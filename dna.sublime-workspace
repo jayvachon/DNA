@@ -1,0 +1,771 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Ve",
+				"Vector2	x, y"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"Vecto",
+				"Vector3	x, y, z"
+			],
+			[
+				"Blue",
+				"BluetoothTest2"
+			],
+			[
+				"GAME",
+				"GAMEBOARD_WIDTH"
+			],
+			[
+				"iRou",
+				"iroundedY"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Assets/Scripts/Step.cs",
+			"settings":
+			{
+				"buffer_size": 815,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/StepCreator.cs",
+			"settings":
+			{
+				"buffer_size": 669,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/jamesvachon/Time2/Assets/CustomAssets/Scripts/_Empties/Wheel.js",
+			"settings":
+			{
+				"buffer_size": 13692,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Unity3D Build System/Unity.sublime-build",
+	"command_palette":
+	{
+		"height": 107.0,
+		"selected_items":
+		[
+			[
+				"package",
+				"Package Control: Disable Package"
+			],
+			[
+				"",
+				"ANF: Rename File"
+			],
+			[
+				"fetc",
+				"Fetch: Package"
+			],
+			[
+				"fetch",
+				"Fetch: Package"
+			],
+			[
+				"fet",
+				"Fetch: Package"
+			],
+			[
+				"rename",
+				"ANF: Rename File"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"snippet",
+				"Snippet: from, to, t"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"packag",
+				"Package Control: Install Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 674.0
+	},
+	"console":
+	{
+		"height": 353.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/jamesvachon/Documents/Unity Projects/Astro Assembly/DNA/DNA/Assets/Prefabs",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/User/Unity C#/public-function.sublime-snippet",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/User/Unity C#/public-class.sublime-snippet",
+		"/Users/jamesvachon/Documents/Unity Projects/Astro Assembly/DNA/DNA/Step.cs",
+		"/Users/jamesvachon/Documents/Unity Projects/Astro Assembly/DNA/DNA/dna.sublime-project",
+		"/Users/jamesvachon/Documents/Web/EGL/managerisk-reflection/managerisk-reflection.sublime-project",
+		"/Users/jamesvachon/Documents/Web/EGL/managerisk-reflection/managerisk-reflection.py",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/jamesvachon/Documents/Web/EGL/managerisk-001 game reflection/assesment-search.sublime-project",
+		"/Users/jamesvachon/Documents/Web/EGL/managerisk-001 game reflection/assesment-search.py",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/summit-proposal.sublime-project",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/css/responsive-nav.css",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/css/discrepancies-test/responsive-nav.css",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/css/custom-boostrap.css",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/css/discrepancies-test/custom-boostrap.css",
+		"/Users/jamesvachon/Downloads/Website/css/custom-boostrap.css",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/head.php",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/index.php",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/nav.php",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/css/email-signup.css",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/css/custom-game.css",
+		"/Users/jamesvachon/developer/git-repositories/egl-homepage/email-signup.php",
+		"/Users/jamesvachon/documents/web/egl/modules/signup-form.html",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/email-signup.css",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/egl-homepage.sublime-project",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/jamesvachon/Documents/Web/EGL/summit-proposal/index.html",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/User/Fetch.sublime-settings",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/src/css/main.css",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/src/css/custom-style.css",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/src/index.html",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/test/tests.js",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/src/css/style.css",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/dist/index.html",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/dist/robots.txt",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/index.html",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/src/favicon.ico",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/src/robots.txt",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/src/404.html",
+		"/Users/jamesvachon/Developer/git-repositories/summit-proposal/README.md",
+		"/Users/jamesvachon/Documents/Unity Projects/EGL/Bluetooth test/BluetoothTest2/Assets/Plugins/iOS/UnityBluetoothLE.mm",
+		"/Users/jamesvachon/Documents/Unity Projects/EGL/Bluetooth test/BluetoothTest2/Assets/Plugins/BluetoothHardwareInterface.cs",
+		"/Users/jamesvachon/Documents/Unity Projects/EGL/Bluetooth test/BluetoothTest2/Assets/Example/Test/TestScript.cs",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/blog/index.php",
+		"/Users/jamesvachon/Developer/git-repositories/egl-homepage/js/other/blog.js",
+		"/Users/jamesvachon/Documents/Unity Projects/EGL/Bluetooth test/BluetoothTest2/Assets/Plugins/BluetoothDeviceScript.cs",
+		"/Users/jamesvachon/Documents/Unity Projects/EGL/Bluetooth test/BluetoothTest2/BluetoothTest2.sublime-project",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/User/Unity C#/private-function.sublime-snippet",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/User/Unity C#/for.sublime-snippet",
+		"/Users/jamesvachon/Library/Application Support/Sublime Text 2/Packages/User/Unity C#/for-down.sublime-snippet",
+		"/Applications/MAMP/htdocs/egl-homepage/js/libs/pathfinding-browser.min.js",
+		"/Applications/MAMP/htdocs/egl-homepage/js/libs/jquery.easing.1.3.js",
+		"/Applications/MAMP/htdocs/egl-homepage/js/game/codegame.js",
+		"/Users/jamesvachon/Documents/Processing/Risk Horizon/rh_data/data/risk_horizon.json",
+		"/Users/jamesvachon/Documents/Unity Projects/EGL/Risk Horizon/Risk Horizon Beta/Assets/ActionScript/BrowserCommunicator.as",
+		"/Users/jamesvachon/Desktop/EGL World Bank/Hello World/js/kiwi.js",
+		"/Users/jamesvachon/Desktop/EGL World Bank/Hello World/helloworld.htm",
+		"/Users/jamesvachon/Desktop/EGL World Bank/Hello World 2/helloworld2.html"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"rad",
+			"CreateStepMesh",
+			"submissions",
+			"evals",
+			"evaluation",
+			"submission",
+			"content",
+			"nav",
+			"@media",
+			"tagline",
+			"input",
+			"introtext",
+			"right",
+			"wrap",
+			"introtext",
+			"h2",
+			"plugin",
+			"plugins",
+			"submit",
+			"button",
+			"readchar",
+			"window",
+			"message",
+			"const",
+			"view",
+			"messages",
+			"message_box",
+			"message",
+			"arrow",
+			"displayarrows",
+			"helparrows",
+			"displayarrows",
+			"arrow",
+			"@media",
+			"message",
+			"button",
+			"discoball",
+			"disco",
+			"onscreen",
+			"disco",
+			"checkscreen",
+			"onscreen",
+			"disco",
+			"reallystarted",
+			"cover",
+			"reallystarted",
+			"lib",
+			"cover",
+			"shit",
+			"fadecov",
+			"cover",
+			"righthalf",
+			"0.4",
+			"0.3",
+			"animate",
+			"storage",
+			"clear",
+			"reset",
+			"clear",
+			"fullname",
+			"nothanks",
+			"data-key",
+			"play now",
+			"sessionstorage",
+			"localstore",
+			"sam",
+			"what appr",
+			"person",
+			"curframe",
+			"eric gord",
+			"animateperson",
+			"updateanimations",
+			"animateperson",
+			"paused",
+			"pause",
+			"pausegame",
+			"pause",
+			"paused",
+			"0 0",
+			"backgroundposition",
+			"speed",
+			"input.speed",
+			"speed",
+			"_slidescreen",
+			"longest",
+			"pageyoffset",
+			"pageXOffset",
+			"oageXOffset",
+			"pagexoffset",
+			"player.x",
+			"_tick",
+			"player.y",
+			"input",
+			"idle",
+			"coffeemak",
+			"setuppeople",
+			"occx",
+			"bottom",
+			"russell",
+			"getting cold",
+			"hi i am",
+			"rob",
+			".animating",
+			"zindex",
+			"stopmove",
+			"intransit",
+			"animatewalk",
+			"slidescreen",
+			"setzindex",
+			"setup",
+			"items",
+			"ready",
+			"setwalk",
+			"setuppeopl",
+			"animateperson",
+			"person",
+			"sleep",
+			"setuppeople",
+			"init",
+			"updateanimations",
+			"animateperson",
+			"sleep",
+			"setuppeople",
+			"loaddata",
+			"height_buffer",
+			"hitlist",
+			"stopmove",
+			"preventmovement"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Assets/Scripts/Step.cs",
+					"settings":
+					{
+						"buffer_size": 815,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								125,
+								125
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Assets/Scripts/StepCreator.cs",
+					"settings":
+					{
+						"buffer_size": 669,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								221,
+								221
+							]
+						],
+						"settings":
+						{
+							"_anf_new": "",
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/C#/C#.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/jamesvachon/Time2/Assets/CustomAssets/Scripts/_Empties/Wheel.js",
+					"settings":
+					{
+						"buffer_size": 13692,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5291,
+								5144
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110.0
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2.0,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2156.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 240.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/jamesvachon/Developer/git-repositories/egl-homepage/egl-homepage.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 247.0,
+	"status_bar_visible": true
+}

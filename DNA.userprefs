@@ -1,12 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MainCamera.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Structure/Step.cs">
     <Files>
       <File FileName="Assets/Scripts/Structure/RowCreator.cs" Line="21" Column="35" />
-      <File FileName="Assets/Scripts/MainCamera.cs" Line="42" Column="27" />
-      <File FileName="Assets/Scripts/Structure/StepController.cs" Line="39" Column="7" />
+      <File FileName="Assets/Scripts/MainCamera.cs" Line="42" Column="26" />
+      <File FileName="Assets/Scripts/Structure/StepController.cs" Line="38" Column="23" />
       <File FileName="Assets/Scripts/Structure/Row.cs" Line="8" Column="25" />
-      <File FileName="Assets/Scripts/Structure/Step.cs" Line="20" Column="59" />
+      <File FileName="Assets/Scripts/Structure/Step.cs" Line="31" Column="2" />
+      <File FileName="Assets/Scripts/Structure/Structure.cs" Line="7" Column="15" />
+      <File FileName="Assets/Scripts/Meshes/OilMesh.cs" Line="15" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

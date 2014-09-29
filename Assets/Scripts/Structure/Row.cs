@@ -5,7 +5,6 @@ public class Row : MonoBehaviour {
 
 	public GameObject step;
 	private int stepCount = 12;
-	private float ySep = 7.5f;
 	private int index;
 
 	private Step[] steps;
@@ -15,6 +14,7 @@ public class Row : MonoBehaviour {
 
 	public void Init (int _index) {
 		index = _index;
+		float ySep = 1f * Structure.scale;
 		float rowHeight = (float)stepCount * ySep;
 		float yStart = index * rowHeight;
 		float slope = 0f;
@@ -34,7 +34,6 @@ public class Row : MonoBehaviour {
 		) as GameObject;
 		Step s = go.GetComponent<Step>();
 		s.Init (0.54f); // TODO: set width based on stepCount instead of hardcoding this value
-//		go.transform.localScale = new Vector3(10, 10, 10);
 		go.transform.parent = transform;
 		return s;
 	}

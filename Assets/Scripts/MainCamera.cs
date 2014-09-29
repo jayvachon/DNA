@@ -9,8 +9,12 @@ public class MainCamera : MonoBehaviour {
 	private Vector3 destRotation;
 	private bool moving = false;
 
+	private float radius = 1.5f;
+	private float lift = 1.25f;
+
 	private void Awake () {
 		myTransform = transform;
+		camera.farClipPlane = Structure.scale * 20;
 	}
 
 	public bool SetActiveStep (Step activeStep) {
@@ -26,9 +30,10 @@ public class MainCamera : MonoBehaviour {
 	}
 
 	private void SetRotation (Step step) {
+		float angle = Mathf.Atan2 (lift, radius * 0.5f) * Mathf.Rad2Deg;
 		float stepYRotation = step.transform.eulerAngles.y;
 		destRotation = new Vector3 (
-			40f,
+			angle,
 			stepYRotation + 180f,
 			myTransform.rotation.z
 		);
@@ -37,9 +42,9 @@ public class MainCamera : MonoBehaviour {
 	private void SetPosition (Step step) {
 		float yRot = Mathf.Deg2Rad * destRotation.y;
 		destPosition = new Vector3 (
-			Mathf.Sin (yRot) * -1.5f * Structure.scale,
-			step.transform.position.y + 1f * Structure.scale,
-			Mathf.Cos (yRot) * -1.5f * Structure.scale
+			Mathf.Sin (yRot) * -radius * Structure.scale,
+			step.transform.position.y + lift * Structure.scale,
+			Mathf.Cos (yRot) * -radius * Structure.scale
 		);
 	}
 

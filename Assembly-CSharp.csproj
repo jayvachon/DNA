@@ -49,12 +49,14 @@
      <Compile Include="Assets\Scripts\ArrayExtended.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\MaterialsManager.cs" />
+     <Compile Include="Assets\Scripts\Meshes\OilMesh.cs" />
+     <Compile Include="Assets\Scripts\Meshes\StepMesh.cs" />
+     <Compile Include="Assets\Scripts\Oil.cs" />
      <Compile Include="Assets\Scripts\Structure\Column.cs" />
      <Compile Include="Assets\Scripts\Structure\Row.cs" />
      <Compile Include="Assets\Scripts\Structure\RowCreator.cs" />
      <Compile Include="Assets\Scripts\Structure\Step.cs" />
      <Compile Include="Assets\Scripts\Structure\StepController.cs" />
-     <Compile Include="Assets\Scripts\Structure\StepMesh.cs" />
      <Compile Include="Assets\Scripts\Structure\Structure.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

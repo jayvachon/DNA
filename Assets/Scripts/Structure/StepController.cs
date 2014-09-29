@@ -34,6 +34,8 @@ public class StepController : MonoBehaviour {
 		bool canSetActive = cam.SetActiveStep (step);
 		if (canSetActive) {
 			step.gameObject.SetActive (true);
+			Step nextStep = steps[activeStepIndex + 2];
+			nextStep.gameObject.SetActive (true);
 		}
 		return canSetActive;
 	}

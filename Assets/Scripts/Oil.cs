@@ -16,7 +16,7 @@ public class Oil : MonoBehaviour {
 	public void Init () {
 		mf = gameObject.AddComponent<MeshFilter>();
 		mr = gameObject.AddComponent<MeshRenderer>();
-		mf.mesh = OilMesh.CreateMesh ();
+		mf.mesh = CustomMesh.Oil ();
 		SetMaterial(Color.red);
 		myTransform.localScale = Structure.v3scale * 0.1f;
 		Deactivate ();

@@ -3,18 +3,18 @@ using System.Collections;
 
 public class MainCamera : MonoBehaviour {
 
-	private Vector3 center = new Vector3 (0, 0, 0);
 	private Transform myTransform;
 	private Vector3 destPosition;
 	private Vector3 destRotation;
 	private bool moving = false;
 
-	private float radius = 1.5f;
-	private float lift = 1.25f;
+	private float radius = 7.5f;
+	private float lift = 5f;//12.5f; // Degrees
 
 	private void Awake () {
 		myTransform = transform;
-		camera.farClipPlane = Structure.scale * 20;
+		camera.fieldOfView = 90;
+		camera.farClipPlane = Structure.scale * 200;
 	}
 
 	public bool SetActiveStep (Step activeStep) {

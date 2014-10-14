@@ -47,17 +47,27 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ArrayExtended.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Camera\MyCamera.cs" />
+     <Compile Include="Assets\Scripts\CameraCenter.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\ChangeActiveStepEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\MaterialsManager.cs" />
-     <Compile Include="Assets\Scripts\Meshes\OilMesh.cs" />
-     <Compile Include="Assets\Scripts\Meshes\StepMesh.cs" />
+     <Compile Include="Assets\Scripts\Meshes\CustomMesh.cs" />
+     <Compile Include="Assets\Scripts\MouseController.cs" />
      <Compile Include="Assets\Scripts\Oil.cs" />
      <Compile Include="Assets\Scripts\Structure\Column.cs" />
+     <Compile Include="Assets\Scripts\Structure\CustomMeshObject.cs" />
+     <Compile Include="Assets\Scripts\Structure\Hexagon.cs" />
      <Compile Include="Assets\Scripts\Structure\Row.cs" />
      <Compile Include="Assets\Scripts\Structure\RowCreator.cs" />
      <Compile Include="Assets\Scripts\Structure\Step.cs" />
      <Compile Include="Assets\Scripts\Structure\StepController.cs" />
      <Compile Include="Assets\Scripts\Structure\Structure.cs" />
+     <Compile Include="Assets\Scripts\TransformExtensions.cs" />
+     <Compile Include="Assets\Scripts\Units\Unit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,18 +3,19 @@ using System.Collections;
 
 public class StepController : MonoBehaviour {
 
-	public MainCamera cam;
 	public RowCreator rowCreator;
 	private int activeStepIndex = 0;
 	private Step activeStep;
 	private Step[] steps;
 
 	private void Awake () {
-		cam = Instantiate (cam) as MainCamera;
 		rowCreator = Instantiate (rowCreator) as RowCreator;
 		rowCreator.Init ();
 		GetSteps ();
-		SetActiveStep (steps[0]);
+	}
+
+	private void Start () {
+		SetActiveStep (0);
 	}
 
 	private void GetSteps () {
@@ -30,22 +31,14 @@ public class StepController : MonoBehaviour {
 		}
 	}
 
-	private bool SetActiveStep (Step step) {
-		bool canSetActive = cam.SetActiveStep (step);
-		if (canSetActive) {
-			step.gameObject.SetActive (true);
-			Step nextStep = steps[activeStepIndex + 2];
-			nextStep.gameObject.SetActive (true);
-		}
-		return canSetActive;
+	private void SetActiveStep (int s) {
+		activeStep = steps[s];
+		Events.instance.Raise (new ChangeActiveStepEvent (activeStep));
 	}
 
 	private void IterateActiveStep () {
-		Step nextStep = steps[activeStepIndex + 1];
-		if (SetActiveStep (nextStep)) {
-			activeStepIndex ++;
-			activeStep = steps[activeStepIndex];
-		}
+		activeStepIndex ++;
+		SetActiveStep (activeStepIndex);
 	}
 
 	private void Update () {

@@ -10,7 +10,7 @@ public class RowCreator : MonoBehaviour {
 	}
 
 	public void Init () {
-		int rowCount = 10;
+		int rowCount = 3;
 		rows = new Row[rowCount];
 		for (int i = 0; i < rowCount; i ++) {
 			rows[i] = CreateRow (i);

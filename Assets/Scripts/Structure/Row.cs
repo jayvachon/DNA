@@ -4,7 +4,7 @@ using System.Collections;
 public class Row : MonoBehaviour {
 
 	public GameObject step;
-	private int stepCount = 12;
+	private int stepCount = 6;
 	private int index;
 
 	private Step[] steps;
@@ -14,7 +14,7 @@ public class Row : MonoBehaviour {
 
 	public void Init (int _index) {
 		index = _index;
-		float ySep = 1f * Structure.scale;
+		float ySep = 10f * Structure.scale;
 		float rowHeight = (float)stepCount * ySep;
 		float yStart = index * rowHeight;
 		float slope = 0f;
@@ -30,10 +30,10 @@ public class Row : MonoBehaviour {
 		GameObject go = Instantiate(
 			step, 
 			new Vector3(0, yPos, 0), 
-			Quaternion.Euler(-slope, rotation, slope)
+			Quaternion.identity
 		) as GameObject;
 		Step s = go.GetComponent<Step>();
-		s.Init (0.54f); // TODO: set width based on stepCount instead of hardcoding this value
+		s.StepInit (0.54f, rotation); // TODO: set width based on stepCount instead of hardcoding this value
 		go.transform.parent = transform;
 		return s;
 	}

@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-// gist by https://gist.github.com/wmiller/3903205#file-events-cs
+// gist by: https://gist.github.com/wmiller/3903205#file-events-cs
+// found at: http://www.willrmiller.com/?p=87
 
 public class GameEvent {}
 

@@ -3,6 +3,8 @@ using System.Collections;
 
 public static class CustomMesh {
 
+	public static Mesh hexagon = null;
+
 	public static Mesh CreateMesh (Vector3[] vertices, int[] triangles) {
 		
 		Mesh mesh = new Mesh ();
@@ -20,6 +22,8 @@ public static class CustomMesh {
 
 	public static Mesh Hexagon () {
 
+		if (hexagon != null) return hexagon;
+
 		int sideCount = 6;
 		float length = 1f;
 		Vector2[] points = new Vector2[sideCount];
@@ -31,7 +35,7 @@ public static class CustomMesh {
 			points[i] = new Vector2 (x, y);
 		}
 
-		return CustomMesh.CreateMesh (
+		hexagon = CustomMesh.CreateMesh (
 			new Vector3[] {
 				
 				// Outer 1
@@ -61,6 +65,7 @@ public static class CustomMesh {
 				9, 10, 11
 			}
 		);
+		return hexagon;
 	}
 	
 	public static Mesh Step (float width) {

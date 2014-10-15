@@ -15,9 +15,7 @@ public class MouseController : MonoBehaviour {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast (ray, out hit, maxDistance)) {
-			//Debug.DrawLine (ray.origin, hit.point);
-			//Debug.Log (hit.point);
-			Events.instance.Raise (new MouseClickEvent (hit.transform));
+			Events.instance.Raise (new MouseClickEvent (hit));
 		}
 	}
 }

@@ -52,7 +52,9 @@
      <Compile Include="Assets\Scripts\CameraCenter.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ChangeActiveStepEvent.cs" />
-     <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\MouseClickEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\SelectUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\UnselectUnitEvent.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\MaterialsManager.cs" />
      <Compile Include="Assets\Scripts\Meshes\CustomMesh.cs" />

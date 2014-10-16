@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour {
 
 	void Awake () {
 		myTransform = transform;
-		Distance = 50f;
+		Distance = 25f;
 	}
 
 	void Start () {

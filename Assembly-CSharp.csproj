@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\Structure\Step.cs" />
      <Compile Include="Assets\Scripts\Structure\StepController.cs" />
      <Compile Include="Assets\Scripts\Structure\Structure.cs" />
+     <Compile Include="Assets\Scripts\Structure\TerrainGenerator.cs" />
      <Compile Include="Assets\Scripts\TransformExtensions.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
   </ItemGroup>

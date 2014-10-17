@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour {
 
 	public Transform cam;
 	Transform myTransform;
-	Transform unitTransform;
+	Transform selectableTransform;
 
 	float distance = 100f;
 	public float Distance {
@@ -41,8 +41,8 @@ public class CameraController : MonoBehaviour {
 
 	void Start () {
 		Events.instance.AddListener<ChangeActiveStepEvent>(OnChangeActiveStep);
-		Events.instance.AddListener<SelectUnitEvent>(OnSelectUnitEvent);
-		Events.instance.AddListener<UnselectUnitEvent>(OnUnselectUnitEvent);
+		Events.instance.AddListener<SelectSelectableEvent>(OnSelectSelectableEvent);
+		Events.instance.AddListener<UnselectSelectableEvent>(OnUnselectSelectableEvent);
 	}
 
 	void Update () {
@@ -71,18 +71,18 @@ public class CameraController : MonoBehaviour {
 		myTransform.SetPositionY (e.step.transform.position.y + 1);
 	}
 
-	void OnSelectUnitEvent (SelectUnitEvent e) {
-		unitTransform = e.unit.transform;
+	void OnSelectSelectableEvent (SelectSelectableEvent e) {
+		selectableTransform = e.selectable.transform;
 		StartCoroutine (FollowTransform ());
 	}
 
-	void OnUnselectUnitEvent (UnselectUnitEvent e) {
-		unitTransform = null;
+	void OnUnselectSelectableEvent (UnselectSelectableEvent e) {
+		selectableTransform = null;
 	}
 
 	IEnumerator FollowTransform () {
-		while (unitTransform != null) {
-			myTransform.position = unitTransform.position;
+		while (selectableTransform != null) {
+			myTransform.position = selectableTransform.position;
 			yield return null;
 		}
 	}

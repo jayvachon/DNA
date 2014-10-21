@@ -3,11 +3,17 @@ using System.Collections;
 
 public class Selectable : MonoBehaviour {
 
-	string tag = "Selectable";
+	string myTag = "Selectable";
 
 	bool selected = false;
 	public bool Selected {
 		get { return selected; }
+	}
+
+	bool canSelect = true;
+	public bool CanSelect {
+		get { return canSelect; }
+		set { canSelect = value; }
 	}
 
 	Transform myTransform;
@@ -17,7 +23,7 @@ public class Selectable : MonoBehaviour {
 
 	void Awake () {
 		myTransform = transform;
-		myTransform.tag = tag;
+		myTransform.tag = myTag;
 	}
 
 	void Start () {
@@ -31,6 +37,7 @@ public class Selectable : MonoBehaviour {
 	}
 	
 	public void Select () {
+		if (!canSelect) return;
 		if (selected) return;
 		selected = true;
 		Events.instance.Raise (new SelectSelectableEvent (this));
@@ -38,6 +45,7 @@ public class Selectable : MonoBehaviour {
 	}
 	
 	public void Unselect () {
+		if (!canSelect) return;
 		if (!selected) return;
 		selected = false;
 		Events.instance.Raise (new UnselectSelectableEvent (this));
@@ -45,7 +53,7 @@ public class Selectable : MonoBehaviour {
 	}
 
 	public virtual void OnMouseClickEvent (MouseClickEvent e) {
-		if (e.transform.tag == tag) {
+		if (e.transform.tag == myTag) {
 			if (e.transform == MyTransform) ClickThis (e);
 			else ClickOther (e);
 		} else {

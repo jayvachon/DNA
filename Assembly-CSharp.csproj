@@ -61,10 +61,13 @@
      <Compile Include="Assets\Scripts\MaterialsManager.cs" />
      <Compile Include="Assets\Scripts\Meshes\CustomMesh.cs" />
      <Compile Include="Assets\Scripts\MouseController.cs" />
+     <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Oil.cs" />
+     <Compile Include="Assets\Scripts\Resources\IceCream.cs" />
      <Compile Include="Assets\Scripts\Selectables\Buildings\Building.cs" />
      <Compile Include="Assets\Scripts\Selectables\Buildings\Hospital.cs" />
      <Compile Include="Assets\Scripts\Selectables\Selectable.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Units\Cow.cs" />
      <Compile Include="Assets\Scripts\Selectables\Units\Person.cs" />
      <Compile Include="Assets\Scripts\Selectables\Units\Unit.cs" />
      <Compile Include="Assets\Scripts\Structure\Column.cs" />

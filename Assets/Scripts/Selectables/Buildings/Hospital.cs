@@ -8,6 +8,10 @@ public class Hospital : Building {
 
 	public override void OnStart () {
 		renderer.SetColor (defaultColor);
+		Init (
+			new string[] {"1", "2"},
+			new string[] {"make a person", "make a shitstain"}
+		);
 	}
 
 	public override void OnSelect () {
@@ -16,5 +20,12 @@ public class Hospital : Building {
 
 	public override void OnUnselect () {
 		renderer.SetColor (defaultColor);
+	}
+
+	public override void OnKeyPress (string key) {
+		switch (key) {
+			case "1": Debug.Log ("fuckin right"); break;
+			case "2": Debug.Log ("eerrf shit"); break;
+		}
 	}
 }

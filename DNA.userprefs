@@ -1,12 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Selectables/Units/Cow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Selectables/Selectable.cs">
     <Files>
-      <File FileName="Assets/Scripts/Selectables/Units/Cow.cs" Line="15" Column="70" />
-      <File FileName="Assets/Scripts/Selectables/Units/Unit.cs" Line="8" Column="1" />
-      <File FileName="Assets/Scripts/Selectables/Units/Person.cs" Line="9" Column="2" />
-      <File FileName="Assets/Scripts/Selectables/Selectable.cs" Line="6" Column="14" />
-      <File FileName="Assets/Scripts/Resources/IceCream.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/MyGUI.cs" Line="57" Column="1" />
+      <File FileName="Assets/Scripts/Selectables/Buildings/Hospital.cs" Line="13" Column="32" />
+      <File FileName="Assets/Scripts/Selectables/Selectable.cs" Line="60" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

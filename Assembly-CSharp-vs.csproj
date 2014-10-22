@@ -46,21 +46,27 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ArrayExtended.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
      <Compile Include="Assets\Scripts\Camera\MyCamera.cs" />
      <Compile Include="Assets\Scripts\CameraCenter.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ChangeActiveStepEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\KeyPressEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\MouseClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\SelectSelectableEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\SelectUnitEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\UnselectSelectableEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\UnselectUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\ResetCommandsEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\SetCommandsEvent.cs" />
+     <Compile Include="Assets\Scripts\Extensions\ArrayExtended.cs" />
+     <Compile Include="Assets\Scripts\Extensions\TransformExtensions.cs" />
+     <Compile Include="Assets\Scripts\InputManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\MaterialsManager.cs" />
      <Compile Include="Assets\Scripts\Meshes\CustomMesh.cs" />
      <Compile Include="Assets\Scripts\MouseController.cs" />
+     <Compile Include="Assets\Scripts\MyGUI.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Oil.cs" />
      <Compile Include="Assets\Scripts\Resources\IceCream.cs" />
@@ -79,7 +85,6 @@
      <Compile Include="Assets\Scripts\Structure\StepController.cs" />
      <Compile Include="Assets\Scripts\Structure\Structure.cs" />
      <Compile Include="Assets\Scripts\Structure\TerrainGenerator.cs" />
-     <Compile Include="Assets\Scripts\TransformExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

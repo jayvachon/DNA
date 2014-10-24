@@ -77,7 +77,8 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void OnUnselectSelectableEvent (UnselectSelectableEvent e) {
-		selectableTransform = null;
+		if (e.selectable.transform == selectableTransform)
+			selectableTransform = null;
 	}
 
 	IEnumerator FollowTransform () {

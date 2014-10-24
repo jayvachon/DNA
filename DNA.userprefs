@@ -1,10 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Selectables/Selectable.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Selectables/Units/CowManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/MyGUI.cs" Line="57" Column="1" />
-      <File FileName="Assets/Scripts/Selectables/Buildings/Hospital.cs" Line="13" Column="32" />
-      <File FileName="Assets/Scripts/Selectables/Selectable.cs" Line="60" Column="3" />
+      <File FileName="Assets/Scripts/MyGUI.cs" Line="19" Column="4" />
+      <File FileName="Assets/Scripts/Selectables/Buildings/Hospital.cs" Line="33" Column="1" />
+      <File FileName="Assets/Scripts/Selectables/Selectable.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Selectables/Units/PersonManager.cs" Line="9" Column="29" />
+      <File FileName="Assets/Scripts/Selectables/Units/Cow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Camera/CameraController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MilkshakeManager.cs" Line="27" Column="3" />
+      <File FileName="Assets/Scripts/GM.cs" Line="17" Column="28" />
+      <File FileName="Assets/Scripts/Selectables/Units/CowManager.cs" Line="10" Column="58" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

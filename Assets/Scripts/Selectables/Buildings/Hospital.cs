@@ -10,7 +10,7 @@ public class Hospital : Building {
 		renderer.SetColor (defaultColor);
 		Init (
 			new string[] {"1", "2"},
-			new string[] {"make a person", "make a shitstain"}
+			new string[] {"make a person (10 milkshakes)", "make a cow (20 milkshakes)"}
 		);
 	}
 
@@ -24,8 +24,24 @@ public class Hospital : Building {
 
 	public override void OnKeyPress (string key) {
 		switch (key) {
-			case "1": Debug.Log ("fuckin right"); break;
-			case "2": Debug.Log ("eerrf shit"); break;
+			case "1": CreatePerson (); break;
+			case "2": CreateCow (); break;
+		}
+	}
+
+	void CreatePerson () {
+		if (GM.instance.SubMshake (10)) {
+			Vector3 creationPosition = MyTransform.position;
+			creationPosition.x += MyTransform.localScale.x + 0.25f;
+			Events.instance.Raise (new CreatePersonEvent (creationPosition));
+		}
+	}
+
+	void CreateCow () {
+		if (GM.instance.SubMshake (20)) {
+			Vector3 creationPosition = MyTransform.position;
+			creationPosition.z += MyTransform.localScale.z + 0.25f;
+			Events.instance.Raise (new CreateCowEvent (creationPosition));
 		}
 	}
 }

@@ -36,13 +36,10 @@ public class CameraController : MonoBehaviour {
 
 	void Awake () {
 		myTransform = transform;
-		Distance = 25f;
-	}
-
-	void Start () {
 		Events.instance.AddListener<ChangeActiveStepEvent>(OnChangeActiveStep);
 		Events.instance.AddListener<SelectSelectableEvent>(OnSelectSelectableEvent);
 		Events.instance.AddListener<UnselectSelectableEvent>(OnUnselectSelectableEvent);
+		Distance = 25f;
 	}
 
 	void Update () {

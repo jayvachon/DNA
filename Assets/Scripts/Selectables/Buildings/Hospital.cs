@@ -3,23 +3,12 @@ using System.Collections;
 
 public class Hospital : Building {
 
-	Color defaultColor = Color.white;
-	Color selectColor = Color.grey;
-
 	public override void OnStart () {
-		renderer.SetColor (defaultColor);
 		Init (
+			Color.white, Color.grey,
 			new string[] {"1", "2"},
 			new string[] {"make a person (10 milkshakes)", "make a cow (20 milkshakes)"}
 		);
-	}
-
-	public override void OnSelect () {
-		renderer.SetColor (selectColor);
-	}
-
-	public override void OnUnselect () {
-		renderer.SetColor (defaultColor);
 	}
 
 	public override void OnKeyPress (string key) {

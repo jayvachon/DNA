@@ -3,18 +3,28 @@ using System.Collections;
 
 public class Person : Unit {
 
-	Color defaultColor = Color.red;
-	Color selectedColor = Color.magenta;
+	Inventory inventory;
 
 	public override void OnStart () {
-		renderer.SetColor (defaultColor);
+		Init (Color.red, Color.magenta);
+		inventory = new Inventory (new InventoryItem[2] {
+			new InventoryItem ("ice cream", 0, 3),
+			new InventoryItem ("milk", 0, 3)
+		});
 	}
 
-	public override void OnSelect () {
-		renderer.SetColor (selectedColor);
+	public override void ClickOther (MouseClickEvent e) {
+		IceCream c = e.transform.GetComponent<IceCream>();
+		if (c) {
+			CollectIceCream (c);
+		} else {
+			Unselect ();
+		}
 	}
-	
-	public override void OnUnselect () {
-		renderer.SetColor (defaultColor);
+
+	void CollectIceCream (IceCream ic) {
+		if (inventory.Add ("ice cream", 1)) {
+			ic.Collect ();
+		}
 	}
 }

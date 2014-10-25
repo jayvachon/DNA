@@ -27,9 +27,6 @@ public class MyGUI : MonoBehaviour {
 
 	void Awake () {
 		if (instance == null) instance = this;
-	}
-
-	void Start () {
 		Events.instance.AddListener<SetCommandsEvent>(OnSetCommands);
 		Events.instance.AddListener<ResetCommandsEvent>(OnResetCommands);
 		Events.instance.AddListener<AddMilkshakesEvent>(OnAddMilkshakesEvent);

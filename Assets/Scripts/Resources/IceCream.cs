@@ -2,8 +2,15 @@
 using System.Collections;
 
 public class IceCream : MonoBehaviour {
+		
+	Transform myTransform;
 
-	void Start () {
+	void Awake () {
+		myTransform = transform;
+		transform.tag = "Selectable";
+	}
+
+	void OnEnable () {
 		ShootUp ();
 	}
 
@@ -16,5 +23,9 @@ public class IceCream : MonoBehaviour {
 			Mathf.Sin (angle) * horSpeed
 		);
 		rigidbody.AddForce (direction * 150, ForceMode.Impulse);
+	}
+
+	public void Collect () {
+		ObjectPool.Destroy ("IceCream", myTransform);
 	}
 }

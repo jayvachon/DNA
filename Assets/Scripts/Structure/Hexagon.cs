@@ -19,38 +19,38 @@ public class Hexagon : CustomMeshObject {
 		get { return circumradius; }
 	}
 
-	enum Type {
+	public enum HexType {
 		Dirt, 
 		Grass,
 		Milk
 	}
-	Type type = Type.Dirt;
+	HexType hexType = HexType.Dirt;
+	public HexType Type {
+		get { return hexType; }
+	}
 
 	void Awake () {
 		sideCount = 6;
 		sideLength = Structure.scale;
 		circumradius = sideCount * sideLength;
-		//SetType ();
 	}
 
 	public void SetType (float noiseVal) {
-		int typeCount = Enum.GetNames (typeof (Type)).Length;
+		int typeCount = Enum.GetNames (typeof (HexType)).Length;
 		noiseVal = Mathf.Clamp (
 			Mathf.Floor (noiseVal * (float)typeCount + 1f) - 1,
 			0,
 			typeCount - 1
 		);
-		SetType ((Type)noiseVal);
+		SetType ((HexType)noiseVal);
 	}
 
-	void SetType (Type t) {
-		//int t = UnityEngine.Random.Range (0, Enum.GetNames (typeof (Type)).Length);
-		//type = (Type)t;
-		type = t;
-		switch (type) {
-			case Type.Dirt: InitDirt (); break;
-			case Type.Grass: InitGrass (); break;
-			case Type.Milk: InitMilk (); break;
+	void SetType (HexType t) {
+		hexType = t;
+		switch (hexType) {
+			case HexType.Dirt: InitDirt (); break;
+			case HexType.Grass: InitGrass (); break;
+			case HexType.Milk: InitMilk (); break;
 		}
 	}
 

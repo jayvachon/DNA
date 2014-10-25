@@ -8,17 +8,17 @@ public class StepController : MonoBehaviour {
 	private Step activeStep;
 	private Step[] steps;
 
-	private void Awake () {
+	void Awake () {
 		rowCreator = Instantiate (rowCreator) as RowCreator;
 		rowCreator.Init ();
 		GetSteps ();
 	}
 
-	private void Start () {
+	void Start () {
 		SetActiveStep (0);
 	}
 
-	private void GetSteps () {
+	void GetSteps () {
 		Row[] rows = rowCreator.Rows;
 		steps = new Step[rows.Length * 12];
 		int index = 0;
@@ -31,19 +31,19 @@ public class StepController : MonoBehaviour {
 		}
 	}
 
-	private void SetActiveStep (int s) {
+	void SetActiveStep (int s) {
 		activeStep = steps[s];
 		Events.instance.Raise (new ChangeActiveStepEvent (activeStep));
 	}
 
-	private void IterateActiveStep () {
+	void IterateActiveStep () {
 		activeStepIndex ++;
 		SetActiveStep (activeStepIndex);
 	}
 
-	private void Update () {
+	/*private void Update () {
 		if (Input.GetKeyDown (KeyCode.Q)) {
 			IterateActiveStep ();
 		}
-	}
+	}*/
 }

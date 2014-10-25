@@ -21,23 +21,39 @@ public class Selectable : MonoBehaviour {
 		get { return myTransform; }
 	}
 
+	Hexagon onHexagon;
+	public Hexagon OnHexagon {
+		set { onHexagon = value; }
+		get { return onHexagon; }
+	}
+
+	Color defaultColor = Color.white;
+	Color selectColor = Color.grey;
 	string[] keys = new string[0];
 	string[] descriptions = new string[0];
 
 	void Awake () {
 		myTransform = transform;
 		myTransform.tag = myTag;
+		Events.instance.AddListener<KeyPressEvent>(OnKeyPressEvent);
+		Events.instance.AddListener<MouseClickEvent>(OnMouseClickEvent);
 	}
 
 	void Start () {
-		Events.instance.AddListener<KeyPressEvent>(OnKeyPressEvent);
-		Events.instance.AddListener<MouseClickEvent>(OnMouseClickEvent);
+		onHexagon = GM.ActiveStep.NearestHexagon (MyTransform.position);
 		OnStart ();
 	}
 
-	public void Init (string[] keys, string[] descriptions) {
+	public void Init (Color defaultColor, Color selectColor) {
+		Init (defaultColor, selectColor, new string[0], new string[0]);
+	}
+
+	public void Init (Color defaultColor, Color selectColor, string[] keys, string[] descriptions) {
+		this.defaultColor = defaultColor;
+		this.selectColor = selectColor;
 		this.keys = keys;
 		this.descriptions = descriptions;
+		renderer.SetColor (defaultColor);
 	}
 
 	public void ToggleSelect () {
@@ -49,6 +65,7 @@ public class Selectable : MonoBehaviour {
 		if (!canSelect) return;
 		if (selected) return;
 		selected = true;
+		renderer.SetColor (selectColor);
 		Events.instance.Raise (new SelectSelectableEvent (this));
 		SetCommands ();
 		OnSelect ();
@@ -64,6 +81,7 @@ public class Selectable : MonoBehaviour {
 		if (!canSelect) return;
 		if (!selected) return;
 		selected = false;
+		renderer.SetColor (defaultColor);
 		Events.instance.Raise (new UnselectSelectableEvent (this));
 		ResetCommands ();
 		OnUnselect ();

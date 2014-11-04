@@ -1,11 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/InventoryItem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Selectables/Units/Unit.cs">
     <Files>
-      <File FileName="Assets/Scripts/Inventory.cs" Line="10" Column="16" />
-      <File FileName="Assets/Scripts/Resources/IceCream.cs" Line="10" Column="16" />
-      <File FileName="Assets/Scripts/ObjectPool.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Selectables/Units/Unit.cs" Line="71" Column="5" />
+      <File FileName="Assets/Scripts/Selectables/Selectable.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Inventory.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Resources/IceCream.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Selectables/Units/Person.cs" Line="32" Column="21" />
+      <File FileName="Assets/Scripts/Selectables/Units/Unit.cs" Line="71" Column="5" />
       <File FileName="Assets/Scripts/InventoryItem.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/TaskCollectIceCream.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

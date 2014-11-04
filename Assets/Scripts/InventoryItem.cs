@@ -39,7 +39,13 @@ public class InventoryItem : System.Object {
 		return false;
 	}
 
-	public void Empty () {
+	public int Empty () {
+		int a = amount;
 		amount = 0;
+		return a;
+	}
+
+	public bool IsFull () {
+		return (amount == capacity);
 	}
 }

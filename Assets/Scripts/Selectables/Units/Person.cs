@@ -29,6 +29,7 @@ public class Person : Unit {
 			ic.Collect ();
 		}*/
 		icDestination = ic;
+		StartMove (ic.transform.position);
 //		StartMove (icDestination.transform.position);
 	}
 

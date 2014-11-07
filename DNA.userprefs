@@ -1,15 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Selectables/Units/Unit.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Meshes/WorldManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Selectables/Units/Unit.cs" Line="71" Column="5" />
-      <File FileName="Assets/Scripts/Selectables/Selectable.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Inventory.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Resources/IceCream.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Selectables/Units/Person.cs" Line="32" Column="21" />
-      <File FileName="Assets/Scripts/Selectables/Units/Unit.cs" Line="71" Column="5" />
-      <File FileName="Assets/Scripts/InventoryItem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TaskCollectIceCream.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Structure/CustomMeshObject.cs" Line="27" Column="22" />
+      <File FileName="Assets/Scripts/Structure/Sandbox/Hexagon2.cs" Line="123" Column="17" />
+      <File FileName="Assets/Scripts/Meshes/CustomMesh.cs" Line="28" Column="45" />
+      <File FileName="Assets/Scripts/Meshes/WorldManager.cs" Line="51" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

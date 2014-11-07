@@ -10,6 +10,12 @@ public class CustomMeshObject : MonoBehaviour {
 	public Transform myTransform;
 	
 	public void Init (Mesh mesh, Color color, bool collider = false) {
+		if (mc != null) {
+			mf.mesh = mesh;
+			mc.sharedMesh = mesh;
+			SetMaterial(color);
+			return;
+		}
 		myTransform = transform;
 		mf = gameObject.AddComponent<MeshFilter>();
 		mr = gameObject.AddComponent<MeshRenderer>();

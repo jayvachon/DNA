@@ -1,12 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Structure/Sandbox/WorldManager2.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Structure/Sandbox/TriangleGrid.cs">
     <Files>
-      <File FileName="Assets/Scripts/Structure/CustomMeshObject.cs" Line="22" Column="1" />
-      <File FileName="Assets/Scripts/Structure/Sandbox/Hexagon2.cs" Line="123" Column="17" />
-      <File FileName="Assets/Scripts/Meshes/CustomMesh.cs" Line="23" Column="1" />
-      <File FileName="Assets/Scripts/Meshes/WorldManager.cs" Line="53" Column="4" />
-      <File FileName="Assets/Scripts/Structure/Sandbox/WorldManager2.cs" Line="60" Column="31" />
+      <File FileName="Assets/Scripts/Structure/Sandbox/Helix.cs" Line="7" Column="36" />
+      <File FileName="Assets/Scripts/Structure/Sandbox/WorldManager3.cs" Line="12" Column="41" />
+      <File FileName="Assets/Scripts/Structure/Sandbox/TriangleGrid.cs" Line="45" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -14,17 +14,21 @@ public static class TerrainGenerator {
 		}
 	}*/
 
-	public static float[,] GetTerrain (int rowCount) {
+	public static float[,] GetTerrain (int rowCount, int columnCount = -1) {
+		if (columnCount == -1)
+			columnCount = rowCount;
 
-		float[,] terrain = new float[rowCount + 1, rowCount];
+		float[,] terrain = new float[rowCount + 1, columnCount];
 		float xOrg = Random.Range (0f, 1000f);
 		float yOrg = Random.Range (0f, 1000f);
-		float scale = 5f;
+		float scale = 2f;
+
+		Debug.Log (rowCount / columnCount);
 
 		for (int x = 0; x < rowCount + 1; x ++) {
-			for (int y = 0; y < rowCount; y ++) {
-				float xCoord = xOrg + (x / (float)rowCount + 1) * scale;
-				float yCoord = yOrg + y / (float)rowCount * scale;
+			for (int y = 0; y < columnCount; y ++) {
+				float xCoord = xOrg + (x / (float)rowCount + 1) * scale * (rowCount / columnCount);
+				float yCoord = yOrg + y / (float)columnCount * scale;
 				terrain[x, y] = Mathf.PerlinNoise (xCoord, yCoord);
 			}
 		}

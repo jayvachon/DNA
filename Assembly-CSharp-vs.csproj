@@ -97,8 +97,12 @@
      <Compile Include="Assets\Scripts\Structure\Hexagon.cs" />
      <Compile Include="Assets\Scripts\Structure\Row.cs" />
      <Compile Include="Assets\Scripts\Structure\RowCreator.cs" />
+     <Compile Include="Assets\Scripts\Structure\Sandbox\GridPoint.cs" />
+     <Compile Include="Assets\Scripts\Structure\Sandbox\Helix.cs" />
      <Compile Include="Assets\Scripts\Structure\Sandbox\Hexagon2.cs" />
+     <Compile Include="Assets\Scripts\Structure\Sandbox\TriangleGrid.cs" />
      <Compile Include="Assets\Scripts\Structure\Sandbox\WorldManager2.cs" />
+     <Compile Include="Assets\Scripts\Structure\Sandbox\WorldManager3.cs" />
      <Compile Include="Assets\Scripts\Structure\Step.cs" />
      <Compile Include="Assets\Scripts\Structure\StepController.cs" />
      <Compile Include="Assets\Scripts\Structure\Structure.cs" />

@@ -7,6 +7,10 @@ public class TriangleGrid {
 	Vector3[,,] coords;
 	Vector3[,,] positions;
 
+	public Vector3[,,] Coords {
+		get { return coords; }
+	}
+
 	public TriangleGrid () {
 	}
 

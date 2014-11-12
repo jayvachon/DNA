@@ -100,7 +100,9 @@
      <Compile Include="Assets\Scripts\Structure\Sandbox\GridPoint.cs" />
      <Compile Include="Assets\Scripts\Structure\Sandbox\Helix.cs" />
      <Compile Include="Assets\Scripts\Structure\Sandbox\Hexagon2.cs" />
+     <Compile Include="Assets\Scripts\Structure\Sandbox\PolygonTester.cs" />
      <Compile Include="Assets\Scripts\Structure\Sandbox\TriangleGrid.cs" />
+     <Compile Include="Assets\Scripts\Structure\Sandbox\Triangulator.cs" />
      <Compile Include="Assets\Scripts\Structure\Sandbox\WorldManager2.cs" />
      <Compile Include="Assets\Scripts\Structure\Sandbox\WorldManager3.cs" />
      <Compile Include="Assets\Scripts\Structure\Step.cs" />

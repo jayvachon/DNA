@@ -5,6 +5,14 @@ public static class CustomMesh {
 
 	public static Mesh hexagon = null;
 
+	public static Mesh CreateMesh (Vector3[] vertices) {
+		int[] triangles = new int[vertices.Length];
+		for (int i = 0; i < triangles.Length; i ++) {
+			triangles[i] = i;
+		}
+		return CustomMesh.CreateMesh (vertices, triangles);
+	}
+
 	public static Mesh CreateMesh (Vector3[] vertices, int[] triangles) {
 
 		Mesh mesh = new Mesh ();

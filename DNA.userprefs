@@ -1,10 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Structure/Sandbox/TriangleGrid.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Structure/Sandbox/PolygonTester.cs">
     <Files>
-      <File FileName="Assets/Scripts/Structure/Sandbox/Helix.cs" Line="7" Column="36" />
-      <File FileName="Assets/Scripts/Structure/Sandbox/WorldManager3.cs" Line="12" Column="41" />
-      <File FileName="Assets/Scripts/Structure/Sandbox/TriangleGrid.cs" Line="45" Column="46" />
+      <File FileName="Assets/Scripts/Structure/Sandbox/Triangulator.cs" Line="110" Column="2" />
+      <File FileName="Assets/Scripts/Structure/Sandbox/PolygonTester.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -21,7 +21,7 @@ public static class TerrainGenerator {
 		float[,] terrain = new float[rowCount + 1, columnCount];
 		float xOrg = Random.Range (0f, 1000f);
 		float yOrg = Random.Range (0f, 1000f);
-		float scale = 3f;
+		float scale = 3.5f;
 
 		for (int x = 0; x < rowCount + 1; x ++) {
 			for (int y = 0; y < columnCount; y ++) {

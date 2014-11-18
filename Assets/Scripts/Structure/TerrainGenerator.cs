@@ -1,20 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class TerrainGenerator {
+public class TerrainGenerator : System.Object {
 
-	/*void Update () {
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			float[,] terrain = GetRoundedTerrain (24, 3);
-			for (int x = 0; x < 25; x ++) {
-				for (int y = 0; y < 24; y ++) {
-					Debug.Log (terrain[x, y]);
-				}
-			}
-		}
-	}*/
-
-	public static float[,] GetTerrain (int rowCount, int columnCount = -1) {
+	public float[,] GetTerrain (int rowCount, int columnCount = -1) {
 		if (columnCount == -1)
 			columnCount = rowCount;
 
@@ -34,8 +23,8 @@ public static class TerrainGenerator {
 		return terrain;
 	}
 
-	public static float[,] GetRoundedTerrain (int rowCount, int range) {
-		float[,] terrain = TerrainGenerator.GetTerrain (rowCount);
+	public float[,] GetRoundedTerrain (int rowCount, int range) {
+		float[,] terrain = GetTerrain (rowCount);
 		float r = (float)range + 1f;
 		for (int x = 0; x < rowCount + 1; x ++) {
 			for (int y = 0; y < rowCount; y ++) {

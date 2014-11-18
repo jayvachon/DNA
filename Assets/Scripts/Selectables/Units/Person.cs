@@ -7,7 +7,7 @@ public class Person : Unit {
 	IceCream icDestination = null;
 	int count = 0;
 
-	public override void OnStart () {
+	public override void OnStartChild () {
 		Init (Color.red, Color.magenta);
 		inventory = new Inventory (new InventoryItem[2] {
 			new InventoryItem ("ice cream", 0, 3),

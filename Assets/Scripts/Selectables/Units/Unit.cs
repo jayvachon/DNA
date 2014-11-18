@@ -5,17 +5,21 @@ public class Unit : Selectable {
 
 	bool moving = false;
 	Vector3 targetPos = Vector3.zero;	// desired position
-	float maxForce = 100f;				// max force available
-	float pGain = 1f; 					// proportional gain
+	float maxForce = 10f;				// max force available
+	float pGain = 1f;					// proportional gain
 	float iGain = 0f;					// integral gain
-	float dGain = 1f;					// differential gain
+	float dGain = 0.25f;				// differential gain
 	Vector3 integrator = Vector3.zero; 	
 	Vector3 lastError = Vector3.zero;	// error accumulator
 	Vector3 curPos = Vector3.zero;		// actual position
 	Vector3 force = Vector3.zero;		// current force
+	float massForce = 0f;
 
 	public override void OnStart () {
 		targetPos = MyTransform.position;
+		massForce = rigidbody.mass * 10f;
+		maxForce = massForce * 0.15f;
+		OnStartChild ();
 	}
 
 	void FixedUpdate () {
@@ -32,8 +36,38 @@ public class Unit : Selectable {
 		force = Vector3.ClampMagnitude (force, maxForce);
 
 		// apply the force to accelerate the rigidbody
-		rigidbody.AddForce (force);
+		rigidbody.AddForce (force * massForce);
 
+		/*if (Input.GetKeyDown (KeyCode.Alpha1)) {
+			pGain += 0.1f;
+			Debug.Log ("p: " + pGain);
+			targetPos = curPos;
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+			pGain -= 0.1f;
+			Debug.Log ("p: " + pGain);
+			targetPos = curPos;
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha3)) {
+			iGain += 0.1f;
+			Debug.Log ("i: " + iGain);
+			targetPos = curPos;
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha4)) {
+			iGain -= 0.1f;
+			Debug.Log ("i: " + iGain);
+			targetPos = curPos;
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha5)) {
+			dGain += 0.1f;
+			Debug.Log ("d: " + dGain);
+			targetPos = curPos;
+		}
+		if (Input.GetKeyDown (KeyCode.Alpha6)) {
+			dGain -= 0.1f;
+			Debug.Log ("d: " + dGain);
+			targetPos = curPos;
+		}*/
 	}
 
 	public override void ClickNothing (MouseClickEvent e) {
@@ -47,5 +81,5 @@ public class Unit : Selectable {
 	}
 
 	public virtual void OnEndMove () {}
-
+	public virtual void OnStartChild () {}
 }

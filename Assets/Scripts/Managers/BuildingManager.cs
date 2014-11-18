@@ -13,12 +13,12 @@ public class BuildingManager : Manager {
 	}
 
 	public override void Init () {
-		Vector3 hospitalPosition = GM.ActiveStep.GetRandomHexagonPosition ();
+		/*Vector3 hospitalPosition = GM.ActiveStep.GetRandomHexagonPosition ();
 		hospitalPosition.y = 5;
 		CreateHospital (hospitalPosition);
 		Vector3 housePosition = GM.ActiveStep.GetRandomHexagonPosition ();
 		housePosition.y = 2.5f;
-		CreateHouse (housePosition);
+		CreateHouse (housePosition);*/
 	}
 
 	void OnCreateBuildingEvent (CreateBuildingEvent e) {

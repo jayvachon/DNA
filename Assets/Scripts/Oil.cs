@@ -18,7 +18,6 @@ public class Oil : MonoBehaviour {
 		mr = gameObject.AddComponent<MeshRenderer>();
 		mf.mesh = CustomMesh.Oil ();
 		SetMaterial(Color.red);
-		myTransform.localScale = Structure.v3scale * 0.1f;
 		Deactivate ();
 	}
 	

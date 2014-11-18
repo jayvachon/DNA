@@ -11,7 +11,8 @@ public class CowManager : Manager {
 	}
 
 	public override void Init () {
-		Vector3 cowPosition = GM.ActiveStep.GetRandomHexagonPosition ();
+		//Vector3 cowPosition = GM.ActiveStep.GetRandomHexagonPosition ();
+		Vector3 cowPosition = Vector3.zero;
 		cowPosition.y = 5;
 		CreateCow (cowPosition);
 	}

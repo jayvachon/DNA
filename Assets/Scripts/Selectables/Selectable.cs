@@ -20,13 +20,7 @@ public class Selectable : MonoBehaviour {
 	public Transform MyTransform {
 		get { return myTransform; }
 	}
-
-	Hexagon onHexagon;
-	public Hexagon OnHexagon {
-		set { onHexagon = value; }
-		get { return onHexagon; }
-	}
-
+	
 	Color defaultColor = Color.white;
 	Color selectColor = Color.grey;
 	string[] keys = new string[0];
@@ -40,7 +34,6 @@ public class Selectable : MonoBehaviour {
 	}
 
 	void Start () {
-		onHexagon = GM.ActiveStep.NearestHexagon (MyTransform.position);
 		OnStart ();
 	}
 

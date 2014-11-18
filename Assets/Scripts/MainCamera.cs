@@ -14,22 +14,9 @@ public class MainCamera : MonoBehaviour {
 	private void Awake () {
 		myTransform = transform;
 		camera.fieldOfView = 90;
-		camera.farClipPlane = Structure.scale * 200;
 	}
 
-	public bool SetActiveStep (Step activeStep) {
-		if (moving) return false;
-		SetTransform (activeStep);
-		StartCoroutine (MoveToTransform (0.5f));
-		return true;
-	}
-
-	private void SetTransform (Step activeStep) {
-		SetRotation (activeStep);
-		SetPosition (activeStep);
-	}
-
-	private void SetRotation (Step step) {
+	/*private void SetRotation (Step step) {
 		float angle = Mathf.Atan2 (lift, radius * 0.5f) * Mathf.Rad2Deg;
 		float stepYRotation = step.transform.eulerAngles.y;
 		destRotation = new Vector3 (
@@ -46,7 +33,7 @@ public class MainCamera : MonoBehaviour {
 			step.transform.position.y + lift * Structure.scale,
 			Mathf.Cos (yRot) * -radius * Structure.scale
 		);
-	}
+	}*/
 
 	private IEnumerator MoveToTransform (float time) {
 

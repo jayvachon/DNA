@@ -25,7 +25,6 @@ public class CustomMeshObject : MonoBehaviour {
 			mc.sharedMesh = mesh;
 		}
 		SetMaterial(color);
-//		myTransform.localScale = Structure.v3scale;
 	}
 
 	public void SetMaterial (Color color) {

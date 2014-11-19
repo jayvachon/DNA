@@ -30,7 +30,11 @@ obj/
 ehthumbs.db
 Thumbs.db
 
+# ====== #
+# Custom #
+# ====== #
 *.sublime-project
 *.sublime-workspace
 *.sublime-project.meta
 *.sublime-workspace.meta
+Builds/

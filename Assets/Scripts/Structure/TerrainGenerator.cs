@@ -23,6 +23,22 @@ public class TerrainGenerator : System.Object {
 		return terrain;
 	}
 
+	public float[,] GetFlatTerrain (int rowCount, int columnCount = -1) {
+		if (columnCount == -1)
+			columnCount = rowCount;
+		
+		float[,] terrain = new float[rowCount + 1, columnCount];
+		
+		for (int x = 0; x < rowCount + 1; x ++) {
+			for (int y = 0; y < columnCount; y ++) {
+				terrain[x, y] = 0f;
+			}
+		}
+		
+		return terrain;
+	}
+
+
 	public float[,] GetRoundedTerrain (int rowCount, int range) {
 		float[,] terrain = GetTerrain (rowCount);
 		float r = (float)range + 1f;

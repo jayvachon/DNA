@@ -6,11 +6,12 @@ public class Helix {
 	public readonly Vector3 center = new Vector3 (0, 0, 0);
 	public readonly int sideCount = 6;
 	public readonly int rotations = 10;
-	int radius = 100;
 	public readonly int rise = 100;
 	public readonly float pointRise;
 	public readonly float sideLength;
 	public readonly Vector3[] points;
+	public readonly float[] pointRotations;
+	public readonly int radius = 100;
 	
 	public Helix (Vector3 center, int rotations = 2, int sideCount = 10, int radius = 200, int rise = 100) {
 		this.center = center;
@@ -19,6 +20,7 @@ public class Helix {
 		this.radius = radius;
 		this.rise = rise;
 		points = new Vector3[sideCount * rotations];
+		pointRotations = new float[sideCount * rotations];
 		pointRise = (float)rise / (float)sideCount;
 		CreateHelix ();
 		sideLength = Vector2.Distance (new Vector2 (points[0].x, points[0].z), new Vector2 (points[1].x, points[1].z));
@@ -33,6 +35,7 @@ public class Helix {
 				center.y + i * pointRise,
 				center.z + radius * Mathf.Cos (radians)
 			);
+			pointRotations[i] = i * deg;
 		}
 	}
 	

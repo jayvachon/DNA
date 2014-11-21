@@ -6,7 +6,6 @@ public class Ring : MonoBehaviour {
 	public RingPoint point;
 	public int radius = 160;
 	public int sideCount = 12;
-//	public Vector3[] points = new Vector3[0];
 	public RingPoint[] points = new RingPoint[0];
 
 	Transform myTransform;
@@ -15,24 +14,19 @@ public class Ring : MonoBehaviour {
 		myTransform = transform;
 	}
 
-	public void Create (int radius = 160, int sideCount = 12) {
+	public void Create (bool offset, int sideCount = 12, int radius = 160) {
 		this.radius = radius;
 		this.sideCount = sideCount;
-//		points = new Vector3[sideCount];
 		points = new RingPoint[sideCount];
-		CreateRing ();
+		CreateRing (offset);
 	}
 
-	void CreateRing () {
+	void CreateRing (bool offset) {
 		Vector3 pos = myTransform.position;
 		float deg = 360f / (float)sideCount;
+		float off = offset ? deg / 2 : 0f;
 		for (int i = 0; i < sideCount; i ++) {
-			float angle = deg * i * Mathf.Deg2Rad;
-			/*points[i] = new Vector3 (
-				pos.x,
-				pos.y + Mathf.Cos (angle) * radius,
-				pos.z + Mathf.Sin (angle) * radius
-			);*/
+			float angle = (deg * i + off) * Mathf.Deg2Rad;
 			Vector3 pointPos = new Vector3 (
 				pos.x,
 				pos.y + Mathf.Cos (angle) * radius,
@@ -41,6 +35,14 @@ public class Ring : MonoBehaviour {
 			points[i] = Instantiate (point, pointPos, Quaternion.identity) as RingPoint;
 			points[i].transform.parent = myTransform;
 		}
+	}
+
+	public Vector3[] GetRingPoints () {
+		Vector3[] positions = new Vector3[points.Length];
+		for (int i = 0; i < positions.Length; i ++) {
+			positions[i] = points[i].WorldPosition ();
+		}
+		return positions;
 	}
 
 	public void DrawRing () {
@@ -55,7 +57,7 @@ public class Ring : MonoBehaviour {
 		Debug.DrawLine (points[pointCount - 1].transform.position, points[0].transform.position, Color.red);
 	}
 
-	void Update () {
+	/*void Update () {
 		DrawRing ();
-	}
+	}*/
 }

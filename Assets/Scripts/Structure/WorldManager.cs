@@ -7,6 +7,8 @@ public class WorldManager : MonoBehaviour {
 	public GridPoint gridPoint;
 	public CustomMeshObject cmo;
 
+	int ringSideCount = 12;
+
 	Helix helix;
 	Helix helix2;
 	TriangleGrid triGrid;
@@ -17,9 +19,46 @@ public class WorldManager : MonoBehaviour {
 
 		helix2 = new Helix (Vector3.zero, 2, 30, 360, 720);
 		Ring[] rings = CreateRingsOnHelix ();
-		for (int i = 0; i < rings.Length; i ++) {
 
+		Vector3[] vs = new Vector3[rings.Length * (ringSideCount*2) * 3];
+		int count = 0;
+		for (int i = 0; i < rings.Length-1; i ++) {
+
+			Vector3[] points = rings[i].GetRingPoints ();
+			Vector3[] points2 = rings[i+1].GetRingPoints ();
+
+			for (int j = 0; j < ringSideCount-1; j ++) {
+
+				vs[count] = points2[j];
+				vs[count+1] = points[j+1];
+				vs[count+2] = points[j];
+
+				vs[count+3] = points2[j];
+				vs[count+4] = points2[j+1];
+				vs[count+5] = points[j+1];
+
+				count += 6;
+			}
+
+			vs[count] = points2[ringSideCount-1];
+			vs[count+1] = points[0];
+			vs[count+2] = points[ringSideCount-1];
+
+			vs[count+3] = points2[ringSideCount-1];
+			vs[count+4] = points2[0];
+			vs[count+5] = points[0];
+
+			count += 6;
 		}
+
+		Mesh helixTerrain = CustomMesh.CreateMesh (vs);
+
+		CustomMeshObject c = Instantiate (cmo, Vector3.zero, Quaternion.identity) as CustomMeshObject;
+		c.Init (helixTerrain, Color.green, true);
+
+		CustomMeshObject c2 = Instantiate (cmo, Vector3.zero, Quaternion.identity) as CustomMeshObject;
+		c2.Init (helixTerrain, Color.white, true);
+		c2.transform.SetLocalEulerAnglesY (180f);
 	}
 
 	void DeprecatedStart () {
@@ -121,7 +160,7 @@ public class WorldManager : MonoBehaviour {
 		Ring[] rings = new Ring[points.Length];
 		for (int i = 0; i < points.Length; i ++) {
 			rings[i] = Instantiate (ring, points[i], Quaternion.identity) as Ring;
-			rings[i].Create ();
+			rings[i].Create (i % 2 == 0, ringSideCount);
 			rings[i].transform.SetLocalEulerAnglesY (helix2.pointRotations[i]);
 		}
 		return rings;

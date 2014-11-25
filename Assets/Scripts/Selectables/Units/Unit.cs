@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Unit : Selectable {
 
+	MovementPath movementPath = new MovementPath (); 
+
 	bool moving = false;
 	Vector3 targetPos = Vector3.zero;	// desired position
 	float maxForce = 10f;				// max force available
@@ -23,6 +25,7 @@ public class Unit : Selectable {
 	}
 
 	void FixedUpdate () {
+		return;
 		curPos = MyTransform.position;
 		Vector3 error = targetPos - curPos; 						// generate the error signal
 		integrator += error * Time.deltaTime;						// integrate error
@@ -72,12 +75,39 @@ public class Unit : Selectable {
 
 	public override void ClickNothing (MouseClickEvent e) {
 		if (Selected) {
-			targetPos = e.point;
+			//targetPos = e.point;
+			StartMove2 (e.point);
 		}
 	}
 
 	public void StartMove (Vector3 pos) {
 		targetPos = pos;
+	}
+
+	public void StartMove2 (Vector3 pos) {
+		Vector3[] path = movementPath.CreatePath (MyTransform.position, pos);
+		StartCoroutine (Move (path));
+	}
+
+	IEnumerator Move (Vector3[] path) {
+
+		int p = 0;
+		int pathLength = path.Length;
+
+		while (p < pathLength-1) {
+
+			float time = 0.5f;
+			float eTime = 0f;
+
+			while (eTime < time) {
+				eTime += Time.deltaTime;
+				MyTransform.position = Vector3.Lerp (path[p], path[p+1], eTime / time);
+				yield return null;
+			}
+
+			p ++;
+			yield return null;
+		}
 	}
 
 	public virtual void OnEndMove () {}

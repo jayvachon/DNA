@@ -90,7 +90,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &47723527
 Renderer:
   m_ObjectHideFlags: 0
@@ -713,6 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7403be3e77ebe44d6a036ac696ec3f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ring: {fileID: 11400000, guid: c8e8867ec9ce9497b9380e339d8971bb, type: 2}
   gridPoint: {fileID: 11400000, guid: 9f9e3e11b096e4cb59b0ec5be3e6908f, type: 2}
   cmo: {fileID: 11400000, guid: 277367d9c1d3e49e6b75f4a997d383de, type: 2}
 --- !u!4 &1959312969

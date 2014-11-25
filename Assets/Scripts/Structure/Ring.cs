@@ -29,7 +29,7 @@ public class Ring : MonoBehaviour {
 			float angle = (deg * i + off) * Mathf.Deg2Rad;
 			Vector3 pointPos = new Vector3 (
 				pos.x,
-				pos.y + Mathf.Cos (angle) * radius,
+				pos.y + Mathf.Cos (angle) * radius * 0.75f,
 				pos.z + Mathf.Sin (angle) * radius
 			);
 			points[i] = Instantiate (point, pointPos, Quaternion.identity) as RingPoint;

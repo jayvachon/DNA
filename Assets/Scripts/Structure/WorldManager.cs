@@ -7,7 +7,7 @@ public class WorldManager : MonoBehaviour {
 	public GridPoint gridPoint;
 	public CustomMeshObject cmo;
 
-	int ringSideCount = 12;
+	int ringSideCount = 16;
 
 	Helix helix;
 	TerrainGenerator terrainGenerator;
@@ -19,7 +19,7 @@ public class WorldManager : MonoBehaviour {
 	float maxRingWidth = 200f;
 
 	void Awake () {
-		helix = new Helix (Vector3.zero, 2, 30, helixWidth, rotationHeight);
+		helix = new Helix (Vector3.zero, 2, 45, helixWidth, rotationHeight);
 		InitTerrain (1, 1, helix.points.Length, 20f);
 	}
 

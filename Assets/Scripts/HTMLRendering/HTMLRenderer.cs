@@ -1,49 +1,93 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class HTMLRenderer {
 
 	class TagFinder {
 
-		public Tag tag = null;
-		public bool insideTag = false;
-		bool flagInside = false;
-
-		bool tagging = false;
+		string name = "";
 		bool startTag = true;
-		string tagName = "";
+		bool recording = false;
+		bool flagEndRecording = false;
+		public bool Recording {
+			get { return recording; }
+		}
 
 		public Tag InputChar (char c) {
-			if (flagInside) {
-				insideTag = true;
-				flagInside = false;
+			if (flagEndRecording) {
+				flagEndRecording = false;
+				recording = false;
 			}
-			if (c == '<') {
-				insideTag = false;
-				tagging = true;
-				return null;
-			}
-			if (tagging) {
-				if (c == '>') {
-					tagging = false;
-					flagInside = true;
-					return CreateTag ();
-				} else if (c == '/') {
-					startTag = false;
-				} else {
-					tagName += c;
-				}
+			switch (c) {
+				case '<': OpenTag (); break;
+				case '/': FlagEndTag (); break;
+				case '>': return CloseTag ();
+				default: AppendName (c); break;
 			}
 			return null;
 		}
 
-		Tag CreateTag () {
-			tag = new Tag (tagName, startTag);
-			tagging = false;
+		void OpenTag () {
+			recording = true;
+		}
+
+		void FlagEndTag () {
+			if (recording) {
+				startTag = false;
+			}
+		}
+
+		Tag CloseTag () {
+			Tag t = new Tag (name, startTag);
+			Reset ();
+			return t;
+		}
+
+		void AppendName (char c) {
+			if (recording) {
+				name += c;
+			}
+		}
+
+		void Reset () {
+			name = "";
 			startTag = true;
-			tagName = "";
-			return tag;
+			flagEndRecording = true;
+		}
+	}
+
+	class TagHandler {
+
+		List<Tag> tags = new List<Tag> ();
+		public List<Tag> Tags {
+			get { return tags; }
+		}
+
+		Tag lastStartTag;
+		public Tag LastStartTag {
+			get { return lastStartTag; }
+		}
+
+		Tag lastEndTag;
+		public Tag LastEndTag {
+			get { return lastEndTag; }
+		}
+
+		public void InputTag (Tag t) {
+			if (t == null) return;
+			if (t.start) {
+				lastStartTag = t;
+				tags.Add (t);
+			} else {
+				for (int i = 0; i < tags.Count; i ++) {
+					if (tags[i].name == t.name) {
+						lastEndTag = tags[i];
+						tags.Remove (tags[i]);
+					}
+				}
+			}
 		}
 	}
 
@@ -62,33 +106,43 @@ public class HTMLRenderer {
 
 	class ContentFinder {
 
+		bool recording = false;
 		string text = "";
+		Tag currentTag = null;
 
-		public Content InputChar (char c, bool insideTag, Tag tag) {
-			if (insideTag) {
-				text += c;
-				return null;
-			} else {
-				return CreateContent (tag);
+		public Content InputChar (List<Tag> tagsList, Tag lastStartTag, Tag lastEndTag, char c) {
+			
+			/*if (lastEndTag != null) {
+				if (lastEndTag.name == currentTag.name) {
+					Debug.Log (text);
+					text = "";
+					currentTag = null;
+				}
 			}
-		}
 
-		Content CreateContent (Tag tag) {
-			if (text == "") return null;
-			Content c = new Content (text, tag);
-			text = "";
-			return c;
+			if (lastStartTag != null) {
+				if (currentTag == null) {
+					currentTag = lastStartTag;
+				}
+			}
+
+			if (currentTag != null) {
+				text += c;
+			}*/
+
+			return null;
 		}
 	}
 
 	class Content {
 
 		public readonly string text;
-		public readonly Tag tag;
+		public readonly List<Tag> tags = new List<Tag>();
 
-		public Content (string text, Tag tag) {
+		public Content (string text, List<Tag> tags) {
 			this.text = text;
-			this.tag = tag;
+			this.tags = tags;
+			Debug.Log (text);
 		}
 	}
 
@@ -101,17 +155,21 @@ public class HTMLRenderer {
 
 	void DecodeHTML () {
 		TagFinder tagFinder = new TagFinder ();
+		TagHandler tagHandler = new TagHandler ();
 		ContentFinder contentFinder = new ContentFinder ();
 		foreach (char c in html) {
 			if (c == '\n') continue;
 			Tag t = tagFinder.InputChar (c);
-			if (t != null) {
-				Debug.Log (t.name + ", " + t.start);
+			tagHandler.InputTag (t);
+			if (tagFinder.Recording) continue;
+			/*Debug.Log ("=================");
+			if (tagHandler.LastStartTag != null) {
+				Debug.Log ("start: " + tagHandler.LastStartTag.name);
 			}
-			Content content = contentFinder.InputChar (c, tagFinder.insideTag, tagFinder.tag);
-			if (content != null) {
-				Debug.Log (content.tag.name + ": " + content.text);
-			}
+			if (tagHandler.LastEndTag != null) {
+				Debug.Log ("end: " + tagHandler.LastEndTag.name);
+			}*/
+			contentFinder.InputChar (tagHandler.Tags, tagHandler.LastStartTag, tagHandler.LastEndTag, c);
 		}
 	}
 }

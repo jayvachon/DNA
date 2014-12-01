@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class Paragraph : PageElement {
+namespace FauxWeb {
+	
+	public class Paragraph : TextElement {
 
-	public readonly string text;
+		public Paragraph (string text) {
+			this.contents = new TextType[] {
+				new DefaultContent (text)
+			};
+		}
 
-	public Paragraph (string text) {
-		this.text = text;
+		public Paragraph (TextType[] contents) {
+			this.contents = contents;
+		}
 	}
 }

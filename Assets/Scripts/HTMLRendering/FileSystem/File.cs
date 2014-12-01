@@ -1,11 +1,13 @@
 using System.Collections;
 
-public class File {
+namespace FauxWeb {
+	
+	public class File {
 
-	PageElement[] elements;
-	public PageElement[] Elements {
-		get { return elements; }
-		set { elements = value; }
+		PageElement[] elements;
+		public PageElement[] Elements {
+			get { return elements; }
+			set { elements = value; }
+		}
 	}
-
 }

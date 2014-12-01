@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Directory : File {
+namespace FauxWeb {
+	
+	public class Directory : File {
 
-	File[] files;
+		File[] files;
 
-	public Directory () {
+		public Directory () {
 
-	}
+		}
 
-	public void SetFiles (File[] files) {
-		this.files = files;
+		public void SetFiles (File[] files) {
+			this.files = files;
+		}
 	}
 }

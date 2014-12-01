@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections;
 
-public class DirectoryFilePath {
+namespace FauxWeb {
 
-	List<Hyperlink> links = new List<Hyperlink> ();
+	public class DirectoryFilePath {
 
-	public DirectoryFilePath () {
+		List<Hyperlink> links = new List<Hyperlink> ();
 
+		public DirectoryFilePath () {
+
+		}
 	}
 }

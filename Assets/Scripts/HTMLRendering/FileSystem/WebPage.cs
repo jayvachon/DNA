@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WebPage : File {
+namespace FauxWeb {
 
-	string path;
+	public class WebPage : File {
 
-	public WebPage () {
-		
+		string path;
+
+		public WebPage () {
+			
+		}
 	}
 }

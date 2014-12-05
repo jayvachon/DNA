@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Unit : Selectable {
 
-	MovementPath movementPath = new MovementPath (); 
-
+	StraightMovementPath movementPath;
 	bool moving = false;
+
 	Vector3 targetPos = Vector3.zero;	// desired position
 	float maxForce = 10f;				// max force available
 	float pGain = 1f;					// proportional gain
@@ -85,29 +85,43 @@ public class Unit : Selectable {
 	}
 
 	public void StartMove2 (Vector3 pos) {
-		Vector3[] path = movementPath.CreatePath (MyTransform.position, pos);
-		StartCoroutine (Move (path));
+		if (moving) return;
+		movementPath = new StraightMovementPath (MyTransform.position, pos);
+		StartCoroutine (Move (movementPath.Path));
 	}
 
 	IEnumerator Move (Vector3[] path) {
+
+		moving = true;
 
 		int p = 0;
 		int pathLength = path.Length;
 
 		while (p < pathLength-1) {
 
-			float time = 0.5f;
-			float eTime = 0f;
-
-			while (eTime < time) {
-				eTime += Time.deltaTime;
-				MyTransform.position = Vector3.Lerp (path[p], path[p+1], eTime / time);
-				yield return null;
-			}
+			yield return StartCoroutine (MoveStep (path[p], path[p+1]));
 
 			p ++;
 			yield return null;
 		}
+
+		moving = false;
+	}
+
+	IEnumerator MoveStep (Vector3 start, Vector3 end) {
+		
+		float time = 0.5f;
+		float eTime = 0f;
+
+		while (eTime < time && moving) {
+			eTime += Time.deltaTime;
+			MyTransform.position = Vector3.Lerp (start, end, eTime / time);
+			yield return null;
+		}
+	}
+
+	IEnumerator Stationary (Vector3 centerPoint) {
+		yield return null;
 	}
 
 	public virtual void OnEndMove () {}

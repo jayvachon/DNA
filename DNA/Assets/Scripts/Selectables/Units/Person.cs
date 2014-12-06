@@ -15,14 +15,14 @@ public class Person : Unit {
 		});
 	}
 
-	public override void ClickOther (MouseClickEvent e) {
+	/*public override void ClickOther (MouseClickEvent e) {
 		IceCream c = e.transform.GetComponent<IceCream>();
 		if (c) {
 			CollectIceCream (c);
 		} else {
 			Unselect ();
 		}
-	}
+	}*/
 
 	void CollectIceCream (IceCream ic) {
 		/*if (inventory.Add ("ice cream", 1)) {

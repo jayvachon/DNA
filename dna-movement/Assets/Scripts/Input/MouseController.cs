@@ -7,15 +7,32 @@ public class MouseController : MonoBehaviour {
 
 	void FixedUpdate () {
 		if (Input.GetMouseButtonDown (0)) {
-			Click ();
+			Click (true);
+		}
+		if (Input.GetMouseButtonDown (1)) {
+			Click (false);
 		}
 	}
 
-	private void Click () {
+	void Click (bool leftClick) {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast (ray, out hit, maxDistance)) {
-			Events.instance.Raise (new MouseClickEvent (hit));
+			RaiseClickMessage (hit, leftClick);
+		}
+	}
+
+	void RaiseClickMessage (RaycastHit hit, bool leftClick) {
+		
+		Events.instance.Raise (new MouseClickEvent (hit, leftClick));
+
+		Transform t = hit.transform;
+
+		Unit u = t.GetComponent<Unit>();
+		if (u) Events.instance.Raise (new UnitClickEvent (u, leftClick));
+
+		if (hit.transform.name == "Floor") {
+			Events.instance.Raise (new FloorClickEvent (leftClick));
 		}
 	}
 }

@@ -3,12 +3,14 @@ using System.Collections;
 
 public class MouseClickEvent : GameEvent {
 	
-	public RaycastHit hit;
-	public Transform transform;
-	public Vector3 point;
+	public readonly RaycastHit hit;
+	public readonly Transform transform;
+	public readonly Vector3 point;
+	public readonly bool leftClick;
 
-	public MouseClickEvent (RaycastHit _hit) {
-		hit = _hit;
+	public MouseClickEvent (RaycastHit hit, bool leftClick) {
+		this.hit = hit;
+		this.leftClick = leftClick;
 		transform = hit.transform;
 		point = hit.point;
 	}

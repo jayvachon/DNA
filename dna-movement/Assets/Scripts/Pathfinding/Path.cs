@@ -67,7 +67,7 @@ public class Path {
 			tempPoints.Add (points[i]);
 		}
 
-		// Special case if there are three points in the new path:
+		// Special case if there are three points in the new path-
 		// if the points form a loop, remove the last point (destroy the loop)
 		PathPointContainer lastPoint = tempPoints[tempPoints.Count-1];
 		if (tempPoints.Count == 3 && tempPoints[0] == lastPoint) {
@@ -133,8 +133,8 @@ public class Path {
 		
 		// Go to the next point in the path
 		// If it's the last point in the path:
-		// a. loop if the last point is the same as the first point,
-		// b. otherwise, reverse the direction
+		// a. loop if the last point is the same as the first point, otherwise,
+		// b. reverse the direction of the path
 
 		if (currPointIndex+1 > points.Count-1) {
 			if (IsLoop) {

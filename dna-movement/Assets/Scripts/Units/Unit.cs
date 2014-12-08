@@ -3,15 +3,19 @@ using System.Collections;
 
 public class Unit : MBRefs {
 
-	public Color defaultColor;
-	public Color selectColor = Color.red;
+	// Colors the unit based on whether it's selected or not
 	public UnitColorHandler colorHandler = new UnitColorHandler ();
 
+	// The actions that the unit can perform (displayed in the GUI)
+	protected ActionsList actionsList = new ActionsList ();
+
+	// Whether or not the unit is selected
 	bool selected = false;
 	public bool Selected {
 		get { return selected; }
 	}
 
+	// Whether or not the unit can be selected
 	bool selectable = true;
 	public bool Selectable {
 		get { return selectable; }
@@ -21,7 +25,7 @@ public class Unit : MBRefs {
 	public override void OnAwake () {
 		Events.instance.AddListener<FloorClickEvent>(OnFloorClickEvent);
 		Events.instance.AddListener<UnitClickEvent>(OnUnitClickEvent);
-		colorHandler.OnStart (defaultColor, selectColor, this);
+		colorHandler.OnStart (this);
 	}
 
 	/**
@@ -52,13 +56,13 @@ public class Unit : MBRefs {
 	*/
 
 	public virtual void OnSelect () {
-		//renderer.SetColor (selectColor);
 		colorHandler.OnSelect ();
+		actionsList.Activate ();
 	}
 
 	public virtual void OnUnselect () {
-		//renderer.SetColor (defaultColor);
 		colorHandler.OnUnselect ();
+		actionsList.Deactivate ();
 	}
 
 	public virtual void ClickThis () {
@@ -72,6 +76,8 @@ public class Unit : MBRefs {
 	public virtual void ClickNothing () {
 		Unselect ();
 	}
+
+	public virtual void OnPerformAction (Action action) {}
 
 	/**
 	*	Messages
@@ -89,10 +95,11 @@ public class Unit : MBRefs {
 	}
 }
 
-public class UnitColorHandler {
+[System.Serializable]
+public class UnitColorHandler : System.Object {
 
-	Color defaultColor;
-	Color selectColor;
+	public Color defaultColor = Color.white;
+	public Color selectColor = Color.red;
 	Renderer renderer;
 	bool activated = false;
 
@@ -104,11 +111,9 @@ public class UnitColorHandler {
 		get { return selectColor; }
 	}
 
-	public void OnStart (Color defaultColor, Color selectColor, Unit unit) {
+	public void OnStart (Unit unit) {
 		if (unit.renderer) {
 			this.renderer = unit.renderer;
-			this.defaultColor = defaultColor;
-			this.selectColor = selectColor;
 			activated = true;
 			renderer.SetColor (defaultColor);
 		}

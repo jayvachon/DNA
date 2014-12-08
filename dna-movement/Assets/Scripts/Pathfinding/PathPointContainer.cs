@@ -5,9 +5,9 @@ public class PathPointContainer : StaticUnit {
 
 	public Building building;
 
-	public DevelopmentPoint devPoint;
-	PathPoint developInto = null;
-	PathPoint activePoint;
+	public DevelopmentPoint devPoint;	// The "blank" PathPoint
+	PathPoint newPoint = null;			// The PathPoint that this will develop into after construction
+	PathPoint activePoint;				// The current PathPoint (either devPoint or newPoint)
 
 	bool activated = false;
 	public bool Activated {
@@ -22,18 +22,18 @@ public class PathPointContainer : StaticUnit {
 		activePoint.ArriveAtPoint (u);
 	}
 
-	public void SetDevelopIntoBuilding () {
-		if (developInto != null)
+	public void SetNewPointBuilding () {
+		if (newPoint != null)
 			return;
-		developInto = GameObject.Instantiate (building, StartPosition, Quaternion.identity) as PathPoint;
-		developInto.MyTransform.SetParent (MyTransform);
-		developInto.Activated = false;
+		newPoint = GameObject.Instantiate (building, StartPosition, Quaternion.identity) as PathPoint;
+		newPoint.MyTransform.SetParent (MyTransform);
+		newPoint.Activated = false;
 		activated = true;
 	}
 
 	public void ActivateDevelopInto () {
 		devPoint.Activated = false;
-		activePoint = developInto;
+		activePoint = newPoint;
 		activePoint.Activated = true;
 	}
 
@@ -53,7 +53,7 @@ public class PathPointContainer : StaticUnit {
 		if (!Selected)
 			return;
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			SetDevelopIntoBuilding ();
+			SetNewPointBuilding ();
 		}
 	}
 }

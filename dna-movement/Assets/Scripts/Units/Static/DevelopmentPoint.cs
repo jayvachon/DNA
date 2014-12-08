@@ -7,6 +7,14 @@ public class DevelopmentPoint : PathPoint {
 
 	void Start () {
 		pointAction = new DevelopmentAction (3f, container);
+		actionsList = new ActionsList (this, "Buildings");
+	}
+
+	public override void OnPerformAction (Action action) {
+		switch (action.name) {
+			case "Building": Debug.Log ("Building"); break;
+			case "Hospital": Debug.Log ("Hospital"); break;
+		}
 	}
 }
 

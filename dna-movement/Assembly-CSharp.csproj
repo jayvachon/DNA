@@ -46,25 +46,33 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Debugging\TempGUI.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Input\ActivateActionsListEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Input\DeactivateActionsListEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\FloorClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\KeyPressEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\MouseClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\UnitClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\_NewEventTemplate.cs" />
+     <Compile Include="Assets\Scripts\Extensions\LineRendererExtended.cs" />
+     <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
+     <Compile Include="Assets\Scripts\Input\Action.cs" />
+     <Compile Include="Assets\Scripts\Input\ActionsList.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
-     <Compile Include="Assets\Scripts\Misc\LineRendererExtended.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
-     <Compile Include="Assets\Scripts\Misc\MaterialsExtended.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\Path.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\PathPointContainer.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\Person.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Building.cs" />
      <Compile Include="Assets\Scripts\Units\Static\DevelopmentPoint.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\PathPoint.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\StaticUnitsHolder.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
+     <Compile Include="Assets\Scripts\Units\UnitsCategory.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>

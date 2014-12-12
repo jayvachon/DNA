@@ -4,6 +4,7 @@ using System.Collections;
 public class PathPointContainer : StaticUnit {
 
 	public Building building;
+	public Hospital hospital;
 
 	public DevelopmentPoint devPoint;	// The "blank" PathPoint
 	PathPoint newPoint = null;			// The PathPoint that this will develop into after construction
@@ -23,9 +24,17 @@ public class PathPointContainer : StaticUnit {
 	}
 
 	public void SetNewPointBuilding () {
+		SetNewPoint (building);
+	}
+
+	public void SetNewPointHospital () {
+		SetNewPoint (hospital);
+	}
+
+	public void SetNewPoint (Object obj) {
 		if (newPoint != null)
 			return;
-		newPoint = GameObject.Instantiate (building, StartPosition, Quaternion.identity) as PathPoint;
+		newPoint = GameObject.Instantiate (obj, StartPosition, Quaternion.identity) as PathPoint;
 		newPoint.MyTransform.SetParent (MyTransform);
 		newPoint.Activated = false;
 		activated = true;
@@ -37,23 +46,11 @@ public class PathPointContainer : StaticUnit {
 		activePoint.Activated = true;
 	}
 
-	public override void OnSelect () {
+	protected override void OnSelect () {
 		activePoint.Select ();
 	}
 
-	public override void OnUnselect () {
+	protected override void OnUnselect () {
 		activePoint.Unselect ();
-	}
-
-	/**
-	*	Debugging
-	*/
-
-	void Update () {
-		if (!Selected)
-			return;
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			SetNewPointBuilding ();
-		}
 	}
 }

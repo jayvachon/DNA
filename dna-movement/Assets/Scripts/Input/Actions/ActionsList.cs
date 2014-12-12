@@ -3,7 +3,11 @@ using System.Collections;
 
 public class ActionsList {
 
-	public readonly Action[] actions;
+	Unit unit;	// the unit that created this
+	Action[] actions;
+	public Action[] Actions {
+		get { return actions; }
+	}
 
 	string[] actionNames = new string[0];
 	public string[] ActionNames {
@@ -23,17 +27,20 @@ public class ActionsList {
 		actions = new Action[0];
 	}
 
-	// Custom ActionsList
+	public ActionsList (Unit unit) {
+		this.unit = unit;
+	}
+
 	public ActionsList (Unit unit, Action[] actions) {
-		this.actions = actions;
-		for (int i = 0; i < actions.Length; i ++) {
-			actions[i].SetUnit (unit);
-		}
+		this.unit = unit;
+		SetActions (actions);
 	}
 
 	// An ActionsList built from a category
 	public ActionsList (Unit unit, string categoryName) {
 		
+		this.unit = unit;
+
 		UnitsCategory category = StaticUnitsHolder.instance.GetCategory (categoryName);
 		string[] unitNames = category.UnitNames;
 		
@@ -49,5 +56,12 @@ public class ActionsList {
 
 	public void Deactivate () {
 		Events.instance.Raise (new DeactivateActionsListEvent (this));
+	}
+
+	protected void SetActions (Action[] actions) {
+		this.actions = actions;
+		for (int i = 0; i < actions.Length; i ++) {
+			actions[i].SetUnit (unit);
+		}
 	}
 }

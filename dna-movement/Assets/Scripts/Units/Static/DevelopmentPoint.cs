@@ -12,8 +12,8 @@ public class DevelopmentPoint : PathPoint {
 
 	public override void OnPerformAction (Action action) {
 		switch (action.name) {
-			case "Building": Debug.Log ("Building"); break;
-			case "Hospital": Debug.Log ("Hospital"); break;
+			case "Building": container.SetNewPointBuilding (); break;
+			case "Hospital": container.SetNewPointHospital (); break;
 		}
 	}
 }

@@ -20,11 +20,11 @@ public class MovableUnit : Unit {
 	*	Public functions
 	*/
 
-	public override void ClickThis () {
+	protected override void ClickThis () {
 		base.ClickThis ();
 	}
 
-	public override void ClickOther (UnitClickEvent e) {
+	protected override void ClickOther (UnitClickEvent e) {
 		if (Selected) {
 			if (e.unit is MovableUnit) {
 				Unselect ();

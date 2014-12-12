@@ -24,7 +24,7 @@ public class TempGUI : MonoBehaviour {
 
 	void OnActivateActionsListEvent (ActivateActionsListEvent e) {
 		actionsList = e.actionsList;
-		actions = e.actionsList.actions;
+		actions = e.actionsList.Actions;
 		actionNames = e.actionsList.ActionNames;
 	}
 

@@ -55,25 +55,25 @@ public class Unit : MBRefs {
 	*	Virtual functions
 	*/
 
-	public virtual void OnSelect () {
+	protected virtual void OnSelect () {
 		colorHandler.OnSelect ();
 		actionsList.Activate ();
 	}
 
-	public virtual void OnUnselect () {
+	protected virtual void OnUnselect () {
 		colorHandler.OnUnselect ();
 		actionsList.Deactivate ();
 	}
 
-	public virtual void ClickThis () {
+	protected virtual void ClickThis () {
 		ToggleSelect (); 
 	}
 
-	public virtual void ClickOther (UnitClickEvent e) {
+	protected virtual void ClickOther (UnitClickEvent e) {
 		Unselect ();
 	}
 
-	public virtual void ClickNothing () {
+	protected virtual void ClickNothing () {
 		Unselect ();
 	}
 

@@ -57,8 +57,9 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\_NewEventTemplate.cs" />
      <Compile Include="Assets\Scripts\Extensions\LineRendererExtended.cs" />
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
-     <Compile Include="Assets\Scripts\Input\Action.cs" />
-     <Compile Include="Assets\Scripts\Input\ActionsList.cs" />
+     <Compile Include="Assets\Scripts\Input\Actions\Action.cs" />
+     <Compile Include="Assets\Scripts\Input\Actions\ActionsList.cs" />
+     <Compile Include="Assets\Scripts\Input\Actions\ActionsLists\HospitalActionsList.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\Path.cs" />

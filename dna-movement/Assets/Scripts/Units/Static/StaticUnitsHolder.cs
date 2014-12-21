@@ -7,7 +7,8 @@ public class StaticUnitsHolder : MonoBehaviour {
 	static public StaticUnitsHolder instance;
 
 	void Awake () {
-		if (instance == null) instance = this;
+		if (instance == null) 
+			instance = this;
 	}
 
 	public StaticUnit GetUnit (string categoryName, string unitName) {

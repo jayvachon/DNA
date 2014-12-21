@@ -13,7 +13,5 @@ public class BuildAction : PathPointAction {
 
 	public BuildAction (float time) : base (time) {}
 
-	public override void PerformAction (float percent) {
-
-	}
+	public override void PerformAction (float percent) {}
 }

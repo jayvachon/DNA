@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
      <Compile Include="Assets\Scripts\Input\Actions\Action.cs" />
      <Compile Include="Assets\Scripts\Input\Actions\ActionsList.cs" />
+     <Compile Include="Assets\Scripts\Input\Actions\ActionsLists\CowActionsList.cs" />
      <Compile Include="Assets\Scripts\Input\Actions\ActionsLists\HospitalActionsList.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
@@ -67,6 +68,7 @@
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\Person.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Building.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Cow.cs" />
      <Compile Include="Assets\Scripts\Units\Static\DevelopmentPoint.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\PathPoint.cs" />

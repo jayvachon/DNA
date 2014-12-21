@@ -14,6 +14,7 @@ public class DevelopmentPoint : PathPoint {
 		switch (action.name) {
 			case "Building": container.SetNewPointBuilding (); break;
 			case "Hospital": container.SetNewPointHospital (); break;
+			case "Cow": container.SetNewPointCow (); break;
 		}
 	}
 }

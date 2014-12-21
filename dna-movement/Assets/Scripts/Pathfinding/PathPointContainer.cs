@@ -5,6 +5,9 @@ public class PathPointContainer : StaticUnit {
 
 	public Building building;
 	public Hospital hospital;
+	public Cow cow;
+
+	public PathPoint defaultPoint;		// Leave null to allow player to choose what to construct
 
 	public DevelopmentPoint devPoint;	// The "blank" PathPoint
 	PathPoint newPoint = null;			// The PathPoint that this will develop into after construction
@@ -17,6 +20,10 @@ public class PathPointContainer : StaticUnit {
 
 	void Start () {
 		activePoint = devPoint;
+		if (defaultPoint != null) {
+			SetNewPoint (defaultPoint);
+			ActivateDevelopInto ();
+		}
 	}
 
 	public void ArriveAtPoint (MovableUnit u) {
@@ -29,6 +36,10 @@ public class PathPointContainer : StaticUnit {
 
 	public void SetNewPointHospital () {
 		SetNewPoint (hospital);
+	}
+
+	public void SetNewPointCow () {
+		SetNewPoint (cow);
 	}
 
 	public void SetNewPoint (Object obj) {

@@ -2,6 +2,8 @@
 using System.Collections;
 
 public static class ExtensionMethods {
+	
+	public static Vector3 NullPosition = new Vector3 (-1, -1, -1);
 
 	public static void SetVertexPositions (this LineRenderer lineRenderer, Vector3[] positions) {
 		lineRenderer.SetVertexCount(positions.Length);
@@ -9,4 +11,5 @@ public static class ExtensionMethods {
 			lineRenderer.SetPosition (i, positions[i]);
 		}
 	}
+
 }

@@ -3,9 +3,14 @@ using System.Collections;
 
 public class MBRefs : MonoBehaviour {
 
-	Transform myTransform;
+	Transform myTransform = null;
 	public Transform MyTransform {
-		get { return myTransform; }
+		get { 
+			if (myTransform == null) {
+				myTransform = transform;
+			}
+			return myTransform; 
+		}
 		set { myTransform = value; }
 	}
 
@@ -15,7 +20,6 @@ public class MBRefs : MonoBehaviour {
 	}
 
 	void Awake () {
-		myTransform = transform;
 		startPosition = myTransform.position;
 		OnAwake ();
 	}

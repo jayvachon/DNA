@@ -18,11 +18,17 @@ public class MouseController : MonoBehaviour {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast (ray, out hit, maxDistance)) {
-			RaiseClickMessage (hit, leftClick);
+			Transform t = hit.transform;
+			IClickable clickable = t.GetScript<IClickable>();
+			if (clickable != null) {
+				if (leftClick) {
+					clickable.LeftClick ();
+				} else {
+					clickable.RightClick ();
+				}
+			} else {
+				Events.instance.Raise (new NullClickEvent ());
+			}
 		}
-	}
-
-	void RaiseClickMessage (RaycastHit hit, bool leftClick) {
-		Events.instance.Raise (new MouseClickEvent (hit, leftClick));
 	}
 }

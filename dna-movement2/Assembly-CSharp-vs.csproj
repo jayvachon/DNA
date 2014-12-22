@@ -46,18 +46,37 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Debugging\TempGUI.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\NullClickEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\SelectUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\UnselectUnitEvent.cs" />
      <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
+     <Compile Include="Assets\Scripts\IPoolable.cs" />
+     <Compile Include="Assets\Scripts\Input\Action\Action.cs" />
+     <Compile Include="Assets\Scripts\Input\Action\ActionManager.cs" />
+     <Compile Include="Assets\Scripts\Input\Action\ActionsList.cs" />
+     <Compile Include="Assets\Scripts\Input\Action\ActionsListManager.cs" />
+     <Compile Include="Assets\Scripts\Input\Action\BuildUnitAction.cs" />
+     <Compile Include="Assets\Scripts\Input\Action\DefaultAction.cs" />
+     <Compile Include="Assets\Scripts\Input\Action\IActionable.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
-     <Compile Include="Assets\Scripts\Units\MovableUnit.cs" />
+     <Compile Include="Assets\Scripts\ObjectPool.cs" />
+     <Compile Include="Assets\Scripts\Units\IEnableable.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Pathfinding\IPathPoint.cs" />
      <Compile Include="Assets\Scripts\Units\Pathfinding\Path.cs" />
-     <Compile Include="Assets\Scripts\Units\Pathfinding\PathPoint.cs" />
-     <Compile Include="Assets\Scripts\Units\StaticUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Pathfinding\PathDrawer.cs" />
+     <Compile Include="Assets\Scripts\Units\Pathfinding\PathManager.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\DevelopableUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\HospitalUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\HouseUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
      <Compile Include="Assets\Scripts\Units\UnitColorHandler.cs" />
  <Reference Include="UnityEngine.UI">

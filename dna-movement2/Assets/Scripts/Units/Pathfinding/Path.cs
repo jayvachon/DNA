@@ -4,15 +4,19 @@ using System.Collections.Generic;
 
 public class Path {
 
-	List<PathPoint> points = new List<PathPoint>();
+	List<IPathPoint> points = new List<IPathPoint>();
 
-	PathPoint prevPoint = null;
-	PathPoint currPoint = null;
+	IPathPoint prevPoint = null;
+	IPathPoint currPoint = null;
 	int currPointIndex = 0;
 
 	/**
-	*	Properties
-	*/
+	 *	Properties
+	 */
+
+	public IPathPoint CurrentPoint {
+		get { return currPoint; }
+	}
 
 	public bool IsLoop {
 		get { return FirstPoint == LastPoint; }
@@ -26,21 +30,17 @@ public class Path {
 		get { return currPoint.Position; }
 	}
 
-	public PathPoint FirstPoint {
+	public IPathPoint FirstPoint {
 		get { return points[0]; }
 	}
 
-	public PathPoint LastPoint {
+	public IPathPoint LastPoint {
 		get { return points[points.Count-1]; }
 	}
 
 	/**
-	*	Public functions
-	*/
-
-	/*public void ArriveAtPoint (MovableUnit u) {
-		currPoint.ArriveAtPoint (u);
-	}*/
+	 *	Public functions
+	 */
 
 	public Vector3[] GotoPosition () {
 		
@@ -54,35 +54,52 @@ public class Path {
 		return new Vector3[] { PrevPosition, CurrPosition };
 	}
 
-	public void AddPoint (PathPoint point) {
+	// Remove this?
+	/*public void TogglePoint (IPathPoint point) {
+		if (PathHasPoint (point)) {
+			RemovePoint (point);
+		} else {
+			AddPoint (point);
+		}
+	}*/
+
+	// This isn't super elegant-- is there a better way?
+	public void ChangePoint (IPathPoint original, IPathPoint newPoint) {
+		
+		List<Path> originalPaths = original.Paths;
+		newPoint.Paths = originalPaths;
+
+		for (int i = 0; i < points.Count; i ++) {
+			if (points[i] == original) {
+				points[i] = newPoint;
+			}
+		}
+		if (currPoint == original) {
+			currPoint = newPoint;
+		}
+		if (prevPoint == original) {
+			prevPoint = newPoint;
+		}
+	}
+
+	public void AddPoint (IPathPoint point) {
 		if (CanAddPoint (point)) {
 			points.Add (point);
 		}
 	}
 
-	public void RemovePoint (PathPoint point) {
+	public void RemovePoint (IPathPoint point) {
 		
 		if (!CanRemovePoint (point))
 			return;
 
 		points.Remove (point);
-		/*List<PathPoint> tempPoints = new List<PathPoint>();
-		for (int i = 0; i < points.Count; i ++) {
-			if (points[i] != point)
-				tempPoints.Add (points[i]);
-		}*/
 
-		// Special case if there are three points in the new path-
+		// Special case if there are three points in the altered path:
 		// if the points form a loop, remove the last point (destroy the loop)
-		/*PathPoint lastPoint = tempPoints[tempPoints.Count-1];
-		if (tempPoints.Count == 3 && tempPoints[0] == lastPoint) {
-			tempPoints.Remove (lastPoint);
-		}*/
 		if (points.Count == 3 && IsLoop) {
 			points.Remove (LastPoint);
 		}
-
-		//points = tempPoints;
 	}
 
 	public Vector3[] GetPositions () {
@@ -94,8 +111,8 @@ public class Path {
 	}
 
 	/**
-	*	Private functions
-	*/
+	 *	Private functions
+	 */
 
 	Vector3 GotoStartPosition () {
 		
@@ -116,21 +133,19 @@ public class Path {
 		return currPoint.Position;
 	}
 
-	bool PathHasPoint (PathPoint point) {
-		foreach (PathPoint p in points) {
+	bool PathHasPoint (IPathPoint point) {
+		foreach (IPathPoint p in points) {
 			if (p == point)
 				return true;
 		}
 		return false;
 	}
 
-	bool CanRemovePoint (PathPoint point) {
+	bool CanRemovePoint (IPathPoint point) {
 		return PathHasPoint (point) && !(point == prevPoint || point == currPoint);
 	}
 
-	bool CanAddPoint (PathPoint point) {
-		if (!point.Activated)
-			return false;
+	bool CanAddPoint (IPathPoint point) {
 		if (points.Count == 0)
 			return true;
 		if (point == LastPoint)
@@ -149,7 +164,7 @@ public class Path {
 			if (IsLoop) {
 				currPointIndex = 1;
 			} else {
-				ReversePath ();
+				points.Reverse ();
 				currPointIndex = 1;
 			}
 		} else {
@@ -157,22 +172,13 @@ public class Path {
 		}
 	}
 
-	void ReversePath () {
-		points.Reverse ();
-		/*List<PathPoint> tempPoints = new List<PathPoint>();
-		for (int i = points.Count-1; i > -1; i --) {
-			tempPoints.Add (points[i]);
-		}
-		points = tempPoints;*/
-	}
-
 	/**
-	*	Debugging
-	*/
+	 *	Debugging
+	 */
 
 	public void Print () {
 		Debug.Log ("==========");
-		foreach (PathPoint p in points) {
+		foreach (IPathPoint p in points) {
 			Debug.Log (p.Position);
 		}
 	}

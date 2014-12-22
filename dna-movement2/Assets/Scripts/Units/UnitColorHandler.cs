@@ -4,10 +4,9 @@ using System.Collections;
 [System.Serializable]
 public class UnitColorHandler : System.Object {
 
-	public Color defaultColor = Color.white;
-	public Color selectColor = Color.red;
-	Renderer renderer;
-
+	[SerializeField] Color defaultColor;
+	[SerializeField] Color selectColor;
+	
 	public Color DefaultColor {
 		get { return defaultColor; }
 	}
@@ -15,6 +14,8 @@ public class UnitColorHandler : System.Object {
 	public Color SelectColor {
 		get { return selectColor; }
 	}
+
+	Renderer renderer;
 
 	public bool Selected {
 		set {
@@ -26,7 +27,7 @@ public class UnitColorHandler : System.Object {
 		}
 	}
 
-	public UnitColorHandler (Renderer render) {
+	public void Init (Renderer renderer) {
 		this.renderer = renderer;
 		Selected = false;
 	}

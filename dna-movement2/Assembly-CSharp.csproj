@@ -65,11 +65,13 @@
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
+     <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Units\IEnableable.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Pathfinding\IPathPoint.cs" />
+     <Compile Include="Assets\Scripts\Units\Pathfinding\IPathable.cs" />
      <Compile Include="Assets\Scripts\Units\Pathfinding\Path.cs" />
      <Compile Include="Assets\Scripts\Units\Pathfinding\PathDrawer.cs" />
      <Compile Include="Assets\Scripts\Units\Pathfinding\PathManager.cs" />

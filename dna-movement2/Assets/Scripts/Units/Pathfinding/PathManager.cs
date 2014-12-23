@@ -1,58 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PathManager : MonoBehaviour {
+public static class PathManager {
 
-	public static PathManager instance = null;
-
-	Path path = null;
-	PathDrawer drawer = null;
-
-	void Awake () {
-		if (instance == null)
-			instance = this;
-		Events.instance.AddListener<SelectUnitEvent> (OnSelectUnitEvent);
-		Events.instance.AddListener<UnselectUnitEvent> (OnUnselectUnitEvent);
+	static Path activePath;
+	public static Path ActivePath {
+		set { activePath = value; }
 	}
 
-	// Remove this?
-	/*public Path TogglePoint (IPathPoint point) {
-		if (path != null) {
-			path.TogglePoint (point);
-			drawer.Update ();
+	public static Path AddPoint (IPathPoint point) {
+		if (activePath != null) {
+			activePath.AddPoint (point);
 		}
-		return path;
-	}*/
-
-	public Path AddPoint (IPathPoint point) {
-		if (path != null) {
-			path.AddPoint (point);
-			drawer.Update ();
-		}
-		return path;
+		return activePath;
 	}
 
-	public Path RemovePoint (IPathPoint point) {
-		if (path != null) {
-			path.RemovePoint (point);
-			drawer.Update ();
+	public static Path RemovePoint (IPathPoint point) {
+		if (activePath != null) {
+			activePath.RemovePoint (point);
 		}
-		return path;
-	}
-
-	void OnSelectUnitEvent (SelectUnitEvent e) {
-		if (e.unit is MovableUnit) {
-			MovableUnit mu = e.unit as MovableUnit;
-			path = mu.MyPath;
-			drawer = mu.MyPathDrawer;
-		} else {
-			path = null;
-			drawer = null;
-		}
-	}
-
-	void OnUnselectUnitEvent (UnselectUnitEvent e) {
-		path = null;
-		drawer = null;
+		return activePath;
 	}
 }

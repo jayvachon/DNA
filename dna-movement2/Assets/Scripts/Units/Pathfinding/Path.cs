@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Path {
 
+	readonly IPathable pathable = null;
 	List<IPathPoint> points = new List<IPathPoint>();
 
 	IPathPoint prevPoint = null;
@@ -38,6 +39,14 @@ public class Path {
 		get { return points[points.Count-1]; }
 	}
 
+	public int Length {
+		get { return points.Count; }
+	}
+
+	public Path (IPathable pathable) {
+		this.pathable = pathable;
+	}
+
 	/**
 	 *	Public functions
 	 */
@@ -53,15 +62,6 @@ public class Path {
 
 		return new Vector3[] { PrevPosition, CurrPosition };
 	}
-
-	// Remove this?
-	/*public void TogglePoint (IPathPoint point) {
-		if (PathHasPoint (point)) {
-			RemovePoint (point);
-		} else {
-			AddPoint (point);
-		}
-	}*/
 
 	// This isn't super elegant-- is there a better way?
 	public void ChangePoint (IPathPoint original, IPathPoint newPoint) {
@@ -80,12 +80,15 @@ public class Path {
 		if (prevPoint == original) {
 			prevPoint = newPoint;
 		}
+
+		pathable.OnUpdatePath ();
 	}
 
 	public void AddPoint (IPathPoint point) {
 		if (CanAddPoint (point)) {
 			points.Add (point);
 		}
+		pathable.OnUpdatePath ();
 	}
 
 	public void RemovePoint (IPathPoint point) {
@@ -100,6 +103,7 @@ public class Path {
 		if (points.Count == 3 && IsLoop) {
 			points.Remove (LastPoint);
 		}
+		pathable.OnUpdatePath ();
 	}
 
 	public Vector3[] GetPositions () {

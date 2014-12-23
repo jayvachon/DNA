@@ -3,8 +3,6 @@ using System.Collections;
 
 public class MouseController : MonoBehaviour {
 
-	private float maxDistance = 5000f;
-
 	void FixedUpdate () {
 		if (Input.GetMouseButtonDown (0)) {
 			Click (true);
@@ -15,20 +13,30 @@ public class MouseController : MonoBehaviour {
 	}
 
 	void Click (bool leftClick) {
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hit;
-		if (Physics.Raycast (ray, out hit, maxDistance)) {
-			Transform t = hit.transform;
+		Transform t = HandleClick ();
+		if (t != null) {
 			IClickable clickable = t.GetScript<IClickable>();
-			if (clickable != null) {
-				if (leftClick) {
-					clickable.LeftClick ();
-				} else {
-					clickable.RightClick ();
-				}
+			if (clickable == null) {
+				SelectionManager.Unselect ();
+				return;
+			}
+			if (leftClick) {
+				clickable.LeftClick ();
 			} else {
-				Events.instance.Raise (new NullClickEvent ());
+				clickable.RightClick ();
 			}
 		}
+	}
+
+	Transform HandleClick () {
+		Vector2 mousePosition = Input.mousePosition;
+		if (mousePosition.x < 100 && mousePosition.y > Screen.height-100)
+			return null;
+		Ray ray = Camera.main.ScreenPointToRay (mousePosition);
+		RaycastHit hit;
+		if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+			return hit.transform;
+		}
+		return null;
 	}
 }

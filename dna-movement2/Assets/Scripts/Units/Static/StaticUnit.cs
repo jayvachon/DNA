@@ -20,6 +20,8 @@ public class StaticUnit : Unit, IPathPoint {
 		set { paths = value; }
 	}
 
+	bool selected = false;
+
 	public override void OnAwake () {
 		base.OnAwake ();
 		MyActionsList.Add (new DefaultAction (this));
@@ -34,10 +36,10 @@ public class StaticUnit : Unit, IPathPoint {
 	public override void LeftClick () {
 		if (!Enabled)
 			return;
-		if (SelectedUnit == null || Selected) {
+		if (SelectionManager.NoneSelected || selected) {
 			base.LeftClick ();
 		} else {
-			Path p = PathManager.instance.AddPoint (this);
+			Path p = PathManager.AddPoint (this);
 			if (p != null)
 				paths.Add (p);
 		}
@@ -46,14 +48,22 @@ public class StaticUnit : Unit, IPathPoint {
 	public override void RightClick () {
 		if (!Enabled)
 			return;
-		if (SelectedUnit == null || Selected) {
+		if (SelectionManager.NoneSelected || selected) {
 			base.RightClick ();
 		} else {
-			Path p = PathManager.instance.RemovePoint (this);
+			Path p = PathManager.RemovePoint (this);
 			if (p != null)
 				paths.Remove (p);
 		}
 	}
-	
-	protected override void OnNullClickEvent (NullClickEvent e) {}
+
+	public override void OnSelect () {
+		base.OnSelect ();
+		selected = true;
+	}
+
+	public override void OnUnselect () {
+		base.OnUnselect ();
+		selected = false;
+	}
 }

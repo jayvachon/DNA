@@ -2,11 +2,26 @@
 using System.Collections;
 
 [RequireComponent (typeof (LineRenderer))]
-public class MovableUnit : Unit {
+public class MovableUnit : Unit, IPathable {
 
-	Path path = new Path ();
+	Path path = null;
 	public Path MyPath {
-		get { return path; }
+		get { 
+			if (path == null) {
+				path = new Path (this);
+			}
+			return path; 
+		}
+	}
+
+	public bool ActivePath {
+		set {
+			if (value) {
+				PathManager.ActivePath = MyPath;
+			} else {
+				PathManager.ActivePath = null;
+			}
+		}
 	}
 
 	PathDrawer pathDrawer;
@@ -14,13 +29,14 @@ public class MovableUnit : Unit {
 		get { return pathDrawer; }
 	}
 
+	bool canMove = false;
 	bool moving = false;
 	float speed = 10f;
 
 	public override void OnAwake () {
 		base.OnAwake ();
 		pathDrawer = new PathDrawer (
-			path, 
+			MyPath, 
 			gameObject.GetComponent<LineRenderer>(), 
 			colorHandler.DefaultColor
 		);
@@ -30,12 +46,16 @@ public class MovableUnit : Unit {
 	 *	Private functions
 	 */
 
-	void StartMoveOnPath () {
+	public void StartMoveOnPath () {
 		if (moving) return;
 		Vector3[] line = path.GotoPosition ();
 		if (line != null) {
 			StartCoroutine (MoveOnPath (line));
 		}
+	}
+
+	public void OnUpdatePath () {
+		pathDrawer.Update ();
 	}
 
 	IEnumerator MoveOnPath (Vector3[] line) {
@@ -63,12 +83,25 @@ public class MovableUnit : Unit {
 		StartMoveOnPath ();
 	}
 
+	public override void OnSelect () {
+		base.OnSelect ();
+		ActivePath = true;
+		canMove = true;
+	}
+
+	public override void OnUnselect () {
+		base.OnUnselect ();
+		ActivePath = false;
+		canMove = false;
+	}
+
 	/**
 	 *	Debugging
 	 */
 
 	void Update () {
-		if (!Selected) return;
+		if (!canMove)
+			return;
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			StartMoveOnPath ();
 		}

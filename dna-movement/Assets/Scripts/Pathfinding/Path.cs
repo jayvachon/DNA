@@ -13,8 +13,8 @@ public class Path {
 	int currPointIndex = 0;
 
 	/**
-	*	Properties
-	*/
+	 *	Properties
+	 */
 
 	public bool IsLoop {
 		get { return points[0] == points[points.Count-1]; }
@@ -29,8 +29,8 @@ public class Path {
 	}
 
 	/**
-	*	Public functions
-	*/
+	 *	Public functions
+	 */
 
 	public void ArriveAtPoint (MovableUnit u) {
 		currPoint.ArriveAtPoint (u);
@@ -86,8 +86,8 @@ public class Path {
 	}
 
 	/**
-	*	Private functions
-	*/
+	 *	Private functions
+	 */
 
 	Vector3 GotoStartPoint () {
 		if (points.Count > 0) {
@@ -157,8 +157,8 @@ public class Path {
 	}
 
 	/**
-	*	Debugging
-	*/
+	 *	Debugging
+	 */
 
 	public void Print () {
 		Debug.Log ("==========");

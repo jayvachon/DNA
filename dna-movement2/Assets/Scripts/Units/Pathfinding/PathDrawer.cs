@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class PathDrawer {
-
-	Path path;
-	LineRenderer line;
+	
+	readonly Path path;
+	readonly LineRenderer line;
 
 	public PathDrawer (Path path, LineRenderer line, Color color) {
 		this.path = path;

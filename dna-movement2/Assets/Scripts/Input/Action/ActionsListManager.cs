@@ -1,31 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActionsListManager : MonoBehaviour {
+public static class ActionsListManager {
 
-	public static ActionsListManager instance = null;
-	ActionsList actionsList = null;
-	public ActionsList Actions {
+	static ActionsList actionsList = null;
+	public static ActionsList Actions {
 		get { return actionsList; }
-	}
-
-	void Awake () {
-		if (instance == null)
-			instance = this;
-		Events.instance.AddListener<SelectUnitEvent> (OnSelectUnitEvent);
-		Events.instance.AddListener<UnselectUnitEvent> (OnUnselectUnitEvent);
-	}
-
-	void OnSelectUnitEvent (SelectUnitEvent e) {
-		if (e.unit is StaticUnit) {
-			StaticUnit su = e.unit as StaticUnit;
-			actionsList = su.MyActionsList;
+		set {
+			actionsList = value;
 		}
 	}
 
-	void OnUnselectUnitEvent (UnselectUnitEvent e) {
-		actionsList = null;
+	public static bool HasActions {
+		get { return actionsList != null && actionsList.Count > 0; }
 	}
-
-	//public void OnPerformAction (Action action) {}
 }

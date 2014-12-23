@@ -5,15 +5,10 @@ public class TempGUI : MonoBehaviour {
 
 	void OnGUI () {
 
-		if (ActionsListManager.instance == null)
+		if (!ActionsListManager.HasActions)
 			return;
-		if (ActionsListManager.instance.Actions == null)
-			return;
+		ActionsList actions = ActionsListManager.Actions;
 
-		ActionsList actions = ActionsListManager.instance.Actions;
-		if (actions.Count == 0) 
-			return;
-			
 		GUILayout.Label ("Directory");
 		string[] names = actions.ActionNames;
 		for (int i = 0; i < names.Length; i ++) {

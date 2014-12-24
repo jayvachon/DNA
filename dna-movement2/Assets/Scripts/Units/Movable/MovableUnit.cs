@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent (typeof (LineRenderer))]
-public class MovableUnit : Unit, IPathable {
+public class MovableUnit : Unit, IPathable, IElderHoldable {
 
 	Path path = null;
 	public Path MyPath {
@@ -32,6 +32,12 @@ public class MovableUnit : Unit, IPathable {
 	bool canMove = false;
 	bool moving = false;
 	float speed = 10f;
+
+	public IceCreamHolder iceCreamHolder = new IceCreamHolder ();
+	ElderHolder elders = new ElderHolder ();
+	public ElderHolder Elders {
+		get { return elders; }
+	}
 
 	public override void OnAwake () {
 		base.OnAwake ();

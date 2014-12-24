@@ -24,7 +24,7 @@ public class StaticUnit : Unit, IPathPoint {
 
 	public override void OnAwake () {
 		base.OnAwake ();
-		MyActionsList.Add (new DefaultAction (this));
+		MyActionsList.Add (new DefaultAction ());
 	}
 
 	protected void ChangePoint (IPathPoint newPoint) {

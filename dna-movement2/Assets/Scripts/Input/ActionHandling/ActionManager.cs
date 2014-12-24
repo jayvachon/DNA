@@ -17,9 +17,9 @@ public class ActionManager : MonoBehaviour {
 	IEnumerator PerformAction (IActionable point, IActionable visitor) {
 		
 		Action action = point.MyActionsList.ActiveAction;
-		action.OnStartAction ();
-		point.OnArrive ();
-		visitor.OnArrive ();
+		action.OnStartAction (point, visitor);
+		//point.OnArrive ();
+		//visitor.OnArrive ();
 
 		float time = action.time;
 		float eTime = 0f;
@@ -30,8 +30,8 @@ public class ActionManager : MonoBehaviour {
 			yield return null;
 		}
 		
-		action.OnEndAction ();
-		point.OnDepart ();
-		visitor.OnDepart ();
+		action.OnEndAction (point, visitor);
+		//point.OnDepart ();
+		//visitor.OnDepart ();
 	}
 }

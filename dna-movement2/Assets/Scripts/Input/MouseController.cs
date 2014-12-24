@@ -30,8 +30,10 @@ public class MouseController : MonoBehaviour {
 
 	Transform HandleClick () {
 		Vector2 mousePosition = Input.mousePosition;
-		if (mousePosition.x < 100 && mousePosition.y > Screen.height-100)
-			return null;
+		
+		// Ignore if clicking the GUI --- this is temp, replace it with something better eventually
+		if (mousePosition.x < 100 && mousePosition.y > Screen.height-200) return null;
+
 		Ray ray = Camera.main.ScreenPointToRay (mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {

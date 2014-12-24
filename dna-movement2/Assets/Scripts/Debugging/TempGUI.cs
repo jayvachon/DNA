@@ -7,14 +7,15 @@ public class TempGUI : MonoBehaviour {
 
 		if (!ActionsListManager.HasActions)
 			return;
-		ActionsList actions = ActionsListManager.Actions;
+		ActionsList actionsList = ActionsListManager.Actions;
 
 		GUILayout.Label ("Directory");
-		string[] names = actions.ActionNames;
-		for (int i = 0; i < names.Length; i ++) {
-			string name = names[i];
-			if (GUILayout.Button (name)) {
-				actions.SetActiveAction (name);
+		foreach (Action action in actionsList.Actions) {
+			if (action is IGUIActionable) {
+				IGUIActionable guiActionable = action as IGUIActionable;
+				if (GUILayout.Button (guiActionable.Label)) {
+					actionsList.SetActiveAction (action);
+				}
 			}
 		}
 	}

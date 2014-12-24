@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HouseUnit : StaticUnit {
+public class ElderHolder {
 
+	int count = 0;
 }

@@ -6,8 +6,9 @@ public class DevelopableUnit : StaticUnit {
 
 	public override void OnAwake () {
 		base.OnAwake ();
-		MyActionsList.Add (new BuildUnitAction (this, "Hospital", 3f));
-		MyActionsList.Add (new BuildUnitAction (this, "House", 1f));
+		MyActionsList.Add (new BuildUnitAction (3f, "Hospital"));
+		MyActionsList.Add (new BuildUnitAction (2f, "House"));
+		MyActionsList.Add (new BuildUnitAction (1f, "Cow"));
 	}
 
 	public override void OnDepart () {

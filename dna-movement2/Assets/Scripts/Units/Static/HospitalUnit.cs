@@ -7,4 +7,9 @@ public class HospitalUnit : StaticUnit, IElderHoldable {
 	public ElderHolder Elders {
 		get { return elders; }
 	}
+
+	public override void OnAwake () {
+		base.OnAwake ();
+		MyActionsList = new HospitalActionsList ();
+	}
 }

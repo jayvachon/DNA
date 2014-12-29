@@ -18,8 +18,6 @@ public class ActionManager : MonoBehaviour {
 		
 		Action action = point.MyActionsList.ActiveAction;
 		action.OnStartAction (point, visitor);
-		//point.OnArrive ();
-		//visitor.OnArrive ();
 
 		float time = action.time;
 		float eTime = 0f;
@@ -31,7 +29,5 @@ public class ActionManager : MonoBehaviour {
 		}
 		
 		action.OnEndAction (point, visitor);
-		//point.OnDepart ();
-		//visitor.OnDepart ();
 	}
 }

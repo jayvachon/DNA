@@ -5,6 +5,7 @@ public class Cow : StaticUnit {
 	
 	public override void OnAwake () {
 		base.OnAwake ();
-		MyActionsList.Add (new GenerateIceCreamAction ());
+		//MyActionsList.Add (new GenerateIceCreamAction ());
+		MyActionsList = new CowActionsList ();
 	}
 }

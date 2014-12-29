@@ -17,9 +17,10 @@ public class Unit : MBRefs, IClickable, ISelectable, IEnableable, IPoolable, IAc
 
 	public UnitColorHandler colorHandler = new UnitColorHandler ();
 
-	protected ActionsList actionsList = new ActionsList ();
+	ActionsList actionsList = new ActionsList ();
 	public ActionsList MyActionsList {
 		get { return actionsList; }
+		set { actionsList = value; }
 	}
 
 	public override void OnAwake () {

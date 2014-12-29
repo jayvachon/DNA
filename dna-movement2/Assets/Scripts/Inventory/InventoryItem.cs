@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ElderHolder {
+public class InventoryItem {
 
-	int count = 0;
 }

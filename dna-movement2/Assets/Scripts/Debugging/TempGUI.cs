@@ -11,10 +11,10 @@ public class TempGUI : MonoBehaviour {
 
 		GUILayout.Label ("Directory");
 		foreach (Action action in actionsList.Actions) {
-			if (action is IGUIActionable) {
+			if (action.Enabled && action is IGUIActionable) {
 				IGUIActionable guiActionable = action as IGUIActionable;
 				if (GUILayout.Button (guiActionable.Label)) {
-					actionsList.SetActiveAction (action);
+					actionsList.ActiveAction = action;
 				}
 			}
 		}

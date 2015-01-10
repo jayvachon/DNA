@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{439FC1B0-C43D-C26A-A0A8-60A5145D10A5}") = "dna-movement2", "Assembly-CSharp.csproj", "{99F90CF6-97F1-F347-6741-0533B6AA39EB}"
+Project("{7A1EABC3-DEB7-FD02-CEB1-E16EAFC41073}") = "inventory", "Assembly-CSharp.csproj", "{62759CF8-BB12-C4E4-CB7B-1145813D78F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{99F90CF6-97F1-F347-6741-0533B6AA39EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99F90CF6-97F1-F347-6741-0533B6AA39EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99F90CF6-97F1-F347-6741-0533B6AA39EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99F90CF6-97F1-F347-6741-0533B6AA39EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																													GlobalSection(MonoDevelopProperties) = preSolution
+											GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

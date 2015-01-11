@@ -1,18 +1,6 @@
 ﻿using System.Collections;
 
-public class Action: IEnableable {
-
-	bool enabled = true;
-	public bool Enabled {
-		get { return enabled; }
-		set {
-			enabled = value;
-			if (enabled)
-				OnEnable ();
-			else
-				OnDisable ();
-		}
-	}
+public class Action {
 
 	public readonly float time;
 
@@ -30,9 +18,6 @@ public class Action: IEnableable {
 		point.OnDepart ();
 		visitor.OnDepart ();
 	}
-
-	public virtual void OnEnable () {}
-	public virtual void OnDisable () {}
 }
 
 /**

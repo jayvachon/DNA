@@ -4,7 +4,7 @@ using System.Collections;
 public class GenerateIceCreamAction : Action, IGUIActionable {
 
 	public string Label {
-		get { return "Collect Ice Cream"; }
+		get { return "Generate Ice Cream"; }
 	}
 
 	public GenerateIceCreamAction (float time=3f) : base (time) {
@@ -13,7 +13,5 @@ public class GenerateIceCreamAction : Action, IGUIActionable {
 
 	public override void OnEndAction (IActionable point, IActionable visitor) {
 		base.OnEndAction (point, visitor);
-		MovableUnit movableUnit = visitor as MovableUnit;
-		movableUnit.iceCreamHolder.Add ();
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent (typeof (LineRenderer))]
-public class MovableUnit : Unit, IPathable, IElderHoldable {
+public class MovableUnit : Unit, IPathable {
 
 	Path path = null;
 	public Path MyPath {
@@ -33,14 +33,12 @@ public class MovableUnit : Unit, IPathable, IElderHoldable {
 	bool moving = false;
 	float speed = 10f;
 
-	public IceCreamHolder iceCreamHolder = new IceCreamHolder ();
-	ElderHolder elders = new ElderHolder ();
-	public ElderHolder Elders {
-		get { return elders; }
-	}
-
 	public override void OnAwake () {
 		base.OnAwake ();
+		InitPath ();
+	}
+
+	protected void InitPath () {
 		pathDrawer = new PathDrawer (
 			MyPath, 
 			gameObject.GetComponent<LineRenderer>(), 
@@ -49,7 +47,7 @@ public class MovableUnit : Unit, IPathable, IElderHoldable {
 	}
 
 	/**
-	 *	Private functions
+	 *	Public functions
 	 */
 
 	public void StartMoveOnPath () {

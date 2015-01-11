@@ -15,12 +15,8 @@ public class Person : Unit, IInventoryHolder, IActionable {
 	Inventory boundInventory;
 
 	void Awake () {
-
-		Inventory = new Inventory ();
-		Inventory.Add (new IceCreamHolder (5));
-
-		ActionsList = new ActionsList ();
-		ActionsList.Add (new CollectIceCream (Inventory));
+		Inventory = new PersonInventory ();
+		ActionsList = new PersonActionsList (Inventory as PersonInventory);
 	}
 
 	void Update () {
@@ -29,5 +25,19 @@ public class Person : Unit, IInventoryHolder, IActionable {
 			ActionsList.Start<CollectIceCream> (boundInventory, 1);
 		}
 		iceCreamCount = Inventory.Get<IceCreamHolder> ().Count;
+	}
+}
+
+public class PersonInventory : Inventory {
+
+	public PersonInventory () {
+		Add (new IceCreamHolder (5));
+	}
+}
+
+public class PersonActionsList : ActionsList {
+
+	public PersonActionsList (PersonInventory personInventory) {
+		Add (new CollectIceCream (personInventory));
 	}
 }

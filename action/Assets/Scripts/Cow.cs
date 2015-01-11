@@ -11,16 +11,28 @@ public class Cow : Unit, IInventoryHolder, IActionable {
 	public ActionsList ActionsList { get; set; }
 
 	void Awake () {
-		
-		IceCreamHolder iceCreamHolder = new IceCreamHolder (10);
-		Inventory = new Inventory ();
-		Inventory.Add (iceCreamHolder);
-
-		ActionsList = new ActionsList ();
-		ActionsList.Add (new GenerateIceCream (iceCreamHolder));
+		Inventory = new CowInventory ();
+		ActionsList = new CowActionsList (Inventory as CowInventory);
 	}
 
 	void Update () {
 		iceCreamCount = Inventory.Get<IceCreamHolder> ().Count;
+	}
+}
+
+public class CowInventory : Inventory {
+
+	public IceCreamHolder iceCreamHolder;
+
+	public CowInventory () {
+		iceCreamHolder = new IceCreamHolder (10);
+		Add (iceCreamHolder);
+	}
+}
+
+public class CowActionsList : ActionsList {
+
+	public CowActionsList (CowInventory cowInventory) {
+		Add (new GenerateIceCream (cowInventory.iceCreamHolder));
 	}
 }

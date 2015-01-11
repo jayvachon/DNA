@@ -78,8 +78,9 @@ namespace GameInventory {
 			return temp; // returns items that were removed
 		}
 
-		public override void Transfer (ItemHolder holder, int amount) {
+		public override void Transfer (ItemHolder holder, int amount=-1) {
 			if (holder is ItemHolder<T>) {
+				if (amount == -1) amount = Capacity;
 				ItemHolder<T> sender = holder as ItemHolder<T>;
 				List<Item> items = sender.Remove (amount);
 				List<Item> overflow = Add (items);

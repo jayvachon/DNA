@@ -12,10 +12,6 @@ namespace GameActions {
 			this.iceCreamHolder = iceCreamHolder;
 		}
 
-		public override void Start () {
-			base.Start ();
-		}
-
 		public override void End () {
 			iceCreamHolder.Add (new IceCreamItem (Flavor.Vanilla));
 			base.End ();

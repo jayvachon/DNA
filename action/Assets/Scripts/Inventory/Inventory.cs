@@ -41,7 +41,7 @@ namespace GameInventory {
 			return null;
 		}
 
-		public void Transfer<T> (Inventory boundInventory, int amount=1) where T : ItemHolder {
+		public void Transfer<T> (Inventory boundInventory, int amount=-1) where T : ItemHolder {
 			T sender = boundInventory.Get<T> () as T;
 			T receiver = Get<T> () as T;
 			receiver.Transfer (sender, amount);

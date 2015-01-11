@@ -27,5 +27,18 @@ namespace GameActions {
 				activeAction = actions[0];
 			}
 		}
+
+		public void Start<T> (params object[] args) where T : Action {
+			Get<T> ().Start (args);
+		}
+
+		Action Get<T> () where T : Action {
+			foreach (Action action in actions) {
+				if (action is T)
+					return action;
+			}
+			Debug.LogError (string.Format ("Action {0} does not exist", typeof (T)));
+			return null;
+		}
 	}
 }

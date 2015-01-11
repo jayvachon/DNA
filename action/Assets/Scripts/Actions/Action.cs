@@ -18,24 +18,14 @@ namespace GameActions {
 			if (autoStart) Start ();
 		}
 
-		public virtual void Start () {
+		public virtual void Start (params object[] args) {
 			ActionsManager.instance.StartAction (this);
 		}
 
 		public virtual void Perform (float progress) {}
+		
 		public virtual void End () {
 			if (autoRepeat) Start ();
 		}
-		
-		/*public virtual void OnStartAction (IActionable point, IActionable visitor) {
-			point.OnArrive ();
-			visitor.OnArrive ();
-		}
-
-		public virtual void PerformAction (float progress, IActionable visitor) {}
-		public virtual void OnEndAction (IActionable point, IActionable visitor) {
-			point.OnDepart ();
-			visitor.OnDepart ();
-		}*/
 	}
 }

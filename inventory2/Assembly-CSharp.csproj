@@ -47,11 +47,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Cow.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
      <Compile Include="Assets\Scripts\Person.cs" />
      <Compile Include="Assets\Scripts\Unit.cs" />

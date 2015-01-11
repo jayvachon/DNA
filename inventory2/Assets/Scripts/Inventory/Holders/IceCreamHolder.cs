@@ -34,6 +34,10 @@ namespace GameInventory {
 			sender.Add (overflow);
 		}
 
+		/**
+		 *	Debugging
+		 */
+		 
 		public override void Print () {
 			foreach (IceCreamItem item in items) {
 				Debug.Log (item.Flavor);

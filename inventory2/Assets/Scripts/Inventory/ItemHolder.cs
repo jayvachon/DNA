@@ -17,20 +17,18 @@ namespace GameInventory {
 			set { capacity = value; }
 		}
 
-		public int Count {
-			get { return items.Count; }
-		}
+		public abstract int Count { get; }
 
 		public List<Item> EmptyList {
 			get { return new List<Item> (0); }
 		}
 		
-		public virtual List<Item> Add (Item item) { return EmptyList; }
-		public virtual List<Item> Add (List<Item> newItems) { return EmptyList; }
-		public virtual List<Item> Remove () { return EmptyList; }
-		public virtual List<Item> Remove (int amount) { return EmptyList; }
-		public virtual void Transfer (ItemHolder holder, int amount) {}
-		public virtual void Print () {}
+		public abstract List<Item> Add (Item item);
+		public abstract List<Item> Add (List<Item> newItems);
+		public abstract List<Item> Remove ();
+		public abstract List<Item> Remove (int amount);
+		public abstract void Transfer (ItemHolder holder, int amount);
+		public abstract void Print ();
 	}
 
 	public class ItemHolder<T> : ItemHolder where T : Item {
@@ -40,7 +38,7 @@ namespace GameInventory {
 			get { return items; }
 		}
 
-		new public int Count {
+		public override int Count {
 			get { return items.Count; }
 		}
 

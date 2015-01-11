@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{62759CF8-BB12-C4E4-CB7B-1145813D78F3}</ProjectGuid>
+	<ProjectGuid>{2F51500C-29BD-37F9-2B1E-C8D23845DDD1}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -47,15 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Cow.cs" />
-     <Compile Include="Assets\Scripts\Elder.cs" />
-     <Compile Include="Assets\Scripts\Hospital.cs" />
-     <Compile Include="Assets\Scripts\House.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Inventory2.cs" />
-     <Compile Include="Assets\Scripts\Inventory\InventoryItem.cs" />
-     <Compile Include="Assets\Scripts\Inventory\InventoryItemHolder.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
      <Compile Include="Assets\Scripts\Person.cs" />
      <Compile Include="Assets\Scripts\Unit.cs" />

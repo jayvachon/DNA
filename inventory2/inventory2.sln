@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{7A1EABC3-DEB7-FD02-CEB1-E16EAFC41073}") = "inventory", "Assembly-CSharp.csproj", "{62759CF8-BB12-C4E4-CB7B-1145813D78F3}"
+Project("{BD75875C-11E3-3851-C20B-EFF1F8CDF9C3}") = "inventory2", "Assembly-CSharp.csproj", "{2F51500C-29BD-37F9-2B1E-C8D23845DDD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62759CF8-BB12-C4E4-CB7B-1145813D78F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F51500C-29BD-37F9-2B1E-C8D23845DDD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F51500C-29BD-37F9-2B1E-C8D23845DDD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F51500C-29BD-37F9-2B1E-C8D23845DDD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F51500C-29BD-37F9-2B1E-C8D23845DDD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																			GlobalSection(MonoDevelopProperties) = preSolution
+															GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

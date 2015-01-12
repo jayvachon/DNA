@@ -9,16 +9,13 @@ public class MBRefs : MonoBehaviour {
 		set { myTransform = value; }
 	}
 
-	Vector3 startPosition;
+	protected Vector3 startPosition;
 	public Vector3 StartPosition {
 		get { return startPosition; }
 	}
 
-	void Awake () {
+	protected virtual void Awake () {
 		myTransform = transform;
 		startPosition = myTransform.position;
-		OnAwake ();
 	}
-
-	public virtual void OnAwake () {}
 }

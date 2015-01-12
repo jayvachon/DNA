@@ -6,8 +6,6 @@ namespace GameInput {
 	
 	public class MouseController : MonoBehaviour {
 
-		private float maxDistance = 5000f;
-
 		void FixedUpdate () {
 			if (Input.GetMouseButtonDown (0)) {
 				Click (true);
@@ -18,15 +16,33 @@ namespace GameInput {
 		}
 
 		void Click (bool leftClick) {
-			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, maxDistance)) {
-				RaiseClickMessage (hit, leftClick);
+			Transform t = HandleClick ();
+			if (t != null) {
+				IClickable clickable = t.GetScript<IClickable>();
+				if (clickable == null) {
+					SelectionManager.Unselect ();
+					return;
+				}
+				if (leftClick) {
+					clickable.LeftClick ();
+				} else {
+					clickable.RightClick ();
+				}
 			}
 		}
 
-		void RaiseClickMessage (RaycastHit hit, bool leftClick) {
-			Events.instance.Raise (new MouseClickEvent (hit, leftClick));
+		Transform HandleClick () {
+			Vector2 mousePosition = Input.mousePosition;
+			
+			// Ignore if clicking the GUI --- this is temp, replace it with something better eventually
+			if (mousePosition.x < 100 && mousePosition.y > Screen.height-200) return null;
+
+			Ray ray = Camera.main.ScreenPointToRay (mousePosition);
+			RaycastHit hit;
+			if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+				return hit.transform;
+			}
+			return null;
 		}
 	}
 }

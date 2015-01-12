@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actions\Action.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\CollectIceCream.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\DefaultAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\GenerateIceCream.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionsList.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionsManager.cs" />
@@ -75,6 +76,7 @@
      <Compile Include="Assets\Scripts\Pooling\IPoolable.cs" />
      <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Pooling\UnitCreator.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\IceCreamCollectorUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\PastureUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />

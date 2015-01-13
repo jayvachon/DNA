@@ -8,17 +8,21 @@ namespace GameActions {
 
 		Inventory receiver;
 		Inventory sender;
-		int transferAmount = -1;
+		int transferAmount = 1;
 
-		public CollectIceCream (Inventory receiver, float duration=2) : base (duration) {
+		public CollectIceCream (Inventory receiver, int transferAmount, float duration=2) : base (duration) {
 			this.receiver = receiver;
+			this.transferAmount = transferAmount;
 		}
 
-		public override void Start (object[] args) {
-			this.sender = args[0] as Inventory;
-			if (args.Length > 0)
-				this.transferAmount = (int)args[1];
-			base.Start ();
+		public override void Start (IActionAcceptor acceptor) {
+			IInventoryHolder holder = acceptor as IInventoryHolder;
+			sender = holder.Inventory;
+			if (!receiver.Get<IceCreamHolder> ().Full && sender.Has<IceCreamHolder> ()) {
+				base.Start ();
+			} else {
+				base.End ();
+			}
 		}
 
 		public override void End () {

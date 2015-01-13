@@ -10,5 +10,6 @@ namespace Pathing {
 
 		void OnUpdatePath ();
 		void StartMoveOnPath ();
+		void OnArriveAtPoint ();
 	}
 }

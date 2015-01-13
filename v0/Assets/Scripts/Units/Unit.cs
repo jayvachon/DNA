@@ -7,12 +7,6 @@ public class Unit : MBRefs, IClickable, ISelectable, IPoolable {
 
 	public UnitColorHandler colorHandler = new UnitColorHandler ();
 
-	ActionsList actionsList = new ActionsList ();
-	public ActionsList MyActionsList {
-		get { return actionsList; }
-		set { actionsList = value; }
-	}
-
 	protected override void Awake () {
 		base.Awake ();
 		colorHandler.Init (renderer);

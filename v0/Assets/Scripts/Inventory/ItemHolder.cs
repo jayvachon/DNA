@@ -18,6 +18,7 @@ namespace GameInventory {
 		}
 
 		public abstract int Count { get; }
+		public abstract bool Full { get; }
 
 		public List<Item> EmptyList {
 			get { return new List<Item> (0); }
@@ -40,6 +41,10 @@ namespace GameInventory {
 
 		public override int Count {
 			get { return items.Count; }
+		}
+
+		public override bool Full {
+			get { return Count == Capacity; }
 		}
 
 		public ItemHolder (int capacity=1) {

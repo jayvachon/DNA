@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathing;
+using GameActions;
 
 [RequireComponent (typeof (LineRenderer))]
 public class MovableUnit : Unit, IPathable {
@@ -81,11 +82,16 @@ public class MovableUnit : Unit, IPathable {
 		}
 
 		moving = false;
+		OnArriveAtPoint ();
 	}
 
-	/*public override void OnDepart () {
-		StartMoveOnPath ();
-	}*/
+	public void OnArriveAtPoint () {
+		if (path.CurrentPoint is IActionAcceptor) {
+			OnBindActionable (path.CurrentPoint as IActionAcceptor);
+		}
+	}
+
+	protected virtual void OnBindActionable (IActionAcceptor acceptor) {}
 
 	public override void OnSelect () {
 		base.OnSelect ();
@@ -103,7 +109,7 @@ public class MovableUnit : Unit, IPathable {
 	 *	Debugging
 	 */
 
-	void Update () {
+	protected virtual void Update () {
 		if (!canMove)
 			return;
 		if (Input.GetKeyDown (KeyCode.Space)) {

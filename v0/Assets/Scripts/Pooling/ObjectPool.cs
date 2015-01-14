@@ -25,8 +25,9 @@ public class ObjectPool : MonoBehaviour {
 	
 	private readonly Stack<Transform> _instances = new Stack<Transform>();
 	
-	void Awake() {
-
+	public void Init (string poolName, Transform prefab) {
+		_poolName = poolName;
+		_prefab = prefab;
 		System.Diagnostics.Debug.Assert(_prefab);
 		_poolsByName[_poolName] = this;
 		

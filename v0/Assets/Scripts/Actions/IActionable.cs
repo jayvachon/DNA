@@ -2,7 +2,7 @@
 
 namespace GameActions {
 	
-	// Can run Actions
+	// Runs Actions
 	public interface IActionable {
 
 		ActionsList ActionsList { get; set; }

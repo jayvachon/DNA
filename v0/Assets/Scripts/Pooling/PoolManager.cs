@@ -1,10 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UnitCreator : MonoBehaviour {
+public class PoolManager : MonoBehaviour {
 
-	// TODO: rename this to "PoolManager" and have it create pools programmatically at the start of the game
-	void Start () {
+	public ObjectPool objectPool;
+	public Transform[] prefabs;
+
+	void Awake () {
+		for (int i = 0; i < prefabs.Length; i ++) {
+			CreatePool (prefabs[i]);
+		}
+		CreateObjects ();
+	}
+
+	void CreatePool (Transform prefab) {
+		string prefabName = prefab.name;
+		ObjectPool op = Instantiate (objectPool) as ObjectPool;
+		op.gameObject.name = prefabName + "Pool";
+		op.Init (prefabName, prefab);
+	}
+
+	void CreateObjects () {
 		ObjectPool.Instantiate ("Pasture", new Vector3 (0, 0.5f, 0));
 		ObjectPool.Instantiate ("Pasture", new Vector3 (-4, 0.5f, 4));
 		ObjectPool.Instantiate ("Pasture", new Vector3 (4, 0.5f, 4));

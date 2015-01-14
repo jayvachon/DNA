@@ -46,5 +46,6 @@ public class IceCreamCollectorActionsList : ActionsList {
 
 	public IceCreamCollectorActionsList (IActionable actionable, IceCreamCollectorInventory iceCreamCollectorInventory) : base (actionable) {
 		Add (new CollectIceCream (iceCreamCollectorInventory, 1));
+		Add (new DeliverIceCream (iceCreamCollectorInventory, -1));
 	}
 }

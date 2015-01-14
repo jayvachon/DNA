@@ -19,6 +19,7 @@ namespace GameInventory {
 
 		public abstract int Count { get; }
 		public abstract bool Full { get; }
+		public abstract bool Empty { get; }
 
 		public List<Item> EmptyList {
 			get { return new List<Item> (0); }
@@ -45,6 +46,10 @@ namespace GameInventory {
 
 		public override bool Full {
 			get { return Count == Capacity; }
+		}
+
+		public override bool Empty {
+			get { return Count == 0; }
 		}
 
 		public ItemHolder (int capacity=1) {
@@ -83,9 +88,10 @@ namespace GameInventory {
 			return temp; // returns items that were removed
 		}
 
-		public override void Transfer (ItemHolder holder, int amount) {
-			if (holder is ItemHolder<T>) {
-				ItemHolder<T> sender = holder as ItemHolder<T>;
+		public override void Transfer (ItemHolder senderHolder, int amount=-1) {
+			if (senderHolder is ItemHolder<T>) {
+				if (amount == -1) amount = Capacity;
+				ItemHolder<T> sender = senderHolder as ItemHolder<T>;
 				List<Item> items = sender.Remove (amount);
 				List<Item> overflow = Add (items);
 				sender.Add (overflow);

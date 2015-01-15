@@ -28,5 +28,6 @@ public class PoolManager : MonoBehaviour {
 		ObjectPool.Instantiate ("IceCreamCollector", new Vector3 (-2, 0.5f, -2));
 		ObjectPool.Instantiate ("IceCreamCollector", new Vector3 (2, 0.5f, -2));
 		ObjectPool.Instantiate ("Hospital", new Vector3 (-6, 0.5f, -1));
+		ObjectPool.Instantiate ("House", new Vector3 (6, 0.5f, -1));
 	}
 }

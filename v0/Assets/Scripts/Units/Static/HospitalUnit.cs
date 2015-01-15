@@ -16,7 +16,7 @@ public class HospitalUnit : StaticUnit, IInventoryHolder, IActionable, IActionAc
 		base.Awake ();
 		Inventory = new HospitalInventory ();
 		ActionsList = new HospitalActionsList (this);
-		AcceptedActions = new HospitalAcceptedActionsList (Inventory as HospitalInventory);
+		AcceptedActions = new HospitalAcceptedActionsList (Inventory);
 	}
 
 	public void OnEndAction () {}
@@ -49,7 +49,7 @@ public class HospitalActionsList : ActionsList {
 
 public class HospitalAcceptedActionsList : ActionsList {
 
-	public HospitalAcceptedActionsList (HospitalInventory hospitalInventory) {
-		Add (new DeliverIceCream (hospitalInventory, 0));
+	public HospitalAcceptedActionsList (Inventory inventory) {
+		Add (new DeliverItem<IceCreamHolder> (inventory, 0, 2));
 	}
 }

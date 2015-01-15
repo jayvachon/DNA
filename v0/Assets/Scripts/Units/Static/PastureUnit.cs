@@ -16,7 +16,7 @@ public class PastureUnit : StaticUnit, IInventoryHolder, IActionable, IActionAcc
 		base.Awake ();
 		Inventory = new PastureInventory ();
 		ActionsList = new PastureActionsList (this, Inventory as PastureInventory);
-		AcceptedActions = new PastureAcceptedActions (Inventory as PastureInventory);
+		AcceptedActions = new PastureAcceptedActions (Inventory);
 	}
 
 	public void OnEndAction () {}
@@ -49,7 +49,7 @@ public class PastureActionsList : ActionsList {
 
 public class PastureAcceptedActions : ActionsList {
 
-	public PastureAcceptedActions (PastureInventory pastureInventory) {
-		Add (new CollectIceCream (pastureInventory, 0));
+	public PastureAcceptedActions (Inventory inventory) {
+		Add (new CollectItem<IceCreamHolder> (inventory, 0, 2));
 	}
 }

@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GameInventory;
 
 namespace GameActions {
 
-	public class DeliverIceCream : Action {
+	public class DeliverItem<T> : Action where T : ItemHolder {
 
-		Inventory receiver;
-		Inventory sender;
+		Inventory receiver, sender;
 		int transferAmount;
 
-		public DeliverIceCream (Inventory sender, int transferAmount, float duration=2) : base (duration) {
+		public DeliverItem (Inventory sender, int transferAmount, float duration) : base (duration) {
 			this.sender = sender;
 			this.transferAmount = transferAmount;
 		}
@@ -18,7 +18,7 @@ namespace GameActions {
 		public override void Start (IActionAcceptor acceptor) {
 			IInventoryHolder holder = acceptor as IInventoryHolder;
 			receiver = holder.Inventory;
-			if (!receiver.Get<IceCreamHolder> ().Full && !sender.Get<IceCreamHolder> ().Empty) {
+			if (CanTransfer ()) {
 				base.Start ();
 			} else {
 				base.End ();
@@ -26,8 +26,12 @@ namespace GameActions {
 		}
 
 		public override void End () {
-			receiver.Transfer<IceCreamHolder> (sender, transferAmount);
+			receiver.Transfer<T> (sender, transferAmount);
 			base.End ();
+		}
+
+		protected virtual bool CanTransfer () {
+			return !receiver.Get<T> ().Full && !sender.Get<T> ().Empty;
 		}
 	}
 }

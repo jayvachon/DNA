@@ -20,7 +20,7 @@ public class HouseUnit : StaticUnit, IInventoryHolder, IActionAcceptor  {
 public class HouseInventory : Inventory {
 
 	public HouseInventory () {
-
+		Add (new ElderHolder (2));
 	}
 }
 

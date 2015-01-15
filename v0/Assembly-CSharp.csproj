@@ -47,9 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actions\Action.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\CollectIceCream.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\DefaultAction.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\DeliverIceCream.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\DeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\GenerateIceCream.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionsList.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionsManager.cs" />
@@ -63,11 +63,13 @@
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathPoint.cs" />
@@ -78,7 +80,8 @@
      <Compile Include="Assets\Scripts\Pooling\IPoolable.cs" />
      <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
-     <Compile Include="Assets\Scripts\Units\Movable\IceCreamCollectorUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\ElderTransferUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\IceCreamTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HospitalUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HouseUnit.cs" />

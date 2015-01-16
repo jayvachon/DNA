@@ -55,7 +55,7 @@ namespace GameInventory {
 		public ItemHolder (int capacity=1) {
 			Capacity = capacity;
 		}
-
+		
 		public override List<Item> Add (Item item) {
 			List<Item> temp = new List<Item> ();
 			temp.Add (item);

@@ -7,6 +7,7 @@ public class HospitalUnit : StaticUnit, IInventoryHolder, IActionable, IActionAc
 
 	// Debugging
 	public int iceCreamCount = 0;
+	public int elderCount = 0;
 
 	public Inventory Inventory { get; set; }
 	public ActionsList ActionsList { get; set; }
@@ -27,6 +28,7 @@ public class HospitalUnit : StaticUnit, IInventoryHolder, IActionable, IActionAc
 
 	void Update () {
 		iceCreamCount = Inventory.Get<IceCreamHolder> ().Count;
+		elderCount = Inventory.Get<ElderHolder> ().Count;
 	}
 }
 
@@ -37,6 +39,7 @@ public class HospitalInventory : Inventory {
 	public HospitalInventory () {
 		iceCreamHolder = new IceCreamHolder (20);
 		Add (iceCreamHolder);
+		Add (new ElderHolder (0, 10));
 	}
 }
 
@@ -51,5 +54,7 @@ public class HospitalAcceptedActionsList : ActionsList {
 
 	public HospitalAcceptedActionsList (Inventory inventory) {
 		Add (new DeliverItem<IceCreamHolder> (inventory, 0, 2));
+		Add (new CollectItem<ElderHolder> (inventory, 1, 3));
+		Add (new DeliverItem<ElderHolder> (inventory, 1, 3));
 	}
 }

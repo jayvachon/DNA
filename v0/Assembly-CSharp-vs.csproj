@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\DefaultAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\DeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\GenerateIceCream.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\MakeMilkshake.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionsList.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionsManager.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
@@ -74,6 +75,7 @@
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\MilkHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\MilkshakeHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
@@ -81,6 +83,7 @@
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
@@ -93,10 +96,13 @@
      <Compile Include="Assets\Scripts\Units\Movable\ElderTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\IceCreamTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MilkTransferUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\MilkshakeTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\TransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HospitalUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HouseUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkPoolUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\MilkshakeMakerUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\PastureUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />

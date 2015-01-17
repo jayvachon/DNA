@@ -22,7 +22,10 @@ public class PoolManager : MonoBehaviour {
 
 	void CreateObjects () {
 		ObjectPool.Instantiate ("MilkPool", new Vector3 (10, 0.5f, 8));
-		ObjectPool.Instantiate ("Pasture", new Vector3 (0, 0.5f, 0));
+		ObjectPool.Instantiate ("MilkshakeMaker", new Vector3 (4, 0.5f, 0));
+		ObjectPool.Instantiate ("MilkshakeTransfer", new Vector3 (6, 0.5f, 0));
+		ObjectPool.Instantiate ("TransferUnit", new Vector3 (-6, 0.5f, 0));
+		ObjectPool.Instantiate ("Pasture", new Vector3 (-4, 0.5f, 0));
 		ObjectPool.Instantiate ("Pasture", new Vector3 (-6, 0.5f, 6));
 		ObjectPool.Instantiate ("Pasture", new Vector3 (6, 0.5f, 6));
 		ObjectPool.Instantiate ("Pasture", new Vector3 (0, 0.5f, 8));

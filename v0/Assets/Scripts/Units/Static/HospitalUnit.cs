@@ -22,11 +22,8 @@ public class HospitalUnit : StaticUnit, IInventoryHolder, IActionable, IActionAc
 
 public class HospitalInventory : Inventory {
 
-	public IceCreamHolder iceCreamHolder;
-
 	public HospitalInventory () {
-		iceCreamHolder = new IceCreamHolder (20);
-		Add (iceCreamHolder);
+		Add (new MilkshakeHolder (20));
 		Add (new ElderHolder (10));
 	}
 }
@@ -41,7 +38,7 @@ public class HospitalActionsList : ActionsList {
 public class HospitalAcceptedActions : AcceptedActions {
 
 	public HospitalAcceptedActions () {
-		Add<DeliverItem<IceCreamHolder>> ();
+		Add<DeliverItem<MilkshakeHolder>> ();
 		Add<DeliverItem<ElderHolder>> ();
 	}
 }

@@ -5,10 +5,10 @@ namespace GameInventory {
 
 	public class ElderItem : Item {
 
-		Disease disease;
+		HealthHandler health;
 
 		public ElderItem () {
-
+			
 		}
 	}
 }

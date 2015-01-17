@@ -6,6 +6,6 @@ namespace GameActions {
 	// Tells an IActionable which Actions it can run
 	public interface IActionAcceptor {
 
-		ActionsList AcceptedActions { get; set; }
+		AcceptedActions AcceptedActions { get; set; }
 	}
 }

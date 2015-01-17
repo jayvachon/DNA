@@ -5,27 +5,17 @@ using GameActions;
 
 public class HouseUnit : StaticUnit, IInventoryHolder, IActionAcceptor  {
 
-	// Debugging
-	public int elderCount = 0;
-
 	public Inventory Inventory { get; set; }
-	public ActionsList AcceptedActions { get; set; }
+	public AcceptedActions AcceptedActions { get; set; }
 
 	protected override void Awake () {
 		base.Awake ();
 		Inventory = new HouseInventory ();
-		AcceptedActions = new HouseAcceptedActions (Inventory);
+		AcceptedActions = new HouseAcceptedActions ();
+		InventoryDrawer.Create (MyTransform, Inventory);
 	}
 
 	public void OnEndAction () {}
-
-	/**
-	 *	Debugging
-	 */
-
-	void Update () {
-		elderCount = Inventory.Get<ElderHolder> ().Count;
-	}
 }
 
 public class HouseInventory : Inventory {
@@ -35,9 +25,9 @@ public class HouseInventory : Inventory {
 	}
 }
 
-public class HouseAcceptedActions : ActionsList {
+public class HouseAcceptedActions : AcceptedActions {
 
-	public HouseAcceptedActions (Inventory inventory) {
-		Add (new CollectItem<ElderHolder> (inventory, 1, 3));
+	public HouseAcceptedActions () {
+		Add<CollectItem<ElderHolder>> ();
 	}
 }

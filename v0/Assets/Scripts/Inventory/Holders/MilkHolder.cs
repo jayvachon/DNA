@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace GameInventory {
+	
+	public class MilkHolder : ItemHolder<MilkItem> {
 
-	public class ElderHolder : ItemHolder<ElderItem> {
-
-		public ElderHolder (int capacity=1, int startCount=0) : base ("Elders", capacity) {
+		public MilkHolder (int capacity=100, int startCount=100) : base ("Milk", capacity) {
 			AddNew (startCount);
 		}
 
@@ -14,7 +14,7 @@ namespace GameInventory {
 			if (count == 0)
 				return;
 			for (int i = 0; i < count; i ++) {
-				Add (new ElderItem ());
+				Add (new MilkItem ());
 			}
 		}
 	}

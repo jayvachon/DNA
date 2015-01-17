@@ -61,20 +61,15 @@ namespace GameActions {
 
 		Action GetAcceptableAction (IActionAcceptor acceptor) {
 			
-			List<Action> acceptedActions = acceptor.AcceptedActions.Actions;
-			
-			// Check if we can do the active action (maybe this is not important & should be removed?)
-			foreach (Action action in acceptedActions) {
-				if (action.GetType () == activeAction.GetType ())
-					return activeAction;
+			AcceptedActions acceptedActions = acceptor.AcceptedActions;
+
+			if (acceptedActions.Has (activeAction)) {
+				return activeAction;
 			}
 
-			// Check if any other actions are acceptable
-			foreach (Action acceptedAction in acceptedActions) {
-				foreach (Action action in actions) {
-					if (action.GetType () == acceptedAction.GetType ())
-						return action;
-				}
+			foreach (Action action in actions) {
+				if (acceptedActions.Has (action))
+					return action;
 			}
 			return null;
 		}

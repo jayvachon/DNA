@@ -5,9 +5,6 @@ using GameActions;
 
 public class IceCreamTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 
-	// Debugging
-	public int iceCreamCount = 0;
-
 	public Inventory Inventory { get; set; }
 	public ActionsList ActionsList { get; set; }
 
@@ -15,6 +12,7 @@ public class IceCreamTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 		base.Awake ();
 		Inventory = new IceCreamTransferInventory ();
 		ActionsList = new IceCreamTransferActionsList (this, Inventory);
+		InventoryDrawer.Create (MyTransform, Inventory);
 	}
 
 	protected override void OnBindActionable (IActionAcceptor acceptor) {
@@ -23,15 +21,6 @@ public class IceCreamTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 
 	public void OnEndAction () {
 		StartMoveOnPath ();
-	}
-
-	/**
-	 *	Debugging
-	 */
-
-	protected override void Update () {
-		iceCreamCount = Inventory.Get<IceCreamHolder> ().Count;
-		base.Update ();
 	}
 }
 

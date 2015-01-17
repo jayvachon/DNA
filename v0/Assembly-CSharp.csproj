@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Actions\AcceptedActions.cs" />
      <Compile Include="Assets\Scripts\Actions\Action.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\DefaultAction.cs" />
@@ -55,25 +56,31 @@
      <Compile Include="Assets\Scripts\Actions\ActionsManager.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionable.cs" />
-     <Compile Include="Assets\Scripts\Disease\Cancer.cs" />
-     <Compile Include="Assets\Scripts\Disease\Disease.cs" />
-     <Compile Include="Assets\Scripts\Disease\HeartDisease.cs" />
+     <Compile Include="Assets\Scripts\Clock\Clock.cs" />
+     <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
+     <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
      <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
+     <Compile Include="Assets\Scripts\Health\Disease\Cancer.cs" />
+     <Compile Include="Assets\Scripts\Health\Disease\Disease.cs" />
+     <Compile Include="Assets\Scripts\Health\Disease\HeartDisease.cs" />
+     <Compile Include="Assets\Scripts\Health\HealthHandler.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\MilkHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
@@ -85,9 +92,11 @@
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\ElderTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\IceCreamTransferUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\MilkTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HospitalUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HouseUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\MilkPoolUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\PastureUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />

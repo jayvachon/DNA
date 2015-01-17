@@ -5,9 +5,6 @@ using GameActions;
 
 public class ElderTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 
-	// Debugging
-	public int elderCount = 0;
-
 	public Inventory Inventory { get; set; }
 	public ActionsList ActionsList { get; set; }
 
@@ -15,6 +12,7 @@ public class ElderTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 		base.Awake ();
 		Inventory = new ElderTranserInventory ();
 		ActionsList = new ElderTransferActionsList (this, Inventory);
+		InventoryDrawer.Create (MyTransform, Inventory);
 	}
 
 	protected override void OnBindActionable (IActionAcceptor acceptor) {
@@ -23,15 +21,6 @@ public class ElderTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 
 	public void OnEndAction () {
 		StartMoveOnPath ();
-	}
-
-	/**
-	 *	Debugging
-	 */
-
-	protected override void Update () {
-		elderCount = Inventory.Get<ElderHolder> ().Count;
-		base.Update ();
 	}
 }
 

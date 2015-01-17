@@ -7,6 +7,9 @@ namespace GameInventory {
 	public class Inventory {
 		
 		List<ItemHolder> holders = new List<ItemHolder> ();
+		public List<ItemHolder> Holders {
+			get { return holders; }
+		}
 
 		public void Add (ItemHolder holder) {
 			holders.Add (holder);

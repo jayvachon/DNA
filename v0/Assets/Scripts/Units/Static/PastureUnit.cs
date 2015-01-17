@@ -5,29 +5,19 @@ using GameActions;
 
 public class PastureUnit : StaticUnit, IInventoryHolder, IActionable, IActionAcceptor  {
 
-	// Debugging
-	public int iceCreamCount = 0;
-
 	public Inventory Inventory { get; set; }
 	public ActionsList ActionsList { get; set; }
-	public ActionsList AcceptedActions { get; set; }
+	public AcceptedActions AcceptedActions { get; set; }
 
 	protected override void Awake () {
 		base.Awake ();
 		Inventory = new PastureInventory ();
 		ActionsList = new PastureActionsList (this, Inventory as PastureInventory);
-		AcceptedActions = new PastureAcceptedActions (Inventory);
+		AcceptedActions = new PastureAcceptedActions ();
+		InventoryDrawer.Create (MyTransform, Inventory);
 	}
 
 	public void OnEndAction () {}
-
-	/**
-	 *	Debugging
-	 */
-
-	void Update () {
-		iceCreamCount = Inventory.Get<IceCreamHolder> ().Count;
-	}
 }
 
 public class PastureInventory : Inventory {
@@ -47,9 +37,9 @@ public class PastureActionsList : ActionsList {
 	}
 }
 
-public class PastureAcceptedActions : ActionsList {
+public class PastureAcceptedActions : AcceptedActions {
 
-	public PastureAcceptedActions (Inventory inventory) {
-		Add (new CollectItem<IceCreamHolder> (inventory, 0, 2));
+	public PastureAcceptedActions () {
+		Add<CollectItem<IceCreamHolder>> ();
 	}
 }

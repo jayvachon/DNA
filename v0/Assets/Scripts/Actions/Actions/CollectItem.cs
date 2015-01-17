@@ -10,7 +10,7 @@ namespace GameActions {
 		Inventory receiver, sender;
 		int transferAmount;
 
-		public CollectItem (Inventory receiver, int transferAmount, float duration) : base (duration) {
+		public CollectItem (Inventory receiver, int transferAmount, float duration) : base (duration*transferAmount) {
 			this.receiver = receiver;
 			this.transferAmount = transferAmount;
 		}

@@ -6,6 +6,8 @@ namespace GameInventory {
 
 	public abstract class ItemHolder {
 		
+		public abstract string Name { get; }
+
 		protected List<Item> items;
 		public List<Item> Items {
 			get { return items; }
@@ -35,6 +37,11 @@ namespace GameInventory {
 
 	public class ItemHolder<T> : ItemHolder where T : Item {
 		
+		string name;
+		public override string Name {
+			get { return name; }
+		}
+
 		new protected List<T> items = new List<T> ();
 		new public List<T> Items {
 			get { return items; }
@@ -52,7 +59,8 @@ namespace GameInventory {
 			get { return Count == 0; }
 		}
 
-		public ItemHolder (int capacity=1) {
+		public ItemHolder (string name, int capacity=1) {
+			this.name = name;
 			Capacity = capacity;
 		}
 		

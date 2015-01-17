@@ -55,6 +55,9 @@
      <Compile Include="Assets\Scripts\Actions\ActionsManager.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionable.cs" />
+     <Compile Include="Assets\Scripts\Disease\Cancer.cs" />
+     <Compile Include="Assets\Scripts\Disease\Disease.cs" />
+     <Compile Include="Assets\Scripts\Disease\HeartDisease.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
      <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />

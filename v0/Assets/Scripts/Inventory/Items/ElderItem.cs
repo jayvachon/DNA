@@ -5,6 +5,8 @@ namespace GameInventory {
 
 	public class ElderItem : Item {
 
+		Disease disease;
+
 		public ElderItem () {
 
 		}

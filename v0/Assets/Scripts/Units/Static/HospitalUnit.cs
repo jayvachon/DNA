@@ -39,7 +39,7 @@ public class HospitalInventory : Inventory {
 	public HospitalInventory () {
 		iceCreamHolder = new IceCreamHolder (20);
 		Add (iceCreamHolder);
-		Add (new ElderHolder (0, 10));
+		Add (new ElderHolder (10));
 	}
 }
 
@@ -54,7 +54,7 @@ public class HospitalAcceptedActionsList : ActionsList {
 
 	public HospitalAcceptedActionsList (Inventory inventory) {
 		Add (new DeliverItem<IceCreamHolder> (inventory, 0, 2));
-		Add (new CollectItem<ElderHolder> (inventory, 1, 3));
+		//Add (new CollectItem<ElderHolder> (inventory, 1, 3));
 		Add (new DeliverItem<ElderHolder> (inventory, 1, 3));
 	}
 }

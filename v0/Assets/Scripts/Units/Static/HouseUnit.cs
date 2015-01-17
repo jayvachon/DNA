@@ -14,7 +14,7 @@ public class HouseUnit : StaticUnit, IInventoryHolder, IActionAcceptor  {
 	protected override void Awake () {
 		base.Awake ();
 		Inventory = new HouseInventory ();
-		AcceptedActions = new HouseAcceptedActions (Inventory as HouseInventory);
+		AcceptedActions = new HouseAcceptedActions (Inventory);
 	}
 
 	public void OnEndAction () {}
@@ -37,7 +37,7 @@ public class HouseInventory : Inventory {
 
 public class HouseAcceptedActions : ActionsList {
 
-	public HouseAcceptedActions (HouseInventory houseInventory) {
-		Add (new CollectItem<ElderHolder> (houseInventory, 1, 3));
+	public HouseAcceptedActions (Inventory inventory) {
+		Add (new CollectItem<ElderHolder> (inventory, 1, 3));
 	}
 }

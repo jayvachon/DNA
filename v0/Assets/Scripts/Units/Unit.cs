@@ -3,12 +3,12 @@ using System.Collections;
 using GameActions;
 using GameInput;
 
-public class Unit : MBRefs, IClickable, ISelectable, IPoolable {
+public class Unit : MBRefs, INameable, IClickable, ISelectable, IPoolable {
 
 	public UnitColorHandler colorHandler = new UnitColorHandler ();
-	new protected string name;
-	public string Name {
-		get { return name; }
+	
+	public virtual string Name {
+		get { return ""; }
 	}
 
 	protected override void Awake () {

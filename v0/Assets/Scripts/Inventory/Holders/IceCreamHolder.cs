@@ -6,7 +6,11 @@ namespace GameInventory {
 	
 	public class IceCreamHolder : ItemHolder<IceCreamItem> {
 
-		public IceCreamHolder (int capacity=5) : base ("Ice Cream", capacity) {}
+		public override string Name {
+			get { return "Ice Cream"; }
+		}
+
+		public IceCreamHolder (int capacity=5) : base (capacity) {}
 		
 		public List<IceCreamItem> RemoveFlavor (Flavor flavor) {
 			return RemoveFlavor (flavor, Capacity);

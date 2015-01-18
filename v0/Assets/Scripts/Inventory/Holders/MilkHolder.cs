@@ -6,7 +6,11 @@ namespace GameInventory {
 	
 	public class MilkHolder : ItemHolder<MilkItem> {
 
-		public MilkHolder (int capacity=100, int startCount=100) : base ("Milk", capacity) {
+		public override string Name {
+			get { return "Milk"; }
+		}
+
+		public MilkHolder (int capacity=100, int startCount=100) : base (capacity) {
 			AddNew (startCount);
 		}
 

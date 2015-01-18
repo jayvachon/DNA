@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GameInventory {
 
-	public abstract class ItemHolder {
+	public abstract class ItemHolder : INameable {
 		
 		public abstract string Name { get; }
 
@@ -37,9 +37,8 @@ namespace GameInventory {
 
 	public class ItemHolder<T> : ItemHolder where T : Item {
 		
-		string name;
 		public override string Name {
-			get { return name; }
+			get { return ""; }
 		}
 
 		new protected List<T> items = new List<T> ();
@@ -59,8 +58,7 @@ namespace GameInventory {
 			get { return Count == 0; }
 		}
 
-		public ItemHolder (string name, int capacity=1) {
-			this.name = name;
+		public ItemHolder (int capacity=1) {
 			Capacity = capacity;
 		}
 		

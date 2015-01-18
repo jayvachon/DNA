@@ -5,7 +5,12 @@ namespace GameActions {
 
 	public class CreateUnit<T> : Action where T : MovableUnit {
 
-		public CreateUnit (float duration) : base ("Create Unit", duration) {
+		string name = "Create Unit";
+		public override string Name {
+			get { return name; }
+		}
+
+		public CreateUnit (float duration) : base (duration) {
 			name = "Create " + typeof (T).Name;
 		}
 

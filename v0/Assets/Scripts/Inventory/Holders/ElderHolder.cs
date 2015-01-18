@@ -6,7 +6,11 @@ namespace GameInventory {
 
 	public class ElderHolder : ItemHolder<ElderItem> {
 
-		public ElderHolder (int capacity=1, int startCount=0) : base ("Elders", capacity) {
+		public override string Name {
+			get { return "Elders"; }
+		}
+		
+		public ElderHolder (int capacity=1, int startCount=0) : base (capacity) {
 			AddNew (startCount);
 		}
 

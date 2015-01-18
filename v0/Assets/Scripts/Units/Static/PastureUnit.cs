@@ -5,13 +5,16 @@ using GameActions;
 
 public class PastureUnit : StaticUnit, IInventoryHolder, IActionable, IActionAcceptor  {
 
+	public override string Name {
+		get { return "Pasture"; }
+	}
+
 	public Inventory Inventory { get; set; }
 	public ActionsList ActionsList { get; set; }
 	public AcceptedActions AcceptedActions { get; set; }
 
 	protected override void Awake () {
 		base.Awake ();
-		name = "Pasture";
 		Inventory = new PastureInventory ();
 		ActionsList = new PastureActionsList (this, Inventory as PastureInventory);
 		AcceptedActions = new PastureAcceptedActions ();

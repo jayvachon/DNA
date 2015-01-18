@@ -3,11 +3,10 @@ using System.Collections;
 
 namespace GameActions {
 
-	public abstract class Action {
+	public abstract class Action : INameable {
 
-		protected string name;
-		public string Name {
-			get { return name; }
+		public virtual string Name {
+			get { return ""; }
 		}
 
 		float duration;
@@ -19,8 +18,7 @@ namespace GameActions {
 
 		public IActionable Actionable { get; set; }
 
-		public Action (string name, float duration, bool autoStart=false, bool autoRepeat=false) {
-			this.name = name;
+		public Action (float duration, bool autoStart=false, bool autoRepeat=false) {
 			this.duration = duration;
 			this.autoRepeat = autoRepeat;
 			if (autoStart) Start ();

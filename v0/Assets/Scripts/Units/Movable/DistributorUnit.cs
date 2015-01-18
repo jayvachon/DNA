@@ -5,12 +5,15 @@ using GameActions;
 
 public class DistributorUnit : MovableUnit, IInventoryHolder, IActionable {
 
+	public override string Name {
+		get { return "Distributor"; }
+	}
+
 	public Inventory Inventory { get; set; }
 	public ActionsList ActionsList { get; set; }
 
 	protected override void Awake () {
 		base.Awake ();
-		name = "Distributor";
 		Inventory = new DistributorInventory ();
 		ActionsList = new DistributorActionsList (this, Inventory);
 		InventoryDrawer.Create (MyTransform, Inventory);

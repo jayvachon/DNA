@@ -6,6 +6,10 @@ namespace GameActions {
 
 	public class DefaultAction : Action {
 
-		public DefaultAction () : base ("Default", 0) {}
+		public override string Name {
+			get { return "Default"; }
+		}
+		
+		public DefaultAction () : base (0) {}
 	}
 }

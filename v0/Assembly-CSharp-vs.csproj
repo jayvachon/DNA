@@ -86,6 +86,7 @@
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
+     <Compile Include="Assets\Scripts\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />

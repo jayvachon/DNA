@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Actions\AcceptedActions.cs" />
      <Compile Include="Assets\Scripts\Actions\Action.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\CollectItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\CreateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\DefaultAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\DeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\GenerateIceCream.cs" />
@@ -59,6 +60,7 @@
      <Compile Include="Assets\Scripts\Actions\IActionable.cs" />
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
+     <Compile Include="Assets\Scripts\Debugging\ActionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
@@ -93,11 +95,13 @@
      <Compile Include="Assets\Scripts\Pooling\IPoolable.cs" />
      <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\DistributorUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\ElderTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\IceCreamTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MilkTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MilkshakeTransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Movable\ProducerUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\TransferUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HospitalUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\HouseUnit.cs" />
@@ -105,6 +109,7 @@
      <Compile Include="Assets\Scripts\Units\Static\MilkshakeMakerUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\PastureUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\TreeUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
      <Compile Include="Assets\Scripts\Units\UnitColorHandler.cs" />
  <Reference Include="UnityEngine.UI">

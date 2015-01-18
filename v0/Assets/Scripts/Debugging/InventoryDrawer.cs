@@ -24,7 +24,9 @@ public class InventoryDrawer : MBRefs, IInventoryHolder {
 	string InventoryContents () {
 		string contents = "";
 		foreach (ItemHolder holder in Inventory.Holders) {
-			contents += string.Format ("{0}: {1}/{2}\n", holder.Name, holder.Count, holder.Capacity);
+			int count = holder.Count;
+			if (count > 0)
+				contents += string.Format ("{0}: {1}/{2}\n", holder.Name, count, holder.Capacity);
 		}
 		return contents;
 	}

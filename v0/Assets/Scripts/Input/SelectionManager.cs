@@ -44,7 +44,7 @@ namespace GameInput {
 			}
 		}
 
-		static bool IsSelected (ISelectable s) {
+		public static bool IsSelected (ISelectable s) {
 			return s == selected;
 		}
 	}

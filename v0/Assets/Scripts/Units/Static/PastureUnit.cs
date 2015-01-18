@@ -11,6 +11,7 @@ public class PastureUnit : StaticUnit, IInventoryHolder, IActionable, IActionAcc
 
 	protected override void Awake () {
 		base.Awake ();
+		name = "Pasture";
 		Inventory = new PastureInventory ();
 		ActionsList = new PastureActionsList (this, Inventory as PastureInventory);
 		AcceptedActions = new PastureAcceptedActions ();

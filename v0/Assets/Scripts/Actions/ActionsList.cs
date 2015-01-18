@@ -11,6 +11,7 @@ namespace GameActions {
 			get { return actions; }
 		}
 
+		// get rid of this?
 		Action activeAction = null;
 		public Action ActiveAction {
 			get { return activeAction; }
@@ -33,6 +34,10 @@ namespace GameActions {
 			if (actions.Count == 1) {
 				activeAction = actions[0];
 			}
+		}
+
+		public void Remove<T> () where T : Action {
+			actions.Remove (Get<T> ());
 		}
 
 		// Start the active action

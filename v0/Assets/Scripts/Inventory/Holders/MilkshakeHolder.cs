@@ -6,6 +6,6 @@ namespace GameInventory {
 	
 	public class MilkshakeHolder : ItemHolder<MilkshakeItem> {
 
-		public MilkshakeHolder (int capacity) : base ("Milkshake", capacity) {} 
+		public MilkshakeHolder (int capacity=5) : base ("Milkshake", capacity) {} 
 	}
 }

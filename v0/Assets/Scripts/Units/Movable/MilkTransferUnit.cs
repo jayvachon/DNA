@@ -10,7 +10,8 @@ public class MilkTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 
 	protected override void Awake () {
 		base.Awake ();
-		Inventory = new MilkTranserInventory ();
+		name = "Milk Distributor";
+		Inventory = new MilkTransferInventory ();
 		ActionsList = new MilkTransferActionsList (this, Inventory);
 		InventoryDrawer.Create (MyTransform, Inventory);
 	}
@@ -24,9 +25,9 @@ public class MilkTransferUnit : MovableUnit, IInventoryHolder, IActionable {
 	}
 }
 
-public class MilkTranserInventory : Inventory {
+public class MilkTransferInventory : Inventory {
 
-	public MilkTranserInventory () {
+	public MilkTransferInventory () {
 		Add (new MilkHolder (5, 0));
 	}
 }

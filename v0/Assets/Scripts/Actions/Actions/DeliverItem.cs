@@ -10,7 +10,7 @@ namespace GameActions {
 		Inventory receiver, sender;
 		int transferAmount;
 
-		public DeliverItem (Inventory sender, int transferAmount, float duration) : base (duration) {
+		public DeliverItem (Inventory sender, int transferAmount, float duration) : base ("Deliver Item", duration) {
 			this.sender = sender;
 			this.transferAmount = transferAmount;
 		}

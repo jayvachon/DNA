@@ -11,7 +11,7 @@ namespace GameActions {
 		MilkHolder milkHolder;
 		MilkshakeHolder milkshakeHolder;
 
-		public MakeMilkshake (IceCreamHolder iceCreamHolder, MilkHolder milkHolder, MilkshakeHolder milkshakeHolder, float duration=5) : base (duration, true, true) {
+		public MakeMilkshake (IceCreamHolder iceCreamHolder, MilkHolder milkHolder, MilkshakeHolder milkshakeHolder, float duration=5) : base ("Make Milkshakes", duration, true, true) {
 			this.iceCreamHolder = iceCreamHolder;
 			this.milkHolder = milkHolder;
 			this.milkshakeHolder = milkshakeHolder;

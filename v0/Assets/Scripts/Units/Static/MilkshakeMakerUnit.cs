@@ -43,8 +43,8 @@ public class MilkshakeMakerActionsList : ActionsList {
 public class MilkshakeMakerAcceptedActions : AcceptedActions {
 
 	public MilkshakeMakerAcceptedActions () {
-		Add<DeliverItem<MilkHolder>> ();
 		Add<DeliverItem<IceCreamHolder>> ();
+		Add<DeliverItem<MilkHolder>> ();
 		Add<CollectItem<MilkshakeHolder>> ();
 	}
 }

@@ -6,6 +6,10 @@ using GameInput;
 public class Unit : MBRefs, IClickable, ISelectable, IPoolable {
 
 	public UnitColorHandler colorHandler = new UnitColorHandler ();
+	new protected string name;
+	public string Name {
+		get { return name; }
+	}
 
 	protected override void Awake () {
 		base.Awake ();

@@ -9,7 +9,7 @@ public class MovableUnit : Unit, IPathable {
 
 	protected override void Awake () {
 		base.Awake ();
-		Path = Path.Create (transform);
+		Path = Path.Create (this);
 	}
 
 	public override void Click (ClickSettings settings) {
@@ -29,5 +29,19 @@ public class MovableUnit : Unit, IPathable {
 	public override void OnUnselect () {
 		base.OnUnselect ();
 		Path.Enabled = false;
+	}
+
+	public void StartMoveOnPath () {
+		Path.Move ();
+	}
+
+	public void ArriveAtPoint (IPathPoint pathPoint) {
+		StartMoveOnPath ();
+	}
+
+	void Update () {
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			StartMoveOnPath ();
+		}
 	}
 }

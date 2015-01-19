@@ -14,12 +14,8 @@ namespace Pathing {
 		bool dragging = false;
 		public bool Dragging {
 			set {
-				if (value) {
-					dragging = true;
-					Drag ();
-				} else {
-					dragging = false;
-				}
+				dragging = value;
+				if (dragging) Drag ();
 			}
 		}
 
@@ -35,19 +31,41 @@ namespace Pathing {
 			return drawer;
 		}
 
+		/**
+		 *	Public functions
+		 */
+
 		public void Init (PathPoints pathPoints) {
 			this.pathPoints = pathPoints;
 			lineRenderer = GetComponent<LineRenderer> ();
 		}
 
-		public void OnAddPoint () {
+		public void OnUpdatePoints () {
 			UpdatePositions ();
 			UpdateLineRenderer ();
-			Drag ();
+		}
+
+		/**
+		 *	Private functions
+		 */
+
+		void UpdatePositions () {
+			if (positions.Count-1 == pathPoints.Count) 
+				return;
+			positions.Clear ();
+			foreach (Vector3 position in pathPoints.Positions) {
+				positions.Add (position);
+			}
+
+			// this last position is the mouse
+			positions.Add (positions[LastPosition]);
+		}
+
+		void UpdateLineRenderer () {
+			lineRenderer.SetVertexPositions (positions);
 		}
 
 		void Drag () {
-			positions.Add (positions[LastPosition]);
 			lineRenderer.SetWidth (0.5f, 0.01f);
 			StartCoroutine (CoDrag ());
 		}
@@ -65,43 +83,6 @@ namespace Pathing {
 			positions.RemoveAt (LastPosition);
 			lineRenderer.SetWidth (0.5f, 0.5f);
 			UpdateLineRenderer ();
-		}
-
-		/*void Drag () {
-			if (dragging) return;
-			dragging = true;
-			lineRenderer.SetWidth (0.5f, 0.01f);
-			StartCoroutine (CoDrag ());
-		}
-
-		IEnumerator CoDrag () {
-			while (MouseController.Dragging) {
-				positions[LastPosition] = MouseController.MousePosition;
-				UpdateLineRenderer ();
-				yield return null;	
-			}
-			EndDrag ();
-		}
-
-		void EndDrag () {
-			dragging = false;
-			positions.RemoveAt (LastPosition);
-			lineRenderer.SetWidth (0.5f, 0.5f);
-			UpdateLineRenderer ();
-		}*/
-
-		void UpdatePositions () {
-			positions.Clear ();
-			foreach (Vector3 position in pathPoints.Positions) {
-				positions.Add (position);
-			}
-
-			// this last position is the mouse
-			//positions.Add (positions[LastPosition]);
-		}
-
-		void UpdateLineRenderer () {
-			lineRenderer.SetVertexPositions (positions);
 		}
 	}
 }

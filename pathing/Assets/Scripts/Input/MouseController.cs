@@ -49,8 +49,8 @@ namespace GameInput {
 			}
 		}
 
-		void FixedUpdate () {
-
+		void LateUpdate () {
+			
 			// Single click
 			if (Input.GetMouseButtonDown (0)) {
 				MouseDown (true);
@@ -75,7 +75,7 @@ namespace GameInput {
 			if (!Input.GetMouseButton (0) && !Input.GetMouseButton (1)) {
 				mouseDown = false;
 				dragging = false;
-			}
+			}	
 		}
 
 		void MouseDown (bool leftClick) {

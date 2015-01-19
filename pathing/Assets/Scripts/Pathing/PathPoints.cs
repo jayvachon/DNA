@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace Pathing {
 
-	public class PathPoints {
+	[System.Serializable]
+	public class PathPoints : System.Object {
 
 		List<IPathPoint> points = new List<IPathPoint> ();
 		public List<IPathPoint> Points {
@@ -25,6 +26,12 @@ namespace Pathing {
 			}
 		}
 
+		public IPathPoint FirstPoint {
+			get {
+				return points[0];
+			}
+		}
+
 		public int Count {
 			get { return points.Count; }
 		}
@@ -33,16 +40,30 @@ namespace Pathing {
 			get { return Count == 0; }
 		}
 
-		public bool Add (IPathPoint point) {
+		public bool Loop {
+			get { return FirstPoint == LastPoint; }
+		}
+
+		public void Add (IPathPoint point) {
 			if (point != LastPoint) {
 				points.Add (point);
 				UpdatePositions ();
-				return true;
 			} 
-			return false;
+		}
+
+		public void Remove (IPathPoint point) {
+			if (point == LastPoint) {
+				points.RemoveAt (Count-1);
+				UpdatePositions ();
+			}
+		}
+
+		public void RemoveSingle () {
+			if (Count == 1) points.Clear ();
 		}
 
 		void UpdatePositions () {
+			if (Count == 0) return;
 			positions.Clear ();
 			foreach (IPathPoint point in points) {
 				positions.Add (point.Position);

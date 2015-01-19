@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\Pathing\Handle.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Mover.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />

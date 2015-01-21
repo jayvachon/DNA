@@ -4,6 +4,7 @@ using GameInput;
 
 namespace Pathing {
 
+	// Deprecated ?
 	public class Handle : MonoBehaviour, IPoolable, IClickable {
 		
 		public static Handle Create (Transform parent) {
@@ -12,9 +13,9 @@ namespace Pathing {
 			return go.GetScript<Handle> ();
 		}
 
-		public void Click (ClickSettings settings) {
-		
-		}
+		public void Click (bool left) {}
+		public void Drag (bool left, Vector3 mousePosition) {}
+		public void Release (bool left) {}
 
 		public void OnCreate () {}
 		public void OnDestroy () {}

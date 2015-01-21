@@ -9,10 +9,24 @@ public class StaticUnit : Unit, IPathPoint {
 		get { return transform.position; }
 	}
 
-	public override void Click (ClickSettings settings) {
+	public override void Click (bool left) {
+		IPathable pathable = SelectionManager.Selected as IPathable;
+		if (pathable != null) {
+			pathable.Path.PointClick (this, left);
+		}
+	}
+
+	public override void Drag (bool left, Vector3 mousePosition) {
+		IPathable pathable = SelectionManager.Selected as IPathable;
+		if (pathable != null) {
+			pathable.Path.PointDrag (this, left);
+		}
+	}
+
+	/*public override void Click (ClickSettings settings) {
 		IPathable pathable = SelectionManager.Selected as IPathable;
 		if (pathable != null) {
 			pathable.Path.PointClick (this, settings);
 		}
-	}
+	}*/
 }

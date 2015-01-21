@@ -39,7 +39,20 @@ namespace Pathing {
 			transform.SetParent (mover.transform);
 		}
 
-		public void PointClick (IPathPoint point, ClickSettings settings) {
+		public void PointClick (IPathPoint point, bool left) {
+			clickedPoint = point;
+		}
+
+		public void PointDrag (IPathPoint point, bool left) {
+			if (left) {
+				AddPoint (point);
+			}
+			if (!left && mover.CanRemovePoint (point)) {
+				RemovePoint (point);
+			}
+		}
+
+		/*public void PointClick (IPathPoint point, ClickSettings settings) {
 			if (!settings.Drag) {
 				clickedPoint = point;
 			} else {
@@ -50,7 +63,7 @@ namespace Pathing {
 					RemovePoint (point);
 				}
 			}
-		}
+		}*/
 
 		public void Move () {
 			mover.Move ();
@@ -91,9 +104,9 @@ namespace Pathing {
 		}
 
 		void UpdatePoints () {
-			clickedPoint = null;
+			//clickedPoint = null;
 			pathDrawer.OnUpdatePoints ();
-			Drag ();
+			//Drag ();
 		}
 
 		void Drag () {

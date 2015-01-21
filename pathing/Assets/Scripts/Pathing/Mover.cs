@@ -28,7 +28,7 @@ namespace Pathing {
 		Vector3 PrevPosition {
 			get { 
 				if (forward) {
-					return Positions[position-1]; 
+					return Positions[Mathf.Max (0, position-1)];
 				} else {
 					return Positions[position];
 				}
@@ -40,7 +40,7 @@ namespace Pathing {
 				if (forward) {
 					return Positions[position]; 
 				} else {
-					return Positions[position-1];
+					return Positions[Mathf.Max (0, position-1)];
 				}
 			}
 		}

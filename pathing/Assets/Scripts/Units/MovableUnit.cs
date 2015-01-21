@@ -12,9 +12,8 @@ public class MovableUnit : Unit, IPathable {
 		Path = Path.Create (this);
 	}
 
-	public override void Click (ClickSettings settings) {
-		if (settings.Drag) return;
-		if (settings.Left) {
+	public override void Click (bool left) {
+		if (left) {
 			SelectionManager.ToggleSelect (this);
 		} else {
 			SelectionManager.Unselect ();

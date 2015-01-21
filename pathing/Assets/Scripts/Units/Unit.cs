@@ -10,9 +10,9 @@ public class Unit : MonoBehaviour, IClickable, ISelectable {
 		colorHandler.Init (renderer);
 	}
 
-	public virtual void Click (ClickSettings settings) {
-		
-	}
+	public virtual void Click (bool left) {}
+	public virtual void Drag (bool left, Vector3 mousePosition) {}
+	public virtual void Release (bool left) {}
 
 	public virtual void OnSelect () {
 		colorHandler.Selected = true;

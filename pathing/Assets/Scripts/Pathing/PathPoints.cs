@@ -26,6 +26,10 @@ namespace Pathing {
 			}
 		}
 
+		public Vector3 LastPosition {
+			get { return positions[positions.Count-1]; }
+		}
+
 		public IPathPoint FirstPoint {
 			get {
 				return points[0];
@@ -44,15 +48,27 @@ namespace Pathing {
 			get { return FirstPoint == LastPoint; }
 		}
 
+		bool CanAddPoint (IPathPoint point) {
+			if (point == LastPoint) return false;
+			return true;
+		}
+
 		public void Add (IPathPoint point) {
-			if (point != LastPoint) {
+			if (CanAddPoint (point)) {
 				points.Add (point);
 				UpdatePositions ();
 			} 
 		}
 
+		bool CanRemovePoint (IPathPoint point) {
+			if (point == LastPoint)
+				return true;
+			else
+				return false;
+		}
+
 		public void Remove (IPathPoint point) {
-			if (point == LastPoint) {
+			if (CanRemovePoint (point)) {
 				points.RemoveAt (Count-1);
 				UpdatePositions ();
 			}

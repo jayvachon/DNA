@@ -36,6 +36,7 @@ namespace GameInput {
 		class MouseButton {
 
 			IClickable clicked = null;
+			IClickable dragged = null;
 			bool left = true;
 			bool mouseDown = false;
 			Vector2 mousePosition = new Vector2 (0, 0);
@@ -51,13 +52,13 @@ namespace GameInput {
 				UpdateMousePosition ();
 				if (!mouseDown) {
 					mouseDown = true;
-					UpdateClicked ();
+					clicked = GetMouseOver ();
 					UpdateStartDragPosition ();
 					RaiseClick ();
 				} else if (!dragging) {
 					CheckDrag ();
 				} else if (dragging) {
-					UpdateClicked ();
+					dragged = GetMouseOver ();
 					RaiseDrag ();
 				}
 			}
@@ -78,13 +79,13 @@ namespace GameInput {
 				startDragPosition = mousePosition;
 			}
 
-			void UpdateClicked () {
+			IClickable GetMouseOver () {
 				Ray ray = Camera.main.ScreenPointToRay (mousePosition);
 				RaycastHit hit;
 				if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-					clicked = hit.transform.GetScript<IClickable>();
+					return hit.transform.GetScript<IClickable>();
 				} else {
-					clicked = null;
+					return null;
 				}
 			}
 			
@@ -101,8 +102,8 @@ namespace GameInput {
 			}
 
 			void RaiseDrag () {
-				if (clicked != null) {
-					clicked.Drag (left, new Vector3 (0, 0, 0));
+				if (dragged != null) {
+					dragged.Drag (left, new Vector3 (0, 0, 0));
 				}
 			}
 
@@ -113,10 +114,12 @@ namespace GameInput {
 			}
 		}
 
-		// temp
-		public static bool Dragging { get { return false; }}
-		public static Vector3 MousePosition { get { return new Vector3 (0,0,0); }}
-		// /temp
+		public static Vector3 MousePosition {
+			get { 
+				Vector2 mp = Input.mousePosition;
+				return Camera.main.ScreenToWorldPoint (new Vector3 (mp.x, mp.y, Camera.main.nearClipPlane));
+			}
+		}
 
 		IClickable clicked = null;
 		MouseButton leftButton = new MouseButton (true);

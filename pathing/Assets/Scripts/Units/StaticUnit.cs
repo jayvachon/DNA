@@ -23,6 +23,13 @@ public class StaticUnit : Unit, IPathPoint {
 		}
 	}
 
+	public override void Release (bool left) {
+		IPathable pathable = SelectionManager.Selected as IPathable;
+		if (pathable != null) {
+			pathable.Path.PointRelease (this, left);
+		}
+	} 
+
 	/*public override void Click (ClickSettings settings) {
 		IPathable pathable = SelectionManager.Selected as IPathable;
 		if (pathable != null) {

@@ -5,22 +5,24 @@ using GameInput;
 
 namespace Pathing {
 
-	[RequireComponent (typeof (LineRenderer))]
 	public class PathDrawer : MonoBehaviour {
 		
 		PathPoints pathPoints;
-		List<Vector3> positions = new List<Vector3> ();
-		LineRenderer lineRenderer;
+		LineDrawer pointsDrawer;
+		LineDrawer mouseDrawer;
+
 		bool dragging = false;
 		public bool Dragging {
+			get { return dragging; }
 			set {
-				dragging = value;
-				if (dragging) Drag ();
+				if (value && !dragging) {
+					dragging = true;
+					Drag ();
+				}
+				if (!value) {
+					dragging = false;
+				}
 			}
-		}
-
-		int LastPosition {
-			get { return positions.Count-1; }
 		}
 
 		public static PathDrawer Create (Transform parent, PathPoints pathPoints) {
@@ -31,58 +33,29 @@ namespace Pathing {
 			return drawer;
 		}
 
-		/**
-		 *	Public functions
-		 */
-
 		public void Init (PathPoints pathPoints) {
 			this.pathPoints = pathPoints;
-			lineRenderer = GetComponent<LineRenderer> ();
+			pointsDrawer = LineDrawer.Create (transform, 0.5f, 0.5f);
+			mouseDrawer = LineDrawer.Create (transform, 0.5f, 0.01f);
 		}
 
 		public void OnUpdatePoints () {
-			UpdatePositions ();
-			UpdateLineRenderer ();
-		}
-
-		/**
-		 *	Private functions
-		 */
-
-		void UpdatePositions () {
-			if (positions.Count-1 == pathPoints.Count) 
-				return;
-			positions.Clear ();
-			foreach (Vector3 position in pathPoints.Positions) {
-				positions.Add (position);
-			}
-
-			// this last position is the mouse
-			positions.Add (positions[LastPosition]);
-		}
-
-		void UpdateLineRenderer () {
-			lineRenderer.SetVertexPositions (positions);
+			pointsDrawer.UpdatePositions (pathPoints.Positions);
 		}
 
 		void Drag () {
-			lineRenderer.SetWidth (0.5f, 0.01f);
 			StartCoroutine (CoDrag ());
 		}
 
 		IEnumerator CoDrag () {
+			List<Vector3> positions = new List<Vector3> (new Vector3[2]);
 			while (dragging) {
-				positions[LastPosition] = MouseController.MousePosition;
-				UpdateLineRenderer ();
+				positions[0] = pathPoints.LastPosition;
+				positions[1] = MouseController.MousePosition;
+				mouseDrawer.UpdatePositions (positions);
 				yield return null;
 			}
-			EndDrag ();
-		}
-
-		void EndDrag () {
-			positions.RemoveAt (LastPosition);
-			lineRenderer.SetWidth (0.5f, 0.5f);
-			UpdateLineRenderer ();
+			mouseDrawer.Clear ();
 		}
 	}
 }

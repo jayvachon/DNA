@@ -40,30 +40,30 @@ namespace Pathing {
 		}
 
 		public void PointClick (IPathPoint point, bool left) {
-			clickedPoint = point;
+			if (pathPoints.Empty || point == pathPoints.LastPoint)
+				clickedPoint = point;
 		}
 
 		public void PointDrag (IPathPoint point, bool left) {
+			if (clickedPoint == null) return;
 			if (left) {
 				AddPoint (point);
 			}
 			if (!left && mover.CanRemovePoint (point)) {
 				RemovePoint (point);
 			}
+			if (pathPoints.Empty) {
+				pathDrawer.Dragging = false;
+			} else {
+				pathDrawer.Dragging = true;
+			}
 		}
 
-		/*public void PointClick (IPathPoint point, ClickSettings settings) {
-			if (!settings.Drag) {
-				clickedPoint = point;
-			} else {
-				if (settings.Left && CanAddPoint (point)) {
-					AddPoint (point);
-				}
-				if (settings.Right && CanRemovePoint (point)) {
-					RemovePoint (point);
-				}
-			}
-		}*/
+		public void PointRelease (IPathPoint point, bool left) {
+			clickedPoint = null;
+			pathDrawer.Dragging = false;
+			pathPoints.RemoveSingle ();
+		}
 
 		public void Move () {
 			mover.Move ();
@@ -104,30 +104,7 @@ namespace Pathing {
 		}
 
 		void UpdatePoints () {
-			//clickedPoint = null;
 			pathDrawer.OnUpdatePoints ();
-			//Drag ();
-		}
-
-		void Drag () {
-			if (dragging) return;
-			dragging = true;
-			pathDrawer.Dragging = true;
-			StartCoroutine (CoDrag ());
-		}
-
-		IEnumerator CoDrag () {
-			while (MouseController.Dragging) {
-				yield return null;	
-			}
-			EndDrag ();
-		}
-
-		void EndDrag () {
-			pathPoints.RemoveSingle ();
-			pathDrawer.Dragging = false;
-			dragging = false;
-			clickedPoint = null;
 		}
 	}
 }

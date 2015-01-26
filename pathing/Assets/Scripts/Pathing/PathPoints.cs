@@ -48,16 +48,22 @@ namespace Pathing {
 			get { return FirstPoint == LastPoint; }
 		}
 
+		public bool PointCanStart (IPathPoint point) {
+			return (Empty || point == LastPoint);
+		}
+
 		bool CanAddPoint (IPathPoint point) {
 			if (point == LastPoint) return false;
 			return true;
 		}
 
-		public void Add (IPathPoint point) {
+		public bool Add (IPathPoint point) {
 			if (CanAddPoint (point)) {
 				points.Add (point);
 				UpdatePositions ();
+				return true;
 			} 
+			return false;
 		}
 
 		bool CanRemovePoint (IPathPoint point) {
@@ -67,11 +73,13 @@ namespace Pathing {
 				return false;
 		}
 
-		public void Remove (IPathPoint point) {
+		public bool Remove (IPathPoint point) {
 			if (CanRemovePoint (point)) {
 				points.RemoveAt (Count-1);
 				UpdatePositions ();
+				return true;
 			}
+			return false;
 		}
 
 		public void RemoveSingle () {
@@ -83,6 +91,15 @@ namespace Pathing {
 			positions.Clear ();
 			foreach (IPathPoint point in points) {
 				positions.Add (point.Position);
+			}
+
+			// Debugging
+			if (positions.Count > 2) {
+				Vector2 a = new Vector2 (positions[0].x, positions[0].z);
+				Vector2 b = new Vector2 (positions[1].x, positions[1].z);
+				Vector2 c = a - b;
+				float angle = Mathf.Atan2 (c.y, c.x) * Mathf.Rad2Deg;
+				Debug.Log ("------------------ angle between two points: " + angle);
 			}
 		}
 	}

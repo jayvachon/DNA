@@ -19,9 +19,7 @@ namespace Pathing {
 					dragging = true;
 					Drag ();
 				}
-				if (!value) {
-					dragging = false;
-				}
+				dragging = value;
 			}
 		}
 

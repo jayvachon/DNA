@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameInput;
+using GameEvents;
 
 namespace Pathing {
 
@@ -33,6 +34,7 @@ namespace Pathing {
 		 */
 
 		public void Init (IPathable pathable) {
+			Events.instance.AddListener<ReleaseEvent> (OnReleaseEvent);
 			pathPoints = new PathPoints ();
 			pathDrawer = PathDrawer.Create (transform, pathPoints);
 			mover = Mover.Create (pathable, pathPoints);
@@ -40,29 +42,23 @@ namespace Pathing {
 		}
 
 		public void PointClick (IPathPoint point, bool left) {
-			if (pathPoints.Empty || point == pathPoints.LastPoint)
+			if (pathPoints.PointCanStart (point)) {
 				clickedPoint = point;
+				if (left) {
+					AddPoint (point);
+				} 
+			}
 		}
 
 		public void PointDrag (IPathPoint point, bool left) {
 			if (clickedPoint == null) return;
+			pathDrawer.Dragging = true;
 			if (left) {
 				AddPoint (point);
 			}
 			if (!left && mover.CanRemovePoint (point)) {
 				RemovePoint (point);
 			}
-			if (pathPoints.Empty) {
-				pathDrawer.Dragging = false;
-			} else {
-				pathDrawer.Dragging = true;
-			}
-		}
-
-		public void PointRelease (IPathPoint point, bool left) {
-			clickedPoint = null;
-			pathDrawer.Dragging = false;
-			pathPoints.RemoveSingle ();
 		}
 
 		public void Move () {
@@ -73,38 +69,28 @@ namespace Pathing {
 		 *	Private functions
 		 */
 
-		bool CanAddPoint (IPathPoint point) {
-			if (point == clickedPoint) {
-				if (pathPoints.Empty || point == pathPoints.LastPoint)
-					return true;
-			} else {
-				return dragging;
-			}
-			return false;
-		}
-
-		bool CanRemovePoint (IPathPoint point) {
-			if (point == clickedPoint) {
-				if (point == pathPoints.LastPoint)
-					return mover.CanRemovePoint (point);
-			} else if (dragging) {
-				return mover.CanRemovePoint (point);
-			}
-			return false;
-		}
-
 		void AddPoint (IPathPoint point) {
-			pathPoints.Add (point);
-			UpdatePoints ();
+			if (pathPoints.Add (point)) 
+				UpdatePoints ();
 		}
 
 		void RemovePoint (IPathPoint point) {
-			pathPoints.Remove (point);
-			UpdatePoints ();
+			if (pathPoints.Remove (point))
+				UpdatePoints ();
 		}
 
 		void UpdatePoints () {
 			pathDrawer.OnUpdatePoints ();
+		}
+
+		/**
+		 * 	 Events
+		 */
+
+		void OnReleaseEvent (ReleaseEvent e) {
+			clickedPoint = null;
+			pathDrawer.Dragging = false;
+			pathPoints.RemoveSingle ();
 		}
 	}
 }

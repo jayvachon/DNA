@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameInput;
 
 namespace Pathing {
 
@@ -17,22 +18,39 @@ namespace Pathing {
 			get { return positions; }
 		}
 
+		public IPathPoint FirstPoint {
+			get {
+				return points[0];
+			}
+		}
+
 		public IPathPoint LastPoint {
 			get {
-				if (points.Count == 0) {
+				if (Empty) {
 					return null;
 				}
-				return points[points.Count-1]; 
+				return points[Count-1]; 
 			}
 		}
 
 		public Vector3 LastPosition {
-			get { return positions[positions.Count-1]; }
+			get { return positions[Count-1]; }
 		}
 
-		public IPathPoint FirstPoint {
+		public Vector3 PreviousPosition {
 			get {
-				return points[0];
+				if (Count < 2) {
+					return new Vector3 (-1, -1, -1);
+				}
+				return positions[Count-2];
+			}
+		}
+
+		public float Direction {
+			get { 
+				if (PreviousPosition.Equals (new Vector3 (-1, -1, -1)))
+					return 0;
+				return ScreenPositionHandler.PointDirection (LastPosition, PreviousPosition); 
 			}
 		}
 
@@ -91,15 +109,6 @@ namespace Pathing {
 			positions.Clear ();
 			foreach (IPathPoint point in points) {
 				positions.Add (point.Position);
-			}
-
-			// Debugging
-			if (positions.Count > 2) {
-				Vector2 a = new Vector2 (positions[0].x, positions[0].z);
-				Vector2 b = new Vector2 (positions[1].x, positions[1].z);
-				Vector2 c = a - b;
-				float angle = Mathf.Atan2 (c.y, c.x) * Mathf.Rad2Deg;
-				Debug.Log ("------------------ angle between two points: " + angle);
 			}
 		}
 	}

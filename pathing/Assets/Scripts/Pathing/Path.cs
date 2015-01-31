@@ -19,7 +19,6 @@ namespace Pathing {
 		PathDrawer pathDrawer;
 		Mover mover;
 
-		bool dragging = false;
 		IPathPoint clickedPoint = null;
 		
 		public static Path Create (IPathable pathable) {
@@ -41,25 +40,32 @@ namespace Pathing {
 			transform.SetParent (mover.transform);
 		}
 
-		public void PointClick (IPathPoint point, bool left) {
-			if (pathPoints.PointCanStart (point)) {
-				clickedPoint = point;
-				if (left) {
+		/*public void PointClick (IPathPoint point, ClickSettings clickSettings) {
+			if (clickSettings.left) {
+				if (pathPoints.PointCanStart (point)) {
+					clickedPoint = point;
 					AddPoint (point);
-				} 
+				}
+			}
+		}*/
+
+		public void PointDragEnter (IPathPoint point, DragSettings dragSettings) {
+			if (!dragSettings.left) return;
+			if (pathPoints.PointCanStart (point)) {
+				AddPoint (point);
 			}
 		}
 
-		public void PointDrag (IPathPoint point, bool left) {
+		/*public void PointDrag (IPathPoint point, ClickSettings clickSettings) {
 			if (clickedPoint == null) return;
+			//bool reversing = ScreenPositionHandler.AnglesInRange (pathPoints.Direction, clickSettings.direction, 10);
 			pathDrawer.Dragging = true;
-			if (left) {
+			if (clickSettings.left) {
 				AddPoint (point);
-			}
-			if (!left && mover.CanRemovePoint (point)) {
+			} else if (mover.CanRemovePoint (point)) {
 				RemovePoint (point);
 			}
-		}
+		}*/
 
 		public void Move () {
 			mover.Move ();

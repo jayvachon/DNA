@@ -4,6 +4,194 @@ using GameEvents;
 
 namespace GameInput {
 
+	public class MouseController : MonoBehaviour {
+
+		abstract class MouseButtonHandler<T> where T : class {
+
+			protected readonly bool left = true;
+			bool mouseDown = false;
+			
+			T moused = null;
+			protected T Moused {
+				get { return moused; }
+			}
+
+			Vector2 mousePosition = Vector2.zero;
+			protected Vector2 MousePosition {
+				get { return mousePosition; }
+				set { mousePosition = value; }
+			}
+
+			public MouseButtonHandler (bool left) {
+				this.left = left;
+			}
+
+			public virtual void HandleMouseDown () {
+				MousePosition = Input.mousePosition;
+				if (!mouseDown) {
+					moused = GetMouseOver ();
+					OnDown ();
+					mouseDown = true;
+				} else {
+					OnHold ();
+				}
+			}
+
+			public virtual void HandleMouseUp () {
+				if (mouseDown) {
+					OnUp ();
+					moused = null;
+					mouseDown = false;
+				}
+			}
+
+			protected virtual void OnDown () {}
+			protected virtual void OnHold () {}
+			protected virtual void OnUp () {}
+
+			protected T GetMouseOver () {
+				Ray ray = Camera.main.ScreenPointToRay (MousePosition);
+				RaycastHit hit;
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+					return hit.transform.GetScript<T> ();
+				} else {
+					return null;
+				}
+			}
+		}
+
+		class DragHandler : MouseButtonHandler<IDraggable> {
+
+			Vector2 startDragPosition = Vector2.zero;
+			float dragThreshold = 5;
+
+			bool dragging = false;
+			public bool Dragging {
+				get { return dragging; }
+			}
+
+			IDraggable dragged = null;
+			public IDraggable Dragged {
+				get { return dragged; }
+				set {
+					if (dragged != value) {
+						IDraggable prevDragged = dragged;
+						if (prevDragged != null) {
+							prevDragged.OnDragExit (DragSettings);
+						}
+						dragged = value;
+						if (dragged != null) {
+							dragged.OnDragEnter (DragSettings);
+						}
+					} else {
+						if (dragged != null)
+							dragged.OnDrag (DragSettings);
+					}
+				}
+			}
+
+			DragSettings DragSettings {
+				get {
+					return new DragSettings (left, Moused, Dragged, Direction);
+				}
+			}
+
+			float Direction {
+				get { return ScreenPositionHandler.PointDirection (startDragPosition, MousePosition); }
+			}
+
+			public DragHandler (bool left) : base (left) {}
+
+			protected override void OnDown () {
+				startDragPosition = MousePosition;
+			}
+
+			protected override void OnHold () {
+				if (!dragging) {
+					CheckDrag ();
+				} else {
+					Dragged = GetMouseOver ();
+				}
+			}
+
+			protected override void OnUp () {
+				dragging = false;
+				Dragged = null;
+			}
+
+			void CheckDrag () {
+				if (Vector2.Distance (startDragPosition, MousePosition) > dragThreshold) {
+					dragging = true;
+				}
+			}
+		}
+
+		class ClickHandler : MouseButtonHandler<IClickable> {
+
+			public ClickHandler (bool left) : base (left) {}
+
+			protected override void OnDown () {
+				ClickSettings clickSettings = new ClickSettings (left, Moused, MousePosition);
+				if (Moused != null) {
+					Moused.OnClick (clickSettings);
+				}
+				Events.instance.Raise (new ClickEvent (clickSettings));
+			}
+		}
+
+		class ReleaseHandler : MouseButtonHandler<IReleasable> {
+
+			public ReleaseHandler (bool left) : base (left) {}
+
+			protected override void OnUp () {
+				IReleasable released = GetMouseOver ();
+				bool clicked = false;
+				if (released != null) {
+					clicked = (released == Moused);
+				}
+				ReleaseSettings releaseSettings = new ReleaseSettings (left, clicked);
+				if (released != null) {
+					released.OnRelease (releaseSettings);
+				}
+				Events.instance.Raise (new ReleaseEvent (releaseSettings));
+			}
+		}
+
+		public static Vector3 MousePosition {
+			get { return ScreenPositionHandler.ScreenToWorld (Input.mousePosition); }
+		}
+
+		ClickHandler leftClick = new ClickHandler (true);
+		ClickHandler rightClick = new ClickHandler (false);
+		DragHandler leftDrag = new DragHandler (true);
+		DragHandler rightDrag = new DragHandler (false);
+		ReleaseHandler leftRelease = new ReleaseHandler (true);
+		ReleaseHandler rightRelease = new ReleaseHandler (false);
+
+		void LateUpdate () {
+			if (Input.GetMouseButton (0)) {
+				leftClick.HandleMouseDown ();
+				leftDrag.HandleMouseDown ();
+				leftRelease.HandleMouseDown ();
+			}
+			if (Input.GetMouseButton (1)) {
+				rightClick.HandleMouseDown ();
+				rightDrag.HandleMouseDown ();
+				rightRelease.HandleMouseDown ();
+			}
+			if (!Input.GetMouseButton (0)) {
+				leftClick.HandleMouseUp ();
+				leftDrag.HandleMouseUp ();
+				leftRelease.HandleMouseUp ();
+			}
+			if (!Input.GetMouseButton (1)) {
+				rightClick.HandleMouseUp ();
+				rightDrag.HandleMouseUp ();
+				rightRelease.HandleMouseUp ();
+			}
+		}
+	}
+
 	public class ClickSettings : System.Object {
 
 		public readonly bool left;
@@ -17,118 +205,32 @@ namespace GameInput {
 		}
 	}
 
-	public class MouseController : MonoBehaviour {
+	public class DragSettings : System.Object {
 
-		class MouseButton {
-
-			IClickable clicked = null;
-			IClickable dragged = null;
-			Vector2 mousePosition = Vector2.zero;
-			Vector2 startDragPosition = Vector2.zero;
-			bool left = true;
-			bool mouseDown = false;
-			bool dragging = false;
-			float dragThreshold = 5;
-
-			public MouseButton (bool left) {
-				this.left = left;
-			}
-
-			public void HandleMouseDown () {
-				UpdateMousePosition ();
-				if (!mouseDown) {
-					UpdateStartDragPosition ();
-					RaiseClick ();
-					mouseDown = true;
-				} else if (!dragging) {
-					CheckDrag ();
-				} else if (dragging) {
-					RaiseDrag ();
-				}
-			}
-
-			public void HandleMouseUp () {
-				if (mouseDown) {
-					mouseDown = false;
-					dragging = false;
-					RaiseRelease ();				
-				}
-			}
-
-			void UpdateMousePosition () {
-				mousePosition = Input.mousePosition;
-			}
-
-			void UpdateStartDragPosition () {
-				startDragPosition = mousePosition;
-			}
-
-			IClickable GetMouseOver () {
-				Ray ray = Camera.main.ScreenPointToRay (mousePosition);
-				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-					return hit.transform.GetScript<IClickable>();
-				} else {
-					return null;
-				}
-			}
-			
-			void CheckDrag () {
-				if (Vector2.Distance (startDragPosition, mousePosition) > dragThreshold) {
-					dragging = true;
-				}
-			}
-
-			void RaiseClick () {
-				clicked = GetMouseOver ();
-				if (clicked != null) {
-					clicked.Click (left);
-					Events.instance.Raise (new ClickEvent (new ClickSettings (left, clicked, mousePosition)));
-				}
-			}
-
-			void RaiseDrag () {
-				Vector2 c = startDragPosition - mousePosition;
-				float angle = Mathf.Atan2 (c.y, c.x) * Mathf.Rad2Deg;
-				Debug.Log (angle);
-				dragged = GetMouseOver ();
-				if (dragged != null) {
-					dragged.Drag (left, Vector3.zero);
-					Events.instance.Raise (new DragEvent (new ClickSettings (left, dragged, mousePosition)));
-				}
-			}
-
-			void RaiseRelease () {
-				if (clicked != null) {
-					clicked.Release (left);	
-					Events.instance.Raise (new ReleaseEvent (new ClickSettings (left, clicked, mousePosition)));
-				}
-			}
+		public readonly bool left;
+		public readonly IDraggable firstDragged;
+		public readonly IDraggable draggable;
+		public readonly float direction;
+		public bool WasClicked {
+			get { return firstDragged == draggable; }
 		}
 
-		public static Vector3 MousePosition {
-			get { 
-				Vector2 mp = Input.mousePosition;
-				return Camera.main.ScreenToWorldPoint (new Vector3 (mp.x, mp.y, Camera.main.nearClipPlane));
-			}
+		public DragSettings (bool left, IDraggable firstDragged, IDraggable draggable, float direction) {
+			this.left = left;
+			this.firstDragged = firstDragged;
+			this.draggable = draggable;
+			this.direction = direction;
 		}
+	}
 
-		MouseButton leftButton = new MouseButton (true);
-		MouseButton rightButton = new MouseButton (false);
+	public class ReleaseSettings : System.Object {
 
-		void LateUpdate () {
-			if (Input.GetMouseButton (0)) {
-				leftButton.HandleMouseDown ();
-			}
-			if (Input.GetMouseButton (1)) {
-				rightButton.HandleMouseDown ();
-			}
-			if (!Input.GetMouseButton (0)) {
-				leftButton.HandleMouseUp ();
-			}
-			if (!Input.GetMouseButton (1)) {
-				rightButton.HandleMouseUp ();
-			}
+		public readonly bool left;
+		public readonly bool clicked;
+
+		public ReleaseSettings (bool left, bool clicked) {
+			this.left = left;
+			this.clicked = clicked;
 		}
 	}
 }

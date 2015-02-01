@@ -60,14 +60,20 @@
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickEvent.cs" />
+<<<<<<< HEAD
      <Compile Include="Assets\Scripts\EventHandling\Events\DragEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
+=======
+>>>>>>> 639715cc36125a4ce25f329e974fcc7526dda669
      <Compile Include="Assets\Scripts\EventHandling\Events\ReleaseEvent.cs" />
      <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
+     <Compile Include="Assets\Scripts\Input\IDraggable.cs" />
+     <Compile Include="Assets\Scripts\Input\IReleasable.cs" />
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
+     <Compile Include="Assets\Scripts\Input\ScreenPositionHandler.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
@@ -75,7 +81,6 @@
      <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
      <Compile Include="Assets\Scripts\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
-     <Compile Include="Assets\Scripts\Pathing\Handle.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />

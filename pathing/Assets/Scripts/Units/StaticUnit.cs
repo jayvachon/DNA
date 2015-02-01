@@ -3,23 +3,25 @@ using System.Collections;
 using GameInput;
 using Pathing;
 
-public class StaticUnit : Unit, IPathPoint {
+public class StaticUnit : Unit, IPathPoint, IDraggable {
 
 	public Vector3 Position {
 		get { return transform.position; }
 	}
 
-	public override void Click (bool left) {
+	public void OnDragEnter (DragSettings dragSettings) {
 		IPathable pathable = SelectionManager.Selected as IPathable;
 		if (pathable != null) {
-			pathable.Path.PointClick (this, left);
+			pathable.Path.PointDragEnter (dragSettings);
 		}
 	}
 
-	public override void Drag (bool left, Vector3 mousePosition) {
+	public void OnDrag (DragSettings dragSettings) {}
+
+	public void OnDragExit (DragSettings dragSettings) {
 		IPathable pathable = SelectionManager.Selected as IPathable;
 		if (pathable != null) {
-			pathable.Path.PointDrag (this, left);
+			pathable.Path.PointDragExit (dragSettings);
 		}
 	}
 }

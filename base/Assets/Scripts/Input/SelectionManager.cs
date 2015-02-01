@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GameEvents;
 
 namespace GameInput {
 	
@@ -15,9 +16,11 @@ namespace GameInput {
 					selected.OnUnselect ();
 				}
 				if (value == null) {
+					Events.instance.RemoveListener<ClickEvent> (OnClickEvent);
 					selected.OnUnselect ();
 					selected = value;
 				} else {
+					Events.instance.AddListener<ClickEvent> (OnClickEvent);
 					selected = value;
 					selected.OnSelect ();
 				}
@@ -46,6 +49,12 @@ namespace GameInput {
 
 		static bool IsSelected (ISelectable s) {
 			return s == selected;
+		}
+
+		static void OnClickEvent (ClickEvent e) {
+			if (e.clickSettings.clickable == null) {
+				Unselect ();
+			}
 		}
 	}
 }

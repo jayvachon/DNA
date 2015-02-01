@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 
 namespace GameInput {
 	
 	public interface IClickable {
-		void RightClick ();
-		void LeftClick ();
+		void OnClick (ClickSettings clickSettings);
 	}
 }

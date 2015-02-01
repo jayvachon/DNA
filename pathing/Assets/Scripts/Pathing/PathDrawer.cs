@@ -48,7 +48,7 @@ namespace Pathing {
 		IEnumerator CoDrag () {
 			List<Vector3> positions = new List<Vector3> (new Vector3[2]);
 			while (dragging) {
-				positions[0] = pathPoints.LastPosition;
+				positions[0] = pathPoints.DragPosition;
 				positions[1] = MouseController.MousePosition;
 				mouseDrawer.UpdatePositions (positions);
 				yield return null;

@@ -11,8 +11,6 @@ public class Unit : MonoBehaviour, IClickable, ISelectable {
 	}
 
 	public virtual void OnClick (ClickSettings clickSettings) {}
-	//public virtual void Drag (ClickSettings clickSettings) {}
-	//public virtual void Release (ClickSettings clickSettings) {}
 
 	public virtual void OnSelect () {
 		colorHandler.Selected = true;

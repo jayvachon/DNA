@@ -60,94 +60,6 @@ namespace GameInput {
 			}
 		}
 
-		// TODO: Break this up into ClickHandler, DragHandler, ReleaseHandler
-		/*class MouseButton {
-
-			IClickable clicked = null;
-			IClickable dragged = null;
-			Vector2 mousePosition = Vector2.zero;
-			Vector2 startDragPosition = Vector2.zero;
-			bool left = true;
-			bool mouseDown = false;
-			bool dragging = false;
-			float dragThreshold = 5;
-
-			public MouseButton (bool left) {
-				this.left = left;
-			}
-
-			public void HandleMouseDown () {
-				UpdateMousePosition ();
-				if (!mouseDown) {
-					UpdateStartDragPosition ();
-					RaiseClick ();
-					mouseDown = true;
-				} else if (!dragging) {
-					CheckDrag ();
-				} else if (dragging) {
-					RaiseDrag ();
-				}
-			}
-
-			public void HandleMouseUp () {
-				if (mouseDown) {
-					mouseDown = false;
-					dragging = false;
-					RaiseRelease ();				
-				}
-			}
-
-			void UpdateMousePosition () {
-				mousePosition = Input.mousePosition;
-			}
-
-			void UpdateStartDragPosition () {
-				startDragPosition = mousePosition;
-			}
-
-			IClickable GetMouseOver () {
-				Ray ray = Camera.main.ScreenPointToRay (mousePosition);
-				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-					return hit.transform.GetScript<IClickable>();
-				} else {
-					return null;
-				}
-			}
-			
-			void CheckDrag () {
-				if (Vector2.Distance (startDragPosition, mousePosition) > dragThreshold) {
-					dragging = true;
-				}
-			}
-
-			void RaiseClick () {
-				clicked = GetMouseOver ();
-				ClickSettings clickSettings = new ClickSettings (left, clicked, mousePosition);
-				Events.instance.Raise (new ClickEvent (clickSettings));
-				if (clicked != null) {
-					//clicked.OnClick (clickSettings);
-				}
-			}
-
-			void RaiseDrag () {
-				dragged = GetMouseOver ();
-				ClickSettings clickSettings = new ClickSettings (left, dragged, mousePosition);
-				//Events.instance.Raise (new DragEvent (clickSettings));
-				if (dragged != null) {
-					dragged.Drag (clickSettings);
-				}
-			}
-
-			void RaiseRelease () {
-				ClickSettings clickSettings = new ClickSettings (left, clicked, mousePosition);
-				Events.instance.Raise (new ReleaseEvent (clickSettings));
-				if (clicked != null) {
-					//clicked.Release (clickSettings);	
-				}
-			}
-		}*/
-
 		class DragHandler : MouseButtonHandler<IDraggable> {
 
 			Vector2 startDragPosition = Vector2.zero;
@@ -180,7 +92,7 @@ namespace GameInput {
 
 			DragSettings DragSettings {
 				get {
-					return new DragSettings (left, Moused == Dragged, Direction);
+					return new DragSettings (left, Moused, Dragged, Direction);
 				}
 			}
 
@@ -219,9 +131,11 @@ namespace GameInput {
 			public ClickHandler (bool left) : base (left) {}
 
 			protected override void OnDown () {
+				ClickSettings clickSettings = new ClickSettings (left, Moused, MousePosition);
 				if (Moused != null) {
-					Moused.OnClick (new ClickSettings (left, Moused, MousePosition));
+					Moused.OnClick (clickSettings);
 				}
+				Events.instance.Raise (new ClickEvent (clickSettings));
 			}
 		}
 
@@ -231,9 +145,15 @@ namespace GameInput {
 
 			protected override void OnUp () {
 				IReleasable released = GetMouseOver ();
+				bool clicked = false;
 				if (released != null) {
-					released.OnRelease (new ReleaseSettings (left, released == Moused));
+					clicked = (released == Moused);
 				}
+				ReleaseSettings releaseSettings = new ReleaseSettings (left, clicked);
+				if (released != null) {
+					released.OnRelease (releaseSettings);
+				}
+				Events.instance.Raise (new ReleaseEvent (releaseSettings));
 			}
 		}
 
@@ -241,36 +161,30 @@ namespace GameInput {
 			get { return ScreenPositionHandler.ScreenToWorld (Input.mousePosition); }
 		}
 
-		//MouseButton leftButton = new MouseButton (true);
-		//MouseButton rightButton = new MouseButton (false);
-		DragHandler leftDrag = new DragHandler (true);
-		DragHandler rightDrag = new DragHandler (false);
 		ClickHandler leftClick = new ClickHandler (true);
 		ClickHandler rightClick = new ClickHandler (false);
+		DragHandler leftDrag = new DragHandler (true);
+		DragHandler rightDrag = new DragHandler (false);
 		ReleaseHandler leftRelease = new ReleaseHandler (true);
 		ReleaseHandler rightRelease = new ReleaseHandler (false);
 
 		void LateUpdate () {
 			if (Input.GetMouseButton (0)) {
-				//leftButton.HandleMouseDown ();
 				leftClick.HandleMouseDown ();
 				leftDrag.HandleMouseDown ();
 				leftRelease.HandleMouseDown ();
 			}
 			if (Input.GetMouseButton (1)) {
-				//rightButton.HandleMouseDown ();
 				rightClick.HandleMouseDown ();
 				rightDrag.HandleMouseDown ();
 				rightRelease.HandleMouseDown ();
 			}
 			if (!Input.GetMouseButton (0)) {
-				//leftButton.HandleMouseUp ();
 				leftClick.HandleMouseUp ();
 				leftDrag.HandleMouseUp ();
 				leftRelease.HandleMouseUp ();
 			}
 			if (!Input.GetMouseButton (1)) {
-				//rightButton.HandleMouseUp ();
 				rightClick.HandleMouseUp ();
 				rightDrag.HandleMouseUp ();
 				rightRelease.HandleMouseUp ();
@@ -289,32 +203,23 @@ namespace GameInput {
 			this.clickable = clickable;
 			this.position = position;
 		}
-
-		// debugging
-		public void Print () {
-			Debug.Log ("left: " + left);
-			Debug.Log ("clickable: " + clickable);
-			Debug.Log ("position: " + position);
-		}
 	}
 
 	public class DragSettings : System.Object {
 
 		public readonly bool left;
-		public readonly bool clicked;
+		public readonly IDraggable firstDragged;
+		public readonly IDraggable draggable;
 		public readonly float direction;
-
-		public DragSettings (bool left, bool clicked, float direction) {
-			this.left = left;
-			this.clicked = clicked;
-			this.direction = direction;
+		public bool WasClicked {
+			get { return firstDragged == draggable; }
 		}
 
-		// debugging
-		public void Print () {
-			Debug.Log ("left: " + left);
-			Debug.Log ("clicked: " + clicked);
-			Debug.Log ("direction: " + direction);
+		public DragSettings (bool left, IDraggable firstDragged, IDraggable draggable, float direction) {
+			this.left = left;
+			this.firstDragged = firstDragged;
+			this.draggable = draggable;
+			this.direction = direction;
 		}
 	}
 
@@ -326,12 +231,6 @@ namespace GameInput {
 		public ReleaseSettings (bool left, bool clicked) {
 			this.left = left;
 			this.clicked = clicked;
-		}
-
-		// debugging
-		public void Print () {
-			Debug.Log ("left: " + left);
-			Debug.Log ("clicked: " + clicked);
 		}
 	}
 }

@@ -4,7 +4,12 @@ using GameInput;
 
 namespace GameEvents {
 	
-	public class ReleaseEvent : ClickEvent {
-		public ReleaseEvent (ClickSettings clickSettings) : base (clickSettings) {}
+	public class ReleaseEvent : GameEvent {
+
+		public readonly ReleaseSettings releaseSettings;
+
+		public ReleaseEvent (ReleaseSettings releaseSettings) {
+			this.releaseSettings = releaseSettings;
+		}
 	}
 }

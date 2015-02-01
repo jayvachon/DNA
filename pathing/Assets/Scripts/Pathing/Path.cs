@@ -12,6 +12,11 @@ namespace Pathing {
 			get { return enabled; }
 			set {
 				enabled = value;
+				if (enabled) {
+					Events.instance.AddListener<ReleaseEvent> (OnReleaseEvent);
+				} else {
+					Events.instance.RemoveListener<ReleaseEvent> (OnReleaseEvent);
+				}
 			}
 		}
 
@@ -19,7 +24,7 @@ namespace Pathing {
 		PathDrawer pathDrawer;
 		Mover mover;
 
-		IPathPoint clickedPoint = null;
+		bool dragging = false;
 		
 		public static Path Create (IPathable pathable) {
 			GameObject go = new GameObject ("Path", typeof (Path));
@@ -33,39 +38,38 @@ namespace Pathing {
 		 */
 
 		public void Init (IPathable pathable) {
-			Events.instance.AddListener<ReleaseEvent> (OnReleaseEvent);
 			pathPoints = new PathPoints ();
 			pathDrawer = PathDrawer.Create (transform, pathPoints);
 			mover = Mover.Create (pathable, pathPoints);
 			transform.SetParent (mover.transform);
 		}
 
-		/*public void PointClick (IPathPoint point, ClickSettings clickSettings) {
-			if (clickSettings.left) {
-				if (pathPoints.PointCanStart (point)) {
-					clickedPoint = point;
-					AddPoint (point);
-				}
-			}
-		}*/
-
-		public void PointDragEnter (IPathPoint point, DragSettings dragSettings) {
+		public void PointDragEnter (DragSettings dragSettings) {
 			if (!dragSettings.left) return;
-			if (pathPoints.PointCanStart (point)) {
-				AddPoint (point);
+			IPathPoint point = dragSettings.draggable as IPathPoint;
+			
+			if (pathPoints.CanDragFromPoint (point)) {
+				dragging = true;
+			}
+
+			if (dragging) {
+				pathPoints.RequestAdd (point);
+				UpdatePoints ();
+				pathDrawer.Dragging = true;
 			}
 		}
 
-		/*public void PointDrag (IPathPoint point, ClickSettings clickSettings) {
-			if (clickedPoint == null) return;
-			//bool reversing = ScreenPositionHandler.AnglesInRange (pathPoints.Direction, clickSettings.direction, 10);
-			pathDrawer.Dragging = true;
-			if (clickSettings.left) {
-				AddPoint (point);
-			} else if (mover.CanRemovePoint (point)) {
-				RemovePoint (point);
+		public void PointDragExit (DragSettings dragSettings) {
+			if (!dragSettings.left) return;
+			
+			IPathPoint point = dragSettings.draggable as IPathPoint;
+			float a = ScreenPositionHandler.PointDirection (MouseController.MousePosition, point.Position);
+			
+			if (ScreenPositionHandler.AnglesInRange (pathPoints.Direction, a, 15)) {
+				pathPoints.RequestRemove (point);
+				UpdatePoints ();
 			}
-		}*/
+		}
 
 		public void Move () {
 			mover.Move ();
@@ -74,16 +78,6 @@ namespace Pathing {
 		/**
 		 *	Private functions
 		 */
-
-		void AddPoint (IPathPoint point) {
-			if (pathPoints.Add (point)) 
-				UpdatePoints ();
-		}
-
-		void RemovePoint (IPathPoint point) {
-			if (pathPoints.Remove (point))
-				UpdatePoints ();
-		}
 
 		void UpdatePoints () {
 			pathDrawer.OnUpdatePoints ();
@@ -94,9 +88,9 @@ namespace Pathing {
 		 */
 
 		void OnReleaseEvent (ReleaseEvent e) {
-			clickedPoint = null;
+			dragging = false;
 			pathDrawer.Dragging = false;
-			pathPoints.RemoveSingle ();
+			pathPoints.OnRelease ();
 		}
 	}
 }

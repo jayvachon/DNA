@@ -18,6 +18,32 @@ namespace Pathing {
 			get { return positions; }
 		}
 
+		IPathPoint queuedPoint = null;
+		IPathPoint QueuedPoint {
+			get { return queuedPoint; }
+			set { queuedPoint = value; }
+		}
+
+		public Vector3 DragPosition {
+			get {
+				if (QueuedPoint != null) {
+					return QueuedPoint.Position;
+				} else {
+					return LastPosition;
+				}
+			}
+		}
+
+		public float Direction {
+			get { 
+				if (QueuedPoint == null) {
+					return ScreenPositionHandler.PointDirection (PreviousPosition, DragPosition); 
+				} else {
+					return -1;
+				}
+			}
+		}
+
 		public IPathPoint FirstPoint {
 			get {
 				return points[0];
@@ -38,20 +64,7 @@ namespace Pathing {
 		}
 
 		public Vector3 PreviousPosition {
-			get {
-				if (Count < 2) {
-					return new Vector3 (-1, -1, -1);
-				}
-				return positions[Count-2];
-			}
-		}
-
-		public float Direction {
-			get { 
-				if (PreviousPosition.Equals (new Vector3 (-1, -1, -1)))
-					return 0;
-				return ScreenPositionHandler.PointDirection (LastPosition, PreviousPosition); 
-			}
+			get { return positions[Count-2]; }
 		}
 
 		public int Count {
@@ -70,38 +83,42 @@ namespace Pathing {
 			return (Empty || point == LastPoint);
 		}
 
-		bool CanAddPoint (IPathPoint point) {
-			if (point == LastPoint) return false;
-			return true;
+		public bool CanDragFromPoint (IPathPoint point) {
+			return Empty || point == LastPoint;
 		}
 
-		public bool Add (IPathPoint point) {
-			if (CanAddPoint (point)) {
-				points.Add (point);
-				UpdatePositions ();
-				return true;
-			} 
-			return false;
-		}
-
-		bool CanRemovePoint (IPathPoint point) {
-			if (point == LastPoint)
-				return true;
-			else
-				return false;
-		}
-
-		public bool Remove (IPathPoint point) {
-			if (CanRemovePoint (point)) {
-				points.RemoveAt (Count-1);
-				UpdatePositions ();
-				return true;
+		public void RequestAdd (IPathPoint point) {
+			if (Empty && QueuedPoint == null) {
+				QueuedPoint = point;
+			} else if (QueuedPoint != null) {
+				Add (QueuedPoint);
+				Add (point);
+				QueuedPoint = null;
+			} else {
+				if (point != LastPoint) {
+					Add (point);
+				}
 			}
-			return false;
 		}
 
-		public void RemoveSingle () {
-			if (Count == 1) points.Clear ();
+		public void RequestRemove (IPathPoint point) {
+			if (point == LastPoint) {
+				Remove ();
+			}
+		}
+
+		public void OnRelease () {
+			QueuedPoint = null;
+		}
+
+		void Add (IPathPoint point) {
+			points.Add (point);
+			UpdatePositions ();
+		}
+
+		void Remove () {
+			points.RemoveAt (Count-1);
+			UpdatePositions ();
 		}
 
 		void UpdatePositions () {

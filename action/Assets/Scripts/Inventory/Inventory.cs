@@ -7,6 +7,9 @@ namespace GameInventory {
 	public class Inventory {
 		
 		List<ItemHolder> holders = new List<ItemHolder> ();
+		public List<ItemHolder> Holders {
+			get { return holders; }
+		}
 
 		public void Add (ItemHolder holder) {
 			holders.Add (holder);
@@ -41,7 +44,15 @@ namespace GameInventory {
 			return null;
 		}
 
-		public void Transfer<T> (Inventory boundInventory, int amount=-1) where T : ItemHolder {
+		public bool Has<T> () {
+			foreach (ItemHolder holder in holders) {
+				if (holder is T)
+					return true;
+			}
+			return false;
+		}
+
+		public void Transfer<T> (Inventory boundInventory, int amount=1) where T : ItemHolder {
 			T sender = boundInventory.Get<T> () as T;
 			T receiver = Get<T> () as T;
 			receiver.Transfer (sender, amount);

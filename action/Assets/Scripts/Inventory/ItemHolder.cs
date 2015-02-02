@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 namespace GameInventory {
 
-	public abstract class ItemHolder {
+	public abstract class ItemHolder : INameable {
 		
+		public abstract string Name { get; }
+
 		protected List<Item> items;
 		public List<Item> Items {
 			get { return items; }
@@ -18,6 +20,8 @@ namespace GameInventory {
 		}
 
 		public abstract int Count { get; }
+		public abstract bool Full { get; }
+		public abstract bool Empty { get; }
 
 		public List<Item> EmptyList {
 			get { return new List<Item> (0); }
@@ -33,6 +37,10 @@ namespace GameInventory {
 
 	public class ItemHolder<T> : ItemHolder where T : Item {
 		
+		public override string Name {
+			get { return ""; }
+		}
+
 		new protected List<T> items = new List<T> ();
 		new public List<T> Items {
 			get { return items; }
@@ -40,6 +48,14 @@ namespace GameInventory {
 
 		public override int Count {
 			get { return items.Count; }
+		}
+
+		public override bool Full {
+			get { return Count == Capacity; }
+		}
+
+		public override bool Empty {
+			get { return Count == 0; }
 		}
 
 		public ItemHolder (int capacity=1) {
@@ -78,10 +94,10 @@ namespace GameInventory {
 			return temp; // returns items that were removed
 		}
 
-		public override void Transfer (ItemHolder holder, int amount=-1) {
-			if (holder is ItemHolder<T>) {
+		public override void Transfer (ItemHolder senderHolder, int amount=-1) {
+			if (senderHolder is ItemHolder<T>) {
 				if (amount == -1) amount = Capacity;
-				ItemHolder<T> sender = holder as ItemHolder<T>;
+				ItemHolder<T> sender = senderHolder as ItemHolder<T>;
 				List<Item> items = sender.Remove (amount);
 				List<Item> overflow = Add (items);
 				sender.Add (overflow);

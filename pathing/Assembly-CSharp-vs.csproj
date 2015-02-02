@@ -60,11 +60,6 @@
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickEvent.cs" />
-<<<<<<< HEAD
-     <Compile Include="Assets\Scripts\EventHandling\Events\DragEvent.cs" />
-     <Compile Include="Assets\Scripts\EventHandling\Events\MouseClickEvent.cs" />
-=======
->>>>>>> 639715cc36125a4ce25f329e974fcc7526dda669
      <Compile Include="Assets\Scripts\EventHandling\Events\ReleaseEvent.cs" />
      <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />

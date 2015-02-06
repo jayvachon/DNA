@@ -15,7 +15,7 @@ namespace GameActions {
 		}
 
 		bool autoRepeat = false;
-		public IActionTaker ActionTaker { get; set; }
+		public IActionPerformer Performer { get; set; }
 
 		public Action (float duration, bool autoStart=false, bool autoRepeat=false) {
 			this.duration = duration;
@@ -24,13 +24,13 @@ namespace GameActions {
 		}
 
 		public virtual void Start () {
-			ActionPerformer.instance.StartAction (this);
+			ActionHandler.instance.StartAction (this);
 		}
 
 		public virtual void Perform (float progress) {}
 
 		public virtual void End () {
-			ActionTaker.OnEndAction ();
+			Performer.OnEndAction ();
 			if (autoRepeat) Start ();
 		}
 	}

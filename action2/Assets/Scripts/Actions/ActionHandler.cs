@@ -3,17 +3,17 @@ using System.Collections;
 
 namespace GameActions {
 
-	public class ActionPerformer : MonoBehaviour {
+	public class ActionHandler : MonoBehaviour {
 		
-		static ActionPerformer instanceInternal = null;
-		static public ActionPerformer instance {
+		static ActionHandler instanceInternal = null;
+		static public ActionHandler instance {
 			get {
 				if (instanceInternal == null) {
-					instanceInternal = Object.FindObjectOfType(typeof (ActionPerformer)) as ActionPerformer;
+					instanceInternal = Object.FindObjectOfType(typeof (ActionHandler)) as ActionHandler;
 					if (instanceInternal == null) {
-						GameObject go = new GameObject ("ActionPerformer");
+						GameObject go = new GameObject ("ActionHandler");
 						DontDestroyOnLoad(go);
-						instanceInternal = go.AddComponent<ActionPerformer>();
+						instanceInternal = go.AddComponent<ActionHandler>();
 					}
 				}
 				return instanceInternal;

@@ -47,11 +47,34 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actions\Action.cs" />
-     <Compile Include="Assets\Scripts\Actions\ActionPerformer.cs" />
-     <Compile Include="Assets\Scripts\Actions\IActionReceiver.cs" />
-     <Compile Include="Assets\Scripts\Actions\IActionTaker.cs" />
+     <Compile Include="Assets\Scripts\Actions\ActionHandler.cs" />
+     <Compile Include="Assets\Scripts\Actions\ActionMatcher.cs" />
+     <Compile Include="Assets\Scripts\Actions\ActionSelector.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\CollectItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\ConsumeItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\DeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\GenerateItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
+     <Compile Include="Assets\Scripts\Actions\IActionPerformer.cs" />
+     <Compile Include="Assets\Scripts\Actions\Lists\AcceptableActions.cs" />
+     <Compile Include="Assets\Scripts\Actions\Lists\ActionList.cs" />
+     <Compile Include="Assets\Scripts\Actions\Lists\PerformableActions.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\MilkHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\MilkshakeHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
+     <Compile Include="Assets\Scripts\MovableUnit.cs" />
+     <Compile Include="Assets\Scripts\StaticUnit.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

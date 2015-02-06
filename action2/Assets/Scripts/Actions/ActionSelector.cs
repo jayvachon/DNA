@@ -6,24 +6,7 @@ namespace GameActions {
 
 	public class ActionSelector {
 
-		ActionList takerActions;
-		ActionList receiverActions;
-		ActionList matchingActions;
-
-		public ActionSelector (ActionList takerActions, ActionList receiverActions) {
-			this.takerActions = takerActions;
-			this.receiverActions = receiverActions;
-			MatchActions ();
-		}
-
-		void MatchActions () {
-			matchingActions = new ActionList ();
-			foreach (Action action in receiverActions.Actions) {
-				if (takerActions.Has (action)) {
-					matchingActions.Add (action);
-				}
-			}
-		}
+		
 	}
 }
 

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actions\ActionBinder.cs" />
+     <Compile Include="Assets\Scripts\Actions\ActionDrawer.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionHandler.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\AcceptorAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\Action.cs" />
@@ -78,6 +79,7 @@
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\StaticUnit.cs" />
+     <Compile Include="Assets\Scripts\Unit.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

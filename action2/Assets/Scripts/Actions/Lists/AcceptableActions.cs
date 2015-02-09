@@ -4,10 +4,17 @@ using System.Collections.Generic;
 
 namespace GameActions {
 
-	public class AcceptableActions : ActionList {
+	public class AcceptableActions : ActionList<AcceptorAction> {
 
-		public void Add (string id) {
-			AddAction (id);
+		IActionAcceptor acceptor;
+
+		public AcceptableActions (IActionAcceptor acceptor) {
+			this.acceptor = acceptor;
+		}
+
+		public void Add (string id, AcceptorAction action) {
+			action.Acceptor = acceptor;
+			AddAction (id, action);
 		}
 	}
 }

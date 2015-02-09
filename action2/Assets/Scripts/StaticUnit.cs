@@ -3,20 +3,27 @@ using System.Collections;
 using GameActions;
 using GameInventory;
 
-public class StaticUnit : MonoBehaviour, IActionPerformer, IActionAcceptor {
+public class StaticUnit : MonoBehaviour, IInventoryHolder, IActionPerformer, IActionAcceptor {
 
 	public PerformableActions PerformableActions { get; private set; }
 	public AcceptableActions AcceptableActions { get; private set; }
+	public Inventory Inventory { get; private set; }
 
 	void Awake () {
-		
-		PerformableActions = new PerformableActions (this);
-		PerformableActions.Add ("GenerateIceCream", new GenerateItem<IceCreamItem> (3));
+			
+		Inventory = new Inventory ();
+		Inventory.Add (new IceCreamHolder ());
+		Inventory.Add (new ElderHolder (5, 2));
+		Inventory.Add (new MilkHolder (5, 5));
 
-		AcceptableActions = new AcceptableActions ();
-		AcceptableActions.Add ("CollectIceCream");
-		AcceptableActions.Add ("DeliverElder");
-		AcceptableActions.Add ("CollectElder");
+		PerformableActions = new PerformableActions (this);
+		PerformableActions.Add ("GenerateIceCream", new GenerateItem<IceCreamHolder> (3));
+		PerformableActions.Add ("ConsumeMilk", new ConsumeItem<MilkHolder> (3));
+
+		AcceptableActions = new AcceptableActions (this);
+		AcceptableActions.Add ("CollectIceCream", new AcceptCollectItem<IceCreamHolder> ());
+		AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> ());
+		AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> ());
 
 		// Debugging
 		/*Debug.Log ("Static Unit Performable:");

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GameActions;
 using GameInventory;
 
@@ -13,10 +14,10 @@ public class MovableUnit : MonoBehaviour, IActionPerformer {
 	void Awake () {
 
 		PerformableActions = new PerformableActions (this);
-		PerformableActions.Add ("CollectElder", new CollectItem<ElderItem> (3));
-		PerformableActions.Add ("DeliverElder", new DeliverItem<ElderItem> (3));
-		PerformableActions.Activate ("DeliverElder");
-		PerformableActions.Activate ("CollectElder");
+		PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (3));
+		PerformableActions.Add ("DeliverElder", new DeliverItem<ElderHolder> (3));
+		PerformableActions.Enable ("DeliverElder");
+		PerformableActions.Enable ("CollectElder");
 
 		// Debugging
 		/*Debug.Log("Movable Unit:");
@@ -24,10 +25,9 @@ public class MovableUnit : MonoBehaviour, IActionPerformer {
 	}
 
 	void Start () {
-		IActionAcceptor acceptor = boundUnit as IActionAcceptor;
-		ActionMatcher matcher = new ActionMatcher ();
-		matcher.MatchActions (PerformableActions, acceptor.AcceptableActions);
-		matcher.Print ();
+		// TODO: combine these two lines into one function? either in the ActionBinder or ActionHandler?
+		List<PerformerAction> actions = ActionBinder.Bind (this, boundUnit as IActionAcceptor);
+		ActionHandler.instance.StartActions (actions);
 	}
 
 	public void OnEndAction () {}

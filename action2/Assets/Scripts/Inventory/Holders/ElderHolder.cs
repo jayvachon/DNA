@@ -10,7 +10,7 @@ namespace GameInventory {
 			get { return "Elders"; }
 		}
 		
-		public ElderHolder (int capacity=1, int startCount=0) : base (capacity) {
+		public ElderHolder (int capacity, int startCount) : base (capacity) {
 			AddNew (startCount);
 		}
 

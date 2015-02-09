@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GameInventory;
 
 namespace GameActions {
-	
-	public abstract class Action : INameable {
 
-		public virtual string Name {
-			get { return ""; }
-		}
+	public abstract class PerformerAction : Action {
 
 		float duration;
 		public float Duration {
@@ -15,9 +12,24 @@ namespace GameActions {
 		}
 
 		bool autoRepeat = false;
-		public IActionPerformer Performer { get; set; }
 
-		public Action (float duration, bool autoStart=false, bool autoRepeat=false) {
+		public IActionPerformer Performer { get; set; }
+		
+		Inventory inventory = null;
+		protected Inventory Inventory {
+			get {
+				if (inventory == null && Performer is IInventoryHolder) {
+					IInventoryHolder holder = Performer as IInventoryHolder;
+					inventory = holder.Inventory;
+				}
+				if (inventory == null) {
+					Debug.LogError ("ActionPerformer does not implement IInventoryHolder");
+				}
+				return inventory;
+			}
+		}
+
+		public PerformerAction (float duration, bool autoStart=false, bool autoRepeat=false) {
 			this.duration = duration;
 			this.autoRepeat = autoRepeat;
 			if (autoStart) Start ();

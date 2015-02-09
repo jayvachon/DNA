@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace GameActions {
 
@@ -20,11 +21,11 @@ namespace GameActions {
 			}
 		}
 
-		public void StartAction (Action action) {
+		public void StartAction (PerformerAction action) {
 			StartCoroutine (Perform (action));
 		}
 
-		IEnumerator Perform (Action action) {
+		IEnumerator Perform (PerformerAction action) {
 
 			float time = action.Duration;
 			float eTime = 0;
@@ -36,6 +37,20 @@ namespace GameActions {
 			}
 
 			action.End ();
+		}
+
+		public void StartActions (List<PerformerAction> actions) {
+			StartCoroutine (PerformActions (actions));
+		}
+
+		IEnumerator PerformActions (List<PerformerAction> actions) {
+
+			while (actions.Count > 0) {
+				yield return StartCoroutine (Perform (actions[0]));
+				actions.RemoveAt (0);
+			}
+
+			// TODO: Notify the ActionPerformer that all actions have been performed
 		}
 	}
 }

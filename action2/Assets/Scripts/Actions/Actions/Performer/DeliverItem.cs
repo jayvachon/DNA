@@ -4,7 +4,11 @@ using GameInventory;
 
 namespace GameActions {
 
-	public class DeliverItem<T> : Action where T : Item {
+	public class DeliverItem<T> : PerformerAction where T : ItemHolder {
+
+		public override string Name {
+			get { return "Deliver " + (typeof (T)); }
+		}
 
 		public DeliverItem (float duration) : base (duration) {}
 		

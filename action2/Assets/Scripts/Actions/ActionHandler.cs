@@ -10,15 +10,32 @@ namespace GameActions {
 		static public ActionHandler instance {
 			get {
 				if (instanceInternal == null) {
-					instanceInternal = Object.FindObjectOfType(typeof (ActionHandler)) as ActionHandler;
+					instanceInternal = Object.FindObjectOfType (typeof (ActionHandler)) as ActionHandler;
 					if (instanceInternal == null) {
 						GameObject go = new GameObject ("ActionHandler");
-						DontDestroyOnLoad(go);
+						DontDestroyOnLoad (go);
 						instanceInternal = go.AddComponent<ActionHandler>();
 					}
 				}
 				return instanceInternal;
 			}
+		}
+
+		public void Bind (IActionPerformer performer, IActionAcceptor acceptor) {
+			
+			List<PerformerAction> matchingActions = new List<PerformerAction> ();
+			PerformableActions performable = performer.PerformableActions;
+			AcceptableActions acceptable = acceptor.AcceptableActions;
+			performable.RefreshEnabledActions ();
+			acceptable.RefreshEnabledActions ();
+
+			foreach (var action in performable.EnabledActions) {
+				if (acceptable.EnabledActions.ContainsKey (action.Key)) {
+					matchingActions.Add (action.Value);
+				}
+			}
+
+			StartActions (matchingActions);
 		}
 
 		public void StartAction (PerformerAction action) {

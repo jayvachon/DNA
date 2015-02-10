@@ -25,9 +25,7 @@ public class MovableUnit : MonoBehaviour, IActionPerformer {
 	}
 
 	void Start () {
-		// TODO: combine these two lines into one function? either in the ActionBinder or ActionHandler?
-		List<PerformerAction> actions = ActionBinder.Bind (this, boundUnit as IActionAcceptor);
-		ActionHandler.instance.StartActions (actions);
+		ActionHandler.instance.Bind (this, boundUnit as IActionAcceptor);
 	}
 
 	public void OnEndAction () {}

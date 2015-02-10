@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Actions\ActionBinder.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionDrawer.cs" />
      <Compile Include="Assets\Scripts\Actions\ActionHandler.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\AcceptorAction.cs" />

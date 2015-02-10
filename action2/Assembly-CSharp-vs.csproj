@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionPerformer.cs" />
+     <Compile Include="Assets\Scripts\Actions\IBinder.cs" />
      <Compile Include="Assets\Scripts\Actions\Lists\AcceptableActions.cs" />
      <Compile Include="Assets\Scripts\Actions\Lists\ActionList.cs" />
      <Compile Include="Assets\Scripts\Actions\Lists\PerformableActions.cs" />

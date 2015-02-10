@@ -46,15 +46,23 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Actions\AcceptedActions.cs" />
-     <Compile Include="Assets\Scripts\Actions\Action.cs" />
-     <Compile Include="Assets\Scripts\Actions\ActionSelector.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\CollectItem.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\DeliverItem.cs" />
-     <Compile Include="Assets\Scripts\Actions\ActionsList.cs" />
-     <Compile Include="Assets\Scripts\Actions\ActionsManager.cs" />
+     <Compile Include="Assets\Scripts\Actions\ActionDrawer.cs" />
+     <Compile Include="Assets\Scripts\Actions\ActionHandler.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Abstract\AcceptorAction.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Abstract\Action.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Abstract\PerformerAction.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\ConsumeItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
-     <Compile Include="Assets\Scripts\Actions\IActionable.cs" />
+     <Compile Include="Assets\Scripts\Actions\IActionPerformer.cs" />
+     <Compile Include="Assets\Scripts\Actions\IBinder.cs" />
+     <Compile Include="Assets\Scripts\Actions\Lists\AcceptableActions.cs" />
+     <Compile Include="Assets\Scripts\Actions\Lists\ActionList.cs" />
+     <Compile Include="Assets\Scripts\Actions\Lists\PerformableActions.cs" />
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
      <Compile Include="Assets\Scripts\Debugging\ActionsDrawer.cs" />
@@ -72,6 +80,9 @@
      <Compile Include="Assets\Scripts\Input\ScreenPositionHandler.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\MilkHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\MilkshakeHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />

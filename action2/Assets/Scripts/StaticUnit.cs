@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameActions;
 using GameInventory;
+using GameActions;
 
 public class StaticUnit : MonoBehaviour, IInventoryHolder, IActionPerformer, IActionAcceptor {
 
+	public Inventory Inventory { get; private set; }
 	public PerformableActions PerformableActions { get; private set; }
 	public AcceptableActions AcceptableActions { get; private set; }
-	public Inventory Inventory { get; private set; }
 
 	void Awake () {
 			
@@ -31,6 +31,4 @@ public class StaticUnit : MonoBehaviour, IInventoryHolder, IActionPerformer, IAc
 		Debug.Log ("Static Unit Acceptable:");
 		AcceptableActions.Print ();*/
 	}
-
-	public void OnEndAction () {}
 }

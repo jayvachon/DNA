@@ -4,6 +4,6 @@ namespace GameInventory {
 
 	public interface IInventoryHolder {
 
-		Inventory Inventory { get; set; }
+		Inventory Inventory { get; }
 	}
 }

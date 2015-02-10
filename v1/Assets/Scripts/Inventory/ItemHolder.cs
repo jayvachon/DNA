@@ -27,6 +27,7 @@ namespace GameInventory {
 			get { return new List<Item> (0); }
 		}
 		
+		public abstract List<Item> Add ();
 		public abstract List<Item> Add (Item item);
 		public abstract List<Item> Add (List<Item> newItems);
 		public abstract List<Item> Remove ();
@@ -62,6 +63,10 @@ namespace GameInventory {
 			Capacity = capacity;
 		}
 
+		public override List<Item> Add () {
+			return Add (new Item () as T);
+		}
+		
 		public override List<Item> Add (Item item) {
 			List<Item> temp = new List<Item> ();
 			temp.Add (item);
@@ -74,7 +79,9 @@ namespace GameInventory {
 				newItems.RemoveAt (0);
 			}
 			if (newItems.Count > 0) {
-				return newItems; // returns items that couldn't be added
+
+				// return items that couldn't be added
+				return newItems; 
 			} else {
 				return EmptyList;
 			}
@@ -91,7 +98,9 @@ namespace GameInventory {
 				items.RemoveAt (0);
 				amount --;
 			}
-			return temp; // returns items that were removed
+
+			// return items that were removed
+			return temp; 
 		}
 
 		public override void Transfer (ItemHolder senderHolder, int amount=-1) {

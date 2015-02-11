@@ -62,7 +62,9 @@ namespace GameActions {
 
 			while (actions.Count > 0) {
 				yield return StartCoroutine (Perform (actions[0]));
-				actions.RemoveAt (0);
+				if (!actions[0].Enabled) {
+					actions.RemoveAt (0);
+				}
 			}
 
 			binder.OnEndActions ();

@@ -4,33 +4,39 @@ using System.Collections.Generic;
 
 namespace GameActions {
 
-	public class ActionDrawer : MonoBehaviour {
+	public class ActionDrawer : MBRefs {
 
-		/*ActionList actionList;
-		Dictionary<System.Type, Action> actions;
-		static int xLabel = 0;
-		int myXLabel;
+		List<PerformerAction> actions = new List<PerformerAction> ();
+		string ActionsContent {
+			get {
+				string content = "";
+				foreach (PerformerAction action in actions) {
+					content += action.Name + "\n";
+				}
+				return content;
+			}
+		}
 
-		public static void Create (Transform parent, ActionList actionList) {
+		public static ActionDrawer Create (Transform parent, List<PerformerAction> actions) {
 			GameObject go = new GameObject ("ActionDrawer", typeof (ActionDrawer));
 			go.transform.SetParent (parent);
 			ActionDrawer drawer = go.GetComponent<ActionDrawer> ();
-			drawer.Init (actionList);
+			drawer.Init (actions);
+			return drawer;
 		}
 
-		public void Init (ActionList actionList) {
-			this.actionList = actionList;
-			actions = actionList.Actions;
-			myXLabel = xLabel;
-			xLabel += 350;
+		public void Init (List<PerformerAction> actions) {
+			UpdateList (actions);
+		}
+
+		public void UpdateList (List<PerformerAction> actions) {
+			this.actions = actions;
 		}
 
 		void OnGUI () {
-			int y = 0;
-			foreach (var pair in actions) {
-				GUI.Label (new Rect (myXLabel, y, 350, 200), pair.Key.ToString ());
-				y += 20;
-			}
-		}*/
+			Vector2 labelPos = V2Position;
+			GUI.color = Color.black;
+			GUI.Label (new Rect (labelPos.x-50, labelPos.y+50, 200, 200), ActionsContent);
+		}
 	}
 }

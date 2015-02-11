@@ -16,7 +16,7 @@ public class MovableUnit : MonoBehaviour, IInventoryHolder, IActionPerformer, IB
 	void Awake () {
 
 		Inventory = new Inventory ();
-		Inventory.Add (new ElderHolder (5, 2));
+		Inventory.Add (new ElderHolder (5, 4));
 
 		PerformableActions = new PerformableActions (this);
 		PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (3));

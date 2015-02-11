@@ -6,8 +6,16 @@ namespace GameActions {
 
 	public class CollectItem<T> : PerformerAction where T : ItemHolder {
 
+		string name = "";
 		public override string Name {
-			get { return "Collect " + (typeof (T)); }
+			get { 
+				if (name == "") {
+					string typeName = typeof (T).Name;
+					typeName = typeName.Substring (0, typeName.Length-6);
+					name = "Collect " + typeName;
+				}
+				return name;
+			}
 		}
 
 		public override bool Enabled {
@@ -39,9 +47,8 @@ namespace GameActions {
 
 		public CollectItem (float duration) : base (duration) {}
 		
-		public override void End () {
-			Inventory.Transfer<T> (AcceptorInventory);
-			base.End ();
+		public override void OnEnd () {
+			Inventory.Transfer<T> (AcceptorInventory, 1);
 		}
 	}
 }

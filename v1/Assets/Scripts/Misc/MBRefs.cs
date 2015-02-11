@@ -3,10 +3,14 @@ using System.Collections;
 
 public class MBRefs : MonoBehaviour {
 
-	Transform myTransform;
+	Transform myTransform = null;
 	public Transform MyTransform {
-		get { return myTransform; }
-		set { myTransform = value; }
+		get { 
+			if (myTransform == null) {
+				myTransform = transform;
+			}
+			return myTransform; 
+		}
 	}
 
 	protected Vector3 startPosition;
@@ -14,8 +18,14 @@ public class MBRefs : MonoBehaviour {
 		get { return startPosition; }
 	}
 
+	protected Vector2 V2Position {
+		get {
+			Vector3 pos = Camera.main.WorldToScreenPoint (MyTransform.position);
+			return new Vector2 (pos.x, Screen.height - pos.y);
+		}
+	}
+
 	protected virtual void Awake () {
-		myTransform = transform;
-		startPosition = myTransform.position;
+		startPosition = MyTransform.position;
 	}
 }

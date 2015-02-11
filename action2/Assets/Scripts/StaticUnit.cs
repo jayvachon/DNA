@@ -13,7 +13,7 @@ public class StaticUnit : MonoBehaviour, IInventoryHolder, IActionPerformer, IAc
 			
 		Inventory = new Inventory ();
 		Inventory.Add (new IceCreamHolder ());
-		Inventory.Add (new ElderHolder (5, 2));
+		Inventory.Add (new ElderHolder (5, 3));
 		Inventory.Add (new MilkHolder (5, 5));
 
 		PerformableActions = new PerformableActions (this);

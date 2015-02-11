@@ -16,8 +16,7 @@ public class InventoryDrawer : MBRefs, IInventoryHolder {
 	}
 
 	void OnGUI () {
-		Vector3 pos = Camera.main.WorldToScreenPoint(MyTransform.position);
-		Vector2 labelPos = new Vector2 (pos.x, Screen.height - pos.y);
+		Vector2 labelPos = V2Position;
 		GUI.color = Color.black;
 		GUI.Label (new Rect (labelPos.x-50, labelPos.y, 200, 200), InventoryContents ());
 	}

@@ -23,21 +23,29 @@ namespace GameActions {
 
 		public void Bind (IBinder binder) {
 			
-			List<PerformerAction> matchingActions = new List<PerformerAction> ();
+			PerformerAction matchingAction = null;
 			IActionPerformer performer     = binder as IActionPerformer;
 			PerformableActions performable = performer.PerformableActions;
 			AcceptableActions acceptable   = binder.BoundAcceptor.AcceptableActions;
 
 			performable.RefreshEnabledActions ();
+			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
 
 			foreach (var action in performable.EnabledActions) {
+				// TODO: Left off here! Need to pass the AcceptCondition to the PerformerAction so that
+				// e.g. it can make sure it only transfers sick ElderlyItems
+				//AcceptorAction acceptorAction;
+				//if ()
 				if (acceptable.EnabledActions.ContainsKey (action.Key)) {
-					matchingActions.Add (action.Value);
+					PerformerAction performerAction = action.Value;
+					//performerAction.Bind ()
+					matchingAction = performerAction;
+					break;
 				}
 			}
 
-			StartCoroutine (PerformActions (binder, matchingActions));
+			StartCoroutine (PerformActions (binder, matchingAction));
 		}
 
 		public void StartAction (PerformerAction action) {
@@ -58,14 +66,15 @@ namespace GameActions {
 			action.End ();
 		}
 
-		IEnumerator PerformActions (IBinder binder, List<PerformerAction> actions) {
-
-			while (actions.Count > 0) {
-				yield return StartCoroutine (Perform (actions[0]));
-				actions.RemoveAt (0);
+		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
+			if (action != null) {
+				yield return StartCoroutine (Perform (action));
+				Bind (binder);
+			} else {
+				IActionPerformer performer = binder as IActionPerformer;
+				performer.PerformableActions.RefreshEnabledActions ();
+				binder.OnEndActions ();
 			}
-
-			binder.OnEndActions ();
 		}
 	}
 }

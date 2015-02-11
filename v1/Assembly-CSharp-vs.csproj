@@ -53,6 +53,9 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\PerformerAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\AcceptCondition.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\ElderCondition.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\ConsumeItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverItem.cs" />
@@ -105,7 +108,9 @@
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\House.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\MilkPool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
      <Compile Include="Assets\Scripts\Units\UnitColorHandler.cs" />

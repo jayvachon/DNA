@@ -21,5 +21,26 @@ namespace GameActions {
 				return inventory;
 			}
 		}
+
+		AcceptCondition acceptCondition;
+		public bool ConditionMet {
+			get { 
+				if (acceptCondition == null) {
+					return true;
+				}
+				return acceptCondition.Acceptable; 
+			}
+		}
+
+		public AcceptorAction (AcceptCondition acceptCondition) {
+			this.acceptCondition = acceptCondition;
+		}
+
+		public void Bind (Inventory inventory) {
+			if (acceptCondition != null) {
+				acceptCondition.Inventory = Inventory; // not the best way of doing this (Inventory will always be the same)
+				acceptCondition.PerformerInventory = inventory;
+			}
+		}
 	}
 }

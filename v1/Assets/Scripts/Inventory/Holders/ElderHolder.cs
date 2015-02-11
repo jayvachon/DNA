@@ -21,5 +21,23 @@ namespace GameInventory {
 				Add (new ElderItem ());
 			}
 		}
+
+		public bool HasSick () {
+			foreach (ElderItem elder in Items) {
+				if (elder.Health < 0.5f) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public bool HasHealthy () {
+			foreach (ElderItem elder in Items) {
+				if (elder.Health >= 0.5f) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }

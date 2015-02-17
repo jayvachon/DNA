@@ -4,7 +4,7 @@ using GameInventory;
 using GameActions;
 using Pathing;
 
-public class Distributor : MovableUnit, IInventoryHolder, IActionPerformer, IBinder {
+public class Distributor : MovableUnit, IInventoryHolder, IActionPerformer {
 
 	public override string Name {
 		get { return "Distributor"; }
@@ -12,7 +12,6 @@ public class Distributor : MovableUnit, IInventoryHolder, IActionPerformer, IBin
 
 	public Inventory Inventory { get; private set; }
 	public PerformableActions PerformableActions { get; private set; }
-	public IActionAcceptor BoundAcceptor { get; private set; }
 
 	protected override void Awake () {
 		base.Awake ();
@@ -30,14 +29,5 @@ public class Distributor : MovableUnit, IInventoryHolder, IActionPerformer, IBin
 		InventoryDrawer.Create (MyTransform, Inventory);
 		PerformableActions.RefreshEnabledActions ();
 		PerformableActions.SetDrawer (ActionDrawer.Create (MyTransform, PerformableActions.EnabledActionsList));
-	}
-
-	protected override void OnBindActionable (IActionAcceptor acceptor) {
-		BoundAcceptor = acceptor;
-		ActionHandler.instance.Bind (this);
-	}
-
-	public void OnEndActions () {
-		StartMoveOnPath ();
 	}
 }

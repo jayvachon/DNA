@@ -14,5 +14,9 @@ namespace GameInventory {
 			health = Random.Range (0f, 1f);
 			Debug.Log (health);
 		}
+
+		public override void Print () {
+			Debug.Log ("Elder Health: " + health);
+		}
 	}
 }

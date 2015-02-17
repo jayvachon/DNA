@@ -22,7 +22,17 @@ namespace GameActions {
 			}
 		}
 
-		AcceptCondition acceptCondition;
+		AcceptCondition acceptCondition = null;
+
+		public AcceptCondition AcceptCondition {
+			get { 
+				if (acceptCondition.Inventory == null) {
+					acceptCondition.Inventory = Inventory;
+				}
+				return acceptCondition; 
+			}
+		}
+
 		public bool ConditionMet {
 			get { 
 				if (acceptCondition == null) {
@@ -37,9 +47,8 @@ namespace GameActions {
 		}
 
 		public void Bind (Inventory inventory) {
-			if (acceptCondition != null) {
-				acceptCondition.Inventory = Inventory; // not the best way of doing this (Inventory will always be the same)
-				acceptCondition.PerformerInventory = inventory;
+			if (AcceptCondition != null) {
+				AcceptCondition.PerformerInventory = inventory;
 			}
 		}
 	}

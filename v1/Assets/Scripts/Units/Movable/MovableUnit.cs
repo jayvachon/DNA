@@ -4,9 +4,10 @@ using Pathing;
 using GameActions;
 using GameInput;
 
-public class MovableUnit : Unit, IPathable {
+public class MovableUnit : Unit, IPathable, IBinder {
 
 	public Path Path { get; set; }
+	public IActionAcceptor BoundAcceptor { get; private set; }
 
 	protected override void Awake () {
 		base.Awake ();
@@ -43,8 +44,16 @@ public class MovableUnit : Unit, IPathable {
 		}
 	}
 
-	protected virtual void OnBindActionable (IActionAcceptor acceptor) {}
+	protected virtual void OnBindActionable (IActionAcceptor acceptor) {
+		BoundAcceptor = acceptor;
+		ActionHandler.instance.Bind (this);
+	}
 
+	public void OnEndActions () {
+		StartMoveOnPath ();
+	}
+
+	// Debugging
 	void Update () {
 		if (!Path.Enabled) return;
 		if (Input.GetKeyDown (KeyCode.Space)) {

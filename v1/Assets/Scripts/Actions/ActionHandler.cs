@@ -21,9 +21,12 @@ namespace GameActions {
 			}
 		}
 
+		/**
+		 * Perform multiple actions when binding to an ActionAcceptor
+		 */
+
 		public void Bind (IBinder binder) {
 			
-			PerformerAction matchingAction = null;
 			IActionPerformer performer     = binder as IActionPerformer;
 			PerformableActions performable = performer.PerformableActions;
 			AcceptableActions acceptable   = binder.BoundAcceptor.AcceptableActions;
@@ -32,21 +35,34 @@ namespace GameActions {
 			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
 
+			PerformerAction matching = null;
 			foreach (var action in performable.EnabledActions) {
-				// TODO: Left off here! Need to pass the AcceptCondition to the PerformerAction so that
-				// e.g. it can make sure it only transfers sick ElderlyItems
-				//AcceptorAction acceptorAction;
-				//if ()
-				if (acceptable.EnabledActions.ContainsKey (action.Key)) {
+				AcceptorAction acceptorAction;
+				if (acceptable.EnabledActions.TryGetValue (action.Key, out acceptorAction)) {
 					PerformerAction performerAction = action.Value;
-					//performerAction.Bind ()
-					matchingAction = performerAction;
+					performerAction.Bind (acceptorAction.AcceptCondition);
+					matching = performerAction;
 					break;
 				}
 			}
 
-			StartCoroutine (PerformActions (binder, matchingAction));
+			StartCoroutine (PerformActions (binder, matching));
 		}
+		
+		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
+			if (action != null) {
+				yield return StartCoroutine (Perform (action));
+				Bind (binder);
+			} else {
+				IActionPerformer performer = binder as IActionPerformer;
+				performer.PerformableActions.RefreshEnabledActions ();
+				binder.OnEndActions ();
+			}
+		}
+
+		/**
+		 * Perform a single action
+		 */
 
 		public void StartAction (PerformerAction action) {
 			StartCoroutine (Perform (action));
@@ -64,17 +80,6 @@ namespace GameActions {
 			}
 
 			action.End ();
-		}
-
-		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
-			if (action != null) {
-				yield return StartCoroutine (Perform (action));
-				Bind (binder);
-			} else {
-				IActionPerformer performer = binder as IActionPerformer;
-				performer.PerformableActions.RefreshEnabledActions ();
-				binder.OnEndActions ();
-			}
 		}
 	}
 }

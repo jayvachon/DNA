@@ -48,7 +48,25 @@ namespace GameActions {
 		public CollectItem (float duration) : base (duration) {}
 		
 		public override void OnEnd () {
-			Inventory.Transfer<T> (AcceptorInventory, 1);
+			// TODO: brute forcing it as a proof of concept
+			// the way to do this would be to use a lambda
+			// (but this IS working)
+			if (AcceptCondition is ElderCondition) {
+				ElderCondition condition = AcceptCondition as ElderCondition;
+				ElderHolder sender = AcceptorInventory.Get<ElderHolder> () as ElderHolder;
+				ElderHolder receiver = Inventory.Get<ElderHolder> () as ElderHolder;
+				if (condition.requestSick) {
+					receiver.TransferSick (sender, 1);
+				} else {
+					receiver.TransferHealthy (sender, 1);
+				}
+				Debug.Log ("Collector's inventory:");
+				Inventory.Print ();
+				Debug.Log ("Static unit's inventory");
+				AcceptorInventory.Print ();
+			} else {
+				Inventory.Transfer<T> (AcceptorInventory, 1);
+			}
 		}
 	}
 }

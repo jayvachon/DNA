@@ -23,7 +23,8 @@ namespace GameActions {
 			}
 		}
 
-		bool requestSick;
+		// CollectItem is referencing this (but should not)
+		public readonly bool requestSick;
 		bool checkMyInventory;
 
 		public ElderCondition (bool requestSick, bool checkMyInventory) {

@@ -91,6 +91,7 @@ namespace GameInventory {
 			return Remove (1);
 		}
 
+		// TODO: add a lambda
 		public override List<Item> Remove (int amount) {
 			List<Item> temp = new List<Item> (0);
 			while (Count > 0 && amount > 0) {
@@ -103,6 +104,7 @@ namespace GameInventory {
 			return temp; 
 		}
 
+		// TODO: add a lambda
 		public override void Transfer (ItemHolder senderHolder, int amount=-1) {
 			if (senderHolder is ItemHolder<T>) {
 				if (amount == -1) amount = Capacity;

@@ -48,7 +48,7 @@ namespace GameActions {
 		public DeliverItem (float duration) : base (duration) {}
 	
 		public override void OnEnd () {
-			AcceptorInventory.Transfer<T> (Inventory, 1);
+			AcceptorInventory.Transfer<T> (Inventory, 1, AcceptCondition.Transferable);
 		}		
 	}
 }

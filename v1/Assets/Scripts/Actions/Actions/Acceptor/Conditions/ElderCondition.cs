@@ -8,23 +8,46 @@ namespace GameActions {
 
 		public override bool Acceptable {
 			get {
-				ElderHolder holder;
-				if (checkMyInventory){
-					holder = Inventory.Get<ElderHolder> () as ElderHolder;
-				} else {
-					holder = PerformerInventory.Get<ElderHolder> () as ElderHolder;
-				}
-				
 				if (requestSick) {
-					return holder.HasSick ();
+					return Holder.Has (IsSick);
 				} else {
-					return holder.HasHealthy ();
+					return Holder.Has (IsHealthy);
 				}
 			}
 		}
 
-		// CollectItem is referencing this (but should not)
-		public readonly bool requestSick;
+		public override ItemHasAttribute Transferable {
+			get {
+				if (requestSick) {
+					return IsSick;
+				} else {
+					return IsHealthy;
+				}
+			}
+		}
+
+		ElderHolder Holder {
+			get {
+				if (checkMyInventory) {
+					return Inventory.Get<ElderHolder> () as ElderHolder;
+				} else {
+					return PerformerInventory.Get<ElderHolder> () as ElderHolder;
+				}
+			}
+		}
+
+
+		bool IsSick (Item item) {
+			ElderItem elder = item as ElderItem;
+			return elder.Health < 0.5f;
+		}
+
+		bool IsHealthy (Item item) {
+			ElderItem elder = item as ElderItem;
+			return elder.Health >= 0.5f;
+		}
+
+		bool requestSick;
 		bool checkMyInventory;
 
 		public ElderCondition (bool requestSick, bool checkMyInventory) {

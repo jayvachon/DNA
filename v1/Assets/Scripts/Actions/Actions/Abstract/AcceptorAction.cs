@@ -25,7 +25,10 @@ namespace GameActions {
 		AcceptCondition acceptCondition = null;
 
 		public AcceptCondition AcceptCondition {
-			get { 
+			get {
+				if (acceptCondition == null) {
+					acceptCondition = new DefaultCondition ();
+				}
 				if (acceptCondition.Inventory == null) {
 					acceptCondition.Inventory = Inventory;
 				}

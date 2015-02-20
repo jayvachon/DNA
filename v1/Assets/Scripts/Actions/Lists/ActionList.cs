@@ -33,6 +33,10 @@ namespace GameActions {
 			enabledActions.Remove (id);
 		}
 
+		public T Get (string id) {
+			return Actions[id] as T;
+		}
+
 		public void RefreshEnabledActions () {
 			enabledActions.Clear ();
 			foreach (var keyval in actions) {

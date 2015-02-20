@@ -9,7 +9,12 @@ public class ObjectPool : MonoBehaviour {
 
 	private static readonly Dictionary<string, ObjectPool> _poolsByName = new Dictionary<string, ObjectPool>();
 	
-	public static ObjectPool GetPool(string name) { return _poolsByName[name]; }
+	public static ObjectPool GetPool(string name) {
+		if (_poolsByName.ContainsKey (name)) {
+			return _poolsByName[name];
+		}
+		return null;
+	}
 	
 	[SerializeField]
 	private string _poolName = string.Empty;
@@ -18,7 +23,7 @@ public class ObjectPool : MonoBehaviour {
 	private Transform _prefab = null;
 	
 	[SerializeField]
-	private int _initialCount = 10;
+	private int _initialCount = 0;
 	
 	[SerializeField]
 	private bool _parentInstances = true;

@@ -26,10 +26,10 @@ namespace Pathing {
 
 		bool dragging = false;
 		
-		public static Path Create (IPathable pathable) {
+		public static Path Create (IPathable pathable, IPathMover mover) {
 			GameObject go = new GameObject ("Path", typeof (Path));
 			Path path = go.GetScript<Path> ();
-			path.Init (pathable);
+			path.Init (pathable, mover);
 			return path;
 		}
 
@@ -37,10 +37,10 @@ namespace Pathing {
 		 *	Public functions
 		 */
 
-		public void Init (IPathable pathable) {
+		public void Init (IPathable pathable, IPathMover pathMover) {
 			pathPoints = new PathPoints ();
 			pathDrawer = PathDrawer.Create (transform, pathPoints);
-			mover = Mover.Create (pathable, pathPoints);
+			mover = Mover.Create (pathable, pathMover, pathPoints);
 			transform.SetParent (mover.transform);
 		}
 

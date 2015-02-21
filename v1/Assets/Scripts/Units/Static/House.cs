@@ -18,6 +18,6 @@ public class House : StaticUnit, IInventoryHolder, IActionAcceptor  {
 		AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (true, true)));
 		AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> (new ElderCondition (false, false)));
 
-		InventoryDrawer.Create (MyTransform, Inventory);
+		InventoryDrawer.Create (UTransform, Inventory);
 	}
 }

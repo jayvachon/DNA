@@ -10,7 +10,7 @@ namespace GameInventory {
 			get { return "Milk"; }
 		}
 
-		public MilkHolder (int capacity=100, int startCount=100) : base (capacity) {
+		public MilkHolder (int capacity, int startCount) : base (capacity) {
 			AddNew (startCount);
 		}
 

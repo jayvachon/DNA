@@ -29,10 +29,16 @@ namespace GameActions {
 			}
 		}
 
+		protected AcceptCondition AcceptCondition { get; private set; }
+
 		public PerformerAction (float duration, bool autoStart=false, bool autoRepeat=false) {
 			this.duration = duration;
 			this.autoRepeat = autoRepeat;
 			if (autoStart) Start ();
+		}
+
+		public void Bind (AcceptCondition acceptCondition) {
+			AcceptCondition = acceptCondition;
 		}
 
 		public virtual void Start () {
@@ -41,8 +47,11 @@ namespace GameActions {
 
 		public virtual void Perform (float progress) {}
 
-		public virtual void End () {
+		public void End () {
+			OnEnd ();
 			if (autoRepeat) Start ();
 		}
+
+		public virtual void OnEnd () {}
 	}
 }

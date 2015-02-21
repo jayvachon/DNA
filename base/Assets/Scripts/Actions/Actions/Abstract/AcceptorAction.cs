@@ -21,5 +21,38 @@ namespace GameActions {
 				return inventory;
 			}
 		}
+
+		AcceptCondition acceptCondition = null;
+
+		public AcceptCondition AcceptCondition {
+			get {
+				if (acceptCondition == null) {
+					acceptCondition = new DefaultCondition ();
+				}
+				if (acceptCondition.Inventory == null) {
+					acceptCondition.Inventory = Inventory;
+				}
+				return acceptCondition; 
+			}
+		}
+
+		public bool ConditionMet {
+			get { 
+				if (acceptCondition == null) {
+					return true;
+				}
+				return acceptCondition.Acceptable; 
+			}
+		}
+
+		public AcceptorAction (AcceptCondition acceptCondition) {
+			this.acceptCondition = acceptCondition;
+		}
+
+		public void Bind (Inventory inventory) {
+			if (AcceptCondition != null) {
+				AcceptCondition.PerformerInventory = inventory;
+			}
+		}
 	}
 }

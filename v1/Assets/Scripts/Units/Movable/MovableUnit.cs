@@ -11,7 +11,7 @@ public class MovableUnit : Unit, IPathable, IBinder {
 
 	protected override void Awake () {
 		base.Awake ();
-		Path = Path.Create (this);
+		Path = Path.Create (this, uTransform);
 	}
 
 	public override void OnClick (ClickSettings clickSettings) {

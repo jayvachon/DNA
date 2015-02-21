@@ -21,24 +21,48 @@ namespace GameActions {
 			}
 		}
 
+		/**
+		 * Perform multiple actions when binding to an ActionAcceptor
+		 */
+
 		public void Bind (IBinder binder) {
 			
-			List<PerformerAction> matchingActions = new List<PerformerAction> ();
 			IActionPerformer performer     = binder as IActionPerformer;
 			PerformableActions performable = performer.PerformableActions;
 			AcceptableActions acceptable   = binder.BoundAcceptor.AcceptableActions;
 
 			performable.RefreshEnabledActions ();
+			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
 
+			PerformerAction matching = null;
 			foreach (var action in performable.EnabledActions) {
-				if (acceptable.EnabledActions.ContainsKey (action.Key)) {
-					matchingActions.Add (action.Value);
+				AcceptorAction acceptorAction;
+				if (acceptable.EnabledActions.TryGetValue (action.Key, out acceptorAction)) {
+					PerformerAction performerAction = action.Value;
+					performerAction.Bind (acceptorAction.AcceptCondition);
+					matching = performerAction;
+					break;
 				}
 			}
 
-			StartCoroutine (PerformActions (binder, matchingActions));
+			StartCoroutine (PerformActions (binder, matching));
 		}
+		
+		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
+			if (action != null) {
+				yield return StartCoroutine (Perform (action));
+				Bind (binder);
+			} else {
+				IActionPerformer performer = binder as IActionPerformer;
+				performer.PerformableActions.RefreshEnabledActions ();
+				binder.OnEndActions ();
+			}
+		}
+
+		/**
+		 * Perform a single action
+		 */
 
 		public void StartAction (PerformerAction action) {
 			StartCoroutine (Perform (action));
@@ -56,18 +80,6 @@ namespace GameActions {
 			}
 
 			action.End ();
-		}
-
-		IEnumerator PerformActions (IBinder binder, List<PerformerAction> actions) {
-
-			while (actions.Count > 0) {
-				yield return StartCoroutine (Perform (actions[0]));
-				if (!actions[0].Enabled) {
-					actions.RemoveAt (0);
-				}
-			}
-
-			binder.OnEndActions ();
 		}
 	}
 }

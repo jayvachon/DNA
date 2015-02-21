@@ -21,5 +21,12 @@ namespace GameInventory {
 				Add (new ElderItem ());
 			}
 		}
+
+		public override void Print () {
+			foreach (ElderItem item in Items) {
+				ElderItem elder = item as ElderItem;
+				elder.Print ();
+			}
+		}
 	}
 }

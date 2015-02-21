@@ -97,6 +97,7 @@
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
+     <Compile Include="Assets\Scripts\Pathing\IPathMover.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
@@ -107,6 +108,13 @@
      <Compile Include="Assets\Scripts\Pooling\IPoolable.cs" />
      <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renders\HouseRender.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\UnitColorHandler.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\UnitRender.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\UnitTransform.cs" />
+     <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />
+     <Compile Include="Assets\Scripts\Units\Managers\UnitRenderList.cs" />
+     <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Movable\MovableUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTree.cs" />
@@ -115,9 +123,6 @@
      <Compile Include="Assets\Scripts\Units\Static\MilkPool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Unit.cs" />
-     <Compile Include="Assets\Scripts\Units\UnitColorHandler.cs" />
-     <Compile Include="Assets\Scripts\Units\UnitCreator.cs" />
-     <Compile Include="Assets\Scripts\Units\UnitsList.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

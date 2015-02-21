@@ -7,6 +7,7 @@ namespace Pathing {
 	public class Mover : MBRefs {
 
 		IPathable pathable;
+		IPathMover pathMover;
 		PathPoints pathPoints;
 		int position = 0;
 		float speed = 10f;
@@ -56,17 +57,17 @@ namespace Pathing {
 			}
 		}
 
-		public static Mover Create (IPathable pathable, PathPoints pathPoints) {
+		public static Mover Create (IPathable pathable, IPathMover pathMover, PathPoints pathPoints) {
 			
 			GameObject go = new GameObject ("Mover", typeof (Mover));
 			
-			Transform t = go.transform;
-			MonoBehaviour p = pathable as MonoBehaviour;
-			t.position = p.transform.position;
-			p.transform.SetParent (t);
+			//Transform t = go.transform;
+			//MonoBehaviour p = pathable as MonoBehaviour;
+			//t.position = p.transform.position;
+			//p.transform.SetParent (t);
 			
 			Mover mover = go.GetScript<Mover> ();
-			mover.Init (pathable, pathPoints);
+			mover.Init (pathable, pathMover, pathPoints);
 			return mover;
 		}
 
@@ -74,8 +75,9 @@ namespace Pathing {
 		 *	Public functions
 		 */
 
-		public void Init (IPathable pathable, PathPoints pathPoints) {
+		public void Init (IPathable pathable, IPathMover pathMover, PathPoints pathPoints) {
 			this.pathable = pathable;
+			this.pathMover = pathMover;
 			this.pathPoints = pathPoints;
 		}
 
@@ -115,7 +117,8 @@ namespace Pathing {
 
 			while (eTime < time) {
 				eTime += Time.deltaTime;
-				MyTransform.position = Vector3.Lerp (start, end, eTime / time);
+				//MyTransform.position = Vector3.Lerp (start, end, eTime / time);
+				pathMover.Position = Vector3.Lerp (start, end, eTime / time);
 				yield return null;
 			}
 

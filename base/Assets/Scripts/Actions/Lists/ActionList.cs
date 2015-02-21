@@ -33,6 +33,10 @@ namespace GameActions {
 			enabledActions.Remove (id);
 		}
 
+		public T Get (string id) {
+			return Actions[id] as T;
+		}
+
 		public void RefreshEnabledActions () {
 			enabledActions.Clear ();
 			foreach (var keyval in actions) {
@@ -41,11 +45,36 @@ namespace GameActions {
 					enabledActions.Add (keyval.Key, action as T);
 				}
 			}
+
+			// Debugging
+			UpdateDrawer ();
 		}
 
 		/**
 		 *	Debugging
 		 */
+
+		ActionDrawer drawer = null;
+
+		public List<PerformerAction> EnabledActionsList {
+			get {
+				List<PerformerAction> list = new List<PerformerAction> ();
+				foreach (var action in enabledActions) {
+					list.Add (action.Value as PerformerAction);
+				}
+				return list;
+			}
+		}
+
+		public void SetDrawer (ActionDrawer drawer) {
+			this.drawer = drawer;
+		}
+
+		void UpdateDrawer () {
+			if (drawer != null) {
+				drawer.UpdateList (EnabledActionsList);
+			}
+		}
 
 		public virtual void Print () {
 			foreach (var action in actions) {

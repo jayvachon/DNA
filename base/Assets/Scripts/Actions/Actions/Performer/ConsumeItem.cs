@@ -21,9 +21,8 @@ namespace GameActions {
 
 		public ConsumeItem (float duration) : base (duration, true, true) {}
 		
-		public override void End () {
+		public override void OnEnd () {
 			Holder.Remove ();
-			base.End ();
 		}
 	}
 }

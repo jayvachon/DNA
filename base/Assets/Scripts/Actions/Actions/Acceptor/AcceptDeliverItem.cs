@@ -7,7 +7,7 @@ namespace GameActions {
 	public class AcceptDeliverItem<T> : AcceptorAction where T : ItemHolder {
 		
 		public override bool Enabled {
-			get { return !Holder.Full; }
+			get { return !Holder.Full && ConditionMet; }
 		}
 
 		ItemHolder holder = null;
@@ -22,5 +22,7 @@ namespace GameActions {
 				return holder;
 			}
 		}
+
+		public AcceptDeliverItem (AcceptCondition acceptCondition=null) : base (acceptCondition) {}
 	}
 }

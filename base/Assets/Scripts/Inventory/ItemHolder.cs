@@ -26,13 +26,15 @@ namespace GameInventory {
 		public List<Item> EmptyList {
 			get { return new List<Item> (0); }
 		}
-		
+
+		public abstract bool Has (ItemHasAttribute contains);
 		public abstract List<Item> Add ();
 		public abstract List<Item> Add (Item item);
 		public abstract List<Item> Add (List<Item> newItems);
 		public abstract List<Item> Remove ();
 		public abstract List<Item> Remove (int amount);
-		public abstract void Transfer (ItemHolder holder, int amount);
+		public abstract List<Item> Remove (int amount, ItemHasAttribute transferable);
+		public abstract void Transfer (ItemHolder holder, int amount, ItemHasAttribute transferable);
 		public abstract void Print ();
 	}
 
@@ -61,6 +63,15 @@ namespace GameInventory {
 
 		public ItemHolder (int capacity=1) {
 			Capacity = capacity;
+		}
+
+		public override bool Has (ItemHasAttribute contains) {
+			foreach (Item item in items) {
+				if (contains (item)) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public override List<Item> Add () {
@@ -103,11 +114,29 @@ namespace GameInventory {
 			return temp; 
 		}
 
-		public override void Transfer (ItemHolder senderHolder, int amount=-1) {
+		public override List<Item> Remove (int amount, ItemHasAttribute transferable) {
+
+			if (transferable == null) {
+				return Remove (amount);
+			}
+
+			List<Item> temp = new List<Item> (0);
+			while (Count > 0 && amount > 0) {
+				if (transferable (items[0])) {
+					temp.Add (items[0]);
+				}
+				items.RemoveAt (0);
+				amount --;
+			}
+
+			return temp;
+		}
+
+		public override void Transfer (ItemHolder senderHolder, int amount=-1, ItemHasAttribute transferable=null) {
 			if (senderHolder is ItemHolder<T>) {
 				if (amount == -1) amount = Capacity;
 				ItemHolder<T> sender = senderHolder as ItemHolder<T>;
-				List<Item> items = sender.Remove (amount);
+				List<Item> items = sender.Remove (amount, transferable);
 				List<Item> overflow = Add (items);
 				sender.Add (overflow);
 			}

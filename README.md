@@ -1,8 +1,8 @@
 DNA
 ===
-or Zango's
+or Zango's ok but not
 ----------
-### or something else
+### or very definitely something else
 
 A game about any, all, or none of the following things:
 * climate change (1y*)
@@ -16,3 +16,8 @@ I'm using Unity to build the game. My approach is to create lots of projects so 
 * in general, parts of the game should be created and edited within their own project files (and be their own namespace)
 * `base` should contain all working parts & serve as a starting point for new projects
 * attempts at making the actual game should be called `v#` (v0, v1, v2, etc)
+
+Anything called "MovableUnit" should be renamed to "MobileUnit"
+"Actions" should be renamed to "Tasks"
+
+front load the disaster. everything is a sine wave. you fall into yourself, your giving tree rebirths your population unaltered.

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Pathing;
 
 namespace Units {
 
-	public class MovableUnit : Unit {
+	public class MobileUnit : Unit {
 
 	}
 }

@@ -7,17 +7,11 @@ namespace Pathing {
 	[RequireComponent (typeof (LineRenderer))]
 	public class LineDrawer : MonoBehaviour {
 
+		public float startWidth = 0.5f;
+		public float endWidth = 0.5f;
 		LineRenderer lineRenderer;
 
-		public static LineDrawer Create (Transform parent, float startWidth, float endWidth) {
-			GameObject go = new GameObject ("LineDrawer", typeof (LineDrawer));
-			go.transform.SetParent (parent);
-			LineDrawer lineDrawer = go.GetScript<LineDrawer> ();
-			lineDrawer.Init (startWidth, endWidth);
-			return lineDrawer;
-		}
-
-		void Init (float startWidth, float endWidth) {
+		void Awake () {
 			lineRenderer = GetComponent<LineRenderer> ();
 			lineRenderer.SetWidth (startWidth, endWidth);
 		}

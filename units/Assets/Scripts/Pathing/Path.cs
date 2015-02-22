@@ -20,28 +20,22 @@ namespace Pathing {
 			}
 		}
 
+		public PathPositioner pathPositioner;
+		public PathDrawer pathDrawer;
+		
 		PathPoints pathPoints;
-		PathDrawer pathDrawer;
-		Mover mover;
+		public PathPoints Points {
+			get { return pathPoints; }
+			private set { pathPoints = value; }
+		}
+
+		public IPathable Pathable { get; set; }
 
 		bool dragging = false;
 		
-		public static Path Create (IPathable pathable, IPathMover mover) {
-			GameObject go = new GameObject ("Path", typeof (Path));
-			Path path = go.GetScript<Path> ();
-			path.Init (pathable, mover);
-			return path;
-		}
-
-		/**
-		 *	Public functions
-		 */
-
-		public void Init (IPathable pathable, IPathMover pathMover) {
-			pathPoints = new PathPoints ();
-			pathDrawer = PathDrawer.Create (transform, pathPoints);
-			mover = Mover.Create (pathable, pathMover, pathPoints);
-			transform.SetParent (mover.transform);
+		public void Init (IPathable pathable) {
+			Points = new PathPoints ();
+			Pathable = pathable;
 		}
 
 		public void PointDragEnter (DragSettings dragSettings, IPathPoint point) {
@@ -68,20 +62,12 @@ namespace Pathing {
 		}
 
 		public void Move () {
-			mover.Move ();
+			pathPositioner.Move ();
 		}
-
-		/**
-		 *	Private functions
-		 */
 
 		void UpdatePoints () {
 			pathDrawer.OnUpdatePoints ();
 		}
-
-		/**
-		 * 	 Events
-		 */
 
 		void OnReleaseEvent (ReleaseEvent e) {
 			dragging = false;

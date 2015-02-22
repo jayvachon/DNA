@@ -4,18 +4,37 @@ using System.Collections.Generic;
 
 namespace Pathing {
 
-	public class Mover : MBRefs {
+	public class PathPositioner : MBRefs {
 
-		IPathable pathable;
-		IPathMover pathMover;
-		PathPoints pathPoints;
+		public Path path;
+
 		int position = 0;
 		float speed = 10f;
 		bool moving = false;
 		bool forward = true;
-
+		
+		PathPoints pathPoints = null;
+		PathPoints Points {
+			get {
+				if (pathPoints == null) {
+					pathPoints = path.Points;
+				}
+				return pathPoints;
+			}
+		}
+		
+		IPathable pathable;
+		IPathable Pathable {
+			get {
+				if (pathable == null) {
+					pathable = path.Pathable;
+				}
+				return pathable;
+			}
+		}
+		
 		List<Vector3> Positions {
-			get { return pathPoints.Positions; }
+			get { return Points.Positions; }
 		}
 
 		int PositionsCount {
@@ -23,7 +42,7 @@ namespace Pathing {
 		}
 
 		IPathPoint CurrentPoint {
-			get { return pathPoints.Points[forward ? position : position-1]; }
+			get { return Points.Points[forward ? position : position-1]; }
 		}
 
 		Vector3 PrevPosition {
@@ -48,37 +67,13 @@ namespace Pathing {
 
 		Vector3[] Line {
 			get {
-				if (pathPoints.Count > 1) {
+				if (Points.Count > 1) {
 					IteratePosition ();
 					Vector3[] line = new Vector3[] { PrevPosition, NextPosition };
 					return line;
 				}
 				return null;
 			}
-		}
-
-		public static Mover Create (IPathable pathable, IPathMover pathMover, PathPoints pathPoints) {
-			
-			GameObject go = new GameObject ("Mover", typeof (Mover));
-			
-			//Transform t = go.transform;
-			//MonoBehaviour p = pathable as MonoBehaviour;
-			//t.position = p.transform.position;
-			//p.transform.SetParent (t);
-			
-			Mover mover = go.GetScript<Mover> ();
-			mover.Init (pathable, pathMover, pathPoints);
-			return mover;
-		}
-
-		/**
-		 *	Public functions
-		 */
-
-		public void Init (IPathable pathable, IPathMover pathMover, PathPoints pathPoints) {
-			this.pathable = pathable;
-			this.pathMover = pathMover;
-			this.pathPoints = pathPoints;
 		}
 
 		public void Move () {
@@ -117,13 +112,12 @@ namespace Pathing {
 
 			while (eTime < time) {
 				eTime += Time.deltaTime;
-				//MyTransform.position = Vector3.Lerp (start, end, eTime / time);
-				pathMover.Position = Vector3.Lerp (start, end, eTime / time);
+				Pathable.Position = Vector3.Lerp (start, end, eTime / time);
 				yield return null;
 			}
 
 			moving = false;
-			pathable.ArriveAtPoint (CurrentPoint);
+			Pathable.ArriveAtPoint (CurrentPoint);
 		}
 
 		void IteratePosition () {
@@ -136,7 +130,7 @@ namespace Pathing {
 
 		void IterateForward () {
 			if (position+1 > PositionsCount-1) {
-				if (pathPoints.Loop) {
+				if (Points.Loop) {
 					position = 1;
 				} else {
 					forward = false;
@@ -148,7 +142,7 @@ namespace Pathing {
 
 		void IterateBackward () {
 			if (position-1 < 1) {
-				if (pathPoints.Loop) {
+				if (Points.Loop) {
 					position = PositionsCount-1;
 				} else {
 					forward = true;

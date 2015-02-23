@@ -5,6 +5,7 @@ public class Branch : MonoBehaviour {
 
 	public Transform branchRender;
 	public Transform leafTransform;
+	public TreeSpawn treeSpawn;
 	public float length;
 	public float radius;
 
@@ -26,5 +27,9 @@ public class Branch : MonoBehaviour {
 			radius
 		);
 		leafTransform.SetLocalPositionZ (length);
+	}
+
+	public void Create (GivingTree givingTree) {
+		treeSpawn.givingTree = givingTree;
 	}
 }

@@ -25,7 +25,9 @@ public class GivingTree : MBRefs {
 			branchTransform.SetParent (MyTransform);
 			branchTransform.SetLocalPosition (position);
 			branchTransform.SetLocalEulerAnglesY (point.w);
-			leaves[i] = branchTransform.GetScript<Branch> ().Leaf;
+			Branch branchScript = branchTransform.GetScript<Branch> ();
+			branchScript.Create (this);
+			leaves[i] = branchScript.Leaf;
 		}
 	}
 

@@ -8,6 +8,6 @@ public class GivingTreeCreator : MonoBehaviour {
 
 	void Awake () {
 		Transform tree = Instantiate (givingTree) as Transform;
-		tree.GetScript<GivingTree> ().Create (0);
+		tree.GetScript<GivingTree> ().Create ();
 	}
 }

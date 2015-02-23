@@ -77,6 +77,7 @@
      <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
      <Compile Include="Assets\Scripts\GivingTree\Branch.cs" />
+     <Compile Include="Assets\Scripts\GivingTree\FractalManager.cs" />
      <Compile Include="Assets\Scripts\GivingTree\GivingTree.cs" />
      <Compile Include="Assets\Scripts\GivingTree\GivingTreeCreator.cs" />
      <Compile Include="Assets\Scripts\GivingTree\Helix.cs" />

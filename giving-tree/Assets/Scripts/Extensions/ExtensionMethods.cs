@@ -49,6 +49,10 @@ public static class ExtensionMethods {
 		transform.position = position;
 	}
 	
+	public static void SetLocalPosition (this Transform transform, Vector3 position) {
+		transform.localPosition = position;
+	}
+
 	public static void SetPositionX (this Transform transform, float x) {
 		Vector3 p = transform.position;
 		p.x = x;

@@ -107,4 +107,15 @@ public static class ExtensionMethods {
 		r.z = z;
 		transform.localEulerAngles = r;
 	}
+
+	// Scale
+	public static void SetLocalScaleY (this Transform transform, float y) {
+		Vector3 p = transform.localScale;
+		p.y = y;
+		transform.localScale = p;
+	}
+
+	public static void SetLocalScale (this Transform transform, float scale) {
+		transform.localScale = new Vector3 (scale, scale, scale);
+	}
 }

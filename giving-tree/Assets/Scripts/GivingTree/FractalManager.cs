@@ -78,12 +78,11 @@ public class FractalManager : MonoBehaviour {
 	}
 
 	void Zoom () {
-		testSpawn = currentIteration.ActiveLeaf.treeSpawn.GetScript<TreeSpawn> ();
-		testTreeTransform = testSpawn.nextTree;
 		testTree = currentIteration.ActiveLeaf.treeSpawn.GetScript<TreeSpawn> ().nextTree.GetScript<GivingTree> ();
 		//Debug.Log (currentIteration.ActiveLeaf.treeSpawn.GetScript<TreeSpawn> ().nextTree.GetScript<GivingTree> ().Leaves.Length);
 		//mainCamera.SetParent (currentIteration.ActiveLeaf.treeSpawn.GetScript<TreeSpawn> ().nextTree.GetScript<GivingTree> ().Leaves[4].treeSpawn); // lol
-		//StartCoroutine (CoZoom ());
+		mainCamera.SetParent (currentIteration.ActiveLeaf.treeSpawn.GetScript<TreeSpawn> ().nextTree);
+		StartCoroutine (CoZoom ());
 	}
 
 	IEnumerator CoZoom () {
@@ -102,6 +101,7 @@ public class FractalManager : MonoBehaviour {
 		while (eTime < time) {
 			eTime += Time.deltaTime;
 			mainCamera.localScale = Vector3.Lerp (targetScale, Vector3.one, Mathf.Lerp (0, 1, eTime / time));
+			mainCamera.localPosition = Vector3.zero;
 			yield return null;
 		}
 	}

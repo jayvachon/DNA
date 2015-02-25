@@ -9,12 +9,15 @@ public class GivingTree2 : MBRefs {
 	public float height;
 	public bool iterate = false;
 
-	Helix helix;
 	Transform[] treeSpawns;
-	int iteration = 0;
+	public Transform[] TreeSpawns {
+		get { return treeSpawns; }
+	}
 
-	public void Create (int iteration) {
-		this.iteration = iteration;
+	Helix helix;
+
+	protected override void Awake () {
+		base.Awake ();
 		helix = new Helix (radius, height);
 		CreateBranches ();
 	}
@@ -35,13 +38,7 @@ public class GivingTree2 : MBRefs {
 		newBranch.SetLocalEulerAnglesY (point.w);
 		return newBranch.GetScript<Branch2> ();
 	}
-
-	public void Iterate () {
-		for (int i = 0; i < treeSpawns.Length; i ++) {
-			//CreateTree (treeSpawns[i].position);
-		}
-	}
-
+	
 	void CreateTree (Vector3 position) {
 		Transform newTree = Instantiate (givingTree, position, Quaternion.identity) as Transform;
 		newTree.SetParent (MyTransform);

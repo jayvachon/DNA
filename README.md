@@ -21,3 +21,6 @@ Anything called "MovableUnit" should be renamed to "MobileUnit"
 "Actions" should be renamed to "Tasks"
 
 front load the disaster. everything is a sine wave. you fall into yourself, your giving tree rebirths your population unaltered.
+
+# Goodbye Leaf!
+## Messages for the fossil history:

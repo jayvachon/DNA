@@ -7,11 +7,16 @@ public class GivingTree2 : MBRefs {
 	public Transform branch;
 	public float radius;
 	public float height;
-	public bool iterate = false;
 
 	Transform[] treeSpawns;
 	public Transform[] TreeSpawns {
 		get { return treeSpawns; }
+	}
+
+	GameObject[] branches;
+	public GameObject[] Branches {
+		get { return branches; }
+		private set { branches = value; }
 	}
 
 	Helix helix;
@@ -25,8 +30,11 @@ public class GivingTree2 : MBRefs {
 	void CreateBranches () {
 		Vector4[] points = helix.Points;
 		treeSpawns = new Transform[points.Length];
+		branches = new GameObject[points.Length];
 		for (int i = 0; i < points.Length; i ++) {
-			treeSpawns[i] = CreateBranch (points[i]).treeSpawn;
+			Branch2 branch = CreateBranch (points[i]);
+			branches[i] = branch.gameObject;
+			treeSpawns[i] = branch.treeSpawn;
 		}
 	}
 

@@ -3,38 +3,43 @@ using System.Collections;
 
 public class Iteration : MonoBehaviour {
 
-	// needs to know:
-	// where to create trees on THIS tree (treeSpawns)
-	// where to create trees on EACH LEAF (treeSpawns)
-	// which leaf we're on
-	// which leaf we're going to
-
 	public Transform prefab;
 
+	int targetTreeIndex = 9;
+	bool iterated = false;
 	GivingTree2[] trees;
-	int targetTreeIndex = 6;
 
 	GivingTree2 givingTree;
 	public GivingTree2 ThisTree {
 		get { return givingTree; }
 	}
 
+	GivingTree2 targetTree;
 	public GivingTree2 TargetTree {
-		get { return trees[targetTreeIndex]; }
+		get { return targetTree; }
+		private set { targetTree = value; }
+	}
+
+	public Transform TargetTransform {
+		get { return TargetTree.transform; }
 	}
 
 	public void Create (GivingTree2 givingTree) {
 		this.givingTree = givingTree;
-		trees = Iterate (givingTree);
+		Iterate (givingTree);
+		TargetTree = trees[targetTreeIndex];
 	}
 
-	GivingTree2[] Iterate (GivingTree2 parent) {
+	void Iterate (GivingTree2 parent) {
+		if (iterated) {
+			return;
+		}
+		iterated = true;
 		Transform[] spawns = parent.TreeSpawns;
-		GivingTree2[] trees = new GivingTree2[spawns.Length];
+		trees = new GivingTree2[spawns.Length];
 		for (int i = 0; i < spawns.Length; i ++) {
 			trees[i] = CreateTree (spawns[i].position, parent.transform);
 		}
-		return trees;
 	}
 
 	GivingTree2 CreateTree (Vector3 position, Transform parent) {
@@ -43,5 +48,15 @@ public class Iteration : MonoBehaviour {
 		GivingTree2 tree = t.GetScript<GivingTree2> ();
 		t.SetLocalScale (0.1f);
 		return tree;
+	}
+
+	public void DeactivateUntargeted () {
+		GameObject[] branches = givingTree.Branches;
+		for (int i = 0; i < trees.Length; i ++) {
+			if (trees[i] != TargetTree) {
+				branches[i].SetActive (false);
+				trees[i].gameObject.SetActive (false);
+			}
+		}
 	}
 }

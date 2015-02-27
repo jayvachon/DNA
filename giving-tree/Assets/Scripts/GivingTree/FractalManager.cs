@@ -54,7 +54,6 @@ public class FractalManager : MonoBehaviour {
 
 	public Transform givingTree;
 	public Transform mainCamera;
-
 	public TreeSpawn testSpawn;
 	public Transform testTreeTransform;
 	public GivingTree testTree;

@@ -8,9 +8,15 @@ public class GivingTree2 : MBRefs {
 	public float radius;
 	public float height;
 
+	const int targetTreeIndex = 9;
+
 	Transform[] treeSpawns;
 	public Transform[] TreeSpawns {
 		get { return treeSpawns; }
+	}
+
+	public Transform TargetTree {
+		get { return treeSpawns[targetTreeIndex]; }
 	}
 
 	GameObject[] branches;

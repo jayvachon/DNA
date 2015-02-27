@@ -8,6 +8,7 @@ public class FractalManager2 : MonoBehaviour {
 	public Iteration iteration;
 	public Transform givingTree;
 
+	int maxIterations = 4;
 	List<Iteration> iterations = new List<Iteration> ();
 
 	Iteration PreviousIteration {
@@ -23,9 +24,10 @@ public class FractalManager2 : MonoBehaviour {
 	}
 
 	void Awake () {
-		Iterate (CreateInitialTree ());
-		Iterate (NextIteration.TargetTree);
-		Iterate (NextIteration.TargetTree);
+		AddIteration (CreateInitialTree ());
+		for (int i = 0; i < maxIterations-1; i ++) {
+			AddIteration (NextIteration.TargetTree);
+		}
 		//PreviousIteration.DeactivateUntargeted ();
 		SetCameraTarget ();
 	}
@@ -37,10 +39,22 @@ public class FractalManager2 : MonoBehaviour {
 		return tree;
 	}
 
-	void Iterate (GivingTree2 tree) {
-		iterations.Add (Instantiate (iteration) as Iteration);
+	void AddIteration (GivingTree2 tree, Iteration newIteration=null) {
+		if (newIteration == null) {
+			newIteration = Instantiate (iteration) as Iteration;
+		}
+		newIteration.name = string.Format ("Iteration {0}", iterations.Count);
+		iterations.Add (newIteration);
 		NextIteration.Create (tree);
 		NextIteration.ThisTree.name = string.Format ("Tree {0}", iterations.Count);
+	}
+
+	void Iterate (GivingTree2 tree) {
+		iterations[1].transform.SetParent (transform);
+		Iteration next = iterations[0];
+		iterations.RemoveAt (0);
+		AddIteration (iterations[2].ThisTree, next);
+		//iterations.Add (next);
 	}
 
 	void SetCameraTarget () {

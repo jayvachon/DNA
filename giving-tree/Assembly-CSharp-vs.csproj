@@ -85,6 +85,9 @@
      <Compile Include="Assets\Scripts\GivingTree\2\LeafRender.cs" />
      <Compile Include="Assets\Scripts\GivingTree\2\MainCamera.cs" />
      <Compile Include="Assets\Scripts\GivingTree\2\TrunkRender.cs" />
+     <Compile Include="Assets\Scripts\GivingTree\3\FractalManager3.cs" />
+     <Compile Include="Assets\Scripts\GivingTree\3\GivingTree3.cs" />
+     <Compile Include="Assets\Scripts\GivingTree\3\Iteration3.cs" />
      <Compile Include="Assets\Scripts\GivingTree\Branch.cs" />
      <Compile Include="Assets\Scripts\GivingTree\FractalManager.cs" />
      <Compile Include="Assets\Scripts\GivingTree\GivingTree.cs" />

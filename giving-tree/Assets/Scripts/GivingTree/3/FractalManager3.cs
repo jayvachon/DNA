@@ -7,7 +7,7 @@ public class FractalManager3 : MonoBehaviour {
 	public Transform cameraAnchor;
 	public GivingTree2 treePrefab;
 
-	int maxIterations = 5;
+	int maxIterations = 3;
 	List<GivingTree2> visitableTrees = new List<GivingTree2> ();
 
 	GivingTree2 FirstTree {
@@ -29,8 +29,10 @@ public class FractalManager3 : MonoBehaviour {
 	void Awake () {
 		targetScale = transform.localScale.x / 10;
 		GivingTree2 targetTree = CreateTree (Vector3.zero, transform, true);
+		PopulateTrees (targetTree);
 		for (int i = 1; i < maxIterations; i ++) {
 			targetTree = CreateTree (targetTree.TargetTree.position, targetTree.transform, true);
+			PopulateTrees (targetTree);
 		}
 		cameraAnchor.SetPosition (LastTree.transform.position);
 	}
@@ -53,6 +55,18 @@ public class FractalManager3 : MonoBehaviour {
 		}
 
 		return tree;
+	}
+
+	void PopulateTrees (GivingTree2 onTree) {
+		for (int i = 0; i < onTree.TreeSpawns.Length; i ++) {
+			if (i == onTree.TargetTreeIndex) continue;
+			Transform t = onTree.TreeSpawns[i];
+			GivingTree2 newTree = Instantiate (treePrefab) as GivingTree2;
+			Transform newTreeTransform = newTree.transform;
+			newTreeTransform.SetPosition (t.position);
+			newTreeTransform.SetParent (onTree.transform);
+			newTreeTransform.SetLocalScale (0.1f);
+		}
 	}
 
 	void Iterate () {

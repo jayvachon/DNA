@@ -9,6 +9,9 @@ public class GivingTree2 : MBRefs {
 	public float height;
 
 	const int targetTreeIndex = 9;
+	public int TargetTreeIndex {
+		get { return targetTreeIndex; }
+	}
 
 	Transform[] treeSpawns;
 	public Transform[] TreeSpawns {

@@ -5,6 +5,7 @@ public class GivingTree2 : MBRefs {
 
 	public Transform givingTree;
 	public Transform branch;
+	public GameObject trunk;
 	public float radius;
 	public float height;
 

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LeafRender : MonoBehaviour {
+public class LeafRender : MBRefs {
 
-	void Awake () {
+	protected override void Awake () {
+		base.Awake ();
 		renderer.SetColor (Color.green);
 	}
 }

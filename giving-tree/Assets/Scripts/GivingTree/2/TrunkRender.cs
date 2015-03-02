@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TrunkRender : MonoBehaviour {
+public class TrunkRender : MBRefs {
 
-	void Awake () {
+	protected override void Awake () {
+		base.Awake ();
 		renderer.SetColor (Color.yellow);
 	}
 }

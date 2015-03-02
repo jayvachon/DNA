@@ -28,4 +28,12 @@ public class MBRefs : MonoBehaviour {
 	protected virtual void Awake () {
 		startPosition = MyTransform.position;
 	}
+
+	void OnBecameVisible () {
+		//renderer.enabled = true;
+	}
+
+	void OnBecameInvisible () {
+		//renderer.enabled = false;
+	}
 }

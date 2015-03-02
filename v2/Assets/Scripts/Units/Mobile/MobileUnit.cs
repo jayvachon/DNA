@@ -8,7 +8,7 @@ namespace Units {
 	public class MobileUnit : Unit, IBinder {
 
 		MobileUnitTransform mobileTransform;
-		MobileUnitTransform MobileTransform {
+		protected MobileUnitTransform MobileTransform {
 			get {
 				if (mobileTransform == null) {
 					mobileTransform = unitTransform as MobileUnitTransform;

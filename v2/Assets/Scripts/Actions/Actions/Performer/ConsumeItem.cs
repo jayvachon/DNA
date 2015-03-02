@@ -19,7 +19,7 @@ namespace GameActions {
 			}
 		}
 
-		public ConsumeItem (float duration) : base (duration, true, true) {}
+		public ConsumeItem (float duration, PerformCondition performCondition=null) : base (duration, true, true, performCondition) {}
 		
 		public override void OnEnd () {
 			Holder.Remove ();

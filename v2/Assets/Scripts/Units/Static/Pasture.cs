@@ -17,7 +17,7 @@ namespace Units {
 			Inventory.Add (new IceCreamHolder (5, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectIceCream", new AcceptCollectItem<ElderHolder> (new ElderCondition (false, false)));
+			AcceptableActions.Add ("CollectIceCream", new AcceptCollectItem<IceCreamHolder> ());
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add ("GenerateIceCream", new GenerateItem<IceCreamHolder> (3));

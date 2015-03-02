@@ -18,8 +18,8 @@ namespace Units {
 			Inventory.Add (new MilkshakeHolder (20, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (false, false)));
-			AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> (new ElderCondition (true, true)));
+			AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (false, true)));
+			AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> (new ElderCondition (true, false)));
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
 
 			PerformableActions = new PerformableActions (this);

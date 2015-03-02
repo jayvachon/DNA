@@ -16,7 +16,7 @@ namespace Units {
 			Inventory.Add (new MilkHolder (100, 100));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectMilk", new AcceptCollectItem<ElderHolder> (new ElderCondition (false, false)));
+			AcceptableActions.Add ("CollectMilk", new AcceptCollectItem<MilkHolder> ());
 
 			InventoryDrawer.Create (StaticTransform.transform, Inventory);
 		}

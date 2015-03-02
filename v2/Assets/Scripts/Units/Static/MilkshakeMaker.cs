@@ -24,14 +24,7 @@ namespace Units {
 			AcceptableActions.Add ("CollectMilkshake", new AcceptCollectItem<MilkshakeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateMilkshake", 
-				new GenerateItem<MilkshakeHolder> (3, new InventoryHasItemsCondition (
-					Inventory,
-					new string[] { "Milk", "Ice Cream" }
-				))
-			);
-			PerformableActions.Add ("ConsumeMilk", new ConsumeItem<MilkHolder> (3));
-			PerformableActions.Add ("ConsumeIceCream", new ConsumeItem<IceCreamHolder> (3));
+			PerformableActions.Add ("CombineMilkAndIceCream", new CombineItems<MilkHolder, IceCreamHolder, MilkshakeHolder> (5));
 
 			InventoryDrawer.Create (StaticTransform.transform, Inventory);
 		}

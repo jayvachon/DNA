@@ -23,7 +23,8 @@ namespace Units {
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("ConsumeMilkshake", new ConsumeItem<MilkshakeHolder> (3));
+			PerformableActions.Add ("ConsumeMilkshake", new ConsumeItem<MilkshakeHolder> (5));
+			PerformableActions.Add ("HealElder", new HealElder (5));
 
 			InventoryDrawer.Create (StaticTransform.transform, Inventory);
 		}

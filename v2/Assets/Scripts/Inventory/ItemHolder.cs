@@ -27,6 +27,7 @@ namespace GameInventory {
 			get { return new List<Item> (0); }
 		}
 
+		public abstract Item Get (ItemHasAttribute contains);
 		public abstract bool Has (ItemHasAttribute contains);
 		public abstract List<Item> Add ();
 		public abstract List<Item> Add (Item item);
@@ -34,6 +35,7 @@ namespace GameInventory {
 		public abstract List<Item> Remove ();
 		public abstract List<Item> Remove (int amount);
 		public abstract List<Item> Remove (int amount, ItemHasAttribute transferable);
+		public abstract void Remove<Item> (Item item);
 		public abstract void Transfer (ItemHolder holder, int amount, ItemHasAttribute transferable);
 		public abstract void Print ();
 	}
@@ -74,6 +76,15 @@ namespace GameInventory {
 			}
 		}
 
+		public override Item Get (ItemHasAttribute contains) {
+			foreach (Item item in items) {
+				if (contains (item)) {
+					return item as T;
+				}
+			}
+			return null;
+		}
+
 		public override bool Has (ItemHasAttribute contains) {
 			foreach (Item item in items) {
 				if (contains (item)) {
@@ -95,7 +106,11 @@ namespace GameInventory {
 
 		public override List<Item> Add (List<Item> newItems) {
 			while (Count < Capacity && newItems.Count > 0) {
-				items.Add (newItems[0] as T);
+				Item newItem = newItems[0];
+				items.Add (newItem as T);
+				if (newItem != null) {
+					newItem.Holder = this;
+				}
 				newItems.RemoveAt (0);
 			}
 			if (newItems.Count > 0) {
@@ -121,6 +136,10 @@ namespace GameInventory {
 
 			// return items that were removed
 			return temp; 
+		}
+
+		public override void Remove<Item> (Item item) {
+			items.Remove (item as T);
 		}
 
 		public override List<Item> Remove (int amount, ItemHasAttribute transferable) {

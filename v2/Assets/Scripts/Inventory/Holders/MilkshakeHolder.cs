@@ -4,12 +4,22 @@ using System.Collections.Generic;
 
 namespace GameInventory {
 	
+	public delegate void MilkshakeHolderFull ();
+
 	public class MilkshakeHolder : ItemHolder<MilkshakeItem> {
 
 		public override string Name {
 			get { return "Milkshakes"; }
 		}
 
-		public MilkshakeHolder (int capacity, int startCount) : base (capacity, startCount) {} 
+		MilkshakeHolderFull holderFull;
+
+		public MilkshakeHolder (int capacity, int startCount, MilkshakeHolderFull holderFull=null) : base (capacity, startCount) {
+			this.holderFull = holderFull;
+		}
+
+		public override void OnTransfer () {
+			if (holderFull != null && Full) holderFull ();
+		}
 	}
 }

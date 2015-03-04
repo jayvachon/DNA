@@ -37,6 +37,7 @@ namespace GameInventory {
 		public abstract List<Item> Remove (int amount, ItemHasAttribute transferable);
 		public abstract void Remove<Item> (Item item);
 		public abstract void Transfer (ItemHolder holder, int amount, ItemHasAttribute transferable);
+		public abstract void OnTransfer ();
 		public abstract void Print ();
 	}
 
@@ -167,8 +168,11 @@ namespace GameInventory {
 				List<Item> items = sender.Remove (amount, transferable);
 				List<Item> overflow = Add (items);
 				sender.Add (overflow);
+				OnTransfer ();
 			}
 		}
+
+		public override void OnTransfer () {}
 
 		protected List<Item> ToItemsList<Y> (List<Y> childItems) where Y : Item {
 			List<Item> temp = new List<Item> ();

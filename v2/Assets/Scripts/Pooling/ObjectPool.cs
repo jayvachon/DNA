@@ -7,9 +7,14 @@ using System.Collections.Generic;
 // All pool objects must implement the IPoolable interface
 public class ObjectPool : MonoBehaviour {
 
-	private static readonly Dictionary<string, ObjectPool> _poolsByName = new Dictionary<string, ObjectPool>();
+	private static readonly Dictionary<string, ObjectPool> _poolsByName = new Dictionary<string, ObjectPool> ();
 	
-	public static ObjectPool GetPool(string name) { return _poolsByName[name]; }
+	public static ObjectPool GetPool(string name) {
+		if (_poolsByName.ContainsKey (name)) {
+			return _poolsByName[name];
+		}
+		return null;
+	}
 	
 	[SerializeField]
 	private string _poolName = string.Empty;
@@ -18,12 +23,12 @@ public class ObjectPool : MonoBehaviour {
 	private Transform _prefab = null;
 	
 	[SerializeField]
-	private int _initialCount = 10;
+	private int _initialCount = 0;
 	
 	[SerializeField]
-	private bool _parentInstances = true;
+	private bool _parentInstances = false;
 	
-	private readonly Stack<Transform> _instances = new Stack<Transform>();
+	private readonly Stack<Transform> _instances = new Stack<Transform> ();
 	
 	public void Init (string poolName, Transform prefab) {
 		_poolName = poolName;
@@ -38,7 +43,7 @@ public class ObjectPool : MonoBehaviour {
 		}
 	}
 	
-	public Transform GetInstance(Vector3 position = new Vector3()) {
+	public Transform GetInstance (Vector3 position = new Vector3()) {
 
 		Transform t = null;
 		
@@ -50,36 +55,34 @@ public class ObjectPool : MonoBehaviour {
 		}
 		
 		t.position = position;
-		InitializeInstance(t);
+		InitializeInstance (t);
 		
 		return t;
 	}
 	
-	private void InitializeInstance(Transform instance) {
+	private void InitializeInstance (Transform instance) {
 
 		if (_parentInstances) {
 			instance.parent = transform;
 		}
 		
-		instance.gameObject.SetActive(true);
-		instance.BroadcastMessage("OnPoolCreate", this, SendMessageOptions.DontRequireReceiver);
+		instance.gameObject.SetActive (true);
 	}
 	
-	public void ReleaseInstance(Transform instance) {
+	public void ReleaseInstance (Transform instance) {
 
-		instance.BroadcastMessage("OnPoolRelease", this, SendMessageOptions.DontRequireReceiver);
-		instance.gameObject.SetActive(false);
-		_instances.Push(instance);
+		instance.gameObject.SetActive (false);
+		_instances.Push (instance);
 	}
 
-	public static Transform Instantiate ( string poolName, Vector3 position ) {
-		Transform t = ObjectPool.GetPool ( poolName ).GetInstance ( position );
-		t.GetScript<IPoolable>().OnCreate ();
+	public static Transform Instantiate (string poolName, Vector3 position) {
+		Transform t = ObjectPool.GetPool (poolName).GetInstance (position);
+		t.GetScript<IPoolable> ().OnCreate ();
 		return t;
 	}
 
-	public static void Destroy ( string poolName, Transform instance ) {
+	public static void Destroy (string poolName, Transform instance) {
 		instance.GetScript<IPoolable>().OnDestroy ();
-		ObjectPool.GetPool ( poolName ).ReleaseInstance ( instance );
+		ObjectPool.GetPool (poolName).ReleaseInstance (instance);
 	}
 }

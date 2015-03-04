@@ -108,6 +108,7 @@
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathDrawer.cs" />
+     <Compile Include="Assets\Scripts\Pathing\PathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
      <Compile Include="Assets\Scripts\Pooling\IPoolable.cs" />
@@ -121,13 +122,17 @@
      <Compile Include="Assets\Scripts\Units\Components\UnitColorHandler.cs" />
      <Compile Include="Assets\Scripts\Units\Components\UnitRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\UnitTransform.cs" />
+     <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />
+     <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\House.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkPool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkshakeMaker.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Pasture.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>

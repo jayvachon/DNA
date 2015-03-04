@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Units {
 
-	public class Unit : MonoBehaviour {
+	public class Unit : MonoBehaviour, IPoolable {
 		
 		public UnitTransform unitTransform;
 		public UnitRenderer unitRenderer;
@@ -21,5 +21,8 @@ namespace Units {
 			unitRenderer.OnUnselect ();
 			unitTransform.OnUnselect ();
 		}
+
+		public virtual void OnCreate () {}
+		public virtual void OnDestroy () {}
 	}
 }

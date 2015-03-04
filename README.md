@@ -1,6 +1,6 @@
 DNA
 ===
-or Zango's ok but not
+or 
 ----------
 ### or very definitely something else
 
@@ -24,3 +24,6 @@ front load the disaster. everything is a sine wave. you fall into yourself, your
 
 # Goodbye Leaf!
 ## Messages for the fossil history:
+![zoom](https://raw.githubusercontent.com/jayvachon/DNA/master/fuckuppics/zoom.gif)
+
+^an arid strain on a chain. still, it's what's on that's the moment: it's not inherently treasurable to run: except that everything gives something to gain from

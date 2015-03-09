@@ -5,9 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class House : StaticUnit, IInventoryHolder, IActionAcceptor {
+	public class House : StaticUnit, IActionAcceptor {
 
-		public Inventory Inventory { get; private set; }
+		public override string Name {
+			get { return "House"; }
+		}
+		
 		public AcceptableActions AcceptableActions { get; private set; }
 
 		void Awake () {

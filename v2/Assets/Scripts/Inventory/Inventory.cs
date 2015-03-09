@@ -5,8 +5,11 @@ using System.Collections.Generic;
 namespace GameInventory {
 
 	public delegate bool ItemHasAttribute (Item item);
+	public delegate void InventoryUpdated ();
 
 	public class Inventory {
+
+		public InventoryUpdated inventoryUpdated;
 
 		List<ItemHolder> holders = new List<ItemHolder> ();
 		public List<ItemHolder> Holders {
@@ -15,25 +18,30 @@ namespace GameInventory {
 
 		public void Add (ItemHolder holder) {
 			holders.Add (holder);
+			NotifyInventoryUpdated ();
 		}
 
 		public List<Item> AddItem<T> (Item item) where T : ItemHolder {
 			T holder = Get<T> () as T;
+			NotifyInventoryUpdated ();
 			return holder.Add (item);
 		}
 
 		public List<Item> AddItems<T> (List<Item> items) where T : ItemHolder {
 			T holder = Get<T> () as T;
+			NotifyInventoryUpdated ();
 			return holder.Add (items);
 		}
 
 		public List<Item> RemoveItem<T> () where T : ItemHolder {
 			T holder = Get<T> () as T;
+			NotifyInventoryUpdated ();
 			return holder.Remove ();
 		}
 
 		public List<Item> RemoveItems<T> (int amount) where T : ItemHolder {
 			T holder = Get<T> () as T;
+			NotifyInventoryUpdated ();
 			return holder.Remove (amount);
 		}
 
@@ -42,7 +50,6 @@ namespace GameInventory {
 				if (holder is T)
 					return holder;
 			}
-			Debug.LogError (string.Format ("ItemHolder {0} does not exist", typeof (T)));
 			return null;
 		}
 
@@ -66,6 +73,13 @@ namespace GameInventory {
 			T sender = boundInventory.Get<T> () as T;
 			T receiver = Get<T> () as T;
 			receiver.Transfer (sender, amount, transferable);
+			NotifyInventoryUpdated ();
+		}
+
+		void NotifyInventoryUpdated () {
+			if (inventoryUpdated != null) {
+				inventoryUpdated ();
+			}
 		}
 
 		/**

@@ -112,8 +112,14 @@
      <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
      <Compile Include="Assets\Scripts\Pooling\IPoolable.cs" />
+     <Compile Include="Assets\Scripts\Pooling\ObjectBank.cs" />
+     <Compile Include="Assets\Scripts\Pooling\ObjectCreator.cs" />
      <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
+     <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
+     <Compile Include="Assets\Scripts\UI\InventoryHolderContainerUI.cs" />
+     <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
+     <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitTransform.cs" />

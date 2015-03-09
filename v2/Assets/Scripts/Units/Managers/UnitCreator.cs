@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// TODO: Use ObjectCreator instead
+// + add Units to ObjectBank (instead of UnitsList)
 namespace Units {
 
 	public class UnitCreator : MonoBehaviour {

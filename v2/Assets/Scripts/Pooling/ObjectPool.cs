@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#define DEBUG
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -50,7 +51,6 @@ public class ObjectPool : MonoBehaviour {
 		if (_instances.Count > 0) {
 			t = _instances.Pop();
 		} else {
-			//Debug.LogWarning (_poolName + " pool ran out of instances!", this);
 			t = Instantiate(_prefab) as Transform;
 		}
 		
@@ -77,11 +77,21 @@ public class ObjectPool : MonoBehaviour {
 
 	public static Transform Instantiate (string poolName, Vector3 position) {
 		Transform t = ObjectPool.GetPool (poolName).GetInstance (position);
+		#if UNITY_EDITOR && DEBUG
+		if (t.GetScript<IPoolable> () == null) {
+			Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", t));
+		}
+		#endif
 		t.GetScript<IPoolable> ().OnCreate ();
 		return t;
 	}
 
 	public static void Destroy (string poolName, Transform instance) {
+		#if UNITY_EDITOR && DEBUG
+		if (instance.GetScript<IPoolable> () == null) {
+			Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", instance));
+		}
+		#endif
 		instance.GetScript<IPoolable>().OnDestroy ();
 		ObjectPool.GetPool (poolName).ReleaseInstance (instance);
 	}

@@ -5,9 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class MilkshakeMaker : StaticUnit, IInventoryHolder, IActionAcceptor, IActionPerformer {
+	public class MilkshakeMaker : StaticUnit, IActionAcceptor, IActionPerformer {
 
-		public Inventory Inventory { get; private set; }
+		public override string Name {
+			get { return "Milkshake Maker"; }
+		}
+		
 		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 

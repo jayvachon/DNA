@@ -5,9 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class Pasture : StaticUnit, IInventoryHolder, IActionAcceptor, IActionPerformer {
+	public class Pasture : StaticUnit, IActionAcceptor, IActionPerformer {
 
-		public Inventory Inventory { get; private set; }
+		public override string Name {
+			get { return "Pasture"; }
+		}
+		
 		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 

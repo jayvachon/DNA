@@ -5,9 +5,12 @@ using GameActions;
 
 namespace Units {
 	
-	public class Plot : StaticUnit, IInventoryHolder, IActionAcceptor {
+	public class Plot : StaticUnit, IActionAcceptor {
 
-		public Inventory Inventory { get; private set; }
+		public override string Name {
+			get { return "Plot"; }
+		}
+		
 		public AcceptableActions AcceptableActions { get; private set; }
 
 		void Awake () {

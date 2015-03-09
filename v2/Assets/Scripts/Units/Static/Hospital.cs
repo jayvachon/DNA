@@ -5,9 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class Hospital : StaticUnit, IInventoryHolder, IActionAcceptor, IActionPerformer {
+	public class Hospital : StaticUnit, IActionAcceptor, IActionPerformer {
 
-		public Inventory Inventory { get; private set; }
+		public override string Name {
+			get { return "Hospital"; }
+		}
+
 		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 

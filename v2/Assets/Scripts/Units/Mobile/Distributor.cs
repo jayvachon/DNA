@@ -5,9 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class Distributor : MobileUnit, IInventoryHolder, IActionPerformer {
+	public class Distributor : MobileUnit, IActionPerformer {
 
-		public Inventory Inventory { get; private set; }
+		public override string Name {
+			get { return "Distributor"; }
+		}
+
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {

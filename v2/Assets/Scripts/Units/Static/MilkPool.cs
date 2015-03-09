@@ -5,9 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class MilkPool : StaticUnit, IInventoryHolder, IActionAcceptor {
+	public class MilkPool : StaticUnit, IActionAcceptor {
 
-		public Inventory Inventory { get; private set; }
+		public override string Name {
+			get { return "Milk Pool"; }
+		}
+		
 		public AcceptableActions AcceptableActions { get; private set; }
 
 		void Awake () {

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace GameInventory {
 
-	public abstract class ItemHolder : INameable {
+	[System.Serializable]
+	public abstract class ItemHolder : System.Object, INameable {
 		
 		public abstract string Name { get; }
 
@@ -41,6 +42,7 @@ namespace GameInventory {
 		public abstract void Print ();
 	}
 
+	[System.Serializable]
 	public class ItemHolder<T> : ItemHolder where T : Item {
 		
 		public override string Name {

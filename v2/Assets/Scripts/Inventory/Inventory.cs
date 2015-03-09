@@ -7,7 +7,13 @@ namespace GameInventory {
 	public delegate bool ItemHasAttribute (Item item);
 	public delegate void InventoryUpdated ();
 
-	public class Inventory {
+	[System.Serializable]
+	public class Inventory : System.Object {
+
+		#if UNITY_EDITOR
+		public string[] holderInfo;
+		public int updateCount = 0;
+		#endif
 
 		public InventoryUpdated inventoryUpdated;
 
@@ -18,6 +24,9 @@ namespace GameInventory {
 
 		public void Add (ItemHolder holder) {
 			holders.Add (holder);
+			#if UNITY_EDITOR
+			UpdateHolderInfo ();
+			#endif
 			NotifyInventoryUpdated ();
 		}
 
@@ -76,11 +85,26 @@ namespace GameInventory {
 			NotifyInventoryUpdated ();
 		}
 
-		void NotifyInventoryUpdated () {
+		public void NotifyInventoryUpdated () {
 			if (inventoryUpdated != null) {
 				inventoryUpdated ();
 			}
+			#if UNITY_EDITOR
+			// WHY DOESN'T THIS WORK???
+			UpdateHolderInfo ();
+			#endif
 		}
+
+		#if UNITY_EDITOR
+		void UpdateHolderInfo () {
+			holderInfo = new string[holders.Count];
+			for (int i = 0; i < holders.Count; i ++) {
+				ItemHolder holder = holders[i];
+				holderInfo[i] = string.Format ("{0}: {1}/{2}", holder.Name, holder.Count, holder.Capacity);
+			}
+			updateCount ++;
+		}
+		#endif
 
 		/**
 		 *	Debugging

@@ -34,47 +34,72 @@ public class UnitInfoBox : MBRefs {
 		}
 	}
 
-	ElderHolder elderHolder = null;
-	UnitInfoContent content;
 	Inventory inventory;
 
 	public void Open (UnitInfoContent content, Transform transform) {
 		
-		this.content = content;
 		inventory = content.Inventory;
 		inventory.inventoryUpdated += OnInventoryUpdated;
 		title.text = content.Title;
 
 		Canvas.enabled = true;
 		MyTransform.SetParent (transform, false);
-		InitElders ();
-		InitHolders ();
+		InitInventory ();
 	}
 
 	void OnInventoryUpdated () {
-		ClearElders ();
-		InitElders ();
-		ClearHolders ();
-		InitHolders ();
+		ClearInventory ();
+		InitInventory ();
 	}
 
 	public void Close () {
 		Canvas.enabled = false;
-		ClearElders ();
-		ClearHolders ();
-		elderHolder = null;
+		ClearInventory ();
 		inventory.inventoryUpdated -= OnInventoryUpdated;
 	}
 
-	void InitElders () {
-		elderHolder = inventory.Get<ElderHolder> () as ElderHolder;
-		if (elderHolder != null && elderHolder.Count > 0) {
+	void InitInventory () {
+
+		List<ItemHolder> holders = inventory.Holders;
+		bool inventoryHasItems = false;
+		bool inventoryHasElders = false;
+		foreach (ItemHolder holder in holders) {
+			if (holder is ElderHolder) {
+				if (holder.Count > 0) {
+					CreateElders (holder as ElderHolder);
+					inventoryHasElders = true;
+				}
+				continue;
+			}
+			if (holder.Count > 0) {
+				CreateHolder (holder);
+				inventoryHasItems = true;
+			}
+		}
+
+		if (inventoryHasItems) {
+			inventoryHolderText.SetActive (true);
+		} else {
+			inventoryHolderText.SetActive (false);
+		}
+
+		if (inventoryHasElders) {
 			eldersText.SetActive (true);
 			eldersGroup.SetActive (true);
 		} else {
 			eldersText.SetActive (false);
 			eldersGroup.SetActive (false);
 		}
+	}
+
+	void ClearInventory () {
+		
+		foreach (GameObject container in inventoryContainers) {
+			ObjectPool.Destroy (container);
+		}
+		inventoryContainers.Clear ();
+
+		ClearElders ();
 	}
 
 	void ClearElders () {
@@ -84,33 +109,12 @@ public class UnitInfoBox : MBRefs {
 		elderContainers.Clear ();
 	}
 
-	void InitHolders () {
-		List<ItemHolder> holders = inventory.Holders;
-		bool inventoryHasItems = false;
-		foreach (ItemHolder holder in holders) {
-			if (holder is ElderHolder) {
-				CreateElders (holder as ElderHolder);
-				continue;
-			}
-			if (holder.Count > 0) {
-				Transform t = ObjectCreator.Instance.Create<InventoryHolderContainerUI> ();
-				t.SetParent (contentGroup.transform);
-				inventoryContainers.Add (t.gameObject);
-				inventoryHasItems = true;
-			}
-		}
-		if (inventoryHasItems) {
-			inventoryHolderText.SetActive (true);
-		} else {
-			inventoryHolderText.SetActive (false);
-		}
-	}
-
-	void ClearHolders () {
-		foreach (GameObject container in inventoryContainers) {
-			ObjectPool.Destroy (container);
-		}
-		inventoryContainers.Clear ();
+	void CreateHolder (ItemHolder holder) {
+		Transform t = ObjectCreator.Instance.Create<InventoryHolderContainerUI> ();
+		t.SetParent (contentGroup.transform);
+		t.localPosition = Vector3.zero;
+		t.GetScript<InventoryHolderContainerUI> ().Text = string.Format ("{0}: {1}/{2}", holder.Name, holder.Count, holder.Capacity);
+		inventoryContainers.Add (t.gameObject);
 	}
 
 	void CreateElders (ElderHolder holder) {
@@ -118,6 +122,7 @@ public class UnitInfoBox : MBRefs {
 		foreach (ElderItem elder in elders) {
 			Transform t = ObjectCreator.Instance.Create<ElderContainerUI> ();
 			t.SetParent (eldersGroup.transform);
+			t.localPosition = Vector3.zero;
 			elderContainers.Add (t.gameObject);
 		}
 	}

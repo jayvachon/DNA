@@ -12,7 +12,20 @@ namespace Units {
 
 		public UnitTransform unitTransform;
 		public UnitRenderer unitRenderer;
-		public Inventory Inventory { get; protected set; }
+
+		#if UNITY_EDITOR
+			public Inventory inventory;
+			public Inventory Inventory {
+				get {
+					return inventory;
+				}
+				protected set {
+					inventory = value;
+				}
+			}
+		#else
+			public Inventory Inventory { get; protected set; }
+		#endif
 		
 		UnitInfoContent unitInfoContent = null;
 		public UnitInfoContent UnitInfoContent { 

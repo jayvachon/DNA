@@ -44,6 +44,7 @@ namespace GameActions {
 				HolderT.Remove ();
 				HolderU.Remove ();
 				HolderV.Add ();
+				Inventory.NotifyInventoryUpdated ();
 			}
 		}
 	}

@@ -6,6 +6,8 @@ namespace GameInventory {
 
 	public class ElderHolder : ItemHolder<ElderItem> {
 
+		public string test = "TEST!";
+
 		public override string Name {
 			get { return "Elders"; }
 		}
@@ -16,7 +18,7 @@ namespace GameInventory {
 
 		// TODO: ElderHolder must do this itself (instead of letting ItemHolder<T> take care of it)
 		// because ElderItem has a constructor. Is there any way of changing this?
-		void AddNew2 (int count) {
+		protected void AddNew2 (int count) {
 			if (count == 0)
 				return;
 			for (int i = 0; i < count; i ++) {

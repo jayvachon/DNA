@@ -11,6 +11,9 @@ namespace Units {
 
 			// awfulness
 			UnitClickable clickable = SelectionManager.Selected as UnitClickable;
+			if (clickable == null)
+				return;
+				
 			MobileUnitTransform mobileTransform = clickable.Unit.unitTransform as MobileUnitTransform;
 			IPathable pathable = mobileTransform as IPathable;
 
@@ -23,6 +26,9 @@ namespace Units {
 
 			// awfulness
 			UnitClickable clickable = SelectionManager.Selected as UnitClickable;
+			if (clickable == null)
+				return;
+
 			MobileUnitTransform mobileTransform = clickable.Unit.unitTransform as MobileUnitTransform;
 			IPathable pathable = mobileTransform as IPathable;
 

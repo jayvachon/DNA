@@ -56,6 +56,10 @@ public static class ExtensionMethods {
 	}
 
 	// Position
+	public static void SetPosition (this Transform transform) {
+		transform.position = Vector3.zero;
+	}
+	
 	public static void SetPosition (this Transform transform, Vector3 position) {
 		transform.position = position;
 	}

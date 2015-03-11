@@ -23,13 +23,17 @@ namespace Units {
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateUnit", new GenerateUnit<Distributor> (5));
+			Vector3 createPosition = StaticTransform.Position;
+			createPosition.x -= 2;
+			
+			PerformableActions.Add ("GenerateDistributor", new GenerateUnit<Distributor> (5, createPosition));
 		}
 
-		/*void Update () {
-			if (Input.GetKeyDown (KeyCode.Space)) {
-				UnitCreator.instance.Create<Distributor> (Vector3.zero);
+		// TODO: This should be in the unit info box as an option
+		void Update () {
+			if (Input.GetKeyDown (KeyCode.Q)) {
+				PerformableActions.Start ("GenerateDistributor");
 			}
-		}*/
+		}
 	}
 }

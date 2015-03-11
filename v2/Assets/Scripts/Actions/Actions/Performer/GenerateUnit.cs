@@ -6,12 +6,14 @@ namespace GameActions {
 
 	public class GenerateUnit<T> : PerformerAction where T : MobileUnit {
 
-		Vector3 position;
+		Vector3 createPosition;
 
-		public GenerateUnit (float duration) : base (duration, false, false) {}
+		public GenerateUnit (float duration, Vector3 createPosition) : base (duration, false, false) {
+			this.createPosition = createPosition;
+		}
 
 		public override void OnEnd () {
-			//UnitCreator.instance.Create<T> (position);
+			ObjectCreator.Instance.Create<Distributor> (createPosition);
 		}
 	}
 }

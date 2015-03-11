@@ -18,6 +18,10 @@ namespace GameActions {
 			AddAction (id, action);
 		}
 
+		public void Start (string id) {
+			Get (id).Start ();
+		}
+
 		/**
 		 *	Debugging
 		 */

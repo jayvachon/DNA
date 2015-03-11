@@ -25,6 +25,7 @@ namespace GameInventory {
 		public void Add (ItemHolder holder) {
 			holders.Add (holder);
 			#if UNITY_EDITOR
+			holder.HolderUpdated += OnUpdateHolder;
 			UpdateHolderInfo ();
 			#endif
 			NotifyInventoryUpdated ();
@@ -90,10 +91,20 @@ namespace GameInventory {
 				inventoryUpdated ();
 			}
 			#if UNITY_EDITOR
-			// WHY DOESN'T THIS WORK???
 			UpdateHolderInfo ();
 			#endif
 		}
+
+		void OnUpdateHolder () {
+			NotifyInventoryUpdated ();
+			#if UNITY_EDITOR
+			UpdateHolderInfo ();
+			#endif
+		}
+
+		/**
+		 *	Debugging
+		 */
 
 		#if UNITY_EDITOR
 		void UpdateHolderInfo () {
@@ -105,10 +116,6 @@ namespace GameInventory {
 			updateCount ++;
 		}
 		#endif
-
-		/**
-		 *	Debugging
-		 */
 
 		public virtual void Print () {
 			foreach (ItemHolder holder in holders) {

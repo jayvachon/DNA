@@ -44,6 +44,20 @@ public static class ExtensionMethods {
 		return gameObject.GetComponent (typeof (T)) as T;
 	}
 
+	public static Transform GetNthParent (this Transform transform, int n) {
+		Transform parent = transform.parent;
+		if (parent == null) {
+			return null;
+		}
+
+		int nCount = 0; // 0 is the first parent
+		while (parent.parent != null && nCount < n) {
+			parent = parent.parent;
+			nCount ++;
+		}
+		return parent;
+	}
+
 	public static Transform GetFirstParent (this Transform transform) {
 		Transform parent = transform.parent;
 		if (parent == null) {

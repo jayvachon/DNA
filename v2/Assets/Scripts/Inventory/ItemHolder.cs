@@ -4,9 +4,13 @@ using System.Collections.Generic;
 
 namespace GameInventory {
 
+	public delegate void HolderUpdated ();
+
 	[System.Serializable]
 	public abstract class ItemHolder : System.Object, INameable {
 		
+		public abstract HolderUpdated HolderUpdated { get; set; }
+
 		public abstract string Name { get; }
 
 		protected List<Item> items;
@@ -45,6 +49,8 @@ namespace GameInventory {
 	[System.Serializable]
 	public class ItemHolder<T> : ItemHolder where T : Item {
 		
+		public override HolderUpdated HolderUpdated { get; set; }
+
 		public override string Name {
 			get { return ""; }
 		}
@@ -116,6 +122,7 @@ namespace GameInventory {
 				}
 				newItems.RemoveAt (0);
 			}
+			NotifyHolderUpdated ();
 			if (newItems.Count > 0) {
 
 				// return items that couldn't be added
@@ -126,7 +133,9 @@ namespace GameInventory {
 		}
 
 		public override List<Item> Remove () {
-			return Remove (1);
+			List<Item> removed = Remove (1);
+			NotifyHolderUpdated ();
+			return removed;
 		}
 
 		public override List<Item> Remove (int amount) {
@@ -136,13 +145,14 @@ namespace GameInventory {
 				items.RemoveAt (0);
 				amount --;
 			}
-
+			NotifyHolderUpdated ();
 			// return items that were removed
 			return temp; 
 		}
 
 		public override void Remove<Item> (Item item) {
 			items.Remove (item as T);
+			NotifyHolderUpdated ();
 		}
 
 		public override List<Item> Remove (int amount, ItemHasAttribute transferable) {
@@ -160,6 +170,7 @@ namespace GameInventory {
 				amount --;
 			}
 
+			NotifyHolderUpdated ();
 			return temp;
 		}
 
@@ -171,6 +182,7 @@ namespace GameInventory {
 				List<Item> overflow = Add (items);
 				sender.Add (overflow);
 				OnTransfer ();
+				NotifyHolderUpdated ();
 			}
 		}
 
@@ -182,6 +194,12 @@ namespace GameInventory {
 				temp.Add (item as Item);
 			}
 			return temp;
+		}
+
+		void NotifyHolderUpdated () {
+			if (HolderUpdated != null) {
+				HolderUpdated ();
+			}	
 		}
 
 		/**

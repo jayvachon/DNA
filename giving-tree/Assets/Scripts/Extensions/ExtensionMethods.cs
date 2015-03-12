@@ -44,7 +44,22 @@ public static class ExtensionMethods {
 		return gameObject.GetComponent (typeof (T)) as T;
 	}
 
+	public static Transform GetFirstParent (this Transform transform) {
+		Transform parent = transform.parent;
+		if (parent == null) {
+			return null;
+		}
+		while (parent.parent != null) {
+			parent = parent.parent;
+		}
+		return parent;
+	}
+
 	// Position
+	public static void SetPosition (this Transform transform) {
+		transform.position = Vector3.zero;
+	}
+	
 	public static void SetPosition (this Transform transform, Vector3 position) {
 		transform.position = position;
 	}

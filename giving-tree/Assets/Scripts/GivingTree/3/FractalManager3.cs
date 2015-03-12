@@ -6,6 +6,7 @@ public class FractalManager3 : MonoBehaviour {
 
 	public Transform cameraAnchor;
 	public GivingTree2 treePrefab;
+	public Transform treeLeafContainer;
 
 	int maxIterations = 4;
 	List<GivingTree2> visitableTrees = new List<GivingTree2> ();
@@ -32,6 +33,7 @@ public class FractalManager3 : MonoBehaviour {
 		cameraAnchor.SetPosition (LastTree.transform.position);
 	}
 
+	// Trees that can be zoomed in on
 	void CreateTrees () {
 		GivingTree2 targetTree = CreateTree (Vector3.zero, transform, true);
 		PopulateTrees (targetTree);
@@ -61,16 +63,28 @@ public class FractalManager3 : MonoBehaviour {
 		return tree;
 	}
 
+	// "Fake" trees that can't be zoomed in on
 	void PopulateTrees (GivingTree2 onTree) {
-		for (int i = 0; i < onTree.TreeSpawns.Length; i ++) {
+		int treeCount = onTree.TreeSpawns.Length;
+		for (int i = 0; i < treeCount; i ++) {
 			if (i == onTree.TargetTreeIndex) continue;
 			Transform t = onTree.TreeSpawns[i];
 			GivingTree2 newTree = Instantiate (treePrefab) as GivingTree2;
 			Transform newTreeTransform = newTree.transform;
 			newTreeTransform.SetPosition (t.position);
-			newTreeTransform.SetParent (onTree.transform);
+			newTreeTransform.SetParent (t);
 			newTreeTransform.SetLocalScale (0.1f);
+
+			// The branch
+			SetBranchScale (onTree.TreeSpawns[i].parent, i, treeCount);
 		}
+	}
+
+	void SetBranchScale (Transform branch, int index, int count) {
+		float deg = 360f / (float)count / 2;
+		float radians = (float)index * deg * Mathf.Deg2Rad;
+		float scale = Mathf.Sin (radians);
+		branch.SetLocalScale (scale);
 	}
 
 	void Iterate () {

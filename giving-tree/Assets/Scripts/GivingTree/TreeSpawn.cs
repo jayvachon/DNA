@@ -11,6 +11,10 @@ public class TreeSpawn : MonoBehaviour {
 	// set by Leaf
 	public Transform nextTree;
 
+	public Transform Branch {
+		get { return transform.parent; }		
+	}
+
 	public void OnIterate (Transform nextTree) {
 		this.nextTree = nextTree;
 	}

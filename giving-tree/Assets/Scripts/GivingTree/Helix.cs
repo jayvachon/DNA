@@ -8,16 +8,16 @@ public class Helix {
 	public readonly int resolution 	= 5;  // number of points in a single rotation
 	public readonly int rotations	= 3;  // number of rotations (a rotation is a full 360 degree turn)
 	public readonly float radius	= 10; // distance from center to side
-	public readonly float height	= 2;  // distance between a side and the side one rotation above or below it
+	public readonly float altitude	= 2;  // vertical distance between a side and the side one rotation above or below it
 
 	Vector4[] points;
 	public Vector4[] Points {
 		get { return points; }
 	}
 	
-	public Helix (float radius, float height) {
+	public Helix (float radius, float altitude) {
 		this.radius = radius;
-		this.height = height;
+		this.altitude = altitude;
 		CreateHelix ();
 	}
 
@@ -30,7 +30,7 @@ public class Helix {
 			float radians = (float)i * deg * Mathf.Deg2Rad;
 			points[i] = new Vector4 (
 				center.x + radius * Mathf.Sin (radians),
-				center.y + i * height,
+				center.y + i * altitude,
 				center.z + radius * Mathf.Cos (radians),
 				i * deg
 			);

@@ -5,12 +5,12 @@ or
 ### or very definitely something else
 
 A game about any, all, or none of the following things:
-* climate change (1y*)
-* geriatrics (4e!)
-* milkshakes (0o@)
-* link rot & web archiving (1b*)
-* sleep (6p&)
-* cow shit (2e#)
+* climate change
+* geriatrics 
+* milkshakes 
+* link rot & web archiving & anonymous communication
+* sleep
+* cow shit
 
 I'm using Unity to build the game. My approach is to create lots of projects so that experiments are self-contained and as messy as they need to be.
 * in general, parts of the game should be created and edited within their own project files (and be their own namespace)
@@ -37,3 +37,8 @@ a single unending strand peppered w MFTFH [realistically, probably an exponentia
 w ofc all this only in the end just being my own MFTFH, probs wrong, probs untickling, nearsighted and stillborn :: that's ok - the only Strongly Held Belief i'm hoping to express is
 
 :wq
+
+# 12:00am Lunch with Ken / On a Given Tree / ^
+i know i know
++ all blooming flowers from clay pots arranged pentagonally. all blooming flowers are functions of production. the church of consumption/work revered/how defined a persons' worth. the preference for tangibility: the lazy/easy expression of realness by physical things ..
++ fortunately this is all suffusable (and is always being suffused, after all - though it [the suffusion] does not feel the compulsion for an obviously convincing case) here & then, near & now, etc. 

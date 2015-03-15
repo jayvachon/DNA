@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateUnit.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateUnit2.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\HealElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\SubtractHealth.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
@@ -120,6 +121,7 @@
      <Compile Include="Assets\Scripts\Pooling\ObjectCreator.cs" />
      <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
+     <Compile Include="Assets\Scripts\UI\ButtonContainer.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\InventoryHolderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />

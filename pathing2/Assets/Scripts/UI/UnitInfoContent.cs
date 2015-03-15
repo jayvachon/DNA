@@ -17,11 +17,9 @@ public class UnitInfoContent {
 	}
 
 	PerformableActions performableActions = null;
-
-	/*public UnitInfoContent (string title, Inventory inventory, PerformableActions performable=null) {
-		this.title = title;
-		this.inventory = inventory;
-	}*/
+	public PerformableActions PerformableActions {
+		get { return performableActions; }
+	}
 
 	public UnitInfoContent (Unit unit) {
 		title = unit.Name;

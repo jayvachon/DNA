@@ -32,7 +32,6 @@ namespace Units {
 		public UnitInfoContent UnitInfoContent { 
 			get {
 				if (unitInfoContent == null) {
-					//unitInfoContent = new UnitInfoContent (Name, Inventory);
 					unitInfoContent = new UnitInfoContent (this);
 				}
 				return unitInfoContent;

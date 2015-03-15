@@ -13,6 +13,7 @@ namespace GameInventory {
 		}
 
 		MilkshakeHolderFull holderFull;
+		public MilkshakeHolderFull HolderFull { get; set; }
 
 		public MilkshakeHolder (int capacity, int startCount, MilkshakeHolderFull holderFull=null) : base (capacity, startCount) {
 			this.holderFull = holderFull;

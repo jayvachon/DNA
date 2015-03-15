@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using GameInventory;
+using GameActions;
 
 public class UnitInfoBox : MBRefs {
 
@@ -11,8 +12,10 @@ public class UnitInfoBox : MBRefs {
 	public GameObject eldersText;
 	public GameObject eldersGroup;
 	public GameObject inventoryHolderText;
+	public GameObject buttonContainer;
 	List<GameObject> elderContainers = new List<GameObject> ();
 	List<GameObject> inventoryContainers = new List<GameObject> ();
+	List<GameObject> buttonContainers = new List<GameObject> ();
 
 	static UnitInfoBox instance = null;
 	public static UnitInfoBox Instance {
@@ -35,16 +38,19 @@ public class UnitInfoBox : MBRefs {
 	}
 
 	Inventory inventory;
+	PerformableActions performableActions;
 
 	public void Open (UnitInfoContent content, Transform transform) {
 		
 		inventory = content.Inventory;
 		inventory.inventoryUpdated += OnInventoryUpdated;
 		title.text = content.Title;
+		performableActions = content.PerformableActions;
 
 		Canvas.enabled = true;
 		MyTransform.SetParent (transform, false);
 		InitInventory ();
+		InitButtons ();
 	}
 
 	void OnInventoryUpdated () {
@@ -55,6 +61,7 @@ public class UnitInfoBox : MBRefs {
 	public void Close () {
 		Canvas.enabled = false;
 		ClearInventory ();
+		ClearButtons ();
 		inventory.inventoryUpdated -= OnInventoryUpdated;
 	}
 
@@ -92,21 +99,10 @@ public class UnitInfoBox : MBRefs {
 		}
 	}
 
-	void ClearInventory () {
-		
-		foreach (GameObject container in inventoryContainers) {
-			ObjectPool.Destroy (container);
+	void InitButtons () {
+		foreach (var input in performableActions.Inputs) {
+			CreateButton (input.Key, input.Value);
 		}
-		inventoryContainers.Clear ();
-
-		ClearElders ();
-	}
-
-	void ClearElders () {
-		foreach (GameObject elderContainer in elderContainers) {
-			ObjectPool.Destroy (elderContainer);
-		}
-		elderContainers.Clear ();
 	}
 
 	void CreateHolder (ItemHolder holder) {
@@ -125,5 +121,41 @@ public class UnitInfoBox : MBRefs {
 			t.localPosition = Vector3.zero;
 			elderContainers.Add (t.gameObject);
 		}
+	}
+
+	void CreateButton (string id, string inputName) {
+		Transform t = ObjectCreator.Instance.Create<ButtonContainer> ();
+		t.SetParent (contentGroup.transform);
+		t.localPosition = Vector3.zero;
+		t.GetScript<ButtonContainer> ().Init (id, inputName, OnButtonPress);
+		buttonContainers.Add (t.gameObject);
+	}
+
+	void ClearInventory () {
+		
+		foreach (GameObject container in inventoryContainers) {
+			ObjectPool.Destroy (container);
+		}
+		inventoryContainers.Clear ();
+
+		ClearElders ();
+	}
+
+	void ClearElders () {
+		foreach (GameObject elderContainer in elderContainers) {
+			ObjectPool.Destroy (elderContainer);
+		}
+		elderContainers.Clear ();
+	}
+
+	void ClearButtons () {
+		foreach (GameObject buttonContainer in buttonContainers) {
+			ObjectPool.Destroy (buttonContainer);
+		}
+		buttonContainers.Clear ();
+	}
+
+	void OnButtonPress (string id) {
+		performableActions.Start (id);
 	}
 }

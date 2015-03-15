@@ -22,11 +22,12 @@ namespace Units {
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
 
-			PerformableActions = new PerformableActions (this);
-			Vector3 createPosition = StaticTransform.Position;
-			PerformableActions.Add ("GenerateHouse", new GenerateUnit<House> (5, createPosition), "Build House");
-			PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital> (5, createPosition), "Build Hospital");
+		}
 
+		void Start () {
+			PerformableActions = new PerformableActions (this);
+			PerformableActions.Add ("GenerateHouse", new GenerateUnit<House> (5, Position), "Build House");
+			PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital> (5, Position), "Build Hospital");
 		}
 
 		void CreateBuilding () {

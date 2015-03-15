@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GameInventory;
 
 namespace GameActions {
@@ -8,18 +9,23 @@ namespace GameActions {
 	public class PerformableActions : ActionList<PerformerAction> {
 		
 		IActionPerformer performer;
-		//ActionInput actionInput
+
+		// If given an (optional) input name, actions will be shown in the unit info box
+		// and can be selected by a player
 		Dictionary<string, string> inputs = new Dictionary<string, string> ();
+		public Dictionary<string, string> Inputs {
+			get { return inputs; }
+		}
 
 		public PerformableActions (IActionPerformer performer) {
 			this.performer = performer;
 		}
 
-		public void Add (string id, PerformerAction action, string playerInput="") {
+		public void Add (string id, PerformerAction action, string inputName="") {
 			action.Performer = performer;
 			AddAction (id, action);
-			if (playerInput != "") {
-				inputs.Add (id, playerInput);
+			if (inputName != "") {
+				inputs.Add (id, inputName);
 			}
 		}
 

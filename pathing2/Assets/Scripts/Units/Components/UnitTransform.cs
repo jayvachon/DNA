@@ -16,8 +16,8 @@ namespace Units {
 		}
 
 		public Vector3 Position {
-			get { return MyTransform.position; }
-			set { MyTransform.position = value; }
+			get { return MyTransform.localPosition; }
+			set { MyTransform.localPosition = value; }
 		}
 
 		public virtual void OnSelect () {}

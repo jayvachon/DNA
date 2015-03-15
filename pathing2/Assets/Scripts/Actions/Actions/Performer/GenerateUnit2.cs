@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Units;
+using GameInventory;
 
 namespace GameActions {
 
-	public class GenerateUnit<T> : PerformerAction where T : Unit {
+	public class GenerateUnit2<T> : PerformerAction where T : Unit {
 
 		Vector3 createPosition;
 
-		public GenerateUnit (float duration, Vector3 createPosition) : base (duration, false, false) {
+		public GenerateUnit2 (Vector3 createPosition, MilkshakeHolder holder) : base (0, false, false) {
 			this.createPosition = createPosition;
 		}
 

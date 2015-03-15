@@ -10,7 +10,7 @@ namespace GameInput {
 
 			protected readonly bool left = true;
 			bool mouseDown = false;
-			
+
 			T moused = null;
 			protected T Moused {
 				get { return moused; }
@@ -21,6 +21,14 @@ namespace GameInput {
 				get { return mousePosition; }
 				set { mousePosition = value; }
 			}
+			
+			bool MouseOverIgnore {
+				get {
+					Ray ray = Camera.main.ScreenPointToRay (MousePosition);
+					RaycastHit hit;
+					return Physics.Raycast (ray, out hit, Mathf.Infinity, MouseController.IgnoreLayers);
+				}
+			}
 
 			public MouseButtonHandler (bool left) {
 				this.left = left;
@@ -28,6 +36,9 @@ namespace GameInput {
 
 			public virtual void HandleMouseDown () {
 				MousePosition = Input.mousePosition;
+				if (MouseOverIgnore) {
+					return;
+				}
 				if (!mouseDown) {
 					moused = GetMouseOver ();
 					OnDown ();
@@ -164,14 +175,18 @@ namespace GameInput {
 		static int layer = -1;
 		public static int Layer {
 			set {
-				layer = 1 << value;
+				layer = value;
 			}
 			get {
 				if (layer == -1) {
-					layer = 1 << LayerController.defaultLayer; 
+					layer = LayerController.DefaultLayer;
 				}
 				return layer;
 			}
+		}
+
+		public static int IgnoreLayers {
+			get { return LayerController.IgnoreLayers; }
 		}
 
 		ClickHandler leftClick = new ClickHandler (true);

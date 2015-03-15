@@ -20,7 +20,7 @@ namespace GameActions {
 					inventory = holder.Inventory;
 				}
 				if (inventory == null) {
-					Debug.LogError ("ActionPerformer does not implement IInventoryHolder");
+					Debug.LogError (string.Format ("ActionPerformer {0} does not implement IInventoryHolder", Performer));
 				}
 				return inventory;
 			}

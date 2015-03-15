@@ -17,7 +17,7 @@ namespace Units {
 		void Awake () {
 
 			Inventory = new Inventory ();
-			Inventory.Add (new MilkshakeHolder (100, 0));
+			Inventory.Add (new MilkshakeHolder (100, 10));
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
@@ -26,14 +26,7 @@ namespace Units {
 			Vector3 createPosition = StaticTransform.Position;
 			createPosition.x -= 2;
 			
-			PerformableActions.Add ("GenerateDistributor", new GenerateUnit<Distributor> (5, createPosition));
-		}
-
-		// TODO: This should be in the unit info box as an option
-		void Update () {
-			if (Input.GetKeyDown (KeyCode.Q)) {
-				PerformableActions.Start ("GenerateDistributor");
-			}
+			PerformableActions.Add ("GenerateDistributor", new GenerateUnit<Distributor, MilkshakeHolder> (5, createPosition), "Birth Distributor");
 		}
 	}
 }

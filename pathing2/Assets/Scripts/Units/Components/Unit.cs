@@ -38,6 +38,10 @@ namespace Units {
 			}
 		}
 
+		public UnitTransform UnitTransform {
+			get { return unitTransform; }
+		}
+
 		public Transform Transform {
 			get { return unitTransform.MyTransform; }
 		}

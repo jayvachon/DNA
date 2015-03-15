@@ -5,11 +5,13 @@ using System.Collections.Generic;
 namespace GameInventory {
 
 	public delegate void HolderUpdated ();
+	public delegate void HolderFull ();	// no listeners (yet?)
 
 	[System.Serializable]
 	public abstract class ItemHolder : System.Object, INameable {
 		
 		public abstract HolderUpdated HolderUpdated { get; set; }
+		public abstract HolderFull HolderFull { get; set; }
 
 		public abstract string Name { get; }
 
@@ -50,6 +52,7 @@ namespace GameInventory {
 	public class ItemHolder<T> : ItemHolder where T : Item {
 		
 		public override HolderUpdated HolderUpdated { get; set; }
+		public override HolderFull HolderFull { get; set; }
 
 		public override string Name {
 			get { return ""; }
@@ -123,6 +126,7 @@ namespace GameInventory {
 				newItems.RemoveAt (0);
 			}
 			NotifyHolderUpdated ();
+			if (Full) NotifyHolderFull ();
 			if (newItems.Count > 0) {
 
 				// return items that couldn't be added
@@ -200,6 +204,12 @@ namespace GameInventory {
 			if (HolderUpdated != null) {
 				HolderUpdated ();
 			}	
+		}
+
+		void NotifyHolderFull () {
+			if (HolderFull != null) {
+				HolderFull ();
+			}
 		}
 
 		/**

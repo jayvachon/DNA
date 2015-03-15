@@ -40,6 +40,10 @@ public class UnitInfoBox : MBRefs {
 	Inventory inventory;
 	PerformableActions performableActions;
 
+	void Start () {
+		Close ();
+	}
+
 	public void Open (UnitInfoContent content, Transform transform) {
 		
 		inventory = content.Inventory;
@@ -62,7 +66,9 @@ public class UnitInfoBox : MBRefs {
 		Canvas.enabled = false;
 		ClearInventory ();
 		ClearButtons ();
-		inventory.inventoryUpdated -= OnInventoryUpdated;
+		if (inventory != null) {
+			inventory.inventoryUpdated -= OnInventoryUpdated;
+		}
 	}
 
 	void InitInventory () {
@@ -100,6 +106,9 @@ public class UnitInfoBox : MBRefs {
 	}
 
 	void InitButtons () {
+		if (performableActions == null) {
+			return;
+		}
 		foreach (var input in performableActions.Inputs) {
 			CreateButton (input.Key, input.Value);
 		}

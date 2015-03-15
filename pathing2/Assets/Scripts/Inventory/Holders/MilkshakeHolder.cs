@@ -12,15 +12,6 @@ namespace GameInventory {
 			get { return "Milkshakes"; }
 		}
 
-		MilkshakeHolderFull holderFull;
-		public MilkshakeHolderFull HolderFull { get; set; }
-
-		public MilkshakeHolder (int capacity, int startCount, MilkshakeHolderFull holderFull=null) : base (capacity, startCount) {
-			this.holderFull = holderFull;
-		}
-
-		public override void OnTransfer () {
-			if (holderFull != null && Full) holderFull ();
-		}
+		public MilkshakeHolder (int capacity, int startCount) : base (capacity, startCount) {}
 	}
 }

@@ -27,19 +27,25 @@ namespace Units {
 			float deg = 360f / (float)mySides;
 			for (int i = 0; i < mySides; i ++) {
 				float radians = (float)i * deg * Mathf.Deg2Rad;
-				CreatePlot (new Vector3 (
+				Vector3 position = new Vector3 (
 					center.x + myRadius * Mathf.Sin (radians),
 					center.y,
 					center.z + myRadius * Mathf.Cos (radians)
-				));
+				); 
+				if (index == 1 && i == 0) {
+					CreateUnit<MilkPool> (position);
+				} else {
+					CreateUnit<Plot> (position);
+				}
 			}
 		}
 
-		void CreatePlot (Vector3 position) {
+		void CreateUnit<T> (Vector3 position) where T : StaticUnit {
 			PathPoint pathPoint = ObjectCreator.Instance.Create<PathPoint> (position).GetScript<PathPoint> ();
-			Plot plot = ObjectCreator.Instance.Create<Plot> ().GetScript<Plot> ();
-			plot.Position = position;
-			pathPoint.StaticUnitTransform = plot.unitTransform as StaticUnitTransform;
+			T unit = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
+			unit.Position = position;
+			unit.PathPoint = pathPoint;
+			pathPoint.StaticUnitTransform = unit.unitTransform as StaticUnitTransform;
 		}
 	}
 }

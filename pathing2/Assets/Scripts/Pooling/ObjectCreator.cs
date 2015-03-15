@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Rename this - it creates AND DESTROYS(!!!) objects
 public class ObjectCreator : MonoBehaviour {
 
 	static ObjectCreator instanceInternal = null;
@@ -23,8 +24,7 @@ public class ObjectCreator : MonoBehaviour {
 	}
 
 	public Transform Create<T> (Vector3 position) where T : class {
-		string name = typeof (T).Name;
-		name = name.Substring (0, name.Length);
+		string name = GetName<T> ();
 		if (ObjectPool.GetPool (name) == null) {
 			CreatePool<T> ();
 		}
@@ -36,5 +36,14 @@ public class ObjectCreator : MonoBehaviour {
 		GameObject go = new GameObject (prefabName);
 		DontDestroyOnLoad (go);
 		go.AddComponent<ObjectPool> ().Init (prefabName, ObjectBank.Instance.GetObject (prefabName).transform);
+	}
+
+	public void Destroy<T> (Transform t) where T : class {
+		ObjectPool.Destroy (GetName<T> (), t);
+	}
+
+	string GetName<T> () where T : class {
+		string name = typeof (T).Name;
+		return name.Substring (0, name.Length);
 	}
 }

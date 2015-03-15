@@ -16,5 +16,7 @@ namespace Units {
 				return staticTransform;
 			}
 		}
+
+		public PathPoint PathPoint { get; set; }
 	}
 }

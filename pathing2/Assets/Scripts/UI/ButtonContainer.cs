@@ -22,4 +22,9 @@ public class ButtonContainer : MBRefs, IPoolable {
 
 	public void OnCreate () {}
 	public void OnDestroy () {}
+
+	void Update () {
+		transform.localScale = new Vector3 (1, 1, 1);
+		transform.localEulerAngles = new Vector3 (0, 0, 0);
+	}
 }

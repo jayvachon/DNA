@@ -33,6 +33,12 @@ namespace GameActions {
 			enabledActions.Remove (id);
 		}
 
+		public void DisableAll () {
+			// TODO: Left off here -- PerformableActions needs to know when actions have been disabled
+			// so that it can remove them from the display in the ui
+			enabledActions.Clear ();
+		}
+
 		public T Get (string id) {
 			return Actions[id] as T;
 		}

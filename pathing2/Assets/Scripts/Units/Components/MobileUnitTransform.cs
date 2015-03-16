@@ -40,7 +40,7 @@ namespace Units {
 		}
 
 		public void ArriveAtPoint (PathPoint point) {
-			StaticUnitTransform unitTransform = point.unit;//point as StaticUnitTransform; 
+			StaticUnitTransform unitTransform = point.unit;
 			if (unitTransform == null) {
 				StartMoveOnPath ();
 			} else {

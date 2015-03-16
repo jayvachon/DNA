@@ -7,12 +7,12 @@ using GameActions;
 
 public class UnitInfoBox : MBRefs {
 
+	public Transform anchor;
 	public Text title;
 	public GameObject contentGroup;
 	public GameObject eldersText;
 	public GameObject eldersGroup;
 	public GameObject inventoryHolderText;
-	public GameObject buttonContainer;
 	List<GameObject> elderContainers = new List<GameObject> ();
 	List<GameObject> inventoryContainers = new List<GameObject> ();
 	List<GameObject> buttonContainers = new List<GameObject> ();
@@ -42,6 +42,10 @@ public class UnitInfoBox : MBRefs {
 
 	void Start () {
 		Close ();
+	}
+
+	void Update () {
+		transform.localRotation = anchor.rotation;
 	}
 
 	public void Open (UnitInfoContent content, Transform transform) {
@@ -118,6 +122,8 @@ public class UnitInfoBox : MBRefs {
 		Transform t = ObjectCreator.Instance.Create<InventoryHolderContainerUI> ();
 		t.SetParent (contentGroup.transform);
 		t.localPosition = Vector3.zero;
+		t.localEulerAngles = new Vector3 (0, 0, 0);
+		t.localScale = new Vector3 (1, 1, 1);
 		t.GetScript<InventoryHolderContainerUI> ().Text = string.Format ("{0}: {1}/{2}", holder.Name, holder.Count, holder.Capacity);
 		inventoryContainers.Add (t.gameObject);
 	}
@@ -136,6 +142,8 @@ public class UnitInfoBox : MBRefs {
 		Transform t = ObjectCreator.Instance.Create<ButtonContainer> ();
 		t.SetParent (contentGroup.transform);
 		t.localPosition = Vector3.zero;
+		t.localEulerAngles = new Vector3 (0, 0, 0);
+		t.localScale = new Vector3 (1, 1, 1);
 		t.GetScript<ButtonContainer> ().Init (id, inputName, OnButtonPress);
 		buttonContainers.Add (t.gameObject);
 	}

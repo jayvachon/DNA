@@ -6,8 +6,11 @@ using GameInventory;
 
 namespace GameActions {
 
+	public delegate void StartAction (string id);
+
 	public class PerformableActions : ActionList<PerformerAction> {
 		
+		public StartAction StartAction { get; set; }		
 		IActionPerformer performer;
 
 		// If given an (optional) input name, actions will be shown in the unit info box
@@ -31,6 +34,8 @@ namespace GameActions {
 
 		public void Start (string id) {
 			Get (id).Start ();
+			if (StartAction != null)
+				StartAction (id);
 		}
 
 		/**

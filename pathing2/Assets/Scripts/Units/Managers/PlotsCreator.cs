@@ -9,7 +9,7 @@ namespace Units {
 		Vector3 center = new Vector3 (0, 0.5f, 0);
 		int sides = 5;
 		int radius = 4;
-		int rings = 4;
+		int rings = 5;
 
 		void Awake () {
 			CreatePlots ();

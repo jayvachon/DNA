@@ -26,11 +26,16 @@ namespace Units {
 
 		void Start () {
 			PerformableActions = new PerformableActions (this);
+			PerformableActions.StartAction += OnStartAction;
 			PerformableActions.Add ("GenerateHouse", new GenerateUnit<House, MilkHolder> (5, Position, OnUnitGenerated), "Birth House");
 			PerformableActions.Add ("GenerateMilkPool", new GenerateUnit<MilkPool, MilkHolder> (5, Position, OnUnitGenerated), "Birth Milk Pool");
 			PerformableActions.Add ("GeneratePasture", new GenerateUnit<Pasture, MilkHolder> (10, Position, OnUnitGenerated), "Birth Pasture");
 			PerformableActions.Add ("GenerateMilkshakeMaker", new GenerateUnit<MilkshakeMaker, MilkHolder> (10, Position, OnUnitGenerated), "Birth Milkshake Maker");
 			PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital, MilkHolder> (10, Position, OnUnitGenerated), "Birth Hospital");
+		}
+
+		void OnStartAction (string id) {
+			PerformableActions.DisableAll ();
 		}
 
 		void OnUnitGenerated (Unit unit) {

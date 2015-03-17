@@ -55,7 +55,7 @@ public class MainCamera : MonoBehaviour {
 				transform.SetLocalPositionZ (transform.localPosition.z + 0.25f);
 		}
 		if (Input.GetKey (KeyCode.DownArrow)) {
-			if (transform.localPosition.z > -20)
+			if (transform.localPosition.z > -25)
 				transform.SetLocalPositionZ (transform.localPosition.z - 0.25f);
 		}
 		anchor.LookAt (center.position);

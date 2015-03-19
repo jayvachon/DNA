@@ -69,6 +69,12 @@ public static class ExtensionMethods {
 		return parent;
 	}
 
+	public static void Reset (this Transform transform) {
+		transform.localPosition = Vector3.zero;
+		transform.localEulerAngles = new Vector3 (0, 0, 0);
+		transform.localScale = new Vector3 (1, 1, 1);
+	}
+
 	// Position
 	public static void SetPosition (this Transform transform) {
 		transform.position = Vector3.zero;

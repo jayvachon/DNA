@@ -2,11 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class InventoryHolderContainerUI : MBRefs, IPoolable {
+public class ItemHolderContainerUI : MonoBehaviour, IPoolable {
 
-	public Text text;
+	public Text itemHolder;
+
 	public string Text {
-		set { text.text = value; }
+		set { itemHolder.text = value; }
 	}
 
 	public void OnCreate () {}

@@ -153,4 +153,20 @@ public static class ExtensionMethods {
 	public static void SetLocalScale (this Transform transform, float scale) {
 		transform.localScale = new Vector3 (scale, scale, scale);
 	}
+
+	/**
+	 *	Colliders
+	 */
+
+	public static void SetCenterY (this BoxCollider collider, float size) {
+		Vector3 colliderCenter = collider.center;
+		colliderCenter.y = size;
+		collider.center = colliderCenter;
+	}
+
+	public static void SetSizeY (this BoxCollider collider, float size) {
+		Vector3 colliderSize = collider.size;
+		colliderSize.y = size;
+		collider.size = colliderSize;
+	}
 }

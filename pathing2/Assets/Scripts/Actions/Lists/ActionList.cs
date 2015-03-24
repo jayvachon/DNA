@@ -27,17 +27,24 @@ namespace GameActions {
 			if (Actions.TryGetValue (id, out action)) {
 				enabledActions.Add (id, action as T);
 			}
+			OnEnable (id);
 		}
+
+		public virtual void OnEnable (string id) {}
 
 		public void Disable (string id) {
 			enabledActions.Remove (id);
+			OnDisable (id);
 		}
 
+		public virtual void OnDisable (string id) {}
+
 		public void DisableAll () {
-			// TODO: Left off here -- PerformableActions needs to know when actions have been disabled
-			// so that it can remove them from the display in the ui
 			enabledActions.Clear ();
+			OnDisableAll ();
 		}
+
+		public virtual void OnDisableAll () {}
 
 		public T Get (string id) {
 			return Actions[id] as T;

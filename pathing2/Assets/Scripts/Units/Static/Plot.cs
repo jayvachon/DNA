@@ -21,7 +21,6 @@ namespace Units {
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("DeliverMilk", new AcceptDeliverItem<MilkHolder> ());
-
 		}
 
 		void Start () {

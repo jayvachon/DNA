@@ -38,6 +38,21 @@ namespace GameActions {
 				StartAction (id);
 		}
 
+		public override void OnEnable (string id) {
+			string inputName;
+			if (inputs.TryGetValue (id, out inputName)) {
+				inputs.Add (id, inputName);
+			}
+		}
+
+		public override void OnDisable (string id) {
+			inputs.Remove (id);
+		}
+
+		public override void OnDisableAll () {
+			inputs.Clear ();
+		}
+
 		/**
 		 *	Debugging
 		 */

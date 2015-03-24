@@ -7,6 +7,18 @@ using GameInventory;
 
 public class UnitInfoBox : MBRefs {
 
+	public RectTransform contentGroup;
+
+	BoxCollider contentCollider = null;
+	BoxCollider ContentCollider {
+		get {
+			if (contentCollider == null) {
+				contentCollider = contentGroup.GetComponent<BoxCollider> ();
+			}
+			return contentCollider;
+		}
+	}
+
 	public Transform anchor;
 	public Text title;
 	public GameObject eldersText;
@@ -48,6 +60,9 @@ public class UnitInfoBox : MBRefs {
 
 	void Update () {
 		transform.localRotation = anchor.rotation;
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Close ();
+		}
 	}
 
 	/**
@@ -56,9 +71,9 @@ public class UnitInfoBox : MBRefs {
 
 	public void Open (UnitInfoContent content, Transform transform) {
 		
+		title.text = content.Title;
 		inventory = content.Inventory;
 		inventory.inventoryUpdated += OnInventoryUpdated;
-		title.text = content.Title;
 		performableActions = content.PerformableActions;
 		MyTransform.SetParent (transform, false);
 
@@ -66,7 +81,21 @@ public class UnitInfoBox : MBRefs {
 		InitInventory (itemHolders);
 		InitElders (itemHolders);
 		InitActions ();
+
+		SetColliderSize ();
 		Canvas.enabled = true;
+	}
+
+	void SetColliderSize () {
+		// Not sure why this needs to wait a frame to work?
+		StartCoroutine (CoSetColliderSize ());
+	}
+
+	IEnumerator CoSetColliderSize () {
+		yield return new WaitForFixedUpdate ();
+		float contentHeight = contentGroup.sizeDelta.y;
+		ContentCollider.SetCenterY (contentHeight/2);
+		ContentCollider.SetSizeY (contentHeight);
 	}
 
 	void InitInventory (List<ItemHolder> itemHolders) {

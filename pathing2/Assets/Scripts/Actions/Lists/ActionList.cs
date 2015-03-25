@@ -4,7 +4,11 @@ using System.Collections.Generic;
 
 namespace GameActions {
 
+	public delegate void ActionsUpdated ();
+
 	public abstract class ActionList<T> where T : Action {
+
+		public ActionsUpdated actionsUpdated;
 
 		Dictionary<string, Action> actions = new Dictionary<string, Action> ();
 		public Dictionary<string, Action> Actions {
@@ -20,6 +24,7 @@ namespace GameActions {
 
 		public void AddAction (string id, Action action) {
 			actions.Add (id, action);
+			NotifyActionsUpdated ();
 		}
 
 		public void Enable (string id) {
@@ -28,6 +33,7 @@ namespace GameActions {
 				enabledActions.Add (id, action as T);
 			}
 			OnEnable (id);
+			NotifyActionsUpdated ();
 		}
 
 		public virtual void OnEnable (string id) {}
@@ -35,6 +41,7 @@ namespace GameActions {
 		public void Disable (string id) {
 			enabledActions.Remove (id);
 			OnDisable (id);
+			NotifyActionsUpdated ();
 		}
 
 		public virtual void OnDisable (string id) {}
@@ -42,6 +49,7 @@ namespace GameActions {
 		public void DisableAll () {
 			enabledActions.Clear ();
 			OnDisableAll ();
+			NotifyActionsUpdated ();
 		}
 
 		public virtual void OnDisableAll () {}
@@ -58,9 +66,15 @@ namespace GameActions {
 					enabledActions.Add (keyval.Key, action as T);
 				}
 			}
-
+			NotifyActionsUpdated ();
 			// Debugging
 			UpdateDrawer ();
+		}
+
+		public void NotifyActionsUpdated () {
+			if (actionsUpdated != null) {
+				actionsUpdated ();
+			}
 		}
 
 		/**

@@ -122,6 +122,8 @@ namespace Pathing {
 		}
 
 		void Add (PathPoint point) {
+			if (points.Contains (point))
+				return;
 			points.Add (point);
 			UpdatePositions ();
 		}

@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// TODO: Rename to "ItemGroup"
+
 namespace GameInventory {
 
 	public delegate void HolderUpdated ();

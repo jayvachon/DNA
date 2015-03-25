@@ -121,6 +121,9 @@
      <Compile Include="Assets\Scripts\Pooling\ObjectCreator.cs" />
      <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
+     <Compile Include="Assets\Scripts\Time\AgeManager.cs" />
+     <Compile Include="Assets\Scripts\Time\Interval.cs" />
+     <Compile Include="Assets\Scripts\Time\TimeManager.cs" />
      <Compile Include="Assets\Scripts\UI\ActionButton.cs" />
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />

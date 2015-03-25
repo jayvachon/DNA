@@ -75,6 +75,9 @@ public class UnitInfoBox : MBRefs {
 		inventory = content.Inventory;
 		inventory.inventoryUpdated += OnInventoryUpdated;
 		performableActions = content.PerformableActions;
+		if (performableActions != null) {
+			performableActions.actionsUpdated += OnActionsUpdated;
+		}
 		MyTransform.SetParent (transform, false);
 
 		List<ItemHolder> itemHolders = inventory.Holders;
@@ -94,6 +97,7 @@ public class UnitInfoBox : MBRefs {
 	IEnumerator CoSetColliderSize () {
 		yield return new WaitForFixedUpdate ();
 		float contentHeight = contentGroup.sizeDelta.y;
+		ContentCollider.enabled = true;
 		ContentCollider.SetCenterY (contentHeight/2);
 		ContentCollider.SetSizeY (contentHeight);
 	}
@@ -156,7 +160,7 @@ public class UnitInfoBox : MBRefs {
 			CreateAction (input.Key, input.Value);
 		}
 
-		ActionsSetActive (true);
+		ActionsSetActive (performableActions.Inputs.Count > 0);
 	}
 
 	void CreateAction (string id, string inputName) {
@@ -176,6 +180,11 @@ public class UnitInfoBox : MBRefs {
 		ClearInventory ();
 		ClearElders ();
 		ClearActions ();
+		DeactivateCollider ();
+	}
+
+	void DeactivateCollider () {
+		ContentCollider.enabled = false;
 	}
 
 	void ClearInventory () {
@@ -224,6 +233,11 @@ public class UnitInfoBox : MBRefs {
 	void OnInventoryUpdated () {
 		ClearInventory ();
 		InitInventory (inventory.Holders);
+	}
+
+	void OnActionsUpdated () {
+		ClearActions ();
+		InitActions ();
 	}
 
 	void OnActionButtonPress (string id) {

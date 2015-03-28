@@ -28,7 +28,7 @@ namespace Units {
 			public Inventory Inventory { get; protected set; }
 		#endif
 		
-		UnitInfoContent unitInfoContent = null;
+		protected UnitInfoContent unitInfoContent = null;
 		public UnitInfoContent UnitInfoContent { 
 			get {
 				if (unitInfoContent == null) {

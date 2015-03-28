@@ -28,6 +28,7 @@ public class UnitInfoBox : MBRefs {
 	public GameObject actionsText;
 	public GameObject actionsGroup;
 
+	UnitInfoContent content;
 	Inventory inventory;
 	PerformableActions performableActions;
 	List<GameObject> elders = new List<GameObject> ();
@@ -71,6 +72,8 @@ public class UnitInfoBox : MBRefs {
 
 	public void Open (UnitInfoContent content, Transform transform) {
 		
+		this.content = content;
+		content.contentUpdated += OnContentUpdated;
 		title.text = content.Title;
 		inventory = content.Inventory;
 		inventory.inventoryUpdated += OnInventoryUpdated;
@@ -176,6 +179,17 @@ public class UnitInfoBox : MBRefs {
 	 */
 
 	public void Close () {
+		
+		if (inventory != null) {
+			inventory.inventoryUpdated -= OnInventoryUpdated;
+		}
+		if (performableActions != null) {
+			performableActions.actionsUpdated -= OnActionsUpdated;
+		}
+		if (content != null) {
+			content.contentUpdated -= OnContentUpdated;
+		}
+
 		Canvas.enabled = false;
 		ClearInventory ();
 		ClearElders ();
@@ -242,5 +256,13 @@ public class UnitInfoBox : MBRefs {
 
 	void OnActionButtonPress (string id) {
 		performableActions.Start (id);
+	}
+
+	void OnContentUpdated () {
+		ClearInventory ();
+		InitInventory (inventory.Holders);
+		ClearActions ();
+		InitActions ();
+		title.text = content.Title;
 	}
 }

@@ -7,8 +7,9 @@ namespace Units {
 	
 	public class Plot : StaticUnit, IActionAcceptor, IActionPerformer {
 
+		string name = "Plot";
 		public override string Name {
-			get { return "Plot"; }
+			get { return name; }
 		}
 
 		public AcceptableActions AcceptableActions { get; private set; }
@@ -35,6 +36,16 @@ namespace Units {
 
 		void OnStartAction (string id) {
 			PerformableActions.DisableAll ();
+			string newUnit = "";
+			switch (id) {
+				case "GenerateHouse": newUnit = "House"; break;
+				case "GenerateMilkPool": newUnit = "Milk Pool"; break;
+				case "GeneratePasture": newUnit = "Pasture"; break;
+				case "GenerateMilkshakeMaker": newUnit = "Milkshake Maker"; break;
+				case "GenerateHospital": newUnit = "Hospital"; break;
+			}
+			name = string.Format ("{0} to Be", newUnit);
+			unitInfoContent.Refresh ();
 		}
 
 		void OnUnitGenerated (Unit unit) {

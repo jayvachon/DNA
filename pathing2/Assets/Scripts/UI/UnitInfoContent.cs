@@ -4,7 +4,11 @@ using GameActions;
 using GameInventory;
 using Units;
 
+public delegate void ContentUpdated ();
+
 public class UnitInfoContent {
+
+	public ContentUpdated contentUpdated;
 
 	string title;
 	public string Title {
@@ -21,7 +25,14 @@ public class UnitInfoContent {
 		get { return performableActions; }
 	}
 
+	Unit unit = null;
+
 	public UnitInfoContent (Unit unit) {
+		this.unit = unit;
+		Set ();
+	}
+
+	void Set () {
 		title = unit.Name;
 		inventory = unit.Inventory;
 		IActionPerformer actionPerformer = unit as IActionPerformer;
@@ -30,5 +41,12 @@ public class UnitInfoContent {
 		} else {
 			performableActions = null;
 		}
+		if (contentUpdated != null) {
+			contentUpdated ();
+		}
+	}
+
+	public void Refresh () {
+		Set ();
 	}
 }

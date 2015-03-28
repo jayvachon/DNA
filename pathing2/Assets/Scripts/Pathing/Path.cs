@@ -61,8 +61,12 @@ namespace Pathing {
 			}
 		}
 
-		public void Move () {
-			pathPositioner.Move ();
+		public void StartMoving () {
+			pathPositioner.StartMoving ();
+		}
+
+		public void StopMoving () {
+			pathPositioner.StopMoving ();
 		}
 
 		void UpdatePoints () {

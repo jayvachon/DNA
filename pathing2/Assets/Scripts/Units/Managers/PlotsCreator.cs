@@ -11,6 +11,17 @@ namespace Units {
 		int radius = 4;
 		int rings = 5;
 
+		// plz don't make this a singleton :(
+		/*static PlotsCreator instance = null;
+		public static PlotsCreator Instance {
+			get {
+				if (instance == null) {
+					instance = Object.FindObjectOfType (typeof (PlotsCreator)) as PlotsCreator;
+				}
+				return instance;
+			}
+		}*/
+
 		void Awake () {
 			CreatePlots ();
 		}

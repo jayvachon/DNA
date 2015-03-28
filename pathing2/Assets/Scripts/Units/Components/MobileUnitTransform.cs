@@ -35,14 +35,18 @@ namespace Units {
 			Path.Enabled = false;
 		}
 
-		public void StartMoveOnPath () {
-			Path.Move ();
+		public void StartMovingOnPath () {
+			Path.StartMoving ();
+		}
+
+		public void StopMovingOnPath () {
+			Path.StopMoving ();
 		}
 
 		public void ArriveAtPoint (PathPoint point) {
 			StaticUnitTransform unitTransform = point.unit;
 			if (unitTransform == null) {
-				StartMoveOnPath ();
+				StartMovingOnPath ();
 			} else {
 				MobileUnit.OnBindActionable (unitTransform.Unit as IActionAcceptor);
 			}

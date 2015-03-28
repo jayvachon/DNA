@@ -33,7 +33,7 @@ namespace Units {
 		}
 
 		public virtual void OnEndActions () {
-			mobileTransform.StartMoveOnPath ();
+			mobileTransform.StartMovingOnPath ();
 		}
 
 		public override void OnSelect () {
@@ -43,12 +43,12 @@ namespace Units {
 
 		public override void OnUnselect () {
 			base.OnUnselect ();
-			LayerController.Layer = InputLayer.Units;
+			LayerController.Reset ();
 		}
 
 		void Update () {
 			if (Input.GetKeyDown (KeyCode.Space)) {
-				MobileTransform.StartMoveOnPath ();
+				MobileTransform.StartMovingOnPath ();
 			}
 		}
 	}

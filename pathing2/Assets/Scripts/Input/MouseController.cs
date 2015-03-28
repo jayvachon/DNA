@@ -121,7 +121,12 @@ namespace GameInput {
 				if (!dragging) {
 					CheckDrag ();
 				} else {
-					Dragged = GetMouseOver ();
+					IDraggable over = GetMouseOver ();
+					if (over != null) {
+						Dragged = over;
+					} else if (Dragged != null) {
+						Dragged = Dragged;
+					}
 				}
 			}
 
@@ -172,6 +177,17 @@ namespace GameInput {
 			get { return ScreenPositionHandler.ScreenToWorld (Input.mousePosition); }
 		}
 
+		public static Vector3 MousePositionWorld {
+			get {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+					return hit.point;
+				}
+				return Vector3.zero;
+			}
+		}
+
 		static int layer = -1;
 		public static int Layer {
 			set {
@@ -201,6 +217,7 @@ namespace GameInput {
 				leftClick.HandleMouseDown ();
 				leftDrag.HandleMouseDown ();
 				leftRelease.HandleMouseDown ();
+				Debug.Log (MousePositionWorld);
 			}
 			if (Input.GetMouseButton (1)) {
 				rightClick.HandleMouseDown ();

@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>/Applications/Unity 4.6.1/Unity 4.6.1.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>/Applications/Unity 4.6.1/Unity 4.6.1.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -52,11 +52,13 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\Action.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\PerformerAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\AcceptCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\DefaultCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\ElderCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CombineItems.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\Conditions\InventoryHasItemsCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\Conditions\PerformCondition.cs" />
@@ -107,7 +109,6 @@
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
-     <Compile Include="Assets\Scripts\Pathing\IPathMover.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />
@@ -130,6 +131,7 @@
      <Compile Include="Assets\Scripts\UI\ItemHolderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\MobileUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Unit.cs" />
@@ -142,6 +144,7 @@
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\House.cs" />
@@ -151,7 +154,7 @@
      <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity 4.6.1/Unity 4.6.1.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,9 +7,11 @@ namespace Units {
 
 	public class MobileUnitTransform : UnitTransform, IPathable {
 
-		public Path path;
 		public Path Path { get; set; }
 		public IActionAcceptor BoundAcceptor { get; private set; }
+
+		Path currentPath;
+		Path targetPath;
 
 		MobileUnit mobileUnit = null;
 		MobileUnit MobileUnit {
@@ -22,9 +24,17 @@ namespace Units {
 		}
 
 		protected override void Awake () {
+			
 			base.Awake ();
-			Path = path;
-			path.Init (this);
+
+			currentPath = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
+			currentPath.transform.SetParent (MobileUnit.transform); 
+			Path = currentPath;
+			currentPath.Init (this);
+
+			targetPath = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
+			targetPath.transform.SetParent (MobileUnit.transform);
+			targetPath.Init (this);
 		}
 
 		public override void OnSelect () {
@@ -35,14 +45,18 @@ namespace Units {
 			Path.Enabled = false;
 		}
 
-		public void StartMoveOnPath () {
-			Path.Move ();
+		public void StartMovingOnPath () {
+			Path.StartMoving ();
+		}
+
+		public void StopMovingOnPath () {
+			Path.StopMoving ();
 		}
 
 		public void ArriveAtPoint (PathPoint point) {
 			StaticUnitTransform unitTransform = point.unit;
 			if (unitTransform == null) {
-				StartMoveOnPath ();
+				StartMovingOnPath ();
 			} else {
 				MobileUnit.OnBindActionable (unitTransform.Unit as IActionAcceptor);
 			}

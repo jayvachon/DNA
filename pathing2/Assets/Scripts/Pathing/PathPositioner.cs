@@ -9,9 +9,14 @@ namespace Pathing {
 		public Path path;
 
 		int position = 0;
-		float speed = 10f;
 		bool moving = false;
 		bool forward = true;
+		
+		float speed = 5;
+		public float Speed {
+			get { return speed; }
+			set { speed = value; }
+		}
 		
 		PathPoints pathPoints = null;
 		PathPoints Points {
@@ -76,13 +81,17 @@ namespace Pathing {
 			}
 		}
 
-		public void Move () {
+		public void StartMoving () {
 			if (moving) return;
 			Vector3[] line = Line;
 			if (line != null) {
 				moving = true;
 				StartCoroutine (CoMove (line));
 			}
+		}
+
+		public void StopMoving () {
+			moving = false;
 		}
 
 		public bool CanRemovePoint (PathPoint pathPoint) {
@@ -110,14 +119,16 @@ namespace Pathing {
 			float time = distance / speed;
 			float eTime = 0f;
 
-			while (eTime < time) {
+			while (eTime < time && moving) {
 				eTime += Time.deltaTime;
 				Pathable.Position = Vector3.Lerp (start, end, eTime / time);
 				yield return null;
 			}
 
-			moving = false;
-			Pathable.ArriveAtPoint (CurrentPoint);
+			if (moving) {
+				moving = false;
+				Pathable.ArriveAtPoint (CurrentPoint);
+			}
 		}
 
 		void IteratePosition () {

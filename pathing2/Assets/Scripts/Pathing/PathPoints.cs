@@ -8,6 +8,8 @@ namespace Pathing {
 	[System.Serializable]
 	public class PathPoints : System.Object {
 
+		int max = 2;
+
 		List<PathPoint> points = new List<PathPoint> ();
 		public List<PathPoint> Points {
 			get { return points; }
@@ -122,7 +124,7 @@ namespace Pathing {
 		}
 
 		void Add (PathPoint point) {
-			if (points.Contains (point))
+			if (points.Contains (point) || points.Count >= max)
 				return;
 			points.Add (point);
 			UpdatePositions ();

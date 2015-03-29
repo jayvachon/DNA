@@ -13,6 +13,8 @@ namespace Units {
 
 		public PerformableActions PerformableActions { get; private set; }
 
+		AgeManager ageManager = new AgeManager ();
+
 		void Awake () {
 
 			Inventory = new Inventory ();
@@ -30,8 +32,29 @@ namespace Units {
 			PerformableActions.Add ("DeliverMilkshake", new DeliverItem<MilkshakeHolder> (2));
 			PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (2));
 			PerformableActions.Add ("DeliverElder", new DeliverItem<ElderHolder> (2));
+			PerformableActions.Add ("CollectUnitElder", new CollectUnit<Elder> (3));
 
 			InventoryDrawer.Create (MobileTransform.transform, Inventory);
+		}
+
+		void Start () {
+			ageManager.BeginAging (OnAge, OnRetirement);
+		}
+
+		void OnAge (float progress) {
+			//Path.Speed = Mathf.Lerp (10, 0, progress);
+		}
+
+		void OnRetirement () {
+			// TODO: set name to "Elder"
+			//MobileTransform.StopMovingOnPath ();
+			//Path.Speed = 5;
+
+			// When the distributor becomes an Elder, the player must click
+			// and drag the distributor to a house
+
+			// similarly, distributors must be dragged onto paths (paths are created
+			// independently of distributors)
 		}
 	}
 }

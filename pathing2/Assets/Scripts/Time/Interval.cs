@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Interval : MonoBehaviour {
+public class Interval {
 
-	float length = 0;
-	float startTime = 0;
-
-	public void Begin () {
-		startTime = TimeManager.Instance.Time;
+	public virtual void Begin (float length) {
+		TimeManager.Instance.WaitForSeconds (length, Run, End);
 	}
 
-	
+	public virtual void Run (float progress) {}
+	public virtual void End () {}
 }

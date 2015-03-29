@@ -217,7 +217,6 @@ namespace GameInput {
 				leftClick.HandleMouseDown ();
 				leftDrag.HandleMouseDown ();
 				leftRelease.HandleMouseDown ();
-				Debug.Log (MousePositionWorld);
 			}
 			if (Input.GetMouseButton (1)) {
 				rightClick.HandleMouseDown ();

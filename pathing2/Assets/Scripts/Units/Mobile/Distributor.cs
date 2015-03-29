@@ -35,13 +35,20 @@ namespace Units {
 			PerformableActions.Add ("CollectUnitElder", new CollectUnit<Elder> (3));
 
 			InventoryDrawer.Create (MobileTransform.transform, Inventory);
+		}
 
-			ageManager.BeginAging (OnRetirement);
+		void Start () {
+			ageManager.BeginAging (OnAge, OnRetirement);
+		}
+
+		void OnAge (float progress) {
+			//Path.Speed = Mathf.Lerp (10, 0, progress);
 		}
 
 		void OnRetirement () {
 			// TODO: set name to "Elder"
-			MobileTransform.StopMovingOnPath ();
+			//MobileTransform.StopMovingOnPath ();
+			//Path.Speed = 5;
 
 			// When the distributor becomes an Elder, the player must click
 			// and drag the distributor to a house

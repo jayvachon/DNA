@@ -9,9 +9,14 @@ namespace Pathing {
 		public Path path;
 
 		int position = 0;
-		float speed = 10f;
 		bool moving = false;
 		bool forward = true;
+		
+		float speed = 5;
+		public float Speed {
+			get { return speed; }
+			set { speed = value; }
+		}
 		
 		PathPoints pathPoints = null;
 		PathPoints Points {

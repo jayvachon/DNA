@@ -5,7 +5,7 @@ using GameEvents;
 
 namespace Pathing {
 
-	public class Path : MonoBehaviour {
+	public class Path : MonoBehaviour, IPoolable {
 
 		new bool enabled = false;
 		public bool Enabled {
@@ -32,6 +32,11 @@ namespace Pathing {
 		public IPathable Pathable { get; set; }
 
 		bool dragging = false;
+
+		public float Speed {
+			get { return pathPositioner.Speed; }
+			set { pathPositioner.Speed = value; }
+		}
 		
 		public void Init (IPathable pathable) {
 			Points = new PathPoints ();
@@ -78,5 +83,8 @@ namespace Pathing {
 			pathDrawer.Dragging = false;
 			pathPoints.OnRelease ();
 		}
+
+		public void OnCreate () {}
+		public void OnDestroy () {}
 	}
 }

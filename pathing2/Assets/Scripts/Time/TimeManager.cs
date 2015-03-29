@@ -24,19 +24,20 @@ public class TimeManager : MonoBehaviour {
 		time += Time.deltaTime;
 	}
 
-	public void WaitForSeconds (float duration, System.Action action) {
-		StartCoroutine (CoWaitForSeconds (duration, action));
+	public void WaitForSeconds (float duration, System.Action<float> runAction, System.Action endAction) {
+		StartCoroutine (CoWaitForSeconds (duration, runAction, endAction));
 	}
 
-	IEnumerator CoWaitForSeconds (float duration, System.Action action) {
+	IEnumerator CoWaitForSeconds (float duration, System.Action<float> runAction, System.Action endAction) {
 		
 		float startTime = time;
 		float endTime = startTime + duration;
 
 		while (time < endTime) {
+			runAction (time / endTime);
 			yield return null;
 		}
 
-		action ();
+		endAction ();
 	}
 }

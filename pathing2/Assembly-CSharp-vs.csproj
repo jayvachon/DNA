@@ -109,7 +109,6 @@
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
-     <Compile Include="Assets\Scripts\Pathing\IPathMover.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />

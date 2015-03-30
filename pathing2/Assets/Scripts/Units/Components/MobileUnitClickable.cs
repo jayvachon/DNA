@@ -11,17 +11,20 @@ namespace Units {
 
 		public void OnDragEnter (DragSettings dragSettings) {
 			//MobileUnit.Position = new Vector3 (3, 0.5f, 0);
-			if (dragSettings.WasClicked) {
+			/*if (dragSettings.WasClicked) {
 				screenPoint = Camera.main.WorldToScreenPoint (Unit.Position);
 				offset = Unit.Position - Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+			}*/
+			if (dragSettings.WasClicked) {
+				gameObject.layer = 11;
 			}
 		}
 
 		public void OnDrag (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
-				Vector3 curScreenPoint = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-				Vector3 curPosition = Camera.main.ScreenToWorldPoint (curScreenPoint) + offset;
-				Unit.Position = curPosition;
+				//Vector3 curScreenPoint = new Vector3 (Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+				//Vector3 curPosition = Camera.main.ScreenToWorldPoint (curScreenPoint) + offset;
+				Unit.Position = MouseController.MousePositionWorld;
 				//MobileUnit.Position = MouseController.MousePosition;
 				//Debug.Log (MouseController.MousePosition);
 			}
@@ -29,9 +32,12 @@ namespace Units {
 
 		public void OnDragExit (DragSettings dragSettings) {
 			//Debug.Log ("exit");
-			Vector3 dropPosition = MouseController.MousePositionWorld;
+			/*Vector3 dropPosition = MouseController.MousePositionWorld;
 			dropPosition.y = 0.5f;
-			Unit.Position = dropPosition;
+			Unit.Position = dropPosition;*/
+			if (dragSettings.WasClicked) {
+				gameObject.layer = 8;
+			}
 		}
 	}
 }

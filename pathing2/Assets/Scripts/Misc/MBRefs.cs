@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// rename to MB
 public class MBRefs : MonoBehaviour {
 
 	Transform myTransform = null;
@@ -23,6 +24,11 @@ public class MBRefs : MonoBehaviour {
 			Vector3 pos = Camera.main.WorldToScreenPoint (MyTransform.position);
 			return new Vector2 (pos.x, Screen.height - pos.y);
 		}
+	}
+
+	public Vector3 Position {
+		get { return MyTransform.position; }
+		set { MyTransform.position = value; }
 	}
 
 	protected virtual void Awake () {

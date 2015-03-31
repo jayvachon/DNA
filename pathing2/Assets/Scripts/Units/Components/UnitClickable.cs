@@ -5,9 +5,10 @@ using GameInput;
 namespace Units {
 
 	// Inherit from this class to handle selection on click
+	// rename to UnitCollider
 
 	[RequireComponent (typeof (Collider))]
-	public class UnitClickable : MonoBehaviour, IClickable, ISelectable {
+	public class UnitClickable : MBRefs, IClickable, ISelectable {
 
 		Unit unit = null;
 		public Unit Unit {

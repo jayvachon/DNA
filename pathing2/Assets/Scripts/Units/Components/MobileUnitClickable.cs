@@ -4,6 +4,8 @@ using GameInput;
 
 namespace Units {
 
+	// rename to MobileUnitCollider
+
 	public class MobileUnitClickable : UnitClickable, IDraggable {
 		
 		Vector3 screenPoint;
@@ -47,13 +49,40 @@ namespace Units {
 		public void OnDragExit (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
 				gameObject.layer = 8;
+				Transform c = Colliding ();
+				if (c != null) {
+					// TODO: Left off here!
+					// unit now knows when it's colliding with something
+					Debug.Log (c);
+				}
 				Collider.enabled = true;
 				MobileUnit.OnDragRelease ();
 			}
 		}
 
-		void OnTriggerStay (Collider collider) {
+		Transform Colliding () {
 			
+			int rayCount = 12;
+			float radius = 1f;
+			float deg = 360f / (float)rayCount;
+			RaycastHit hit;
+
+			for (int i = 0; i < rayCount; i ++) {
+				float radians = (float)i * deg * Mathf.Deg2Rad;
+				Vector3 direction = new Vector3 (
+					Mathf.Sin (radians) * radius,
+					0,
+					Mathf.Cos (radians) * radius
+				);
+
+				// Rays are cast inwards, so this will only work if the collider has been disabled
+				// (otherwise it will register a collision with itself)
+				if (Physics.Raycast (Position + direction, -direction, out hit, 0.5f)) {
+					return hit.transform;
+				}
+			}
+
+			return null;
 		}
 	}
 }

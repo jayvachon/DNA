@@ -7,8 +7,9 @@ namespace Units {
 
 	public class Distributor : MobileUnit, IActionPerformer {
 
+		string name = "Distributor";
 		public override string Name {
-			get { return "Distributor"; }
+			get { return name; }
 		}
 
 		public PerformableActions PerformableActions { get; private set; }
@@ -46,6 +47,8 @@ namespace Units {
 		}
 
 		void OnRetirement () {
+			name = "Elder";
+			unitInfoContent.Refresh ();
 			// TODO: set name to "Elder"
 			//MobileTransform.StopMovingOnPath ();
 			//Path.Speed = 5;

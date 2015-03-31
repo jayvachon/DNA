@@ -56,5 +56,11 @@ namespace Units {
 			// similarly, distributors must be dragged onto paths (paths are created
 			// independently of distributors)
 		}
+
+		public override void OnDragRelease () {
+			if (ageManager.Retired) {
+				Debug.Log ("retired");
+			}
+		}
 	}
 }

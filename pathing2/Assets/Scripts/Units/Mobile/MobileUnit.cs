@@ -46,6 +46,8 @@ namespace Units {
 			LayerController.Reset ();
 		}
 
+		public virtual void OnDragRelease () {}
+
 		void Update () {
 			if (Input.GetKeyDown (KeyCode.Space)) {
 				MobileTransform.StartMovingOnPath ();

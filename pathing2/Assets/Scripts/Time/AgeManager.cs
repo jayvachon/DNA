@@ -7,9 +7,14 @@ public delegate void OnRetirement ();
 public class AgeManager : Interval {
 
 	float age = 0; 				// seconds since birth
-	float retirementAge = 180;	// seconds until becoming an elder
+	float retirementAge = 30;	// seconds until becoming an elder
 	OnAge onAge;
 	OnRetirement onRetirement;
+
+	bool retired = false;
+	public bool Retired {
+		get { return retired; }
+	}
 
 	public void BeginAging (OnAge onAge, OnRetirement onRetirement) {
 		this.onAge = onAge;
@@ -22,6 +27,7 @@ public class AgeManager : Interval {
 	}
 
 	public override void End () {
+		retired = true;
 		onRetirement ();
 	}
 }

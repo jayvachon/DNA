@@ -7,7 +7,7 @@ namespace Units {
 
 	public class Distributor : MobileUnit, IActionPerformer {
 
-		string name = "Distributor";
+		new string name = "Distributor";
 		public override string Name {
 			get { return name; }
 		}
@@ -43,26 +43,23 @@ namespace Units {
 		}
 
 		void OnAge (float progress) {
+			// Make this exponential
 			//Path.Speed = Mathf.Lerp (10, 0, progress);
 		}
 
 		void OnRetirement () {
+			MobileTransform.StopMovingOnPath ();
 			name = "Elder";
 			unitInfoContent.Refresh ();
-			// TODO: set name to "Elder"
-			//MobileTransform.StopMovingOnPath ();
-			//Path.Speed = 5;
-
-			// When the distributor becomes an Elder, the player must click
-			// and drag the distributor to a house
-
-			// similarly, distributors must be dragged onto paths (paths are created
-			// independently of distributors)
 		}
 
-		public override void OnDragRelease () {
+		public override void OnDragRelease (Unit unit) {
 			if (ageManager.Retired) {
-				Debug.Log ("retired");
+				House house = unit as House;
+				if (house != null) {
+					house.Inventory.AddItem<ElderHolder> (new ElderItem ());
+					ObjectCreator.Instance.Destroy<Distributor> (transform);
+				}
 			}
 		}
 	}

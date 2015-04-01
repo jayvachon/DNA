@@ -13,16 +13,6 @@ namespace Units {
 		Path currentPath;
 		Path targetPath;
 
-		MobileUnit mobileUnit = null;
-		MobileUnit MobileUnit {
-			get {
-				if (mobileUnit == null) {
-					mobileUnit = Unit as MobileUnit;
-				}
-				return mobileUnit;
-			}
-		}
-
 		protected override void Awake () {
 			
 			base.Awake ();

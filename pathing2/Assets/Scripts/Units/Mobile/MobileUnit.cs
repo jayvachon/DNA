@@ -46,7 +46,7 @@ namespace Units {
 			LayerController.Reset ();
 		}
 
-		public virtual void OnDragRelease () {}
+		public virtual void OnDragRelease (Unit unit) {}
 
 		void Update () {
 			if (Input.GetKeyDown (KeyCode.Space)) {

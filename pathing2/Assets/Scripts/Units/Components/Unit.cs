@@ -48,9 +48,7 @@ namespace Units {
 
 		public Vector3 Position {
 			get { return Transform.position; }
-			set {
-				unitTransform.Position = value;
-			}
+			set { unitTransform.Position = value; }
 		}
 
 		public virtual void OnSelect () {

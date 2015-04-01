@@ -6,7 +6,6 @@ public delegate void OnRetirement ();
 
 public class AgeManager : Interval {
 
-	float age = 0; 				// seconds since birth
 	float retirementAge = 30;	// seconds until becoming an elder
 	OnAge onAge;
 	OnRetirement onRetirement;

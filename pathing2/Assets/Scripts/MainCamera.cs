@@ -17,7 +17,6 @@ public class MainCamera : MonoBehaviour {
 
 	public Transform center;
 	Transform anchor;
-	float arrowSpeed = 0.25f;
 
 	void Awake () {
 		Events.instance.AddListener<SelectEvent> (OnSelectEvent);

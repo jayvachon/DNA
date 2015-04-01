@@ -8,17 +8,7 @@ namespace Units {
 	// rename to UnitCollider
 
 	[RequireComponent (typeof (Collider))]
-	public class UnitClickable : MBRefs, IClickable, ISelectable {
-
-		Unit unit = null;
-		public Unit Unit {
-			get {
-				if (unit == null) {
-					unit = transform.GetNthParent (1).GetScript<Unit> ();
-				} 
-				return unit;
-			}
-		}
+	public class UnitClickable : UnitComponent, IClickable, ISelectable {
 
 		public virtual void OnClick (ClickSettings clickSettings) {
 			if (clickSettings.left) {

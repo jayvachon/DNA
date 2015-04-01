@@ -4,11 +4,11 @@ using System.Collections;
 namespace Units {
 
 	[RequireComponent (typeof (Renderer))]
-	public class UnitRenderer : MonoBehaviour {
+	public class UnitRenderer : UnitComponent {
 
 		public UnitColorHandler colorHandler = new UnitColorHandler ();
 
-		void Awake () {
+		new void Awake () {
 			colorHandler.Init (renderer);
 		}
 

@@ -13,11 +13,6 @@ namespace Pathing {
 			set { unit = value; }
 		}
 
-		public Vector3 Position {
-			get { return MyTransform.position; }
-			set { MyTransform.position = value; }
-		}
-
 		public void OnDragEnter (DragSettings dragSettings) {
 			PathManager.instance.EnterPathPoint (dragSettings, this);
 		}

@@ -11,23 +11,13 @@ namespace Units {
 		Vector3 screenPoint;
 		Vector3 offset;
 
-		Collider collider;
+		new Collider collider;
 		Collider Collider {
 			get {
 				if (collider == null) {
 					collider = GetComponent<Collider> ();
 				}
 				return collider;
-			}
-		}
-
-		MobileUnit mobileUnit;
-		MobileUnit MobileUnit {
-			get {
-				if (mobileUnit == null) {
-					mobileUnit = Unit as MobileUnit;
-				}
-				return mobileUnit;
 			}
 		}
 
@@ -49,14 +39,11 @@ namespace Units {
 		public void OnDragExit (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
 				gameObject.layer = 8;
-				Transform c = Colliding ();
-				if (c != null) {
-					// TODO: Left off here!
-					// unit now knows when it's colliding with something
-					Debug.Log (c);
+				UnitClickable collidingUnit = Colliding ().GetScript<UnitClickable> ();
+				if (collidingUnit != null) {
+					MobileUnit.OnDragRelease (collidingUnit.Unit);
 				}
 				Collider.enabled = true;
-				MobileUnit.OnDragRelease ();
 			}
 		}
 

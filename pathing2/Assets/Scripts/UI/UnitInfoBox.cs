@@ -146,7 +146,8 @@ public class UnitInfoBox : MBRefs {
 
 	void CreateElders (ElderHolder holder) {
 		List<ElderItem> elderItems = holder.Items;
-		foreach (ElderItem elder in elderItems) {
+		//foreach (ElderItem elder in elderItems) {
+		for (int i = 0; i < elderItems.Count; i ++) {
 			Transform t = ObjectCreator.Instance.Create<ElderAvatar> ();
 			t.SetParent (eldersGroup.transform);
 			t.localPosition = Vector3.zero;

@@ -7,7 +7,7 @@ namespace Units {
 	
 	public class Plot : StaticUnit, IActionAcceptor, IActionPerformer {
 
-		string name = "Plot";
+		new string name = "Plot";
 		public override string Name {
 			get { return name; }
 		}

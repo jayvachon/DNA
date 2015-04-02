@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GameEvents;
 
 namespace GameInput {
@@ -30,8 +31,11 @@ namespace GameInput {
 				}
 			}
 
-			public MouseButtonHandler (bool left) {
+			int layer = -1;
+
+			public MouseButtonHandler (bool left, int layer) {
 				this.left = left;
+				this.layer = layer;
 			}
 
 			public virtual void HandleMouseDown () {
@@ -63,7 +67,7 @@ namespace GameInput {
 			protected T GetMouseOver () {
 				Ray ray = Camera.main.ScreenPointToRay (MousePosition);
 				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit, Mathf.Infinity, MouseController.Layer)) {
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << layer)) {
 					return hit.transform.GetScript<T> ();
 				} else {
 					return null;
@@ -111,7 +115,7 @@ namespace GameInput {
 				get { return ScreenPositionHandler.PointDirection (startDragPosition, MousePosition); }
 			}
 
-			public DragHandler (bool left) : base (left) {}
+			public DragHandler (bool left, int layer) : base (left, layer) {}
 
 			protected override void OnDown () {
 				startDragPosition = MousePosition;
@@ -144,7 +148,7 @@ namespace GameInput {
 
 		class ClickHandler : MouseButtonHandler<IClickable> {
 
-			public ClickHandler (bool left) : base (left) {}
+			public ClickHandler (bool left, int layer) : base (left, layer) {}
 
 			protected override void OnDown () {
 				ClickSettings clickSettings = new ClickSettings (left, Moused, MousePosition);
@@ -157,7 +161,7 @@ namespace GameInput {
 
 		class ReleaseHandler : MouseButtonHandler<IReleasable> {
 
-			public ReleaseHandler (bool left) : base (left) {}
+			public ReleaseHandler (bool left, int layer) : base (left, layer) {}
 
 			protected override void OnUp () {
 				IReleasable released = GetMouseOver ();
@@ -205,33 +209,52 @@ namespace GameInput {
 			get { return LayerController.IgnoreLayers; }
 		}
 
-		ClickHandler leftClick = new ClickHandler (true);
-		ClickHandler rightClick = new ClickHandler (false);
-		DragHandler leftDrag = new DragHandler (true);
-		DragHandler rightDrag = new DragHandler (false);
-		ReleaseHandler leftRelease = new ReleaseHandler (true);
-		ReleaseHandler rightRelease = new ReleaseHandler (false);
+		List<ClickHandler> clicks = new List<ClickHandler> ();
+		List<DragHandler> drags = new List<DragHandler> ();
+		List<ReleaseHandler> releases = new List<ReleaseHandler> ();
+
+		int[] layers;
+
+		void Awake () {
+			layers = LayerController.Layers;
+			foreach (int layer in layers) {
+				clicks.Add (new ClickHandler (true, layer));
+				clicks.Add (new ClickHandler (false, layer));
+				drags.Add (new DragHandler (true, layer));
+				drags.Add (new DragHandler (false, layer));
+				releases.Add (new ReleaseHandler (true, layer));
+				releases.Add (new ReleaseHandler (false, layer));
+			}
+		}
 
 		void LateUpdate () {
 			if (Input.GetMouseButton (0)) {
-				leftClick.HandleMouseDown ();
-				leftDrag.HandleMouseDown ();
-				leftRelease.HandleMouseDown ();
+				for (int i = 0; i < layers.Length; i += 2) {
+					clicks[i].HandleMouseDown ();
+					drags[i].HandleMouseDown ();
+					releases[i].HandleMouseDown ();
+				}
 			}
 			if (Input.GetMouseButton (1)) {
-				rightClick.HandleMouseDown ();
-				rightDrag.HandleMouseDown ();
-				rightRelease.HandleMouseDown ();
+				for (int i = 1; i < layers.Length; i += 2) {
+					clicks[i].HandleMouseDown ();
+					drags[i].HandleMouseDown ();
+					releases[i].HandleMouseDown ();
+				}
 			}
 			if (!Input.GetMouseButton (0)) {
-				leftClick.HandleMouseUp ();
-				leftDrag.HandleMouseUp ();
-				leftRelease.HandleMouseUp ();
+				for (int i = 0; i < layers.Length; i += 2) {
+					clicks[i].HandleMouseUp ();
+					drags[i].HandleMouseUp ();
+					releases[i].HandleMouseUp ();
+				}
 			}
 			if (!Input.GetMouseButton (1)) {
-				rightClick.HandleMouseUp ();
-				rightDrag.HandleMouseUp ();
-				rightRelease.HandleMouseUp ();
+				for (int i = 1; i < layers.Length; i += 2) {
+					clicks[i].HandleMouseUp ();
+					drags[i].HandleMouseUp ();
+					releases[i].HandleMouseUp ();
+				}
 			}
 		}
 
@@ -240,7 +263,6 @@ namespace GameInput {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-				//Debug.Log (hit.point + " = " + MousePositionWorld);
 				Debug.DrawRay (ray.origin, ray.direction * 1000);
 			} 
 		}

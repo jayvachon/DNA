@@ -38,12 +38,12 @@ namespace Units {
 
 		public override void OnSelect () {
 			base.OnSelect ();
-			LayerController.Layer = InputLayer.PathPoints;
+			//LayerController.Layer = InputLayer.PathPoints;
 		}
 
 		public override void OnUnselect () {
 			base.OnUnselect ();
-			LayerController.Reset ();
+			//LayerController.Reset ();
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}

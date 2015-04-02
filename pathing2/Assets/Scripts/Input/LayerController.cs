@@ -4,11 +4,11 @@ using System.Collections;
 namespace GameInput {
 
 	public enum InputLayer {
-		UI = 1 << 5,
-		Units = 1 << 8,
-		PathPoints = 1 << 9,
-		Structure = 1 << 10,
-		Dragging = 1 << 11
+		UI = 5,
+		Units = 8,
+		PathPoints = 9,
+		Structure = 10,
+		Dragging = 11
 	}
 
 	public class LayerController {

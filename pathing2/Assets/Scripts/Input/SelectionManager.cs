@@ -55,7 +55,12 @@ namespace GameInput {
 		}
 
 		static void OnClickEvent (ClickEvent e) {
-			if (e.clickSettings.clickable == null) {
+			/*if (e.clickSettings.clickable == null) {
+				Unselect ();
+			}*/
+			if (e.LayerClickSettings (InputLayer.UI).layerHit)
+				return;
+			if (!e.LayerClickSettings (InputLayer.Units).layerHit) {
 				Unselect ();
 			}
 		}

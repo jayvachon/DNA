@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>/Applications/Unity 4.6.1/Unity 4.6.1.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity 4.6.1/Unity 4.6.1.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -86,12 +86,16 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\UnselectEvent.cs" />
      <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
+     <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />
+     <Compile Include="Assets\Scripts\Input\DragHandler.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
      <Compile Include="Assets\Scripts\Input\IDraggable.cs" />
      <Compile Include="Assets\Scripts\Input\IReleasable.cs" />
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Input\LayerController.cs" />
+     <Compile Include="Assets\Scripts\Input\MouseButtonHandler.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
+     <Compile Include="Assets\Scripts\Input\ReleaseHandler.cs" />
      <Compile Include="Assets\Scripts\Input\ScreenPositionHandler.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
@@ -155,7 +159,7 @@
      <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity 4.6.1/Unity 4.6.1.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

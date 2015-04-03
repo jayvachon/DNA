@@ -10,6 +10,10 @@ namespace Units {
 	[RequireComponent (typeof (Collider))]
 	public class UnitClickable : UnitComponent, IClickable, ISelectable {
 
+		public virtual InputLayer[] IgnoreLayers {
+			get { return new InputLayer[] { InputLayer.UI }; }
+		}
+
 		public virtual void OnClick (ClickSettings clickSettings) {
 			if (clickSettings.left) {
 				SelectionManager.ToggleSelect (this);

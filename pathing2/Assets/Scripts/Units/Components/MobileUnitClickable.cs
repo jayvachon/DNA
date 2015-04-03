@@ -6,7 +6,7 @@ namespace Units {
 
 	// rename to MobileUnitCollider
 
-	public class MobileUnitClickable : UnitClickable, IDraggable {
+	public class MobileUnitClickable : UnitClickable, IDraggable, IReleasable {
 		
 		Vector3 screenPoint;
 		Vector3 offset;
@@ -21,9 +21,14 @@ namespace Units {
 			}
 		}
 
+		public override void OnClick (ClickSettings clickSettings) {
+			if (clickSettings.left) {
+				SelectionManager.Select (this);
+			}
+		}
+
 		public void OnDragEnter (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
-				gameObject.layer = 11;
 				Collider.enabled = false;
 			}
 		}
@@ -38,13 +43,16 @@ namespace Units {
 
 		public void OnDragExit (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
-				gameObject.layer = 8;
 				UnitClickable collidingUnit = Colliding ().GetScript<UnitClickable> ();
 				if (collidingUnit != null) {
 					MobileUnit.OnDragRelease (collidingUnit.Unit);
 				}
 				Collider.enabled = true;
 			}
+		}
+
+		public void OnRelease (ReleaseSettings releaseSettings) {
+			MobileTransform.StartMovingOnPath ();
 		}
 
 		Transform Colliding () {

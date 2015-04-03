@@ -58,9 +58,9 @@ namespace GameInput {
 			/*if (e.clickSettings.clickable == null) {
 				Unselect ();
 			}*/
-			if (e.LayerClickSettings (InputLayer.UI).layerHit)
+			if (e.LayerClicked (InputLayer.UI))
 				return;
-			if (!e.LayerClickSettings (InputLayer.Units).layerHit) {
+			if (!e.LayerClicked (InputLayer.Units)) {
 				Unselect ();
 			}
 		}

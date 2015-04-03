@@ -9,7 +9,7 @@ namespace Units {
 	public class MobileUnit : Unit, IBinder {
 
 		MobileUnitTransform mobileTransform;
-		protected MobileUnitTransform MobileTransform {
+		public MobileUnitTransform MobileTransform {
 			get {
 				if (mobileTransform == null) {
 					mobileTransform = unitTransform as MobileUnitTransform;
@@ -36,22 +36,6 @@ namespace Units {
 			mobileTransform.StartMovingOnPath ();
 		}
 
-		public override void OnSelect () {
-			base.OnSelect ();
-			//LayerController.Layer = InputLayer.PathPoints;
-		}
-
-		public override void OnUnselect () {
-			base.OnUnselect ();
-			//LayerController.Reset ();
-		}
-
 		public virtual void OnDragRelease (Unit unit) {}
-
-		void Update () {
-			if (Input.GetKeyDown (KeyCode.Space)) {
-				MobileTransform.StartMovingOnPath ();
-			}
-		}
 	}
 }

@@ -5,7 +5,11 @@ using Units;
 
 namespace Pathing {
 
-	public class PathPoint : MBRefs, IPoolable, IDraggable, IClickable {
+	public class PathPoint : MBRefs, IPoolable, IDraggable {
+
+		public virtual InputLayer[] IgnoreLayers {
+			get { return new InputLayer[] { InputLayer.UI }; }
+		}
 
 		public StaticUnitTransform unit;
 		public StaticUnitTransform StaticUnitTransform {
@@ -21,7 +25,6 @@ namespace Pathing {
 			PathManager.instance.ExitPathPoint (dragSettings, this);
 		}
 
-		public void OnClick (ClickSettings clickSettings) {}
 		public void OnDrag (DragSettings dragSettings) {}
 		public void OnCreate () {}
 		public void OnDestroy () {}

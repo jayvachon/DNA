@@ -47,25 +47,19 @@ namespace Pathing {
 		}
 
 		public PathPoint FirstPoint {
-			get {
-				return points[0];
-			}
+			get { return points[0]; }
 		}
 
 		public PathPoint LastPoint {
 			get {
-				if (Empty) {
-					return null;
-				}
+				if (Empty) return null; 
 				return points[Count-1]; 
 			}
 		}
 
 		public Vector3 LastPosition {
 			get { 
-				if (Empty) {
-					return Vector3.zero;
-				}
+				if (Empty) return Vector3.zero;
 				return positions[Count-1];
 			}
 		}

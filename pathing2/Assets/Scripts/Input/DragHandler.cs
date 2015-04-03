@@ -99,7 +99,7 @@ namespace GameInput {
 		}
 	}
 
-	public class DragSettings : System.Object {
+	public class DragSettings {
 
 		public readonly bool left;
 		public readonly IDraggable firstDragged;

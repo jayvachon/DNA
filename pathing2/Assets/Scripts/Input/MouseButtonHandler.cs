@@ -5,6 +5,8 @@ namespace GameInput {
 
 	public abstract class MouseButtonHandler<T> where T : class {
 
+		protected const int LEFT = 0;
+		protected const int RIGHT = 1;
 		protected readonly bool left = true;
 		bool mouseDown = false;
 
@@ -19,14 +21,6 @@ namespace GameInput {
 			set { mousePosition = value; }
 		}
 		
-		bool MouseOverIgnore {
-			get {
-				Ray ray = Camera.main.ScreenPointToRay (MousePosition);
-				RaycastHit hit;
-				return Physics.Raycast (ray, out hit, Mathf.Infinity, MouseController.IgnoreLayers);
-			}
-		}
-
 		int layer = -1;
 		protected int Layer { get { return layer; } }
 
@@ -40,9 +34,6 @@ namespace GameInput {
 
 		public virtual void HandleMouseDown () {
 			MousePosition = Input.mousePosition;
-			if (MouseOverIgnore) {
-				return;
-			}
 			if (!mouseDown) {
 				moused = GetMouseOver ();
 				OnDown ();

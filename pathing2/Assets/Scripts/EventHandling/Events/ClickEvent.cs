@@ -13,6 +13,18 @@ namespace GameEvents {
 			this.clickSettings = clickSettings;
 		}
 
+		public bool LayersClicked (InputLayer[] layers) {
+			for (int i = 0; i < layers.Length; i ++) {
+				if (LayerClicked (layers[i]))
+					return true;	
+			}
+			return false;
+		}
+
+		public bool LayerClicked (InputLayer layer) {
+			return LayerClickSettings (layer).layerHit;
+		}
+
 		public ClickSettings LayerClickSettings (InputLayer layer) {
 			return LayerClickSettings ((int)layer);
 		}

@@ -44,5 +44,15 @@ namespace Units {
 				return staticUnit;
 			}
 		}
+
+		MobileUnitTransform mobileTransform = null;
+		public MobileUnitTransform MobileTransform {
+			get {
+				if (mobileTransform == null) {
+					mobileTransform = MobileUnit.MobileTransform;
+				}
+				return mobileTransform;
+			}
+		}
 	}
 }

@@ -7,6 +7,9 @@ namespace GameInput {
 
 	public class MouseController : MonoBehaviour {
 
+		protected const int LEFT = 0;
+		protected const int RIGHT = 1;
+
 		public static Vector3 MousePosition {
 			get { return ScreenPositionHandler.ScreenToWorld (Input.mousePosition); }
 		}
@@ -15,28 +18,11 @@ namespace GameInput {
 			get {
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.Structure)) {
 					return hit.point;
 				}
 				return Vector3.zero;
 			}
-		}
-
-		static int layer = -1;
-		public static int Layer {
-			set {
-				layer = value;
-			}
-			get {
-				if (layer == -1) {
-					layer = LayerController.DefaultLayer;
-				}
-				return layer;
-			}
-		}
-
-		public static int IgnoreLayers {
-			get { return LayerController.IgnoreLayers; }
 		}
 
 		ClickManager clickManager;
@@ -51,25 +37,25 @@ namespace GameInput {
 		}
 
 		void LateUpdate () {
-			if (Input.GetMouseButton (0)) {
-				clickManager.HandleMouseDown (0);
-				dragManager.HandleMouseDown (0);
-				releaseManager.HandleMouseDown (0);
+			if (Input.GetMouseButton (LEFT)) {
+				clickManager.HandleMouseDown (LEFT);
+				dragManager.HandleMouseDown (LEFT);
+				releaseManager.HandleMouseDown (LEFT);
 			}
-			if (!Input.GetMouseButton (0)) {
-				clickManager.HandleMouseUp (0);
-				dragManager.HandleMouseUp (0);
-				releaseManager.HandleMouseUp (0);
+			if (!Input.GetMouseButton (LEFT)) {
+				clickManager.HandleMouseUp (LEFT);
+				dragManager.HandleMouseUp (LEFT);
+				releaseManager.HandleMouseUp (LEFT);
 			}
-			if (Input.GetMouseButton (1)) {
-				clickManager.HandleMouseDown (1);
-				dragManager.HandleMouseDown (1);
-				releaseManager.HandleMouseDown (1);
+			if (Input.GetMouseButton (RIGHT)) {
+				clickManager.HandleMouseDown (RIGHT);
+				dragManager.HandleMouseDown (RIGHT);
+				releaseManager.HandleMouseDown (RIGHT);
 			}
-			if (!Input.GetMouseButton (1)) {
-				clickManager.HandleMouseUp (1);
-				dragManager.HandleMouseUp (1);
-				releaseManager.HandleMouseUp (1);
+			if (!Input.GetMouseButton (RIGHT)) {
+				clickManager.HandleMouseUp (RIGHT);
+				dragManager.HandleMouseUp (RIGHT);
+				releaseManager.HandleMouseUp (RIGHT);
 			}
 		}
 

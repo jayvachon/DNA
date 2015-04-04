@@ -10,21 +10,11 @@ namespace Units {
 		public Path Path { get; set; }
 		public IActionAcceptor BoundAcceptor { get; private set; }
 
-		Path currentPath;
-		Path targetPath;
-
 		protected override void Awake () {
-			
 			base.Awake ();
-
-			currentPath = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
-			currentPath.transform.SetParent (MobileUnit.transform); 
-			Path = currentPath;
-			currentPath.Init (this);
-
-			targetPath = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
-			targetPath.transform.SetParent (MobileUnit.transform);
-			targetPath.Init (this);
+			Path = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
+			Path.MyTransform.SetParent (MobileUnit.transform);
+			Path.Init (this);
 		}
 
 		public override void OnSelect () {

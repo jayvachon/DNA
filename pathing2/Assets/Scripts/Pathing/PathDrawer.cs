@@ -5,21 +5,10 @@ using GameInput;
 
 namespace Pathing {
 
-	public class PathDrawer : MonoBehaviour {
+	public class PathDrawer : PathComponent {
 		
-		public Path path;
 		public LineDrawer pointsDrawer;
 		public LineDrawer mouseDrawer;
-		
-		PathPoints pathPoints = null;
-		public PathPoints Points {
-			get {
-				if (pathPoints == null) {
-					pathPoints = path.Points;
-				}
-				return pathPoints;
-			}
-		}
 
 		bool dragging = false;
 		public bool Dragging {
@@ -44,9 +33,15 @@ namespace Pathing {
 		IEnumerator CoDrag () {
 			List<Vector3> positions = new List<Vector3> (new Vector3[2]);
 			while (dragging) {
-				positions[0] = Points.DragPosition;
-				positions[1] = MouseController.MousePosition;
-				mouseDrawer.UpdatePositions (positions);
+				Vector3 startPosition = Points.DragPosition;
+				if (startPosition == Vector3.zero) { 
+					mouseDrawer.Clear ();
+					dragging = false;
+				} else {
+					positions[0] = startPosition;
+					positions[1] = MouseController.MousePosition;
+					mouseDrawer.UpdatePositions (positions);
+				}
 				yield return null;
 			}
 			mouseDrawer.Clear ();

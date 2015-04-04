@@ -7,7 +7,9 @@ namespace Units {
 	// rename to MobileUnitCollider
 
 	public class MobileUnitClickable : UnitClickable, IDraggable, IReleasable {
-		
+			
+		public bool MoveOnDrag { get { return true; } }
+
 		Vector3 screenPoint;
 		Vector3 offset;
 
@@ -29,7 +31,7 @@ namespace Units {
 
 		public void OnDragEnter (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
-				Collider.enabled = false;
+				//Collider.enabled = false;
 			}
 		}
 
@@ -47,7 +49,7 @@ namespace Units {
 				if (collidingUnit != null) {
 					MobileUnit.OnDragRelease (collidingUnit.Unit);
 				}
-				Collider.enabled = true;
+				//Collider.enabled = true;
 			}
 		}
 

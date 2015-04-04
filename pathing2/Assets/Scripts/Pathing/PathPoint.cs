@@ -7,6 +7,8 @@ namespace Pathing {
 
 	public class PathPoint : MBRefs, IPoolable, IDraggable {
 
+		public bool MoveOnDrag { get { return false; } }
+
 		public virtual InputLayer[] IgnoreLayers {
 			get { return new InputLayer[] { InputLayer.UI }; }
 		}
@@ -25,7 +27,8 @@ namespace Pathing {
 			PathManager.instance.ExitPathPoint (dragSettings, this);
 		}
 
-		public void OnDrag (DragSettings dragSettings) {}
+		public void OnDrag (DragSettings dragSettings) {
+		}
 		public void OnCreate () {}
 		public void OnDestroy () {}
 	}

@@ -31,37 +31,17 @@ namespace GameInput {
 	public class DragHandler : MouseButtonHandler<IDraggable> {
 
 		Vector2 startDragPosition = Vector2.zero;
-		float dragThreshold = 5;
+		float dragThreshold = 4;
+		IDraggable dragged = null;
+		IDraggable currentDragged = null;
 
 		bool dragging = false;
 		public bool Dragging {
 			get { return dragging; }
 		}
 
-		IDraggable dragged = null;
-		public IDraggable Dragged {
-			get { return dragged; }
-			set {
-				if (dragged != value) {
-					IDraggable prevDragged = dragged;
-					if (prevDragged != null) {
-						prevDragged.OnDragExit (DragSettings);
-					}
-					dragged = value;
-					if (dragged != null) {
-						dragged.OnDragEnter (DragSettings);
-					}
-				} else {
-					if (dragged != null)
-						dragged.OnDrag (DragSettings);
-				}
-			}
-		}
-
 		DragSettings DragSettings {
-			get {
-				return new DragSettings (left, Moused, Dragged, Direction);
-			}
+			get { return new DragSettings (left, Moused, dragged, Direction); }
 		}
 
 		float Direction {
@@ -78,18 +58,47 @@ namespace GameInput {
 			if (!dragging) {
 				CheckDrag ();
 			} else {
-				IDraggable over = GetMouseOver ();
-				if (over != null) {
-					Dragged = over;
-				} else if (Dragged != null) {
-					Dragged = Dragged;
+				
+				// 'currentDragged' is always set to whatever the mouse is over
+				// its value gets compared to 'dragged'
+				currentDragged = GetMouseOver ();
+
+				// Check for mouse enter
+				if (dragged == null) {
+					if (currentDragged != null) {
+						currentDragged.OnDragEnter (DragSettings);
+						dragged = currentDragged;	
+					}
+				} else {
+
+					// if the object is moved when dragged, then OnDragExit gets called on mouse up
+					if (dragged.MoveOnDrag) {
+						dragged.OnDrag (DragSettings);
+					} else {
+
+						// if the object is stationary, then check if the mouse is no longer over it--
+						// if not, then call OnDragExit 
+						if (currentDragged == null) {
+							dragged.OnDragExit (DragSettings);
+							dragged = null;
+						} else {
+							dragged.OnDrag (DragSettings);
+						}
+					}
 				}
 			}
 		}
 
 		protected override void OnUp () {
 			dragging = false;
-			Dragged = null;
+			if (dragged != null) {
+				
+				// if the object gets moved when dragged, then only call OnDragExit once the mouse is released
+				if (dragged.MoveOnDrag) {
+					dragged.OnDragExit (DragSettings);
+				}
+				dragged = null;
+			}
 		}
 
 		void CheckDrag () {

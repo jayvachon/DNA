@@ -48,6 +48,7 @@ namespace Units {
 		}
 
 		void OnRetirement () {
+			Path.Speed = 0;
 			MobileTransform.StopMovingOnPath ();
 			name = "Elder";
 			unitInfoContent.Refresh ();

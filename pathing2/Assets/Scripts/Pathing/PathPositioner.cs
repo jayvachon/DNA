@@ -4,9 +4,7 @@ using System.Collections.Generic;
 
 namespace Pathing {
 
-	public class PathPositioner : MBRefs {
-
-		public Path path;
+	public class PathPositioner : PathComponent {
 
 		int position = 0;
 		bool moving = false;
@@ -16,26 +14,6 @@ namespace Pathing {
 		public float Speed {
 			get { return speed; }
 			set { speed = value; }
-		}
-		
-		PathPoints pathPoints = null;
-		PathPoints Points {
-			get {
-				if (pathPoints == null) {
-					pathPoints = path.Points;
-				}
-				return pathPoints;
-			}
-		}
-		
-		IPathable pathable;
-		IPathable Pathable {
-			get {
-				if (pathable == null) {
-					pathable = path.Pathable;
-				}
-				return pathable;
-			}
 		}
 		
 		List<Vector3> Positions {

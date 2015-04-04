@@ -116,6 +116,7 @@
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />
+     <Compile Include="Assets\Scripts\Pathing\PathComponent.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPoint.cs" />

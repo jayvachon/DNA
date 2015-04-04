@@ -9,16 +9,13 @@ namespace Pathing {
 	public class PathPoints : System.Object {
 
 		int max = 2;
+		bool allowLoop = false;
 
 		List<PathPoint> points = new List<PathPoint> ();
-		public List<PathPoint> Points {
-			get { return points; }
-		}
+		public List<PathPoint> Points { get { return points; } }
 
 		List<Vector3> positions = new List<Vector3> ();
-		public List<Vector3> Positions {
-			get { return positions; }
-		}
+		public List<Vector3> Positions { get { return positions; } }
 
 		PathPoint queuedPoint = null;
 		PathPoint QueuedPoint {
@@ -73,17 +70,9 @@ namespace Pathing {
 			}
 		}
 
-		public int Count {
-			get { return points.Count; }
-		}
-
-		public bool Empty {
-			get { return Count == 0; }
-		}
-
-		public bool Loop {
-			get { return FirstPoint == LastPoint; }
-		}
+		public int Count { get { return points.Count; } }
+		public bool Empty { get { return Count == 0; } }
+		public bool Loop { get { return FirstPoint == LastPoint; } }
 
 		public bool PointCanStart (PathPoint point) {
 			return (Empty || point == LastPoint);
@@ -100,7 +89,8 @@ namespace Pathing {
 				Add (QueuedPoint);
 				Add (point);
 				QueuedPoint = null;
-			} else {
+			} else if (!allowLoop) {
+				// Prevent looping - no effect in a path of 2 points
 				if (point != LastPoint) {
 					Add (point);
 				}
@@ -108,18 +98,25 @@ namespace Pathing {
 		}
 
 		public void RequestRemove (PathPoint point) {
+			if (QueuedPoint != null) {
+				QueuedPoint = null;
+			}
 			if (point == LastPoint) {
 				Remove ();
 			}
 		}
 
 		public void OnRelease () {
+			if (Count == 1) points.Clear ();
 			QueuedPoint = null;
 		}
 
 		void Add (PathPoint point) {
-			if (points.Contains (point) || points.Count >= max)
+			if (points.Contains (point))
 				return;
+			if (points.Count >= max) {
+				points.RemoveAt (0);
+			}
 			points.Add (point);
 			UpdatePositions ();
 		}

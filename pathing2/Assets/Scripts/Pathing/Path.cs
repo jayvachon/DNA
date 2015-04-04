@@ -4,8 +4,16 @@ using GameInput;
 using GameEvents;
 
 namespace Pathing {
+	
+	/**
+	 *	Path
+	 *		- PathPositioner
+	 *		- PathDrawer
+	 *			- PointsDrawer
+	 *			- MouseDrawer
+	 */
 
-	public class Path : MonoBehaviour, IPoolable {
+	public class Path : MBRefs, IPoolable {
 
 		new bool enabled = false;
 		public bool Enabled {
@@ -60,7 +68,7 @@ namespace Pathing {
 			if (!dragSettings.left) return;
 			float a = ScreenPositionHandler.PointDirection (MouseController.MousePosition, point.Position);
 			
-			if (ScreenPositionHandler.AnglesInRange (pathPoints.Direction, a, 15)) {
+			if (ScreenPositionHandler.AnglesInRange (pathPoints.Direction, a, 25)) {
 				pathPoints.RequestRemove (point);
 				UpdatePoints ();
 			}

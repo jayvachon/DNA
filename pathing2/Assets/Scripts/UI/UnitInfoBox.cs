@@ -265,5 +265,6 @@ public class UnitInfoBox : MBRefs {
 		ClearActions ();
 		InitActions ();
 		title.text = content.Title;
+		SetColliderSize ();
 	}
 }

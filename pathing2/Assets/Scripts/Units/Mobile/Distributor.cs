@@ -2,6 +2,7 @@
 using System.Collections;
 using GameInventory;
 using GameActions;
+using Pathing;
 
 namespace Units {
 
@@ -34,8 +35,6 @@ namespace Units {
 			PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (2));
 			PerformableActions.Add ("DeliverElder", new DeliverItem<ElderHolder> (2));
 			PerformableActions.Add ("CollectUnitElder", new CollectUnit<Elder> (3));
-
-			InventoryDrawer.Create (MobileTransform.transform, Inventory);
 		}
 
 		void Start () {
@@ -43,8 +42,8 @@ namespace Units {
 		}
 
 		void OnAge (float progress) {
-			// Make this exponential
-			//Path.Speed = Mathf.Lerp (10, 0, progress);
+			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
+			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p);
 		}
 
 		void OnRetirement () {
@@ -52,6 +51,14 @@ namespace Units {
 			MobileTransform.StopMovingOnPath ();
 			name = "Elder";
 			unitInfoContent.Refresh ();
+			Path.Enabled = false;
+		}
+
+		public override void OnRelease () {
+			MobileTransform.StartMovingOnPath ();
+			if (!ageManager.Retired) {
+				Path.Speed = Path.PathSettings.maxSpeed;
+			}
 		}
 
 		public override void OnDragRelease (Unit unit) {
@@ -62,6 +69,10 @@ namespace Units {
 					ObjectCreator.Instance.Destroy<Distributor> (transform);
 				}
 			}
+		}
+
+		public override void OnCreate () {
+			Path.Enabled = true;
 		}
 	}
 }

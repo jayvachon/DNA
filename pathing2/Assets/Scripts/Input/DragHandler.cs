@@ -66,8 +66,8 @@ namespace GameInput {
 				// Check for mouse enter
 				if (dragged == null) {
 					if (currentDragged != null) {
+						dragged = currentDragged;
 						currentDragged.OnDragEnter (DragSettings);
-						dragged = currentDragged;	
 					}
 				} else {
 

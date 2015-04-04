@@ -45,16 +45,32 @@ namespace Pathing {
 			get { return pathPositioner.Speed; }
 			set { pathPositioner.Speed = value; }
 		}
+
+		PathSettings pathSettings;
+		public PathSettings PathSettings {
+			get { return pathSettings; }
+			set { pathSettings = value; }
+		}
 		
-		public void Init (IPathable pathable) {
-			Points = new PathPoints ();
+		public void Init (IPathable pathable, PathSettings pathSettings) {
 			Pathable = pathable;
+			this.pathSettings = pathSettings;
+			Points = new PathPoints (pathSettings.maxLength, pathSettings.allowLoop);
+			Speed = pathSettings.maxSpeed;
 		}
 
 		public void PointDragEnter (DragSettings dragSettings, PathPoint point) {
 			if (!dragSettings.left) return;
 			if (pathPoints.CanDragFromPoint (point)) {
 				dragging = true;
+			} else {
+
+				// Clear the path and start over if the path already exists but the player
+				// is dragging over a point not on the path (ik this makes no sense, but it works)
+				if (!dragging) {
+					pathPoints.Clear ();
+					dragging = true;
+				}
 			}
 
 			if (dragging) {
@@ -94,5 +110,18 @@ namespace Pathing {
 
 		public void OnCreate () {}
 		public void OnDestroy () {}
+	}
+
+	public class PathSettings {
+
+		public readonly float maxSpeed;
+		public readonly int maxLength;
+		public readonly bool allowLoop;
+
+		public PathSettings (float maxSpeed=5, int maxLength=2, bool allowLoop=false) {
+			this.maxSpeed = maxSpeed;
+			this.maxLength = maxLength;
+			this.allowLoop = allowLoop;
+		}
 	}
 }

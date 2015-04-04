@@ -28,8 +28,6 @@ namespace Units {
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add ("CombineMilkAndIceCream", new CombineItems<MilkHolder, IceCreamHolder, MilkshakeHolder> (5));
-
-			InventoryDrawer.Create (StaticTransform.transform, Inventory);
 		}
 	}
 }

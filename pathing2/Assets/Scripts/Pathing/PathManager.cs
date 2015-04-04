@@ -9,7 +9,7 @@ namespace Pathing {
 	public class PathManager : MonoBehaviour {
 		
 		static PathManager instanceInternal = null;
-		static public PathManager instance {
+		static public PathManager Instance {
 			get {
 				if (instanceInternal == null) {
 					instanceInternal = Object.FindObjectOfType (typeof (PathManager)) as PathManager;
@@ -24,21 +24,9 @@ namespace Pathing {
 		}
 
 		Path selectedPath = null;
-
-		void Awake () {
-			Events.instance.AddListener<SelectEvent> (OnSelectEvent);
-			Events.instance.AddListener<UnselectEvent> (OnUnselectEvent);
-		}
-
-		void OnSelectEvent (SelectEvent e) {
-			MobileUnit mu = e.unit as MobileUnit;
-			if (mu != null) {
-				selectedPath = mu.Path;
-			}
-		}
-
-		void OnUnselectEvent (UnselectEvent e) {
-			selectedPath = null;
+		public Path SelectedPath {
+			get { return selectedPath; }
+			set { selectedPath = value; }
 		}
 
 		public void EnterPathPoint (DragSettings dragSettings, PathPoint pathPoint) {

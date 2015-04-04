@@ -8,7 +8,7 @@ namespace Pathing {
 	[System.Serializable]
 	public class PathPoints : System.Object {
 
-		int max = 2;
+		int maxLength = 2;
 		bool allowLoop = false;
 
 		List<PathPoint> points = new List<PathPoint> ();
@@ -74,6 +74,11 @@ namespace Pathing {
 		public bool Empty { get { return Count == 0; } }
 		public bool Loop { get { return FirstPoint == LastPoint; } }
 
+		public PathPoints (int maxLength, bool allowLoop) {
+			this.maxLength = maxLength;
+			this.allowLoop = allowLoop;
+		}
+
 		public bool PointCanStart (PathPoint point) {
 			return (Empty || point == LastPoint);
 		}
@@ -107,14 +112,14 @@ namespace Pathing {
 		}
 
 		public void OnRelease () {
-			if (Count == 1) points.Clear ();
+			if (Count == 1) Clear ();
 			QueuedPoint = null;
 		}
 
 		void Add (PathPoint point) {
 			if (points.Contains (point))
 				return;
-			if (points.Count >= max) {
+			if (points.Count >= maxLength) {
 				points.RemoveAt (0);
 			}
 			points.Add (point);
@@ -124,6 +129,11 @@ namespace Pathing {
 		void Remove () {
 			points.RemoveAt (Count-1);
 			UpdatePositions ();
+		}
+
+		public void Clear () {
+			points.Clear ();
+			positions.Clear ();
 		}
 
 		void UpdatePositions () {

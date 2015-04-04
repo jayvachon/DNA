@@ -21,8 +21,6 @@ namespace Units {
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (true, true)));
 			AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> (new ElderCondition (false, false)));
-
-			InventoryDrawer.Create (StaticTransform.transform, Inventory);
 		}
 	}
 }

@@ -20,15 +20,14 @@ namespace Pathing {
 		}
 
 		public void OnDragEnter (DragSettings dragSettings) {
-			PathManager.instance.EnterPathPoint (dragSettings, this);
+			PathManager.Instance.EnterPathPoint (dragSettings, this);
 		}
 
 		public void OnDragExit (DragSettings dragSettings) {
-			PathManager.instance.ExitPathPoint (dragSettings, this);
+			PathManager.Instance.ExitPathPoint (dragSettings, this);
 		}
 
-		public void OnDrag (DragSettings dragSettings) {
-		}
+		public void OnDrag (DragSettings dragSettings) {}
 		public void OnCreate () {}
 		public void OnDestroy () {}
 	}

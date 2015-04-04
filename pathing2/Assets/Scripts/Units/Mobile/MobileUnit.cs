@@ -18,10 +18,14 @@ namespace Units {
 			}
 		}
 
+		Path path = null;
 		public Path Path {
 			get { 
-				IPathable pathable = MobileTransform as IPathable; 
-				return pathable.Path;
+				if (path == null) {
+					IPathable pathable = MobileTransform as IPathable; 
+					path = pathable.Path;
+				}
+				return path;
 			}
 		}
 
@@ -37,5 +41,6 @@ namespace Units {
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}
+		public virtual void OnRelease () {}
 	}
 }

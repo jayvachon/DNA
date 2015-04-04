@@ -25,8 +25,6 @@ namespace Units {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add ("GenerateIceCream", new GenerateItem<IceCreamHolder> (3));
 			PerformableActions.Add ("ConsumeIceCream", new ConsumeItem<IceCreamHolder> (10));
-
-			InventoryDrawer.Create (StaticTransform.transform, Inventory);
 		}
 	}
 }

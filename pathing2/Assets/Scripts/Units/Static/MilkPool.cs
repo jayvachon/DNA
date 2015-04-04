@@ -20,8 +20,6 @@ namespace Units {
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("CollectMilk", new AcceptCollectItem<MilkHolder> ());
-
-			InventoryDrawer.Create (StaticTransform.transform, Inventory);
 		}
 	}
 }

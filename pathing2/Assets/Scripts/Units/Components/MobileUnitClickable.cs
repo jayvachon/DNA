@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameInput;
+using Pathing;
 
 namespace Units {
 
@@ -31,7 +32,8 @@ namespace Units {
 
 		public void OnDragEnter (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
-				//Collider.enabled = false;
+				PathManager.Instance.SelectedPath = MobileUnit.Path;
+				MobileTransform.StopMovingOnPath ();
 			}
 		}
 
@@ -45,16 +47,16 @@ namespace Units {
 
 		public void OnDragExit (DragSettings dragSettings) {
 			if (dragSettings.WasClicked) {
+				PathManager.Instance.SelectedPath = null;
 				UnitClickable collidingUnit = Colliding ().GetScript<UnitClickable> ();
 				if (collidingUnit != null) {
 					MobileUnit.OnDragRelease (collidingUnit.Unit);
 				}
-				//Collider.enabled = true;
 			}
 		}
 
 		public void OnRelease (ReleaseSettings releaseSettings) {
-			MobileTransform.StartMovingOnPath ();
+			MobileUnit.OnRelease ();
 		}
 
 		Transform Colliding () {

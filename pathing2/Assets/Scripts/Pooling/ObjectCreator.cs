@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// Rename this - it creates AND DESTROYS(!!!) objects
+// Rename this to ObjectManager - it creates AND DESTROYS(!!!) objects
 public class ObjectCreator : MonoBehaviour {
 
 	static ObjectCreator instanceInternal = null;

@@ -10,6 +10,8 @@ namespace Units {
 	[RequireComponent (typeof (Collider))]
 	public class UnitClickable : UnitComponent, IClickable, ISelectable {
 
+		protected override int ParentUnit { get { return 1; } }
+
 		public virtual InputLayer[] IgnoreLayers {
 			get { return new InputLayer[] { InputLayer.UI }; }
 		}

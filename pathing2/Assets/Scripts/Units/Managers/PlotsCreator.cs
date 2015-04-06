@@ -11,17 +11,6 @@ namespace Units {
 		int radius = 4;
 		int rings = 5;
 
-		// plz don't make this a singleton :(
-		/*static PlotsCreator instance = null;
-		public static PlotsCreator Instance {
-			get {
-				if (instance == null) {
-					instance = Object.FindObjectOfType (typeof (PlotsCreator)) as PlotsCreator;
-				}
-				return instance;
-			}
-		}*/
-
 		void Awake () {
 			CreatePlots ();
 		}
@@ -56,7 +45,7 @@ namespace Units {
 			T unit = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
 			unit.Position = position;
 			unit.PathPoint = pathPoint;
-			pathPoint.StaticUnitTransform = unit.unitTransform as StaticUnitTransform;
+			pathPoint.StaticUnit = unit as StaticUnit;
 		}
 	}
 }

@@ -8,6 +8,8 @@ namespace Units {
 
 		public UnitColorHandler colorHandler = new UnitColorHandler ();
 
+		protected override int ParentUnit { get { return 1; } }
+
 		new void Awake () {
 			colorHandler.Init (renderer);
 		}

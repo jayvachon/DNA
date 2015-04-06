@@ -34,7 +34,7 @@ namespace Units {
 		}
 
 		public void ArriveAtPoint (PathPoint point) {
-			StaticUnitTransform unitTransform = point.unit;
+			StaticUnitTransform unitTransform = point.StaticUnitTransform;
 			if (unitTransform == null) {
 				StartMovingOnPath ();
 			} else {

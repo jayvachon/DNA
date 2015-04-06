@@ -53,6 +53,30 @@ namespace GameActions {
 			inputs.Clear ();
 		}
 
+		public override void RefreshEnabledActions () {
+			EnabledActions.Clear ();
+			foreach (var keyval in Actions) {
+				PerformerAction action = keyval.Value as PerformerAction;
+				if (action.Enabled && action.CanPerform) {
+					EnabledActions.Add (keyval.Key, action);
+				}
+			}
+			NotifyActionsUpdated ();
+		}
+
+		public List<string> GetAcceptedActions (IActionAcceptor acceptor) {
+			List<string> acceptedActions = new List<string> ();
+			if (acceptor == null) {
+				return acceptedActions;
+			}
+			foreach (var action in acceptor.AcceptableActions.EnabledActions) {
+				if (Actions[action.Key] != null) {
+					acceptedActions.Add (action.Key);
+				}
+			}
+			return acceptedActions;
+		}
+
 		/**
 		 *	Debugging
 		 */

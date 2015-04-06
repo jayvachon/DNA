@@ -22,6 +22,7 @@ namespace Units {
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("DeliverMilk", new AcceptDeliverItem<MilkHolder> ());
+			AcceptableActions.Disable ("DeliverMilk");
 		}
 
 		void Start () {
@@ -35,6 +36,7 @@ namespace Units {
 		}
 
 		void OnStartAction (string id) {
+			AcceptableActions.Enable ("DeliverMilk");
 			PerformableActions.DisableAll ();
 			string newUnit = "";
 			switch (id) {
@@ -51,7 +53,7 @@ namespace Units {
 		void OnUnitGenerated (Unit unit) {
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.PathPoint = PathPoint;
-			PathPoint.StaticUnitTransform = staticUnit.UnitTransform as StaticUnitTransform;
+			PathPoint.StaticUnit = staticUnit;
 			ObjectCreator.Instance.Destroy<Plot> (transform);
 		}
 	}

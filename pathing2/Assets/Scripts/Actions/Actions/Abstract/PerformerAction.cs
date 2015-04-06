@@ -6,6 +6,9 @@ namespace GameActions {
 
 	public abstract class PerformerAction : Action {
 
+		public virtual System.Type RequiredPair { get { return null; } }
+		public virtual bool CanPerform { get { return true; } }
+
 		bool autoRepeat = false;
 		float duration;
 		public float Duration {

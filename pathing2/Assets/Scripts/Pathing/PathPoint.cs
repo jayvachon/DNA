@@ -13,10 +13,20 @@ namespace Pathing {
 			get { return new InputLayer[] { InputLayer.UI }; }
 		}
 
-		public StaticUnitTransform unit;
+		StaticUnitTransform staticUnitTransform;
 		public StaticUnitTransform StaticUnitTransform {
-			get { return unit; }
-			set { unit = value; }
+			get { 
+				if (staticUnitTransform == null) {
+					staticUnitTransform = staticUnit.StaticTransform;
+				}
+				return staticUnitTransform; 
+			}
+		}
+
+		StaticUnit staticUnit;
+		public StaticUnit StaticUnit {
+			get { return staticUnit; }
+			set { staticUnit = value; }
 		}
 
 		public void OnDragEnter (DragSettings dragSettings) {

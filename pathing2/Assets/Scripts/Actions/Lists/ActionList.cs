@@ -23,15 +23,17 @@ namespace GameActions {
 		}
 
 		public void AddAction (string id, Action action) {
-			actions.Add (id, action);
+			Actions.Add (id, action);
+			EnabledActions.Add (id, action as T);
 			NotifyActionsUpdated ();
 		}
 
 		public void Enable (string id) {
 			Action action;
 			if (Actions.TryGetValue (id, out action)) {
-				enabledActions.Add (id, action as T);
+				EnabledActions.Add (id, action as T);
 			}
+			action.Enabled = true;
 			OnEnable (id);
 			NotifyActionsUpdated ();
 		}
@@ -39,7 +41,8 @@ namespace GameActions {
 		public virtual void OnEnable (string id) {}
 
 		public void Disable (string id) {
-			enabledActions.Remove (id);
+			EnabledActions.Remove (id);
+			Get (id).Enabled = false;
 			OnDisable (id);
 			NotifyActionsUpdated ();
 		}
@@ -47,7 +50,11 @@ namespace GameActions {
 		public virtual void OnDisable (string id) {}
 
 		public void DisableAll () {
-			enabledActions.Clear ();
+			foreach (var keyval in Actions) {
+				Action action = keyval.Value;
+				action.Enabled = false;
+			}
+			EnabledActions.Clear ();
 			OnDisableAll ();
 			NotifyActionsUpdated ();
 		}
@@ -58,17 +65,15 @@ namespace GameActions {
 			return Actions[id] as T;
 		}
 
-		public void RefreshEnabledActions () {
-			enabledActions.Clear ();
-			foreach (var keyval in actions) {
+		public virtual void RefreshEnabledActions () {
+			EnabledActions.Clear ();
+			foreach (var keyval in Actions) {
 				Action action = keyval.Value;
 				if (action.Enabled) {
-					enabledActions.Add (keyval.Key, action as T);
+					EnabledActions.Add (keyval.Key, action as T);
 				}
 			}
 			NotifyActionsUpdated ();
-			// Debugging
-			UpdateDrawer ();
 		}
 
 		public void NotifyActionsUpdated () {
@@ -81,31 +86,19 @@ namespace GameActions {
 		 *	Debugging
 		 */
 
-		ActionDrawer drawer = null;
-
 		public List<PerformerAction> EnabledActionsList {
 			get {
 				List<PerformerAction> list = new List<PerformerAction> ();
-				foreach (var action in enabledActions) {
+				foreach (var action in EnabledActions) {
 					list.Add (action.Value as PerformerAction);
 				}
 				return list;
 			}
 		}
 
-		public void SetDrawer (ActionDrawer drawer) {
-			this.drawer = drawer;
-		}
-
-		void UpdateDrawer () {
-			if (drawer != null) {
-				drawer.UpdateList (EnabledActionsList);
-			}
-		}
-
 		public virtual void Print () {
-			foreach (var action in actions) {
-				Debug.Log (action.Key);
+			foreach (var action in Actions) {
+				Debug.Log (action.Key + " enabled ? " + action.Value.Enabled);
 			}
 		}
 	}

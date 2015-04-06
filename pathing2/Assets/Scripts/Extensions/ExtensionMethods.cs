@@ -51,6 +51,9 @@ public static class ExtensionMethods {
 		if (parent == null) {
 			return null;
 		}
+		if (n == 0) {
+			return parent;
+		}
 
 		int nCount = 0; // 0 is the first parent
 		while (parent.parent != null && nCount < n) {

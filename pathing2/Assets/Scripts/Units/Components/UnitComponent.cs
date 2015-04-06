@@ -5,11 +5,13 @@ namespace Units {
 
 	public class UnitComponent : MBRefs {
 
+		protected virtual int ParentUnit { get { return 1; } }
+
 		Unit unit = null;
 		public Unit Unit {
 			get {
 				if (unit == null) {
-					unit = transform.GetNthParent (1).GetScript<Unit> ();
+					unit = transform.GetNthParent (ParentUnit).GetScript<Unit> ();
 				} 
 				return unit;
 			}

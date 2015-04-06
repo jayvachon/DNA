@@ -18,7 +18,11 @@ namespace GameActions {
 			}
 		}
 
-		public override bool Enabled {
+		public override System.Type RequiredPair {
+			get { return typeof (CollectItem<T>); }
+		}
+
+		public override bool CanPerform {
 			get { return Holder.Count > 0; }
 		}
 

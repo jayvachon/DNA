@@ -66,12 +66,12 @@ public class ObjectPool : MonoBehaviour {
 			instance.parent = transform;
 		}
 		
-		instance.gameObject.SetActive (true);
+		instance.SetActiveRecursively (true);
 	}
 	
 	public void ReleaseInstance (Transform instance) {
 
-		instance.gameObject.SetActive (false);
+		instance.SetActiveRecursively (false);
 		_instances.Push (instance);
 	}
 

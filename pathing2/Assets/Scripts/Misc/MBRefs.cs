@@ -31,6 +31,11 @@ public class MBRefs : MonoBehaviour {
 		set { MyTransform.position = value; }
 	}
 
+	public Vector3 LocalPosition {
+		get { return MyTransform.localPosition; }
+		set { MyTransform.localPosition = value; }
+	}
+
 	protected virtual void Awake () {
 		startPosition = MyTransform.position;
 	}

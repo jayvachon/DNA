@@ -12,7 +12,12 @@ namespace Units {
 		int rings = 5;
 
 		void Awake () {
+			CreateGivingTree ();
 			CreatePlots ();
+		}
+
+		void CreateGivingTree () {
+			CreateUnit<GivingTreeUnit> (center);
 		}
 
 		void CreatePlots () {

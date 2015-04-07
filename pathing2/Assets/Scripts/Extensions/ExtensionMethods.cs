@@ -46,6 +46,13 @@ public static class ExtensionMethods {
 		return gameObject.GetComponent (typeof (T)) as T;
 	}
 
+	public static void SetActiveRecursively (this Transform transform, bool active) {
+		foreach (Transform child in transform) {
+			child.SetActiveRecursively (active);
+		}
+		transform.gameObject.SetActive (active);
+	}
+
 	public static Transform GetNthParent (this Transform transform, int n) {
 		Transform parent = transform.parent;
 		if (parent == null) {

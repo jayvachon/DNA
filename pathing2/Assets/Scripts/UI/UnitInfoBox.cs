@@ -34,6 +34,7 @@ public class UnitInfoBox : MBRefs {
 	List<GameObject> elders = new List<GameObject> ();
 	List<GameObject> holders = new List<GameObject> ();
 	List<GameObject> actions = new List<GameObject> ();
+	Vector3 creationPosition = Vector3.zero;
 
 	static UnitInfoBox instance = null;
 	public static UnitInfoBox Instance {
@@ -56,6 +57,7 @@ public class UnitInfoBox : MBRefs {
 	}
 
 	void Start () {
+		creationPosition = LocalPosition;
 		Close ();
 	}
 
@@ -82,6 +84,7 @@ public class UnitInfoBox : MBRefs {
 			performableActions.actionsUpdated += OnActionsUpdated;
 		}
 		MyTransform.SetParent (transform, false);
+		LocalPosition = creationPosition;
 
 		List<ItemHolder> itemHolders = inventory.Holders;
 		InitInventory (itemHolders);
@@ -196,6 +199,7 @@ public class UnitInfoBox : MBRefs {
 		ClearElders ();
 		ClearActions ();
 		DeactivateCollider ();
+		MyTransform.SetParent (null);
 	}
 
 	void DeactivateCollider () {

@@ -26,7 +26,10 @@ namespace Pathing {
 		StaticUnit staticUnit;
 		public StaticUnit StaticUnit {
 			get { return staticUnit; }
-			set { staticUnit = value; }
+			set { 
+				staticUnit = value; 
+				staticUnitTransform = staticUnit.StaticTransform;
+			}
 		}
 
 		public void OnDragEnter (DragSettings dragSettings) {

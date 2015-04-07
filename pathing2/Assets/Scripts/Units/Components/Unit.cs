@@ -2,6 +2,7 @@
 using System.Collections;
 using GameInventory;
 using GameActions;
+using GameInput;
 
 namespace Units {
 
@@ -28,6 +29,8 @@ namespace Units {
 			public Inventory Inventory { get; protected set; }
 		#endif
 		
+		protected bool Selected { get; private set;}
+
 		protected UnitInfoContent unitInfoContent = null;
 		public UnitInfoContent UnitInfoContent { 
 			get {
@@ -52,18 +55,25 @@ namespace Units {
 		}
 
 		public virtual void OnSelect () {
+			Selected = true;
 			unitRenderer.OnSelect ();
 			unitTransform.OnSelect ();
 			UnitInfoBox.Instance.Open (UnitInfoContent, Transform);
 		}
 
 		public virtual void OnUnselect () {
+			Selected = false;
 			unitRenderer.OnUnselect ();
 			unitTransform.OnUnselect ();
 			UnitInfoBox.Instance.Close ();
 		}
 
+		public virtual void OnDestroy () {
+			if (Selected) {
+				SelectionManager.Unselect ();
+			}
+		}
+
 		public virtual void OnCreate () {}
-		public virtual void OnDestroy () {}
 	}
 }

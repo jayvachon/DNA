@@ -12,7 +12,9 @@ namespace GameActions {
 		bool enabled = true;
 		public virtual bool Enabled {
 			get { return enabled; }
-			set { enabled = value; }
+			set { if (enableable) enabled = value; }
 		}
+
+		protected bool enableable = true;
 	}
 }

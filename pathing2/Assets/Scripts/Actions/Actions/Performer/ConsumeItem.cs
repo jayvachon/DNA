@@ -19,7 +19,9 @@ namespace GameActions {
 			}
 		}
 
-		public ConsumeItem (float duration, PerformCondition performCondition=null) : base (duration, true, true, performCondition) {}
+		public ConsumeItem (float duration, bool enableable=true) : base (duration, true, true, null) {
+			this.enableable = enableable;
+		}
 		
 		public override void OnEnd () {
 			Holder.Remove ();

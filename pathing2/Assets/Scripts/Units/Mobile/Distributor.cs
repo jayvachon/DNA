@@ -19,6 +19,7 @@ namespace Units {
 		void Awake () {
 
 			Inventory = new Inventory ();
+			Inventory.Add (new HappinessHolder (100, 100));
 			Inventory.Add (new MilkHolder (5, 0));
 			Inventory.Add (new IceCreamHolder (3, 0));
 			Inventory.Add (new MilkshakeHolder (3, 0));
@@ -33,6 +34,8 @@ namespace Units {
 			PerformableActions.Add ("DeliverMilkshake", new DeliverItem<MilkshakeHolder> (2));
 			PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (2));
 			PerformableActions.Add ("DeliverElder", new DeliverItem<ElderHolder> (2));
+			PerformableActions.Add ("CollectHappiness", new CollectHappiness (3f));
+			PerformableActions.Add ("ConsumeHappiness", new ConsumeItem<HappinessHolder> (5, false));
 			PerformableActions.DisableAll ();
 		}
 
@@ -63,7 +66,7 @@ namespace Units {
 			}
 		}
 
-		public override void OnCreate () {
+		public override void OnPoolCreate () {
 			Path.Enabled = true;
 		}
 	}

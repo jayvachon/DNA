@@ -68,12 +68,12 @@ namespace Units {
 			UnitInfoBox.Instance.Close ();
 		}
 
-		public virtual void OnDestroy () {
+		public virtual void OnPoolDestroy () {
 			if (Selected) {
 				SelectionManager.Unselect ();
 			}
 		}
 
-		public virtual void OnCreate () {}
+		public virtual void OnPoolCreate () {}
 	}
 }

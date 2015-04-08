@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ElderAvatar : MonoBehaviour, IPoolable {
+public class ElderAvatar : MBRefs, IPoolable {
 
-	public void OnCreate () {}
-	public void OnDestroy () {}
+	public void OnPoolCreate () {}
+	public void OnPoolDestroy () {}
 }

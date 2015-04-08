@@ -3,6 +3,6 @@ using System.Collections;
 
 public class ElderContainerUI : MBRefs, IPoolable {
 
-	public void OnCreate () {}
-	public void OnDestroy () {}
+	public void OnPoolCreate () {}
+	public void OnPoolDestroy () {}
 }

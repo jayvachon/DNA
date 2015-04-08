@@ -33,6 +33,7 @@ namespace Units {
 			PerformableActions.Add ("GeneratePasture", new GenerateUnit<Pasture, MilkHolder> (10, Position, OnUnitGenerated), "Birth Pasture");
 			PerformableActions.Add ("GenerateMilkshakeMaker", new GenerateUnit<MilkshakeMaker, MilkHolder> (10, Position, OnUnitGenerated), "Birth Milkshake Maker");
 			PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital, MilkHolder> (10, Position, OnUnitGenerated), "Birth Hospital");
+			PerformableActions.Add ("GenerateJacuzzi", new GenerateUnit<Jacuzzi, MilkHolder> (10, Position, OnUnitGenerated), "Birth Jacuzzi");
 		}
 
 		void OnStartAction (string id) {
@@ -45,6 +46,7 @@ namespace Units {
 				case "GeneratePasture": newUnit = "Pasture"; break;
 				case "GenerateMilkshakeMaker": newUnit = "Milkshake Maker"; break;
 				case "GenerateHospital": newUnit = "Hospital"; break;
+				case "GenerateJacuzzi": newUnit = "Jacuzzi"; break;
 			}
 			name = string.Format ("{0} to Be", newUnit);
 			unitInfoContent.Refresh ();

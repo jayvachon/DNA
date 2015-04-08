@@ -108,8 +108,8 @@ namespace Pathing {
 			pathPoints.OnRelease ();
 		}
 
-		public void OnCreate () {}
-		public void OnDestroy () {}
+		public void OnPoolCreate () {}
+		public void OnPoolDestroy () {}
 	}
 
 	public class PathSettings {

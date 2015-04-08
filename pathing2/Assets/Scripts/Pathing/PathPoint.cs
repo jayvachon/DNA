@@ -41,7 +41,7 @@ namespace Pathing {
 		}
 
 		public void OnDrag (DragSettings dragSettings) {}
-		public void OnCreate () {}
-		public void OnDestroy () {}
+		public void OnPoolCreate () {}
+		public void OnPoolDestroy () {}
 	}
 }

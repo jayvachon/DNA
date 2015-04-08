@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\AcceptCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\DefaultCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\ElderCondition.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectHappiness.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CombineItems.cs" />
@@ -99,6 +100,7 @@
      <Compile Include="Assets\Scripts\Input\ScreenPositionHandler.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\HappinessHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\MilkHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\MilkshakeHolder.cs" />
@@ -107,6 +109,7 @@
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\HappinessItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
@@ -154,6 +157,7 @@
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\House.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Jacuzzi.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkPool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkshakeMaker.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Pasture.cs" />

@@ -50,72 +50,71 @@ namespace Units {
 			MobileTransform.StartMovingOnPath ();
 			PerformableActions.DisableAll ();
 			EnableAcceptedActions (GetAcceptedActionsOnPath ());
-			//PerformableActions.Print ();
 		}
 
-		// TODO: Have this return Dictionary<string, AcceptorAction> so that EnableAcceptedActions can check
-		// to make sure that it isn't pairing actions with other actions on the same unit
-		List<string> GetAcceptedActionsOnPath () {
-			List<string> acceptedActions = new List<string> ();
+		List<KeyValuePair<string, IActionAcceptor>> GetAcceptedActionsOnPath () {
+			
+			List<KeyValuePair<string, IActionAcceptor>> acceptedActions = 
+				new List<KeyValuePair<string, IActionAcceptor>> ();
+
 			foreach (PathPoint point in Path.Points.Points) {
-				acceptedActions.AddRange (
-					PerformableActions.GetAcceptedActions (point.StaticUnit as IActionAcceptor)
-				);
+				
+				IActionAcceptor acceptor 	= point.StaticUnit as IActionAcceptor;
+				List<string> actions 		= PerformableActions.GetAcceptedActions (acceptor);
+				
+				foreach (string action in actions) {
+					acceptedActions.Add (
+						new KeyValuePair<string, IActionAcceptor> (action, acceptor)
+					);
+				}
 			}
 			return acceptedActions;
 		}
 
-		/**
-		 *	1. when a path is formed, get each path point and cast to IActionAcceptor
-		 *	2. create a list of actions that the distributor can perform with the acceptor
-		 *	3. check for paired actions (collect/deliver) and if a pair exists in the path,
-		 *		enable the performer action
-		 */
+		void EnableAcceptedActions (List<KeyValuePair<string, IActionAcceptor>> acceptedActions) {
 
-		void EnableAcceptedActions (List<string> acceptedActions) {
-			
-			Dictionary<string, System.Type> unpairedActions = new Dictionary<string, System.Type> ();
-			
-			for (int i = 0; i < acceptedActions.Count; i ++) {
-				
-				string actionName 			= acceptedActions[i];
-				PerformerAction action 		= PerformableActions.Get (actionName);
-				System.Type requiredPair 	= action.RequiredPair;
-				
+			Dictionary<KeyValuePair<string, IActionAcceptor>, System.Type> unpairedActions = 
+				new Dictionary<KeyValuePair<string, IActionAcceptor>, System.Type> ();
+
+			foreach (var acceptedAction in acceptedActions) {
+
+				string actionName 										= acceptedAction.Key;
+				PerformerAction action 									= PerformableActions.Get (actionName);
+				System.Type requiredPair								= action.RequiredPair;
+				KeyValuePair<string, IActionAcceptor> acceptorAction	= new KeyValuePair<string, IActionAcceptor> (actionName, acceptedAction.Value);
+
 				// Enable the action if it doesn't require a pair
 				if (requiredPair == null) {
 					PerformableActions.Enable (actionName);
 					continue;
-				} 
+				}
 
-				// Add the action to the dictionary if the dictionary is empty
+				// If unpairedActions is empty, add the action
 				if (unpairedActions.Count == 0) {
-					unpairedActions.Add (actionName, action.GetType ());
+					unpairedActions.Add (acceptorAction, action.GetType ());
 					continue;
-				} 
+				}
 
-				// If the dictionary isn't empty, check if the pair exists in the dictionary
-				// and enable both actions if it does
+				// If unpairedActions isn't empty, try to find the pair in unpairedActions
+				// Both actions are enabled if they are pairs & not from the same IActionAcceptor
 				string pair = "";
 				foreach (var unpairedAction in unpairedActions) {
-					if (unpairedAction.Value == requiredPair) {
-						pair = unpairedAction.Key;
+					var keyVal = unpairedAction.Key;
+					if (unpairedAction.Value == requiredPair && keyVal.Value != acceptorAction.Value) {
+						pair = keyVal.Key;
 						PerformableActions.Enable (pair);
 						PerformableActions.Enable (actionName);
 						break;
 					}
 				}
 
-				// If no pair was found, at the action to the dictionary
+				// If no pair was found, add the action to the dictionary
 				if (pair == "") {
-					System.Type t;
-					if (!unpairedActions.TryGetValue (actionName, out t)) {
-						unpairedActions.Add (actionName, action.GetType ());
-					}
+					unpairedActions.Add (acceptorAction, action.GetType ());
 				} else {
 
 					// But if a pair WAS found, remove it from the dictionary
-					unpairedActions.Remove (pair);
+					unpairedActions.Remove (acceptorAction);
 				}
 			}
 		}

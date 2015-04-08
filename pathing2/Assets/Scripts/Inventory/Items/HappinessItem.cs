@@ -2,5 +2,5 @@
 using System.Collections;
 
 namespace GameInventory {
-	public class MilkItem : Item {}
+	public class HappinessItem : Item {}
 }

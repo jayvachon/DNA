@@ -82,7 +82,7 @@ public class ObjectPool : MonoBehaviour {
 			Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", t));
 		}
 		#endif
-		t.GetScript<IPoolable> ().OnCreate ();
+		t.GetScript<IPoolable> ().OnPoolCreate ();
 		return t;
 	}
 
@@ -92,7 +92,7 @@ public class ObjectPool : MonoBehaviour {
 			Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", instance));
 		}
 		#endif
-		instance.GetScript<IPoolable>().OnDestroy ();
+		instance.GetScript<IPoolable>().OnPoolDestroy ();
 		ObjectPool.GetPool (poolName).ReleaseInstance (instance);
 	}
 }

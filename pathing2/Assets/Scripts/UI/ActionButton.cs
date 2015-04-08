@@ -20,6 +20,6 @@ public class ActionButton : MonoBehaviour, IPoolable {
 		actionButtonPress (id);
 	}
 
-	public void OnCreate () {}
-	public void OnDestroy () {}
+	public void OnPoolCreate () {}
+	public void OnPoolDestroy () {}
 }

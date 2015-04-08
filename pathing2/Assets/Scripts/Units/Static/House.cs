@@ -16,7 +16,7 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory ();
-			Inventory.Add (new ElderHolder (2, 0));
+			Inventory.Add (new ElderHolder (2, 2));
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (true, true)));

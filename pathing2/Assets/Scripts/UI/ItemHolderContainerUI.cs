@@ -10,6 +10,6 @@ public class ItemHolderContainerUI : MonoBehaviour, IPoolable {
 		set { itemHolder.text = value; }
 	}
 
-	public void OnCreate () {}
-	public void OnDestroy () {}
+	public void OnPoolCreate () {}
+	public void OnPoolDestroy () {}
 }

@@ -2,6 +2,6 @@
 using System.Collections;
 
 public interface IPoolable {
-	void OnCreate ();
-	void OnDestroy ();
+	void OnPoolCreate ();
+	void OnPoolDestroy ();
 }

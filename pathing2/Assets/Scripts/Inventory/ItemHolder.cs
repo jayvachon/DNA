@@ -38,6 +38,7 @@ namespace GameInventory {
 
 		public abstract Item Get (ItemHasAttribute contains);
 		public abstract bool Has (ItemHasAttribute contains);
+		public abstract void AddInitial (int count);
 		public abstract List<Item> Add ();
 		public abstract List<Item> Add (Item item);
 		public abstract List<Item> Add (List<Item> newItems);
@@ -45,6 +46,7 @@ namespace GameInventory {
 		public abstract List<Item> Remove (int amount);
 		public abstract List<Item> Remove (int amount, ItemHasAttribute transferable);
 		public abstract void Remove<Item> (Item item);
+		public abstract void Clear ();
 		public abstract void Transfer (ItemHolder holder, int amount, ItemHasAttribute transferable);
 		public abstract void OnTransfer ();
 		public abstract void Print ();
@@ -79,10 +81,10 @@ namespace GameInventory {
 
 		public ItemHolder (int capacity, int startCount) {
 			Capacity = capacity;
-			AddNew (startCount);
+			AddInitial (startCount);
 		}
 
-		void AddNew (int count) {
+		public override void AddInitial (int count) {
 			if (count == 0)
 				return;
 			for (int i = 0; i < count; i ++) {
@@ -178,6 +180,10 @@ namespace GameInventory {
 
 			NotifyHolderUpdated ();
 			return temp;
+		}
+
+		public override void Clear () {
+			items.Clear ();
 		}
 
 		public override void Transfer (ItemHolder senderHolder, int amount=-1, ItemHasAttribute transferable=null) {

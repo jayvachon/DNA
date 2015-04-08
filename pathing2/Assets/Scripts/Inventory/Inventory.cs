@@ -55,6 +55,12 @@ namespace GameInventory {
 			return holder.Remove (amount);
 		}
 
+		public void Empty () {
+			foreach (ItemHolder holder in holders) {
+				holder.Clear ();
+			}
+		}
+
 		public ItemHolder Get<T> () {
 			foreach (ItemHolder holder in holders) {
 				if (holder is T)

@@ -9,8 +9,10 @@ namespace Units {
 
 	public class Distributor : MobileUnit {
 
+		string workerName = "Distributor";
+		string retirementName = "Elder";
 		new string name = "Distributor";
-		public override string Name {
+		public override string Name { 
 			get { return name; }
 		}
 
@@ -34,13 +36,9 @@ namespace Units {
 			PerformableActions.Add ("DeliverMilkshake", new DeliverItem<MilkshakeHolder> (2));
 			PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (2));
 			PerformableActions.Add ("DeliverElder", new DeliverItem<ElderHolder> (2));
-			PerformableActions.Add ("CollectHappiness", new CollectHappiness (3f));
+			PerformableActions.Add ("CollectHappiness", new CollectHappiness (3));
 			PerformableActions.Add ("ConsumeHappiness", new ConsumeItem<HappinessHolder> (5, false));
 			PerformableActions.DisableAll ();
-		}
-
-		void Start () {
-			ageManager.BeginAging (OnAge, OnRetirement);
 		}
 
 		void OnAge (float progress) {
@@ -49,25 +47,29 @@ namespace Units {
 		}
 
 		void OnRetirement () {
-			Path.Speed = 0;
-			MobileTransform.StopMovingOnPath ();
-			name = "Elder";
-			unitInfoContent.Refresh ();
-			Path.Enabled = false;
+			name = retirementName;
+			Path.Active = false;
+			UnitInfoContent.Refresh ();
 		}
 
 		public override void OnDragRelease (Unit unit) {
-			if (ageManager.Retired) {
+			Debug.Log ("collide");
+			/*if (ageManager.Retired) {
 				House house = unit as House;
 				if (house != null) {
 					house.Inventory.AddItem<ElderHolder> (new ElderItem ());
 					ObjectCreator.Instance.Destroy<Distributor> (transform);
 				}
-			}
+			}*/
 		}
 
 		public override void OnPoolCreate () {
-			Path.Enabled = true;
+			name = workerName;
+			Inventory.Empty ();
+			Inventory.Get<HappinessHolder> ().AddInitial (100);
+			ageManager.BeginAging (OnAge, OnRetirement);
+			Path.Active = true;
+			UnitInfoContent.Refresh ();
 		}
 	}
 }

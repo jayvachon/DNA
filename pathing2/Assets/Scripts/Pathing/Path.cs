@@ -15,6 +15,17 @@ namespace Pathing {
 
 	public class Path : MBRefs, IPoolable {
 
+		new bool active = true;
+		public bool Active {
+			get { return active; }
+			set {
+				active = value;
+				if (!active) {
+					OnInactivate ();
+				}
+			}
+		}
+
 		new bool enabled = false;
 		public bool Enabled {
 			get { return enabled; }
@@ -60,7 +71,7 @@ namespace Pathing {
 		}
 
 		public void PointDragEnter (DragSettings dragSettings, PathPoint point) {
-			if (!dragSettings.left) return;
+			if (!Active || !dragSettings.left) return;
 			if (pathPoints.CanDragFromPoint (point)) {
 				dragging = true;
 			} else {
@@ -81,7 +92,7 @@ namespace Pathing {
 		}
 
 		public void PointDragExit (DragSettings dragSettings, PathPoint point) {
-			if (!dragSettings.left) return;
+			if (!Active || !dragSettings.left) return;
 			float a = ScreenPositionHandler.PointDirection (MouseController.MousePosition, point.Position);
 			
 			if (ScreenPositionHandler.AnglesInRange (pathPoints.Direction, a, 25)) {
@@ -106,6 +117,14 @@ namespace Pathing {
 			dragging = false;
 			pathDrawer.Dragging = false;
 			pathPoints.OnRelease ();
+		}
+
+		void OnInactivate () {
+			dragging = false;
+			pathDrawer.Dragging = false;
+			StopMoving ();
+			pathPoints.Clear ();
+			UpdatePoints ();
 		}
 
 		public void OnPoolCreate () {}

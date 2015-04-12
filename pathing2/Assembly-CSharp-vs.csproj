@@ -85,8 +85,7 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\ReleaseEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\SelectEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnselectEvent.cs" />
-     <Compile Include="Assets\Scripts\Extensions\ExtensionMethods.cs" />
-     <Compile Include="Assets\Scripts\Extensions\MaterialsExtended.cs" />
+     <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />
      <Compile Include="Assets\Scripts\Input\DragHandler.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
@@ -114,8 +113,6 @@
      <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
-     <Compile Include="Assets\Scripts\Misc\INameable.cs" />
-     <Compile Include="Assets\Scripts\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />
@@ -125,14 +122,11 @@
      <Compile Include="Assets\Scripts\Pathing\PathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
-     <Compile Include="Assets\Scripts\Pooling\IPoolable.cs" />
-     <Compile Include="Assets\Scripts\Pooling\ObjectBank.cs" />
-     <Compile Include="Assets\Scripts\Pooling\ObjectCreator.cs" />
-     <Compile Include="Assets\Scripts\Pooling\ObjectPool.cs" />
-     <Compile Include="Assets\Scripts\Pooling\PoolManager.cs" />
-     <Compile Include="Assets\Scripts\Time\AgeManager.cs" />
+     <Compile Include="Assets\Scripts\Time\DeathTimer.cs" />
      <Compile Include="Assets\Scripts\Time\Interval.cs" />
+     <Compile Include="Assets\Scripts\Time\RetirementTimer.cs" />
      <Compile Include="Assets\Scripts\Time\TimeManager.cs" />
+     <Compile Include="Assets\Scripts\Time\TimerValues.cs" />
      <Compile Include="Assets\Scripts\UI\ActionButton.cs" />
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
@@ -153,7 +147,6 @@
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
-     <Compile Include="Assets\Scripts\Units\Static\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\House.cs" />
@@ -163,6 +156,16 @@
      <Compile Include="Assets\Scripts\Units\Static\Pasture.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Coroutine.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Extensions\ExtensionMethods.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Extensions\MaterialsExtended.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Misc\INameable.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Misc\MBRefs.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Pooling\IPoolable.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectBank.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectCreator.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectPool.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Pooling\PoolManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

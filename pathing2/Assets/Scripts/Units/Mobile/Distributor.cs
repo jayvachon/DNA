@@ -16,7 +16,8 @@ namespace Units {
 			get { return name; }
 		}
 
-		AgeManager ageManager = new AgeManager ();
+		RetirementTimer retirementTimer = new RetirementTimer ();
+		HealthManager healthManager = new HealthManager ();
 
 		void Awake () {
 
@@ -42,6 +43,7 @@ namespace Units {
 		}
 
 		void OnAge (float progress) {
+			healthManager.OnAge (progress);
 			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
 			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p);
 		}
@@ -53,21 +55,20 @@ namespace Units {
 		}
 
 		public override void OnDragRelease (Unit unit) {
-			Debug.Log ("collide");
-			/*if (ageManager.Retired) {
+			if (retirementTimer.Retired) {
 				House house = unit as House;
 				if (house != null) {
 					house.Inventory.AddItem<ElderHolder> (new ElderItem ());
 					ObjectCreator.Instance.Destroy<Distributor> (transform);
 				}
-			}*/
+			}
 		}
 
 		public override void OnPoolCreate () {
 			name = workerName;
 			Inventory.Empty ();
 			Inventory.Get<HappinessHolder> ().AddInitial (100);
-			ageManager.BeginAging (OnAge, OnRetirement);
+			retirementTimer.BeginAging (OnAge, OnRetirement);
 			Path.Active = true;
 			UnitInfoContent.Refresh ();
 		}

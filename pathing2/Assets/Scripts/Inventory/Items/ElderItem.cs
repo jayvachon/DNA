@@ -12,6 +12,9 @@ namespace GameInventory {
 			set { health = value; }
 		}
 
+		//AgeManager ageManager = new AgeManager ();
+		HealthManager healthManager = new HealthManager ();
+
 		public PerformableActions PerformableActions { get; private set; }
 
 		public ElderItem () {

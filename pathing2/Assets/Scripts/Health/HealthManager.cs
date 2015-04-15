@@ -10,7 +10,15 @@ public class HealthManager {
 		private set { health = value; }
 	}
 
-	readonly float sicknessDuration;
+	Stopwatch deathTime = new Stopwatch ();
+
+	public HealthManager () {
+
+	}
+
+	
+
+	/*readonly float sicknessDuration;
 	bool sick = false;
 	int sicknessOpportunity = 0;
 	int sicknessOpportunitiesCount = 8;
@@ -57,5 +65,5 @@ public class HealthManager {
 	void EndSickness () {
 		sick = false;
 		Debug.Log ("done");
-	}
+	}*/
 }

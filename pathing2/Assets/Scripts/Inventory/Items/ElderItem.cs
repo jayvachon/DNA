@@ -14,6 +14,9 @@ namespace GameInventory {
 
 		//AgeManager ageManager = new AgeManager ();
 		HealthManager healthManager = new HealthManager ();
+		public HealthManager HealthManager {
+			get { return healthManager; }
+		}
 
 		public PerformableActions PerformableActions { get; private set; }
 
@@ -21,7 +24,8 @@ namespace GameInventory {
 			
 			health = Random.Range (0f, 1f);
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("SubtractHealth", new SubtractHealth (8));
+			//PerformableActions.Add ("SubtractHealth", new SubtractHealth (8));
+			PerformableActions.Add ("SubtractHealth", new SubtractHealth ());
 
 			Debug.Log (health);
 		}

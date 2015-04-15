@@ -8,7 +8,7 @@ namespace GameActions {
 
 		// This is checked before the action is performed
 		// if false is returned the action is not performed
-		public abstract bool Performable { get; }
+		public abstract bool CanPerform { get; }
 
 	}
 }

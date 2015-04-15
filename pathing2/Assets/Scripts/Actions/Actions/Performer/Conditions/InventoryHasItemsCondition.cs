@@ -6,7 +6,7 @@ namespace GameActions {
 
 	public class InventoryHasItemsCondition : PerformCondition {
 
-		public override bool Performable {
+		public override bool CanPerform {
 			get {
 				for (int i = 0; i < holders.Length; i ++) {
 					if (holders[i].Empty)

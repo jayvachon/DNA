@@ -9,10 +9,12 @@ namespace GameActions {
 		public virtual System.Type RequiredPair { get { return null; } }
 		public virtual bool CanPerform { get { return true; } }
 
-		bool autoRepeat = false;
+		protected bool autoRepeat = false;
+
 		float duration;
 		public float Duration {
 			get { return duration; }
+			protected set { duration = value; }
 		}
 
 		Inventory inventory = null;
@@ -51,7 +53,7 @@ namespace GameActions {
 		public virtual void Perform (float progress) {}
 
 		public void End () {
-			if (PerformCondition == null || PerformCondition.Performable) {
+			if (PerformCondition == null || PerformCondition.CanPerform) {
 				OnEnd ();
 			}
 			if (autoRepeat) {

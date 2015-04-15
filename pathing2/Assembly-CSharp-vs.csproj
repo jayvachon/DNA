@@ -125,6 +125,7 @@
      <Compile Include="Assets\Scripts\Time\DeathTimer.cs" />
      <Compile Include="Assets\Scripts\Time\Interval.cs" />
      <Compile Include="Assets\Scripts\Time\RetirementTimer.cs" />
+     <Compile Include="Assets\Scripts\Time\Stopwatch.cs" />
      <Compile Include="Assets\Scripts\Time\TimeManager.cs" />
      <Compile Include="Assets\Scripts\Time\TimerValues.cs" />
      <Compile Include="Assets\Scripts\UI\ActionButton.cs" />

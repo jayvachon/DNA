@@ -11,10 +11,9 @@ namespace GameActions {
 
 		protected bool autoRepeat = false;
 
-		float duration;
+		protected float duration;
 		public float Duration {
 			get { return duration; }
-			protected set { duration = value; }
 		}
 
 		Inventory inventory = null;

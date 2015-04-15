@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Coroutine : MonoBehaviour {
 
@@ -18,19 +19,22 @@ public class Coroutine : MonoBehaviour {
 		}
 	}
 
-	public void StartCoroutine (float time, System.Action<float> action, System.Action endAction) {
+	List<System.Action<float>> coroutines = new List<System.Action<float>> ();
+
+	public void StartCoroutine (float time, System.Action<float> action, System.Action endAction=null) {
+		coroutines.Add (action);
 		StartCoroutine (CoCoroutine (time, action, endAction));
 	}
 
-	public void StopCoroutine () {
-		StopCoroutine ("CoCoroutine");
+	public void StopCoroutine (System.Action<float> action) {
+		coroutines.Remove (action);
 	}
 
-	IEnumerator CoCoroutine (float time, System.Action<float> action, System.Action endAction) {
+	IEnumerator CoCoroutine (float time, System.Action<float> action, System.Action endAction=null) {
 		
 		float eTime = 0f;
 	
-		while (eTime < time) {
+		while (eTime < time && coroutines.Contains (action)) {
 			eTime += Time.deltaTime;
 			action (eTime / time);			
 			yield return null;

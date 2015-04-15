@@ -39,19 +39,18 @@ namespace GameActions {
 
 		bool IsSick (Item item) {
 			ElderItem elder = item as ElderItem;
-			return elder.Health < 0.5f;
+			return elder.HealthManager.Sick;
 		}
 
 		bool IsHealthy (Item item) {
 			ElderItem elder = item as ElderItem;
-			return elder.Health >= 0.5f;
+			return !elder.HealthManager.Sick;
 		}
 
 		bool requestSick;
 		bool checkMyInventory;
 
 		public ElderCondition (bool requestSick, bool checkMyInventory) {
-			// TODO: make this an enum instead
 			this.requestSick = requestSick;
 			this.checkMyInventory = checkMyInventory;
 		}

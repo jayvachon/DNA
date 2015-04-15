@@ -8,11 +8,10 @@ namespace GameInventory {
 
 		float health = 1f;
 		public float Health {
-			get { return health; }
-			set { health = value; }
+			get { return HealthManager.Health; }
+			//set { health = value; }
 		}
 
-		//AgeManager ageManager = new AgeManager ();
 		HealthManager healthManager = new HealthManager ();
 		public HealthManager HealthManager {
 			get { return healthManager; }
@@ -21,22 +20,8 @@ namespace GameInventory {
 		public PerformableActions PerformableActions { get; private set; }
 
 		public ElderItem () {
-			
-			health = Random.Range (0f, 1f);
 			PerformableActions = new PerformableActions (this);
-			//PerformableActions.Add ("SubtractHealth", new SubtractHealth (8));
 			PerformableActions.Add ("SubtractHealth", new SubtractHealth ());
-
-			Debug.Log (health);
-		}
-
-		public void SubtractHealth (float amount) {
-			if (health > amount) {
-				health -= amount;
-				Debug.Log (health);
-			} else {
-				Holder.Remove (this);
-			}
 		}
 
 		public override void Print () {

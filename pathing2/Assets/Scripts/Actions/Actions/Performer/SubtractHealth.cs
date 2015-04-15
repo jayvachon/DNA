@@ -20,25 +20,37 @@ namespace GameActions {
 		HealthManager HealthManager {
 			get {
 				if (healthManager == null) {
-					healthManager = elder.HealthManager;
+					healthManager = Elder.HealthManager;
 				}
 				return healthManager;
 			}
 		}
 
-		// public SubtractHealth (float duration) : base (duration, true, true, null) {}
-		public SubtractHealth () : base (15f, true, false, null) {}
+		bool ShouldStartSickness {
+			get { return Random.value < 0.15f; }
+		}
+
+		Stopwatch deathTime = new Stopwatch ();
+
+		public SubtractHealth () : base (5f, true, false, null) {}
+
+		public override void Start () {
+			deathTime.Begin ();
+			base.Start ();
+		}
 
 		public override void OnEnd () {
-			//Elder.SubtractHealth (0.1f);
-			
+			if (ShouldStartSickness) {
+				HealthManager.StartSickness ();
+			} else {
+				Debug.Log ("no start");
+			}
 
 			// The first time through, the timer waits 15 seconds. 
 			// Every time after, timer waits 5 seconds
 			if (!autoRepeat) {
 				autoRepeat = true;
 				duration = 5f;
-				Start ();
 			}
 		}
 	}

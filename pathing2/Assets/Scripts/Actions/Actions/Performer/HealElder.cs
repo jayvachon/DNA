@@ -18,7 +18,7 @@ namespace GameActions {
 
 		bool IsSick (Item item) {
 			ElderItem elder = item as ElderItem;
-			return elder.Health < 0.5f;
+			return elder.HealthManager.Sick;
 		}
 
 		public HealElder (float duration) : base (duration, true, true, null) {}
@@ -27,7 +27,7 @@ namespace GameActions {
 			if (!Holder.Empty) {
 				ElderItem sickElder = Holder.Get (IsSick) as ElderItem;
 				if (sickElder != null) {
-					sickElder.Health = 1f;
+					sickElder.HealthManager.StopSickness ();
 				}
 			}
 		}

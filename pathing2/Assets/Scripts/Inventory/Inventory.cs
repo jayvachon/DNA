@@ -32,27 +32,23 @@ namespace GameInventory {
 		}
 
 		public List<Item> AddItem<T> (Item item) where T : ItemHolder {
-			T holder = Get<T> () as T;
 			NotifyInventoryUpdated ();
-			return holder.Add (item);
+			return Get<T> ().Add (item);
 		}
 
 		public List<Item> AddItems<T> (List<Item> items) where T : ItemHolder {
-			T holder = Get<T> () as T;
 			NotifyInventoryUpdated ();
-			return holder.Add (items);
+			return Get<T> ().Add (items);
 		}
 
 		public List<Item> RemoveItem<T> () where T : ItemHolder {
-			T holder = Get<T> () as T;
 			NotifyInventoryUpdated ();
-			return holder.Remove ();
+			return Get<T> ().Remove ();
 		}
 
 		public List<Item> RemoveItems<T> (int amount) where T : ItemHolder {
-			T holder = Get<T> () as T;
 			NotifyInventoryUpdated ();
-			return holder.Remove (amount);
+			return Get<T> ().Remove (amount);
 		}
 
 		public void Empty () {
@@ -61,10 +57,11 @@ namespace GameInventory {
 			}
 		}
 
-		public ItemHolder Get<T> () {
+		public T Get<T> () where T : ItemHolder {
 			foreach (ItemHolder holder in holders) {
-				if (holder is T)
-					return holder;
+				T t = holder as T;
+				if (t != null)
+					return t;
 			}
 			return null;
 		}
@@ -86,8 +83,8 @@ namespace GameInventory {
 		}
 
 		public void Transfer<T> (Inventory boundInventory, int amount=-1, ItemHasAttribute transferable=null) where T : ItemHolder {
-			T sender = boundInventory.Get<T> () as T;
-			T receiver = Get<T> () as T;
+			T sender = boundInventory.Get<T> ();
+			T receiver = Get<T> ();
 			receiver.Transfer (sender, amount, transferable);
 			NotifyInventoryUpdated ();
 		}

@@ -17,7 +17,6 @@ namespace Units {
 		}
 
 		RetirementTimer retirementTimer = new RetirementTimer ();
-		HealthManager healthManager = new HealthManager (); // Just for testing -> this should only be in ElderItem
 
 		void Awake () {
 
@@ -43,8 +42,6 @@ namespace Units {
 		}
 
 		void OnAge (float progress) {
-			// healthManager.OnAge (progress); // testing
-
 			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
 			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p);
 		}

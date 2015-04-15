@@ -9,14 +9,31 @@ public class HealthManager {
 		get { return health; }
 		private set { health = value; }
 	}
+	float healthAtSicknessOnset;
 
-	Stopwatch deathTime = new Stopwatch ();
+	public bool Sick { get; private set; }
 
-	public HealthManager () {
-
+	public void StartSickness () {
+		if (Sick) return;
+		Debug.Log ("starting Sickness");
+		healthAtSicknessOnset = Health;
+		Coroutine.Instance.StartCoroutine (30f, OnSickness);
+		Sick = true;
 	}
 
-	
+	public void StopSickness () {
+		Sick = false;
+		Coroutine.Instance.StopCoroutine (OnSickness);
+	}
+
+	void OnSickness (float progress) {
+		Health = Mathf.Abs (SicknessCurve (progress)-1) * healthAtSicknessOnset;
+		Debug.Log (Health);
+	}
+
+	float SicknessCurve (float p) {
+		return Mathf.Pow (p, 3);
+	}
 
 	/*readonly float sicknessDuration;
 	bool sick = false;

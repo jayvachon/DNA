@@ -37,7 +37,7 @@ namespace Units {
 			PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (2));
 			PerformableActions.Add ("DeliverElder", new DeliverItem<ElderHolder> (2));
 			PerformableActions.Add ("CollectHappiness", new CollectHappiness (3));
-			PerformableActions.Add ("ConsumeHappiness", new ConsumeItem<HappinessHolder> (5, false));
+			PerformableActions.Add ("ConsumeHappiness", new ConsumeItem<HappinessHolder> (5, true, true, false));
 			PerformableActions.DisableAll ();
 		}
 

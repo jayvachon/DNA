@@ -25,6 +25,7 @@ namespace GameInventory {
 		public PerformableActions PerformableActions { get; private set; }
 
 		public ElderItem () {
+			HealthManager.onDie += OnDie;
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add ("SubtractHealth", new SubtractHealth ());
 		}
@@ -32,7 +33,7 @@ namespace GameInventory {
 		public override void OnAdd () {
 			if (settings.CanBecomeSickWhileMoving) return;
 			if (Inventory == null) {
-				// This is null if the ItemHolder adds items in its constructor
+				// This is null if the ItemHolder adds items in its constructor (because Inventory hasn't been assigned to the Item yet)
 				// there probably exists a better way of handling this, but it's fine for now i think?
 				return;
 			}
@@ -41,6 +42,11 @@ namespace GameInventory {
 			} else if (Inventory.holder is StaticUnit) {
 				HealthManager.CanBecomeSick = true;
 			}
+		}
+
+		void OnDie () {
+			Debug.Log ("die");
+			Holder.Remove (this);
 		}
 
 		public override void Print () {

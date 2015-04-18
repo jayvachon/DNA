@@ -9,6 +9,7 @@ namespace GameActions {
 		public virtual System.Type RequiredPair { get { return null; } }
 		public virtual bool CanPerform { get { return true; } }
 
+		bool performing = false;
 		protected bool autoRepeat = false;
 
 		protected float duration;
@@ -45,13 +46,21 @@ namespace GameActions {
 			AcceptCondition = acceptCondition;
 		}
 
+		public void Start (bool autoRepeat) {
+			this.autoRepeat = autoRepeat;
+			Start ();
+		}
+
 		public virtual void Start () {
+			if (performing) return;
+			performing = true;
 			ActionHandler.instance.StartAction (this);
 		}
 
 		public virtual void Perform (float progress) {}
 
 		public void End () {
+			performing = false;
 			if (PerformCondition == null || PerformCondition.CanPerform) {
 				OnEnd ();
 			}
@@ -61,5 +70,9 @@ namespace GameActions {
 		}
 
 		public virtual void OnEnd () {}
+
+		public void Stop () {
+			autoRepeat = false;
+		}
 	}
 }

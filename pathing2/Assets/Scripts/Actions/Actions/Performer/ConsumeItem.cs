@@ -19,7 +19,7 @@ namespace GameActions {
 			}
 		}
 
-		public ConsumeItem (float duration, bool enableable=true) : base (duration, true, true, null) {
+		public ConsumeItem (float duration, bool autoStart=true, bool autoRepeat=true, bool enableable=true) : base (duration, autoStart, autoRepeat, null) {
 			this.enableable = enableable;
 		}
 		

@@ -155,6 +155,7 @@ public class UnitInfoBox : MBRefs {
 			t.localPosition = Vector3.zero;
 			t.localEulerAngles = Vector3.zero;
 			elders.Add (t.gameObject);
+			t.GetScript<ElderAvatar> ().Init (elderItems[0]);
 		}
 	}
 

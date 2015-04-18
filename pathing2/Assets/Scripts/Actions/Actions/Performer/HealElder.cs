@@ -4,7 +4,11 @@ using GameInventory;
 
 namespace GameActions {
 
+	public delegate void OnElderHealed ();
+
 	public class HealElder : PerformerAction {
+
+		OnElderHealed onElderHealed;
 
 		ElderHolder holder = null;
 		ElderHolder Holder {
@@ -21,7 +25,9 @@ namespace GameActions {
 			return elder.HealthManager.Sick;
 		}
 
-		public HealElder (float duration) : base (duration, true, true, null) {}
+		public HealElder (float duration, OnElderHealed onElderHealed=null) : base (duration, false, false, null) {
+			this.onElderHealed += onElderHealed;
+		}
 
 		public override void OnEnd () {
 			if (!Holder.Empty) {
@@ -29,6 +35,7 @@ namespace GameActions {
 				if (sickElder != null) {
 					sickElder.HealthManager.StopSickness ();
 				}
+				if (onElderHealed != null) onElderHealed ();
 			}
 		}
 	}

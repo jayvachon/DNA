@@ -62,7 +62,7 @@ namespace Units {
 		Transform Colliding () {
 			
 			int rayCount = 18;
-			float radius = 1f;
+			float radius = 1.25f;
 			float deg = 360f / (float)rayCount;
 			RaycastHit hit;
 

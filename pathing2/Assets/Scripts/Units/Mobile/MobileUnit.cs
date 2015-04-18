@@ -52,6 +52,7 @@ namespace Units {
 			EnableAcceptedActions (GetAcceptedActionsOnPath ());
 		}
 
+		// TODO: Move this to PerformableActions
 		List<KeyValuePair<string, IActionAcceptor>> GetAcceptedActionsOnPath () {
 			
 			List<KeyValuePair<string, IActionAcceptor>> acceptedActions = 
@@ -71,6 +72,7 @@ namespace Units {
 			return acceptedActions;
 		}
 
+		// TODO: Move this to PerformableActions
 		void EnableAcceptedActions (List<KeyValuePair<string, IActionAcceptor>> acceptedActions) {
 
 			Dictionary<KeyValuePair<string, IActionAcceptor>, System.Type> unpairedActions = 

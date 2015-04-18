@@ -8,7 +8,7 @@ namespace GameActions {
 
 		// This is checked before any time is spent carrying out the Action
 		// if false is returned, the Acceptor is skipped over
-		public abstract bool Acceptable { get; }
+		public abstract bool CanAccept { get; }
 
 		// This is checked for individual inventory items during the transfer
 		public virtual ItemHasAttribute Transferable {

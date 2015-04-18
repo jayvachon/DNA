@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,14 +11,20 @@ public class HealthManager {
 	}
 	float healthAtSicknessOnset;
 
+	bool canBecomeSick = true;
+	public bool CanBecomeSick { 
+		get { return canBecomeSick; }
+		set { canBecomeSick = value; }
+	}
+
 	public bool Sick { get; private set; }
 
 	public void StartSickness () {
-		if (Sick) return;
-		Debug.Log ("starting Sickness");
+		if (Sick || !CanBecomeSick) return;
+		Debug.Log ("starting sickness");
 		healthAtSicknessOnset = Health;
-		Coroutine.Instance.StartCoroutine (30f, OnSickness);
 		Sick = true;
+		Coroutine.Instance.StartCoroutine (30f, OnSickness);
 	}
 
 	public void StopSickness () {
@@ -28,7 +34,6 @@ public class HealthManager {
 
 	void OnSickness (float progress) {
 		Health = Mathf.Abs (SicknessCurve (progress)-1) * healthAtSicknessOnset;
-		Debug.Log (Health);
 	}
 
 	float SicknessCurve (float p) {

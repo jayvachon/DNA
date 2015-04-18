@@ -39,6 +39,12 @@ namespace Units {
 				); 
 				if (index == 1 && i == 0) {
 					CreateUnit<MilkPool> (position);
+				} else if (index == 1 && i == 1) {
+					CreateUnit<Hospital> (position);
+				} else if (index == 2 && i == 0) {
+					CreateUnit<House> (position);
+				} else if (index == 1 && i == 2) {
+					CreateUnit<MilkshakeMaker> (position);
 				} else {
 					CreateUnit<Plot> (position);
 				}

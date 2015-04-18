@@ -6,7 +6,7 @@ namespace GameActions {
 	
 	public class DefaultCondition : AcceptCondition {
 		
-		public override bool Acceptable {
+		public override bool CanAccept {
 			get { return true; }
 		}
 		

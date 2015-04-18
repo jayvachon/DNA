@@ -27,7 +27,7 @@ namespace GameActions {
 		}
 
 		bool ShouldStartSickness {
-			get { return Random.value < 0.15f; }
+			get { return Random.value < 0.2f; }
 		}
 
 		Stopwatch deathTime = new Stopwatch ();
@@ -42,8 +42,6 @@ namespace GameActions {
 		public override void OnEnd () {
 			if (ShouldStartSickness) {
 				HealthManager.StartSickness ();
-			} else {
-				Debug.Log ("no start");
 			}
 
 			// The first time through, the timer waits 15 seconds. 

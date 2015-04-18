@@ -69,7 +69,7 @@ namespace GameActions {
 			if (acceptor == null) {
 				return acceptedActions;
 			}
-			foreach (var action in acceptor.AcceptableActions.EnabledActions) {
+			foreach (var action in acceptor.AcceptableActions.Actions) {
 				if (Actions[action.Key] != null) {
 					acceptedActions.Add (action.Key);
 				}

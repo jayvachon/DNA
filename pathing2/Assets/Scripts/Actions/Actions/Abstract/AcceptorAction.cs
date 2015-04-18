@@ -41,7 +41,7 @@ namespace GameActions {
 				if (acceptCondition == null) {
 					return true;
 				}
-				return acceptCondition.Acceptable; 
+				return acceptCondition.CanAccept; 
 			}
 		}
 

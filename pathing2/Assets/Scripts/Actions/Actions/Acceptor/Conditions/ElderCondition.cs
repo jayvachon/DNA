@@ -6,7 +6,7 @@ namespace GameActions {
 	
 	public class ElderCondition : AcceptCondition {
 
-		public override bool Acceptable {
+		public override bool CanAccept {
 			get {
 				if (requestSick) {
 					return Holder.Has (IsSick);
@@ -35,7 +35,6 @@ namespace GameActions {
 				}
 			}
 		}
-
 
 		bool IsSick (Item item) {
 			ElderItem elder = item as ElderItem;

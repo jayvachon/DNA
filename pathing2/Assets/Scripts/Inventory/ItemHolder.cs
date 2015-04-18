@@ -16,6 +16,7 @@ namespace GameInventory {
 		public abstract HolderFull HolderFull { get; set; }
 
 		public abstract string Name { get; }
+		public abstract Inventory Inventory { get; set; }
 
 		protected List<Item> items;
 		public List<Item> Items {
@@ -61,6 +62,8 @@ namespace GameInventory {
 		public override string Name {
 			get { return ""; }
 		}
+
+		public override Inventory Inventory { get; set; }
 
 		new protected List<T> items = new List<T> ();
 		new public List<T> Items {
@@ -126,6 +129,7 @@ namespace GameInventory {
 				items.Add (newItem as T);
 				if (newItem != null) {
 					newItem.Holder = this;
+					newItem.OnAdd ();
 				}
 				newItems.RemoveAt (0);
 			}
@@ -164,7 +168,7 @@ namespace GameInventory {
 		}
 
 		public override List<Item> Remove (int amount, ItemHasAttribute transferable) {
-
+			
 			if (transferable == null) {
 				return Remove (amount);
 			}

@@ -31,7 +31,8 @@ namespace GameActions {
 		public void Enable (string id) {
 			Action action;
 			if (Actions.TryGetValue (id, out action)) {
-				EnabledActions.Add (id, action as T);
+				if (!EnabledActions.ContainsKey (id))
+					EnabledActions.Add (id, action as T);
 			}
 			action.Enabled = true;
 			OnEnable (id);

@@ -17,7 +17,7 @@ namespace Units {
 
 		void Awake () {
 
-			Inventory = new Inventory ();
+			Inventory = new Inventory (this);
 			Inventory.Add (new MilkHolder (0, 0));
 
 			AcceptableActions = new AcceptableActions (this);

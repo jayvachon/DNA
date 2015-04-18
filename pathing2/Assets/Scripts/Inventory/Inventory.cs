@@ -11,10 +11,11 @@ namespace GameInventory {
 	public class Inventory : System.Object {
 
 		#if UNITY_EDITOR
-		public string[] holderInfo;
-		public int updateCount = 0;
+		// g29public string[] holderInfo;
+		// g29public int updateCount = 0;
 		#endif
 
+		public readonly IInventoryHolder holder;
 		public InventoryUpdated inventoryUpdated;
 
 		List<ItemHolder> holders = new List<ItemHolder> ();
@@ -22,11 +23,16 @@ namespace GameInventory {
 			get { return holders; }
 		}
 
+		public Inventory (IInventoryHolder holder) {
+			this.holder = holder;
+		}
+
 		public void Add (ItemHolder holder) {
+			holder.Inventory = this;
 			holders.Add (holder);
 			#if UNITY_EDITOR
 			holder.HolderUpdated += OnUpdateHolder;
-			UpdateHolderInfo ();
+			//UpdateHolderInfo ();
 			#endif
 			NotifyInventoryUpdated ();
 		}
@@ -94,14 +100,14 @@ namespace GameInventory {
 				inventoryUpdated ();
 			}
 			#if UNITY_EDITOR
-			UpdateHolderInfo ();
+			//UpdateHolderInfo ();
 			#endif
 		}
 
 		void OnUpdateHolder () {
 			NotifyInventoryUpdated ();
 			#if UNITY_EDITOR
-			UpdateHolderInfo ();
+			//UpdateHolderInfo ();
 			#endif
 		}
 
@@ -110,14 +116,14 @@ namespace GameInventory {
 		 */
 
 		#if UNITY_EDITOR
-		void UpdateHolderInfo () {
+		/*void UpdateHolderInfo () {
 			holderInfo = new string[holders.Count];
 			for (int i = 0; i < holders.Count; i ++) {
 				ItemHolder holder = holders[i];
 				holderInfo[i] = string.Format ("{0}: {1}/{2}", holder.Name, holder.Count, holder.Capacity);
 			}
 			updateCount ++;
-		}
+		}*/
 		#endif
 
 		public virtual void Print () {

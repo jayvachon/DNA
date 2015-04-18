@@ -252,6 +252,8 @@ public class UnitInfoBox : MBRefs {
 	void OnInventoryUpdated () {
 		ClearInventory ();
 		InitInventory (inventory.Holders);
+		ClearElders ();
+		InitElders (inventory.Holders);
 	}
 
 	void OnActionsUpdated () {
@@ -266,6 +268,8 @@ public class UnitInfoBox : MBRefs {
 	void OnContentUpdated () {
 		ClearInventory ();
 		InitInventory (inventory.Holders);
+		ClearElders ();
+		InitElders (inventory.Holders);
 		ClearActions ();
 		InitActions ();
 		title.text = content.Title;

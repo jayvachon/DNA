@@ -4,19 +4,27 @@ using System.Collections.Generic;
 using GameInventory;
 using GameActions;
 using Pathing;
+using GameInput;
 
 namespace Units {
 
+	// TODO: Rename to Worker
 	public class Distributor : MobileUnit {
 
-		string workerName = "Distributor";
-		string retirementName = "Elder";
-		new string name = "Distributor";
 		public override string Name { 
-			get { return name; }
+			get { return "Distributor"; }
 		}
 
-		RetirementTimer retirementTimer = new RetirementTimer ();
+		//RetirementTimer retirementTimer = new RetirementTimer ();
+		RetirementTimer retirementTimer = null;
+		RetirementTimer RetirementTimer {
+			get {
+				if (retirementTimer == null) {
+					retirementTimer = new RetirementTimer ();
+				}
+				return retirementTimer;
+			}
+		}
 
 		void Awake () {
 
@@ -47,28 +55,42 @@ namespace Units {
 		}
 
 		void OnRetirement () {
-			name = retirementName;
+			/*name = retirementName;
 			Path.Active = false;
-			UnitInfoContent.Refresh ();
+			UnitInfoContent.Refresh ();*/
+			CreateElder ();
+			DestroySelf ();			
 		}
 
 		public override void OnDragRelease (Unit unit) {
-			if (retirementTimer.Retired) {
+			/*if (RetirementTimer.Retired) {
 				House house = unit as House;
 				if (house != null) {
 					house.Inventory.AddItem<ElderHolder> (new ElderItem ());
 					ObjectCreator.Instance.Destroy<Distributor> (transform);
 				}
-			}
+			}*/
 		}
 
 		public override void OnPoolCreate () {
-			name = workerName;
 			Inventory.Empty ();
 			Inventory.Get<HappinessHolder> ().AddInitial (100);
-			retirementTimer.BeginAging (OnAge, OnRetirement);
+			RetirementTimer.BeginAging (OnAge, OnRetirement);
 			Path.Active = true;
 			UnitInfoContent.Refresh ();
+		}
+
+		void CreateElder () {
+			Elder elder = ObjectCreator.Instance.Create<Elder> ().GetScript<Elder> ();
+			elder.Position = MobileTransform.Position;
+			if (Selected) {
+				SelectionManager.Select (elder.UnitClickable);
+			}
+		}
+
+		void DestroySelf () {
+			Path.Active = false;
+			ObjectCreator.Instance.Destroy<Distributor> (transform);
 		}
 	}
 }

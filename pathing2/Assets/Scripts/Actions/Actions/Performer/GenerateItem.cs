@@ -4,20 +4,7 @@ using GameInventory;
 
 namespace GameActions {
 
-	public class GenerateItem<T> : PerformerAction where T : ItemHolder {
-
-		ItemHolder holder = null;
-		ItemHolder Holder {
-			get {
-				if (holder == null) {
-					holder = Inventory.Get<T> ();
-				}
-				if (holder == null) {
-					Debug.LogError ("Inventory does not include " + typeof (T));
-				}
-				return holder;
-			}
-		}
+	public class GenerateItem<T> : InventoryAction<T> where T : ItemHolder {
 
 		public GenerateItem (float duration, PerformCondition performCondition=null) : base (duration, true, true, performCondition) {}
 		

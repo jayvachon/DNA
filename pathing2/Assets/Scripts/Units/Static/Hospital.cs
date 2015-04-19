@@ -5,13 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class Hospital : StaticUnit, IActionAcceptor, IActionPerformer {
+	public class Hospital : StaticUnit, IActionPerformer {
 
 		public override string Name {
 			get { return "Hospital"; }
 		}
 
-		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {

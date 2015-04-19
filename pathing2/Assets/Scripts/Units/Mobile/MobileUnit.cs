@@ -13,9 +13,19 @@ namespace Units {
 		public MobileUnitTransform MobileTransform {
 			get {
 				if (mobileTransform == null) {
-					mobileTransform = unitTransform as MobileUnitTransform;
+					mobileTransform = UnitTransform as MobileUnitTransform;
 				}
 				return mobileTransform;
+			}
+		}
+
+		MobileUnitClickable mobileClickable;
+		public MobileUnitClickable MobileClickable {
+			get {
+				if (mobileClickable == null) {
+					mobileClickable = UnitClickable as MobileUnitClickable;
+				}
+				return mobileClickable;
 			}
 		}
 
@@ -48,77 +58,8 @@ namespace Units {
 
 		void StartMovingOnPath () {
 			MobileTransform.StartMovingOnPath ();
-			PerformableActions.DisableAll ();
-			EnableAcceptedActions (GetAcceptedActionsOnPath ());
-		}
-
-		// TODO: Move this to PerformableActions
-		List<KeyValuePair<string, IActionAcceptor>> GetAcceptedActionsOnPath () {
-			
-			List<KeyValuePair<string, IActionAcceptor>> acceptedActions = 
-				new List<KeyValuePair<string, IActionAcceptor>> ();
-
-			foreach (PathPoint point in Path.Points.Points) {
-				
-				IActionAcceptor acceptor 	= point.StaticUnit as IActionAcceptor;
-				List<string> actions 		= PerformableActions.GetAcceptedActions (acceptor);
-				
-				foreach (string action in actions) {
-					acceptedActions.Add (
-						new KeyValuePair<string, IActionAcceptor> (action, acceptor)
-					);
-				}
-			}
-			return acceptedActions;
-		}
-
-		// TODO: Move this to PerformableActions
-		void EnableAcceptedActions (List<KeyValuePair<string, IActionAcceptor>> acceptedActions) {
-
-			Dictionary<KeyValuePair<string, IActionAcceptor>, System.Type> unpairedActions = 
-				new Dictionary<KeyValuePair<string, IActionAcceptor>, System.Type> ();
-
-			foreach (var acceptedAction in acceptedActions) {
-
-				string actionName 										= acceptedAction.Key;
-				PerformerAction action 									= PerformableActions.Get (actionName);
-				System.Type requiredPair								= action.RequiredPair;
-				KeyValuePair<string, IActionAcceptor> acceptorAction	= new KeyValuePair<string, IActionAcceptor> (actionName, acceptedAction.Value);
-
-				// Enable the action if it doesn't require a pair
-				if (requiredPair == null) {
-					PerformableActions.Enable (actionName);
-					continue;
-				}
-
-				// If unpairedActions is empty, add the action
-				if (unpairedActions.Count == 0) {
-					unpairedActions.Add (acceptorAction, action.GetType ());
-					continue;
-				}
-
-				// If unpairedActions isn't empty, try to find the pair in unpairedActions
-				// Both actions are enabled if they are pairs & not from the same IActionAcceptor
-				string pair = "";
-				foreach (var unpairedAction in unpairedActions) {
-					var keyVal = unpairedAction.Key;
-					if (unpairedAction.Value == requiredPair && keyVal.Value != acceptorAction.Value) {
-						pair = keyVal.Key;
-						PerformableActions.Enable (pair);
-						PerformableActions.Enable (actionName);
-						break;
-					}
-				}
-
-				// If no pair was found, add the action to the dictionary
-				if (pair == "") {
-					unpairedActions.Add (acceptorAction, action.GetType ());
-				} else {
-
-					// But if a pair WAS found, remove it from the dictionary
-					unpairedActions.Remove (acceptorAction);
-				}
-			}
+			PerformableActions.EnableAcceptedActionsBetweenAcceptors (
+				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}

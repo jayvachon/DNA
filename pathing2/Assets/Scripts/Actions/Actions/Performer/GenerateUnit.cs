@@ -8,24 +8,11 @@ namespace GameActions {
 	public delegate void UnitGenerated (Unit unit);
 
 	// T = Unit to be generated, U = ItemHolder to check
-	public class GenerateUnit<T, U> : PerformerAction where T : Unit where U : ItemHolder {
+	public class GenerateUnit<T, U> : InventoryAction<U> where T : Unit where U : ItemHolder {
 
 		int cost = 0;
 		Vector3 createPosition;
 		UnitGenerated unitGenerated;
-
-		U holder = null;
-		U Holder {
-			get {
-				if (holder == null) {
-					holder = Inventory.Get<U> () as U;
-				}
-				if (holder == null) {
-					Debug.LogError ("Inventory does not include " + typeof (U));
-				}
-				return holder;
-			}
-		}
 
 		public GenerateUnit (int cost, Vector3 createPosition, UnitGenerated unitGenerated=null) : base (0, false, false) {
 			this.cost = cost;

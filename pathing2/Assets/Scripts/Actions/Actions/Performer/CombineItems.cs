@@ -4,8 +4,8 @@ using GameInventory;
 
 namespace GameActions {
 
-	// T + U = V
-	public class CombineItems<T, U, V> : PerformerAction where T: ItemHolder where U: ItemHolder where V: ItemHolder {
+	// Item<T> + Item<U> = Item<V>
+	public class CombineItems<T, U, V> : InventoryAction<T> where T: ItemHolder where U: ItemHolder where V: ItemHolder {
 
 		ItemHolder holdert = null;
 		ItemHolder HolderT {

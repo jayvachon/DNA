@@ -5,14 +5,13 @@ using GameActions;
 
 namespace Units {
 	
-	public class Plot : StaticUnit, IActionAcceptor, IActionPerformer {
+	public class Plot : StaticUnit, IActionPerformer {
 
 		new string name = "Plot";
 		public override string Name {
 			get { return name; }
 		}
 
-		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {
@@ -28,11 +27,12 @@ namespace Units {
 		void Start () {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.StartAction += OnStartAction;
-			PerformableActions.Add ("GenerateHouse", new GenerateUnit<House, MilkHolder> (5, Position, OnUnitGenerated), "Birth House");
+			//PerformableActions.Add ("GenerateHouse", new GenerateUnit<House, MilkHolder> (5, Position, OnUnitGenerated), "Birth House");
+			PerformableActions.Add ("GenerateClinic", new GenerateUnit<Clinic, MilkHolder> (5, Position, OnUnitGenerated), "Birth Clinic");
 			PerformableActions.Add ("GenerateMilkPool", new GenerateUnit<MilkPool, MilkHolder> (5, Position, OnUnitGenerated), "Birth Milk Pool");
 			PerformableActions.Add ("GeneratePasture", new GenerateUnit<Pasture, MilkHolder> (10, Position, OnUnitGenerated), "Birth Pasture");
 			PerformableActions.Add ("GenerateMilkshakeMaker", new GenerateUnit<MilkshakeMaker, MilkHolder> (10, Position, OnUnitGenerated), "Birth Milkshake Maker");
-			PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital, MilkHolder> (10, Position, OnUnitGenerated), "Birth Hospital");
+			//PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital, MilkHolder> (10, Position, OnUnitGenerated), "Birth Hospital");
 			PerformableActions.Add ("GenerateJacuzzi", new GenerateUnit<Jacuzzi, MilkHolder> (10, Position, OnUnitGenerated), "Birth Jacuzzi");
 		}
 
@@ -42,6 +42,7 @@ namespace Units {
 			string newUnit = "";
 			switch (id) {
 				case "GenerateHouse": newUnit = "House"; break;
+				case "GenerateClinic": newUnit = "Clinic"; break;
 				case "GenerateMilkPool": newUnit = "Milk Pool"; break;
 				case "GeneratePasture": newUnit = "Pasture"; break;
 				case "GenerateMilkshakeMaker": newUnit = "Milkshake Maker"; break;

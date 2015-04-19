@@ -73,6 +73,11 @@ namespace GameActions {
 			float time = action.Duration;
 			float eTime = 0;
 
+			if (time == 0) {
+				action.End ();
+				yield break;
+			}
+
 			while (eTime < time) {
 				eTime += Time.deltaTime;
 				action.Perform (eTime / time);

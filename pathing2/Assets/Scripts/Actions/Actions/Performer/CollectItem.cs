@@ -4,7 +4,7 @@ using GameInventory;
 
 namespace GameActions {
 
-	public class CollectItem<T> : PerformerAction where T : ItemHolder {
+	public class CollectItem<T> : InventoryAction<T> where T : ItemHolder {
 
 		string name = "";
 		public override string Name {
@@ -27,27 +27,6 @@ namespace GameActions {
 		}
 
 		public IActionAcceptor Acceptor { get; set; }
-
-		ItemHolder holder = null;
-		ItemHolder Holder {
-			get {
-				if (holder == null) {
-					holder = Inventory.Get<T> ();
-				}
-				if (holder == null) {
-					Debug.LogError ("Inventory does not include " + typeof (T));
-				}
-				return holder;
-			}
-		}
-
-		Inventory AcceptorInventory {
-			get {
-				IBinder binder = Performer as IBinder;
-				IInventoryHolder holder = binder.BoundAcceptor as IInventoryHolder;
-				return holder.Inventory;
-			}
-		}
 
 		public CollectItem (float duration) : base (duration) {}
 		

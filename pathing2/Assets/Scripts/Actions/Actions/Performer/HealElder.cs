@@ -6,19 +6,9 @@ namespace GameActions {
 
 	public delegate void OnElderHealed ();
 
-	public class HealElder : PerformerAction {
+	public class HealElder : InventoryAction<ElderHolder> {
 
 		OnElderHealed onElderHealed;
-
-		ElderHolder holder = null;
-		ElderHolder Holder {
-			get {
-				if (holder == null) {
-					holder = Inventory.Get<ElderHolder> () as ElderHolder;
-				}
-				return holder;
-			}
-		}
 
 		bool IsSick (Item item) {
 			ElderItem elder = item as ElderItem;

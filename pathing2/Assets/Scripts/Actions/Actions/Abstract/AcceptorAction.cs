@@ -8,6 +8,7 @@ namespace GameActions {
 
 		public IActionAcceptor Acceptor { get; set; }
 		
+		// TODO: Move this to AcceptInventoryAction (& figure out what to do w/ AcceptCondition)
 		Inventory inventory = null;
 		protected Inventory Inventory {
 			get {

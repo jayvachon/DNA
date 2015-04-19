@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using GameInventory;
 
 namespace GameActions {
@@ -79,6 +78,78 @@ namespace GameActions {
 				}
 			}
 			return acceptedActions;
+		}
+
+		public void EnableAcceptedActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
+			DisableAll ();
+			EnableAcceptedActions (GetAcceptedActionsBetweenAcceptors (acceptors));
+		} 
+
+		List<KeyValuePair<string, IActionAcceptor>> GetAcceptedActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
+			
+			List<KeyValuePair<string, IActionAcceptor>> acceptedActions = 
+				new List<KeyValuePair<string, IActionAcceptor>> ();
+
+			foreach (IActionAcceptor acceptor in acceptors) {
+				
+				//IActionAcceptor acceptor 	= point.StaticUnit as IActionAcceptor;
+				List<string> actions = GetAcceptedActions (acceptor);
+				
+				foreach (string action in actions) {
+					acceptedActions.Add (
+						new KeyValuePair<string, IActionAcceptor> (action, acceptor)
+					);
+				}
+			}
+			return acceptedActions;
+		}
+
+		void EnableAcceptedActions (List<KeyValuePair<string, IActionAcceptor>> acceptedActions) {
+
+			Dictionary<KeyValuePair<string, IActionAcceptor>, System.Type> unpairedActions = 
+				new Dictionary<KeyValuePair<string, IActionAcceptor>, System.Type> ();
+
+			foreach (var acceptedAction in acceptedActions) {
+
+				string actionName 										= acceptedAction.Key;
+				PerformerAction action 									= Get (actionName);
+				System.Type requiredPair								= action.RequiredPair;
+				KeyValuePair<string, IActionAcceptor> acceptorAction	= new KeyValuePair<string, IActionAcceptor> (actionName, acceptedAction.Value);
+
+				// Enable the action if it doesn't require a pair
+				if (requiredPair == null) {
+					Enable (actionName);
+					continue;
+				}
+
+				// If unpairedActions is empty, add the action
+				if (unpairedActions.Count == 0) {
+					unpairedActions.Add (acceptorAction, action.GetType ());
+					continue;
+				}
+
+				// If unpairedActions isn't empty, try to find the pair in unpairedActions
+				// Both actions are enabled if they are pairs & not from the same IActionAcceptor
+				string pair = "";
+				foreach (var unpairedAction in unpairedActions) {
+					var keyVal = unpairedAction.Key;
+					if (unpairedAction.Value == requiredPair && keyVal.Value != acceptorAction.Value) {
+						pair = keyVal.Key;
+						Enable (pair);
+						Enable (actionName);
+						break;
+					}
+				}
+
+				// If no pair was found, add the action to the dictionary
+				if (pair == "") {
+					unpairedActions.Add (acceptorAction, action.GetType ());
+				} else {
+
+					// But if a pair WAS found, remove it from the dictionary
+					unpairedActions.Remove (acceptorAction);
+				}
+			}
 		}
 
 		/**

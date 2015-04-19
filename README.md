@@ -52,3 +52,5 @@ what's important here is that the a to the q of **'how to win this game?'** is o
 
 ### The Upward or Inward Dive & the veneration of Passing Elders
 is the playspace heartbeat is the bar w/ a repeat is the motif is the time&space of little interaction which at the end of emerge rebirthed players on a new familiar mission. this is guaranteed to happen and happens in 1 of 2 ways: Upward or Inward, with the direction being determined by 'how venerated were the Passing Elders' -> to respect & care for aged laborers & to pass properly souls to the Recycler is an economic burden (but a scaling burden, the "cost" of which is determined by the player's society's attachment to/obssession with/reliance on material goods ofc) but is more spiritually rewarding : The Inward Dive is claustrophobic and confines the player to their **Gigantic Giving Tree**, while the Upward Dive reveals the **universe of giving trees** - is more moldable - more malleable. trouble here is that this is bifurcated, simplistic, with a too-obviously "right" answer - so i need to work on that
+
+# sun ra: "there are other worls they have not told you of which wish to speak to you"

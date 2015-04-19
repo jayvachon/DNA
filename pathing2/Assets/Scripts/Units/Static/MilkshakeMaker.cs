@@ -5,13 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class MilkshakeMaker : StaticUnit, IActionAcceptor, IActionPerformer {
+	public class MilkshakeMaker : StaticUnit, IActionPerformer {
 
 		public override string Name {
 			get { return "Milkshake Maker"; }
 		}
 		
-		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {

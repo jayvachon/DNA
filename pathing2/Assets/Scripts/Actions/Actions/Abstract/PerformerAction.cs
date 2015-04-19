@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
 
 namespace GameActions {
 
@@ -15,20 +14,7 @@ namespace GameActions {
 		protected float duration;
 		public float Duration {
 			get { return duration; }
-		}
-
-		Inventory inventory = null;
-		protected Inventory Inventory {
-			get {
-				if (inventory == null && Performer is IInventoryHolder) {
-					IInventoryHolder holder = Performer as IInventoryHolder;
-					inventory = holder.Inventory;
-				}
-				if (inventory == null) {
-					Debug.LogError (string.Format ("ActionPerformer {0} does not implement IInventoryHolder", Performer));
-				}
-				return inventory;
-			}
+			set { duration = value; }
 		}
 
 		public IActionPerformer Performer { get; set; }

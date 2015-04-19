@@ -8,6 +8,7 @@ namespace GameActions {
 
 		public override bool CanAccept {
 			get {
+				if (Holder == null) return false;
 				if (requestSick) {
 					return Holder.Has (IsSick);
 				} else {

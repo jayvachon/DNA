@@ -14,6 +14,7 @@ namespace Units {
 
 		public UnitTransform unitTransform;
 		public UnitRenderer unitRenderer;
+		public UnitClickable unitClickable;
 
 		#if UNITY_EDITOR
 			public Inventory inventory;
@@ -39,6 +40,10 @@ namespace Units {
 				}
 				return unitInfoContent;
 			}
+		}
+
+		public UnitClickable UnitClickable {
+			get { return unitClickable; }
 		}
 
 		public UnitTransform UnitTransform {

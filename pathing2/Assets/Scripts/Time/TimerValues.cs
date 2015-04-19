@@ -1,4 +1,4 @@
-﻿#undef FAST_FORWARD
+﻿#define FAST_FORWARD
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class TimerValues {
 	static readonly float workRetirementRatio = 0.541f;
 	#if FAST_FORWARD
-	public static float Retirement { get { return 15; } }
+	public static float Retirement { get { return 5; } }
 	#else
 	public static float Retirement { get { return 180; } }
 	#endif

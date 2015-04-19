@@ -19,5 +19,7 @@ public class Interval {
 
 	public virtual void End () {
 		if (onTimerEnd != null) onTimerEnd ();
+		onRun = null;
+		onTimerEnd = null;
 	}
 }

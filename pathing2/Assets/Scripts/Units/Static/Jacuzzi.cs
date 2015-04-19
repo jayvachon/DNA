@@ -5,13 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class Jacuzzi : StaticUnit, IActionAcceptor, IActionPerformer {
+	public class Jacuzzi : StaticUnit, IActionPerformer {
 
 		public override string Name {
 			get { return "Jacuzzi"; }
 		}
 		
-		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {

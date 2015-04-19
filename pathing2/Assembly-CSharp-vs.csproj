@@ -54,6 +54,8 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptOccupyBed.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptorInventoryAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\AcceptCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\DefaultCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\ElderCondition.cs" />
@@ -63,11 +65,14 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CombineItems.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\Conditions\InventoryHasItemsCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\Conditions\PerformCondition.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\ConsumeHealth.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\ConsumeItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\HealElder.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\InventoryAction.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\OccupyBed.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\SubtractHealth.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionPerformer.cs" />
@@ -86,6 +91,7 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\SelectEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnselectEvent.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
+     <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />
      <Compile Include="Assets\Scripts\Input\DragHandler.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
@@ -98,8 +104,10 @@
      <Compile Include="Assets\Scripts\Input\ReleaseHandler.cs" />
      <Compile Include="Assets\Scripts\Input\ScreenPositionHandler.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\BedHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\HappinessHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\HealthHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\IceCreamHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\MilkHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\MilkshakeHolder.cs" />
@@ -107,8 +115,10 @@
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\BedItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\HappinessItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\HealthItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\IceCreamItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
@@ -147,7 +157,9 @@
      <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
+     <Compile Include="Assets\Scripts\Units\Mobile\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
      <Compile Include="Assets\Scripts\Units\Static\House.cs" />

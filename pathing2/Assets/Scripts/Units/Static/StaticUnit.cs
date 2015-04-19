@@ -2,10 +2,11 @@
 using System.Collections;
 using GameInput;
 using Pathing;
+using GameActions;
 
 namespace Units {
 
-	public class StaticUnit : Unit {
+	public class StaticUnit : Unit, IActionAcceptor {
 
 		StaticUnitTransform staticTransform;
 		public StaticUnitTransform StaticTransform {
@@ -18,5 +19,6 @@ namespace Units {
 		}
 
 		public PathPoint PathPoint { get; set; }
+		public AcceptableActions AcceptableActions { get; protected set; }
 	}
 }

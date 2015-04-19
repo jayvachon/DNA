@@ -59,8 +59,8 @@ namespace Units {
 			MobileUnit.OnRelease ();
 		}
 
-		Transform Colliding () {
-			
+		public Transform Colliding (int layerMask=Physics.DefaultRaycastLayers) {
+
 			int rayCount = 18;
 			float radius = 1.25f;
 			float deg = 360f / (float)rayCount;
@@ -76,7 +76,7 @@ namespace Units {
 
 				// Rays are cast inwards, so this will only work if the collider has been disabled
 				// (otherwise it will register a collision with itself)
-				if (Physics.Raycast (Position + direction, -direction, out hit, 0.5f)) {
+				if (Physics.Raycast (Position + direction, -direction, out hit, 0.5f, layerMask)) {
 					return hit.transform;
 				}
 			}

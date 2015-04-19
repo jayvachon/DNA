@@ -45,6 +45,8 @@ namespace Units {
 					CreateUnit<House> (position);
 				} else if (index == 1 && i == 2) {
 					CreateUnit<MilkshakeMaker> (position);
+				} else if (index == 1 && i == 3) {
+					CreateUnit<Clinic> (position);
 				} else {
 					CreateUnit<Plot> (position);
 				}

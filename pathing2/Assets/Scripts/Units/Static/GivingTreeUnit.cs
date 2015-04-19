@@ -5,13 +5,12 @@ using GameActions;
 
 namespace Units {
 
-	public class GivingTreeUnit : StaticUnit, IActionAcceptor, IActionPerformer {
+	public class GivingTreeUnit : StaticUnit, IActionPerformer {
 
 		public override string Name {
 			get { return "Giving Tree"; }
 		}
 
-		public AcceptableActions AcceptableActions { get; private set; }
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {

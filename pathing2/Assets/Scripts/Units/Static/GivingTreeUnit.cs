@@ -16,16 +16,18 @@ namespace Units {
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new MilkshakeHolder (100, 20));
+			Inventory.Add (new CoffeeHolder (100, 20));
+			Inventory.Add (new YearHolder (500, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
+			AcceptableActions.Add ("DeliverCoffee", new AcceptDeliverItem<CoffeeHolder> ());
+			AcceptableActions.Add ("DeliverYear", new AcceptDeliverItem<YearHolder> ());
 
 			PerformableActions = new PerformableActions (this);
 			Vector3 createPosition = StaticTransform.Position;
 			createPosition.x -= 2;
 			
-			PerformableActions.Add ("GenerateDistributor", new GenerateUnit<Distributor, MilkshakeHolder> (5, createPosition), "Birth Distributor");
+			PerformableActions.Add ("GenerateDistributor", new GenerateUnit<Distributor, CoffeeHolder> (5, createPosition), "Birth Distributor");
 		}
 	}
 }

@@ -4,6 +4,9 @@ using System.Collections;
 public class RetirementTimer : Interval {
 
 	float retirementAge = TimerValues.Retirement;	// seconds until becoming an elder
+	public float RetirementAge {
+		get { return retirementAge; }
+	}
 
 	bool retired = false;
 	public bool Retired {

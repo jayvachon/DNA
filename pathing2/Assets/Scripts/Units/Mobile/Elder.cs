@@ -20,12 +20,15 @@ namespace Units {
 		void Awake () {
 
 			Inventory = new Inventory (this);
+			Inventory.Add (new YearHolder (500, 65));
 			Inventory.Add (new HealthHolder (100, 100));
 
 			PerformableActions = new PerformableActions (this);
 			occupyBed = new OccupyBed ();
 			PerformableActions.Add ("OccupyBed", occupyBed);
 			PerformableActions.Add ("ConsumeHealth", new ConsumeHealth (healthManager));
+			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> (TimerValues.Retirement / 65f));
+			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> (0));
 		}
 
 		void Start () {

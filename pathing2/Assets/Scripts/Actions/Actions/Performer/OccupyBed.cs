@@ -12,7 +12,7 @@ namespace GameActions {
 		}
 
 		public override bool CanPerform {
-			get { return !occupying && !AcceptorHolder.Full; }
+			get { return !occupying && AcceptorHolder != null && !AcceptorHolder.Full; }
 		}
 
 		Elder elder = null;

@@ -38,15 +38,9 @@ namespace Units {
 					center.z + myRadius * Mathf.Cos (radians)
 				); 
 				if (index == 1 && i == 0) {
-					CreateUnit<MilkPool> (position);
+					CreateUnit<MilkshakePool> (position);
 				} else if (index == 1 && i == 1) {
-					CreateUnit<Hospital> (position);
-				} else if (index == 2 && i == 0) {
-					CreateUnit<House> (position);
-				} else if (index == 1 && i == 2) {
-					CreateUnit<MilkshakeMaker> (position);
-				} else if (index == 1 && i == 3) {
-					CreateUnit<Clinic> (position);
+					CreateUnit<CoffeePlant> (position);
 				} else {
 					CreateUnit<Plot> (position);
 				}

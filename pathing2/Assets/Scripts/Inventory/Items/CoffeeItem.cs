@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace GameInventory {
 
-	public class BedItem : Item {
-		public BedItem () {}
+	public class CoffeeItem : Item {
+		public CoffeeItem () {}
 	}
 }

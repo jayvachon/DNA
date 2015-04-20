@@ -73,8 +73,10 @@ namespace GameActions {
 				return acceptedActions;
 			}
 			foreach (var action in acceptor.AcceptableActions.Actions) {
-				if (Actions[action.Key] != null) {
-					acceptedActions.Add (action.Key);
+				string key = action.Key;
+				if (!Actions.ContainsKey (key)) continue;
+				if (Actions[key] != null) {
+					acceptedActions.Add (key);
 				}
 			}
 			return acceptedActions;

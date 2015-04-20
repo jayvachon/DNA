@@ -19,16 +19,19 @@ public class TimerValues {
 			if (actionTimes == null) {
 				actionTimes = new Dictionary<string, float> ();
 
-				actionTimes.Add ("CollectIceCream", 0.5f);
-				actionTimes.Add ("DeliverIceCream", 0.5f);
-				actionTimes.Add ("CollectMilk", 0.5f);
-				actionTimes.Add ("DeliverMilk", 0.5f);
+				// actionTimes.Add ("CollectIceCream", 0.5f);
+				// actionTimes.Add ("DeliverIceCream", 0.5f);
+				// actionTimes.Add ("CollectMilk", 0.5f);
+				// actionTimes.Add ("DeliverMilk", 0.5f);
 				actionTimes.Add ("CollectMilkshake", 0.5f);
 				actionTimes.Add ("DeliverMilkshake", 0.5f);
-				actionTimes.Add ("CollectElder", 1f);
-				actionTimes.Add ("DeliverElder", 1f);
+				actionTimes.Add ("CollectCoffee", 0.5f);
+				actionTimes.Add ("DeliverCoffee", 0.5f);
+				// actionTimes.Add ("CollectElder", 1f);
+				// actionTimes.Add ("DeliverElder", 1f);
 				actionTimes.Add ("CollectHappiness", 0.1f);
 				actionTimes.Add ("DeliverHappiness", 0.1f);
+				actionTimes.Add ("ConsumeHappiness", 1f);
 
 				actionTimes.Add ("ConsumeMilkshake", 1);
 				actionTimes.Add ("HealElder", 5);

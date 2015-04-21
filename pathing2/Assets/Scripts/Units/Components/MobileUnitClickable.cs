@@ -11,6 +11,12 @@ namespace Units {
 			
 		public bool MoveOnDrag { get { return true; } }
 
+		bool canDrag = true;
+		public bool CanDrag {
+			get { return canDrag; }
+			set { canDrag = value; }
+		}
+
 		Vector3 screenPoint;
 		Vector3 offset;
 
@@ -25,20 +31,21 @@ namespace Units {
 		}
 
 		public override void OnClick (ClickSettings clickSettings) {
+			if (!CanSelect) return;
 			if (clickSettings.left) {
 				SelectionManager.Select (this);
 			}
 		}
 
 		public void OnDragEnter (DragSettings dragSettings) {
-			if (dragSettings.WasClicked) {
+			if (CanDrag && dragSettings.WasClicked) {
 				PathManager.Instance.SelectedPath = MobileUnit.Path;
 				MobileTransform.StopMovingOnPath ();
 			}
 		}
 
 		public void OnDrag (DragSettings dragSettings) {
-			if (dragSettings.WasClicked) {
+			if (CanDrag && dragSettings.WasClicked) {
 				Vector3 target = MouseController.MousePositionWorld;
 				target.y = 0.5f;
 				Unit.Position = target;
@@ -46,7 +53,7 @@ namespace Units {
 		}
 
 		public void OnDragExit (DragSettings dragSettings) {
-			if (dragSettings.WasClicked) {
+			if (CanDrag && dragSettings.WasClicked) {
 				PathManager.Instance.SelectedPath = null;
 				UnitClickable collidingUnit = Colliding ().GetScript<UnitClickable> ();
 				if (collidingUnit != null) {

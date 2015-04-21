@@ -37,6 +37,13 @@ namespace GameInventory {
 			return Get<T> ().Add (items);
 		}
 
+		public void AddItems<T> (int amount) where T : ItemHolder {
+			T holder = Get<T> ();
+			for (int i = 0; i < amount; i ++) {
+				holder.Add ();
+			}
+		}
+
 		public List<Item> RemoveItem<T> () where T : ItemHolder {
 			return Get<T> ().Remove ();
 		}

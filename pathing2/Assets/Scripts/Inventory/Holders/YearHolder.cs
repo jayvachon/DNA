@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 namespace GameInventory {
 	
-	public delegate void YearHolderFull ();
-
 	public class YearHolder : ItemHolder<YearItem> {
 
 		public override string Name {

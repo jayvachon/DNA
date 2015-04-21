@@ -10,6 +10,7 @@ namespace GameActions {
 
 		bool performing = false;
 		protected bool autoRepeat = false;
+		bool interrupt = false;
 
 		protected float duration;
 		public float Duration {
@@ -51,14 +52,18 @@ namespace GameActions {
 				OnEnd ();
 			}
 			if (autoRepeat) {
-				Start ();
+				if (interrupt) {
+					interrupt = false;
+				} else {
+					Start ();
+				}
 			}
 		}
 
 		public virtual void OnEnd () {}
 
 		public void Stop () {
-			autoRepeat = false;
+			interrupt = true;
 		}
 	}
 }

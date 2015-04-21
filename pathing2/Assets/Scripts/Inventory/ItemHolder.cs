@@ -7,15 +7,18 @@ using System.Collections.Generic;
 namespace GameInventory {
 
 	public delegate void HolderUpdated ();
-	public delegate void HolderFull ();	// no listeners (yet?)
+	public delegate void HolderFilled ();
+	public delegate void HolderEmptied ();
 
 	[System.Serializable]
 	public abstract class ItemHolder : System.Object, INameable {
 		
 		public abstract HolderUpdated HolderUpdated { get; set; }
-		public abstract HolderFull HolderFull { get; set; }
+		public abstract HolderFilled HolderFilled { get; set; }
+		public abstract HolderEmptied HolderEmptied { get; set; }
 
 		public abstract string Name { get; }
+		public abstract ItemHolderDisplaySettings DisplaySettings { get; set; }
 		public abstract Inventory Inventory { get; set; }
 
 		protected List<Item> items;
@@ -57,10 +60,17 @@ namespace GameInventory {
 	public class ItemHolder<T> : ItemHolder where T : Item {
 		
 		public override HolderUpdated HolderUpdated { get; set; }
-		public override HolderFull HolderFull { get; set; }
+		public override HolderFilled HolderFilled { get; set; }
+		public override HolderEmptied HolderEmptied { get; set; }
 
 		public override string Name {
 			get { return ""; }
+		}
+
+		ItemHolderDisplaySettings displaySettings = new ItemHolderDisplaySettings (false, true);
+		public override ItemHolderDisplaySettings DisplaySettings {
+			get { return displaySettings; }
+			set { displaySettings = value; }
 		}
 
 		public override Inventory Inventory { get; set; }
@@ -134,7 +144,7 @@ namespace GameInventory {
 				newItems.RemoveAt (0);
 			}
 			NotifyHolderUpdated ();
-			if (Full) NotifyHolderFull ();
+			if (Full) NotifyHolderFilled ();
 			if (newItems.Count > 0) {
 
 				// return items that couldn't be added
@@ -215,12 +225,19 @@ namespace GameInventory {
 		void NotifyHolderUpdated () {
 			if (HolderUpdated != null) {
 				HolderUpdated ();
-			}	
+			}
+			if (Empty) NotifyHolderEmptied ();
 		}
 
-		void NotifyHolderFull () {
-			if (HolderFull != null) {
-				HolderFull ();
+		void NotifyHolderFilled () {
+			if (HolderFilled != null) {
+				HolderFilled ();
+			}
+		}
+
+		void NotifyHolderEmptied () {
+			if (HolderEmptied != null) {
+				HolderEmptied ();
 			}
 		}
 

@@ -115,10 +115,15 @@ public class UnitInfoBox : MBRefs {
 
 		bool activateInventory = false;
 		foreach (ItemHolder holder in itemHolders) {
-			if (!(holder is ElderHolder) && holder.Count > 0) {
+			if (holder is ElderHolder) continue;
+			if (holder.Count > 0 || holder.DisplaySettings.ShowWhenEmpty) {
 				CreateHolder (holder);
 				activateInventory = true;
 			}
+			/*if (!(holder is ElderHolder) && holder.Count > 0) {
+				CreateHolder (holder);
+				activateInventory = true;
+			}*/
 		}
 
 		if (activateInventory)
@@ -129,7 +134,9 @@ public class UnitInfoBox : MBRefs {
 		Transform t = ObjectCreator.Instance.Create<ItemHolderContainerUI> ();
 		t.SetParent (inventoryGroup.transform);
 		t.Reset ();
-		t.GetScript<ItemHolderContainerUI> ().Text = string.Format ("{0}: {1}/{2}", holder.Name, holder.Count, holder.Capacity);
+		t.GetScript<ItemHolderContainerUI> ().Text = holder.DisplaySettings.ShowCapacity 
+			? string.Format ("{0}: {1}/{2}", holder.Name, holder.Count, holder.Capacity)
+			: string.Format ("{0}: {1}", holder.Name, holder.Count);
 		holders.Add (t.gameObject);
 	}
 

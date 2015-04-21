@@ -57,6 +57,7 @@ namespace Units {
 				case "GenerateJacuzzi": 		newUnit = "Jacuzzi"; break;
 			}
 			name = string.Format ("{0} to Be", newUnit);
+			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 			unitInfoContent.Refresh ();
 		}
 

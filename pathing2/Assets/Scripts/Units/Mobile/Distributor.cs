@@ -12,7 +12,7 @@ namespace Units {
 	public class Distributor : MobileUnit {
 
 		public override string Name { 
-			get { return "Distributor"; }
+			get { return "Worker"; }
 		}
 
 		//RetirementTimer retirementTimer = new RetirementTimer ();
@@ -60,8 +60,11 @@ namespace Units {
 		}
 
 		void OnRetirement () {
-			CreateElder ();
-			DestroySelf ();			
+			ChangeUnit<Distributor, Elder> ();
+		}
+
+		protected override void OnChangeUnit<U> (U u) {
+			Path.Active = false;
 		}
 
 		public override void OnPoolCreate () {
@@ -70,19 +73,6 @@ namespace Units {
 			RetirementTimer.BeginAging (OnAge, OnRetirement);
 			Path.Active = true;
 			UnitInfoContent.Refresh ();
-		}
-
-		void CreateElder () {
-			Elder elder = ObjectCreator.Instance.Create<Elder> ().GetScript<Elder> ();
-			elder.Position = MobileTransform.Position;
-			if (Selected) {
-				SelectionManager.Select (elder.UnitClickable);
-			}
-		}
-
-		void DestroySelf () {
-			Path.Active = false;
-			ObjectCreator.Instance.Destroy<Distributor> (transform);
 		}
 	}
 }

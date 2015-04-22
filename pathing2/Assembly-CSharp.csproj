@@ -162,6 +162,7 @@
      <Compile Include="Assets\Scripts\Units\Managers\PlotsCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
+     <Compile Include="Assets\Scripts\Units\Mobile\Corpse.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />

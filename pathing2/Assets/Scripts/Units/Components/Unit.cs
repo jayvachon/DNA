@@ -73,6 +73,18 @@ namespace Units {
 			UnitInfoBox.Instance.Close ();
 		}
 
+		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {
+			U to = ObjectCreator.Instance.Create<U> ().GetScript<U> ();
+			to.Position = Position;
+			if (Selected) {
+				SelectionManager.Select (to.UnitClickable);
+			}
+			OnChangeUnit (to);
+			ObjectCreator.Instance.Destroy<T> (transform);
+		}
+
+		protected virtual void OnChangeUnit<U> (U u) where U : Unit {}
+
 		public virtual void OnPoolDestroy () {
 			if (Selected) {
 				SelectionManager.Unselect ();

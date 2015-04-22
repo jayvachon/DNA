@@ -16,13 +16,13 @@ namespace Units {
 		}
 
 		OccupyBed occupyBed;
+		bool dead = false;
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (new YearHolder (500, 65));
 			Inventory.Add (new HealthHolder (100, 100));
-			Inventory.Get<YearHolder> ().HolderEmptied += OnDeliverYears;
 			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
 
 			PerformableActions = new PerformableActions (this);
@@ -30,7 +30,6 @@ namespace Units {
 			PerformableActions.Add ("OccupyBed", occupyBed);
 			PerformableActions.Add ("ConsumeHealth", new ConsumeHealth (healthManager));
 			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> (TimerValues.Retirement / 65f));
-			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> (0));
 		}
 
 		void Start () {
@@ -38,11 +37,11 @@ namespace Units {
 		}
 		
 		public override void OnPoolCreate () {
+			Inventory.Get<YearHolder> ().Clear ();
 			Inventory.AddItems<YearHolder> (65);
 			Inventory.AddItems<HealthHolder> (100);
 			PerformableActions.Start ("ConsumeHealth");
-			PerformableActions.Start ("GenerateYear");
-			PerformableActions.Disable ("DeliverYear");
+			dead = false;
 		}
 
 		public override void OnRelease () {
@@ -57,15 +56,17 @@ namespace Units {
 		}
 
 		void OnDie () {
-			PerformableActions.Stop ("GenerateYear");
+			if (dead) return; // TODO: this is a problem w/ the HolderEmptied callback
+			dead = true;
 			PerformableActions.Stop ("ConsumeHealth");
-			PerformableActions.Disable ("OccupyBed");
-			PerformableActions.Enable ("DeliverYear");
-			occupyBed.Remove ();
+			occupyBed.Remove (); // TODO: Transfer occuppied bed to corpse
+			// maybe this ^ is an opportunity to measure respect for elders/spirits: when an elder dies, does 
+			// the player immediately deliver its remains to the giving tree, or let them sit in a bed?
+			ChangeUnit<Elder, Corpse> ();
 		}
 
-		void OnDeliverYears () {
-			ObjectCreator.Instance.Destroy<Elder> (transform);
+		protected override void OnChangeUnit<Corpse> (Corpse corpse) {
+			corpse.Inventory.Transfer<YearHolder> (Inventory);
 		}
 	}
 }

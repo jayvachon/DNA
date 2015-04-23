@@ -86,6 +86,8 @@
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
      <Compile Include="Assets\Scripts\Debugging\ActionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
+     <Compile Include="Assets\Scripts\Environment\Emissions.cs" />
+     <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ReleaseEvent.cs" />
@@ -128,6 +130,7 @@
      <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\YearItem.cs" />
+     <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />

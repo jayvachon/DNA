@@ -9,7 +9,5 @@ namespace GameActions {
 		public override System.Type RequiredPair {
 			get { return null; }
 		}
-
-		public CollectHappiness (float duration) : base (duration) {}
 	}
 }

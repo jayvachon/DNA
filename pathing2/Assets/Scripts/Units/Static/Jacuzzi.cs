@@ -22,7 +22,7 @@ namespace Units {
 			AcceptableActions.Add ("CollectHappiness", new AcceptCollectItem<HappinessHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateHappiness", new GenerateItem<HappinessHolder> (1));
+			PerformableActions.Add ("GenerateHappiness", new GenerateItem<HappinessHolder> ());//(1));
 		}
 	}
 }

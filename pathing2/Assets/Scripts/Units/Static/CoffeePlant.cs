@@ -22,8 +22,8 @@ namespace Units {
 			AcceptableActions.Add ("CollectCoffee", new AcceptCollectItem<CoffeeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateCoffee", new GenerateItem<CoffeeHolder> (3));
-			PerformableActions.Add ("ConsumeCoffee", new ConsumeItem<CoffeeHolder> (10));
+			PerformableActions.Add ("GenerateCoffee", new GenerateItem<CoffeeHolder> ());
+			PerformableActions.Add ("ConsumeCoffee", new ConsumeItem<CoffeeHolder> ());
 		}
 	}
 }

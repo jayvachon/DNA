@@ -5,25 +5,52 @@ public delegate void EndRising ();
 
 public class Sea : MBRefs {
 
-	public EndRising endRising;
-
-	float timescale = 600f; 
-	float rate = 1;
+	static Sea instance = null;
+	static public Sea Instance {
+		get {
+			if (instance == null) {
+				instance = Object.FindObjectOfType (typeof (Sea)) as Sea;
+				if (instance == null) {
+					GameObject go = new GameObject ("Sea");
+					DontDestroyOnLoad (go);
+					instance = go.AddComponent<Sea>();
+				}
+			}
+			return instance;
+		}
+	}
 
 	const float minLevel = -3.5f;
 	const float maxLevel = 0.1f;
+	public EndRising endRising;
+	float timescale = 600f; 
+
+	float rate = 0;
+	public float Rate {
+		get { return rate; }
+		set { rate = value; }
+	}
 
 	float level;
 	float Level {
 		get { return level; }
 		set {
-			level = Mathf.Lerp (minLevel, maxLevel, value);
+			level = value;
 			MyTransform.SetLocalPositionY (level);
 		}
 	}
 
+	float levelPercent = 0;
+	public float LevelPercent {
+		get { return levelPercent; }
+		set {
+			levelPercent = value;
+			Level = Mathf.Lerp (minLevel, maxLevel, value);
+		}
+	}
+
 	public void BeginRising () {
-		Level = 0;
+		LevelPercent = 0;
 		StartCoroutine (CoRise ());
 	}
 
@@ -34,21 +61,10 @@ public class Sea : MBRefs {
 	
 		while (eTime < time) {
 			eTime += Time.deltaTime * rate;
-			Level = Mathf.Lerp (0f, 1f, eTime / time);
+			LevelPercent = Mathf.Lerp (0f, 1f, eTime / time);
 			yield return null;
 		}
 
 		if (endRising != null) endRising ();
-	}
-
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.Q)) {
-			rate += 0.1f;
-			Debug.Log (rate);
-		}
-		if (Input.GetKeyDown (KeyCode.W)) {
-			rate -= 0.1f;
-			Debug.Log (rate);
-		}
 	}
 }

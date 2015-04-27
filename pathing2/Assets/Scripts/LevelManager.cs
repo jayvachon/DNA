@@ -3,15 +3,14 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
-	public Sea sea;
-
 	void Awake () {
 		LevelStart ();
-		sea.endRising += OnEndRising;
+		Sea.Instance.endRising += OnEndRising;
 	}
 
 	void LevelStart () {
-		sea.BeginRising ();
+		EmissionsManager.Instance.Reset ();
+		Sea.Instance.BeginRising ();
 	}
 
 	void OnEndRising () {

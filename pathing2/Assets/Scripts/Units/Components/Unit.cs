@@ -85,12 +85,15 @@ namespace Units {
 
 		protected virtual void OnChangeUnit<U> (U u) where U : Unit {}
 
+		public virtual void OnPoolCreate () {
+			EmissionsManager.Instance.AddUnit (this);
+		}
+
 		public virtual void OnPoolDestroy () {
+			EmissionsManager.Instance.RemoveUnit (this);
 			if (Selected) {
 				SelectionManager.Unselect ();
 			}
 		}
-
-		public virtual void OnPoolCreate () {}
 	}
 }

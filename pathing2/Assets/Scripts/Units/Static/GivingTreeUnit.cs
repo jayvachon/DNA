@@ -28,7 +28,7 @@ namespace Units {
 			Vector3 createPosition = StaticTransform.Position;
 			createPosition.x -= 2;
 			
-			PerformableActions.Add ("GenerateDistributor", new GenerateUnit<Distributor, CoffeeHolder> (5, createPosition), "Birth Distributor");
+			PerformableActions.Add ("GenerateLaborer", new GenerateUnit<Distributor, CoffeeHolder> (5, createPosition), "Birth Laborer");
 		}
 
 		void OnYearsCollected () {

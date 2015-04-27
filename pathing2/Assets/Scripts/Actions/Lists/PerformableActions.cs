@@ -25,6 +25,7 @@ namespace GameActions {
 
 		public void Add (string id, PerformerAction action, string inputName="") {
 			action.Performer = performer;
+			action.Duration = TimerValues.GetActionTime (id);
 			AddAction (id, action);
 			if (inputName != "") {
 				inputs.Add (id, inputName);
@@ -94,9 +95,7 @@ namespace GameActions {
 
 			foreach (IActionAcceptor acceptor in acceptors) {
 				
-				//IActionAcceptor acceptor 	= point.StaticUnit as IActionAcceptor;
 				List<string> actions = GetAcceptedActions (acceptor);
-				
 				foreach (string action in actions) {
 					acceptedActions.Add (
 						new KeyValuePair<string, IActionAcceptor> (action, acceptor)

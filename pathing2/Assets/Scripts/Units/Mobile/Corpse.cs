@@ -10,6 +10,8 @@ namespace Units {
 
 		public override string Name { get { return "Remains"; } }
 
+		OccupyBed occupyBed = new OccupyBed ();
+
 		void Awake () {
 
 			Inventory = new Inventory (this);
@@ -17,7 +19,8 @@ namespace Units {
 			Inventory.Get<YearHolder> ().HolderEmptied += OnDeliverYears;
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> (0));
+			PerformableActions.Add ("OccupyBed", occupyBed);
+			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> ());
 		}
 
 		void Start () {

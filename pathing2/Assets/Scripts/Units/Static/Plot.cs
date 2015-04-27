@@ -24,7 +24,7 @@ namespace Units {
 			//AcceptableActions.Add ("DeliverMilk", new AcceptDeliverItem<MilkHolder> ());
 			//AcceptableActions.Disable ("DeliverMilk");
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
-			AcceptableActions.Disable ("DeliverMilkshake");
+			// AcceptableActions.Disable ("DeliverMilkshake"); // TODO: "Deactive"
 		}
 
 		void Start () {
@@ -42,7 +42,7 @@ namespace Units {
 		}
 
 		void OnStartAction (string id) {
-			AcceptableActions.Enable ("DeliverMilkshake");
+			// AcceptableActions.Enable ("DeliverMilkshake"); // TODO: "Activate"
 			PerformableActions.DisableAll ();
 			string newUnit = "";
 			switch (id) {

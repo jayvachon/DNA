@@ -86,7 +86,7 @@
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
      <Compile Include="Assets\Scripts\Debugging\ActionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
-     <Compile Include="Assets\Scripts\Environment\Emissions.cs" />
+     <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickEvent.cs" />
@@ -150,6 +150,7 @@
      <Compile Include="Assets\Scripts\UI\ActionButton.cs" />
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
+     <Compile Include="Assets\Scripts\UI\HUD\SeaLevelMeter.cs" />
      <Compile Include="Assets\Scripts\UI\ItemHolderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />

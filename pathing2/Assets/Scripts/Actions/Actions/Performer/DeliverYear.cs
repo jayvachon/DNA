@@ -14,7 +14,5 @@ namespace GameActions {
 		public override bool CanPerform {
 			get { return Inventory.Get<HealthHolder> ().Empty; }
 		}
-
-		public DeliverYear (float duration) : base (duration) {}
 	}
 }

@@ -16,18 +16,18 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new ElderHolder (1, 0));
-			Inventory.Add (new MilkshakeHolder (20, 5));
-			Inventory.inventoryUpdated += OnInventoryUpdated;
+			// Inventory.Add (new ElderHolder (1, 0));
+			// Inventory.Add (new MilkshakeHolder (20, 5));
+			// Inventory.inventoryUpdated += OnInventoryUpdated;
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (false, true)));
-			AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> (new ElderCondition (true, false)));
-			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
+			// AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (false, true)));
+			// AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> (new ElderCondition (true, false)));
+			// AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("ConsumeMilkshake", new ConsumeItem<MilkshakeHolder> (1, false));
-			PerformableActions.Add ("HealElder", new HealElder (5, OnElderHealed));
+			// PerformableActions.Add ("ConsumeMilkshake", new ConsumeItem<MilkshakeHolder> (-1f, false));
+			// PerformableActions.Add ("HealElder", new HealElder (OnElderHealed));
 		}
 
 		bool IsSick (Item item) {

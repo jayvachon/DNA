@@ -12,7 +12,7 @@ public class HealthManager2 {
 
 	float degradeRate = 0.1f;
 	public float DegradeRate {
-		get { return degradeRate; }
+		get { return degradeRate * TimerValues.year; }
 	}
 
 	public void SetDegradeRate (float quality) {

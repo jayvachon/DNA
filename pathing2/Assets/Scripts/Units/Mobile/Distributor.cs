@@ -8,11 +8,11 @@ using GameInput;
 
 namespace Units {
 
-	// TODO: Rename to Worker
+	// TODO: Rename to Laborer
 	public class Distributor : MobileUnit {
 
 		public override string Name { 
-			get { return "Worker"; }
+			get { return "Laborer"; }
 		}
 
 		//RetirementTimer retirementTimer = new RetirementTimer ();
@@ -32,25 +32,16 @@ namespace Units {
 			Inventory.Add (new YearHolder (65, 0));
 			Inventory.Add (new HappinessHolder (100, 100));
 			Inventory.Add (new CoffeeHolder (5, 0));
-			// Inventory.Add (new MilkHolder (5, 0));
-			// Inventory.Add (new IceCreamHolder (3, 0));
 			Inventory.Add (new MilkshakeHolder (3, 0));
-			// Inventory.Add (new ElderHolder (2, 0));
 
 			PerformableActions = new PerformableActions (this);
-			// PerformableActions.Add ("CollectMilk", new CollectItem<MilkHolder> (TimerValues.ActionTimes["CollectMilk"]));
-			// PerformableActions.Add ("DeliverMilk", new DeliverItem<MilkHolder> (TimerValues.ActionTimes["DeliverMilk"]));
-			// PerformableActions.Add ("CollectIceCream", new CollectItem<IceCreamHolder> (TimerValues.ActionTimes["DeliverIceCream"]));
-			// PerformableActions.Add ("DeliverIceCream", new DeliverItem<IceCreamHolder> (TimerValues.ActionTimes["DeliverIceCream"]));
-			PerformableActions.Add ("CollectMilkshake", new CollectItem<MilkshakeHolder> (TimerValues.ActionTimes["CollectMilkshake"]));
-			PerformableActions.Add ("DeliverMilkshake", new DeliverItem<MilkshakeHolder> (TimerValues.ActionTimes["DeliverMilkshake"]));
-			PerformableActions.Add ("CollectCoffee", new CollectItem<CoffeeHolder> (TimerValues.ActionTimes["CollectCoffee"]));
-			PerformableActions.Add ("DeliverCoffee", new DeliverItem<CoffeeHolder> (TimerValues.ActionTimes["DeliverCoffee"]));
-			// PerformableActions.Add ("CollectElder", new CollectItem<ElderHolder> (2));
-			// PerformableActions.Add ("DeliverElder", new DeliverItem<ElderHolder> (2));
-			PerformableActions.Add ("CollectHappiness", new CollectHappiness (TimerValues.ActionTimes["CollectHappiness"]));
-			PerformableActions.Add ("ConsumeHappiness", new ConsumeItem<HappinessHolder> (TimerValues.ActionTimes["ConsumeHappiness"], true, true, false));
-			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> (RetirementTimer.RetirementAge / 65f));
+			PerformableActions.Add ("CollectMilkshake", new CollectItem<MilkshakeHolder> ());
+			PerformableActions.Add ("DeliverMilkshake", new DeliverItem<MilkshakeHolder> ());
+			PerformableActions.Add ("CollectCoffee", new CollectItem<CoffeeHolder> ());
+			PerformableActions.Add ("DeliverCoffee", new DeliverItem<CoffeeHolder> ());
+			PerformableActions.Add ("CollectHappiness", new CollectHappiness ());
+			PerformableActions.Add ("ConsumeHappiness", new ConsumeItem<HappinessHolder> (-1, true, true, false));
+			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> ());
 			PerformableActions.DisableAll ();
 		}
 
@@ -65,11 +56,13 @@ namespace Units {
 
 		protected override void OnChangeUnit<U> (U u) {
 			Path.Active = false;
+			Elder elder = u as Elder;
+			elder.AverageHappiness = Inventory.Get<HappinessHolder> ().Average;
 		}
 
 		public override void OnPoolCreate () {
 			Inventory.Empty ();
-			Inventory.Get<HappinessHolder> ().AddInitial (100);
+			Inventory.Get<HappinessHolder> ().Initialize (100);
 			RetirementTimer.BeginAging (OnAge, OnRetirement);
 			Path.Active = true;
 			UnitInfoContent.Refresh ();

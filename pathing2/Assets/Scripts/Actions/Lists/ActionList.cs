@@ -16,6 +16,18 @@ namespace GameActions {
 			protected set { actions = value; }
 		}
 
+		////
+		// TODO: Add an Active property to Actions. ActionPerformers/Acceptors can set an
+		// action's active state to include/execlude it in the list of enableable actions
+		// Basically - enabling/disabling should all be handled internally by the action system,
+		// but Active/Inactive should be set externally
+		Dictionary<string, T> activeActions = new Dictionary<string, T> ();
+		public Dictionary<string, T> ActiveActions {
+			get { return activeActions; }
+			protected set { activeActions = value; }
+		}
+		////
+
 		Dictionary<string, T> enabledActions = new Dictionary<string, T> ();
 		public Dictionary<string, T> EnabledActions {
 			get { return enabledActions; }

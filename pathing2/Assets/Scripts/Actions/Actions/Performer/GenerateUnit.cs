@@ -14,7 +14,7 @@ namespace GameActions {
 		Vector3 createPosition;
 		UnitGenerated unitGenerated;
 
-		public GenerateUnit (int cost, Vector3 createPosition, UnitGenerated unitGenerated=null) : base (0, false, false) {
+		public GenerateUnit (int cost, Vector3 createPosition, UnitGenerated unitGenerated=null) : base (-1, false, false) {
 			this.cost = cost;
 			this.createPosition = createPosition;
 			this.unitGenerated = unitGenerated;

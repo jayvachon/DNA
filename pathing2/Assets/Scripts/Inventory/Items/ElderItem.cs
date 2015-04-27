@@ -5,6 +5,7 @@ using Units;
 
 namespace GameInventory {
 
+	// TODO: Delete this item
 	public class ElderItem : Item, IActionPerformer {
 
 		class Settings {

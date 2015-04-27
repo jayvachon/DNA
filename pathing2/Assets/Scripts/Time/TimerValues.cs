@@ -4,39 +4,63 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class TimerValues {
-	static readonly float workRetirementRatio = 0.541f;
+
 	#if FAST_FORWARD
-	public static float Retirement { get { return 5; } }
+	public static float year = 1; // # of seconds in 1 year
 	#else
-	public static float Retirement { get { return 180; } }
+	public static float year = 3;
 	#endif
+
+	static readonly float workRetirementRatio = 0.541f;
+	public static float Retirement { get { return 65f * year; } }
 	public static float Death { get { return Retirement - Retirement * workRetirementRatio; } }
 
-	// TODO: have units use these times instead of hardcoded values
 	static Dictionary<string, float> actionTimes;
 	public static Dictionary<string, float> ActionTimes {
 		get {
 			if (actionTimes == null) {
 				actionTimes = new Dictionary<string, float> ();
 
-				// actionTimes.Add ("CollectIceCream", 0.5f);
-				// actionTimes.Add ("DeliverIceCream", 0.5f);
-				// actionTimes.Add ("CollectMilk", 0.5f);
-				// actionTimes.Add ("DeliverMilk", 0.5f);
-				actionTimes.Add ("CollectMilkshake", 0.5f);
-				actionTimes.Add ("DeliverMilkshake", 0.5f);
-				actionTimes.Add ("CollectCoffee", 0.5f);
-				actionTimes.Add ("DeliverCoffee", 0.5f);
-				// actionTimes.Add ("CollectElder", 1f);
-				// actionTimes.Add ("DeliverElder", 1f);
-				actionTimes.Add ("CollectHappiness", 0.1f);
-				actionTimes.Add ("DeliverHappiness", 0.1f);
-				actionTimes.Add ("ConsumeHappiness", 1f);
+				// GenerateUnits
+				actionTimes.Add ("GenerateClinic", 0f);
+				actionTimes.Add ("GenerateCoffeePlant", 0f);
+				actionTimes.Add ("GenerateMilkshakePool", 0f);
+				actionTimes.Add ("GenerateJacuzzi", 0f);
+				actionTimes.Add ("GenerateLaborer", 0f);
 
-				actionTimes.Add ("ConsumeMilkshake", 1);
-				actionTimes.Add ("HealElder", 5);
+				// GenerateItems
+				actionTimes.Add ("GenerateYear", 1f);
+				actionTimes.Add ("GenerateCoffee", 3f);
+
+				// ConsumeItems
+				actionTimes.Add ("ConsumeHappiness", 0.5f);
+				actionTimes.Add ("ConsumeMilkshake", 5f);
+				actionTimes.Add ("ConsumeCoffee", 10f);
+
+				// CollectItems
+				actionTimes.Add ("CollectMilkshake", 0.5f);
+				actionTimes.Add ("CollectCoffee", 0.5f);
+				actionTimes.Add ("CollectHappiness", 0.5f);
+
+				// DeliverItems
+				actionTimes.Add ("DeliverMilkshake", 0.5f);
+				actionTimes.Add ("DeliverCoffee", 0.5f);
+				actionTimes.Add ("DeliverHappiness", 0.5f);
+				actionTimes.Add ("DeliverYear", 0f);
+
+				// Miscellaneous
+				actionTimes.Add ("HealElder", 5f);
+				actionTimes.Add ("OccupyBed", 0f);
 			}
 			return actionTimes;
 		}
+	}
+
+	public static float GetActionTime (string id) {
+		float time;
+		if (ActionTimes.TryGetValue (id, out time)) {
+			return time * year;
+		}
+		return -1f;
 	}
 }

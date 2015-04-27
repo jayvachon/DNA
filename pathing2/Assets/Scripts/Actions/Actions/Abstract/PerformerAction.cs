@@ -8,6 +8,7 @@ namespace GameActions {
 		public virtual System.Type RequiredPair { get { return null; } }
 		public virtual bool CanPerform { get { return true; } }
 
+		readonly bool autoStart;
 		bool performing = false;
 		protected bool autoRepeat = false;
 		bool interrupt = false;
@@ -15,18 +16,33 @@ namespace GameActions {
 		protected float duration;
 		public float Duration {
 			get { return duration; }
-			set { duration = value; }
+			set { 
+				// This is a hack - the constructor doesn't auto start if duration is the default value of -1
+				// so, when the duration DOES get set, autos start happens here
+				// a better way of doing this would be to have classes that inherit from PerformerAction set their name
+				// in their constructors so that PerformerAction can access TimeValues.ActionTimes
+				float prevValue = duration;
+				if (value != -1) {
+					duration = value;
+					if (prevValue == -1 && autoStart) {
+						Start ();
+					}
+				}
+			}
 		}
 
 		public IActionPerformer Performer { get; set; }
 		protected AcceptCondition AcceptCondition { get; private set; }
 		protected PerformCondition PerformCondition { get; private set; }
 
-		public PerformerAction (float duration, bool autoStart=false, bool autoRepeat=false, PerformCondition performCondition=null) {
+		public PerformerAction (float duration=-1, bool autoStart=false, bool autoRepeat=false, PerformCondition performCondition=null) {
 			this.duration = duration;
+			this.autoStart = autoStart;
 			this.autoRepeat = autoRepeat;
 			this.PerformCondition = performCondition;
-			if (autoStart) Start ();
+			if (duration != -1 && autoStart) {
+				Start ();
+			}
 		}
 
 		public void Bind (AcceptCondition acceptCondition) {

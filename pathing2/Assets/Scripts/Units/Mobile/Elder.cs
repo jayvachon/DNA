@@ -15,7 +15,9 @@ namespace Units {
 			get { return healthManager; }
 		}
 
-		OccupyBed occupyBed;
+		public int AverageHappiness { get; set; }
+
+		OccupyBed occupyBed = new OccupyBed ();
 		bool dead = false;
 
 		void Awake () {
@@ -26,10 +28,9 @@ namespace Units {
 			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
 
 			PerformableActions = new PerformableActions (this);
-			occupyBed = new OccupyBed ();
 			PerformableActions.Add ("OccupyBed", occupyBed);
 			PerformableActions.Add ("ConsumeHealth", new ConsumeHealth (healthManager));
-			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> (TimerValues.Retirement / 65f));
+			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> ());
 		}
 
 		void Start () {
@@ -65,8 +66,14 @@ namespace Units {
 			ChangeUnit<Elder, Corpse> ();
 		}
 
-		protected override void OnChangeUnit<Corpse> (Corpse corpse) {
+		protected override void OnChangeUnit<U> (U u) {
+			Corpse corpse = u as Corpse;
 			corpse.Inventory.Transfer<YearHolder> (Inventory);
+			if (occupyBed.Occupying) {
+				Clinic clinic = occupyBed.Clinic;
+				occupyBed.Remove ();
+				corpse.OnBindActionable (clinic);
+			}
 		}
 	}
 }

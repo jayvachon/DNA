@@ -40,13 +40,14 @@ namespace GameActions {
 		public override void OnEnd () {
 			bedItem = new BedItem (Performer);
 			AcceptorHolder.Add (bedItem);
-			Elder.HealthManager.SetDegradeRate (AcceptorHolder.Quality);
+			if (Elder != null) Elder.HealthManager.SetDegradeRate (AcceptorHolder.Quality);
 			occupying = true;
 		}
 
 		public void Remove () {
 			if (occupying) {
 				AcceptorHolder.Remove<BedItem> (bedItem);
+				Debug.Log (AcceptorHolder.Inventory.Get<BedHolder> ().Count);
 				occupying = false;
 			}
 		}

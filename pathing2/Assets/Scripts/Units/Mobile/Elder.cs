@@ -49,8 +49,6 @@ namespace Units {
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-				// TODO: Check if elder was dropped on giving tree
-				// if it was, check if it's delivering years and if so set UnitClickable CanDrag = false and CanSelect = false
 			} else {
 				occupyBed.Remove ();
 			}
@@ -60,9 +58,6 @@ namespace Units {
 			if (dead) return; // TODO: this is a problem w/ the HolderEmptied callback
 			dead = true;
 			PerformableActions.Stop ("ConsumeHealth");
-			occupyBed.Remove (); // TODO: Transfer occuppied bed to corpse
-			// maybe this ^ is an opportunity to measure respect for elders/spirits: when an elder dies, does 
-			// the player immediately deliver its remains to the giving tree, or let them sit in a bed?
 			ChangeUnit<Elder, Corpse> ();
 		}
 

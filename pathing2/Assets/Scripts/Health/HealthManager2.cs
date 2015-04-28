@@ -10,7 +10,7 @@ public class HealthManager2 {
 	float minRate = 1f;
 	float maxRate = 10f;
 
-	float degradeRate = 0.1f;
+	float degradeRate = 1f;
 	public float DegradeRate {
 		get { return degradeRate * TimerValues.year; }
 	}

@@ -29,6 +29,8 @@ namespace Units {
 			createPosition.x -= 2;
 			
 			PerformableActions.Add ("GenerateLaborer", new GenerateUnit<Distributor, CoffeeHolder> (5, createPosition), "Birth Laborer");
+			PerformableActions.Add ("GenerateElder", new GenerateUnit<Elder, CoffeeHolder> (0, createPosition), "Birth Elder (temp)");
+			PerformableActions.Add ("GenerateCorpse", new GenerateUnit<Corpse, CoffeeHolder> (0, createPosition), "Birth Corpse (temp)");
 		}
 
 		void OnYearsCollected () {

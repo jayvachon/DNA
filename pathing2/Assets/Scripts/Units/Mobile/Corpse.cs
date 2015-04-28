@@ -27,12 +27,23 @@ namespace Units {
 			Path.Active = false;
 		}
 
+		public override void OnPoolCreate () {
+			Inventory.AddItems<YearHolder> (100); // temp
+			MobileClickable.CanDrag = true;
+			MobileClickable.CanSelect = true;
+		}
+
 		public override void OnRelease () {
+			PerformableActions.Enable ("DeliverYear"); // TODO: shouldn't have to do this here -> straighten out how enabling/disabling works w/ actions!
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-				// TODO: Check if corpse was dropped on giving tree
-				// if it was, check if it's delivering years and if so set UnitClickable CanDrag = false and CanSelect = false
+				if (clickable is GivingTreeUnit) {
+					MobileClickable.CanDrag = false;
+					MobileClickable.CanSelect = false;
+				}
+			} else {
+				occupyBed.Remove ();
 			}
 		}
 

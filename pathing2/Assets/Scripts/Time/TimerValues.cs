@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class TimerValues {
 
 	#if FAST_FORWARD
-	public static float year = 1; // # of seconds in 1 year
+	public static float year = 0.25f; // # of seconds in 1 year
 	#else
 	public static float year = 3;
 	#endif

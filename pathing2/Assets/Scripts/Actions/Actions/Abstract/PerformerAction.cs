@@ -55,6 +55,10 @@ namespace GameActions {
 		}
 
 		public virtual void Start () {
+			if (Duration == 0) {
+				End ();
+				return;
+			}
 			if (performing) return;
 			performing = true;
 			ActionHandler.instance.StartAction (this);

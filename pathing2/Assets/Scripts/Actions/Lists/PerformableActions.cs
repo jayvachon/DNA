@@ -156,6 +156,7 @@ namespace GameActions {
 		 */
 
 		public override void Print () {
+			Debug.Log ("PERFORMABLE");
 			Debug.Log ("All actions:");
 			base.Print ();
 			Debug.Log ("Active actions:");

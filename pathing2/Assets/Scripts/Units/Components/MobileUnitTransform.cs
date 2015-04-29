@@ -14,7 +14,7 @@ namespace Units {
 			base.Awake ();
 			Path = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
 			Path.MyTransform.SetParent (MobileUnit.transform);
-			Path.Init (this, new PathSettings (5, 2, false));
+			Path.Init (this, new PathSettings (3, 2, false));
 		}
 
 		public override void OnSelect () {

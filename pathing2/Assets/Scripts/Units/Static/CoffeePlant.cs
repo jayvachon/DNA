@@ -16,7 +16,8 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new CoffeeHolder (5, 0));
+			Inventory.Add (new CoffeeHolder (25, 0));
+			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("CollectCoffee", new AcceptCollectItem<CoffeeHolder> ());

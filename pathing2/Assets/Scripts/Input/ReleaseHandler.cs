@@ -50,7 +50,7 @@ namespace GameInput {
 
 			// ..."Moused" is what the mouse originally clicked
 			if (Moused != null) {
-				Moused.OnRelease (releaseSettings);
+				if (released != Moused) Moused.OnRelease (releaseSettings);
 			}
 			Events.instance.Raise (new ReleaseEvent (releaseSettings));
 		}

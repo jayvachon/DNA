@@ -25,6 +25,10 @@ namespace GameActions {
 			}
 		}
 
+		float ElderDegradeRate {
+			set { if (Elder != null) Elder.HealthManager.SetDegradeRate (value); }
+		}
+
 		public Clinic Clinic {
 			// TODO: This is a really roundabout/unintuitive way of get the clinic
 			get { return AcceptorHolder.Inventory.holder as Clinic; }
@@ -40,14 +44,14 @@ namespace GameActions {
 		public override void OnEnd () {
 			bedItem = new BedItem (Performer);
 			AcceptorHolder.Add (bedItem);
-			if (Elder != null) Elder.HealthManager.SetDegradeRate (AcceptorHolder.Quality);
+			ElderDegradeRate = AcceptorHolder.Quality;
 			occupying = true;
 		}
 
 		public void Remove () {
 			if (occupying) {
+				ElderDegradeRate = 0;
 				AcceptorHolder.Remove<BedItem> (bedItem);
-				Debug.Log (AcceptorHolder.Inventory.Get<BedHolder> ().Count);
 				occupying = false;
 			}
 		}

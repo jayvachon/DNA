@@ -38,7 +38,7 @@ namespace Units {
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-				if (clickable is GivingTreeUnit) {
+				if (clickable.StaticUnit is GivingTreeUnit) {
 					MobileClickable.CanDrag = false;
 					MobileClickable.CanSelect = false;
 				}

@@ -46,6 +46,7 @@ namespace Units {
 		}
 
 		public override void OnRelease () {
+			PerformableActions.Enable ("OccupyBed");
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);

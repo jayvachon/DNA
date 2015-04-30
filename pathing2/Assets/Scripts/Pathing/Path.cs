@@ -137,7 +137,7 @@ namespace Pathing {
 		public readonly int maxLength;
 		public readonly bool allowLoop;
 
-		public PathSettings (float maxSpeed=5, int maxLength=2, bool allowLoop=false) {
+		public PathSettings (float maxSpeed=2, int maxLength=2, bool allowLoop=false) {
 			this.maxSpeed = maxSpeed;
 			this.maxLength = maxLength;
 			this.allowLoop = allowLoop;

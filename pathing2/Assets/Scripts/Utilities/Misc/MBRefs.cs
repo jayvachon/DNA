@@ -26,7 +26,7 @@ public class MBRefs : MonoBehaviour {
 		}
 	}
 
-	public Vector3 Position {
+	public virtual Vector3 Position {
 		get { return MyTransform.position; }
 		set { MyTransform.position = value; }
 	}
@@ -34,6 +34,11 @@ public class MBRefs : MonoBehaviour {
 	public Vector3 LocalPosition {
 		get { return MyTransform.localPosition; }
 		set { MyTransform.localPosition = value; }
+	}
+
+	public Quaternion LocalRotation {
+		get { return MyTransform.localRotation; }
+		set { MyTransform.localRotation = value; }
 	}
 
 	protected virtual void Awake () {

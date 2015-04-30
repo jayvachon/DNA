@@ -141,6 +141,7 @@
      <Compile Include="Assets\Scripts\Pathing\PathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
+     <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
      <Compile Include="Assets\Scripts\Time\DeathTimer.cs" />
      <Compile Include="Assets\Scripts\Time\Interval.cs" />
      <Compile Include="Assets\Scripts\Time\RetirementTimer.cs" />

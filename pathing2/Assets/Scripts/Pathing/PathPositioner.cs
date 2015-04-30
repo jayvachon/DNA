@@ -99,7 +99,7 @@ namespace Pathing {
 
 			while (eTime < time && moving) {
 				eTime += Time.deltaTime;
-				Pathable.Position = Vector3.Lerp (start, end, eTime / time);
+				Pathable.PathPosition = Vector3.Lerp (start, end, eTime / time);
 				yield return null;
 			}
 

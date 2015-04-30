@@ -15,12 +15,15 @@ namespace Units {
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new YearHolder (500, 0));
-			Inventory.Get<YearHolder> ().HolderEmptied += OnDeliverYears;
+			YearHolder yearHolder = new YearHolder (500, 0);
+			yearHolder.HolderEmptied += OnDeliverYears;
+			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, false);
+			Inventory.Add (yearHolder);
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add ("OccupyBed", occupyBed);
 			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> ());
+			PerformableActions.Add ("ConsumeYear", new ConsumeItem<YearHolder> ());
 		}
 
 		void Start () {

@@ -15,7 +15,9 @@ namespace Units {
 			get { return healthManager; }
 		}
 
-		public int AverageHappiness { get; set; }
+		public int AverageHappiness { 
+			set { Inventory.RemoveItems<HealthHolder> (100 - value); }
+		}
 
 		OccupyBed occupyBed = new OccupyBed ();
 		bool dead = false;
@@ -25,6 +27,7 @@ namespace Units {
 			Inventory = new Inventory (this);
 			Inventory.Add (new YearHolder (500, 65));
 			Inventory.Add (new HealthHolder (100, 100));
+			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
 
 			PerformableActions = new PerformableActions (this);

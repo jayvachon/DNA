@@ -1,4 +1,4 @@
-﻿#undef FAST_FORWARD
+﻿#define FAST_FORWARD
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +36,7 @@ public class TimerValues {
 				actionTimes.Add ("ConsumeHappiness", 1f);
 				actionTimes.Add ("ConsumeMilkshake", 5f);
 				actionTimes.Add ("ConsumeCoffee", 5f);
+				actionTimes.Add ("ConsumeYear", 5f);
 
 				// CollectItems
 				actionTimes.Add ("CollectMilkshake", 0.5f);

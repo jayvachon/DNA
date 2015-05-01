@@ -101,9 +101,8 @@ namespace Pathing {
 
 			while (eTime < time && moving) {
 				eTime += Time.deltaTime;
-				float t = eTime / time;
-				Progress = (Mathf.Cos (t * 180f * Mathf.Deg2Rad) - 1) / -2;
-				Pathable.PathPosition = Vector3.Lerp (start, end, Progress);
+				Progress = eTime / time;
+				Pathable.PathPosition = Vector3.Lerp (start, end, TrigMap.HalfCos01 (Progress));
 				yield return null;
 			}
 

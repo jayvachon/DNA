@@ -5,16 +5,12 @@ using Units;
 
 public class PathRotator : MBRefs {
 
-	// TODO: Path should know its direction
-	// slow down around points to allow for rotation
-
 	public override Vector3 Position {
 		get { return MyTransform.position; }
 		set {
-			if (MobileTransform.localPosition != mobilePosition) {
+			if (MobileTransform.localPosition != Vector3.zero) {
 				MyTransform.position = MobileTransform.position;
-				MobileTransform.localPosition = mobilePosition;
-				Debug.Log (Position);
+				MobileTransform.localPosition = Vector3.zero;
 				prevPosition = value;
 			} else {
 				direction = Vector3.Normalize (prevPosition-value);
@@ -22,6 +18,19 @@ public class PathRotator : MBRefs {
 				prevPosition = value;
 			}
 			// MyTransform.SetLocalEulerAnglesY (PathProgress * 360f);
+			// MobileDistance = PathProgress;
+
+			if (prevProgress > PathProgress) {
+				if (progressOffset == 0)
+					progressOffset = 1;
+				else
+					progressOffset = 0;
+			}
+			prevProgress = PathProgress;
+			float totalProgress = (progressOffset + PathProgress) / 2f;
+			MobileDistance = totalProgress;
+			// MyTransform.SetLocalEulerAnglesY (PathProgress * 360f);	
+			Rotation = totalProgress;	
 			MyTransform.position = value;
 		}
 	}
@@ -55,7 +64,24 @@ public class PathRotator : MBRefs {
 		}
 	}
 
-	Vector3 mobilePosition = new Vector3 (0, 0, 1);
+	float maxDistance = 1f;
+	float MobileDistance {
+		set {
+			float mobileDistance = TrigMap.HalfCos (value);
+			MobileTransform.SetLocalPositionX (mobileDistance * maxDistance);
+		}
+	}
+
+	float Rotation {
+		set {
+			float p = TrigMap.Sin (value);
+			Debug.Log (p * 360f);
+			MyTransform.SetLocalEulerAnglesY (p * 360f);
+		}
+	}
+	
+	float prevProgress = 0f;
+	float progressOffset = 0f;
 	Vector3 direction;
 	Vector3 prevPosition;
 }

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Pathing;
+using Units;
 
 public class PathRotator : MBRefs {
 
@@ -12,12 +14,14 @@ public class PathRotator : MBRefs {
 			if (MobileTransform.localPosition != mobilePosition) {
 				MyTransform.position = MobileTransform.position;
 				MobileTransform.localPosition = mobilePosition;
+				Debug.Log (Position);
 				prevPosition = value;
 			} else {
 				direction = Vector3.Normalize (prevPosition-value);
-				MyTransform.localRotation = Quaternion.LookRotation (direction);
+				// MyTransform.localRotation = Quaternion.LookRotation (direction);
 				prevPosition = value;
 			}
+			// MyTransform.SetLocalEulerAnglesY (PathProgress * 360f);
 			MyTransform.position = value;
 		}
 	}
@@ -29,6 +33,25 @@ public class PathRotator : MBRefs {
 				mobileTransform = MyTransform.GetChild (0);
 			}
 			return mobileTransform;
+		}
+	}
+
+	Path path;
+	Path Path {
+		get {
+			if (path == null) {
+				IPathable pathable = MobileTransform.GetScript<MobileUnitTransform> () as IPathable;
+				path = pathable.Path;
+			}
+			return path;
+		}
+	}
+
+	float pathProgress = 0;
+	float PathProgress {
+		get { 
+			if (Path == null) return 0;
+			return Path.pathPositioner.Progress; 
 		}
 	}
 

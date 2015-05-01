@@ -15,6 +15,8 @@ namespace Pathing {
 			get { return speed; }
 			set { speed = value; }
 		}
+
+		public float Progress { get; private set; }
 		
 		List<Vector3> Positions {
 			get { return Points.Positions; }
@@ -99,7 +101,9 @@ namespace Pathing {
 
 			while (eTime < time && moving) {
 				eTime += Time.deltaTime;
-				Pathable.PathPosition = Vector3.Lerp (start, end, eTime / time);
+				float t = eTime / time;
+				Progress = (Mathf.Cos (t * 180f * Mathf.Deg2Rad) - 1) / -2;
+				Pathable.PathPosition = Vector3.Lerp (start, end, Progress);
 				yield return null;
 			}
 

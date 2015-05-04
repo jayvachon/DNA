@@ -75,8 +75,8 @@ public class PathRotator : MBRefs {
 	float Rotation {
 		set {
 			float p = TrigMap.Sin (value);
-			Debug.Log (p * 360f);
-			MyTransform.SetLocalEulerAnglesY (p * 360f);
+//			Debug.Log (p * 360f);
+//			MyTransform.SetLocalEulerAnglesY (p * 360f);
 		}
 	}
 	

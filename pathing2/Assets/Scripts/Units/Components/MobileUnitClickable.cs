@@ -17,6 +17,8 @@ namespace Units {
 			set { canDrag = value; }
 		}
 
+		public bool Dragging { get; private set; }
+
 		Vector3 screenPoint;
 		Vector3 offset;
 
@@ -39,6 +41,7 @@ namespace Units {
 
 		public void OnDragEnter (DragSettings dragSettings) {
 			if (CanDrag && dragSettings.WasClicked) {
+				Dragging = true;
 				PathManager.Instance.SelectedPath = MobileUnit.Path;
 				MobileTransform.StopMovingOnPath ();
 			}
@@ -59,6 +62,7 @@ namespace Units {
 				if (collidingUnit != null) {
 					MobileUnit.OnDragRelease (collidingUnit.Unit);
 				}
+				Dragging = false;
 			}
 		}
 

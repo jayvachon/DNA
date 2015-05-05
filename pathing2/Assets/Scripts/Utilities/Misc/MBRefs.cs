@@ -41,6 +41,11 @@ public class MBRefs : MonoBehaviour {
 		set { MyTransform.localRotation = value; }
 	}
 
+	public Vector3 LocalEulerAngles {
+		get { return MyTransform.localEulerAngles; }
+		set { MyTransform.localEulerAngles = value; }
+	}
+
 	protected virtual void Awake () {
 		startPosition = MyTransform.position;
 	}

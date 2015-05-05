@@ -75,8 +75,14 @@ public class PathRotator : MBRefs {
 	float Rotation {
 		set {
 			float p = TrigMap.Sin (value);
-			Debug.Log (p * 360f);
-			MyTransform.SetLocalEulerAnglesY (p * 360f);
+			if (value >= 0.5f && value < 1.5f) {
+				MyTransform.SetLocalEulerAnglesY (Mathf.Lerp (-25f, 205f, Mathf.InverseLerp (-1, 1, p)));
+			} else {
+				MyTransform.SetLocalEulerAnglesY (Mathf.Lerp (205f, -25f, Mathf.InverseLerp (1, -1, p)));
+			}
+			// Debug.Log (p * 360f);
+			// MyTransform.SetLocalEulerAnglesY (p * 360f);
+			// MyTransform.SetLocalEulerAnglesY (90f + (value * 360f));
 		}
 	}
 	

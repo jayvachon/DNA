@@ -5,7 +5,47 @@ using Units;
 
 public class PathRotator : MBRefs {
 
-	public override Vector3 Position {
+	float progress;
+	public float Progress {
+		get { return progress; }
+		set {
+			Vector3 newPosition = Positioner.PathPosition;
+			if (Vector3.Distance (MobileTransform.localPosition, Vector3.zero) > 0f) {
+				MyTransform.position = MobileTransform.position;
+				MobileTransform.localPosition = Vector3.zero;
+				prevPosition = newPosition;
+				Debug.Log (Positioner.Line[0]);
+				Debug.Log (Positioner.Line[1]);
+				PathLength = Vector3.Distance (Positioner.Line[0], Positioner.Line[1]);
+			} else {
+				direction = Vector3.Normalize (prevPosition-newPosition);
+				prevPosition = newPosition;
+			}
+			if (prevProgress > value) {
+				progressOffset = progressOffset == 0 ? 1 : 0;
+			}
+			prevProgress = value;
+			float totalProgress = (progressOffset + value) / 2f;
+			MobileDistance = totalProgress;
+			Rotation = totalProgress;
+			MyTransform.position = newPosition;
+			progress = value;
+		}
+	}
+
+	float pathLength = 0;
+	float PathLength {
+		get { return pathLength; }
+		set {
+			pathLength = value;
+			pointLength = (pathLength - maxDistance) / pathLength;
+			Debug.Log (pathLength + ", " + pointLength);
+		}
+	}
+
+	float pointLength = 0;
+
+	/*public override Vector3 Position {
 		get { return MyTransform.position; }
 		set {
 			if (MobileTransform.localPosition != Vector3.zero) {
@@ -33,7 +73,7 @@ public class PathRotator : MBRefs {
 			Rotation = totalProgress;	
 			MyTransform.position = value;
 		}
-	}
+	}*/
 
 	Transform mobileTransform;
 	Transform MobileTransform {
@@ -56,11 +96,13 @@ public class PathRotator : MBRefs {
 		}
 	}
 
-	float pathProgress = 0;
-	float PathProgress {
-		get { 
-			if (Path == null) return 0;
-			return Path.pathPositioner.Progress; 
+	PathPositioner positioner;
+	PathPositioner Positioner {
+		get {
+			if (positioner == null) {
+				positioner = Path.Positioner;
+			}
+			return positioner;
 		}
 	}
 
@@ -68,6 +110,7 @@ public class PathRotator : MBRefs {
 	float MobileDistance {
 		set {
 			float mobileDistance = TrigMap.HalfCos (value);
+			// Debug.Log (value);
 			MobileTransform.SetLocalPositionX (mobileDistance * maxDistance);
 		}
 	}
@@ -80,6 +123,7 @@ public class PathRotator : MBRefs {
 			} else {
 				MyTransform.SetLocalEulerAnglesY (Mathf.Lerp (205f, -25f, Mathf.InverseLerp (1, -1, p)));
 			}
+
 			// Debug.Log (p * 360f);
 			// MyTransform.SetLocalEulerAnglesY (p * 360f);
 			// MyTransform.SetLocalEulerAnglesY (90f + (value * 360f));

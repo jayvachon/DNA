@@ -49,6 +49,7 @@ namespace Pathing {
 		}
 
 		public IPathable Pathable { get; set; }
+		public PathPositioner Positioner { get { return pathPositioner; } }
 
 		bool dragging = false;
 

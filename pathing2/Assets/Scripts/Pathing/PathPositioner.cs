@@ -17,6 +17,7 @@ namespace Pathing {
 		}
 
 		public float Progress { get; private set; }
+		public Vector3 PathPosition { get; private set; }
 		
 		List<Vector3> Positions {
 			get { return Points.Positions; }
@@ -50,7 +51,7 @@ namespace Pathing {
 			}
 		}
 
-		Vector3[] Line {
+		public Vector3[] Line {
 			get {
 				if (Points.Count > 1) {
 					IteratePosition ();
@@ -102,7 +103,9 @@ namespace Pathing {
 			while (eTime < time && moving) {
 				eTime += Time.deltaTime;
 				Progress = eTime / time;
-				Pathable.PathPosition = Vector3.Lerp (start, end, TrigMap.HalfCos01 (Progress));
+				Pathable.Progress = Progress;
+				// Pathable.PathPosition = Vector3.Lerp (start, end, TrigMap.HalfCos01 (Progress));
+				PathPosition = Vector3.Lerp (start, end, TrigMap.HalfCos01 (Progress));
 				yield return null;
 			}
 

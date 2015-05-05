@@ -10,12 +10,21 @@ namespace Units {
 		public Path Path { get; set; }
 		public IActionAcceptor BoundAcceptor { get; private set; }
 		
-		Vector3 pathPosition;
+		/*Vector3 pathPosition;
 		public Vector3 PathPosition {
 			get { return pathPosition; }
 			set { 
 				pathPosition = value;
 				PathRotator.Position = pathPosition;
+			}
+		}*/
+
+		float progress;
+		public float Progress { 
+			get { return progress; }
+			set {
+				progress = value;
+				PathRotator.Progress = progress;
 			}
 		}
 

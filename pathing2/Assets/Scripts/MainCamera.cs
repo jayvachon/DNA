@@ -6,6 +6,8 @@ using Units;
 
 public class MainCamera : MonoBehaviour {
 
+	Transform followTarget = null;
+
 	Vector3 target;
 	Vector3 Target {
 		get { return target; }
@@ -20,6 +22,7 @@ public class MainCamera : MonoBehaviour {
 
 	void Awake () {
 		Events.instance.AddListener<SelectEvent> (OnSelectEvent);
+		Events.instance.AddListener<UnselectEvent> (OnUnselectEvent);
 		anchor = transform.parent;
 	}
 
@@ -38,6 +41,20 @@ public class MainCamera : MonoBehaviour {
 			float progress = Mathf.SmoothStep (0, 1, eTime / time);
 			anchor.position = Vector3.Lerp (start, end, progress);
 			transform.SetLocalPositionZ (Mathf.Lerp (startZ, endZ, progress)); 
+			yield return null;
+		}
+
+		if (followTarget != null) {
+			StartCoroutine (CoFollowTarget ());
+		}
+	}
+
+	IEnumerator CoFollowTarget () {
+
+		MobileUnitClickable clickable = followTarget.GetScript<MobileUnitTransform> ().MobileClickable;
+		while (followTarget != null) {
+			if (!clickable.Dragging)
+				anchor.position = followTarget.position;
 			yield return null;
 		}
 	}
@@ -64,6 +81,11 @@ public class MainCamera : MonoBehaviour {
 		Unit unit = e.unit;
 		if (unit != null) {
 			Target = unit.Position;
+			followTarget = unit is Distributor ? unit.Transform : null;
 		}
+	}
+
+	void OnUnselectEvent (UnselectEvent e) {
+		followTarget = null;
 	}
 }

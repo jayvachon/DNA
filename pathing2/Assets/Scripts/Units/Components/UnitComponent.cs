@@ -56,5 +56,15 @@ namespace Units {
 				return mobileTransform;
 			}
 		}
+
+		MobileUnitClickable mobileClickable = null;
+		public MobileUnitClickable MobileClickable {
+			get {
+				if (mobileClickable == null) {
+					mobileClickable = MobileUnit.MobileClickable;
+				}
+				return mobileClickable;
+			}
+		}
 	}
 }

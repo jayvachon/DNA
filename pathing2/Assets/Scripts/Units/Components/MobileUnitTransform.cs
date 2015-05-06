@@ -55,6 +55,7 @@ namespace Units {
 
 		public void StartMovingOnPath () {
 			Path.StartMoving ();
+			PathRotator.StartMoving ();
 		}
 
 		public void StopMovingOnPath () {

@@ -54,7 +54,6 @@ namespace Pathing {
 		public Vector3[] Line {
 			get {
 				if (Points.Count > 1) {
-					IteratePosition ();
 					Vector3[] line = new Vector3[] { PrevPosition, NextPosition };
 					return line;
 				}
@@ -64,6 +63,7 @@ namespace Pathing {
 
 		public void StartMoving () {
 			if (moving) return;
+			IteratePosition ();
 			Vector3[] line = Line;
 			if (line != null) {
 				moving = true;

@@ -44,9 +44,9 @@ public class MainCamera : MonoBehaviour {
 			yield return null;
 		}
 
-		if (followTarget != null) {
+		/*if (followTarget != null) {
 			StartCoroutine (CoFollowTarget ());
-		}
+		}*/
 	}
 
 	IEnumerator CoFollowTarget () {

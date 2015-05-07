@@ -15,21 +15,12 @@ namespace Units {
 			get { return "Laborer"; }
 		}
 
-		//RetirementTimer retirementTimer = new RetirementTimer ();
-		RetirementTimer retirementTimer = null;
-		RetirementTimer RetirementTimer {
-			get {
-				if (retirementTimer == null) {
-					retirementTimer = new RetirementTimer ();
-				}
-				return retirementTimer;
-			}
-		}
+		YearHolder yearHolder = new YearHolder (65, 0);
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new YearHolder (65, 0));
+			Inventory.Add (yearHolder);
 			Inventory.Add (new HappinessHolder (100, 100));
 			Inventory.Add (new CoffeeHolder (5, 0));
 			Inventory.Add (new MilkshakeHolder (3, 0));
@@ -46,13 +37,27 @@ namespace Units {
 			PerformableActions.DisableAll ();
 		}
 
-		void OnAge (float progress) {
+		void OnAge () {
+			float progress = yearHolder.PercentFilled;
 			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
 			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p);
 		}
 
 		void OnRetirement () {
 			ChangeUnit<Distributor, Elder> ();
+		}
+
+		public override void OnBindActionable (IActionAcceptor acceptor) {
+			UpdateEfficiency ();
+			base.OnBindActionable (acceptor);
+		}
+
+		void UpdateEfficiency () {
+			float efficiency = Mathf.Max (0.1f, Inventory.Get<HappinessHolder> ().PercentFilled);
+			PerformableActions.Get ("CollectMilkshake").Efficiency = efficiency;
+			PerformableActions.Get ("DeliverMilkshake").Efficiency = efficiency;
+			PerformableActions.Get ("CollectCoffee").Efficiency = efficiency;
+			PerformableActions.Get ("DeliverCoffee").Efficiency = efficiency;
 		}
 
 		protected override void OnChangeUnit<U> (U u) {
@@ -64,9 +69,14 @@ namespace Units {
 		public override void OnPoolCreate () {
 			Inventory.Empty ();
 			Inventory.Get<HappinessHolder> ().Initialize (100);
-			RetirementTimer.BeginAging (OnAge, OnRetirement);
+			yearHolder.HolderUpdated += OnAge;
+			yearHolder.HolderFilled += OnRetirement;
 			Path.Active = true;
 			UnitInfoContent.Refresh ();
+		}
+
+		public override void OnPoolDestroy () {
+			yearHolder.HolderFilled -= OnRetirement;
 		}
 	}
 }

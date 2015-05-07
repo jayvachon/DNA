@@ -13,12 +13,18 @@ namespace GameActions {
 		protected bool autoRepeat = false;
 		bool interrupt = false;
 
+		float efficiency = 1f; // Percentage
+		public float Efficiency {
+			get { return efficiency; }
+			set { efficiency = value; }
+		}
+
 		protected float duration;
 		public float Duration {
-			get { return duration; }
+			get { return duration * Efficiency; }
 			set { 
 				// This is a hack - the constructor doesn't auto start if duration is the default value of -1
-				// so, when the duration DOES get set, autos start happens here
+				// so, when the duration DOES get set, auto start happens here
 				// a better way of doing this would be to have classes that inherit from PerformerAction set their name
 				// in their constructors so that PerformerAction can access TimeValues.ActionTimes
 				float prevValue = duration;
@@ -55,7 +61,7 @@ namespace GameActions {
 		}
 
 		public virtual void Start () {
-			if (Duration == 0) {
+			if (duration == 0) {
 				End ();
 				return;
 			}

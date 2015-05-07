@@ -20,7 +20,6 @@ namespace Units {
 		}
 
 		OccupyBed occupyBed = new OccupyBed ();
-		bool dead = false;
 
 		void Awake () {
 
@@ -28,7 +27,6 @@ namespace Units {
 			Inventory.Add (new YearHolder (500, 65));
 			Inventory.Add (new HealthHolder (100, 100));
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
-			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add ("OccupyBed", occupyBed);
@@ -44,8 +42,12 @@ namespace Units {
 			Inventory.Get<YearHolder> ().Clear ();
 			Inventory.AddItems<YearHolder> (65);
 			Inventory.AddItems<HealthHolder> (100);
+			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
 			PerformableActions.Start ("ConsumeHealth");
-			dead = false;
+		}
+
+		public override void OnPoolDestroy () {
+			Inventory.Get<HealthHolder> ().HolderEmptied -= OnDie;
 		}
 
 		public override void OnRelease () {
@@ -59,8 +61,6 @@ namespace Units {
 		}
 
 		void OnDie () {
-			if (dead) return; // TODO: this is a problem w/ the HolderEmptied callback
-			dead = true;
 			PerformableActions.Stop ("ConsumeHealth");
 			ChangeUnit<Elder, Corpse> ();
 		}

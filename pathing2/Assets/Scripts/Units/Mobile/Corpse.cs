@@ -31,7 +31,6 @@ namespace Units {
 		}
 
 		public override void OnPoolCreate () {
-			Inventory.AddItems<YearHolder> (100); // temp
 			MobileClickable.CanDrag = true;
 			MobileClickable.CanSelect = true;
 		}

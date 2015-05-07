@@ -35,6 +35,7 @@ namespace GameInventory {
 		public abstract int Count { get; }
 		public abstract bool Full { get; }
 		public abstract bool Empty { get; }
+		public abstract float PercentFilled { get; }
 
 		public List<Item> EmptyList {
 			get { return new List<Item> (0); }
@@ -91,6 +92,10 @@ namespace GameInventory {
 
 		public override bool Empty {
 			get { return Count == 0; }
+		}
+
+		public override float PercentFilled {
+			get { return (float)Count / (float)Capacity; }
 		}
 
 		public ItemHolder (int capacity, int startCount) {

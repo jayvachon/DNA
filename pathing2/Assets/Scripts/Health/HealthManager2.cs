@@ -7,8 +7,8 @@ public class HealthManager2 {
 
 	public OnChangeDegradeRate onChangeDegradeRate;
 
-	float minRate = 5f;
-	float maxRate = 50f;
+	float minRate = 0.1f;
+	float maxRate = 10f;
 
 	float degradeRate = 1f;
 	public float DegradeRate {

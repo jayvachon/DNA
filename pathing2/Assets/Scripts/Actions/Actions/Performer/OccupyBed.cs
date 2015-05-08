@@ -24,23 +24,36 @@ namespace GameActions {
 				return elder;
 			}
 		}
+
+		float ElderDegradeRate {
+			set { if (Elder != null) Elder.HealthManager.SetDegradeRate (value); }
+		}
+
+		public Clinic Clinic {
+			// TODO: This is a really roundabout/unintuitive way of get the clinic
+			get { return AcceptorHolder.Inventory.holder as Clinic; }
+		}
 		
 		bool occupying = false;
+		public bool Occupying { get { return occupying; } }
 
 		BedItem bedItem;
 
 		public OccupyBed () : base (0, false, false, null) {}
 
 		public override void OnEnd () {
-			bedItem = new BedItem ();
+			bedItem = new BedItem (Performer);
 			AcceptorHolder.Add (bedItem);
-			Elder.HealthManager.SetDegradeRate (AcceptorHolder.Quality);
+			ElderDegradeRate = AcceptorHolder.Quality;
 			occupying = true;
 		}
 
 		public void Remove () {
-			if (occupying)
+			if (occupying) {
+				ElderDegradeRate = 0;
 				AcceptorHolder.Remove<BedItem> (bedItem);
+				occupying = false;
+			}
 		}
 	}
 }

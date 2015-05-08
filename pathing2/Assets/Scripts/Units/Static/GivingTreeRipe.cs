@@ -5,24 +5,23 @@ using GameActions;
 
 namespace Units {
 
-	public class Jacuzzi : StaticUnit, IActionPerformer {
+	public class GivingTreeRipe : StaticUnit, IActionPerformer {
 
 		public override string Name {
-			get { return "Jacuzzi"; }
+			get { return "Ripe Giving Tree"; }
 		}
-		
+
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {
-			
+
 			Inventory = new Inventory (this);
-			Inventory.Add (new HappinessHolder (500, 500));
+			Inventory.Add (new YearHolder (500, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectHappiness", new AcceptCollectItem<HappinessHolder> ());
-
+			
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateHappiness", new GenerateItem<HappinessHolder> ());//(1));
+			PerformableActions.Add ("FleeTree", new FleeTree (), "Flee Tree");
 		}
 	}
 }

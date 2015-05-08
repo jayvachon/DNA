@@ -28,8 +28,6 @@ namespace GameActions {
 
 		public IActionAcceptor Acceptor { get; set; }
 
-		public DeliverItem (float duration) : base (duration) {}
-	
 		public override void OnEnd () {
 			AcceptorInventory.Transfer<T> (Inventory, 1, AcceptCondition.Transferable);
 		}		

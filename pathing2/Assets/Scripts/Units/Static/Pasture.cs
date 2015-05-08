@@ -16,14 +16,14 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new IceCreamHolder (5, 0));
+			// Inventory.Add (new IceCreamHolder (5, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectIceCream", new AcceptCollectItem<IceCreamHolder> ());
+			// AcceptableActions.Add ("CollectIceCream", new AcceptCollectItem<IceCreamHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateIceCream", new GenerateItem<IceCreamHolder> (3));
-			PerformableActions.Add ("ConsumeIceCream", new ConsumeItem<IceCreamHolder> (10));
+			// PerformableActions.Add ("GenerateIceCream", new GenerateItem<IceCreamHolder> (3));
+			// PerformableActions.Add ("ConsumeIceCream", new ConsumeItem<IceCreamHolder> (10));
 		}
 	}
 }

@@ -35,14 +35,15 @@ namespace GameInventory {
 		public abstract int Count { get; }
 		public abstract bool Full { get; }
 		public abstract bool Empty { get; }
+		public abstract float PercentFilled { get; }
 
 		public List<Item> EmptyList {
 			get { return new List<Item> (0); }
 		}
 
+		public abstract void Initialize (int count);
 		public abstract Item Get (ItemHasAttribute contains);
 		public abstract bool Has (ItemHasAttribute contains);
-		public abstract void AddInitial (int count);
 		public abstract List<Item> Add ();
 		public abstract List<Item> Add (Item item);
 		public abstract List<Item> Add (List<Item> newItems);
@@ -53,6 +54,7 @@ namespace GameInventory {
 		public abstract void Clear ();
 		public abstract void Transfer (ItemHolder holder, int amount, ItemHasAttribute transferable);
 		public abstract void OnTransfer ();
+		public abstract void OnHolderUpdated ();
 		public abstract void Print ();
 	}
 
@@ -92,12 +94,16 @@ namespace GameInventory {
 			get { return Count == 0; }
 		}
 
-		public ItemHolder (int capacity, int startCount) {
-			Capacity = capacity;
-			AddInitial (startCount);
+		public override float PercentFilled {
+			get { return (float)Count / (float)Capacity; }
 		}
 
-		public override void AddInitial (int count) {
+		public ItemHolder (int capacity, int startCount) {
+			Capacity = capacity;
+			Initialize (startCount);
+		}
+
+		public override void Initialize (int count) {
 			if (count == 0)
 				return;
 			for (int i = 0; i < count; i ++) {
@@ -223,6 +229,7 @@ namespace GameInventory {
 		}
 
 		void NotifyHolderUpdated () {
+			OnHolderUpdated ();
 			if (HolderUpdated != null) {
 				HolderUpdated ();
 			}
@@ -240,6 +247,8 @@ namespace GameInventory {
 				HolderEmptied ();
 			}
 		}
+
+		public override void OnHolderUpdated () {}
 
 		/**
 		 *	Debugging

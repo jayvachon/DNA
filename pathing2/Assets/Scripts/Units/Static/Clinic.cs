@@ -24,7 +24,18 @@ namespace Units {
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("ConsumeMilkshake", new ConsumeItem<MilkshakeHolder> (5));
+			PerformableActions.Add ("ConsumeMilkshake", new ConsumeItem<MilkshakeHolder> (-1, false)); 
+			// TODO: Set rate based on # beds filled (and don't consume milkshakes if no beds are filled)
+			// Also - don't slow elders' health rate unless there are milkshakes to consume
+		}
+
+		void OnInventoryUpdated () {
+			//bool hasSickElders = Inventory.Get<ElderHolder> ().Get (IsSick) != null;
+			//bool filledBeds = Inventory.Get<BedHolder> ();
+			/*int milkshakeCount = Inventory.Get<MilkshakeHolder> ().Count;
+			if (!hasSickElders || milkshakeCount < 5) return;
+			PerformableActions.Start ("ConsumeMilkshake");
+			PerformableActions.Start ("HealElder");*/
 		}
 	}
 }

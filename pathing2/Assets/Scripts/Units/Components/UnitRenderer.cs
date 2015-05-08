@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Units {
 
@@ -12,14 +13,28 @@ namespace Units {
 
 		new void Awake () {
 			colorHandler.Init (renderer);
+			SetRenderersInChildren ();
 		}
 
 		public void OnSelect () {
 			colorHandler.Selected = true;
+			SetRenderersInChildren ();
 		}
 
 		public void OnUnselect () {
 			colorHandler.Selected = false;
+			SetRenderersInChildren ();
+		}
+
+		void SetRenderersInChildren () {
+			List<Transform> children = MyTransform.GetAllChildren ();
+			Renderer colorHandlerRenderer = colorHandler.Renderer;
+			foreach (Transform child in children) {
+				Renderer childRenderer = child.GetComponent<Renderer> ();
+				if (childRenderer != null) {
+					childRenderer.sharedMaterial = colorHandlerRenderer.sharedMaterial;
+				}
+			}
 		}
 	}
 }

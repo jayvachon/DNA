@@ -10,26 +10,42 @@ namespace Units {
 
 		public override string Name { get { return "Remains"; } }
 
+		OccupyBed occupyBed = new OccupyBed ();
+
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new YearHolder (500, 0));
-			Inventory.Get<YearHolder> ().HolderEmptied += OnDeliverYears;
+			YearHolder yearHolder = new YearHolder (500, 0);
+			yearHolder.HolderEmptied += OnDeliverYears;
+			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, false);
+			Inventory.Add (yearHolder);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> (0));
+			PerformableActions.Add ("OccupyBed", occupyBed);
+			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> ());
+			PerformableActions.Add ("ConsumeYear", new ConsumeItem<YearHolder> ());
 		}
 
 		void Start () {
 			Path.Active = false;
 		}
 
+		public override void OnPoolCreate () {
+			MobileClickable.CanDrag = true;
+			MobileClickable.CanSelect = true;
+		}
+
 		public override void OnRelease () {
+			PerformableActions.Enable ("DeliverYear"); // TODO: shouldn't have to do this here -> straighten out how enabling/disabling works w/ actions!
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-				// TODO: Check if corpse was dropped on giving tree
-				// if it was, check if it's delivering years and if so set UnitClickable CanDrag = false and CanSelect = false
+				if (clickable.StaticUnit is GivingTreeUnit) {
+					MobileClickable.CanDrag = false;
+					MobileClickable.CanSelect = false;
+				}
+			} else {
+				occupyBed.Remove ();
 			}
 		}
 

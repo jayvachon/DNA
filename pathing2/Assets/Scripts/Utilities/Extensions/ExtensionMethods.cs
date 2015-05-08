@@ -53,6 +53,15 @@ public static class ExtensionMethods {
 		transform.gameObject.SetActive (active);
 	}
 
+	public static List<Transform> GetAllChildren (this Transform transform) {
+		List<Transform> children = new List<Transform> ();
+		foreach (Transform child in transform) {
+			children.Add (child);
+			children.AddRange (child.GetAllChildren ());
+		}
+		return children;
+	}
+
 	public static Transform GetNthParent (this Transform transform, int n) {
 		Transform parent = transform.parent;
 		if (parent == null) {

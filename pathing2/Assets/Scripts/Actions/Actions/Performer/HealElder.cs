@@ -15,7 +15,7 @@ namespace GameActions {
 			return elder.HealthManager.Sick;
 		}
 
-		public HealElder (float duration, OnElderHealed onElderHealed=null) : base (duration, false, false, null) {
+		public HealElder (OnElderHealed onElderHealed=null) : base (-1, false, false, null) {
 			this.onElderHealed += onElderHealed;
 		}
 

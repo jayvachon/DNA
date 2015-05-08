@@ -15,21 +15,23 @@ namespace Units {
 			get { return healthManager; }
 		}
 
-		OccupyBed occupyBed;
-		bool dead = false;
+		public int AverageHappiness { 
+			set { Inventory.RemoveItems<HealthHolder> (100 - value); }
+		}
+
+		OccupyBed occupyBed = new OccupyBed ();
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (new YearHolder (500, 65));
 			Inventory.Add (new HealthHolder (100, 100));
-			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
+			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			PerformableActions = new PerformableActions (this);
-			occupyBed = new OccupyBed ();
 			PerformableActions.Add ("OccupyBed", occupyBed);
 			PerformableActions.Add ("ConsumeHealth", new ConsumeHealth (healthManager));
-			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> (TimerValues.Retirement / 65f));
+			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> ());
 		}
 
 		void Start () {
@@ -40,33 +42,37 @@ namespace Units {
 			Inventory.Get<YearHolder> ().Clear ();
 			Inventory.AddItems<YearHolder> (65);
 			Inventory.AddItems<HealthHolder> (100);
+			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
 			PerformableActions.Start ("ConsumeHealth");
-			dead = false;
+		}
+
+		public override void OnPoolDestroy () {
+			Inventory.Get<HealthHolder> ().HolderEmptied -= OnDie;
 		}
 
 		public override void OnRelease () {
+			PerformableActions.Enable ("OccupyBed");
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-				// TODO: Check if elder was dropped on giving tree
-				// if it was, check if it's delivering years and if so set UnitClickable CanDrag = false and CanSelect = false
 			} else {
 				occupyBed.Remove ();
 			}
 		}
 
 		void OnDie () {
-			if (dead) return; // TODO: this is a problem w/ the HolderEmptied callback
-			dead = true;
 			PerformableActions.Stop ("ConsumeHealth");
-			occupyBed.Remove (); // TODO: Transfer occuppied bed to corpse
-			// maybe this ^ is an opportunity to measure respect for elders/spirits: when an elder dies, does 
-			// the player immediately deliver its remains to the giving tree, or let them sit in a bed?
 			ChangeUnit<Elder, Corpse> ();
 		}
 
-		protected override void OnChangeUnit<Corpse> (Corpse corpse) {
+		protected override void OnChangeUnit<U> (U u) {
+			Corpse corpse = u as Corpse;
 			corpse.Inventory.Transfer<YearHolder> (Inventory);
+			if (occupyBed.Occupying) {
+				Clinic clinic = occupyBed.Clinic;
+				occupyBed.Remove ();
+				corpse.OnBindActionable (clinic);
+			}
 		}
 	}
 }

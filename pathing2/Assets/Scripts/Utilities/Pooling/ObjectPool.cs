@@ -42,6 +42,8 @@ public class ObjectPool : MonoBehaviour {
 			InitializeInstance(t);
 			ReleaseInstance(t);
 		}
+
+		// DontDestroyOnLoad (this);
 	}
 	
 	public Transform GetInstance (Vector3 position = new Vector3()) {
@@ -51,6 +53,13 @@ public class ObjectPool : MonoBehaviour {
 		if (_instances.Count > 0) {
 			t = _instances.Pop();
 		} else {
+			t = Instantiate(_prefab) as Transform;
+		}
+
+		// Here's a hack -- when the level restarts, the object pool retains its stack of inactive instances,
+		// even though instances in the stack are destroyed when the level starts
+		if (t == null) {
+			_instances.Clear ();
 			t = Instantiate(_prefab) as Transform;
 		}
 		

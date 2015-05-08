@@ -8,11 +8,11 @@ public class HealthManager2 {
 	public OnChangeDegradeRate onChangeDegradeRate;
 
 	float minRate = 1f;
-	float maxRate = 10f;
+	float maxRate = 25f;
 
-	float degradeRate = 0.1f;
+	float degradeRate = 1f;
 	public float DegradeRate {
-		get { return degradeRate; }
+		get { return degradeRate * TimerValues.year; }
 	}
 
 	public void SetDegradeRate (float quality) {

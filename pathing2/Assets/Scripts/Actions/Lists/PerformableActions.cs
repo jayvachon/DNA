@@ -25,6 +25,7 @@ namespace GameActions {
 
 		public void Add (string id, PerformerAction action, string inputName="") {
 			action.Performer = performer;
+			action.Duration = TimerValues.GetActionTime (id);
 			AddAction (id, action);
 			if (inputName != "") {
 				inputs.Add (id, inputName);
@@ -75,9 +76,7 @@ namespace GameActions {
 			foreach (var action in acceptor.AcceptableActions.Actions) {
 				string key = action.Key;
 				if (!Actions.ContainsKey (key)) continue;
-				// if (Actions[key] != null) {
-					acceptedActions.Add (key);
-				// }
+				acceptedActions.Add (key);
 			}
 			return acceptedActions;
 		}
@@ -94,9 +93,7 @@ namespace GameActions {
 
 			foreach (IActionAcceptor acceptor in acceptors) {
 				
-				//IActionAcceptor acceptor 	= point.StaticUnit as IActionAcceptor;
 				List<string> actions = GetAcceptedActions (acceptor);
-				
 				foreach (string action in actions) {
 					acceptedActions.Add (
 						new KeyValuePair<string, IActionAcceptor> (action, acceptor)
@@ -159,6 +156,7 @@ namespace GameActions {
 		 */
 
 		public override void Print () {
+			Debug.Log ("PERFORMABLE");
 			Debug.Log ("All actions:");
 			base.Print ();
 			Debug.Log ("Active actions:");

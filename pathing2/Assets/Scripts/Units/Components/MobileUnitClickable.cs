@@ -68,7 +68,7 @@ namespace Units {
 
 		public Transform Colliding (int layerMask=Physics.DefaultRaycastLayers) {
 
-			int rayCount = 18;
+			int rayCount = 36;
 			float radius = 1.25f;
 			float deg = 360f / (float)rayCount;
 			RaycastHit hit;

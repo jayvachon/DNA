@@ -19,6 +19,7 @@ namespace Units {
 			Inventory.Add (new CoffeeHolder (100, 20));
 			Inventory.Add (new YearHolder (500, 0));
 			Inventory.Get<YearHolder> ().HolderFilled += OnYearsCollected;
+			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("DeliverCoffee", new AcceptDeliverItem<CoffeeHolder> ());
@@ -28,11 +29,19 @@ namespace Units {
 			Vector3 createPosition = StaticTransform.Position;
 			createPosition.x -= 2;
 			
-			PerformableActions.Add ("GenerateDistributor", new GenerateUnit<Distributor, CoffeeHolder> (5, createPosition), "Birth Distributor");
+			PerformableActions.Add ("GenerateLaborer", new GenerateUnit<Distributor, CoffeeHolder> (5, createPosition), "Birth Laborer");
+			PerformableActions.Add ("GenerateElder", new GenerateUnit<Elder, CoffeeHolder> (0, createPosition), "Birth Elder (temp)");
+			PerformableActions.Add ("GenerateCorpse", new GenerateUnit<Corpse, CoffeeHolder> (0, createPosition), "Birth Corpse (temp)");
 		}
 
 		void OnYearsCollected () {
-			Debug.Log ("on to the next tree!");
+			ChangeUnit<GivingTreeUnit, GivingTreeRipe> ();
+		}
+
+		void Update () {
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				OnYearsCollected ();
+			}
 		}
 	}
 }

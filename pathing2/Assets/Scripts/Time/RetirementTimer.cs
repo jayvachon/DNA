@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Deprecate this
 public class RetirementTimer : Interval {
 
 	float retirementAge = TimerValues.Retirement;	// seconds until becoming an elder

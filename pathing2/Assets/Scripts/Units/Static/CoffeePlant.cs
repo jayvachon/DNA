@@ -16,14 +16,15 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new CoffeeHolder (5, 0));
+			Inventory.Add (new CoffeeHolder (25, 0));
+			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("CollectCoffee", new AcceptCollectItem<CoffeeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateCoffee", new GenerateItem<CoffeeHolder> (3));
-			PerformableActions.Add ("ConsumeCoffee", new ConsumeItem<CoffeeHolder> (10));
+			PerformableActions.Add ("GenerateCoffee", new GenerateItem<CoffeeHolder> ());
+			PerformableActions.Add ("ConsumeCoffee", new ConsumeItem<CoffeeHolder> ());
 		}
 	}
 }

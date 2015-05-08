@@ -18,6 +18,9 @@ namespace Units {
 		}
 
 		Renderer renderer;
+		public Renderer Renderer {
+			get { return renderer; }
+		}
 
 		public bool Selected {
 			set {

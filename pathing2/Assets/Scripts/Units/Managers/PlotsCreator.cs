@@ -39,11 +39,11 @@ namespace Units {
 				); 
 				if (index == 1 && i == 0) {
 					CreateUnit<MilkshakePool> (position);
-				} else if (index == 1 && i == 1) {
+				} /*else if (index == 1 && i == 1) {
 					CreateUnit<CoffeePlant> (position);
 				} else if (index == 1 && i ==2) {
 					CreateUnit<Clinic> (position);
-				} else {
+				}*/ else {
 					CreateUnit<Plot> (position);
 				}
 			}

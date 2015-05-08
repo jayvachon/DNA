@@ -31,14 +31,14 @@ namespace Units {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.StartAction += OnStartAction;
 			//PerformableActions.Add ("GenerateHouse", new GenerateUnit<House, MilkHolder> (5, Position, OnUnitGenerated), "Birth House");
-			PerformableActions.Add ("GenerateClinic", new GenerateUnit<Clinic, MilkshakeHolder> (25, Position, OnUnitGenerated), "Birth Clinic");
 			//PerformableActions.Add ("GenerateMilkPool", new GenerateUnit<MilkPool, MilkHolder> (5, Position, OnUnitGenerated), "Birth Milk Pool");
 			//PerformableActions.Add ("GeneratePasture", new GenerateUnit<Pasture, MilkHolder> (10, Position, OnUnitGenerated), "Birth Pasture");
 			//PerformableActions.Add ("GenerateMilkshakeMaker", new GenerateUnit<MilkshakeMaker, MilkHolder> (10, Position, OnUnitGenerated), "Birth Milkshake Maker");
 			//PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital, MilkHolder> (10, Position, OnUnitGenerated), "Birth Hospital");
-			PerformableActions.Add ("GenerateCoffeePlant", new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, Position, OnUnitGenerated), "Birth Coffee Plant");
-			PerformableActions.Add ("GenerateMilkshakePool", new GenerateUnit<MilkshakePool, MilkshakeHolder> (15, Position, OnUnitGenerated), "Birth Milkshake Derrick");
-			PerformableActions.Add ("GenerateJacuzzi", new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, Position, OnUnitGenerated), "Birth Jacuzzi");
+			PerformableActions.Add ("GenerateMilkshakePool", new GenerateUnit<MilkshakePool, MilkshakeHolder> (15, Position, OnUnitGenerated), "Birth Milkshake Derrick (15M)");
+			PerformableActions.Add ("GenerateCoffeePlant", new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, Position, OnUnitGenerated), "Birth Coffee Plant (5M)");
+			PerformableActions.Add ("GenerateJacuzzi", new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, Position, OnUnitGenerated), "Birth Jacuzzi (20M)");
+			PerformableActions.Add ("GenerateClinic", new GenerateUnit<Clinic, MilkshakeHolder> (25, Position, OnUnitGenerated), "Birth Clinic (25M)");
 		}
 
 		void OnStartAction (string id) {

@@ -16,13 +16,13 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new HappinessHolder (500, 500));
+			Inventory.Add (new HappinessHolder (100, 100));
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add ("CollectHappiness", new AcceptCollectItem<HappinessHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateHappiness", new GenerateItem<HappinessHolder> ());//(1));
+			PerformableActions.Add ("GenerateHappiness", new GenerateItem<HappinessHolder> ());
 		}
 	}
 }

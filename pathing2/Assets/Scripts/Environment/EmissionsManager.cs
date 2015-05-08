@@ -31,10 +31,10 @@ public class EmissionsManager : MonoBehaviour {
 
 	// Units' emissions. Values are relative & should be set between 0 and 1
 	Dictionary<string, float> emissionsValues = new Dictionary<string, float> () {
-		{ "Milkshake Derrick", 1.0f },
-		{ "Jacuzzi", 0.5f },
-		{ "Clinic", 0.33f },
-		{ "Laborer", 0.25f }
+		{ "Milkshake Derrick", 0.25f },
+		{ "Jacuzzi", 0.15f },
+		{ "Clinic", 0.1f },
+		{ "Laborer", 0.05f }
 	};
 
 	public void AddUnit (Unit unit) {

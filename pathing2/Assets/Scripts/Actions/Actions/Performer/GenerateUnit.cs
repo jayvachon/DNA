@@ -10,8 +10,13 @@ namespace GameActions {
 	// T = Unit to be generated, U = ItemHolder to check
 	public class GenerateUnit<T, U> : InventoryAction<U> where T : Unit where U : ItemHolder {
 
-		int cost = 0;
 		Vector3 createPosition;
+		public Vector3 CreatePosition {
+			get { return createPosition; }
+			set { createPosition = value; }
+		}
+		
+		int cost = 0;
 		UnitGenerated unitGenerated;
 
 		public GenerateUnit (int cost, Vector3 createPosition, UnitGenerated unitGenerated=null) : base (-1, false, false) {

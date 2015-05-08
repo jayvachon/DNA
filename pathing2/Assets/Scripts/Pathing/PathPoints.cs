@@ -36,6 +36,7 @@ namespace Pathing {
 		public float Direction {
 			get { 
 				if (QueuedPoint == null) {
+					if (Empty) return -1;
 					return ScreenPositionHandler.PointDirection (PreviousPosition, DragPosition); 
 				} else {
 					return -1;

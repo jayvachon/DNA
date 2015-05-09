@@ -24,6 +24,7 @@ namespace Units {
 			Inventory.Add (new HappinessHolder (100, 100));
 			Inventory.Add (new CoffeeHolder (3, 0));
 			Inventory.Add (new MilkshakeHolder (5, 0));
+			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 			Inventory.Get<HappinessHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			PerformableActions = new PerformableActions (this);

@@ -14,6 +14,8 @@ namespace Units {
 
 		public PerformableActions PerformableActions { get; private set; }
 
+		BuildingIndicator indicator;
+
 		void Awake () {
 
 			Inventory = new Inventory (this);
@@ -58,10 +60,13 @@ namespace Units {
 			}
 			name = string.Format ("{0} to Be", newUnit);
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
+			indicator = ObjectCreator.Instance.Create<BuildingIndicator> ().GetScript<BuildingIndicator> ();
+			indicator.Initialize (newUnit, Position);
 			unitInfoContent.Refresh ();
 		}
 
 		void OnUnitGenerated (Unit unit) {
+			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.PathPoint = PathPoint;
 			PathPoint.StaticUnit = staticUnit;

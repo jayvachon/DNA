@@ -53,6 +53,12 @@ public static class ExtensionMethods {
 		transform.gameObject.SetActive (active);
 	}
 
+	public static void SetChildrenActive (this Transform transform, bool active) {
+		foreach (Transform child in transform) {
+			child.SetActiveRecursively (active);
+		}
+	}
+
 	public static List<Transform> GetAllChildren (this Transform transform) {
 		List<Transform> children = new List<Transform> ();
 		foreach (Transform child in transform) {

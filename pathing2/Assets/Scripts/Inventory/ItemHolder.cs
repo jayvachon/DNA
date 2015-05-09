@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace GameInventory {
 
-	public delegate void HolderUpdated ();
-	public delegate void HolderFilled ();
-	public delegate void HolderEmptied ();
+	public delegate void HolderUpdated (); // TODO: rename to OnHolderUpdate
+	public delegate void HolderFilled ();  // TODO: rename to OnHolderFull
+	public delegate void HolderEmptied (); // TODO: rename to OnHolderEmpty
 
 	[System.Serializable]
 	public abstract class ItemHolder : System.Object, INameable {

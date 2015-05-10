@@ -41,6 +41,7 @@ namespace Units {
 			PerformableActions.Add ("GenerateCoffeePlant", new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, Position, OnUnitGenerated), "Birth Coffee Plant (5M)");
 			PerformableActions.Add ("GenerateJacuzzi", new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, Position, OnUnitGenerated), "Birth Jacuzzi (20M)");
 			PerformableActions.Add ("GenerateClinic", new GenerateUnit<Clinic, MilkshakeHolder> (25, Position, OnUnitGenerated), "Birth Clinic (25M)");
+			// PerformableActions.Add ("CancelGenerateUnit", new CancelGenerateUnit (), "Cancel");
 		}
 
 		void OnStartAction (string id) {

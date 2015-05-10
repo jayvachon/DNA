@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\AcceptCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\DefaultCondition.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\Conditions\ElderCondition.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\CancelGenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectHappiness.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectUnit.cs" />

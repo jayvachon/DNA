@@ -51,6 +51,7 @@ namespace GameActions {
 		}
 
 		public virtual void Start () {
+			if (!Enabled) return;
 			if (duration == 0) {
 				End ();
 				return;

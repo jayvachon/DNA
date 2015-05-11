@@ -35,7 +35,6 @@ namespace Units {
 			PerformableActions.Add (new CollectHappiness ());
 			PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
-			// PerformableActions.DisableAll ();
 		}
 
 		void OnAge () {

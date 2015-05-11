@@ -16,8 +16,8 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new CoffeeHolder (25, 0));
-			Inventory.Add (new YearHolder (5, 5));
+			Inventory.Add (new CoffeeHolder (25, 10));
+			Inventory.Add (new YearHolder (10, 10));
 			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			Inventory.Get<YearHolder> ().HolderEmptied += OnDie;
 
@@ -27,6 +27,7 @@ namespace Units {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateItem<CoffeeHolder> ());
 			PerformableActions.Add (new ConsumeItem<CoffeeHolder> ());
+			// left off here -- for some reason consume year can't find this performer's inventory
 			PerformableActions.Add (new ConsumeItem<YearHolder> (TimerValues.year));
 		}
 

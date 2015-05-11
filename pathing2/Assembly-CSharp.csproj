@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\ActionDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptCollectItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverItemEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectHappinessEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\ConsumeItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DefaultEnabledState.cs" />

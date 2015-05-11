@@ -22,7 +22,7 @@ namespace GameActions {
 			}
 		}
 
-		ItemHolder holder;
+		protected ItemHolder holder;
 
 		public CollectItemEnabledState (ItemHolder holder) {
 			this.holder = holder;

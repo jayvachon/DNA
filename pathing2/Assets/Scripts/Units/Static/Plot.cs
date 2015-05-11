@@ -19,14 +19,11 @@ namespace Units {
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			//Inventory.Add (new MilkHolder (0, 0));
 			Inventory.Add (new MilkshakeHolder (0, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			//AcceptableActions.Add ("DeliverMilk", new AcceptDeliverItem<MilkHolder> ());
-			//AcceptableActions.Disable ("DeliverMilk");
 			AcceptableActions.Add (new AcceptDeliverItem<MilkshakeHolder> ());
-			// AcceptableActions.Disable ("DeliverMilkshake"); // TODO: "Deactive"
+			AcceptableActions.SetActive ("DeliverMilkshake", false);
 		}
 
 		void Start () {
@@ -45,9 +42,8 @@ namespace Units {
 		}
 
 		void OnStartAction (string id) {
-			// AcceptableActions.Enable ("DeliverMilkshake"); // TODO: "Activate"
-			// PerformableActions.DisableAll ();
 			PerformableActions.DeactivateAll ();
+			AcceptableActions.SetActive ("DeliverMilkshake", true);
 			string newUnit = "";
 			switch (id) {
 				case "GenerateHouse": 			newUnit = "House"; break;
@@ -68,6 +64,7 @@ namespace Units {
 		}
 
 		void OnUnitGenerated (Unit unit) {
+			AcceptableActions.SetActive ("DeliverMilkshake", false);
 			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.PathPoint = PathPoint;

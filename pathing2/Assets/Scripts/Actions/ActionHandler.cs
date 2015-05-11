@@ -34,7 +34,7 @@ namespace GameActions {
 			performable.RefreshEnabledActions ();
 			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
-			
+
 			PerformerAction matching = null;
 			foreach (var action in performable.EnabledActions) {
 				AcceptorAction acceptorAction;

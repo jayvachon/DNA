@@ -6,8 +6,14 @@ namespace GameActions {
 
 	public class CollectHappiness : CollectItem<HappinessHolder> {
 		
+		EnabledState enabledState;
 		public override EnabledState EnabledState {
-			get { return new DefaultEnabledState (); }
+			get {
+				if (enabledState == null) {
+					enabledState = new CollectHappinessEnabledState (Holder);
+				}
+				return enabledState;
+			}
 		}
 	}
 }

@@ -58,7 +58,9 @@ namespace Units {
 
 		void StartMovingOnPath () {
 			MobileTransform.StartMovingOnPath ();
-			PerformableActions.EnableAcceptedActionsBetweenAcceptors (
+			// PerformableActions.EnableAcceptedActionsBetweenAcceptors (
+			// 	Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
+			PerformableActions.PairActionsBetweenAcceptors (
 				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
 		}
 

@@ -6,6 +6,20 @@ namespace GameActions {
 
 	public class AcceptInventoryAction<T> : AcceptorAction where T : ItemHolder {
 
+		Inventory inventory = null;
+		protected Inventory Inventory {
+			get {
+				if (inventory == null && Acceptor is IInventoryHolder) {
+					IInventoryHolder holder = Acceptor as IInventoryHolder;
+					inventory = holder.Inventory;
+				}
+				if (inventory == null) {
+					Debug.LogError ("ActionAcceptor does not implement IInventoryHolder");
+				}
+				return inventory;
+			}
+		}
+		
 		ItemHolder holder = null;
 		protected ItemHolder Holder {
 			get {
@@ -18,8 +32,5 @@ namespace GameActions {
 				return holder;
 			}
 		}
-
-		public AcceptInventoryAction (AcceptCondition acceptCondition) : base (acceptCondition) {}
-	
 	}
 }

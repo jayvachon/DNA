@@ -5,9 +5,9 @@ using GameInventory;
 namespace GameActions {
 
 	public class CollectHappiness : CollectItem<HappinessHolder> {
-
-		public override System.Type RequiredPair {
-			get { return null; }
+		
+		public override EnabledState EnabledState {
+			get { return new DefaultEnabledState (); }
 		}
 	}
 }

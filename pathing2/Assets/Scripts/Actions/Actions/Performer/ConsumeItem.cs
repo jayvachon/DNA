@@ -12,15 +12,23 @@ namespace GameActions {
 				if (name == "") {
 					string typeName = typeof (T).Name;
 					typeName = typeName.Substring (0, typeName.Length-6);
-					name = "Consume " + typeName;
+					name = "Consume" + typeName;
 				}
 				return name;
 			}
 		}
 
-		public ConsumeItem (float duration=-1, bool autoStart=true, bool autoRepeat=true, bool enableable=true) : base (duration, autoStart, autoRepeat, null) {
-			this.enableable = enableable;
+		EnabledState enabledState;
+		public override EnabledState EnabledState {
+			get {
+				if (enabledState == null) {
+					enabledState = new ConsumeItemEnabledState (Holder);
+				}
+				return enabledState;
+			}
 		}
+
+		public ConsumeItem (float duration=-1, bool autoStart=true, bool autoRepeat=true) : base (duration, autoStart, autoRepeat) {}
 		
 		public override void OnEnd () {
 			Holder.Remove ();

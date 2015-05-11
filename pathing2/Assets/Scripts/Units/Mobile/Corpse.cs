@@ -21,9 +21,9 @@ namespace Units {
 			Inventory.Add (yearHolder);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("OccupyBed", occupyBed);
-			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> ());
-			PerformableActions.Add ("ConsumeYear", new ConsumeItem<YearHolder> ());
+			PerformableActions.Add (occupyBed);
+			PerformableActions.Add (new DeliverItem<YearHolder> ());
+			PerformableActions.Add (new ConsumeItem<YearHolder> ());
 		}
 
 		void Start () {
@@ -36,7 +36,7 @@ namespace Units {
 		}
 
 		public override void OnRelease () {
-			PerformableActions.Enable ("DeliverYear"); // TODO: shouldn't have to do this here -> straighten out how enabling/disabling works w/ actions!
+			// PerformableActions.Enable ("DeliverYear"); // TODO: shouldn't have to do this here -> straighten out how enabling/disabling works w/ actions!
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);

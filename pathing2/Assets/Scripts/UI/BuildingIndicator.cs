@@ -12,6 +12,7 @@ public class BuildingIndicator : MBRefs, IPoolable {
 
 	public void Initialize (string id, Vector3 position) {
 		Transform activeRender = null;
+		Debug.Log (id);
 		switch (id) {
 			case "Clinic": activeRender = clinicRender; break;
 			case "Coffee Plant": activeRender = coffeeRender; break;

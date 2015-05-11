@@ -11,10 +11,6 @@ namespace GameActions {
 		public ActionsUpdated actionsUpdated;
 
 		Dictionary<string, Action> actions = new Dictionary<string, Action> ();
-		public Dictionary<string, Action> Actions {
-			get { return actions; }
-			protected set { actions = value; }
-		}
 
 		////
 		// TODO: Add an Active property to Actions. ActionPerformers/Acceptors can set an
@@ -34,53 +30,86 @@ namespace GameActions {
 			protected set { enabledActions = value; }
 		}
 
-		public void AddAction (string id, Action action) {
-			Actions.Add (id, action);
+		public void AddAction (Action action) {
+			string id = action.Name;
+			actions.Add (id, action);
 			EnabledActions.Add (id, action as T);
+			ActiveActions.Add (id, action as T);
 			NotifyActionsUpdated ();
 		}
 
-		public void Enable (string id) {
+		public void SetActive (string id, bool active) {
+			if (active) 
+				Activate (id);
+			else
+				Deactivate (id);
+			NotifyActionsUpdated ();
+			OnSetActive ();	
+		}
+
+		void Activate (string id) {
 			Action action;
-			if (Actions.TryGetValue (id, out action)) {
+			if (actions.TryGetValue (id, out action)) {
+				if (!ActiveActions.ContainsKey (id)) {
+					ActiveActions.Add (id, action as T);
+				}
+			}
+			action.Active = true;
+		}
+
+		void Deactivate (string id) {
+			ActiveActions.Remove (id);
+			Get (id).Active = false;
+		}
+
+		public void DeactivateAll () {
+			ActiveActions.Clear ();
+			NotifyActionsUpdated ();
+			OnSetActive ();
+		}
+
+		/*protected void SetEnabled (string id, bool enabled) {
+			if (enabled)
+				Enable (id);
+			else
+				Disable (id);
+			NotifyActionsUpdated ();
+		}
+
+		void Enable (string id) {
+			Action action;
+			if (actions.TryGetValue (id, out action)) {
 				if (!EnabledActions.ContainsKey (id))
 					EnabledActions.Add (id, action as T);
 			}
 			action.Enabled = true;
-			OnEnable (id);
-			NotifyActionsUpdated ();
 		}
 
-		public virtual void OnEnable (string id) {}
-
-		public void Disable (string id) {
+		void Disable (string id) {
 			EnabledActions.Remove (id);
 			Get (id).Enabled = false;
-			OnDisable (id);
-			NotifyActionsUpdated ();
 		}
 
-		public virtual void OnDisable (string id) {}
-
-		public void DisableAll () {
-			foreach (var keyval in Actions) {
+		protected void DisableAll () {
+			foreach (var keyval in actions) {
 				Action action = keyval.Value;
 				action.Enabled = false;
 			}
 			EnabledActions.Clear ();
-			OnDisableAll ();
 			NotifyActionsUpdated ();
-		}
-
-		public virtual void OnDisableAll () {}
+		}*/
 
 		public T Get (string id) {
-			return Actions[id] as T;
+			return actions[id] as T;
+		}
+
+		public bool Has (string id) {
+			return ActiveActions.ContainsKey (id);
 		}
 
 		public virtual void RefreshEnabledActions () {
 			EnabledActions.Clear ();
-			foreach (var keyval in Actions) {
+			foreach (var keyval in actions) {
 				Action action = keyval.Value;
 				if (action.Enabled) {
 					EnabledActions.Add (keyval.Key, action as T);
@@ -94,6 +123,8 @@ namespace GameActions {
 				actionsUpdated ();
 			}
 		}
+
+		public virtual void OnSetActive () {}
 
 		/**
 		 *	Debugging
@@ -110,8 +141,10 @@ namespace GameActions {
 		}
 
 		public virtual void Print () {
-			foreach (var action in Actions) {
-				Debug.Log (action.Key + " enabled ? " + action.Value.Enabled);
+			foreach (var action in actions) {
+				Debug.Log (action.Key 
+					+ " enabled = " + action.Value.Enabled 
+					+ ", active = " + action.Value.Active);
 			}
 		}
 	}

@@ -6,10 +6,26 @@ namespace GameActions {
 
 	public class AcceptCollectItem<T> : AcceptInventoryAction<T> where T : ItemHolder {
 		
-		public override bool Enabled {
-			get { return Holder.Count > 0 && ConditionMet; }
+		string name = "";
+		public override string Name {
+			get { 
+				if (name == "") {
+					string typeName = typeof (T).Name;
+					typeName = typeName.Substring (0, typeName.Length-6);
+					name = "Collect" + typeName;
+				}
+				return name;
+			}
 		}
 
-		public AcceptCollectItem (AcceptCondition acceptCondition=null) : base (acceptCondition) {}
+		EnabledState enabledState;
+		public override EnabledState EnabledState {
+			get {
+				if (enabledState == null) {
+					enabledState = new AcceptCollectItemEnabledState (Holder);
+				}
+				return enabledState;
+			}
+		}
 	}
 }

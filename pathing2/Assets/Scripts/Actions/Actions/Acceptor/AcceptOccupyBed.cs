@@ -6,10 +6,18 @@ namespace GameActions {
 
 	public class AcceptOccupyBed : AcceptInventoryAction<BedHolder> {
 
-		public override bool Enabled {
-			get { return !Holder.Full; }
+		public override string Name {
+			get { return "OccupyBed"; }
 		}
 
-		public AcceptOccupyBed () : base (null) {}			
+		EnabledState enabledState;
+		public override EnabledState EnabledState {
+			get {
+				if (enabledState == null) {
+					enabledState = new AcceptDeliverItemEnabledState (Holder);
+				}
+				return enabledState;
+			}
+		}
 	}
 }

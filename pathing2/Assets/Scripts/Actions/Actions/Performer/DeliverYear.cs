@@ -7,12 +7,8 @@ namespace GameActions {
 
 	public class DeliverYear : DeliverItem<YearHolder> {
 
-		public override System.Type RequiredPair {
-			get { return null; }
-		}
-
-		public override bool CanPerform {
-			get { return Inventory.Get<HealthHolder> ().Empty; }
+		public override EnabledState EnabledState {
+			get { return new DefaultEnabledState (); }
 		}
 	}
 }

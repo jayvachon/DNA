@@ -25,7 +25,7 @@ namespace Units {
 			AcceptableActions = new AcceptableActions (this);
 			//AcceptableActions.Add ("DeliverMilk", new AcceptDeliverItem<MilkHolder> ());
 			//AcceptableActions.Disable ("DeliverMilk");
-			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
+			AcceptableActions.Add (new AcceptDeliverItem<MilkshakeHolder> ());
 			// AcceptableActions.Disable ("DeliverMilkshake"); // TODO: "Deactive"
 		}
 
@@ -37,16 +37,17 @@ namespace Units {
 			//PerformableActions.Add ("GeneratePasture", new GenerateUnit<Pasture, MilkHolder> (10, Position, OnUnitGenerated), "Birth Pasture");
 			//PerformableActions.Add ("GenerateMilkshakeMaker", new GenerateUnit<MilkshakeMaker, MilkHolder> (10, Position, OnUnitGenerated), "Birth Milkshake Maker");
 			//PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital, MilkHolder> (10, Position, OnUnitGenerated), "Birth Hospital");
-			PerformableActions.Add ("GenerateMilkshakePool", new GenerateUnit<MilkshakePool, MilkshakeHolder> (15, Position, OnUnitGenerated), "Birth Milkshake Derrick (15M)");
-			PerformableActions.Add ("GenerateCoffeePlant", new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, Position, OnUnitGenerated), "Birth Coffee Plant (5M)");
-			PerformableActions.Add ("GenerateJacuzzi", new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, Position, OnUnitGenerated), "Birth Jacuzzi (20M)");
-			PerformableActions.Add ("GenerateClinic", new GenerateUnit<Clinic, MilkshakeHolder> (25, Position, OnUnitGenerated), "Birth Clinic (25M)");
+			PerformableActions.Add (new GenerateUnit<MilkshakePool, MilkshakeHolder> (15, Position, OnUnitGenerated), "Birth Milkshake Derrick (15M)");
+			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, Position, OnUnitGenerated), "Birth Coffee Plant (5M)");
+			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, Position, OnUnitGenerated), "Birth Jacuzzi (20M)");
+			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (25, Position, OnUnitGenerated), "Birth Clinic (25M)");
 			// PerformableActions.Add ("CancelGenerateUnit", new CancelGenerateUnit (), "Cancel");
 		}
 
 		void OnStartAction (string id) {
 			// AcceptableActions.Enable ("DeliverMilkshake"); // TODO: "Activate"
-			PerformableActions.DisableAll ();
+			// PerformableActions.DisableAll ();
+			PerformableActions.DeactivateAll ();
 			string newUnit = "";
 			switch (id) {
 				case "GenerateHouse": 			newUnit = "House"; break;

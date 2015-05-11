@@ -4,6 +4,7 @@ using GameInventory;
 
 namespace GameActions {
 
+	// TODO: Remove
 	public abstract class PerformCondition {
 
 		// This is checked before the action is performed

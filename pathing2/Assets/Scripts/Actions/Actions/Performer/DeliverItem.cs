@@ -12,24 +12,27 @@ namespace GameActions {
 				if (name == "") {
 					string typeName = typeof (T).Name;
 					typeName = typeName.Substring (0, typeName.Length-6);
-					name = "Deliver " + typeName;
+					name = "Deliver" + typeName;
 				}
 				return name;
 			}
 		}
 
-		public override System.Type RequiredPair {
-			get { return typeof (CollectItem<T>); }
-		}
-
-		public override bool CanPerform {
-			get { return Holder.Count > 0; }
+		EnabledState enabledState;
+		public override EnabledState EnabledState {
+			get {
+				if (enabledState == null) {
+					enabledState = new DeliverItemEnabledState<T> (Holder);
+				}
+				return enabledState;
+			}
 		}
 
 		public IActionAcceptor Acceptor { get; set; }
 
 		public override void OnEnd () {
-			AcceptorInventory.Transfer<T> (Inventory, 1, AcceptCondition.Transferable);
+			// AcceptorInventory.Transfer<T> (Inventory, 1, AcceptCondition.Transferable);
+			AcceptorInventory.Transfer<T> (Inventory, 1);
 		}		
 	}
 }

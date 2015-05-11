@@ -45,6 +45,6 @@ namespace GameActions {
 			get { return AcceptorInventory.Get<T> (); }
 		}
 
-		public InventoryAction (float duration=-1, bool autoStart=false, bool autoRepeat=false, PerformCondition performCondition=null) : base (duration, autoStart, autoRepeat, performCondition) {}
+		public InventoryAction (float duration=-1, bool autoStart=false, bool autoRepeat=false) : base (duration, autoStart, autoRepeat) {}
 	}
 }

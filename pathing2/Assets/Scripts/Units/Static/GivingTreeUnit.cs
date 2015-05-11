@@ -48,12 +48,12 @@ namespace Units {
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("DeliverCoffee", new AcceptDeliverItem<CoffeeHolder> ());
-			AcceptableActions.Add ("DeliverYear", new AcceptDeliverItem<YearHolder> ());
+			AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
+			AcceptableActions.Add (new AcceptDeliverItem<YearHolder> ());
 
 			PerformableActions = new PerformableActions (this);
 			generateLaborer = new GenerateUnit<Distributor, CoffeeHolder> (15, CreatePositions[0], OnUnitGenerated);
-			PerformableActions.Add ("GenerateLaborer", generateLaborer, "Birth Laborer (15C)");
+			PerformableActions.Add (generateLaborer, "Birth Laborer (15C)");
 			// PerformableActions.Add ("GenerateElder", new GenerateUnit<Elder, CoffeeHolder> (0, createPosition), "Birth Elder (temp)");
 			// PerformableActions.Add ("GenerateCorpse", new GenerateUnit<Corpse, CoffeeHolder> (0, createPosition), "Birth Corpse (temp)");
 		}
@@ -73,7 +73,7 @@ namespace Units {
 
 		void Update () {
 			if (Input.GetKeyDown (KeyCode.Space)) {
-				OnYearsCollected ();
+				// PerformableActions.Print ();
 			}
 		}
 	}

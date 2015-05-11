@@ -3,6 +3,8 @@ using System.Collections;
 using GameInventory;
 using GameActions;
 
+// TODO: not needed?
+
 namespace Units {
 
 	public class House : StaticUnit {
@@ -17,8 +19,8 @@ namespace Units {
 			Inventory.Add (new ElderHolder (2, 1));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectElder", new AcceptCollectItem<ElderHolder> (new ElderCondition (true, true)));
-			AcceptableActions.Add ("DeliverElder", new AcceptDeliverItem<ElderHolder> (new ElderCondition (false, false)));
+			// AcceptableActions.Add (new AcceptCollectItem<ElderHolder> (new ElderCondition (true, true)));
+			// AcceptableActions.Add (new AcceptDeliverItem<ElderHolder> (new ElderCondition (false, false)));
 		}
 	}
 }

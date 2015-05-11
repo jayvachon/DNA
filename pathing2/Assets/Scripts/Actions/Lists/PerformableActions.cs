@@ -14,6 +14,7 @@ namespace GameActions {
 
 		// If given an (optional) input name, actions will be shown in the unit info box
 		// and can be selected by a player
+		// TODO: Use ActionDisplaySettings instead
 		Dictionary<string, string> inputs = new Dictionary<string, string> ();
 		public Dictionary<string, string> Inputs {
 			get { return inputs; }
@@ -23,12 +24,12 @@ namespace GameActions {
 			this.performer = performer;
 		}
 
-		public void Add (string id, PerformerAction action, string inputName="") {
+		public void Add (PerformerAction action, string inputName="") {
 			action.Performer = performer;
-			action.Duration = TimerValues.GetActionTime (id);
-			AddAction (id, action);
+			action.Duration = TimerValues.GetActionTime (action.Name);
+			AddAction (action);
 			if (inputName != "") {
-				inputs.Add (id, inputName);
+				inputs.Add (action.Name, inputName);
 			}
 		}
 
@@ -42,47 +43,35 @@ namespace GameActions {
 			Get (id).Stop ();
 		}
 
-		public override void OnEnable (string id) {
-			string inputName;
-			if (inputs.TryGetValue (id, out inputName)) {
-				inputs.Add (id, inputName);
-			}
-		}
-
-		public override void OnDisable (string id) {
-			inputs.Remove (id);
-		}
-
-		public override void OnDisableAll () {
+		public override void OnSetActive () {
 			inputs.Clear ();
+			foreach (var action in ActiveActions) {
+				string name = action.Value.Name;
+				if (action.Value.Active && inputs.ContainsKey (name)) {
+					inputs.Add (name, inputs[name]);
+				}
+			}
 		}
 
 		public override void RefreshEnabledActions () {
 			EnabledActions.Clear ();
-			foreach (var keyval in Actions) {
+			foreach (var keyval in ActiveActions) {
 				PerformerAction action = keyval.Value as PerformerAction;
-				if (action.Enabled && action.CanPerform) {
+				if (action.Enabled) {
 					EnabledActions.Add (keyval.Key, action);
 				}
 			}
 			NotifyActionsUpdated ();
 		}
 
-		public List<string> GetAcceptedActions (IActionAcceptor acceptor) {
-			List<string> acceptedActions = new List<string> ();
-			if (acceptor == null) {
-				return acceptedActions;
+		public void PairActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
+			foreach (var action in ActiveActions) {
+				action.Value.EnabledState.AttemptPair (acceptors);
 			}
-			foreach (var action in acceptor.AcceptableActions.Actions) {
-				string key = action.Key;
-				if (!Actions.ContainsKey (key)) continue;
-				acceptedActions.Add (key);
-			}
-			return acceptedActions;
 		}
 
-		public void EnableAcceptedActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
-			DisableAll ();
+		/*public void EnableAcceptedActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
+			// DisableAll ();
 			EnableAcceptedActions (GetAcceptedActionsBetweenAcceptors (acceptors));
 		} 
 
@@ -117,7 +106,7 @@ namespace GameActions {
 
 				// Enable the action if it doesn't require a pair
 				if (requiredPair == null) {
-					Enable (actionName);
+					// SetEnabled (actionName, true);
 					continue;
 				}
 
@@ -134,8 +123,8 @@ namespace GameActions {
 					var keyVal = unpairedAction.Key;
 					if (unpairedAction.Value == requiredPair && keyVal.Value != acceptorAction.Value) {
 						pair = keyVal.Key;
-						Enable (pair);
-						Enable (actionName);
+						// SetEnabled (pair, true);
+						// SetEnabled (actionName, true);
 						break;
 					}
 				}
@@ -151,6 +140,19 @@ namespace GameActions {
 			}
 		}
 
+		List<string> GetAcceptedActions (IActionAcceptor acceptor) {
+			List<string> acceptedActions = new List<string> ();
+			if (acceptor == null) {
+				return acceptedActions;
+			}
+			foreach (var action in acceptor.AcceptableActions.ActiveActions) {
+				string key = action.Key;
+				if (ActiveActions.ContainsKey (key))
+					acceptedActions.Add (key);
+			}
+			return acceptedActions;
+		}*/
+
 		/**
 		 *	Debugging
 		 */
@@ -159,8 +161,12 @@ namespace GameActions {
 			Debug.Log ("PERFORMABLE");
 			Debug.Log ("All actions:");
 			base.Print ();
-			Debug.Log ("Active actions:");
+			Debug.Log ("Enabled actions:");
 			foreach (var action in EnabledActions) {
+				Debug.Log (action.Key);
+			}
+			Debug.Log ("Active actions");
+			foreach (var action in ActiveActions) {
 				Debug.Log (action.Key);
 			}
 		}

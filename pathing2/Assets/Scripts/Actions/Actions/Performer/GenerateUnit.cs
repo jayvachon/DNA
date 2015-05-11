@@ -10,6 +10,17 @@ namespace GameActions {
 	// T = Unit to be generated, U = ItemHolder to check
 	public class GenerateUnit<T, U> : InventoryAction<U> where T : Unit where U : ItemHolder {
 
+		string name = "";
+		public override string Name {
+			get { 
+				if (name == "") {
+					string typeName = typeof (T).Name;
+					name = "Generate" + typeName;
+				}
+				return name;
+			}
+		}
+
 		Vector3 createPosition;
 		public Vector3 CreatePosition {
 			get { return createPosition; }

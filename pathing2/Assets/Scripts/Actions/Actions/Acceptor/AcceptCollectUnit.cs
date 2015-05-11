@@ -6,6 +6,5 @@ namespace GameActions {
 	// not needed?
 	public class AcceptCollectUnit : AcceptorAction {
 
-		public AcceptCollectUnit () : base (null) {}
 	}
 }

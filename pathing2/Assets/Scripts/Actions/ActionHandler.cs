@@ -40,12 +40,11 @@ namespace GameActions {
 				AcceptorAction acceptorAction;
 				if (acceptable.EnabledActions.TryGetValue (action.Key, out acceptorAction)) {
 					PerformerAction performerAction = action.Value;
-					performerAction.Bind (acceptorAction.AcceptCondition);
 					matching = performerAction;
 					break;
 				}
 			}
-
+			
 			StartCoroutine (PerformActions (binder, matching));
 		}
 		

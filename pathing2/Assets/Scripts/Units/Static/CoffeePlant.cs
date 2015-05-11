@@ -22,12 +22,12 @@ namespace Units {
 			Inventory.Get<YearHolder> ().HolderEmptied += OnDie;
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectCoffee", new AcceptCollectItem<CoffeeHolder> ());
+			AcceptableActions.Add (new AcceptCollectItem<CoffeeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateCoffee", new GenerateItem<CoffeeHolder> ());
-			PerformableActions.Add ("ConsumeCoffee", new ConsumeItem<CoffeeHolder> ());
-			PerformableActions.Add ("ConsumeYear", new ConsumeItem<YearHolder> (TimerValues.year));
+			PerformableActions.Add (new GenerateItem<CoffeeHolder> ());
+			PerformableActions.Add (new ConsumeItem<CoffeeHolder> ());
+			PerformableActions.Add (new ConsumeItem<YearHolder> (TimerValues.year));
 		}
 
 		void OnDie () {

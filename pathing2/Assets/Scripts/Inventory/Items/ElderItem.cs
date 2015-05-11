@@ -28,7 +28,7 @@ namespace GameInventory {
 		public ElderItem () {
 			HealthManager.onDie += OnDie;
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("SubtractHealth", new SubtractHealth ());
+			PerformableActions.Add (new SubtractHealth ());
 		}
 
 		public override void OnAdd () {

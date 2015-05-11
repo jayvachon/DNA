@@ -29,9 +29,9 @@ namespace Units {
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("OccupyBed", occupyBed);
-			PerformableActions.Add ("ConsumeHealth", new ConsumeHealth (healthManager));
-			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> ());
+			PerformableActions.Add (occupyBed);
+			PerformableActions.Add (new ConsumeHealth (healthManager));
+			PerformableActions.Add (new GenerateItem<YearHolder> ());
 		}
 
 		void Start () {
@@ -51,7 +51,7 @@ namespace Units {
 		}
 
 		public override void OnRelease () {
-			PerformableActions.Enable ("OccupyBed");
+			// PerformableActions.Enable ("OccupyBed");
 			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);

@@ -6,6 +6,10 @@ namespace GameActions {
 
 	public class SubtractHealth : PerformerAction {
 
+		public override string Name {
+			get { return "SubtractHealth"; }
+		}
+
 		ElderItem elder = null;
 		ElderItem Elder {
 			get {
@@ -32,7 +36,7 @@ namespace GameActions {
 
 		Stopwatch deathTime = new Stopwatch ();
 
-		public SubtractHealth () : base (5f, true, false, null) {}
+		public SubtractHealth () : base (5f, true, false) {}
 
 		public override void Start () {
 			deathTime.Begin ();

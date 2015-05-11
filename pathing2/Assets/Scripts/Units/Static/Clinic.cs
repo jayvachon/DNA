@@ -22,12 +22,12 @@ namespace Units {
 			// Inventory.Add (new MilkshakeHolder (10, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("OccupyBed", new AcceptOccupyBed ());
+			AcceptableActions.Add (new AcceptOccupyBed ());
 			// AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
-			AcceptableActions.Add ("DeliverCoffee", new AcceptDeliverItem<CoffeeHolder> ());
+			AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("ConsumeCoffee", new ConsumeItem<CoffeeHolder> (-1, false));
+			PerformableActions.Add (new ConsumeItem<CoffeeHolder> (-1, false));
 			// PerformableActions.Add ("ConsumeMilkshake", new ConsumeItem<MilkshakeHolder> (-1, false)); 
 			// TODO: Set rate based on # beds filled (and don't consume milkshakes if no beds are filled)
 			// Also - don't slow elders' health rate unless there are milkshakes to consume

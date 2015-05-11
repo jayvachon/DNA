@@ -5,9 +5,6 @@ namespace GameActions {
 
 	public abstract class PerformerAction : Action {
 
-		public virtual System.Type RequiredPair { get { return null; } }
-		public virtual bool CanPerform { get { return true; } }
-
 		readonly bool autoStart;
 		bool performing = false;
 		protected bool autoRepeat = false;
@@ -38,21 +35,14 @@ namespace GameActions {
 		}
 
 		public IActionPerformer Performer { get; set; }
-		protected AcceptCondition AcceptCondition { get; private set; }
-		protected PerformCondition PerformCondition { get; private set; }
 
-		public PerformerAction (float duration=-1, bool autoStart=false, bool autoRepeat=false, PerformCondition performCondition=null) {
+		public PerformerAction (float duration=-1, bool autoStart=false, bool autoRepeat=false) {
 			this.duration = duration;
 			this.autoStart = autoStart;
 			this.autoRepeat = autoRepeat;
-			this.PerformCondition = performCondition;
 			if (duration != -1 && autoStart) {
 				Start ();
 			}
-		}
-
-		public void Bind (AcceptCondition acceptCondition) {
-			AcceptCondition = acceptCondition;
 		}
 
 		public void Start (bool autoRepeat) {
@@ -74,7 +64,7 @@ namespace GameActions {
 
 		public void End () {
 			performing = false;
-			if (PerformCondition == null || PerformCondition.CanPerform) {
+			if (Enabled) {
 				OnEnd ();
 			}
 			if (autoRepeat) {

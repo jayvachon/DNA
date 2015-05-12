@@ -26,7 +26,6 @@ namespace GameActions {
 
 		public void Add (PerformerAction action, string inputName="") {
 			action.Performer = performer;
-			action.Duration = TimerValues.GetActionTime (action.Name);
 			AddAction (action);
 			if (inputName != "") {
 				inputs.Add (action.Name, inputName);

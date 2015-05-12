@@ -19,30 +19,25 @@ namespace GameActions {
 		protected float duration;
 		public float Duration {
 			get { return duration * Efficiency; }
+			set { duration = value; }
+		}
+
+		IActionPerformer performer;
+		public IActionPerformer Performer { 
+			get { return performer; }
 			set { 
-				// This is a hack - the constructor doesn't auto start if duration is the default value of -1
-				// so, when the duration DOES get set, auto start happens here
-				// a better way of doing this would be to have classes that inherit from PerformerAction set their name
-				// in their constructors so that PerformerAction can access TimeValues.ActionTimes
-				float prevValue = duration;
-				if (value != -1) {
-					duration = value;
-					if (prevValue == -1 && autoStart) {
-						Start ();
-					}
+				bool first = (performer == null);
+				performer = value;
+				if (first && autoStart) {
+					Start ();
 				}
 			}
 		}
 
-		public IActionPerformer Performer { get; set; }
-
 		public PerformerAction (float duration=-1, bool autoStart=false, bool autoRepeat=false) {
-			this.duration = duration;
+			this.duration = (duration == -1) ? TimerValues.GetActionTime (Name) : duration;
 			this.autoStart = autoStart;
 			this.autoRepeat = autoRepeat;
-			if (duration != -1 && autoStart) {
-				Start ();
-			}
 		}
 
 		public void Start (bool autoRepeat) {

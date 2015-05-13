@@ -73,6 +73,7 @@ namespace Units {
 			UnitInfoBox.Instance.Close ();
 		}
 
+		// from unit T to unit U
 		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {
 			U to = ObjectCreator.Instance.Create<U> ().GetScript<U> ();
 			to.Position = Position;

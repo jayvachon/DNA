@@ -2,6 +2,7 @@
 using System.Collections;
 using GameInventory;
 using GameActions;
+using GameInput;
 
 namespace Units {
 	
@@ -27,6 +28,10 @@ namespace Units {
 			//AcceptableActions.Disable ("DeliverMilk");
 			AcceptableActions.Add ("DeliverMilkshake", new AcceptDeliverItem<MilkshakeHolder> ());
 			// AcceptableActions.Disable ("DeliverMilkshake"); // TODO: "Deactive"
+		}
+
+		public override void OnPoolCreate () {
+//			PerformableActions.EnableAll ();
 		}
 
 		void Start () {
@@ -71,6 +76,9 @@ namespace Units {
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.PathPoint = PathPoint;
 			PathPoint.StaticUnit = staticUnit;
+			if (Selected) {
+				SelectionManager.Select (unit.UnitClickable);
+			}
 			ObjectCreator.Instance.Destroy<Plot> (transform);
 		}
 	}

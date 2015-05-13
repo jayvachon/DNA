@@ -2,6 +2,7 @@
 using System.Collections;
 using GameInventory;
 using GameActions;
+using GameInput;
 
 namespace Units {
 
@@ -34,6 +35,9 @@ namespace Units {
 			StaticUnit plot = ObjectCreator.Instance.Create<Plot> (Vector3.zero).GetScript<Plot> () as StaticUnit;
 			plot.Position = Position;
 			plot.PathPoint = PathPoint;
+			if (Selected) {
+				SelectionManager.Select (plot.UnitClickable);
+			}
 			ObjectCreator.Instance.Destroy<CoffeePlant> (transform);
 		}
 	}

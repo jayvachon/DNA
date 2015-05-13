@@ -10,14 +10,17 @@ namespace GameActions {
 
 		public ActionsUpdated actionsUpdated;
 
+		// All actions within this ActionList
 		Dictionary<string, Action> actions = new Dictionary<string, Action> ();
 
+		// Inactive actions are not considered for enabling
 		Dictionary<string, T> activeActions = new Dictionary<string, T> ();
 		public Dictionary<string, T> ActiveActions {
 			get { return activeActions; }
 			protected set { activeActions = value; }
 		}
 
+		// Actions are enabled if their EnabledState is true
 		Dictionary<string, T> enabledActions = new Dictionary<string, T> ();
 		public Dictionary<string, T> EnabledActions {
 			get { return enabledActions; }
@@ -61,37 +64,6 @@ namespace GameActions {
 			NotifyActionsUpdated ();
 			OnSetActive ();
 		}
-
-		/*protected void SetEnabled (string id, bool enabled) {
-			if (enabled)
-				Enable (id);
-			else
-				Disable (id);
-			NotifyActionsUpdated ();
-		}
-
-		void Enable (string id) {
-			Action action;
-			if (actions.TryGetValue (id, out action)) {
-				if (!EnabledActions.ContainsKey (id))
-					EnabledActions.Add (id, action as T);
-			}
-			action.Enabled = true;
-		}
-
-		void Disable (string id) {
-			EnabledActions.Remove (id);
-			Get (id).Enabled = false;
-		}
-
-		protected void DisableAll () {
-			foreach (var keyval in actions) {
-				Action action = keyval.Value;
-				action.Enabled = false;
-			}
-			EnabledActions.Clear ();
-			NotifyActionsUpdated ();
-		}*/
 
 		public T Get (string id) {
 			return actions[id] as T;

@@ -11,10 +11,6 @@ namespace GameActions {
 			get { return "OccupyBed"; }
 		}
 
-		/*public override bool CanPerform {
-			get { return !occupying && AcceptorHolder != null && !AcceptorHolder.Full; }
-		}*/
-
 		Elder elder = null;
 		Elder Elder {
 			get {

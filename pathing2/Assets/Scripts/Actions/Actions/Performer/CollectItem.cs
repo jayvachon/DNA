@@ -31,7 +31,6 @@ namespace GameActions {
 		public IActionAcceptor Acceptor { get; set; }
 
 		public override void OnEnd () {
-			// Inventory.Transfer<T> (AcceptorInventory, 1, AcceptCondition.Transferable);
 			Inventory.Transfer<T> (AcceptorInventory, 1);
 		}
 	}

@@ -27,7 +27,6 @@ namespace Units {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateItem<CoffeeHolder> ());
 			PerformableActions.Add (new ConsumeItem<CoffeeHolder> ());
-			// left off here -- for some reason consume year can't find this performer's inventory
 			PerformableActions.Add (new ConsumeItem<YearHolder> (TimerValues.year));
 		}
 

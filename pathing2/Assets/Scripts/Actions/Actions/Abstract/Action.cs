@@ -19,7 +19,7 @@ namespace GameActions {
 		}
 
 		bool active = true;
-		public bool Active {
+		public virtual bool Active {
 			get { return active; }
 			set { active = value; }
 		}

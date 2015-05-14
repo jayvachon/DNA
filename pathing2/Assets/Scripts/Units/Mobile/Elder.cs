@@ -19,7 +19,7 @@ namespace Units {
 			set { Inventory.RemoveItems<HealthHolder> (100 - value); }
 		}
 
-		OccupyBed occupyBed = new OccupyBed ();
+		Clinic boundClinic = null;
 
 		void Awake () {
 
@@ -29,7 +29,7 @@ namespace Units {
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (occupyBed);
+			PerformableActions.Add (new DeliverElder ());
 			PerformableActions.Add (new ConsumeHealth (healthManager));
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
 		}
@@ -50,13 +50,24 @@ namespace Units {
 			Inventory.Get<HealthHolder> ().HolderEmptied -= OnDie;
 		}
 
-		public override void OnRelease () {
-			// PerformableActions.Enable ("OccupyBed");
-			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
-			if (clickable != null) {
-				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-			} else {
-				occupyBed.Remove ();
+		protected override void OnBind () {
+			UnbindClinic ();
+			Clinic clinic = BoundAcceptor as Clinic;
+			if (clinic != null) {
+				boundClinic = clinic;
+				PerformableActions.SetActive ("DeliverElder", false);
+			}
+		}
+
+		protected override void OnUnbind () {
+			UnbindClinic ();
+		}
+
+		void UnbindClinic () {
+			if (boundClinic != null) {
+				boundClinic.Inventory.RemoveItem<ElderHolder> ();
+				PerformableActions.SetActive ("DeliverElder", true);
+				boundClinic = null;
 			}
 		}
 
@@ -68,11 +79,7 @@ namespace Units {
 		protected override void OnChangeUnit<U> (U u) {
 			Corpse corpse = u as Corpse;
 			corpse.Inventory.Transfer<YearHolder> (Inventory);
-			if (occupyBed.Occupying) {
-				Clinic clinic = occupyBed.Clinic;
-				occupyBed.Remove ();
-				corpse.OnBindActionable (clinic);
-			}
+			UnbindClinic ();
 		}
 	}
 }

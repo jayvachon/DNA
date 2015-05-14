@@ -27,10 +27,5 @@ namespace GameActions {
 				return enabledState;
 			}
 		}
-
-		// TODO: Remove
-		/*public override bool Enabled {
-			get { return !Holder.Full && ConditionMet; }
-		}*/
 	}
 }

@@ -30,6 +30,9 @@ namespace GameActions {
 
 		public IActionAcceptor Acceptor { get; set; }
 
+		public DeliverItem (float duration=-1, bool autoStart=false, bool autoRepeat=false) 
+			: base (duration, autoStart, autoRepeat) {}
+
 		public override void OnEnd () {
 			AcceptorInventory.Transfer<T> (Inventory, 1);
 		}		

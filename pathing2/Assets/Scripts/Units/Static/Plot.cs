@@ -7,6 +7,7 @@ namespace Units {
 	
 	public class Plot : StaticUnit, IActionPerformer {
 
+		readonly string defaultName = "Plot";
 		new string name = "Plot";
 		public override string Name {
 			get { return name; }
@@ -29,16 +30,19 @@ namespace Units {
 		void Start () {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.StartAction += OnStartAction;
-			//PerformableActions.Add ("GenerateHouse", new GenerateUnit<House, MilkHolder> (5, Position, OnUnitGenerated), "Birth House");
-			//PerformableActions.Add ("GenerateMilkPool", new GenerateUnit<MilkPool, MilkHolder> (5, Position, OnUnitGenerated), "Birth Milk Pool");
-			//PerformableActions.Add ("GeneratePasture", new GenerateUnit<Pasture, MilkHolder> (10, Position, OnUnitGenerated), "Birth Pasture");
-			//PerformableActions.Add ("GenerateMilkshakeMaker", new GenerateUnit<MilkshakeMaker, MilkHolder> (10, Position, OnUnitGenerated), "Birth Milkshake Maker");
-			//PerformableActions.Add ("GenerateHospital", new GenerateUnit<Hospital, MilkHolder> (10, Position, OnUnitGenerated), "Birth Hospital");
-			PerformableActions.Add (new GenerateUnit<MilkshakePool, MilkshakeHolder> (15, Position, OnUnitGenerated), "Birth Milkshake Derrick (15M)");
-			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, Position, OnUnitGenerated), "Birth Coffee Plant (5M)");
-			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, Position, OnUnitGenerated), "Birth Jacuzzi (20M)");
-			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (25, Position, OnUnitGenerated), "Birth Clinic (25M)");
+			PerformableActions.Add (new GenerateUnit<MilkshakePool, MilkshakeHolder> (15, OnUnitGenerated), "Birth Milkshake Derrick (15M)");
+			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, OnUnitGenerated), "Birth Coffee Plant (5M)");
+			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, OnUnitGenerated), "Birth Jacuzzi (20M)");
+			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (25, OnUnitGenerated), "Birth Clinic (25M)");
 			// PerformableActions.Add ("CancelGenerateUnit", new CancelGenerateUnit (), "Cancel");
+		}
+
+		public override void OnPoolCreate () {
+			if (name != defaultName) {
+				name = defaultName;
+				PerformableActions.ActivateAll ();
+				unitInfoContent.Refresh ();
+			}
 		}
 
 		void OnStartAction (string id) {
@@ -46,15 +50,10 @@ namespace Units {
 			AcceptableActions.SetActive ("DeliverMilkshake", true);
 			string newUnit = "";
 			switch (id) {
-				case "GenerateHouse": 			newUnit = "House"; break;
-				case "GenerateClinic": 			newUnit = "Clinic"; break;
-				case "GenerateMilkPool": 		newUnit = "Milk Pool"; break;
-				case "GeneratePasture": 		newUnit = "Pasture"; break;
-				case "GenerateMilkshakeMaker": 	newUnit = "Milkshake Maker"; break;
-				case "GenerateHospital": 		newUnit = "Hospital"; break;
-				case "GenerateCoffeePlant": 	newUnit = "Coffee Plant"; break;
 				case "GenerateMilkshakePool": 	newUnit = "Milkshake Derrick"; break;
+				case "GenerateCoffeePlant": 	newUnit = "Coffee Plant"; break;
 				case "GenerateJacuzzi": 		newUnit = "Jacuzzi"; break;
+				case "GenerateClinic": 			newUnit = "Clinic"; break;
 			}
 			name = string.Format ("{0} to Be", newUnit);
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
@@ -67,6 +66,7 @@ namespace Units {
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
 			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
 			StaticUnit staticUnit = unit as StaticUnit;
+			staticUnit.Position = Position;
 			staticUnit.PathPoint = PathPoint;
 			PathPoint.StaticUnit = staticUnit;
 			ObjectCreator.Instance.Destroy<Plot> (transform);

@@ -21,18 +21,11 @@ namespace GameActions {
 			}
 		}
 
-		Vector3 createPosition;
-		public Vector3 CreatePosition {
-			get { return createPosition; }
-			set { createPosition = value; }
-		}
-		
 		int cost = 0;
 		UnitGenerated unitGenerated;
 
-		public GenerateUnit (int cost, Vector3 createPosition, UnitGenerated unitGenerated=null) : base (-1, false, false) {
+		public GenerateUnit (int cost, UnitGenerated unitGenerated=null) : base (-1, false, false) {
 			this.cost = cost;
-			this.createPosition = createPosition;
 			this.unitGenerated = unitGenerated;
 		}
 
@@ -57,7 +50,6 @@ namespace GameActions {
 		void CreateUnit () {
 			Holder.Remove (cost);
 			Unit unit = ObjectCreator.Instance.Create<T> ().GetScript<Unit> ();
-			unit.Position = createPosition;
 			if (unitGenerated != null) {
 				unitGenerated (unit);
 			}

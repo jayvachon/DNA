@@ -53,11 +53,12 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\PerformerAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectUnit.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptOccupyBed.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptorInventoryAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\ActionDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptCollectItemEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverElderEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectHappinessEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectItemEnabledState.cs" />
@@ -66,7 +67,6 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DeliverItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\EnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\GenerateItemEnabledState.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\OccupyBedEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CancelGenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectHappiness.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
@@ -74,15 +74,13 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CombineItems.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\ConsumeHealth.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\ConsumeItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverYear.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\FleeTree.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateUnit.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\Performer\HealElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\InventoryAction.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\Performer\OccupyBed.cs" />
-     <Compile Include="Assets\Scripts\Actions\Actions\Performer\SubtractHealth.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionAcceptor2.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionPerformer.cs" />
@@ -189,8 +187,6 @@
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeRipe.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
-     <Compile Include="Assets\Scripts\Units\Static\Hospital.cs" />
-     <Compile Include="Assets\Scripts\Units\Static\House.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Jacuzzi.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkPool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkshakeMaker.cs" />

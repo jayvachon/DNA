@@ -1,7 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
-Project("{7F6A139C-585B-D327-19F5-47E42FFA1592}") = "pathing2", "Assembly-CSharp.csproj", "{21DD6928-3DEA-0145-609A-6A5863227989}"
+Project("{7F6A139C-585B-D327-19F5-47E42FFA1592}") = "pathing2", "Assembly-CSharp-vs.csproj", "{21DD6928-3DEA-0145-609A-6A5863227989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,7 +17,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																										GlobalSection(MonoDevelopProperties) = preSolution
+												GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -30,6 +30,7 @@ Global
 		$0.TextStylePolicy = $3
 		$3.FileWidth = 120
 		$3.TabWidth = 4
+		$3.IndentWidth = 4
 		$3.EolMarker = Unix
 		$3.inheritsSet = Mono
 		$3.inheritsScope = text/plain

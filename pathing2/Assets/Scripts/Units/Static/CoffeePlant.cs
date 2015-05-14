@@ -34,6 +34,7 @@ namespace Units {
 			StaticUnit plot = ObjectCreator.Instance.Create<Plot> (Vector3.zero).GetScript<Plot> () as StaticUnit;
 			plot.Position = Position;
 			plot.PathPoint = PathPoint;
+			PathPoint.StaticUnit = plot;
 			ObjectCreator.Instance.Destroy<CoffeePlant> (transform);
 		}
 	}

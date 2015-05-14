@@ -30,8 +30,8 @@ namespace GameActions {
 		public void AddAction (Action action) {
 			string id = action.Name;
 			actions.Add (id, action);
-			EnabledActions.Add (id, action as T);
 			ActiveActions.Add (id, action as T);
+			EnabledActions.Add (id, action as T);
 			NotifyActionsUpdated ();
 		}
 
@@ -57,6 +57,16 @@ namespace GameActions {
 		void Deactivate (string id) {
 			ActiveActions.Remove (id);
 			Get (id).Active = false;
+		}
+
+		public void ActivateAll () {
+			ActiveActions.Clear ();
+			foreach (var action in actions) {
+				action.Value.Active = true;
+				ActiveActions.Add (action.Key, action.Value as T);
+			}
+			NotifyActionsUpdated ();
+			OnSetActive ();
 		}
 
 		public void DeactivateAll () {

@@ -10,6 +10,15 @@ namespace GameActions {
 		protected bool autoRepeat = false;
 		bool interrupt = false;
 
+		bool active = true;
+		public override bool Active {
+			get { return active; }
+			set {
+				active = value;
+				if (autoStart) Start ();
+			}
+		}
+
 		float efficiency = 1f; // Percentage
 		public float Efficiency {
 			get { return efficiency; }
@@ -26,9 +35,9 @@ namespace GameActions {
 		public IActionPerformer Performer { 
 			get { return performer; }
 			set { 
-				bool first = (performer == null);
+				bool initial = (performer == null);
 				performer = value;
-				if (first && autoStart) {
+				if (initial && autoStart) {
 					Start ();
 				}
 			}

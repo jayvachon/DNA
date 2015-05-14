@@ -4,17 +4,13 @@ using GameInventory;
 
 namespace GameActions {
 
-	public class AcceptOccupyBed : AcceptInventoryAction<BedHolder> {
-
-		public override string Name {
-			get { return "OccupyBed"; }
-		}
+	public class AcceptDeliverElder : AcceptDeliverItem<ElderHolder> {
 
 		EnabledState enabledState;
 		public override EnabledState EnabledState {
 			get {
 				if (enabledState == null) {
-					enabledState = new AcceptDeliverItemEnabledState (Holder);
+					enabledState = new AcceptDeliverElderEnabledState (Holder);
 				}
 				return enabledState;
 			}

@@ -104,10 +104,12 @@ namespace GameInventory {
 		}
 
 		public override void Initialize (int count) {
-			if (count == 0)
-				return;
-			for (int i = 0; i < count; i ++) {
-				Add ();
+			if (count == 0) {
+				Clear ();
+			} else {
+				for (int i = 0; i < count; i ++) {
+					Add ();
+				}
 			}
 		}
 

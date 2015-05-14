@@ -10,7 +10,7 @@ namespace Units {
 
 		public override string Name { get { return "Remains"; } }
 
-		OccupyBed occupyBed = new OccupyBed ();
+		Clinic boundClinic = null;
 
 		void Awake () {
 
@@ -21,7 +21,7 @@ namespace Units {
 			Inventory.Add (yearHolder);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (occupyBed);
+			PerformableActions.Add (new DeliverElder ());
 			PerformableActions.Add (new DeliverItem<YearHolder> ());
 			PerformableActions.Add (new ConsumeItem<YearHolder> ());
 		}
@@ -35,9 +35,9 @@ namespace Units {
 			MobileClickable.CanSelect = true;
 		}
 
-		public override void OnRelease () {
+		/*public override void OnRelease () {
 			// PerformableActions.Enable ("DeliverYear"); // TODO: shouldn't have to do this here -> straighten out how enabling/disabling works w/ actions!
-			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
+			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits);
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
 				if (clickable.StaticUnit is GivingTreeUnit) {
@@ -46,6 +46,27 @@ namespace Units {
 				}
 			} else {
 				occupyBed.Remove ();
+			}
+		}*/
+
+		protected override void OnBind () {
+			UnbindClinic ();
+			Clinic clinic = BoundAcceptor as Clinic;
+			if (clinic != null) {
+				boundClinic = clinic;
+				PerformableActions.SetActive ("DeliverElder", false);
+			}
+		}
+
+		protected override void OnUnbind () {
+			UnbindClinic ();
+		}
+
+		void UnbindClinic () {
+			if (boundClinic != null) {
+				boundClinic.Inventory.RemoveItem<ElderHolder> ();
+				PerformableActions.SetActive ("DeliverElder", true);
+				boundClinic = null;
 			}
 		}
 

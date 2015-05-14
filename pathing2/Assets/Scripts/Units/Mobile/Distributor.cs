@@ -38,9 +38,7 @@ namespace Units {
 		}
 
 		void OnAge () {
-			float progress = yearHolder.PercentFilled;
-			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
-			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p);
+			SetPathSpeed ();
 		}
 
 		void OnRetirement () {
@@ -60,6 +58,12 @@ namespace Units {
 			PerformableActions.Get ("DeliverCoffee").Efficiency = efficiency;
 		}
 
+		void SetPathSpeed () {
+			float progress = yearHolder.PercentFilled;
+			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
+			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p) / TimerValues.year;
+		}
+
 		protected override void OnChangeUnit<U> (U u) {
 			Path.Active = false;
 			Elder elder = u as Elder;
@@ -72,10 +76,14 @@ namespace Units {
 			yearHolder.HolderUpdated += OnAge;
 			yearHolder.HolderFilled += OnRetirement;
 			Path.Active = true;
+			SetPathSpeed ();
+			PerformableActions.ActivateAll ();
 			UnitInfoContent.Refresh ();
 		}
 
 		public override void OnPoolDestroy () {
+			PerformableActions.DeactivateAll ();
+			yearHolder.HolderUpdated -= OnAge;
 			yearHolder.HolderFilled -= OnRetirement;
 		}
 	}

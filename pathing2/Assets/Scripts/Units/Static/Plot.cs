@@ -28,10 +28,6 @@ namespace Units {
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
 		}
 
-		public override void OnPoolCreate () {
-//			PerformableActions.EnableAll ();
-		}
-
 		void Start () {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.StartAction += OnStartAction;

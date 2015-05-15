@@ -21,12 +21,12 @@ namespace Units {
 			Inventory.Add (new MilkshakeHolder (10, 0));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("DeliverMilk", new AcceptDeliverItem<MilkHolder> ());
-			AcceptableActions.Add ("DeliverIceCream", new AcceptDeliverItem<IceCreamHolder> ());
-			AcceptableActions.Add ("CollectMilkshake", new AcceptCollectItem<MilkshakeHolder> ());
+			AcceptableActions.Add (new AcceptDeliverItem<MilkHolder> ());
+			AcceptableActions.Add (new AcceptDeliverItem<IceCreamHolder> ());
+			AcceptableActions.Add (new AcceptCollectItem<MilkshakeHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("CombineMilkAndIceCream", new CombineItems<MilkHolder, IceCreamHolder, MilkshakeHolder> (5));
+			PerformableActions.Add (new CombineItems<MilkHolder, IceCreamHolder, MilkshakeHolder> (5));
 		}
 	}
 }

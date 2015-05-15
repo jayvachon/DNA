@@ -21,7 +21,7 @@ namespace Units {
 			AcceptableActions = new AcceptableActions (this);
 			
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("FleeTree", new FleeTree (), "Flee Tree");
+			PerformableActions.Add (new FleeTree (), "Flee Tree");
 		}
 	}
 }

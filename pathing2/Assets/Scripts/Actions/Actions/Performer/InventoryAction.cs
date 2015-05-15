@@ -42,9 +42,12 @@ namespace GameActions {
 		}
 
 		protected T AcceptorHolder {
+			// TODO: Only OccupyBed uses this - but it should be removed
+			// OccupyBed should operate like DeliverItem. only the
+			// action acceptor/performer should know about its own inventory
 			get { return AcceptorInventory.Get<T> (); }
 		}
 
-		public InventoryAction (float duration=-1, bool autoStart=false, bool autoRepeat=false, PerformCondition performCondition=null) : base (duration, autoStart, autoRepeat, performCondition) {}
+		public InventoryAction (float duration=-1, bool autoStart=false, bool autoRepeat=false) : base (duration, autoStart, autoRepeat) {}
 	}
 }

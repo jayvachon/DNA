@@ -28,20 +28,17 @@ namespace Units {
 			Inventory.Get<HappinessHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("CollectMilkshake", new CollectItem<MilkshakeHolder> ());
-			PerformableActions.Add ("DeliverMilkshake", new DeliverItem<MilkshakeHolder> ());
-			PerformableActions.Add ("CollectCoffee", new CollectItem<CoffeeHolder> ());
-			PerformableActions.Add ("DeliverCoffee", new DeliverItem<CoffeeHolder> ());
-			PerformableActions.Add ("CollectHappiness", new CollectHappiness ());
-			PerformableActions.Add ("ConsumeHappiness", new ConsumeItem<HappinessHolder> (-1, true, true, false));
-			PerformableActions.Add ("GenerateYear", new GenerateItem<YearHolder> ());
-			PerformableActions.DisableAll ();
+			PerformableActions.Add (new CollectItem<MilkshakeHolder> ());
+			PerformableActions.Add (new DeliverItem<MilkshakeHolder> ());
+			PerformableActions.Add (new CollectItem<CoffeeHolder> ());
+			PerformableActions.Add (new DeliverItem<CoffeeHolder> ());
+			PerformableActions.Add (new CollectHappiness ());
+			PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
+			PerformableActions.Add (new GenerateItem<YearHolder> ());
 		}
 
 		void OnAge () {
-			float progress = yearHolder.PercentFilled;
-			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
-			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p);
+			SetPathSpeed ();
 		}
 
 		void OnRetirement () {
@@ -61,6 +58,12 @@ namespace Units {
 			PerformableActions.Get ("DeliverCoffee").Efficiency = efficiency;
 		}
 
+		void SetPathSpeed () {
+			float progress = yearHolder.PercentFilled;
+			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
+			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p) / TimerValues.year;
+		}
+
 		protected override void OnChangeUnit<U> (U u) {
 			Path.Active = false;
 			Elder elder = u as Elder;
@@ -73,10 +76,14 @@ namespace Units {
 			yearHolder.HolderUpdated += OnAge;
 			yearHolder.HolderFilled += OnRetirement;
 			Path.Active = true;
+			SetPathSpeed ();
+			PerformableActions.ActivateAll ();
 			UnitInfoContent.Refresh ();
 		}
 
 		public override void OnPoolDestroy () {
+			PerformableActions.DeactivateAll ();
+			yearHolder.HolderUpdated -= OnAge;
 			yearHolder.HolderFilled -= OnRetirement;
 		}
 	}

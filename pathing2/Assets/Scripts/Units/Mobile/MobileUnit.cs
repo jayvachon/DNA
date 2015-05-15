@@ -44,8 +44,22 @@ namespace Units {
 		public IActionAcceptor BoundAcceptor { get; private set; }
 
 		public virtual void OnRelease () {
-			StartMovingOnPath ();
+			if (StartMovingOnPath ()) return;
+			BindToCollider ();
 		}
+
+		protected void BindToCollider () {
+			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits);
+			if (clickable != null) {
+				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
+				OnBind ();
+			} else {
+				OnUnbind ();
+			}
+		}
+
+		protected virtual void OnBind () {}
+		protected virtual void OnUnbind () {}
 
 		public virtual void OnBindActionable (IActionAcceptor acceptor) {
 			BoundAcceptor = acceptor;
@@ -56,10 +70,10 @@ namespace Units {
 			StartMovingOnPath ();
 		}
 
-		void StartMovingOnPath () {
-			MobileTransform.StartMovingOnPath ();
-			PerformableActions.EnableAcceptedActionsBetweenAcceptors (
+		bool StartMovingOnPath () {
+			PerformableActions.PairActionsBetweenAcceptors (
 				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
+			return MobileTransform.StartMovingOnPath ();
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}

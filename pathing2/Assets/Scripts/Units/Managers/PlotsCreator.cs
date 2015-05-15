@@ -36,16 +36,21 @@ namespace Units {
 					center.x + myRadius * Mathf.Sin (radians),
 					center.y,
 					center.z + myRadius * Mathf.Cos (radians)
-				); 
-				if (index == 1 && i == 0) {
+				);
+				if (index == 2 && i == 4) {
 					CreateUnit<MilkshakePool> (position);
-				} /*else if (index == 1 && i == 1) {
-					CreateUnit<CoffeePlant> (position);
-				} else if (index == 1 && i ==2) {
-					CreateUnit<Clinic> (position);
-				}*/ else {
+				} else if (index == 3 && i == 9) {
+					CreateUnit<MilkshakePool> (position);
+				} else if (index == 4 && i == 19) {
+					CreateUnit<MilkshakePool> (position);
+				} else {
 					CreateUnit<Plot> (position);
 				}
+				/*if (index == 1 && i == 0) {
+					CreateUnit<MilkshakePool> (position);
+				} else {
+					CreateUnit<Plot> (position);
+				}*/
 			}
 		}
 

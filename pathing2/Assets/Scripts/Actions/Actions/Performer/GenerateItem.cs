@@ -12,13 +12,23 @@ namespace GameActions {
 				if (name == "") {
 					string typeName = typeof (T).Name;
 					typeName = typeName.Substring (0, typeName.Length-6);
-					name = "Generate " + typeName;
+					name = "Generate" + typeName;
 				}
 				return name;
 			}
 		}
 
-		public GenerateItem (PerformCondition performCondition=null) : base (-1f, true, true, performCondition) {}
+		EnabledState enabledState;
+		public override EnabledState EnabledState {
+			get {
+				if (enabledState == null) {
+					enabledState = new GenerateItemEnabledState (Holder);
+				}
+				return enabledState;
+			}
+		}
+
+		public GenerateItem () : base (-1f, true, true) {}
 		
 		public override void OnEnd () {
 			Holder.Add ();

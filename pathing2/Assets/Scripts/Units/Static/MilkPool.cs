@@ -17,7 +17,7 @@ namespace Units {
 			Inventory.Add (new MilkHolder (100, 100));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectMilk", new AcceptCollectItem<MilkHolder> ());
+			AcceptableActions.Add (new AcceptCollectItem<MilkHolder> ());
 		}
 	}
 }

@@ -13,15 +13,15 @@ namespace GameActions {
 			this.acceptor = acceptor;
 		}
 
-		public void Add (string id, AcceptorAction action) {
+		public void Add (AcceptorAction action) {
 			action.Acceptor = acceptor;
-			AddAction (id, action);
+			AddAction (action);
 		}
 
 		public void Bind (IActionPerformer boundPerformer) {
 			IInventoryHolder holder = boundPerformer as IInventoryHolder;
 			Inventory boundInventory = holder.Inventory;
-			foreach (var action in Actions) {
+			foreach (var action in ActiveActions) {
 				AcceptorAction acceptorAction = action.Value as AcceptorAction;
 				acceptorAction.Bind (boundInventory);
 			}

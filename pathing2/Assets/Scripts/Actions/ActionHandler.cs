@@ -34,18 +34,17 @@ namespace GameActions {
 			performable.RefreshEnabledActions ();
 			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
-			
+
 			PerformerAction matching = null;
 			foreach (var action in performable.EnabledActions) {
 				AcceptorAction acceptorAction;
 				if (acceptable.EnabledActions.TryGetValue (action.Key, out acceptorAction)) {
 					PerformerAction performerAction = action.Value;
-					performerAction.Bind (acceptorAction.AcceptCondition);
 					matching = performerAction;
 					break;
 				}
 			}
-
+			
 			StartCoroutine (PerformActions (binder, matching));
 		}
 		

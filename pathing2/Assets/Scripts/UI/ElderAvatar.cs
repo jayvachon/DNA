@@ -21,7 +21,7 @@ public class ElderAvatar : MBRefs, IPoolable {
 
 	public void Init (ElderItem elder) {
 		this.elder = elder;
-		Image.fillAmount = elder.HealthManager.Health;		
+		//Image.fillAmount = elder.HealthManager.Health;		
 	}
 
 	IEnumerator CoTrackHealth () {
@@ -29,7 +29,7 @@ public class ElderAvatar : MBRefs, IPoolable {
 		int blinkSpeed = 10;
 		while (trackHealth) {
 			if (elder != null) {
-				Image.fillAmount = elder.HealthManager.Health;
+				/*Image.fillAmount = elder.HealthManager.Health;
 				if (elder.HealthManager.Sick) {
 					blink ++;
 					if (blink < blinkSpeed) {
@@ -42,7 +42,7 @@ public class ElderAvatar : MBRefs, IPoolable {
 					}
 				} else {
 					Image.color = Color.white;
-				}
+				}*/
 			}
 			yield return null;
 		}

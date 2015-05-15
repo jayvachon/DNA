@@ -19,10 +19,10 @@ namespace Units {
 			Inventory.Add (new HappinessHolder (100, 100));
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add ("CollectHappiness", new AcceptCollectItem<HappinessHolder> ());
+			AcceptableActions.Add (new AcceptCollectItem<HappinessHolder> ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("GenerateHappiness", new GenerateItem<HappinessHolder> ());
+			PerformableActions.Add (new GenerateItem<HappinessHolder> ());
 		}
 	}
 }

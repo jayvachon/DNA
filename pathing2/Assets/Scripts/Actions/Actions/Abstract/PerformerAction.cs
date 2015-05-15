@@ -5,13 +5,19 @@ namespace GameActions {
 
 	public abstract class PerformerAction : Action {
 
-		public virtual System.Type RequiredPair { get { return null; } }
-		public virtual bool CanPerform { get { return true; } }
-
 		readonly bool autoStart;
 		bool performing = false;
 		protected bool autoRepeat = false;
 		bool interrupt = false;
+
+		bool active = true;
+		public override bool Active {
+			get { return active; }
+			set {
+				active = value;
+				if (autoStart) Start ();
+			}
+		}
 
 		float efficiency = 1f; // Percentage
 		public float Efficiency {
@@ -22,37 +28,27 @@ namespace GameActions {
 		protected float duration;
 		public float Duration {
 			get { return duration * Efficiency; }
+			set { duration = value; }
+		}
+
+		IActionPerformer performer;
+		public IActionPerformer Performer { 
+			get { return performer; }
 			set { 
-				// This is a hack - the constructor doesn't auto start if duration is the default value of -1
-				// so, when the duration DOES get set, auto start happens here
-				// a better way of doing this would be to have classes that inherit from PerformerAction set their name
-				// in their constructors so that PerformerAction can access TimeValues.ActionTimes
-				float prevValue = duration;
-				if (value != -1) {
-					duration = value;
-					if (prevValue == -1 && autoStart) {
-						Start ();
-					}
+				bool initial = (performer == null);
+				performer = value;
+				if (initial && autoStart) {
+					Start ();
 				}
 			}
 		}
 
-		public IActionPerformer Performer { get; set; }
-		protected AcceptCondition AcceptCondition { get; private set; }
-		protected PerformCondition PerformCondition { get; private set; }
-
-		public PerformerAction (float duration=-1, bool autoStart=false, bool autoRepeat=false, PerformCondition performCondition=null) {
-			this.duration = duration;
+		public PerformerAction (float duration=-1, bool autoStart=false, bool autoRepeat=false) {
+			this.duration = (duration == -1) 
+				? TimerValues.GetActionTime (Name) 
+				: duration;
 			this.autoStart = autoStart;
 			this.autoRepeat = autoRepeat;
-			this.PerformCondition = performCondition;
-			if (duration != -1 && autoStart) {
-				Start ();
-			}
-		}
-
-		public void Bind (AcceptCondition acceptCondition) {
-			AcceptCondition = acceptCondition;
 		}
 
 		public void Start (bool autoRepeat) {
@@ -61,6 +57,7 @@ namespace GameActions {
 		}
 
 		public virtual void Start () {
+			if (!Enabled) return;
 			if (duration == 0) {
 				End ();
 				return;
@@ -74,7 +71,7 @@ namespace GameActions {
 
 		public void End () {
 			performing = false;
-			if (PerformCondition == null || PerformCondition.CanPerform) {
+			if (Enabled) {
 				OnEnd ();
 			}
 			if (autoRepeat) {

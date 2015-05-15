@@ -10,20 +10,20 @@ namespace Units {
 
 		public override string Name { get { return "Remains"; } }
 
-		OccupyBed occupyBed = new OccupyBed ();
+		Clinic boundClinic = null;
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			YearHolder yearHolder = new YearHolder (500, 0);
+			YearHolder yearHolder = new YearHolder (500, 100);
 			yearHolder.HolderEmptied += OnDeliverYears;
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			Inventory.Add (yearHolder);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add ("OccupyBed", occupyBed);
-			PerformableActions.Add ("DeliverYear", new DeliverItem<YearHolder> ());
-			PerformableActions.Add ("ConsumeYear", new ConsumeItem<YearHolder> ());
+			PerformableActions.Add (new DeliverElder ());
+			PerformableActions.Add (new DeliverAllYears ());
+			PerformableActions.Add (new ConsumeItem<YearHolder> ());
 		}
 
 		void Start () {
@@ -35,17 +35,24 @@ namespace Units {
 			MobileClickable.CanSelect = true;
 		}
 
-		public override void OnRelease () {
-			PerformableActions.Enable ("DeliverYear"); // TODO: shouldn't have to do this here -> straighten out how enabling/disabling works w/ actions!
-			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits).GetScript<UnitClickable> ();
-			if (clickable != null) {
-				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-				if (clickable.StaticUnit is GivingTreeUnit) {
-					MobileClickable.CanDrag = false;
-					MobileClickable.CanSelect = false;
-				}
-			} else {
-				occupyBed.Remove ();
+		protected override void OnBind () {
+			UnbindClinic ();
+			Clinic clinic = BoundAcceptor as Clinic;
+			if (clinic != null) {
+				boundClinic = clinic;
+				PerformableActions.SetActive ("DeliverElder", false);
+			}
+		}
+
+		protected override void OnUnbind () {
+			UnbindClinic ();
+		}
+
+		void UnbindClinic () {
+			if (boundClinic != null) {
+				boundClinic.Inventory.RemoveItem<ElderHolder> ();
+				PerformableActions.SetActive ("DeliverElder", true);
+				boundClinic = null;
 			}
 		}
 

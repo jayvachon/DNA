@@ -14,7 +14,7 @@ namespace Units {
 			base.Awake ();
 			Path = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
 			Path.MyTransform.SetParent (MobileUnit.transform);
-			Path.Init (this, new PathSettings (3, 2, false));
+			Path.Init (this, new PathSettings (8, 2, false));
 		}
 
 		public override void OnSelect () {
@@ -25,8 +25,9 @@ namespace Units {
 			Path.Enabled = false;
 		}
 
-		public void StartMovingOnPath () {
+		public bool StartMovingOnPath () {
 			Path.StartMoving ();
+			return (Path.Points.Count >= 2);
 		}
 
 		public void StopMovingOnPath () {

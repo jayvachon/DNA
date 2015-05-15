@@ -55,7 +55,7 @@ namespace Units {
 		public void OnDragExit (DragSettings dragSettings) {
 			if (CanDrag && dragSettings.WasClicked) {
 				PathManager.Instance.SelectedPath = null;
-				UnitClickable collidingUnit = Colliding ().GetScript<UnitClickable> ();
+				UnitClickable collidingUnit = Colliding ();
 				if (collidingUnit != null) {
 					MobileUnit.OnDragRelease (collidingUnit.Unit);
 				}
@@ -66,7 +66,7 @@ namespace Units {
 			MobileUnit.OnRelease ();
 		}
 
-		public Transform Colliding (int layerMask=Physics.DefaultRaycastLayers) {
+		public UnitClickable Colliding (int layerMask=Physics.DefaultRaycastLayers) {
 
 			int rayCount = 36;
 			float radius = 1.25f;
@@ -84,7 +84,7 @@ namespace Units {
 				// Rays are cast inwards, so this will only work if the collider has been disabled
 				// (otherwise it will register a collision with itself)
 				if (Physics.Raycast (Position + direction, -direction, out hit, 0.5f, layerMask)) {
-					return hit.transform;
+					return hit.transform.GetScript<UnitClickable> ();
 				}
 			}
 

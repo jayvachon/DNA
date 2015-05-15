@@ -2,6 +2,7 @@
 using System.Collections;
 using GameInventory;
 using GameActions;
+using GameInput;
 
 namespace Units {
 	
@@ -40,6 +41,7 @@ namespace Units {
 		public override void OnPoolCreate () {
 			if (name != defaultName) {
 				name = defaultName;
+				Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, true);
 				PerformableActions.ActivateAll ();
 				unitInfoContent.Refresh ();
 			}
@@ -65,10 +67,14 @@ namespace Units {
 		void OnUnitGenerated (Unit unit) {
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
 			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
+
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.Position = Position;
 			staticUnit.PathPoint = PathPoint;
 			PathPoint.StaticUnit = staticUnit;
+			if (Selected) {
+				SelectionManager.Select (staticUnit.UnitClickable);
+			}
 			ObjectCreator.Instance.Destroy<Plot> (transform);
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class ObjectBank : MonoBehaviour {
@@ -20,9 +21,6 @@ public class ObjectBank : MonoBehaviour {
 			if (objects[i].name == name)
 				return objects[i];
 		}
-		#if UNITY_EDITOR
-		Debug.LogError (string.Format ("{0} does not exist in the object bank", name));
-		#endif
 		return null;
 	}
 }

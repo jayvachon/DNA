@@ -10,18 +10,13 @@
 -\'93drop on and circle\'94 for certain units (jacuzzi, clinic)\
 -mobile units stop transferring after receiving inventory filled (e.g. when building a plot & the laborer has leftover milkshakes)\
 -laborers don\'92t path between units that don\'92t share an action (e.g. coffee plant and milkshake derrick) \'97 don\'92t allow the path in the first place\
--distinguish enabling/disabling action from activating/deactivating action\
--laborers don\'92t collect milkshakes if paired with an empty plot\
 -ability to cancel building projects by clicking on this^ indicator\
--slow laborers max speed\
 -action performers need to be able to consume 1 inventory item while generating others (a trading action) (e.g. clinic require coffee to treat elders) >> or not- this might be confusing to play, and it\'92s more illustrative to have resources only go into building units (so, coffee plants die and milkshake derricks have a finite supply of milkshakes, and clinics are expensive to build)\
 -must deliver constant stream of milkshakes to jacuzzis; must deliver constant stream of coffee to clinics\
 -laborer capacity for jacuzzi (like clinic)\
--drop off finished laborers/remains\
 -don\'92t allow milkshake derrick to be depleted if not enough milkshakes to build another derrick OR: populate map with set # of derricks & set milkshakes at a finite amount (like gold or rock in age of empires) <- this might be a lot better since it also gives 1 less building option to the player\
 -double click laborer to follow\
 -laborer happiness indicator\
--interrupting laborers during transfer messes up inventory\
 -be able to set action times specific to the unit (e.g. years w/ corpse vs years w/ coffee plant)\
 \
 balancing:\
@@ -33,9 +28,4 @@ eventually:\
 -replace current object pool with object pool from rbf game\
 \
 \
-when are actions enabled/disabled? when are they activated/deactivated?\
-- any object implementing IActionPerformer or IActionAcceptor can activate or deactivate actions. ONLY the implementer may do this - not the action list\
-\
-- ONLY the action list checks for enabled/disabled actions\
-- actions themselves determine whether they are enabled/disabled - this is not set by the action list. this replaces accept/perform conditions\
--action checks its enabled state EVERY TIME before it is performed}
+}

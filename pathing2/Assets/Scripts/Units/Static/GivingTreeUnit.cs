@@ -48,7 +48,7 @@ namespace Units {
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
-			AcceptableActions.Add (new AcceptDeliverItem<YearHolder> ());
+			AcceptableActions.Add (new AcceptDeliverAllYears ());
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (15, OnUnitGenerated), "Birth Laborer (15C)");

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathing;
@@ -44,12 +45,17 @@ namespace Units {
 		public IActionAcceptor BoundAcceptor { get; private set; }
 
 		public virtual void OnRelease () {
-			if (StartMovingOnPath ()) return;
+			if (StartMovingOnPath (true)) return;
 			BindToCollider ();
 		}
 
 		protected void BindToCollider () {
-			UnitClickable clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits);
+			UnitClickable clickable = null;
+			try {
+				clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits);
+			} catch (NullReferenceException e) {
+				Debug.LogError (Name + " does not reference its MobileClickable. Assign it in the inspector. \n" + e);
+			}
 			if (clickable != null) {
 				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
 				OnBind ();
@@ -70,10 +76,10 @@ namespace Units {
 			StartMovingOnPath ();
 		}
 
-		bool StartMovingOnPath () {
+		bool StartMovingOnPath (bool checkIfPreviousPath=false) {
 			PerformableActions.PairActionsBetweenAcceptors (
 				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
-			return MobileTransform.StartMovingOnPath ();
+			return MobileTransform.StartMovingOnPath (checkIfPreviousPath);
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}

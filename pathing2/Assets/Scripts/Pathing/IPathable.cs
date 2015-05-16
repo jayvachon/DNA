@@ -6,7 +6,7 @@ namespace Pathing {
 	public interface IPathable {
 		Path Path { get; set; }
 		Vector3 Position { get; set; }
-		bool StartMovingOnPath ();
+		bool StartMovingOnPath (bool checkIfPreviousPath);
 		void StopMovingOnPath ();
 		void ArriveAtPoint (PathPoint pathPoint);
 	}

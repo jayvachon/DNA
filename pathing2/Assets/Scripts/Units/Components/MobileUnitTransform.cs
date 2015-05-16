@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Pathing;
 using GameActions;
 
@@ -9,6 +10,8 @@ namespace Units {
 
 		public Path Path { get; set; }
 		public IActionAcceptor BoundAcceptor { get; private set; }
+
+		List<PathPoint> previousPath; // TODO: instead of doing this, picking up a unit should automatically remove one of the points from the path
 
 		protected override void Awake () {
 			base.Awake ();
@@ -25,8 +28,13 @@ namespace Units {
 			Path.Enabled = false;
 		}
 
-		public bool StartMovingOnPath () {
+		public bool StartMovingOnPath (bool checkIfPreviousPath=false) {
+			if (checkIfPreviousPath && PathPoints.PathsEqual (previousPath, Path.Points.Points)) {
+				StopMovingOnPath ();
+				return false;
+			}
 			Path.StartMoving ();
+			previousPath = Path.Points.Points;
 			return (Path.Points.Count >= 2);
 		}
 

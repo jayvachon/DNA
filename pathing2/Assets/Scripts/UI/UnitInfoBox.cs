@@ -171,11 +171,16 @@ public class UnitInfoBox : MBRefs {
 		if (performableActions == null)
 			return;
 
-		foreach (var input in performableActions.Inputs) {
-			CreateAction (input.Key, input.Value);
+		bool hasInputAction = false;
+		foreach (var action in performableActions.ActiveActions) {
+			string name = action.Value.Name;
+			if (performableActions.Inputs.ContainsKey (name)) {
+				CreateAction (name, performableActions.Inputs[name]);
+				hasInputAction = true;
+			}
 		}
 
-		ActionsSetActive (performableActions.Inputs.Count > 0);
+		ActionsSetActive (hasInputAction);
 	}
 
 	void CreateAction (string id, string inputName) {

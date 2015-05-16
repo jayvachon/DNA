@@ -42,16 +42,6 @@ namespace GameActions {
 			Get (id).Stop ();
 		}
 
-		public override void OnSetActive () {
-			inputs.Clear ();
-			foreach (var action in ActiveActions) {
-				string name = action.Value.Name;
-				if (action.Value.Active && inputs.ContainsKey (name)) {
-					inputs.Add (name, inputs[name]);
-				}
-			}
-		}
-
 		public override void RefreshEnabledActions () {
 			EnabledActions.Clear ();
 			foreach (var keyval in ActiveActions) {

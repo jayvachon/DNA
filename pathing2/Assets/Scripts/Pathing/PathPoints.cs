@@ -71,6 +71,8 @@ namespace Pathing {
 			}
 		}
 
+
+
 		public int Count { get { return points.Count; } }
 		public bool Empty { get { return Count == 0; } }
 		public bool Loop { get { return FirstPoint == LastPoint; } }
@@ -143,6 +145,16 @@ namespace Pathing {
 			foreach (PathPoint point in points) {
 				positions.Add (point.Position);
 			}
+		}
+
+		public static bool PathsEqual (List<PathPoint> set1, List<PathPoint> set2) {
+			if (set1 == null || set2 == null) return false;
+			if (set1.Count != set2.Count) return false;
+			for (int i = 0; i < set1.Count; i ++) {
+				if (!Vector3.Equals (set1[i].Position, set2[i].Position))
+					return false;
+			}
+			return true;
 		}
 	}
 }

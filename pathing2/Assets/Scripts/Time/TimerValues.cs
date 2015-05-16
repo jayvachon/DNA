@@ -1,4 +1,4 @@
-﻿#define FAST_FORWARD
+﻿#undef FAST_FORWARD
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;

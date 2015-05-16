@@ -7,10 +7,10 @@ namespace Pathing {
 	
 	/**
 	 *	Path
-	 *		- PathPositioner
-	 *		- PathDrawer
-	 *			- PointsDrawer
-	 *			- MouseDrawer
+	 *		> PathPositioner
+	 *		> PathDrawer
+	 *			> PointsDrawer
+	 *			> MouseDrawer
 	 */
 
 	public class Path : MBRefs, IPoolable {

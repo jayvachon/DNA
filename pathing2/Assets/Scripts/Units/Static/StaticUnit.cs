@@ -17,6 +17,10 @@ namespace Units {
 				return staticTransform;
 			}
 		}
+		
+		public virtual bool PathPointEnabled {
+			get { return true; }
+		}
 
 		public PathPoint PathPoint { get; set; }
 		public AcceptableActions AcceptableActions { get; protected set; }

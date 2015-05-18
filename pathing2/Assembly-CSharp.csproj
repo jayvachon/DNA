@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverAllYears.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverUnpairedItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptorInventoryAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\ActionDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptCollectItemEnabledState.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverAllYearsEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverElderEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverItemEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverUnpairedItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectHappinessEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\ConsumeItemEnabledState.cs" />
@@ -84,6 +86,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverAllYears.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverUnpairedItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverYear.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\FleeTree.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateItem.cs" />
@@ -129,6 +132,7 @@
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\BedHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\CoffeeHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\DistributorHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\HappinessHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\HealthHolder.cs" />
@@ -143,6 +147,7 @@
      <Compile Include="Assets\Scripts\Inventory\ItemHolderDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\BedItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\CoffeeItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\DistributorItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\HappinessItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\HealthItem.cs" />

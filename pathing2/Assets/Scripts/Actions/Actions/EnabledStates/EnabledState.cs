@@ -18,19 +18,20 @@ namespace GameActions {
 
 		public Inventory BoundInventory { get; set; }
 
-		public void AttemptPair (List<IActionAcceptor> acceptors) {
+		public bool AttemptPair (List<IActionAcceptor> acceptors) {
 			
 			if (RequiredPair == "") {
-				return;
+				return false;
 			}
 
 			foreach (IActionAcceptor acceptor in acceptors) {
 				if (acceptor.AcceptableActions.Has (RequiredPair)) {
 					Paired = true;
-					return;
+					return true;
 				}
 			}
 			Paired = false;
+			return false;
 		}
 	}
 }

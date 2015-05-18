@@ -2,5 +2,5 @@
 using System.Collections;
 
 namespace GameInventory {
-	public class ElderItem : Item {}
+	public class DistributorItem : Item {}
 }

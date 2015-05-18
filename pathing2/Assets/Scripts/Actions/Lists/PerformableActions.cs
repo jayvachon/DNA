@@ -53,12 +53,6 @@ namespace GameActions {
 			NotifyActionsUpdated ();
 		}
 
-		public void PairActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
-			foreach (var action in ActiveActions) {
-				action.Value.EnabledState.AttemptPair (acceptors);
-			}
-		}
-
 		/**
 		 *	Debugging
 		 */

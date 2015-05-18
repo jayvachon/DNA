@@ -21,7 +21,7 @@ namespace Pathing {
 			set {
 				active = value;
 				if (!active) {
-					OnInactivate ();
+					OnDeactivate ();
 				}
 			}
 		}
@@ -50,8 +50,6 @@ namespace Pathing {
 
 		public IPathable Pathable { get; set; }
 
-		bool dragging = false;
-
 		public float Speed {
 			get { return pathPositioner.Speed; }
 			set { pathPositioner.Speed = value; }
@@ -67,64 +65,48 @@ namespace Pathing {
 			Pathable = pathable;
 			this.pathSettings = pathSettings;
 			Points = new PathPoints (pathSettings.maxLength, pathSettings.allowLoop);
+			pathDrawer.Init (Points);
 			Speed = pathSettings.maxSpeed;
 		}
 
 		public void PointDragEnter (DragSettings dragSettings, PathPoint point) {
 			if (!Active || !dragSettings.left) return;
-			if (pathPoints.CanDragFromPoint (point)) {
-				dragging = true;
-			} else {
-
-				// Clear the path and start over if the path already exists but the player
-				// is dragging over a point not on the path (ik this makes no sense, but it works)
-				if (!dragging) {
-					pathPoints.Clear ();
-					dragging = true;
-				}
-			}
-
-			if (dragging) {
-				pathPoints.RequestAdd (point);
-				UpdatePoints ();
-				pathDrawer.Dragging = true;
-			}
+			pathDrawer.Dragging = true;
+			pathPoints.Add (point);
 		}
 
 		public void PointDragExit (DragSettings dragSettings, PathPoint point) {
 			if (!Active || !dragSettings.left) return;
 			float a = ScreenPositionHandler.PointDirection (MouseController.MousePosition, point.Position);
-			
 			if (ScreenPositionHandler.AnglesInRange (pathPoints.Direction, a, 25)) {
-				pathPoints.RequestRemove (point);
-				UpdatePoints ();
+				pathPoints.Remove (point);
 			}
 		}
 
 		public void StartMoving () {
-			pathPositioner.StartMoving ();
+			if (pathPoints.Refresh ())
+				pathPositioner.StartMoving ();
 		}
 
 		public void StopMoving () {
 			pathPositioner.StopMoving ();
 		}
 
-		void UpdatePoints () {
-			pathDrawer.OnUpdatePoints ();
+		public void DragFromPath () {
+			pathDrawer.Dragging = true;
+			pathPoints.RemoveFirst ();
+			StopMoving ();
 		}
 
 		void OnReleaseEvent (ReleaseEvent e) {
-			dragging = false;
 			pathDrawer.Dragging = false;
 			pathPoints.OnRelease ();
 		}
 
-		void OnInactivate () {
-			dragging = false;
+		void OnDeactivate () {
 			pathDrawer.Dragging = false;
 			StopMoving ();
 			pathPoints.Clear ();
-			UpdatePoints ();
 		}
 
 		public void OnPoolCreate () {}

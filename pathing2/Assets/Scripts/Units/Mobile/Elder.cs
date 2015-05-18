@@ -29,7 +29,7 @@ namespace Units {
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new DeliverElder ());
+			PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
 			PerformableActions.Add (new ConsumeHealth (healthManager));
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
 		}

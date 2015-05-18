@@ -11,6 +11,10 @@ namespace Units {
 			get { return "Clinic"; }
 		}
 
+		public override bool PathPointEnabled {
+			get { return false; }
+		}
+
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {
@@ -20,7 +24,7 @@ namespace Units {
 			Inventory.Get<ElderHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add (new AcceptDeliverElder ());
+			AcceptableActions.Add (new AcceptDeliverUnpairedItem<ElderHolder> ());
 		}
 	}
 }

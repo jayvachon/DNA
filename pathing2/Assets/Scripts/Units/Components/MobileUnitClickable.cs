@@ -5,7 +5,7 @@ using Pathing;
 
 namespace Units {
 
-	// rename to MobileUnitCollider
+	// TODO: rename to MobileUnitCollider
 
 	public class MobileUnitClickable : UnitClickable, IDraggable, IReleasable {
 			
@@ -40,7 +40,7 @@ namespace Units {
 		public void OnDragEnter (DragSettings dragSettings) {
 			if (CanDrag && dragSettings.WasClicked) {
 				PathManager.Instance.SelectedPath = MobileUnit.Path;
-				MobileTransform.StopMovingOnPath ();
+				MobileTransform.Path.DragFromPath ();
 			}
 		}
 

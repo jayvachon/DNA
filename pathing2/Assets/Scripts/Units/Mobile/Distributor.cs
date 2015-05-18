@@ -15,6 +15,7 @@ namespace Units {
 			get { return "Laborer"; }
 		}
 
+		Jacuzzi boundJacuzzi = null;
 		YearHolder yearHolder = new YearHolder (65, 0);
 
 		void Awake () {
@@ -32,6 +33,7 @@ namespace Units {
 			PerformableActions.Add (new DeliverItem<MilkshakeHolder> ());
 			PerformableActions.Add (new CollectItem<CoffeeHolder> ());
 			PerformableActions.Add (new DeliverItem<CoffeeHolder> ());
+			PerformableActions.Add (new DeliverUnpairedItem<DistributorHolder> ());
 			PerformableActions.Add (new CollectHappiness ());
 			PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
@@ -48,6 +50,27 @@ namespace Units {
 		public override void OnBindActionable (IActionAcceptor acceptor) {
 			UpdateEfficiency ();
 			base.OnBindActionable (acceptor);
+		}
+
+		protected override void OnBind () {
+			UnbindJacuzzi ();
+			Jacuzzi jacuzzi = BoundAcceptor as Jacuzzi;
+			if (jacuzzi != null) {
+				boundJacuzzi = jacuzzi;
+				PerformableActions.SetActive ("DeliverDistributor", false);
+			}
+		}
+
+		protected override void OnUnbind () {
+			UnbindJacuzzi ();
+		}
+
+		void UnbindJacuzzi () {
+			if (boundJacuzzi != null) {
+				boundJacuzzi.Inventory.RemoveItem<DistributorHolder> ();
+				PerformableActions.SetActive ("DeliverDistributor", true);
+				boundJacuzzi = null;
+			}
 		}
 
 		void UpdateEfficiency () {

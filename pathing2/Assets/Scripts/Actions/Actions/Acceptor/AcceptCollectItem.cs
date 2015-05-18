@@ -22,7 +22,7 @@ namespace GameActions {
 		public override EnabledState EnabledState {
 			get {
 				if (enabledState == null) {
-					enabledState = new AcceptCollectItemEnabledState (Holder);
+					enabledState = new AcceptCollectItemEnabledState<T> (Holder);
 				}
 				return enabledState;
 			}

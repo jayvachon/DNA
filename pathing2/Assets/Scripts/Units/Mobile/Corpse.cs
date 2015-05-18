@@ -21,7 +21,7 @@ namespace Units {
 			Inventory.Add (yearHolder);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new DeliverElder ());
+			PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
 			PerformableActions.Add (new DeliverAllYears ());
 			PerformableActions.Add (new ConsumeItem<YearHolder> ());
 		}

@@ -29,6 +29,10 @@ namespace GameInventory {
 			NotifyInventoryUpdated ();
 		}
 
+		public List<Item> AddItem<T> () where T : ItemHolder {
+			return Get<T> ().Add ();
+		}
+
 		public List<Item> AddItem<T> (Item item) where T : ItemHolder {
 			return Get<T> ().Add (item);
 		}

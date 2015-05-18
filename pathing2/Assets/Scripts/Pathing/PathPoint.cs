@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using GameActions;
 using GameInput;
 using Units;
 
 namespace Pathing {
 
 	public class PathPoint : MBRefs, IPoolable, IDraggable {
+
+		public bool Enabled { 
+			get { return StaticUnit.PathPointEnabled; }
+		}
 
 		public bool MoveOnDrag { get { return false; } }
 
@@ -32,12 +38,21 @@ namespace Pathing {
 			}
 		}
 
+		public IActionAcceptor ActionAcceptor {
+			get { return staticUnit as IActionAcceptor; }
+		}
+
 		public void OnDragEnter (DragSettings dragSettings) {
 			PathManager.Instance.EnterPathPoint (dragSettings, this);
 		}
 
 		public void OnDragExit (DragSettings dragSettings) {
 			PathManager.Instance.ExitPathPoint (dragSettings, this);
+		}
+
+		public bool PointsHavePairs (List<PathPoint> points) {
+			return ActionAcceptor.AcceptableActions.PairActionsBetweenAcceptors (
+				points.ConvertAll (x => x.ActionAcceptor));
 		}
 
 		public void OnDrag (DragSettings dragSettings) {}

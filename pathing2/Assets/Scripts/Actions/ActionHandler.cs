@@ -44,7 +44,7 @@ namespace GameActions {
 					break;
 				}
 			}
-			
+
 			StartCoroutine (PerformActions (binder, matching));
 		}
 		

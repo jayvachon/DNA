@@ -4,6 +4,17 @@ using System.Collections.Generic;
 
 namespace GameActions {
 
+	/**
+	 *	ActionList
+	 *	- PerformableActions
+	 *		> PerformerAction
+	 *		> IActionPerformer
+	 *	- AcceptableActions
+	 *		> AcceptorAction
+	 *		> IActionAcceptor
+	 *
+	 */
+
 	public delegate void ActionsUpdated ();
 
 	public abstract class ActionList<T> where T : Action {
@@ -98,6 +109,15 @@ namespace GameActions {
 			if (actionsUpdated != null) {
 				actionsUpdated ();
 			}
+		}
+
+		public bool PairActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
+			bool hasPair = false;
+			foreach (var action in ActiveActions) {
+				if (action.Value.EnabledState.AttemptPair (acceptors))
+					hasPair = true;
+			}
+			return hasPair;
 		}
 
 		public virtual void OnSetActive () {}

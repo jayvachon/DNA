@@ -4,6 +4,7 @@ using GameInventory;
 
 namespace GameActions {
 
+	// TODO: Deprecate
 	public class AcceptDeliverElderEnabledState : EnabledState {
 
 		public override bool Enabled {

@@ -22,7 +22,11 @@ namespace Pathing {
 			}
 		}
 
-		public void OnUpdatePoints () {
+		public void Init (PathPoints points) {
+			points.OnUpdatePoints += OnUpdatePoints;
+		}
+
+		void OnUpdatePoints () {
 			pointsDrawer.UpdatePositions (Points.Positions);
 		}
 

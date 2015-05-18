@@ -5,8 +5,12 @@ using GameInput;
 
 namespace Pathing {
 
+	public delegate void OnUpdatePoints ();
+
 	[System.Serializable]
 	public class PathPoints : System.Object {
+
+		public OnUpdatePoints OnUpdatePoints { get; set; }
 
 		int maxLength = 2;
 		bool allowLoop = false;
@@ -17,30 +21,16 @@ namespace Pathing {
 		List<Vector3> positions = new List<Vector3> ();
 		public List<Vector3> Positions { get { return positions; } }
 
-		PathPoint queuedPoint = null;
-		PathPoint QueuedPoint {
-			get { return queuedPoint; }
-			set { queuedPoint = value; }
-		}
-
 		public Vector3 DragPosition {
 			get {
-				if (QueuedPoint != null) {
-					return QueuedPoint.Position;
-				} else {
-					return LastPosition;
-				}
+				return LastPosition;
 			}
 		}
 
 		public float Direction {
 			get { 
-				if (QueuedPoint == null) {
-					if (Empty) return -1;
-					return ScreenPositionHandler.PointDirection (PreviousPosition, DragPosition); 
-				} else {
-					return -1;
-				}
+				if (Empty) return -1;
+				return ScreenPositionHandler.PointDirection (PreviousPosition, DragPosition); 
 			}
 		}
 
@@ -71,8 +61,6 @@ namespace Pathing {
 			}
 		}
 
-
-
 		public int Count { get { return points.Count; } }
 		public bool Empty { get { return Count == 0; } }
 		public bool Loop { get { return FirstPoint == LastPoint; } }
@@ -82,69 +70,76 @@ namespace Pathing {
 			this.allowLoop = allowLoop;
 		}
 
-		public bool PointCanStart (PathPoint point) {
-			return (Empty || point == LastPoint);
+		public void Add (PathPoint point) {
+			if (!CanAddPoint (point)) return;
+			points.Add (point);
+			if (points.Count > maxLength) {
+				RemoveFirst ();
+			}
+			RemoveUnpaired (point);
+			UpdatePositions ();
 		}
 
-		public bool CanDragFromPoint (PathPoint point) {
-			return Empty || point == LastPoint;
+		bool CanAddPoint (PathPoint point) {
+			if (!point.Enabled) return false;
+			if (points.Contains (point)) {
+				if (!allowLoop || Count <= 2 || points[Count-1] == point)
+					return false;
+			}
+			return true;
 		}
 
-		public void RequestAdd (PathPoint point) {
-			if (Empty && QueuedPoint == null) {
-				QueuedPoint = point;
-			} else if (QueuedPoint != null) {
-				Add (QueuedPoint);
-				Add (point);
-				QueuedPoint = null;
-			} else if (!allowLoop) {
-				// Prevent looping - no effect in a path of 2 points
-				if (point != LastPoint) {
-					Add (point);
-				}
+		void RemoveUnpaired (PathPoint newPoint) {
+			if (Count > 1 && !PointsHavePairs (newPoint)) {
+				RemoveFirst ();
 			}
 		}
 
-		public void RequestRemove (PathPoint point) {
-			if (QueuedPoint != null) {
-				QueuedPoint = null;
-			}
-			if (point == LastPoint) {
-				Remove ();
+		public void RemoveFirst () {
+			if (!Empty) Remove (points[0]);
+		}
+
+		public void Remove (PathPoint point) {
+			if (points.Contains (point)) {
+				points.Remove (point);
+				UpdatePositions ();
 			}
 		}
 
 		public void OnRelease () {
-			if (Count == 1) Clear ();
-			QueuedPoint = null;
-		}
-
-		void Add (PathPoint point) {
-			if (points.Contains (point))
-				return;
-			if (points.Count >= maxLength) {
-				points.RemoveAt (0);
-			}
-			points.Add (point);
-			UpdatePositions ();
-		}
-
-		void Remove () {
-			points.RemoveAt (Count-1);
-			UpdatePositions ();
+			if (Count == 1) 
+				RemoveFirst ();
 		}
 
 		public void Clear () {
 			points.Clear ();
-			positions.Clear ();
+			UpdatePositions ();
+		}
+
+		public bool Refresh () {
+			if (Count < 2) return false;
+			if (!PointsHavePairs (points[0])) {
+				Clear ();
+				return false;
+			}
+			return true;
 		}
 
 		void UpdatePositions () {
-			if (Count == 0) return;
 			positions.Clear ();
 			foreach (PathPoint point in points) {
 				positions.Add (point.Position);
 			}
+			if (OnUpdatePoints != null) OnUpdatePoints ();
+		}
+
+		bool PointsHavePairs (PathPoint newPoint) {
+			List<PathPoint> tempPoints = new List<PathPoint> ();
+			foreach (PathPoint p in points) {
+				tempPoints.Add (p);
+			}
+			tempPoints.Add (newPoint);
+			return newPoint.PointsHavePairs (tempPoints);
 		}
 
 		public static bool PathsEqual (List<PathPoint> set1, List<PathPoint> set2) {

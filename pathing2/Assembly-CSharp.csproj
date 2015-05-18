@@ -157,6 +157,7 @@
      <Compile Include="Assets\Scripts\Inventory\Items\YearItem.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />

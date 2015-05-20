@@ -12,7 +12,7 @@ namespace Units {
 		public Unit Unit {
 			get {
 				if (unit == null) {
-					unit = transform.GetNthParent (ParentUnit).GetScript<Unit> ();
+					unit = transform.GetParentOfType<Unit> ();
 				} 
 				return unit;
 			}

@@ -48,10 +48,9 @@ namespace Pathing {
 			}
 		}
 
-		Vector3[] Line {
+		public Vector3[] Line {
 			get {
 				if (Points.Count > 1) {
-					IteratePosition ();
 					Vector3[] line = new Vector3[] { PrevPosition, NextPosition };
 					return line;
 				}
@@ -61,6 +60,7 @@ namespace Pathing {
 
 		public void StartMoving () {
 			if (moving) return;
+			IteratePosition ();
 			Vector3[] line = Line;
 			if (line != null) {
 				moving = true;
@@ -99,7 +99,8 @@ namespace Pathing {
 
 			while (eTime < time && moving) {
 				eTime += Time.deltaTime;
-				Pathable.Position = Vector3.Lerp (start, end, eTime / time);
+				//Pathable.Position = Vector3.Lerp (start, end, eTime / time);
+				Pathable.Progress = eTime / time;
 				yield return null;
 			}
 

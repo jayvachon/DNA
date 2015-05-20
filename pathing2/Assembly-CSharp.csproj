@@ -159,6 +159,7 @@
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
      <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Path.cs" />
@@ -168,6 +169,7 @@
      <Compile Include="Assets\Scripts\Pathing\PathPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
+     <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
      <Compile Include="Assets\Scripts\Time\DeathTimer.cs" />
      <Compile Include="Assets\Scripts\Time\Interval.cs" />
      <Compile Include="Assets\Scripts\Time\RetirementTimer.cs" />

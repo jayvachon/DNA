@@ -85,6 +85,19 @@ public static class ExtensionMethods {
 		return parent;
 	}
 
+	public static T GetParentOfType<T> (this Transform transform) where T : MonoBehaviour {
+		Transform parent = transform.parent;
+		if (parent == null) {
+			return null;
+		}
+		T t = parent.GetScript<T> ();
+		if (t != null) {
+			return t;
+		} else {
+			return parent.GetParentOfType<T> ();
+		}
+	}
+
 	public static Transform GetFirstParent (this Transform transform) {
 		Transform parent = transform.parent;
 		if (parent == null) {

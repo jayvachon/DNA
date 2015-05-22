@@ -41,7 +41,8 @@ namespace Pathing {
 		Vector3[] line;
 
 		public void StartMoving () {
-			if (line != null && !SameLine (Positioner.Line)) return;
+			if (Positioner.Line == null) return;
+			if (SameLine (Positioner.Line)) return;
 			line = Positioner.Line;
 			#if UNITY_EDITOR
 			if (line.Length > 2)
@@ -55,7 +56,7 @@ namespace Pathing {
 		void SetPosition () {
 			Vector3 a = line[0];
 			Vector3 b = line[1];
-			MyTransform.position = new Vector3 (
+			Position = new Vector3 (
 				(a.x + b.x) / 2,
 				0,
 				(a.z + b.z) / 2
@@ -64,16 +65,20 @@ namespace Pathing {
 
 		void SetRotation () {
 			Vector3 c = line[0] - line[1];
-			float angle = Vector3.Angle (c, Vector3.right);
-			Vector3 cross = Vector3.Cross (c, Vector3.right);
+			float angle = Vector3.Angle (c, Vector3.left);
+			Vector3 cross = Vector3.Cross (c, Vector3.left);
 			angle *= -Mathf.Sign (cross.y);
 			transform.SetLocalEulerAnglesY (angle);
 		}
 
 		bool SameLine (Vector3[] otherLine) {
-			bool same1 = line[0] == otherLine[0] && line[1] == otherLine[1];
-			//bool same2 = line[0] == otherLine[1] && line[1] == otherLine[0];
-			return same1;// || same2;
+			if (line == null || otherLine == null) return false;
+			bool same1 = line[0].Equals (otherLine[0]) && line[1].Equals (otherLine[1]);
+			bool same2 = line[0].Equals (otherLine[1]) && line[1].Equals (otherLine[0]);
+			return same1 || same2;
+
+			//bool same1 = line[0] == otherLine[0] && line[1] == otherLine[1];
+			//return same1;
 		}
 	}
 }

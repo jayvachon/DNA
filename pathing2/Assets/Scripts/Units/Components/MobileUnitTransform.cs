@@ -15,9 +15,10 @@ namespace Units {
 		public float Progress {
 			get { return progress; }
 			set {
-				progress = value;
+				progress = value + 0.25f;
+				if (progress > 1f) progress -= 1f;
 				//Position = Vector3.Lerp (Path.Positioner.Line[0], Path.Positioner.Line[1], value);
-				LocalPosition = new Vector3 (GetX (progress), 0, GetZ (progress));
+				LocalPosition = new Vector3 (GetX (progress), yPos, GetZ (progress));
 			}
 		}
 
@@ -33,10 +34,12 @@ namespace Units {
 
 		float xMax = 1.5f;
 		float TWO_PI;
+		float yPos;
 
 		protected override void Awake () {
 			base.Awake ();
 			TWO_PI = Mathf.PI * 2f;
+			yPos = Position.y;
 			Path = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
 			Path.MyTransform.SetParent (MobileUnit.transform);
 			Path.Init (this, new PathSettings (8, 2, false));
@@ -51,9 +54,11 @@ namespace Units {
 		}
 
 		public bool StartMovingOnPath () {
-			PathRotator.StartMoving ();
+			if (Path.Points.Count < 2)
+				return false;
 			Path.StartMoving ();
-			return (Path.Points.Count >= 2);
+			PathRotator.StartMoving ();
+			return true;
 		}
 
 		public void StopMovingOnPath () {

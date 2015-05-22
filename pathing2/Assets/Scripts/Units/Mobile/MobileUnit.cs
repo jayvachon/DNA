@@ -83,8 +83,15 @@ namespace Units {
 		bool StartMovingOnPath () {
 			PerformableActions.PairActionsBetweenAcceptors (
 				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
-			currentPoints = Path.Points.Points;
-			return MobileTransform.StartMovingOnPath ();
+			if (MobileTransform.StartMovingOnPath ()) {
+				if (Path.Points.Points == null || Path.Points.Points.Count == 0) {
+					currentPoints = null;
+				} else {
+					currentPoints = Path.Points.Points;
+				}
+				return true;
+			}
+			return false;
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}

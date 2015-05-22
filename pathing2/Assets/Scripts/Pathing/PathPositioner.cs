@@ -9,7 +9,9 @@ namespace Pathing {
 		int position = 0;
 		bool moving = false;
 		bool forward = true;
-		
+		float progress = 0;
+		int positionOnLine = 0;
+
 		float speed = 5;
 		public float Speed {
 			get { return speed; }
@@ -20,7 +22,7 @@ namespace Pathing {
 			get { return Points.Positions; }
 		}
 
-		int PositionsCount {
+		int LineLength {
 			get { return Positions.Count; }
 		}
 
@@ -61,14 +63,14 @@ namespace Pathing {
 		public void StartMoving () {
 			if (moving) return;
 			IteratePosition ();
-			Vector3[] line = Line;
-			if (line != null) {
+			if (Line != null) {
 				moving = true;
-				StartCoroutine (CoMove (line));
+				StartCoroutine (CoMove (Line));
 			}
 		}
 
 		public void StopMoving () {
+			progress = 0;
 			moving = false;
 		}
 
@@ -96,11 +98,12 @@ namespace Pathing {
 			float distance = Vector3.Distance (start, end);
 			float time = distance / speed;
 			float eTime = 0f;
+			float startProgress = positionOnLine / (float)LineLength;
+			float endProgress = startProgress + (1f / (float)LineLength);
 
 			while (eTime < time && moving) {
 				eTime += Time.deltaTime;
-				//Pathable.Position = Vector3.Lerp (start, end, eTime / time);
-				Pathable.Progress = eTime / time;
+				Pathable.Progress = Mathf.Lerp (startProgress, endProgress, eTime / time);
 				yield return null;
 			}
 
@@ -116,10 +119,15 @@ namespace Pathing {
 			} else {
 				IterateBackward ();
 			}
+			if (positionOnLine < LineLength-1) {
+				positionOnLine ++;
+			} else {
+				positionOnLine = 0;
+			}
 		}
 
 		void IterateForward () {
-			if (position+1 > PositionsCount-1) {
+			if (position+1 > LineLength-1) {
 				if (Points.Loop) {
 					position = 1;
 				} else {
@@ -133,7 +141,7 @@ namespace Pathing {
 		void IterateBackward () {
 			if (position-1 < 1) {
 				if (Points.Loop) {
-					position = PositionsCount-1;
+					position = LineLength-1;
 				} else {
 					forward = true;
 				}

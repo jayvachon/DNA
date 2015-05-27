@@ -96,7 +96,16 @@ namespace Pathing {
 		}
 
 		public void RemoveFirst () {
-			if (!Empty) Remove (points[0]);
+			if (!Empty) RemoveAt (0);
+		}
+
+		public void RemoveLast () {
+			if (!Empty) RemoveAt (1);
+		}
+
+		void RemoveAt (int index) {
+			points.RemoveAt (index);
+			UpdatePositions ();
 		}
 
 		public void Remove (PathPoint point) {

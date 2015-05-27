@@ -4,7 +4,7 @@ using GameEvents;
 using GameInput;
 using Units;
 
-public class MainCamera : MonoBehaviour {
+public class MainCamera : MBRefs {
 
 	Vector3 target;
 	Vector3 Target {
@@ -18,7 +18,8 @@ public class MainCamera : MonoBehaviour {
 	public Transform center;
 	Transform anchor;
 
-	void Awake () {
+	protected override void Awake () {
+		base.Awake ();
 		Events.instance.AddListener<SelectEvent> (OnSelectEvent);
 		anchor = transform.parent;
 	}
@@ -61,9 +62,9 @@ public class MainCamera : MonoBehaviour {
 	}
 
 	void OnSelectEvent (SelectEvent e) {
-		Unit unit = e.unit;
+		/*Unit unit = e.unit;
 		if (unit != null) {
 			Target = unit.Position;
-		}
+		}*/
 	}
 }

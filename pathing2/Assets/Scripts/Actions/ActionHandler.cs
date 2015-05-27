@@ -27,6 +27,8 @@ namespace GameActions {
 
 		public void Bind (IBinder binder) {
 			
+			if (binder.BoundAcceptor == null) return;
+			
 			IActionPerformer performer     = binder as IActionPerformer;
 			PerformableActions performable = performer.PerformableActions;
 			AcceptableActions acceptable   = binder.BoundAcceptor.AcceptableActions;

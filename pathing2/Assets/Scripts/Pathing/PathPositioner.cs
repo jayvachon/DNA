@@ -70,7 +70,10 @@ namespace Pathing {
 		}
 
 		public void StopMoving () {
+			position = 0;
 			progress = 0;
+			positionOnLine = 0;
+			forward = true;
 			moving = false;
 		}
 
@@ -102,6 +105,9 @@ namespace Pathing {
 			float endProgress = startProgress + (1f / (float)LineLength);
 
 			while (eTime < time && moving) {
+				#if VARIABLE_TIME
+				time = distance / speed;
+				#endif
 				eTime += Time.deltaTime;
 				Pathable.Progress = Mathf.Lerp (startProgress, endProgress, eTime / time);
 				yield return null;

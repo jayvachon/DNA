@@ -22,18 +22,28 @@ namespace GameActions {
 		}
 
 		int cost = 0;
+		int Cost {
+			get { 
+				#if VARIABLE_COST
+				return CostValues.Instance.GetCost (Name);
+				#endif
+				return cost; 
+			}
+			set { cost = value; }
+		}
+
 		UnitGenerated unitGenerated;
 
-		public GenerateUnit (int cost, UnitGenerated unitGenerated=null) : base (-1, false, false) {
-			this.cost = cost;
+		public GenerateUnit (int cost=-1, UnitGenerated unitGenerated=null) : base (-1, false, false) {
+			this.cost = (cost == -1) ? CostValues.Instance.GetCost (Name) : cost;
 			this.unitGenerated = unitGenerated;
 		}
 
 		public override void Start () {
-			if (Holder.Capacity < cost) {
-				Holder.Capacity = cost;
+			if (Holder.Capacity < Cost) {
+				Holder.Capacity = Cost;
 			}
-			if (Holder.Count >= cost) {
+			if (Holder.Count >= Cost) {
 				CreateUnit ();
 			} else {
 				Holder.HolderUpdated += OnUpdated;
@@ -41,14 +51,14 @@ namespace GameActions {
 		}
 
 		public void OnUpdated () {
-			if (Holder.Count >= cost) {
+			if (Holder.Count >= Cost) {
 				CreateUnit ();
 				Holder.HolderUpdated -= OnUpdated;
 			}
 		}
 
 		void CreateUnit () {
-			Holder.Remove (cost);
+			Holder.Remove (Cost);
 			Unit unit = ObjectCreator.Instance.Create<T> ().GetScript<Unit> ();
 			if (unitGenerated != null) {
 				unitGenerated (unit);

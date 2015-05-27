@@ -51,9 +51,9 @@ namespace Units {
 			AcceptableActions.Add (new AcceptDeliverAllYears ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (15, OnUnitGenerated), "Birth Laborer (15C)");
-			PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");
-			PerformableActions.Add (new GenerateUnit<Corpse, CoffeeHolder> (0, OnUnitGenerated), "Birth Corpse (temp)");
+			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
+			//PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");
+			//PerformableActions.Add (new GenerateUnit<Corpse, CoffeeHolder> (0, OnUnitGenerated), "Birth Corpse (temp)");
 		}
 
 		void OnUnitGenerated (Unit unit) {

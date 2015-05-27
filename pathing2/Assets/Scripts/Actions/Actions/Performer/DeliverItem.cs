@@ -34,7 +34,8 @@ namespace GameActions {
 			: base (duration, autoStart, autoRepeat) {}
 
 		public override void OnEnd () {
-			AcceptorInventory.Transfer<T> (Inventory, 1);
+			if (AcceptorInventory != null)
+				AcceptorInventory.Transfer<T> (Inventory, 1);
 		}		
 	}
 }

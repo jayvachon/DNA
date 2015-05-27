@@ -4,7 +4,7 @@ using System.Collections;
 // Deprecate this
 public class RetirementTimer : Interval {
 
-	float retirementAge = TimerValues.Retirement;	// seconds until becoming an elder
+	/*float retirementAge = TimerValues.Retirement;	// seconds until becoming an elder
 	public float RetirementAge {
 		get { return retirementAge; }
 	}
@@ -23,5 +23,5 @@ public class RetirementTimer : Interval {
 	public override void End () {
 		base.End ();
 		retired = true;
-	}
+	}*/
 }

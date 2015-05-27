@@ -17,7 +17,7 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new CoffeeHolder (25, 10));
+			Inventory.Add (new CoffeeHolder (25, 0));
 			Inventory.Add (new YearHolder (15, 0));
 			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
@@ -26,8 +26,8 @@ namespace Units {
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateItem<CoffeeHolder> ());
-			PerformableActions.Add (new ConsumeItem<CoffeeHolder> ());
-			PerformableActions.Add (new ConsumeItem<YearHolder> (TimerValues.year));
+			//PerformableActions.Add (new ConsumeItem<CoffeeHolder> ());
+			PerformableActions.Add (new ConsumeItem<YearHolder> (TimerValues.Instance.Year));
 			PerformableActions.SetActive ("ConsumeYear", false);
 		}
 

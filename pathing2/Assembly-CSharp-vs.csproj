@@ -98,6 +98,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionPerformer2.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\SetAcceptableActionsActiveStateTest.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\SetPerformableActionsActiveStateTest.cs" />
+     <Compile Include="Assets\Scripts\Actions\CostValues.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\IActionPerformer.cs" />
      <Compile Include="Assets\Scripts\Actions\IBinder.cs" />
@@ -109,6 +110,7 @@
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
      <Compile Include="Assets\Scripts\Debugging\ActionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
+     <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />

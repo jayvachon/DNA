@@ -44,12 +44,9 @@ namespace Units {
 		public PerformableActions PerformableActions { get; protected set; }
 		public IActionAcceptor BoundAcceptor { get; private set; }
 
-		List<PathPoint> currentPoints;
-
 		public virtual void OnRelease () {
-			if (currentPoints == null || !PathPoints.PathsEqual (currentPoints, Path.Points.Points)) {
-				if (StartMovingOnPath ()) return;
-			}
+			BoundAcceptor = null;
+			if (StartMovingOnPath (true)) return;
 			BindToCollider ();
 		}
 
@@ -80,18 +77,10 @@ namespace Units {
 			StartMovingOnPath ();
 		}
 
-		bool StartMovingOnPath () {
+		bool StartMovingOnPath (bool reset=false) {
 			PerformableActions.PairActionsBetweenAcceptors (
 				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
-			if (MobileTransform.StartMovingOnPath ()) {
-				if (Path.Points.Points == null || Path.Points.Points.Count == 0) {
-					currentPoints = null;
-				} else {
-					currentPoints = Path.Points.Points;
-				}
-				return true;
-			}
-			return false;
+			return MobileTransform.StartMovingOnPath (reset);
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}

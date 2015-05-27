@@ -5,6 +5,15 @@ using System.Collections.Generic;
 public static class ExtensionMethods {
 	
 	/**
+	 *	Float
+	 */
+
+	public static float RoundToDecimal (this float fl, int decimalPlaces) {
+		float magnitude = 10 * (float)decimalPlaces;
+		return Mathf.Round (fl * (magnitude)) / magnitude;
+	}
+
+	/**
 	 *	Vector3
 	 */
 	 

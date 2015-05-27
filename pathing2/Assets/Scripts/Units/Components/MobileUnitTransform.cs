@@ -42,7 +42,7 @@ namespace Units {
 			yPos = Position.y;
 			Path = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
 			Path.MyTransform.SetParent (MobileUnit.transform);
-			Path.Init (this, new PathSettings (8, 2, false));
+			Path.Init (this, new PathSettings (2, false));
 		}
 
 		public override void OnSelect () {
@@ -53,11 +53,11 @@ namespace Units {
 			Path.Enabled = false;
 		}
 
-		public bool StartMovingOnPath () {
+		public bool StartMovingOnPath (bool reset=false) {
 			if (Path.Points.Count < 2)
 				return false;
 			Path.StartMoving ();
-			PathRotator.StartMoving ();
+			PathRotator.StartMoving (reset);
 			return true;
 		}
 
@@ -66,6 +66,7 @@ namespace Units {
 		}
 
 		public void ArriveAtPoint (PathPoint point) {
+			Debug.Log (point.Position);
 			StaticUnitTransform unitTransform = point.StaticUnitTransform;
 			if (unitTransform == null) {
 				StartMovingOnPath ();

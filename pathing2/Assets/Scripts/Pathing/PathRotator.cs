@@ -40,10 +40,12 @@ namespace Pathing {
 
 		Vector3[] line;
 
-		public void StartMoving () {
+		public void StartMoving (bool reset=false) {
+			//Debug.Log (reset);
 			if (Positioner.Line == null) return;
-			if (SameLine (Positioner.Line)) return;
+			if (SameLine (Positioner.Line) && !reset) return;
 			line = Positioner.Line;
+			Debug.Log (line[0] + ", " + line[1]);
 			#if UNITY_EDITOR
 			if (line.Length > 2)
 				Debug.LogWarning ("Path should only have 2 points");
@@ -68,6 +70,7 @@ namespace Pathing {
 			float angle = Vector3.Angle (c, Vector3.left);
 			Vector3 cross = Vector3.Cross (c, Vector3.left);
 			angle *= -Mathf.Sign (cross.y);
+			Debug.Log (angle);
 			transform.SetLocalEulerAnglesY (angle);
 		}
 

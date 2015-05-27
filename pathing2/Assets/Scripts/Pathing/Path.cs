@@ -67,7 +67,7 @@ namespace Pathing {
 			this.pathSettings = pathSettings;
 			Points = new PathPoints (pathSettings.maxLength, pathSettings.allowLoop);
 			pathDrawer.Init (Points);
-			Speed = pathSettings.maxSpeed;
+			Speed = pathSettings.MaxSpeed;
 		}
 
 		public void PointDragEnter (DragSettings dragSettings, PathPoint point) {
@@ -95,7 +95,7 @@ namespace Pathing {
 
 		public void DragFromPath () {
 			pathDrawer.Dragging = true;
-			pathPoints.RemoveFirst ();
+			pathPoints.RemoveLast ();
 			StopMoving ();
 		}
 
@@ -116,12 +116,15 @@ namespace Pathing {
 
 	public class PathSettings {
 
-		public readonly float maxSpeed;
+		//public readonly float maxSpeed;
+		public float MaxSpeed {
+			get { return TimerValues.Instance.PathSpeed; }
+		}
 		public readonly int maxLength;
 		public readonly bool allowLoop;
 
-		public PathSettings (float maxSpeed=10, int maxLength=2, bool allowLoop=false) {
-			this.maxSpeed = maxSpeed;
+		public PathSettings (int maxLength=2, bool allowLoop=false) {
+			//this.maxSpeed = maxSpeed;
 			this.maxLength = maxLength;
 			this.allowLoop = allowLoop;
 		}

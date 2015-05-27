@@ -37,7 +37,11 @@ namespace GameActions {
 			get {
 				IBinder binder = Performer as IBinder;
 				IInventoryHolder holder = binder.BoundAcceptor as IInventoryHolder;
-				return holder.Inventory;
+				if (holder == null) {
+					return null;
+				} else {
+					return holder.Inventory;
+				}
 			}
 		}
 

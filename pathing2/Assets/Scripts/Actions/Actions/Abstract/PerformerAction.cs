@@ -27,7 +27,14 @@ namespace GameActions {
 
 		protected float duration;
 		public float Duration {
-			get { return duration * Efficiency; }
+			get { 
+				#if VARIABLE_TIME
+				float t = TimerValues.Instance.GetActionTime (Name);
+				if (t != -1) return t * Efficiency;
+				return duration * Efficiency;
+				#endif
+				return duration * Efficiency; 
+			}
 			set { duration = value; }
 		}
 
@@ -45,7 +52,7 @@ namespace GameActions {
 
 		public PerformerAction (float duration=-1, bool autoStart=false, bool autoRepeat=false) {
 			this.duration = (duration == -1) 
-				? TimerValues.GetActionTime (Name) 
+				? TimerValues.Instance.GetActionTime (Name)
 				: duration;
 			this.autoStart = autoStart;
 			this.autoRepeat = autoRepeat;

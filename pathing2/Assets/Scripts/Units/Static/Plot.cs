@@ -31,9 +31,9 @@ namespace Units {
 		void Start () {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.StartAction += OnStartAction;
-			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (5, OnUnitGenerated), "Birth Coffee Plant (5M)");
-			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (20, OnUnitGenerated), "Birth Jacuzzi (20M)");
-			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (25, OnUnitGenerated), "Birth Clinic (25M)");
+			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Coffee Plant (5M)");
+			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Jacuzzi (20M)");
+			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Clinic (25M)");
 			// PerformableActions.Add ("CancelGenerateUnit", new CancelGenerateUnit (), "Cancel");
 		}
 

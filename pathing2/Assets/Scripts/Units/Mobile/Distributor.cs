@@ -84,7 +84,7 @@ namespace Units {
 		void SetPathSpeed () {
 			float progress = yearHolder.PercentFilled;
 			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
-			Path.Speed = Path.PathSettings.maxSpeed * Mathf.Sqrt(-(p - 2) * p) / TimerValues.year;
+			Path.Speed = Path.PathSettings.MaxSpeed * Mathf.Sqrt(-(p - 2) * p) / TimerValues.Instance.Year;
 		}
 
 		protected override void OnChangeUnit<U> (U u) {
@@ -109,5 +109,11 @@ namespace Units {
 			yearHolder.HolderUpdated -= OnAge;
 			yearHolder.HolderFilled -= OnRetirement;
 		}
+
+		#if VARIABLE_TIME
+		void Update () {
+			SetPathSpeed ();
+		}
+		#endif
 	}
 }

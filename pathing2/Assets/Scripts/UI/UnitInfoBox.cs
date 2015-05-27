@@ -62,7 +62,7 @@ public class UnitInfoBox : MBRefs {
 	}
 
 	void Update () {
-		transform.localRotation = anchor.rotation;
+		transform.rotation = anchor.rotation;
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			Close ();
 		}

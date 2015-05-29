@@ -29,7 +29,7 @@ namespace GameActions {
 		}
 
 		public GenerateItem () : base (-1f, true, true) {}
-		
+
 		public override void OnEnd () {
 			Holder.Add ();
 		}

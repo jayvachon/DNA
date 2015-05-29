@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#define GENERATE_ALL
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using GameInventory;
@@ -52,8 +53,10 @@ namespace Units {
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
-			//PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");
-			//PerformableActions.Add (new GenerateUnit<Corpse, CoffeeHolder> (0, OnUnitGenerated), "Birth Corpse (temp)");
+			#if GENERATE_ALL
+			PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");
+			PerformableActions.Add (new GenerateUnit<Corpse, CoffeeHolder> (0, OnUnitGenerated), "Birth Corpse (temp)");
+			#endif
 		}
 
 		void OnUnitGenerated (Unit unit) {
@@ -67,12 +70,6 @@ namespace Units {
 
 		void OnYearsCollected () {
 			ChangeUnit<GivingTreeUnit, GivingTreeRipe> ();
-		}
-
-		void Update () {
-			if (Input.GetKeyDown (KeyCode.Space)) {
-				// PerformableActions.Print ();
-			}
 		}
 	}
 }

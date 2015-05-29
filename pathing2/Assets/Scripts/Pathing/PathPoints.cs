@@ -22,9 +22,7 @@ namespace Pathing {
 		public List<Vector3> Positions { get { return positions; } }
 
 		public Vector3 DragPosition {
-			get {
-				return LastPosition;
-			}
+			get { return LastPosition; }
 		}
 
 		public float Direction {
@@ -76,23 +74,20 @@ namespace Pathing {
 			if (points.Count > maxLength) {
 				RemoveFirst ();
 			}
-			RemoveUnpaired (point);
 			UpdatePositions ();
 		}
 
 		bool CanAddPoint (PathPoint point) {
-			if (!point.Enabled) return false;
+			if (!point.Enabled
+				|| Count > 0
+				&& !PointsHavePairs (point)) 
+				return false;
+				
 			if (points.Contains (point)) {
 				if (!allowLoop || Count <= 2 || points[Count-1] == point)
 					return false;
 			}
 			return true;
-		}
-
-		void RemoveUnpaired (PathPoint newPoint) {
-			if (Count > 1 && !PointsHavePairs (newPoint)) {
-				RemoveFirst ();
-			}
 		}
 
 		public void RemoveFirst () {

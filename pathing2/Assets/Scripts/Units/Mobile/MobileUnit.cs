@@ -45,9 +45,12 @@ namespace Units {
 		public IActionAcceptor BoundAcceptor { get; private set; }
 
 		public virtual void OnRelease () {
-			BoundAcceptor = null;
-			if (StartMovingOnPath (true)) return;
-			BindToCollider ();
+			//if (Path.Positioner.Moving) return;
+			if (StartMovingOnPath (true)) {
+				BoundAcceptor = null;
+			} else {
+				BindToCollider ();
+			}
 		}
 
 		protected void BindToCollider () {
@@ -58,9 +61,11 @@ namespace Units {
 				Debug.LogError (Name + " does not reference its MobileClickable. Assign it in the inspector. \n" + e);
 			}
 			if (clickable != null) {
-				OnBindActionable (clickable.StaticUnit as IActionAcceptor);
-				OnBind ();
+				if (OnBindActionable (clickable.StaticUnit as IActionAcceptor)) {
+					OnBind ();
+				}
 			} else {
+				BoundAcceptor = null;
 				OnUnbind ();
 			}
 		}
@@ -68,9 +73,11 @@ namespace Units {
 		protected virtual void OnBind () {}
 		protected virtual void OnUnbind () {}
 
-		public virtual void OnBindActionable (IActionAcceptor acceptor) {
+		public virtual bool OnBindActionable (IActionAcceptor acceptor) {
+			if (BoundAcceptor == acceptor) return false;
 			BoundAcceptor = acceptor;
 			ActionHandler.instance.Bind (this);
+			return true;
 		}
 
 		public virtual void OnEndActions () {
@@ -81,6 +88,11 @@ namespace Units {
 			PerformableActions.PairActionsBetweenAcceptors (
 				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
 			return MobileTransform.StartMovingOnPath (reset);
+		}
+
+		public void OnDragEnter () {
+			BoundAcceptor = null;
+			MobileTransform.Path.DragFromPath ();
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}

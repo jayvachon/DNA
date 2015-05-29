@@ -116,7 +116,6 @@ namespace Pathing {
 
 	public class PathSettings {
 
-		//public readonly float maxSpeed;
 		public float MaxSpeed {
 			get { return TimerValues.Instance.PathSpeed; }
 		}
@@ -124,7 +123,6 @@ namespace Pathing {
 		public readonly bool allowLoop;
 
 		public PathSettings (int maxLength=2, bool allowLoop=false) {
-			//this.maxSpeed = maxSpeed;
 			this.maxLength = maxLength;
 			this.allowLoop = allowLoop;
 		}

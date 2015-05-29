@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// TODO: Make a class for HappinessIndicator and BuildingIndicator to inherit from
 public class BuildingIndicator : MBRefs, IPoolable {
 
 	[SerializeField] float spinSpeed = 10f;
@@ -12,7 +13,6 @@ public class BuildingIndicator : MBRefs, IPoolable {
 
 	public void Initialize (string id, Vector3 position) {
 		Transform activeRender = null;
-		Debug.Log (id);
 		switch (id) {
 			case "Clinic": activeRender = clinicRender; break;
 			case "Coffee Plant": activeRender = coffeeRender; break;

@@ -10,7 +10,7 @@ namespace GameActions {
 			get { return ""; }
 		}
 
-		public bool Enabled {
+		public virtual bool Enabled {
 			get { return EnabledState.Enabled; }
 		}
 

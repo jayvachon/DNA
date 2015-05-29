@@ -41,7 +41,6 @@ namespace Pathing {
 		Vector3[] line;
 
 		public void StartMoving (bool reset=false) {
-			//Debug.Log (reset);
 			if (Positioner.Line == null) return;
 			if (SameLine (Positioner.Line) && !reset) return;
 			line = Positioner.Line;
@@ -70,7 +69,6 @@ namespace Pathing {
 			float angle = Vector3.Angle (c, Vector3.left);
 			Vector3 cross = Vector3.Cross (c, Vector3.left);
 			angle *= -Mathf.Sign (cross.y);
-			Debug.Log (angle);
 			transform.SetLocalEulerAnglesY (angle);
 		}
 
@@ -79,9 +77,6 @@ namespace Pathing {
 			bool same1 = line[0].Equals (otherLine[0]) && line[1].Equals (otherLine[1]);
 			bool same2 = line[0].Equals (otherLine[1]) && line[1].Equals (otherLine[0]);
 			return same1 || same2;
-
-			//bool same1 = line[0] == otherLine[0] && line[1] == otherLine[1];
-			//return same1;
 		}
 	}
 }

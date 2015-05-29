@@ -183,7 +183,9 @@
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\HUD\SeaLevelMeter.cs" />
+     <Compile Include="Assets\Scripts\UI\HappinessIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\ItemHolderContainerUI.cs" />
+     <Compile Include="Assets\Scripts\UI\MercuryRender.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitClickable.cs" />

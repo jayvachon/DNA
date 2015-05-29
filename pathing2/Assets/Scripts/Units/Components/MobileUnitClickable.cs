@@ -40,7 +40,8 @@ namespace Units {
 		public void OnDragEnter (DragSettings dragSettings) {
 			if (CanDrag && dragSettings.WasClicked) {
 				PathManager.Instance.SelectedPath = MobileUnit.Path;
-				MobileTransform.Path.DragFromPath ();
+				//MobileTransform.Path.DragFromPath ();
+				MobileUnit.OnDragEnter ();
 			}
 		}
 

@@ -17,7 +17,6 @@ namespace Units {
 			set {
 				progress = value + 0.25f;
 				if (progress > 1f) progress -= 1f;
-				//Position = Vector3.Lerp (Path.Positioner.Line[0], Path.Positioner.Line[1], value);
 				LocalPosition = new Vector3 (GetX (progress), yPos, GetZ (progress));
 			}
 		}
@@ -35,6 +34,7 @@ namespace Units {
 		float xMax = 1.5f;
 		float TWO_PI;
 		float yPos;
+		List<PathPoint> prevPath = new List<PathPoint> ();
 
 		protected override void Awake () {
 			base.Awake ();
@@ -54,19 +54,33 @@ namespace Units {
 		}
 
 		public bool StartMovingOnPath (bool reset=false) {
+			//Debug.Log (Path.Points.Count + " < 2 || " + prevPath.Count + " < 2 && " + PathPoints.PathsEqual (Path.Points.Points, prevPath));
 			if (Path.Points.Count < 2)
 				return false;
+			//Debug.Log (Path.Points.Count);
+			//if (prevPath.Count == 2 && PathPoints.PathsEqual (Path.Points.Points, prevPath)) {
+				//return false;
+			//}
 			Path.StartMoving ();
 			PathRotator.StartMoving (reset);
+			/*prevPath.Clear ();
+			foreach (PathPoint point in Path.Points.Points) {
+				prevPath.Add (point);
+			}*/
 			return true;
 		}
+
+		/*bool SamePath (List<PathPoint> newPath) {
+			if (prevPath.Count < 2) return false;
+			return PathPoints.PathsEqual (newPath, prevPath);
+		}
+*/
 
 		public void StopMovingOnPath () {
 			Path.StopMoving ();
 		}
 
 		public void ArriveAtPoint (PathPoint point) {
-			Debug.Log (point.Position);
 			StaticUnitTransform unitTransform = point.StaticUnitTransform;
 			if (unitTransform == null) {
 				StartMovingOnPath ();

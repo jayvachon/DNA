@@ -12,6 +12,10 @@ namespace Pathing {
 		float progress = 0;
 		int positionOnLine = 0;
 
+		public bool Moving {
+			get { return moving; }
+		}
+
 		float speed = 5;
 		public float Speed {
 			get { return speed; }

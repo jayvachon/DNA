@@ -14,6 +14,11 @@ namespace Units {
 			get { return name; }
 		}
 
+		bool pathPointEnabled = false;
+		public override bool PathPointEnabled {
+			get { return pathPointEnabled; }
+		}
+
 		public PerformableActions PerformableActions { get; private set; }
 
 		BuildingIndicator indicator;
@@ -47,6 +52,7 @@ namespace Units {
 		}
 
 		void OnStartAction (string id) {
+			pathPointEnabled = true;
 			PerformableActions.DeactivateAll ();
 			AcceptableActions.SetActive ("DeliverMilkshake", true);
 			string newUnit = "";

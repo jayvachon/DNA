@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using GameInventory;
@@ -16,13 +16,16 @@ namespace Units {
 		}
 
 		Jacuzzi boundJacuzzi = null;
-		YearHolder yearHolder = new YearHolder (65, 0);
+		YearHolder yearHolder = new YearHolder (55, 0);
+		HappinessHolder happinessHolder = new HappinessHolder (100, 100);
+
+		HappinessIndicator indicator;
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (yearHolder);
-			Inventory.Add (new HappinessHolder (100, 100));
+			Inventory.Add (happinessHolder);
 			Inventory.Add (new CoffeeHolder (3, 0));
 			Inventory.Add (new MilkshakeHolder (5, 0));
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
@@ -39,6 +42,41 @@ namespace Units {
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
 		}
 
+		public override void OnPoolCreate () {
+			InitInventory ();
+			InitPath ();
+			InitIndicator ();
+			PerformableActions.ActivateAll ();
+			UnitInfoContent.Refresh ();
+		}
+
+		void InitIndicator () {
+			indicator = ObjectCreator.Instance.Create<HappinessIndicator> ().GetScript<HappinessIndicator> ();
+			indicator.Parent = Transform;
+			indicator.MyTransform.SetLocalPosition (new Vector3 (0f, 1f, 0f));
+		}
+
+		void InitInventory () {
+			Inventory.Empty ();
+			HappinessHolder happinessHolder = Inventory.Get<HappinessHolder> ();
+			happinessHolder.Initialize (100);
+			happinessHolder.HolderUpdated += OnHappinessUpdate;
+			yearHolder.HolderUpdated += OnAge;
+			yearHolder.HolderFilled += OnRetirement;
+		}
+
+		void InitPath () {
+			Path.Active = true;
+			SetPathSpeed ();
+		}
+
+		public override void OnPoolDestroy () {
+			ObjectCreator.Instance.Destroy<HappinessIndicator> (indicator.MyTransform);
+			PerformableActions.DeactivateAll ();
+			yearHolder.HolderUpdated -= OnAge;
+			yearHolder.HolderFilled -= OnRetirement;
+		}
+
 		void OnAge () {
 			SetPathSpeed ();
 		}
@@ -47,9 +85,13 @@ namespace Units {
 			ChangeUnit<Distributor, Elder> ();
 		}
 
-		public override void OnBindActionable (IActionAcceptor acceptor) {
+		void OnHappinessUpdate () {
+			indicator.Fill = happinessHolder.PercentFilled;
+		}
+
+		public override bool OnBindActionable (IActionAcceptor acceptor) {
 			UpdateEfficiency ();
-			base.OnBindActionable (acceptor);
+			return base.OnBindActionable (acceptor);
 		}
 
 		protected override void OnBind () {
@@ -91,23 +133,6 @@ namespace Units {
 			Path.Active = false;
 			Elder elder = u as Elder;
 			elder.AverageHappiness = Inventory.Get<HappinessHolder> ().Average;
-		}
-
-		public override void OnPoolCreate () {
-			Inventory.Empty ();
-			Inventory.Get<HappinessHolder> ().Initialize (100);
-			yearHolder.HolderUpdated += OnAge;
-			yearHolder.HolderFilled += OnRetirement;
-			Path.Active = true;
-			SetPathSpeed ();
-			PerformableActions.ActivateAll ();
-			UnitInfoContent.Refresh ();
-		}
-
-		public override void OnPoolDestroy () {
-			PerformableActions.DeactivateAll ();
-			yearHolder.HolderUpdated -= OnAge;
-			yearHolder.HolderFilled -= OnRetirement;
 		}
 
 		#if VARIABLE_TIME

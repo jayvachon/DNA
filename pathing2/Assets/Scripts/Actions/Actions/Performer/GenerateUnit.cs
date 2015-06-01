@@ -57,6 +57,11 @@ namespace GameActions {
 			}
 		}
 
+		public override void Stop () {
+			base.Stop ();
+			Holder.HolderUpdated -= OnUpdated;
+		}
+
 		void CreateUnit () {
 			Holder.Remove (Cost);
 			Unit unit = ObjectCreator.Instance.Create<T> ().GetScript<Unit> ();

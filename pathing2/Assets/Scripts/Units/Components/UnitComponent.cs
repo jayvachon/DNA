@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathing;
+using GameActions;
 
 namespace Units {
 
@@ -56,6 +57,10 @@ namespace Units {
 				}
 				return mobileTransform;
 			}
+		}
+
+		public IActionAcceptor BoundAcceptor {
+			get { return MobileUnit.BoundAcceptor; }
 		}
 	}
 }

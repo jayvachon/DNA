@@ -25,9 +25,9 @@ namespace GameActions {
 		 * Perform multiple actions when binding to an ActionAcceptor
 		 */
 
-		public void Bind (IBinder binder) {
+		public PerformerAction Bind (IBinder binder) {
 			
-			if (binder.BoundAcceptor == null) return;
+			if (binder.BoundAcceptor == null) return null;
 			
 			IActionPerformer performer     = binder as IActionPerformer;
 			PerformableActions performable = performer.PerformableActions;
@@ -48,6 +48,7 @@ namespace GameActions {
 			}
 
 			StartCoroutine (PerformActions (binder, matching));
+			return matching;
 		}
 		
 		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
@@ -66,11 +67,12 @@ namespace GameActions {
 		 */
 
 		public void StartAction (PerformerAction action) {
+			//Debug.Log ("start action");
 			StartCoroutine (Perform (action));
 		}
 
 		IEnumerator Perform (PerformerAction action) {
-
+			//Debug.Log ("Perform " + action);
 			float time = action.Duration;
 			float eTime = 0;
 
@@ -79,13 +81,19 @@ namespace GameActions {
 				yield break;
 			}
 
+			//action.Performing = true;
+			//if (action.Performing) yield break;
+			action.BindStart ();
+
 			while (eTime < time) {
 				eTime += Time.deltaTime;
-				action.Perform (eTime / time);
+				action.Progress = eTime / time;
+				//action.Perform (eTime / time);
 				yield return null;
 			}
 
-			action.End ();
+			//action.End ();
+			action.BindEnd ();
 		}
 	}
 }

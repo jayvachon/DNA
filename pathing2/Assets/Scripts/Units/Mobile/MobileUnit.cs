@@ -44,11 +44,13 @@ namespace Units {
 		public PerformableActions PerformableActions { get; protected set; }
 		public IActionAcceptor BoundAcceptor { get; private set; }
 
+		bool moveOnRelease = true;
+
 		public virtual void OnRelease () {
-			//if (Path.Positioner.Moving) return;
-			if (StartMovingOnPath (true)) {
+			if (moveOnRelease && StartMovingOnPath (true)) {
 				BoundAcceptor = null;
-			} else {
+				moveOnRelease = false;
+			} else if (Path.Points.Count < 2) {
 				BindToCollider ();
 			}
 		}
@@ -73,10 +75,15 @@ namespace Units {
 		protected virtual void OnBind () {}
 		protected virtual void OnUnbind () {}
 
+		// Returns true if this is a newly bound acceptor
 		public virtual bool OnBindActionable (IActionAcceptor acceptor) {
+			//Debug.Log (BoundAcceptor + " , new: " + acceptor);
 			if (BoundAcceptor == acceptor) return false;
 			BoundAcceptor = acceptor;
-			ActionHandler.instance.Bind (this);
+			PerformerAction action = ActionHandler.instance.Bind (this);
+			if (action != null) {
+				MobileTransform.EncircleBoundUnit (action);
+			}
 			return true;
 		}
 
@@ -91,6 +98,7 @@ namespace Units {
 		}
 
 		public void OnDragEnter () {
+			moveOnRelease = true;
 			BoundAcceptor = null;
 			MobileTransform.Path.DragFromPath ();
 		}

@@ -4,6 +4,6 @@ using System.Collections;
 public class MercuryRender : MonoBehaviour {
 
 	void Awake () {
-		renderer.SetColor (Color.red);
+		renderer.SetColor (Color.blue);
 	}
 }

@@ -39,7 +39,8 @@ namespace Units {
 			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Coffee Plant (5M)");
 			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Jacuzzi (20M)");
 			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Clinic (25M)");
-			// PerformableActions.Add ("CancelGenerateUnit", new CancelGenerateUnit (), "Cancel");
+			PerformableActions.Add (new CancelGenerateUnit (), "Cancel");
+			PerformableActions.SetActive ("CancelGenerateUnit", false);
 		}
 
 		public override void OnPoolCreate () {
@@ -52,8 +53,30 @@ namespace Units {
 		}
 
 		void OnStartAction (string id) {
+			if (id == "CancelGenerateUnit") {
+				CancelGenerateUnit ();
+			} else {
+				GenerateUnit (id);
+			}
+		}
+
+		void CancelGenerateUnit () {
+			pathPointEnabled = false;
+			PerformableActions.StopAll ();
+			PerformableActions.ActivateAll ();
+			PerformableActions.SetActive ("CancelGenerateUnit", false);
+			AcceptableActions.SetActive ("DeliverMilkshake", false);
+			name = "Plot";
+			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, false);
+			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
+			unitInfoContent.Refresh ();
+		}
+
+		void GenerateUnit (string id) {
+			if (!gameObject.activeSelf) return;
 			pathPointEnabled = true;
 			PerformableActions.DeactivateAll ();
+			PerformableActions.SetActive ("CancelGenerateUnit", true);
 			AcceptableActions.SetActive ("DeliverMilkshake", true);
 			string newUnit = "";
 			switch (id) {

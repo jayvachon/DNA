@@ -6,9 +6,13 @@ namespace GameActions {
 	public abstract class PerformerAction : Action {
 
 		readonly bool autoStart;
-		bool performing = false;
 		protected bool autoRepeat = false;
 		bool interrupt = false;
+		
+		bool performing = false;
+		public bool Performing {
+			get { return performing; }
+		}
 
 		bool active = true;
 		public override bool Active {
@@ -18,6 +22,8 @@ namespace GameActions {
 				if (autoStart) Start ();
 			}
 		}
+
+		public float Progress { get; set; }
 
 		float efficiency = 1f; // Percentage
 		public float Efficiency {
@@ -74,8 +80,6 @@ namespace GameActions {
 			ActionHandler.instance.StartAction (this);
 		}
 
-		public virtual void Perform (float progress) {}
-
 		public void End () {
 			performing = false;
 			if (Enabled) {
@@ -90,9 +94,18 @@ namespace GameActions {
 			}
 		}
 
+		public void BindStart () {
+			performing = true;
+		}
+
+		public void BindEnd () {
+			performing = false;
+			if (Enabled) OnEnd ();
+		}
+
 		public virtual void OnEnd () {}
 
-		public void Stop () {
+		public virtual void Stop () {
 			interrupt = true;
 		}
 	}

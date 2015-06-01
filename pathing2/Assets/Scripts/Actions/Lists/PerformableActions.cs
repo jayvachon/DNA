@@ -42,6 +42,13 @@ namespace GameActions {
 			Get (id).Stop ();
 		}
 
+		public void StopAll () {
+			foreach (var keyval in EnabledActions) {
+				PerformerAction action = keyval.Value as PerformerAction;
+				action.Stop ();
+			}
+		}
+
 		public override void RefreshEnabledActions () {
 			EnabledActions.Clear ();
 			foreach (var keyval in ActiveActions) {

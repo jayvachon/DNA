@@ -22,7 +22,7 @@ namespace Pathing {
 			set { speed = value; }
 		}
 		
-		List<Vector3> Positions {
+		public List<Vector3> Positions {
 			get { return Points.Positions; }
 		}
 

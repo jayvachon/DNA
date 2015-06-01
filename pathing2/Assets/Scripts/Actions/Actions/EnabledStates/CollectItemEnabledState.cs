@@ -16,7 +16,7 @@ namespace GameActions {
 				if (requiredPair == "") {
 					string typeName = typeof (T).Name;
 					typeName = typeName.Substring (0, typeName.Length-6);
-					requiredPair = "Deliver" + typeName;
+					requiredPair = "Collect" + typeName;
 				}
 				return requiredPair;
 			}

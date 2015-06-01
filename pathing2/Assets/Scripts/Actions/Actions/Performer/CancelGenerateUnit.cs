@@ -6,7 +6,7 @@ namespace GameActions {
 	public class CancelGenerateUnit : PerformerAction {
 
 		public override string Name {
-			get { return "CencelGenerateUnit"; }
+			get { return "CancelGenerateUnit"; }
 		}
 
 		public CancelGenerateUnit () : base (0f) {}

@@ -42,9 +42,8 @@ namespace Pathing {
 
 		public void StartMoving (bool reset=false) {
 			if (Positioner.Line == null) return;
-			if (SameLine (Positioner.Line) && !reset) return;
-			line = Positioner.Line;
-			Debug.Log (line[0] + ", " + line[1]);
+			if (SameLine (Positioner.Positions.ToArray ()) && !reset) return;
+			line = Positioner.Positions.ToArray ();
 			#if UNITY_EDITOR
 			if (line.Length > 2)
 				Debug.LogWarning ("Path should only have 2 points");

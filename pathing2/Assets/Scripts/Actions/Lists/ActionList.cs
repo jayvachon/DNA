@@ -87,7 +87,12 @@ namespace GameActions {
 		}
 
 		public T Get (string id) {
-			return actions[id] as T;
+			try {
+				return actions[id] as T;
+			} catch (System.Exception e) {
+				Debug.LogError ("The action '" + id + "' does not exist in the list\n" + e);
+				throw;
+			}
 		}
 
 		public bool Has (string id) {

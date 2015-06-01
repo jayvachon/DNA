@@ -9,7 +9,6 @@ namespace Units {
 	public class MobileUnitTransform : UnitTransform, IPathable {
 
 		public Path Path { get; set; }
-		public IActionAcceptor BoundAcceptor { get; private set; }
 
 		float progress;
 		public float Progress {
@@ -31,7 +30,7 @@ namespace Units {
 			}
 		}
 
-		float xMax = 1.5f;
+		float xMax = 1.25f;
 		float TWO_PI;
 		float yPos;
 		List<PathPoint> prevPath = new List<PathPoint> ();
@@ -54,27 +53,12 @@ namespace Units {
 		}
 
 		public bool StartMovingOnPath (bool reset=false) {
-			//Debug.Log (Path.Points.Count + " < 2 || " + prevPath.Count + " < 2 && " + PathPoints.PathsEqual (Path.Points.Points, prevPath));
 			if (Path.Points.Count < 2)
 				return false;
-			//Debug.Log (Path.Points.Count);
-			//if (prevPath.Count == 2 && PathPoints.PathsEqual (Path.Points.Points, prevPath)) {
-				//return false;
-			//}
 			Path.StartMoving ();
 			PathRotator.StartMoving (reset);
-			/*prevPath.Clear ();
-			foreach (PathPoint point in Path.Points.Points) {
-				prevPath.Add (point);
-			}*/
 			return true;
 		}
-
-		/*bool SamePath (List<PathPoint> newPath) {
-			if (prevPath.Count < 2) return false;
-			return PathPoints.PathsEqual (newPath, prevPath);
-		}
-*/
 
 		public void StopMovingOnPath () {
 			Path.StopMoving ();
@@ -86,6 +70,35 @@ namespace Units {
 				StartMovingOnPath ();
 			} else {
 				MobileUnit.OnBindActionable (unitTransform.Unit as IActionAcceptor);
+			}
+		}
+
+		public void EncircleBoundUnit (PerformerAction action) {
+			StaticUnit su = (StaticUnit)BoundAcceptor;
+			StartCoroutine (CoEncircleBoundUnit (su.Position, action));
+		}
+
+		IEnumerator CoEncircleBoundUnit (Vector3 center, PerformerAction action) {
+			float sign = Mathf.Sign (LocalPosition.x);
+			if (sign > 0) {
+				while (action.Performing) {
+					float p = action.Progress;
+					Position = new Vector3 (
+						center.x + xMax * Mathf.Sin (TWO_PI * p + 145f * Mathf.Deg2Rad),
+						yPos,
+						center.z + xMax * Mathf.Cos (TWO_PI * p + 145f * Mathf.Deg2Rad));
+					yield return null;
+				}
+			}
+			if (sign < 0) {
+				while (action.Performing) {
+					float p = action.Progress;
+					Position = new Vector3 (
+						center.x + xMax * Mathf.Cos (TWO_PI * p + 125f * Mathf.Deg2Rad),
+						yPos,
+						center.z + xMax * Mathf.Sin (TWO_PI * p + 125f * Mathf.Deg2Rad));
+					yield return null;
+				}
 			}
 		}
 

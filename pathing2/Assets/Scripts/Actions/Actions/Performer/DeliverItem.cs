@@ -29,6 +29,7 @@ namespace GameActions {
 		}
 
 		public IActionAcceptor Acceptor { get; set; }
+		public override bool ListenForUpdate { get { return false; } }
 
 		public DeliverItem (float duration=-1, bool autoStart=false, bool autoRepeat=false) 
 			: base (duration, autoStart, autoRepeat) {}

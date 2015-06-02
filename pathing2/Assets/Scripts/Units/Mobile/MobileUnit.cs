@@ -77,7 +77,6 @@ namespace Units {
 
 		// Returns true if this is a newly bound acceptor
 		public virtual bool OnBindActionable (IActionAcceptor acceptor) {
-			//Debug.Log (BoundAcceptor + " , new: " + acceptor);
 			if (BoundAcceptor == acceptor) return false;
 			BoundAcceptor = acceptor;
 			PerformerAction action = ActionHandler.instance.Bind (this);

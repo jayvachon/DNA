@@ -3,6 +3,8 @@ using System.Collections;
 
 namespace GameActions {
 
+	// TODO: rewrite so that there are two types of PerformerActions: ones that must be explicitly started
+	// and ones that loop (or is there a better division?)
 	public abstract class PerformerAction : Action {
 
 		readonly bool autoStart;
@@ -19,7 +21,9 @@ namespace GameActions {
 			get { return active; }
 			set {
 				active = value;
-				if (autoStart) Start ();
+				if (autoStart) {
+					Start ();
+				}
 			}
 		}
 

@@ -53,7 +53,7 @@ namespace GameActions {
 		
 		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
 			if (action != null) {
-				yield return StartCoroutine (Perform (action));
+				yield return StartCoroutine (BindPerform (action));
 				Bind (binder);
 			} else {
 				IActionPerformer performer = binder as IActionPerformer;
@@ -67,12 +67,11 @@ namespace GameActions {
 		 */
 
 		public void StartAction (PerformerAction action) {
-			//Debug.Log ("start action");
 			StartCoroutine (Perform (action));
 		}
 
 		IEnumerator Perform (PerformerAction action) {
-			//Debug.Log ("Perform " + action);
+			
 			float time = action.Duration;
 			float eTime = 0;
 
@@ -81,18 +80,33 @@ namespace GameActions {
 				yield break;
 			}
 
-			//action.Performing = true;
-			//if (action.Performing) yield break;
+			while (eTime < time) {
+				eTime += Time.deltaTime;
+				action.Progress = eTime / time;
+				yield return null;
+			}
+
+			action.End ();
+		}
+
+		IEnumerator BindPerform (PerformerAction action) {
+			
+			float time = action.Duration;
+			float eTime = 0;
+
+			if (time == 0) {
+				action.BindEnd ();
+				yield break;
+			}
+			
 			action.BindStart ();
 
 			while (eTime < time) {
 				eTime += Time.deltaTime;
 				action.Progress = eTime / time;
-				//action.Perform (eTime / time);
 				yield return null;
 			}
 
-			//action.End ();
 			action.BindEnd ();
 		}
 	}

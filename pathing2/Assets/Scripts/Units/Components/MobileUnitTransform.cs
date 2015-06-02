@@ -78,25 +78,29 @@ namespace Units {
 			StartCoroutine (CoEncircleBoundUnit (su.Position, action));
 		}
 
+		// TODO: clean up
 		IEnumerator CoEncircleBoundUnit (Vector3 center, PerformerAction action) {
 			float sign = Mathf.Sign (LocalPosition.x);
 			if (sign > 0) {
-				while (action.Performing) {
+				float offset = 90f + Parent.localEulerAngles.y;
+				Debug.Log (action.Performing + ", " + BoundAcceptor);
+				while (action.Performing && BoundAcceptor != null) {
 					float p = action.Progress;
 					Position = new Vector3 (
-						center.x + xMax * Mathf.Sin (TWO_PI * p + 145f * Mathf.Deg2Rad),
+						center.x + xMax * Mathf.Sin (TWO_PI * p + offset * Mathf.Deg2Rad),
 						yPos,
-						center.z + xMax * Mathf.Cos (TWO_PI * p + 145f * Mathf.Deg2Rad));
+						center.z + xMax * Mathf.Cos (TWO_PI * p + offset * Mathf.Deg2Rad));
 					yield return null;
 				}
 			}
 			if (sign < 0) {
-				while (action.Performing) {
-					float p = action.Progress;
+				float offset = Parent.localEulerAngles.y + 270f;
+				while (action.Performing && BoundAcceptor != null) {
+					float p = Mathf.Abs (action.Progress-1);
 					Position = new Vector3 (
-						center.x + xMax * Mathf.Cos (TWO_PI * p + 125f * Mathf.Deg2Rad),
+						center.x + xMax * Mathf.Sin (TWO_PI * p + offset * Mathf.Deg2Rad),
 						yPos,
-						center.z + xMax * Mathf.Sin (TWO_PI * p + 125f * Mathf.Deg2Rad));
+						center.z + xMax * Mathf.Cos (TWO_PI * p + offset * Mathf.Deg2Rad));
 					yield return null;
 				}
 			}

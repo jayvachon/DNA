@@ -29,6 +29,7 @@ namespace GameActions {
 		}
 
 		public IActionAcceptor Acceptor { get; set; }
+		public override bool ListenForUpdate { get { return false; } }
 
 		public override void OnEnd () {
 			if (AcceptorInventory != null)

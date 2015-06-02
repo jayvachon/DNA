@@ -48,6 +48,9 @@ namespace GameActions {
 		bool listeningForUpdate = false;
 		public override bool Enabled {
 			get {
+				if (!ListenForUpdate) {
+					return EnabledState.Enabled;
+				}
 				if (!EnabledState.Enabled && !listeningForUpdate) {
 					holder.HolderUpdated += Start;
 					listeningForUpdate = true;
@@ -57,6 +60,10 @@ namespace GameActions {
 				}
 				return EnabledState.Enabled;
 			}
+		}
+
+		public virtual bool ListenForUpdate {
+			get { return true; }
 		}
 
 		public InventoryAction (float duration=-1, bool autoStart=false, bool autoRepeat=false) : 

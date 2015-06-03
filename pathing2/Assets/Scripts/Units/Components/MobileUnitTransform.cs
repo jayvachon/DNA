@@ -33,7 +33,6 @@ namespace Units {
 		float xMax = 1.25f;
 		float TWO_PI;
 		float yPos;
-		List<PathPoint> prevPath = new List<PathPoint> ();
 
 		protected override void Awake () {
 			base.Awake ();
@@ -83,7 +82,6 @@ namespace Units {
 			float sign = Mathf.Sign (LocalPosition.x);
 			if (sign > 0) {
 				float offset = 90f + Parent.localEulerAngles.y;
-				Debug.Log (action.Performing + ", " + BoundAcceptor);
 				while (action.Performing && BoundAcceptor != null) {
 					float p = action.Progress;
 					Position = new Vector3 (

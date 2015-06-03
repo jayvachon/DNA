@@ -37,18 +37,24 @@ namespace GameActions {
 			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
 
-			PerformerAction matching = null;
+			List<PerformerAction> matching = new List<PerformerAction> ();
 			foreach (var action in performable.EnabledActions) {
 				AcceptorAction acceptorAction;
 				if (acceptable.EnabledActions.TryGetValue (action.Key, out acceptorAction)) {
 					PerformerAction performerAction = action.Value;
-					matching = performerAction;
-					break;
+					matching.Add (performerAction);
 				}
 			}
 
-			StartCoroutine (PerformActions (binder, matching));
-			return matching;
+			matching = PerformInstantActions (matching);
+
+			if (matching.Count > 0) {
+				StartCoroutine (PerformActions (binder, matching[0]));
+				return matching[0];
+			} else {
+				StartCoroutine (PerformActions (binder, null));
+				return null;
+			}
 		}
 		
 		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
@@ -60,6 +66,18 @@ namespace GameActions {
 				performer.PerformableActions.RefreshEnabledActions ();
 				binder.OnEndActions ();
 			}
+		}
+
+		List<PerformerAction> PerformInstantActions (List<PerformerAction> matchingActions) {
+			List<PerformerAction> timedActions = new List<PerformerAction> ();
+			foreach (PerformerAction action in matchingActions) {
+				if (Mathf.Approximately (action.Duration, 0f)) {
+					action.BindEnd ();
+				} else {
+					timedActions.Add (action);
+				}
+			}
+			return timedActions;
 		}
 
 		/**
@@ -98,7 +116,7 @@ namespace GameActions {
 				action.BindEnd ();
 				yield break;
 			}
-			
+
 			action.BindStart ();
 
 			while (eTime < time) {

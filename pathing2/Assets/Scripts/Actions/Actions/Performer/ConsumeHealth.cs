@@ -15,6 +15,7 @@ namespace GameActions {
 		}
 
 		void OnChangeDegradeRate () {
+			Debug.Log (Duration);
 			Duration = healthManager.DegradeRate;
 		}
 	}

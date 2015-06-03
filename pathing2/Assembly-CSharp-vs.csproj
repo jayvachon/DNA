@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverUnpairedItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptOccupyUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptorInventoryAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\ActionDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptCollectItemEnabledState.cs" />
@@ -66,6 +67,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverElderEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverUnpairedItemEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptOccupyUnitEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectHappinessEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\ConsumeItemEnabledState.cs" />
@@ -75,6 +77,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DeliverItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\EnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\GenerateItemEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\OccupyUnitEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CancelGenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectHappiness.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
@@ -92,6 +95,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\InventoryAction.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\OccupyUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionAcceptor2.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionPerformer.cs" />

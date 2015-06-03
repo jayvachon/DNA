@@ -32,6 +32,8 @@ namespace Units {
 			PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
 			PerformableActions.Add (new ConsumeHealth (healthManager));
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
+			PerformableActions.Add (new OccupyUnit ());
+			PerformableActions.SetActive ("OccupyUnit", false);
 		}
 
 		void Start () {
@@ -56,6 +58,16 @@ namespace Units {
 			if (clinic != null) {
 				boundClinic = clinic;
 				PerformableActions.SetActive ("DeliverElder", false);
+					
+				// a disgusting hack
+				// this starts the "OccupyUnit" action (which causes the elders to circle the clinic)
+				// but only if they were added to the clinic's inventory
+				if (boundClinic.AcceptableActions.ActionEnabled ("DeliverElder")) {
+					PerformableActions.SetActive ("OccupyUnit", true);
+					IActionAcceptor boundAcceptor = BoundAcceptor;
+					BoundAcceptor = null;
+					OnBindActionable (boundAcceptor);
+				}
 			}
 		}
 

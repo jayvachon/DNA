@@ -18,7 +18,7 @@ namespace Units {
 			
 			Inventory = new Inventory (this);
 			Inventory.Add (new CoffeeHolder (25, 0));
-			Inventory.Add (new YearHolder (15, 0));
+			Inventory.Add (new YearHolder (10, 0));
 			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableActions = new AcceptableActions (this);

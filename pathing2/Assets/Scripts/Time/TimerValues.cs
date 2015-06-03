@@ -61,6 +61,9 @@ public class TimerValues : MonoBehaviour {
 				actionTimes.Add ("DeliverHappiness", 0.5f);
 				actionTimes.Add ("DeliverYear", 0f);
 
+				// Misc
+				actionTimes.Add ("OccupyUnit", 1f);
+
 			}
 			return actionTimes;
 		}

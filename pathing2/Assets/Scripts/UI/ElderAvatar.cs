@@ -25,8 +25,8 @@ public class ElderAvatar : MBRefs, IPoolable {
 	}
 
 	IEnumerator CoTrackHealth () {
-		int blink = 0;
-		int blinkSpeed = 10;
+		//int blink = 0;
+		//int blinkSpeed = 10;
 		while (trackHealth) {
 			if (elder != null) {
 				/*Image.fillAmount = elder.HealthManager.Health;

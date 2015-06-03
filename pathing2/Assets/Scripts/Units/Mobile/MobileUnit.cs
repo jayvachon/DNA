@@ -42,7 +42,7 @@ namespace Units {
 		}
 
 		public PerformableActions PerformableActions { get; protected set; }
-		public IActionAcceptor BoundAcceptor { get; private set; }
+		public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
 
 		bool moveOnRelease = true;
 
@@ -67,6 +67,13 @@ namespace Units {
 					OnBind ();
 				}
 			} else {
+				// disgusting hack that prevents an elder from being unbound from a clinic
+				// unless it has been moved some distance away from the clinic
+				// INSTEAD: units should have States (IDLE, MOVING, TAKING ACTION) 
+				if (BoundAcceptor != null) {
+					StaticUnit su = (StaticUnit)BoundAcceptor;
+					if (Vector3.Distance (Position, su.Position) <= 1.5f) return;
+				}
 				BoundAcceptor = null;
 				OnUnbind ();
 			}

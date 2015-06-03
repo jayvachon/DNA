@@ -25,6 +25,7 @@ namespace Units {
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add (new AcceptDeliverUnpairedItem<ElderHolder> ());
+			AcceptableActions.Add (new AcceptOccupyUnit ());
 		}
 	}
 }

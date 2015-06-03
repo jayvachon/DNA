@@ -9,7 +9,6 @@ namespace Pathing {
 		int position = 0;
 		bool moving = false;
 		bool forward = true;
-		float progress = 0;
 		int positionOnLine = 0;
 
 		public bool Moving {
@@ -75,7 +74,6 @@ namespace Pathing {
 
 		public void StopMoving () {
 			position = 0;
-			progress = 0;
 			positionOnLine = 0;
 			forward = true;
 			moving = false;

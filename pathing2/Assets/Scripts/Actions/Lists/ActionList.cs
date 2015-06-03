@@ -99,6 +99,10 @@ namespace GameActions {
 			return ActiveActions.ContainsKey (id);
 		}
 
+		public bool ActionEnabled (string id) {
+			return EnabledActions.ContainsKey (id);
+		}
+
 		public virtual void RefreshEnabledActions () {
 			EnabledActions.Clear ();
 			foreach (var keyval in ActiveActions) {

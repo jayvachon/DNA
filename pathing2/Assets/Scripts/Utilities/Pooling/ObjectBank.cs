@@ -21,6 +21,6 @@ public class ObjectBank : MonoBehaviour {
 			if (objects[i].name == name)
 				return objects[i];
 		}
-		return null;
+		throw new Exception ("The prefab '" + name + "' has not been added to the ObjectBank");
 	}
 }

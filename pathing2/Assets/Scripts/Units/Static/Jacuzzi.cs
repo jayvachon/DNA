@@ -24,12 +24,9 @@ namespace Units {
 			
 			Inventory = new Inventory (this);
 			Inventory.Add (happinessHolder);
-			Inventory.Add (new DistributorHolder (3, 0));
-			Inventory.Get<DistributorHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add (new AcceptCollectItem<HappinessHolder> ());
-			AcceptableActions.Add (new AcceptDeliverUnpairedItem<DistributorHolder> ());
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateItem<HappinessHolder> ());
@@ -38,8 +35,7 @@ namespace Units {
 		public override void OnPoolCreate () {
 			happinessHolder.HolderUpdated += OnHappinessUpdate;
 			indicator = ObjectCreator.Instance.Create<HappinessIndicator> ().GetScript<HappinessIndicator> ();
-			indicator.Parent = Transform;
-			indicator.MyTransform.SetLocalPosition (new Vector3 (0f, 1.5f, 0f));
+			indicator.Initialize (Transform, 1.5f);
 		}
 
 		public override void OnPoolDestroy () {

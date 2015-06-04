@@ -15,7 +15,6 @@ namespace Units {
 			get { return "Laborer"; }
 		}
 
-		Jacuzzi boundJacuzzi = null;
 		YearHolder yearHolder = new YearHolder (55, 0);
 		HappinessHolder happinessHolder = new HappinessHolder (100, 100);
 
@@ -36,7 +35,6 @@ namespace Units {
 			PerformableActions.Add (new DeliverItem<MilkshakeHolder> ());
 			PerformableActions.Add (new CollectItem<CoffeeHolder> ());
 			PerformableActions.Add (new DeliverItem<CoffeeHolder> ());
-			PerformableActions.Add (new DeliverUnpairedItem<DistributorHolder> ());
 			PerformableActions.Add (new CollectHappiness ());
 			PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
@@ -52,8 +50,7 @@ namespace Units {
 
 		void InitIndicator () {
 			indicator = ObjectCreator.Instance.Create<HappinessIndicator> ().GetScript<HappinessIndicator> ();
-			indicator.Parent = Transform;
-			indicator.MyTransform.SetLocalPosition (new Vector3 (0f, 1f, 0f));
+			indicator.Initialize (Transform);
 		}
 
 		void InitInventory () {
@@ -72,6 +69,7 @@ namespace Units {
 
 		public override void OnPoolDestroy () {
 			ObjectCreator.Instance.Destroy<HappinessIndicator> (indicator.MyTransform);
+			indicator = null;
 			PerformableActions.DeactivateAll ();
 			yearHolder.HolderUpdated -= OnAge;
 			yearHolder.HolderFilled -= OnRetirement;
@@ -86,33 +84,12 @@ namespace Units {
 		}
 
 		void OnHappinessUpdate () {
-			indicator.Fill = happinessHolder.PercentFilled;
+			if (indicator != null) indicator.Fill = happinessHolder.PercentFilled;
 		}
 
 		public override bool OnBindActionable (IActionAcceptor acceptor) {
 			UpdateEfficiency ();
 			return base.OnBindActionable (acceptor);
-		}
-
-		protected override void OnBind () {
-			UnbindJacuzzi ();
-			Jacuzzi jacuzzi = BoundAcceptor as Jacuzzi;
-			if (jacuzzi != null) {
-				boundJacuzzi = jacuzzi;
-				PerformableActions.SetActive ("DeliverDistributor", false);
-			}
-		}
-
-		protected override void OnUnbind () {
-			UnbindJacuzzi ();
-		}
-
-		void UnbindJacuzzi () {
-			if (boundJacuzzi != null) {
-				boundJacuzzi.Inventory.RemoveItem<DistributorHolder> ();
-				PerformableActions.SetActive ("DeliverDistributor", true);
-				boundJacuzzi = null;
-			}
 		}
 
 		void UpdateEfficiency () {

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MercuryRender : MonoBehaviour {
 
-	void Awake () {
-		renderer.SetColor (Color.blue);
+	public void SetColor (Color color) {
+		renderer.SetColor (color);
 	}
 }

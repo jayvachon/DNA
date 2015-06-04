@@ -43,7 +43,7 @@ namespace Units {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (new CoffeeHolder (100, 35));
-			Inventory.Add (new YearHolder (250, 0));
+			Inventory.Add (new YearHolder (350, 0));
 			Inventory.Get<YearHolder> ().HolderFilled += OnYearsCollected;
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 

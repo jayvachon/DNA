@@ -17,15 +17,35 @@ namespace Units {
 
 		public PerformableActions PerformableActions { get; private set; }
 
+		HealthHolder healthHolder = new HealthHolder (100, 100);
+		HealthIndicator indicator;
+
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new ElderHolder (3, 0));
-			Inventory.Get<ElderHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
+			Inventory.Add (healthHolder);
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add (new AcceptDeliverUnpairedItem<ElderHolder> ());
-			AcceptableActions.Add (new AcceptOccupyUnit ());
+			AcceptableActions.Add (new AcceptCollectItem<HealthHolder> ());
+
+			PerformableActions = new PerformableActions (this);
+			PerformableActions.Add (new GenerateItem<HealthHolder> ());
+		}
+
+		public override void OnPoolCreate () {
+			healthHolder.HolderUpdated += OnHealthUpdate;
+			indicator = ObjectCreator.Instance.Create<HealthIndicator> ().GetScript<HealthIndicator> ();
+			indicator.Initialize (Transform, 1.5f);
+		}
+
+		public override void OnPoolDestroy () {
+			healthHolder.HolderUpdated -= OnHealthUpdate;
+			ObjectCreator.Instance.Destroy<HealthIndicator> (indicator.MyTransform);
+		}
+
+		void OnHealthUpdate () {
+			//TODO: should set indicator as listener on init (and set position & parent) --- basically move all this out of the unit
+			indicator.Fill = healthHolder.PercentFilled;
 		}
 	}
 }

@@ -88,7 +88,7 @@ namespace Units {
 			name = string.Format ("{0} to Be", newUnit);
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 			indicator = ObjectCreator.Instance.Create<BuildingIndicator> ().GetScript<BuildingIndicator> ();
-			indicator.Initialize (newUnit, Position);
+			indicator.Initialize (newUnit, Transform);
 			unitInfoContent.Refresh ();
 		}
 
@@ -106,4 +106,4 @@ namespace Units {
 			ObjectCreator.Instance.Destroy<Plot> (transform);
 		}
 	}
-}
+	}

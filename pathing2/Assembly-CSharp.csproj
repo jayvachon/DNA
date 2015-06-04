@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverUnpairedItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptOccupyUnitEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectHappinessEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectHealthEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\ConsumeItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DefaultEnabledState.cs" />
@@ -80,6 +81,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\OccupyUnitEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CancelGenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectHappiness.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectHealth.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CollectUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\CombineItems.cs" />
@@ -186,8 +188,10 @@
      <Compile Include="Assets\Scripts\UI\BuildingIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
+     <Compile Include="Assets\Scripts\UI\FloatingIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\HUD\SeaLevelMeter.cs" />
      <Compile Include="Assets\Scripts\UI\HappinessIndicator.cs" />
+     <Compile Include="Assets\Scripts\UI\HealthIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\ItemHolderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\MercuryRender.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />

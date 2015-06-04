@@ -43,9 +43,11 @@ public class TimerValues : MonoBehaviour {
 				actionTimes.Add ("GenerateYear", 1f);
 				actionTimes.Add ("GenerateCoffee", 0.75f);
 				actionTimes.Add ("GenerateHappiness", 1f);
+				actionTimes.Add ("GenerateHealth", 1f);
 
 				// ConsumeItems
-				actionTimes.Add ("ConsumeHappiness", 0.75f);
+				actionTimes.Add ("ConsumeHappiness", 0.5f);
+				actionTimes.Add ("ConsumeHealth", 0.1f);
 				//actionTimes.Add ("ConsumeMilkshake", 5f);
 				//actionTimes.Add ("ConsumeCoffee", 5f);
 				actionTimes.Add ("ConsumeYear", 5f);
@@ -54,6 +56,7 @@ public class TimerValues : MonoBehaviour {
 				actionTimes.Add ("CollectMilkshake", 0.5f);
 				actionTimes.Add ("CollectCoffee", 0.5f);
 				actionTimes.Add ("CollectHappiness", 0.1f);
+				actionTimes.Add ("CollectHealth", 0.25f);
 
 				// DeliverItems
 				actionTimes.Add ("DeliverMilkshake", 0.5f);

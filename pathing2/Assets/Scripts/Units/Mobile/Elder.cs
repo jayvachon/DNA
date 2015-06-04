@@ -19,7 +19,7 @@ namespace Units {
 			set { Inventory.RemoveItems<HealthHolder> (100 - value); }
 		}
 
-		Clinic boundClinic = null;
+		HealthIndicator indicator;
 
 		void Awake () {
 
@@ -27,10 +27,12 @@ namespace Units {
 			Inventory.Add (new YearHolder (500, 65));
 			Inventory.Add (new HealthHolder (100, 100));
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
+			Inventory.Get<HealthHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
-			PerformableActions.Add (new ConsumeHealth (healthManager));
+			PerformableActions.Add (new ConsumeItem<HealthHolder> ()); // new
+			PerformableActions.Add (new CollectHealth ()); // new
+
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
 			PerformableActions.Add (new OccupyUnit ());
 			PerformableActions.SetActive ("OccupyUnit", false);
@@ -41,11 +43,21 @@ namespace Units {
 		}
 		
 		public override void OnPoolCreate () {
+			InitInventory ();
+			InitIndicator ();
+			PerformableActions.Start ("ConsumeHealth");
+		}
+
+		void InitInventory () {
 			Inventory.Get<YearHolder> ().Clear ();
 			Inventory.AddItems<YearHolder> (65);
 			Inventory.AddItems<HealthHolder> (100);
 			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
-			PerformableActions.Start ("ConsumeHealth");
+		}
+
+		void InitIndicator () {
+			indicator = ObjectCreator.Instance.Create<HealthIndicator> ().GetScript<HealthIndicator> ();
+			indicator.Initialize (Transform);
 		}
 
 		public override void OnPoolDestroy () {
@@ -53,34 +65,10 @@ namespace Units {
 		}
 
 		protected override void OnBind () {
-			UnbindClinic ();
-			Clinic clinic = BoundAcceptor as Clinic;
-			if (clinic != null) {
-				boundClinic = clinic;
-				PerformableActions.SetActive ("DeliverElder", false);
-					
-				// a disgusting hack
-				// this starts the "OccupyUnit" action (which causes the elders to circle the clinic)
-				// but only if they were added to the clinic's inventory
-				if (boundClinic.AcceptableActions.ActionEnabled ("DeliverElder")) {
-					PerformableActions.SetActive ("OccupyUnit", true);
-					IActionAcceptor boundAcceptor = BoundAcceptor;
-					BoundAcceptor = null;
-					OnBindActionable (boundAcceptor);
-				}
-			}
-		}
-
-		protected override void OnUnbind () {
-			UnbindClinic ();
-		}
-
-		void UnbindClinic () {
-			if (boundClinic != null) {
-				boundClinic.Inventory.RemoveItem<ElderHolder> ();
-				PerformableActions.SetActive ("DeliverElder", true);
-				boundClinic = null;
-			}
+			PerformableActions.SetActive ("OccupyUnit", true);
+			IActionAcceptor boundAcceptor = BoundAcceptor;
+			BoundAcceptor = null;
+			OnBindActionable (boundAcceptor);
 		}
 
 		void OnDie () {
@@ -91,7 +79,6 @@ namespace Units {
 		protected override void OnChangeUnit<U> (U u) {
 			Corpse corpse = u as Corpse;
 			corpse.Inventory.Transfer<YearHolder> (Inventory);
-			UnbindClinic ();
 		}
 	}
 }

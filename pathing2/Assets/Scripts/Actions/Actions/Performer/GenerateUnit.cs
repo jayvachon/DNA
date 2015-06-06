@@ -6,8 +6,7 @@ using GameInventory;
 namespace GameActions {
 
 	public delegate void UnitGenerated (Unit unit);
-
-	// T = Unit to be generated, U = ItemHolder to check
+	
 	public class GenerateUnit<T, U> : InventoryAction<U> where T : Unit where U : ItemHolder {
 
 		string name = "";

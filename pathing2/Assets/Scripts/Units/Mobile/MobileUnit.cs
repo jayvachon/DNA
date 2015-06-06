@@ -94,7 +94,7 @@ namespace Units {
 		}
 
 		public virtual void OnEndActions () {
-			StartCoroutine (CoWaitForCompleteCircle ());
+			if (gameObject.activeSelf) StartCoroutine (CoWaitForCompleteCircle ());
 		}
 
 		IEnumerator CoWaitForCompleteCircle () {
@@ -112,7 +112,6 @@ namespace Units {
 
 		public void OnDragEnter () {
 			moveOnRelease = true;
-			BoundAcceptor = null;
 			MobileTransform.Path.DragFromPath ();
 		}
 

@@ -1,4 +1,4 @@
-﻿#define GENERATE_ALL
+﻿#undef GENERATE_ALL
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,12 +37,12 @@ namespace Units {
 			}
 		}
 
-		int positionIndex = 0;
+		int positionIndex = 4;
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new CoffeeHolder (100, 35));
+			Inventory.Add (new CoffeeHolder (100, 50));
 			Inventory.Add (new YearHolder (350, 0));
 			Inventory.Get<YearHolder> ().HolderFilled += OnYearsCollected;
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
@@ -52,11 +52,18 @@ namespace Units {
 			AcceptableActions.Add (new AcceptDeliverAllYears ());
 
 			PerformableActions = new PerformableActions (this);
+			PerformableActions.StartAction += OnStartAction;
 			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
 			#if GENERATE_ALL
 			PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");
 			PerformableActions.Add (new GenerateUnit<Corpse, CoffeeHolder> (0, OnUnitGenerated), "Birth Corpse (temp)");
 			#endif
+		}
+
+		void OnStartAction (string id) {
+			if (id == "GenerateDistributor") {
+				//PerformableActions.SetActive ("GenerateDistributor", false);
+			}
 		}
 
 		void OnUnitGenerated (Unit unit) {
@@ -66,6 +73,8 @@ namespace Units {
 			} else {
 				positionIndex ++;
 			}
+			//PerformableActions.SetActive ("GenerateDistributor", true);
+			//RefreshInfoContent ();
 		}
 
 		void OnYearsCollected () {

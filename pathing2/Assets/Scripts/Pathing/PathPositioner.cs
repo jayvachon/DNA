@@ -97,9 +97,6 @@ namespace Pathing {
 
 		IEnumerator CoMove (Vector3[] line) {
 
-			//Vector3 start = line[0];
-			//Vector3 end = line[1];
-
 			float startProgress = positionOnLine / (float)LineLength;
 			float endProgress = startProgress + (1f / (float)LineLength);
 			float p = startProgress;

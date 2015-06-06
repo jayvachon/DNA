@@ -41,7 +41,7 @@ namespace GameInventory {
 			get { return new List<Item> (0); }
 		}
 
-		public abstract void Initialize (int count);
+		public abstract void Initialize (int count=-1);
 		public abstract Item Get (ItemHasAttribute contains);
 		public abstract bool Has (ItemHasAttribute contains);
 		public abstract List<Item> Add ();
@@ -103,7 +103,10 @@ namespace GameInventory {
 			Initialize (startCount);
 		}
 
-		public override void Initialize (int count) {
+		public override void Initialize (int count=-1) {
+			if (count == -1) {
+				count = Capacity;
+			}
 			if (count == 0) {
 				Clear ();
 			} else {

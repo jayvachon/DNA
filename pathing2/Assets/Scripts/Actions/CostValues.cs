@@ -26,10 +26,23 @@ public class CostValues : MonoBehaviour {
 				costs = new Dictionary<string, int> ();
 				costs.Add ("GenerateDistributor", 15);
 				costs.Add ("GenerateCoffeePlant", 5);
-				costs.Add ("GenerateJacuzzi", 20);
-				costs.Add ("GenerateClinic", 25);
+				costs.Add ("GenerateJacuzzi", 10);
+				costs.Add ("GenerateClinic", 15);
+				costs.Add ("GenerateUniversity", 10);
 			}
 			return costs;
+		}
+	}
+
+	Dictionary<string, int> researchCosts;
+	public Dictionary<string, int> ResearchCosts {
+		get {
+			if (researchCosts == null) {
+				researchCosts = new Dictionary<string, int> ();
+				researchCosts.Add ("ResearchJacuzzi", 10);
+				researchCosts.Add ("ResearchClinic", 15);
+			}
+			return researchCosts;
 		}
 	}
 
@@ -39,6 +52,14 @@ public class CostValues : MonoBehaviour {
 			return cost;
 		}
 		return -1;
+	}
+
+	public int GetResearchCost (string id) {
+		try {
+			return ResearchCosts[id];
+		} catch {
+			throw new System.Exception ("Research cost '" + id + "' does not exist in the dictionary");
+		}
 	}
 
 	#if VARIABLE_COST

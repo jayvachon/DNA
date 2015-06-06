@@ -22,11 +22,12 @@ namespace GameInventory {
 			this.holder = holder;
 		}
 
-		public void Add (ItemHolder holder) {
+		public ItemHolder Add (ItemHolder holder) {
 			holder.Inventory = this;
 			holder.HolderUpdated += NotifyInventoryUpdated;
 			holders.Add (holder);
 			NotifyInventoryUpdated ();
+			return holder;
 		}
 
 		public List<Item> AddItem<T> () where T : ItemHolder {

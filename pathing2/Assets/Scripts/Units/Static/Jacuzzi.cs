@@ -17,7 +17,7 @@ namespace Units {
 		
 		public PerformableActions PerformableActions { get; private set; }
 
-		HappinessHolder happinessHolder = new HappinessHolder (100, 100);
+		HappinessHolder happinessHolder = new HappinessHolder (50, 50);
 		HappinessIndicator indicator;
 
 		void Awake () {

@@ -22,17 +22,21 @@ public class FloatingIndicator : MBRefs, IPoolable {
 	}
 
 	public virtual void OnPoolCreate () {
-		if (spinning) return;
-		spinning = true;
-		StartCoroutine (CoSpin ());
+		StartSpinning ();
 	}
 
-	public void OnPoolDestroy () {
+	public virtual void OnPoolDestroy () {
 		spinning = false;
 	}
 
 	protected void SetColor (Color color) {
 		mercuryRender.SetColor (color);
+	}
+
+	protected void StartSpinning () {
+		if (spinning) return;
+		spinning = true;
+		StartCoroutine (CoSpin ());
 	}
 
 	IEnumerator CoSpin () {

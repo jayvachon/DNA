@@ -20,18 +20,19 @@ namespace Units {
 		}
 
 		HealthIndicator indicator;
+		HealthHolder healthHolder;
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (new YearHolder (500, 65));
-			Inventory.Add (new HealthHolder (100, 100));
+			healthHolder = (HealthHolder)Inventory.Add (new HealthHolder (100, 100));
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
-			Inventory.Get<HealthHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
+			healthHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new ConsumeItem<HealthHolder> ()); // new
-			PerformableActions.Add (new CollectHealth ()); // new
+			PerformableActions.Add (new ConsumeItem<HealthHolder> ());
+			PerformableActions.Add (new CollectHealth ());
 
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
 			PerformableActions.Add (new OccupyUnit ());
@@ -40,20 +41,22 @@ namespace Units {
 
 		void Start () {
 			Path.Active = false;
-			Path.Speed = Path.PathSettings.MaxSpeed / TimerValues.Instance.Year;
+			Path.Speed = Path.PathSettings.MinSpeed / TimerValues.Instance.Year;
 		}
 		
 		public override void OnPoolCreate () {
 			InitInventory ();
 			InitIndicator ();
 			PerformableActions.Start ("ConsumeHealth");
+			NotificationCenter.Instance.ShowNotification ("laborerRetired");
 		}
 
 		void InitInventory () {
 			Inventory.Get<YearHolder> ().Clear ();
 			Inventory.AddItems<YearHolder> (65);
 			Inventory.AddItems<HealthHolder> (100);
-			Inventory.Get<HealthHolder> ().HolderEmptied += OnDie;
+			healthHolder.HolderUpdated += OnHealthUpdate;
+			healthHolder.HolderEmptied += OnDie;
 		}
 
 		void InitIndicator () {
@@ -62,7 +65,9 @@ namespace Units {
 		}
 
 		public override void OnPoolDestroy () {
-			Inventory.Get<HealthHolder> ().HolderEmptied -= OnDie;
+			healthHolder.HolderEmptied -= OnDie;
+			ObjectCreator.Instance.Destroy<HealthIndicator> (indicator.MyTransform);
+			indicator = null;
 		}
 
 		protected override void OnBind () {
@@ -70,6 +75,10 @@ namespace Units {
 			IActionAcceptor boundAcceptor = BoundAcceptor;
 			BoundAcceptor = null;
 			OnBindActionable (boundAcceptor);
+		}
+
+		void OnHealthUpdate () {
+			if (indicator != null) indicator.Fill = healthHolder.PercentFilled;
 		}
 
 		void OnDie () {

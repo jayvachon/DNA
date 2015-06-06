@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GameInventory;
 using GameActions;
 using GameInput;
+using GameEvents;
 
 namespace Units {
 	
@@ -31,15 +33,30 @@ namespace Units {
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add (new AcceptDeliverItem<MilkshakeHolder> ());
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
+
+			Events.instance.AddListener<UnlockUnitEvent> (OnUnlockUnitEvent);
 		}
 
 		void Start () {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.StartAction += OnStartAction;
 			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Coffee Plant (5M)");
-			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Jacuzzi (20M)");
-			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Clinic (25M)");
+			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Jacuzzi (10M)");
+			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Clinic (15M)");
+			PerformableActions.Add (new GenerateUnit<University, MilkshakeHolder> (-1, OnUnitGenerated), "Birth University (25M)");
 			PerformableActions.Add (new CancelGenerateUnit (), "Cancel");
+			SetActiveActions ();
+		}
+
+		void SetActiveActions () {
+			PerformableActions.SetActive ("GenerateCoffeePlant", false);
+			PerformableActions.SetActive ("GenerateJacuzzi", false);
+			PerformableActions.SetActive ("GenerateClinic", false);
+			PerformableActions.SetActive ("GenerateUniversity", false);
+			List<string> unlockedUnits = StaticUnitsManager.UnlockedUnits;
+			for (int i = 0; i < unlockedUnits.Count; i ++) {
+				PerformableActions.SetActive ("Generate" + unlockedUnits[i], true);
+			}
 			PerformableActions.SetActive ("CancelGenerateUnit", false);
 		}
 
@@ -48,7 +65,8 @@ namespace Units {
 				name = defaultName;
 				Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, true);
 				PerformableActions.ActivateAll ();
-				unitInfoContent.Refresh ();
+				SetActiveActions ();
+				RefreshInfoContent ();
 			}
 		}
 
@@ -64,8 +82,8 @@ namespace Units {
 			pathPointEnabled = false;
 			PerformableActions.StopAll ();
 			PerformableActions.ActivateAll ();
-			PerformableActions.SetActive ("CancelGenerateUnit", false);
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
+			SetActiveActions ();
 			name = "Plot";
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, false);
 			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
@@ -84,6 +102,7 @@ namespace Units {
 				case "GenerateCoffeePlant": 	newUnit = "Coffee Plant"; break;
 				case "GenerateJacuzzi": 		newUnit = "Jacuzzi"; break;
 				case "GenerateClinic": 			newUnit = "Clinic"; break;
+				case "GenerateUniversity":		newUnit = "University"; break;
 			}
 			name = string.Format ("{0} to Be", newUnit);
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
@@ -105,5 +124,9 @@ namespace Units {
 			}
 			ObjectCreator.Instance.Destroy<Plot> (transform);
 		}
+
+		void OnUnlockUnitEvent (UnlockUnitEvent e) {
+			PerformableActions.SetActive ("Generate" + e.id, true);
+		}
 	}
-	}
+}

@@ -15,7 +15,7 @@ namespace Units {
 		void Awake () {
 
 			Inventory = new Inventory (this);
-			YearHolder yearHolder = new YearHolder (500, 100);
+			YearHolder yearHolder = new YearHolder (500, 0);
 			yearHolder.HolderEmptied += OnDeliverYears;
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			Inventory.Add (yearHolder);
@@ -33,6 +33,7 @@ namespace Units {
 		public override void OnPoolCreate () {
 			MobileClickable.CanDrag = true;
 			MobileClickable.CanSelect = true;
+			NotificationCenter.Instance.ShowNotification ("elderDied");
 		}
 
 		protected override void OnBind () {

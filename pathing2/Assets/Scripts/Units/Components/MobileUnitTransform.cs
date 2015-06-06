@@ -43,6 +43,10 @@ namespace Units {
 			Path.Init (this, new PathSettings (2, false));
 		}
 
+		void OnEnable () {
+			circling = false;
+		}
+
 		public override void OnSelect () {
 			Path.Enabled = true;
 		}
@@ -110,29 +114,6 @@ namespace Units {
 				yield return null;
 			}
 			circling = false;
-			/*float sign = Mathf.Sign (LocalPosition.x);
-			if (sign > 0) {
-				float offset = 90f + Parent.localEulerAngles.y;
-				while (action.Performing && BoundAcceptor != null) {
-					float p = action.Progress;
-					Position = new Vector3 (
-						center.x + xMax * Mathf.Sin (TWO_PI * p + offset * Mathf.Deg2Rad),
-						yPos,
-						center.z + xMax * Mathf.Cos (TWO_PI * p + offset * Mathf.Deg2Rad));
-					yield return null;
-				}
-			}
-			if (sign < 0) {
-				float offset = Parent.localEulerAngles.y + 270f;
-				while (action.Performing && BoundAcceptor != null) {
-					float p = Mathf.Abs (action.Progress-1);
-					Position = new Vector3 (
-						center.x + xMax * Mathf.Sin (TWO_PI * p + offset * Mathf.Deg2Rad),
-						yPos,
-						center.z + xMax * Mathf.Cos (TWO_PI * p + offset * Mathf.Deg2Rad));
-					yield return null;
-				}
-			}*/
 		}
 
 		// TODO: Move this somewhere else?

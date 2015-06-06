@@ -98,6 +98,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\GenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\InventoryAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\OccupyUnit.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\ResearchUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionAcceptor.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionAcceptor2.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Tests\MockActionPerformer.cs" />
@@ -120,10 +121,11 @@
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
-     <Compile Include="Assets\Scripts\EventHandling\Events\ClickEvent.cs" />
-     <Compile Include="Assets\Scripts\EventHandling\Events\ReleaseEvent.cs" />
-     <Compile Include="Assets\Scripts\EventHandling\Events\SelectEvent.cs" />
-     <Compile Include="Assets\Scripts\EventHandling\Events\UnselectEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Input\ClickEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Input\ReleaseEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Input\SelectEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Input\UnselectEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />
@@ -194,6 +196,8 @@
      <Compile Include="Assets\Scripts\UI\HealthIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\ItemHolderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\MercuryRender.cs" />
+     <Compile Include="Assets\Scripts\UI\Notifications\Notification.cs" />
+     <Compile Include="Assets\Scripts\UI\Notifications\NotificationCenter.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitClickable.cs" />
@@ -223,6 +227,8 @@
      <Compile Include="Assets\Scripts\Units\Static\Pasture.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\StaticUnitsManager.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\University.cs" />
      <Compile Include="Assets\Scripts\Utilities\Coroutine.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\MaterialsExtended.cs" />

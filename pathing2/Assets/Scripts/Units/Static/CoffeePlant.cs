@@ -17,8 +17,8 @@ namespace Units {
 		void Awake () {
 			
 			Inventory = new Inventory (this);
-			Inventory.Add (new CoffeeHolder (25, 0));
-			Inventory.Add (new YearHolder (10, 0));
+			Inventory.Add (new CoffeeHolder (20, 0));
+			Inventory.Add (new YearHolder (30, 0));
 			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableActions = new AcceptableActions (this);
@@ -26,28 +26,21 @@ namespace Units {
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateItem<CoffeeHolder> ());
-			//PerformableActions.Add (new ConsumeItem<CoffeeHolder> ());
 			PerformableActions.Add (new ConsumeItem<YearHolder> (TimerValues.Instance.Year));
 			PerformableActions.SetActive ("ConsumeYear", false);
 		}
 
 		public override void OnPoolCreate () {
 			Inventory.Get<YearHolder> ().HolderEmptied += OnDie;
-			Inventory.Get<YearHolder> ().Initialize (15);
+			Inventory.Get<YearHolder> ().Initialize ();
 			PerformableActions.SetActive ("ConsumeYear", true);
 		}
 
 		void OnDie () {
 			Inventory.Get<YearHolder> ().HolderEmptied -= OnDie;
+			PerformableActions.Stop ("ConsumeYear");
 			PerformableActions.SetActive ("ConsumeYear", false);
-			StaticUnit plot = ObjectCreator.Instance.Create<Plot> (Vector3.zero).GetScript<Plot> () as StaticUnit;
-			plot.Position = Position;
-			plot.PathPoint = PathPoint;
-			PathPoint.StaticUnit = plot;
-			if (Selected) {
-				SelectionManager.Select (plot.UnitClickable);
-			}
-			ObjectCreator.Instance.Destroy<CoffeePlant> (transform);
+			Destroy<CoffeePlant> ();
 		}
 	}
 }

@@ -96,5 +96,9 @@ namespace Units {
 				SelectionManager.Unselect ();
 			}
 		}
+
+		protected void RefreshInfoContent () {
+			UnitInfoContent.Refresh ();
+		}
 	}
 }

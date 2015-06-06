@@ -19,11 +19,18 @@ public class TimerValues : MonoBehaviour {
 		}
 	}
 
-	public float Year = 5f;
-	float pathSpeed = 1f;
-	public float PathSpeed {
-		get { return pathSpeed; }
-		set { pathSpeed = value; }
+	public float Year = 3f;
+
+	float maxPathSpeed = 1f;
+	public float MaxPathSpeed {
+		get { return maxPathSpeed; }
+		set { maxPathSpeed = value; }
+	}
+
+	float minPathSpeed = 0.1f;
+	public float MinPathSpeed {
+		get { return minPathSpeed; }
+		set { minPathSpeed = value; }
 	}
 
 	Dictionary<string, float> actionTimes;
@@ -41,9 +48,9 @@ public class TimerValues : MonoBehaviour {
 
 				// GenerateItems
 				actionTimes.Add ("GenerateYear", 1f);
-				actionTimes.Add ("GenerateCoffee", 0.75f);
-				actionTimes.Add ("GenerateHappiness", 1f);
-				actionTimes.Add ("GenerateHealth", 1f);
+				actionTimes.Add ("GenerateCoffee", 1.5f);
+				actionTimes.Add ("GenerateHappiness", 0.25f);
+				actionTimes.Add ("GenerateHealth", 0.25f);
 
 				// ConsumeItems
 				actionTimes.Add ("ConsumeHappiness", 0.5f);
@@ -55,7 +62,7 @@ public class TimerValues : MonoBehaviour {
 				// CollectItems
 				actionTimes.Add ("CollectMilkshake", 0.5f);
 				actionTimes.Add ("CollectCoffee", 0.5f);
-				actionTimes.Add ("CollectHappiness", 0.1f);
+				actionTimes.Add ("CollectHappiness", 0.05f);
 				actionTimes.Add ("CollectHealth", 0.25f);
 
 				// DeliverItems

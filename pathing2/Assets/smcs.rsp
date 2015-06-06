@@ -1,2 +1,2 @@
--define:VARIABLE_TIME
--define:VARIABLE_COST
+-define:VARIABLE_TIMEx
+-define:VARIABLE_COSTx

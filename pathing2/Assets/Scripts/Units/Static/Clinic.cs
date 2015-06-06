@@ -17,7 +17,7 @@ namespace Units {
 
 		public PerformableActions PerformableActions { get; private set; }
 
-		HealthHolder healthHolder = new HealthHolder (100, 100);
+		HealthHolder healthHolder = new HealthHolder (300, 300);
 		HealthIndicator indicator;
 
 		void Awake () {

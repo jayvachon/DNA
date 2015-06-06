@@ -45,7 +45,7 @@ namespace Units {
 			InitPath ();
 			InitIndicator ();
 			PerformableActions.ActivateAll ();
-			UnitInfoContent.Refresh ();
+			RefreshInfoContent ();
 		}
 
 		void InitIndicator () {
@@ -58,7 +58,7 @@ namespace Units {
 			HappinessHolder happinessHolder = Inventory.Get<HappinessHolder> ();
 			happinessHolder.Initialize (100);
 			happinessHolder.HolderUpdated += OnHappinessUpdate;
-			yearHolder.HolderUpdated += OnAge;
+			happinessHolder.HolderUpdated += SetPathSpeed;
 			yearHolder.HolderFilled += OnRetirement;
 		}
 
@@ -71,12 +71,9 @@ namespace Units {
 			ObjectCreator.Instance.Destroy<HappinessIndicator> (indicator.MyTransform);
 			indicator = null;
 			PerformableActions.DeactivateAll ();
-			yearHolder.HolderUpdated -= OnAge;
+			happinessHolder.HolderUpdated -= OnHappinessUpdate;
+			happinessHolder.HolderUpdated -= SetPathSpeed;
 			yearHolder.HolderFilled -= OnRetirement;
-		}
-
-		void OnAge () {
-			SetPathSpeed ();
 		}
 
 		void OnRetirement () {
@@ -87,27 +84,16 @@ namespace Units {
 			if (indicator != null) indicator.Fill = happinessHolder.PercentFilled;
 		}
 
-		public override bool OnBindActionable (IActionAcceptor acceptor) {
-			UpdateEfficiency ();
-			return base.OnBindActionable (acceptor);
-		}
-
-		void UpdateEfficiency () {
-			float efficiency = Mathf.Max (0.1f, Inventory.Get<HappinessHolder> ().PercentFilled);
-			PerformableActions.Get ("CollectMilkshake").Efficiency = efficiency;
-			PerformableActions.Get ("DeliverMilkshake").Efficiency = efficiency;
-			PerformableActions.Get ("CollectCoffee").Efficiency = efficiency;
-			PerformableActions.Get ("DeliverCoffee").Efficiency = efficiency;
-		}
-
 		void SetPathSpeed () {
-			float progress = yearHolder.PercentFilled;
-			float p = Mathf.Clamp01 (Mathf.Abs (progress - 1));
-			Path.Speed = Path.PathSettings.MaxSpeed * Mathf.Sqrt(-(p - 2) * p) / TimerValues.Instance.Year;
+			Path.Speed = Mathf.Lerp (
+				Path.PathSettings.MinSpeed, 
+				Path.PathSettings.MaxSpeed, 
+				happinessHolder.PercentFilled) / TimerValues.Instance.Year;
 		}
 
 		protected override void OnChangeUnit<U> (U u) {
 			Path.Active = false;
+			BoundAcceptor = null;
 			Elder elder = u as Elder;
 			elder.AverageHappiness = Inventory.Get<HappinessHolder> ().Average;
 		}

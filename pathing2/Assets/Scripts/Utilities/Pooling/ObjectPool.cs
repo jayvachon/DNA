@@ -102,6 +102,7 @@ public class ObjectPool : MonoBehaviour {
 		}
 		#endif
 		instance.GetScript<IPoolable>().OnPoolDestroy ();
+		instance.SetParent (null);
 		ObjectPool.GetPool (poolName).ReleaseInstance (instance);
 	}
 }

@@ -20,7 +20,7 @@ public class TimerValues : MonoBehaviour {
 	}
 
 	public float Year = 5f;
-	float pathSpeed = 10f;
+	float pathSpeed = 1f;
 	public float PathSpeed {
 		get { return pathSpeed; }
 		set { pathSpeed = value; }
@@ -97,7 +97,7 @@ public class TimerValues : MonoBehaviour {
 		}
 		GUILayout.Label ("Duration settings");
 		Year = DrawFloatSlider (Year, 1, 20, "Year (secs)");
-		PathSpeed = DrawFloatSlider (PathSpeed, 1, 20, "Path Speed");
+		PathSpeed = DrawFloatSlider (PathSpeed, 0.1f, 2f, "Path Speed");
 		GUILayout.Label ("Action times (% of year)");
 		showGenerate = GUILayout.Toggle (showGenerate, "Generate");
 		if (showGenerate) {

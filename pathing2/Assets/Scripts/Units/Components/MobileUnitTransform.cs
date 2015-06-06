@@ -72,14 +72,45 @@ namespace Units {
 			}
 		}
 
+		bool circling = false;
+		public bool Circling {
+			get { return circling; }
+		}
+
 		public void EncircleBoundUnit (PerformerAction action) {
+			if (circling) return;
+			circling = true;
 			StaticUnit su = (StaticUnit)BoundAcceptor;
 			StartCoroutine (CoEncircleBoundUnit (su.Position, action));
 		}
 
 		// TODO: clean up
 		IEnumerator CoEncircleBoundUnit (Vector3 center, PerformerAction action) {
+			
+			float p = 0f;
 			float sign = Mathf.Sign (LocalPosition.x);
+			float offset = Parent.localEulerAngles.y + ((sign > 0) ? 90f : 270f);
+			float speed = Path.Speed * xMax * 2f; // Path speed * diameter
+
+			while (p < 1f || action.Performing && BoundAcceptor != null) {
+				if (p >= 1f) p = 0f;
+				p += speed * Time.deltaTime;
+				if (sign > 0) {
+					Position = new Vector3 (
+						center.x + xMax * Mathf.Sin (TWO_PI * p + offset * Mathf.Deg2Rad),
+						yPos,
+						center.z + xMax * Mathf.Cos (TWO_PI * p + offset * Mathf.Deg2Rad));
+				} else {
+					float pInv = Mathf.Abs (p-1);
+					Position = new Vector3 (
+						center.x + xMax * Mathf.Sin (TWO_PI * pInv + offset * Mathf.Deg2Rad),
+						yPos,
+						center.z + xMax * Mathf.Cos (TWO_PI * pInv + offset * Mathf.Deg2Rad));
+				}
+				yield return null;
+			}
+			circling = false;
+			/*float sign = Mathf.Sign (LocalPosition.x);
 			if (sign > 0) {
 				float offset = 90f + Parent.localEulerAngles.y;
 				while (action.Performing && BoundAcceptor != null) {
@@ -101,7 +132,7 @@ namespace Units {
 						center.z + xMax * Mathf.Cos (TWO_PI * p + offset * Mathf.Deg2Rad));
 					yield return null;
 				}
-			}
+			}*/
 		}
 
 		// TODO: Move this somewhere else?

@@ -18,7 +18,7 @@ public class FloatingIndicator : MBRefs, IPoolable {
 		floatHeight = (height == -1) ? floatHeight : height;
 		Parent = parent;
 		LocalPosition = new Vector3 (0, floatHeight, 0);
-		StartCoroutine (CoSpin ());		
+		StartCoroutine (CoSpin ());
 	}
 
 	public virtual void OnPoolCreate () {

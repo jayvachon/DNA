@@ -97,21 +97,16 @@ namespace Pathing {
 
 		IEnumerator CoMove (Vector3[] line) {
 
-			Vector3 start = line[0];
-			Vector3 end = line[1];
+			//Vector3 start = line[0];
+			//Vector3 end = line[1];
 
-			float distance = Vector3.Distance (start, end);
-			float time = distance / speed;
-			float eTime = 0f;
 			float startProgress = positionOnLine / (float)LineLength;
 			float endProgress = startProgress + (1f / (float)LineLength);
+			float p = startProgress;
 
-			while (eTime < time && moving) {
-				#if VARIABLE_TIME
-				time = distance / speed;
-				#endif
-				eTime += Time.deltaTime;
-				Pathable.Progress = Mathf.Lerp (startProgress, endProgress, eTime / time);
+			while (p < endProgress && moving) {
+				p += speed * Time.deltaTime;
+				Pathable.Progress = p;
 				yield return null;
 			}
 

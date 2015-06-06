@@ -94,6 +94,13 @@ namespace Units {
 		}
 
 		public virtual void OnEndActions () {
+			StartCoroutine (CoWaitForCompleteCircle ());
+		}
+
+		IEnumerator CoWaitForCompleteCircle () {
+			while (MobileTransform.Circling) {
+				yield return null;
+			}
 			StartMovingOnPath ();
 		}
 

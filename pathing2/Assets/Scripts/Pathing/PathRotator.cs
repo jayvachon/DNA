@@ -53,6 +53,11 @@ namespace Pathing {
 			Distance = Vector3.Distance (line[0], line[1]);
 		}
 
+		public float GetYPosition (float p) {
+			if (line == null) return -1;
+			return Mathf.Lerp (line[0].y, line[1].y, p);
+		}
+
 		void SetPosition () {
 			Vector3 a = line[0];
 			Vector3 b = line[1];

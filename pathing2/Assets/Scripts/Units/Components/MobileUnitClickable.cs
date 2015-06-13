@@ -34,6 +34,8 @@ namespace Units {
 			if (!CanSelect) return;
 			if (clickSettings.left) {
 				SelectionManager.Select (this);
+			} else {
+				
 			}
 		}
 

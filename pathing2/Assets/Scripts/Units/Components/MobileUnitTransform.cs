@@ -16,7 +16,10 @@ namespace Units {
 			set {
 				progress = value + 0.25f;
 				if (progress > 1f) progress -= 1f;
-				LocalPosition = new Vector3 (GetX (progress), yPos, GetZ (progress));
+				LocalPosition = new Vector3 (
+					GetX (progress), 
+					GetY (Mathf.Abs (1f-progress)),
+					GetZ (progress));
 			}
 		}
 
@@ -29,6 +32,12 @@ namespace Units {
 				return pathRotator;
 			}
 		}
+
+		enum MovementState {
+			Idle, Moving, Bound
+		}
+
+		MovementState movementState = MovementState.Idle;
 
 		float xMax = 1.25f;
 		float TWO_PI;
@@ -102,13 +111,13 @@ namespace Units {
 				if (sign > 0) {
 					Position = new Vector3 (
 						center.x + xMax * Mathf.Sin (TWO_PI * p + offset * Mathf.Deg2Rad),
-						yPos,
+						center.y,
 						center.z + xMax * Mathf.Cos (TWO_PI * p + offset * Mathf.Deg2Rad));
 				} else {
 					float pInv = Mathf.Abs (p-1);
 					Position = new Vector3 (
 						center.x + xMax * Mathf.Sin (TWO_PI * pInv + offset * Mathf.Deg2Rad),
-						yPos,
+						center.y,
 						center.z + xMax * Mathf.Cos (TWO_PI * pInv + offset * Mathf.Deg2Rad));
 				}
 				yield return null;
@@ -124,6 +133,12 @@ namespace Units {
 		// TODO: Move this somewhere else?
 		float GetX (float p) {
 			return (PathRotator.Distance + xMax * 2) * Mathf.Sin (TWO_PI * p) / 2f;
+		}
+
+		float GetY (float p) {
+			float y = PathRotator.GetYPosition (p);
+			if (y == -1) return yPos;
+			return y;
 		}
 	}
 }

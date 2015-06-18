@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Pathing;
 using GameActions;
 using GameInput;
+using GameEvents;
 
 namespace Units {
 
@@ -45,6 +46,16 @@ namespace Units {
 		public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
 
 		bool moveOnRelease = true;
+
+		public override void OnSelect () {
+			base.OnSelect ();
+			Events.instance.AddListener<ClickEvent> (OnClickEvent);
+		}
+
+		public override void OnUnselect () {
+			base.OnUnselect ();
+			Events.instance.RemoveListener<ClickEvent> (OnClickEvent);
+		}
 
 		public virtual void OnRelease () {
 			if (moveOnRelease && StartMovingOnPath (true)) {
@@ -116,5 +127,16 @@ namespace Units {
 		}
 
 		public virtual void OnDragRelease (Unit unit) {}
+
+		void OnClickEvent (ClickEvent e) {
+			if (e.left) return;
+			UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
+			if (unit != null) {
+				AcceptorAction a = unit.StaticUnit.AcceptableActions.GetEnabledAction ();
+				if (a != null && PerformableActions.HasMatchingAction (a)) {
+					Debug.Log (a.Name);
+				}
+			}
+		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#undef DRAG_STYLE
+using UnityEngine;
 using System.Collections;
 using GameInput;
 using Pathing;
@@ -6,9 +7,21 @@ using Pathing;
 namespace Units {
 
 	// TODO: rename to MobileUnitCollider
-
+	#if DRAG_STYLE
 	public class MobileUnitClickable : UnitClickable, IDraggable, IReleasable {
-			
+		
+		/*public bool MoveOnDrag { get { return true; } }
+
+		bool canDrag = true;
+		public bool CanDrag {
+			get { return canDrag; }
+			set { canDrag = value; }
+		}*/
+
+	#else
+	public class MobileUnitClickable : UnitClickable {
+	#endif
+
 		public bool MoveOnDrag { get { return true; } }
 
 		bool canDrag = true;
@@ -29,16 +42,15 @@ namespace Units {
 				return collider;
 			}
 		}
-
+		
 		public override void OnClick (ClickSettings clickSettings) {
 			if (!CanSelect) return;
 			if (clickSettings.left) {
 				SelectionManager.Select (this);
-			} else {
-				
 			}
 		}
 
+		#if DRAG_STYLE
 		public void OnDragEnter (DragSettings dragSettings) {
 			if (CanDrag && dragSettings.WasClicked) {
 				PathManager.Instance.SelectedPath = MobileUnit.Path;
@@ -67,6 +79,7 @@ namespace Units {
 		public void OnRelease (ReleaseSettings releaseSettings) {
 			MobileUnit.OnRelease ();
 		}
+		#endif
 
 		public UnitClickable Colliding (int layerMask=Physics.DefaultRaycastLayers) {
 

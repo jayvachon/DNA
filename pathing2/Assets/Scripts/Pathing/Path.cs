@@ -110,6 +110,13 @@ namespace Pathing {
 			pathPoints.Clear ();
 		}
 
+		public static PathPoint CreatePoint (Vector3 position, Units.StaticUnit staticUnit) {
+			PathPoint pathPoint = ObjectCreator.Instance.Create<PathPoint> (position).GetScript<PathPoint> ();
+			pathPoint.StaticUnit = staticUnit;
+			Pathfinder.Instance.AddPathPoint (pathPoint);
+			return pathPoint;
+		}
+
 		public void OnPoolCreate () {}
 		public void OnPoolDestroy () {}
 	}

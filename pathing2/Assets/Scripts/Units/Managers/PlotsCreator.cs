@@ -57,11 +57,10 @@ namespace Units {
 		}
 
 		void CreateUnit<T> (Vector3 position) where T : StaticUnit {
-			PathPoint pathPoint = ObjectCreator.Instance.Create<PathPoint> (position).GetScript<PathPoint> ();
 			T unit = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
-			unit.Position = position;
+			PathPoint pathPoint = Path.CreatePoint (position, unit as StaticUnit);
+			unit.Position = position; 
 			unit.PathPoint = pathPoint;
-			pathPoint.StaticUnit = unit as StaticUnit;
 		}
 	}
 }

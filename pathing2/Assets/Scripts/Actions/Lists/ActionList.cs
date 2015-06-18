@@ -66,6 +66,7 @@ namespace GameActions {
 		}
 
 		void Deactivate (string id) {
+			EnabledActions.Remove (id);
 			ActiveActions.Remove (id);
 			Get (id).Active = false;
 		}
@@ -93,6 +94,13 @@ namespace GameActions {
 				Debug.LogError ("The action '" + id + "' does not exist in the list\n" + e);
 				throw;
 			}
+		}
+
+		public T GetEnabledAction () {
+			foreach (var action in enabledActions) {
+				return action.Value;
+			}
+			return null;
 		}
 
 		public bool Has (string id) {
@@ -127,6 +135,10 @@ namespace GameActions {
 					hasPair = true;
 			}
 			return hasPair;
+		}
+
+		public bool HasMatchingAction (Action action) {
+			return enabledActions.ContainsKey (action.Name);
 		}
 
 		public virtual void OnSetActive () {}

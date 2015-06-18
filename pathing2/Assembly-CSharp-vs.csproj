@@ -180,6 +180,7 @@
      <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\Floret.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\HSBColor.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralCamera.cs" />
@@ -208,6 +209,7 @@
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitTransform.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\StaticUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Unit.cs" />
      <Compile Include="Assets\Scripts\Units\Components\UnitClickable.cs" />

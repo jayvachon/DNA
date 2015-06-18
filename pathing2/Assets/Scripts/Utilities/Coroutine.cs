@@ -42,4 +42,13 @@ public class Coroutine : MonoBehaviour {
 
 		if (endAction != null) endAction ();
 	}
+
+	public static void WaitForFixedUpdate (System.Action action) {
+		Coroutine.Instance.StartCoroutine (Coroutine.CoWaitForFixedUpdate (action));
+	}
+
+	static IEnumerator CoWaitForFixedUpdate (System.Action action) {
+		yield return new WaitForFixedUpdate ();
+		action ();
+	}
 }

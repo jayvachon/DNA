@@ -31,6 +31,7 @@ namespace Units {
 		}
 
 		public override void OnPoolCreate () {
+			base.OnPoolCreate ();
 			Inventory.Get<YearHolder> ().HolderEmptied += OnDie;
 			Inventory.Get<YearHolder> ().Initialize ();
 			PerformableActions.SetActive ("ConsumeYear", true);

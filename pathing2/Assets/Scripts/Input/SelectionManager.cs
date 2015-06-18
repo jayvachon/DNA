@@ -57,7 +57,7 @@ namespace GameInput {
 		static void OnClickEvent (ClickEvent e) {
 			if (e.LayerClicked (InputLayer.UI))
 				return;
-			if (!e.LayerClicked (InputLayer.MobileUnits) && !e.LayerClicked (InputLayer.StaticUnits)) {
+			if (e.left && !e.LayerClicked (InputLayer.MobileUnits) && !e.LayerClicked (InputLayer.StaticUnits)) {
 				Unselect ();
 			}
 		}

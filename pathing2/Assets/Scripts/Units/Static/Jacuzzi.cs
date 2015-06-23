@@ -26,7 +26,7 @@ namespace Units {
 			Inventory.Add (happinessHolder);
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add (new AcceptCollectItem<HappinessHolder> ());
+			AcceptableActions.Add (new AcceptCollectHappiness ());
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new GenerateItem<HappinessHolder> ());

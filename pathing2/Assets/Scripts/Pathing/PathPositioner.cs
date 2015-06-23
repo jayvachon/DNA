@@ -65,6 +65,7 @@ namespace Pathing {
 
 		public void StartMoving () {
 			if (moving) return;
+			//StopMoving ();
 			IteratePosition ();
 			if (Line != null) {
 				moving = true;

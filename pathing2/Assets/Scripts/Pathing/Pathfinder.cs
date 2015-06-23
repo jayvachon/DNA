@@ -32,13 +32,17 @@ public class Pathfinder : MBRefs {
 	}
 
 	public StaticUnit FindNearestStaticUnit (Vector3 position, System.Type unitType) {
-		
-		List<StaticUnit> matches = StaticUnits.FindAll (x => x.GetType () == unitType);
-		if (matches.Count == 0) 
-			return null;
+		return FindNearest (position, StaticUnits.FindAll (x => x.GetType () == unitType));
+	}
 
+	public PathPoint FindNearestWithAction (Vector3 position, string action) {
+		StaticUnit su = FindNearest (position, StaticUnits.FindAll (x => x.AcceptableActions.Has (action)));
+		return (su == null) ? null : su.PathPoint;
+	}
+
+	StaticUnit FindNearest (Vector3 position, List<StaticUnit> matches) {
 		float nearestDistance = Mathf.Infinity;
-		StaticUnit nearestUnit = matches[0];
+		StaticUnit nearestUnit = null;
 		foreach (StaticUnit unit in matches) {
 			float distance = Vector3.Distance (position, unit.Position);
 			if (distance < nearestDistance) {

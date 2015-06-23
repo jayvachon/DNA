@@ -45,7 +45,17 @@ namespace Units {
 		public PerformableActions PerformableActions { get; protected set; }
 		public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
 
+		enum State {
+			Bound, Moving
+		}
+
+		State state;
+
 		bool moveOnRelease = true;
+
+		public void Init (IActionAcceptor givingTree) {
+			BoundAcceptor = givingTree;
+		}
 
 		public override void OnSelect () {
 			base.OnSelect ();
@@ -58,16 +68,16 @@ namespace Units {
 		}
 
 		public virtual void OnRelease () {
-			if (moveOnRelease && StartMovingOnPath (true)) {
+			/*if (moveOnRelease && StartMovingOnPath (true)) {
 				BoundAcceptor = null;
 				moveOnRelease = false;
 			} else if (Path.Points.Count < 2) {
 				BindToCollider ();
-			}
+			}*/
 		}
 
 		protected void BindToCollider () {
-			UnitClickable clickable = null;
+			/*UnitClickable clickable = null;
 			try {
 				clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits);
 			} catch (NullReferenceException e) {
@@ -87,21 +97,22 @@ namespace Units {
 				}
 				BoundAcceptor = null;
 				OnUnbind ();
-			}
+			}*/
 		}
 
 		protected virtual void OnBind () {}
 		protected virtual void OnUnbind () {}
 
 		// Returns true if this is a newly bound acceptor
-		public virtual bool OnBindActionable (IActionAcceptor acceptor) {
-			if (BoundAcceptor == acceptor) return false;
+		public virtual PerformerAction OnBindActionable (IActionAcceptor acceptor) {
+			if (BoundAcceptor == acceptor) return null; //return false;
 			BoundAcceptor = acceptor;
-			PerformerAction action = ActionHandler.instance.Bind (this);
+			return ActionHandler.instance.Bind (this);
+			/*PerformerAction action = ActionHandler.instance.Bind (this);
 			if (action != null) {
 				MobileTransform.EncircleBoundUnit (action);
 			}
-			return true;
+			return true;*/
 		}
 
 		public virtual void OnEndActions () {
@@ -109,7 +120,10 @@ namespace Units {
 		}
 
 		IEnumerator CoWaitForCompleteCircle () {
-			while (MobileTransform.Circling) {
+			/*while (MobileTransform.Circling) {
+				yield return null;
+			}*/
+			while (MobileTransform.Working) {
 				yield return null;
 			}
 			StartMovingOnPath ();
@@ -131,12 +145,26 @@ namespace Units {
 		void OnClickEvent (ClickEvent e) {
 			if (e.left) return;
 			UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
-			if (unit != null) {
-				AcceptorAction a = unit.StaticUnit.AcceptableActions.GetEnabledAction ();
-				if (a != null && PerformableActions.HasMatchingAction (a)) {
-					Debug.Log (a.Name);
-				}
+			if (unit == null) return;
+			Path.Points.Clear ();
+			Path.Points.Add (((StaticUnit)BoundAcceptor).PathPoint);
+			Path.Points.Add (unit.StaticUnit.PathPoint);
+			MobileTransform.StartMovingOnPath (false);
+
+			/*UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
+			if (unit == null) return;
+			if (unit.StaticUnit as IActionAcceptor == BoundAcceptor) {
+				// TODO: not working (mobile doesn't carry out the action)
+				OnBindActionable (BoundAcceptor);
+				return;
 			}
+			AcceptorAction a = unit.StaticUnit.AcceptableActions.GetEnabledAction ();
+			if (a != null && PerformableActions.HasMatchingAction (a)) {
+				Path.Points.Clear ();
+				Path.Points.Add (((StaticUnit)BoundAcceptor).PathPoint);
+				Path.Points.Add (unit.StaticUnit.PathPoint);
+				MobileTransform.StartMovingOnPath (false);
+			}*/
 		}
 	}
 }

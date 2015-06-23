@@ -73,6 +73,7 @@ namespace Units {
 			} else {
 				positionIndex ++;
 			}
+			((MobileUnit)unit).Init (this);
 			//PerformableActions.SetActive ("GenerateDistributor", true);
 			//RefreshInfoContent ();
 		}

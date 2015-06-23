@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using GameInventory;
@@ -11,6 +12,10 @@ namespace GameActions {
 
 		public virtual string RequiredPair {
 			get { return ""; }
+		}
+
+		public virtual bool RequiresPair {
+			get { return RequiredPair == ""; }
 		}
 
 		// TODO: Make protected after finished testing

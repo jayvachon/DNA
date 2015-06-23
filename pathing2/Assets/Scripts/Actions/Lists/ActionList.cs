@@ -59,10 +59,11 @@ namespace GameActions {
 			Action action;
 			if (actions.TryGetValue (id, out action)) {
 				if (!ActiveActions.ContainsKey (id)) {
-					ActiveActions.Add (id, action as T);
+					ActiveActions.Add (id, (T)action);
 				}
 			}
 			action.Active = true;
+			if (action.Enabled) EnabledActions.Add (id, (T)action);
 		}
 
 		void Deactivate (string id) {
@@ -103,6 +104,13 @@ namespace GameActions {
 			return null;
 		}
 
+		public T GetActiveAction () {
+			foreach (var action in activeActions) {
+				return action.Value;
+			}
+			return null;
+		}
+
 		public bool Has (string id) {
 			return ActiveActions.ContainsKey (id);
 		}
@@ -138,7 +146,7 @@ namespace GameActions {
 		}
 
 		public bool HasMatchingAction (Action action) {
-			return enabledActions.ContainsKey (action.Name);
+			return activeActions.ContainsKey (action.Name);
 		}
 
 		public virtual void OnSetActive () {}
@@ -162,6 +170,12 @@ namespace GameActions {
 				Debug.Log (action.Key 
 					+ " enabled = " + action.Value.Enabled 
 					+ ", active = " + action.Value.Active);
+			}
+		}
+
+		public void PrintEnabled () {
+			foreach (var action in EnabledActions) {
+				Debug.Log (action.Key);
 			}
 		}
 	}

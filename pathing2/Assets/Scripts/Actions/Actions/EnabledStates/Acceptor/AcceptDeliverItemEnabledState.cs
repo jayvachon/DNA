@@ -22,6 +22,10 @@ namespace GameActions {
 			}
 		}
 
+		public override bool RequiresPair {
+			get { return true; }
+		}
+
 		ItemHolder holder;
 
 		public AcceptDeliverItemEnabledState (ItemHolder holder) {

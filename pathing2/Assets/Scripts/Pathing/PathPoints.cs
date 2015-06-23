@@ -69,7 +69,8 @@ namespace Pathing {
 		}
 
 		public void Add (PathPoint point) {
-			if (!CanAddPoint (point)) return;
+			// TODO: add this back in
+			//if (!CanAddPoint (point)) return;
 			points.Add (point);
 			if (points.Count > maxLength) {
 				RemoveFirst ();
@@ -121,12 +122,13 @@ namespace Pathing {
 		}
 
 		public bool Refresh () {
-			if (Count < 2) return false;
+			return true;
+			/*if (Count < 2) return false;
 			if (!PointsHavePairs (points[0])) {
 				Clear ();
 				return false;
 			}
-			return true;
+			return true;*/
 		}
 
 		void UpdatePositions () {
@@ -154,6 +156,12 @@ namespace Pathing {
 					return false;
 			}
 			return true;
+		}
+
+		public void Print () {
+			foreach (PathPoint p in points) {
+				Debug.Log (p.StaticUnit);
+			}
 		}
 	}
 }

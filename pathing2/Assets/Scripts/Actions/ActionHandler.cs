@@ -37,6 +37,12 @@ namespace GameActions {
 			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
 
+			// uncommment to see enabled actions on performer & acceptor
+			/*Debug.Log ("PERFORMABLE");
+			performable.PrintEnabled ();
+			Debug.Log ("ACCEPTABLE");
+			acceptable.PrintEnabled ();*/
+
 			List<PerformerAction> matching = new List<PerformerAction> ();
 			foreach (var action in performable.EnabledActions) {
 				AcceptorAction acceptorAction;

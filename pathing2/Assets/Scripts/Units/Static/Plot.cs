@@ -18,7 +18,8 @@ namespace Units {
 
 		bool pathPointEnabled = false;
 		public override bool PathPointEnabled {
-			get { return pathPointEnabled; }
+			//get { return pathPointEnabled; }
+			get { return true; }
 		}
 
 		public PerformableActions PerformableActions { get; private set; }
@@ -96,6 +97,7 @@ namespace Units {
 			PerformableActions.DeactivateAll ();
 			PerformableActions.SetActive ("CancelGenerateUnit", true);
 			AcceptableActions.SetActive ("DeliverMilkshake", true);
+			Debug.Log (AcceptableActions.GetEnabledAction ());
 			string newUnit = "";
 			switch (id) {
 				case "GenerateMilkshakePool": 	newUnit = "Milkshake Derrick"; break;

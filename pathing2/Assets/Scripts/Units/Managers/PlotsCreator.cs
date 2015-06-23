@@ -38,7 +38,9 @@ namespace Units {
 					center.z + myRadius * Mathf.Cos (radians)
 				);
 				if (index == 1 && i == 1) {
-					CreateUnit<Plot> (position);
+					CreateUnit<Jacuzzi> (position);
+				} else if (index == 1 && i == 2) {
+					CreateUnit<CoffeePlant> (position);
 				} else if (index == 2 && i == 4) {
 					CreateUnit<MilkshakePool> (position);
 				} else if (index == 3 && i == 9) {

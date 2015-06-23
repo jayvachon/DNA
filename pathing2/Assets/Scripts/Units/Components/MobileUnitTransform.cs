@@ -34,10 +34,14 @@ namespace Units {
 		}
 
 		enum MovementState {
-			Idle, Moving, Bound
+			Idling, Moving, Working
 		}
 
-		MovementState movementState = MovementState.Idle;
+		MovementState movementState = MovementState.Idling;
+
+		public bool Working {
+			get { return movementState == MovementState.Working; }
+		}
 
 		float xMax = 1.25f;
 		float TWO_PI;
@@ -67,22 +71,85 @@ namespace Units {
 		public bool StartMovingOnPath (bool reset=false) {
 			if (Path.Points.Count < 2)
 				return false;
+			movementState = MovementState.Moving;
 			Path.StartMoving ();
 			PathRotator.StartMoving (reset);
 			return true;
 		}
 
 		public void StopMovingOnPath () {
+			movementState = MovementState.Idling;
 			Path.StopMoving ();
 		}
 
+		// On arrive at point:
+		// A. point has action
+		//		a. action requires pair
+		//			i. pair exists on path
+		//				- perform action & move to pair
+		//			ii. pair does not exist on path
+		//				a. pair exists in world
+		//					- make new path w/ pair, perform action, & move to pair
+		//				b. pair does not exist in world
+		//					- do not perform action
+		//		b. action does not require pair
+		//			- perform action
+		// √ B. point does not have action
+		//		√ - do not perform action
+
 		public void ArriveAtPoint (PathPoint point) {
-			StaticUnitTransform unitTransform = point.StaticUnitTransform;
+			/*StaticUnitTransform unitTransform = point.StaticUnitTransform;
 			if (unitTransform == null) {
 				StartMovingOnPath ();
 			} else {
 				MobileUnit.OnBindActionable (unitTransform.Unit as IActionAcceptor);
+			}*/
+
+			/*StaticUnitTransform unitTransform = point.StaticUnitTransform;
+			if (!point.PointsHavePairs (Path.Points.Points)) {
+				Path.Points.Clear ();
+				// ugly
+				AcceptorAction a = point.StaticUnit.AcceptableActions.GetEnabledAction ();
+				Debug.Log (a);
+				if (a.EnabledState.RequiresPair) {
+					PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (point.Position, a.EnabledState.RequiredPair);
+					Debug.Log (nearest);
+					if (nearest != null) {
+						Path.Points.Add (nearest);
+						Path.Points.Add (point);
+						Debug.Log (Path.Points.Count);
+					}
+				}
 			}
+			MobileUnit.OnBindActionable ((IActionAcceptor)unitTransform.Unit);*/
+
+			AcceptorAction a = point.StaticUnit.AcceptableActions.GetActiveAction ();//GetEnabledAction ();
+			StaticUnitTransform unitTransform = point.StaticUnitTransform;
+			if (a == null || !a.Enabled) {
+				ResetPath ();
+			} else {
+				if (a.EnabledState.RequiresPair) {
+					if (!point.PointsHavePairs (Path.Points.Points)) {
+						ResetPath ();
+						PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (point.Position, a.EnabledState.RequiredPair);
+						if (nearest != null) {
+							Path.Points.Add (point);
+							Path.Points.Add (nearest);
+						}
+					}
+				} else {
+					ResetPath ();
+				}
+			}
+			PerformerAction action = MobileUnit.OnBindActionable ((IActionAcceptor)unitTransform.Unit);
+			if (action != null) {
+				EncircleBoundUnit (action);
+			}
+		}
+
+		void ResetPath () {
+			Path.Points.Clear ();
+			StopMovingOnPath ();
 		}
 
 		bool circling = false;
@@ -91,8 +158,10 @@ namespace Units {
 		}
 
 		public void EncircleBoundUnit (PerformerAction action) {
-			if (circling) return;
-			circling = true;
+			//if (circling) return;
+			if (movementState == MovementState.Working) return;
+			movementState = MovementState.Working;
+			///circling = true;
 			StaticUnit su = (StaticUnit)BoundAcceptor;
 			StartCoroutine (CoEncircleBoundUnit (su.Position, action));
 		}
@@ -122,7 +191,10 @@ namespace Units {
 				}
 				yield return null;
 			}
-			circling = false;
+			//circling = false;
+			movementState = (Path.Points.Count > 1)
+				? MovementState.Moving
+				: MovementState.Idling;
 		}
 
 		// TODO: Move this somewhere else?

@@ -14,6 +14,10 @@ namespace GameActions {
 			get { return ""; }
 		}
 
+		public override bool RequiresPair {
+			get { return false; }
+		}
+
 		public CollectHappinessEnabledState (ItemHolder holder) : base (holder) {}
 	}
 }

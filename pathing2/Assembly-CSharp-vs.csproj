@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\AcceptorAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\Action.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Abstract\PerformerAction.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectHappiness.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptCollectUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverAllItems.cs" />
@@ -61,6 +62,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptOccupyUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptorInventoryAction.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\ActionDisplaySettings.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptCollectHappinessEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptCollectItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverAllItemsEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverAllYearsEnabledState.cs" />

@@ -13,8 +13,6 @@ namespace Units {
 			} else {
 				if (SelectionManager.IsSelected (this)) {
 					SelectionManager.Unselect ();
-				} else {
-					// assign action to selected mobile unit
 				}
 			}
 		}		

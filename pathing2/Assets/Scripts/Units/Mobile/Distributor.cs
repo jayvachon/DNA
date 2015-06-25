@@ -30,7 +30,7 @@ namespace Units {
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 			Inventory.Get<HappinessHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
-			PerformableActions = new PerformableActions (this);
+			//PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new CollectItem<MilkshakeHolder> ());
 			PerformableActions.Add (new DeliverItem<MilkshakeHolder> ());
 			PerformableActions.Add (new CollectItem<CoffeeHolder> ());
@@ -84,6 +84,7 @@ namespace Units {
 			if (indicator != null) indicator.Fill = happinessHolder.PercentFilled;
 		}
 
+		// TODO: Move to MoveOnPath action
 		void SetPathSpeed () {
 			Path.Speed = Mathf.Lerp (
 				Path.PathSettings.MinSpeed, 

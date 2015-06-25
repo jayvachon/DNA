@@ -24,7 +24,7 @@ namespace Units {
 		}
 
 		PathRotator pathRotator;
-		PathRotator PathRotator {
+		public PathRotator PathRotator {
 			get {
 				if (pathRotator == null) {
 					pathRotator = MyTransform.GetParentOfType<PathRotator> ();
@@ -79,7 +79,8 @@ namespace Units {
 
 		public void StopMovingOnPath () {
 			movementState = MovementState.Idling;
-			Path.StopMoving ();
+			//Path.StopMoving ();
+			MobileUnit.PerformableActions.Stop ("MoveOnPath");
 		}
 
 		// On arrive at point:
@@ -141,9 +142,9 @@ namespace Units {
 					ResetPath ();
 				}
 			}
-			PerformerAction action = MobileUnit.OnBindActionable ((IActionAcceptor)unitTransform.Unit);
-			if (action != null) {
-				EncircleBoundUnit (action);
+			MobileUnit.OnBindActionable ((IActionAcceptor)unitTransform.Unit);
+			if (MobileUnit.PerformableActions.Performing) {
+				EncircleBoundUnit ();
 			}
 		}
 
@@ -157,24 +158,24 @@ namespace Units {
 			get { return circling; }
 		}
 
-		public void EncircleBoundUnit (PerformerAction action) {
+		public void EncircleBoundUnit () {
 			//if (circling) return;
 			if (movementState == MovementState.Working) return;
 			movementState = MovementState.Working;
 			///circling = true;
 			StaticUnit su = (StaticUnit)BoundAcceptor;
-			StartCoroutine (CoEncircleBoundUnit (su.Position, action));
+			StartCoroutine (CoEncircleBoundUnit (su.Position));
 		}
 
 		// TODO: clean up
-		IEnumerator CoEncircleBoundUnit (Vector3 center, PerformerAction action) {
+		IEnumerator CoEncircleBoundUnit (Vector3 center) {
 			
 			float p = 0f;
 			float sign = Mathf.Sign (LocalPosition.x);
 			float offset = Parent.localEulerAngles.y + ((sign > 0) ? 90f : 270f);
 			float speed = Path.Speed * xMax * 2f; // Path speed * diameter
 
-			while (p < 1f || action.Performing && BoundAcceptor != null) {
+			while (p < 1f || MobileUnit.PerformableActions.Performing && BoundAcceptor != null) {
 				if (p >= 1f) p = 0f;
 				p += speed * Time.deltaTime;
 				if (sign > 0) {
@@ -197,12 +198,12 @@ namespace Units {
 				: MovementState.Idling;
 		}
 
-		// TODO: Move this somewhere else?
+		// TODO: Move this to MoveOnPath action
 		float GetZ (float p) {
 			return xMax * Mathf.Sin (TWO_PI * p * 2f);
 		}
 
-		// TODO: Move this somewhere else?
+		// TODO: Move this to MoveOnPath action
 		float GetX (float p) {
 			return (PathRotator.Distance + xMax * 2) * Mathf.Sin (TWO_PI * p) / 2f;
 		}

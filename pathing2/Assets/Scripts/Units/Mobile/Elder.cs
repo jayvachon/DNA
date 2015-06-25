@@ -30,7 +30,7 @@ namespace Units {
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			healthHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
-			PerformableActions = new PerformableActions (this);
+			//PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new ConsumeItem<HealthHolder> ());
 			PerformableActions.Add (new CollectHealth ());
 

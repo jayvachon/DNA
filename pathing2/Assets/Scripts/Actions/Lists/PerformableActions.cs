@@ -5,11 +5,11 @@ using GameInventory;
 
 namespace GameActions {
 
-	public delegate void StartAction (string id);
+	public delegate void OnStartAction (string id);
 
 	public class PerformableActions : ActionList<PerformerAction> {
 		
-		public StartAction StartAction { get; set; }		
+		public OnStartAction OnStartAction { get; set; }		
 		IActionPerformer performer;
 
 		// If given an (optional) input name, actions will be shown in the unit info box
@@ -20,8 +20,14 @@ namespace GameActions {
 			get { return inputs; }
 		}
 
-		public PerformableActions (IActionPerformer performer) {
+		Queue<PerformerAction> actionQueue = new Queue<PerformerAction> ();
+		bool debug = false;
+
+		public bool Performing { get; private set; }
+
+		public PerformableActions (IActionPerformer performer, bool debug=false) {
 			this.performer = performer;
+			this.debug = debug;
 		}
 
 		public void Add (PerformerAction action, string inputName="") {
@@ -33,20 +39,36 @@ namespace GameActions {
 		}
 
 		public void Start (string id) {
-			Get (id).Start ();
-			if (StartAction != null)
-				StartAction (id);
+			PerformerAction action = Get (id);
+			if (action.autoStart) {
+				StartAction (action);
+			} else if (QueueAction (action)) {
+				StartQueued ();
+			}
 		}
 
 		public void Stop (string id) {
-			Get (id).Stop ();
+			PerformerAction action = Get (id);
+			action.Stop ();
+			if (!action.autoStart)
+				StartQueued ();
 		}
 
 		public void StopAll () {
+			bool stoppedQueuedAction = false;
 			foreach (var keyval in EnabledActions) {
 				PerformerAction action = keyval.Value as PerformerAction;
+				if (!action.autoStart) 
+					stoppedQueuedAction = true;
 				action.Stop ();
 			}
+			if (stoppedQueuedAction) 
+				StartQueued ();
+		}
+
+		public void OnActionStop (PerformerAction action) {
+			if (!action.autoStart)
+				StartQueued ();
 		}
 
 		public override void RefreshEnabledActions () {
@@ -58,6 +80,28 @@ namespace GameActions {
 				}
 			}
 			NotifyActionsUpdated ();
+		}
+
+		bool QueueAction (PerformerAction action) {
+			actionQueue.Enqueue (action);
+			return actionQueue.Count == 1;
+		}
+
+		void StartQueued () {
+			if (actionQueue.Count < 1) {
+				Log ("stop");
+				Performing = false;
+				return;
+			}
+			Performing = true;
+			StartAction (actionQueue.Dequeue ());
+		}
+
+		void StartAction (PerformerAction action) {
+			Log ("start " + action + " " + actionQueue.Count);
+			action.Start ();
+			if (OnStartAction != null)
+				OnStartAction (action.Name);
 		}
 
 		/**
@@ -76,6 +120,10 @@ namespace GameActions {
 			foreach (var action in ActiveActions) {
 				Debug.Log (action.Key);
 			}
+		}
+
+		void Log (string message) {
+			if (debug) Debug.Log (message);
 		}
 	}
 }

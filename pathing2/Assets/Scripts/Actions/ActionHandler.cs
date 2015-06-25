@@ -25,9 +25,10 @@ namespace GameActions {
 		 * Perform multiple actions when binding to an ActionAcceptor
 		 */
 
-		public PerformerAction Bind (IBinder binder) {
+		public void Bind (IBinder binder) {
 			
-			if (binder.BoundAcceptor == null) return null;
+			if (binder.BoundAcceptor == null) return;
+			Debug.Log ("bind");
 			
 			IActionPerformer performer     = binder as IActionPerformer;
 			PerformableActions performable = performer.PerformableActions;
@@ -55,15 +56,29 @@ namespace GameActions {
 			matching = PerformInstantActions (matching);
 
 			if (matching.Count > 0) {
+				foreach (var action in matching) {
+					performable.Start (action.Name);
+				}
+				StartCoroutine (WaitForActions (performable, () => Bind (binder)));
+			} else {
+				Debug.Log ("end actions");
+				binder.OnEndActions ();
+			}
+			/*if (matching.Count > 0) {
 				StartCoroutine (PerformActions (binder, matching[0]));
 				return matching[0];
 			} else {
 				StartCoroutine (PerformActions (binder, null));
 				return null;
-			}
+			}*/
 		}
-		
-		IEnumerator PerformActions (IBinder binder, PerformerAction action) {
+
+		IEnumerator WaitForActions (PerformableActions p, System.Action action) {
+			while (p.Performing) yield return null;
+			action ();
+		}
+
+		/*IEnumerator PerformActions (IBinder binder, PerformerAction action) {
 			if (action != null) {
 				yield return StartCoroutine (BindPerform (action));
 				Bind (binder);
@@ -72,13 +87,14 @@ namespace GameActions {
 				performer.PerformableActions.RefreshEnabledActions ();
 				binder.OnEndActions ();
 			}
-		}
+		}*/
 
 		List<PerformerAction> PerformInstantActions (List<PerformerAction> matchingActions) {
 			List<PerformerAction> timedActions = new List<PerformerAction> ();
 			foreach (PerformerAction action in matchingActions) {
 				if (Mathf.Approximately (action.Duration, 0f)) {
-					action.BindEnd ();
+					//action.BindEnd ();
+					action.End ();
 				} else {
 					timedActions.Add (action);
 				}
@@ -90,30 +106,7 @@ namespace GameActions {
 		 * Perform a single action
 		 */
 
-		public void StartAction (PerformerAction action) {
-			StartCoroutine (Perform (action));
-		}
-
-		IEnumerator Perform (PerformerAction action) {
-			
-			float time = action.Duration;
-			float eTime = 0;
-
-			if (time == 0) {
-				action.End ();
-				yield break;
-			}
-
-			while (eTime < time) {
-				eTime += Time.deltaTime;
-				action.Progress = eTime / time;
-				yield return null;
-			}
-
-			action.End ();
-		}
-
-		IEnumerator BindPerform (PerformerAction action) {
+		/*IEnumerator BindPerform (PerformerAction action) {
 			
 			float time = action.Duration;
 			float eTime = 0;
@@ -132,6 +125,6 @@ namespace GameActions {
 			}
 
 			action.BindEnd ();
-		}
+		}*/
 	}
 }

@@ -7,11 +7,11 @@ namespace GameActions {
 	// and ones that loop (or is there a better division?)
 	public abstract class PerformerAction : Action {
 
-		readonly bool autoStart;
+		public readonly bool autoStart;
 		protected bool autoRepeat = false;
 		bool interrupt = false;
 		
-		bool performing = false;
+		protected bool performing = false;
 		public bool Performing {
 			get { return performing; }
 		}
@@ -81,14 +81,15 @@ namespace GameActions {
 			}
 			if (performing) return;
 			performing = true;
-			ActionHandler.instance.StartAction (this);
+			Coroutine.Start (Duration, SetProgress, End);
 		}
 
 		public void End () {
 			performing = false;
 			if (Enabled) {
 				OnEnd ();
-			}
+				Performer.PerformableActions.OnActionStop (this);
+			} 
 			if (autoRepeat) {
 				if (interrupt) {
 					interrupt = false;
@@ -98,19 +99,25 @@ namespace GameActions {
 			}
 		}
 
-		public void BindStart () {
+		/*public void BindStart () {
 			performing = true;
+			//Performer.PerformableActions.StartAction (Name);
 		}
 
 		public void BindEnd () {
 			performing = false;
 			if (Enabled) OnEnd ();
-		}
+		}*/
 
 		public virtual void OnEnd () {}
 
 		public virtual void Stop () {
 			interrupt = true;
+			Performer.PerformableActions.OnActionStop (this);
+		}
+
+		void SetProgress (float progress) {
+			Progress = progress;
 		}
 	}
 }

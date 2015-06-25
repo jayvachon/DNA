@@ -42,14 +42,25 @@ namespace Units {
 			}
 		}
 
-		public PerformableActions PerformableActions { get; protected set; }
-		public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
-
-		enum State {
-			Bound, Moving
+		MoveOnPath moveOnPath;
+		PerformableActions performableActions = null;
+		public PerformableActions PerformableActions { 
+			get {
+				if (performableActions == null) {
+					performableActions = new PerformableActions (this, true);
+					moveOnPath = new MoveOnPath (this);
+					performableActions.Add (moveOnPath);
+				}
+				return performableActions;
+			}
 		}
 
-		State state;
+		public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
+
+		// might not be necessary, since there will be an action queue ?
+		enum ActionState {
+			Idling, Moving, Working
+		}
 
 		bool moveOnRelease = true;
 
@@ -104,10 +115,10 @@ namespace Units {
 		protected virtual void OnUnbind () {}
 
 		// Returns true if this is a newly bound acceptor
-		public virtual PerformerAction OnBindActionable (IActionAcceptor acceptor) {
-			if (BoundAcceptor == acceptor) return null; //return false;
+		public virtual void OnBindActionable (IActionAcceptor acceptor) {
+			if (BoundAcceptor == acceptor) return; //return false;
 			BoundAcceptor = acceptor;
-			return ActionHandler.instance.Bind (this);
+			ActionHandler.instance.Bind (this);
 			/*PerformerAction action = ActionHandler.instance.Bind (this);
 			if (action != null) {
 				MobileTransform.EncircleBoundUnit (action);
@@ -126,7 +137,8 @@ namespace Units {
 			while (MobileTransform.Working) {
 				yield return null;
 			}
-			StartMovingOnPath ();
+			//StartMovingOnPath ();
+			PerformableActions.Start ("MoveOnPath");
 		}
 
 		bool StartMovingOnPath (bool reset=false) {
@@ -144,12 +156,15 @@ namespace Units {
 
 		void OnClickEvent (ClickEvent e) {
 			if (e.left) return;
-			UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
+
+			moveOnPath.ClickedUnit = e.GetClickedOfType<UnitClickable> (); //TODO: should be a better way of doing this
+			PerformableActions.Start ("MoveOnPath");
+			/*UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
 			if (unit == null) return;
 			Path.Points.Clear ();
 			Path.Points.Add (((StaticUnit)BoundAcceptor).PathPoint);
 			Path.Points.Add (unit.StaticUnit.PathPoint);
-			MobileTransform.StartMovingOnPath (false);
+			MobileTransform.StartMovingOnPath (false);*/
 
 			/*UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
 			if (unit == null) return;

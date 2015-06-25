@@ -20,7 +20,7 @@ namespace Units {
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			Inventory.Add (yearHolder);
 
-			PerformableActions = new PerformableActions (this);
+			//PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
 			PerformableActions.Add (new DeliverAllYears ());
 			PerformableActions.Add (new ConsumeItem<YearHolder> ());

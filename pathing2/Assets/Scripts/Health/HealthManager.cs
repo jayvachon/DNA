@@ -28,12 +28,12 @@ public class HealthManager {
 		Debug.Log ("starting sickness");
 		healthAtSicknessOnset = Health;
 		Sick = true;
-		Coroutine.Instance.StartCoroutine (30f, OnSickness, OnEndSickness);
+		//Coroutine.Instance.StartCoroutine (30f, OnSickness, OnEndSickness);
 	}
 
 	public void StopSickness () {
 		Sick = false;
-		Coroutine.Instance.StopCoroutine (OnSickness);
+		//Coroutine.Instance.StopCoroutine (OnSickness);
 	}
 
 	void OnSickness (float progress) {

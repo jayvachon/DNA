@@ -25,7 +25,7 @@ namespace Units {
 			AcceptableActions.SetActive ("DeliverCoffee", false);
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.StartAction += OnStartAction;
+			PerformableActions.OnStartAction += OnStartAction;
 			//PerformableActions.Add (new ResearchUnit<Jacuzzi, CoffeeHolder> (OnUnitUnlocked), "Research Happiness");
 			PerformableActions.Add (new ResearchUnit<Clinic, CoffeeHolder> (OnUnitUnlocked), "Research Clinic (15C)");
 		}

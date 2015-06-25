@@ -52,7 +52,7 @@ namespace Units {
 			AcceptableActions.Add (new AcceptDeliverAllYears ());
 
 			PerformableActions = new PerformableActions (this);
-			PerformableActions.StartAction += OnStartAction;
+			PerformableActions.OnStartAction += OnStartAction;
 			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
 			#if GENERATE_ALL
 			PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");

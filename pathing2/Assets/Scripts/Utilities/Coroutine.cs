@@ -19,18 +19,18 @@ public class Coroutine : MonoBehaviour {
 		}
 	}
 
-	List<System.Action<float>> coroutines = new List<System.Action<float>> ();
+	static List<System.Action<float>> coroutines = new List<System.Action<float>> ();
 
-	public void StartCoroutine (float time, System.Action<float> action, System.Action endAction=null) {
+	public static void Start (float time, System.Action<float> action, System.Action endAction=null) {
 		coroutines.Add (action);
-		StartCoroutine (CoCoroutine (time, action, endAction));
+		Coroutine.Instance.StartCoroutine (Coroutine.CoCoroutine (time, action, endAction));
 	}
 
-	public void StopCoroutine (System.Action<float> action) {
+	public static void Stop (System.Action<float> action) {
 		coroutines.Remove (action);
 	}
 
-	IEnumerator CoCoroutine (float time, System.Action<float> action, System.Action endAction=null) {
+	static IEnumerator CoCoroutine (float time, System.Action<float> action, System.Action endAction=null) {
 		
 		float eTime = 0f;
 	

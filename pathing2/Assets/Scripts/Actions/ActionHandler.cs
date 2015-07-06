@@ -28,7 +28,6 @@ namespace GameActions {
 		public void Bind (IBinder binder) {
 			
 			if (binder.BoundAcceptor == null) return;
-			Debug.Log ("bind");
 			
 			IActionPerformer performer     = binder as IActionPerformer;
 			PerformableActions performable = performer.PerformableActions;
@@ -61,7 +60,6 @@ namespace GameActions {
 				}
 				StartCoroutine (WaitForActions (performable, () => Bind (binder)));
 			} else {
-				Debug.Log ("end actions");
 				binder.OnEndActions ();
 			}
 			/*if (matching.Count > 0) {

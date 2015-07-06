@@ -12,10 +12,6 @@ namespace GameActions {
 		}
 
 		Path Path { get { return mobile.Path; } }
-		IActionAcceptor BoundAcceptor { get { return mobile.BoundAcceptor; } }
-
-		public UnitClickable ClickedUnit { get; set; }
-
 		MobileUnit mobile;
 
 		public MoveOnPath (MobileUnit mobile) : base (0, false, false) {
@@ -23,17 +19,11 @@ namespace GameActions {
 		}
 
 		public override void Start () {
-			if (ClickedUnit == null) return;
 			
-			Path.Points.Clear ();
-			Path.Points.Add (((StaticUnit)BoundAcceptor).PathPoint);
-			Path.Points.Add (ClickedUnit.StaticUnit.PathPoint);
-
-			Performer.PerformableActions.PairActionsBetweenAcceptors (
-				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
+			//Performer.PerformableActions.PairActionsBetweenAcceptors (
+			//	Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
 
 			Path.StartMoving ();
-			mobile.MobileTransform.PathRotator.StartMoving (false);
 
 			performing = true;
 		}

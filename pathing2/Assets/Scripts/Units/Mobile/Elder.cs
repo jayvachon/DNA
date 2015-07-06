@@ -30,7 +30,6 @@ namespace Units {
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			healthHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
-			//PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new ConsumeItem<HealthHolder> ());
 			PerformableActions.Add (new CollectHealth ());
 
@@ -70,11 +69,12 @@ namespace Units {
 			indicator = null;
 		}
 
+		// TODO: remove this?
 		protected override void OnBind () {
 			PerformableActions.SetActive ("OccupyUnit", true);
 			IActionAcceptor boundAcceptor = BoundAcceptor;
 			BoundAcceptor = null;
-			OnBindActionable (boundAcceptor);
+			//OnBindActionable (boundAcceptor);
 		}
 
 		void OnHealthUpdate () {

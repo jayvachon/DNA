@@ -7,7 +7,8 @@ namespace GameActions {
 	public class DeliverItemEnabledState<T> : EnabledState where T : ItemHolder {
 
 		public override bool Enabled {
-			get { return Paired && !holder.Empty; }
+			//get { return Paired && !holder.Empty; }
+			get { return !holder.Empty; }
 		}
 		
 		string requiredPair = "";

@@ -63,9 +63,9 @@ public class MockActionPerformer : MonoBehaviour, IInventoryHolder, IActionPerfo
 	}
 
 	void Bind () {
-		PerformableActions.PairActionsBetweenAcceptors (
+		/*PerformableActions.PairActionsBetweenAcceptors (
 			new List<IActionAcceptor> () { acc1, acc2 }
-		);
+		);*/
 		PrintPaired ();
 	}
 

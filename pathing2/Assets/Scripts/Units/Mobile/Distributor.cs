@@ -30,7 +30,6 @@ namespace Units {
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 			Inventory.Get<HappinessHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
-			//PerformableActions = new PerformableActions (this);
 			PerformableActions.Add (new CollectItem<MilkshakeHolder> ());
 			PerformableActions.Add (new DeliverItem<MilkshakeHolder> ());
 			PerformableActions.Add (new CollectItem<CoffeeHolder> ());
@@ -94,9 +93,10 @@ namespace Units {
 
 		protected override void OnChangeUnit<U> (U u) {
 			Path.Active = false;
-			BoundAcceptor = null;
 			Elder elder = u as Elder;
 			elder.AverageHappiness = Inventory.Get<HappinessHolder> ().Average;
+			elder.Init (BoundAcceptor);
+			BoundAcceptor = null;
 		}
 
 		#if VARIABLE_TIME

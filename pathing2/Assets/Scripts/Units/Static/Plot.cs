@@ -97,7 +97,6 @@ namespace Units {
 			PerformableActions.DeactivateAll ();
 			PerformableActions.SetActive ("CancelGenerateUnit", true);
 			AcceptableActions.SetActive ("DeliverMilkshake", true);
-			Debug.Log (AcceptableActions.GetEnabledAction ());
 			string newUnit = "";
 			switch (id) {
 				case "GenerateMilkshakePool": 	newUnit = "Milkshake Derrick"; break;

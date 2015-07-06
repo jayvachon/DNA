@@ -62,5 +62,15 @@ namespace Units {
 		public IActionAcceptor BoundAcceptor {
 			get { return MobileUnit.BoundAcceptor; }
 		}
+
+		PerformableActions performableActions;
+		protected PerformableActions PerformableActions {
+			get {
+				if (performableActions == null) {
+					performableActions = MobileUnit.PerformableActions;
+				}
+				return performableActions;
+			}
+		}
 	}
 }

@@ -38,6 +38,10 @@ namespace GameActions {
 			protected set { enabledActions = value; }
 		}
 
+		public Action this[string id] {
+			get { return actions[id]; }
+		}
+
 		public void AddAction (Action action) {
 			string id = action.Name;
 			actions.Add (id, action);
@@ -136,13 +140,34 @@ namespace GameActions {
 			}
 		}
 
-		public bool PairActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
-			bool hasPair = false;
+		/*public void PairActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
 			foreach (var action in ActiveActions) {
-				if (action.Value.EnabledState.AttemptPair (acceptors))
-					hasPair = true;
+				action.Value.EnabledState.AttemptPair (acceptors);
 			}
-			return hasPair;
+		}
+
+		public void PairActionsOnPath (Pathing.Path path) {
+			PairActionsBetweenAcceptors (
+				path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
+		}*/
+
+		public List<string> GetBoundActions (List<string> acceptorActions) {
+			RefreshEnabledActions ();
+			return acceptorActions.FindAll (x => ActionEnabled (x));
+		}
+
+		public List<string> GetPairedActionsBetweenAcceptors (IActionAcceptor a, IActionAcceptor b) {
+			AcceptableActions aa = a.AcceptableActions;
+			AcceptableActions ba = b.AcceptableActions;
+			aa.RefreshEnabledActions ();
+			ba.RefreshEnabledActions ();
+			List<string> paired = new List<string> ();
+			Dictionary<string, AcceptorAction> aActions = aa.ActiveActions;//aa.EnabledActions;
+			foreach (var action in aActions) {
+				if (action.Value.EnabledState.AttemptPair (b))
+					paired.Add (action.Key);
+			}
+			return paired;
 		}
 
 		public bool HasMatchingAction (Action action) {

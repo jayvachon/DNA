@@ -40,6 +40,7 @@ namespace Pathing {
 		}
 
 		public PathPositioner pathPositioner;
+		public PathRotator pathRotator;
 		public PathDrawer pathDrawer;
 		
 		PathPoints pathPoints;
@@ -62,9 +63,10 @@ namespace Pathing {
 			set { pathSettings = value; }
 		}
 		
-		public void Init (IPathable pathable, PathSettings pathSettings) {
+		public void Init (IPathable pathable, PathSettings pathSettings, PathRotator pathRotator) {
 			Pathable = pathable;
 			this.pathSettings = pathSettings;
+			this.pathRotator = pathRotator;
 			Points = new PathPoints (pathSettings.maxLength, pathSettings.allowLoop);
 			pathDrawer.Init (Points);
 			Speed = pathSettings.MaxSpeed;
@@ -85,8 +87,10 @@ namespace Pathing {
 		}
 
 		public void StartMoving () {
-			if (pathPoints.Refresh ())
+			if (pathPoints.Refresh ()) {
 				pathPositioner.StartMoving ();
+				pathRotator.StartMoving ();
+			}
 		}
 
 		public void StopMoving () {

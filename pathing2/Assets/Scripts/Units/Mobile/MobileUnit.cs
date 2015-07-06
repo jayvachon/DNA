@@ -47,7 +47,7 @@ namespace Units {
 		public PerformableActions PerformableActions { 
 			get {
 				if (performableActions == null) {
-					performableActions = new PerformableActions (this, true);
+					performableActions = new PerformableActions (this, false);
 					moveOnPath = new MoveOnPath (this);
 					performableActions.Add (moveOnPath);
 				}
@@ -56,16 +56,13 @@ namespace Units {
 		}
 
 		public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
-
-		// might not be necessary, since there will be an action queue ?
-		enum ActionState {
-			Idling, Moving, Working
-		}
+		PathPoint CurrentPoint { get { return ((StaticUnit)BoundAcceptor).PathPoint; } }
+		PathPoint Destination { get; set; }
 
 		bool moveOnRelease = true;
 
-		public void Init (IActionAcceptor givingTree) {
-			BoundAcceptor = givingTree;
+		public void Init (IActionAcceptor acceptor) {
+			BoundAcceptor = acceptor;
 		}
 
 		public override void OnSelect () {
@@ -78,73 +75,174 @@ namespace Units {
 			Events.instance.RemoveListener<ClickEvent> (OnClickEvent);
 		}
 
-		public virtual void OnRelease () {
-			/*if (moveOnRelease && StartMovingOnPath (true)) {
-				BoundAcceptor = null;
-				moveOnRelease = false;
-			} else if (Path.Points.Count < 2) {
-				BindToCollider ();
-			}*/
-		}
-
-		protected void BindToCollider () {
-			/*UnitClickable clickable = null;
-			try {
-				clickable = MobileClickable.Colliding (1 << (int)InputLayer.StaticUnits);
-			} catch (NullReferenceException e) {
-				Debug.LogError (Name + " does not reference its MobileClickable. Assign it in the inspector. \n" + e);
-			}
-			if (clickable != null) {
-				if (OnBindActionable (clickable.StaticUnit as IActionAcceptor)) {
-					OnBind ();
-				}
-			} else {
-				// disgusting hack that prevents an elder from being unbound from a clinic
-				// unless it has been moved some distance away from the clinic
-				// INSTEAD: units should have States (IDLE, MOVING, TAKING ACTION) 
-				if (BoundAcceptor != null) {
-					StaticUnit su = (StaticUnit)BoundAcceptor;
-					if (Vector3.Distance (Position, su.Position) <= 1.5f) return;
-				}
-				BoundAcceptor = null;
-				OnUnbind ();
-			}*/
-		}
-
 		protected virtual void OnBind () {}
 		protected virtual void OnUnbind () {}
 
-		// Returns true if this is a newly bound acceptor
-		public virtual void OnBindActionable (IActionAcceptor acceptor) {
-			if (BoundAcceptor == acceptor) return; //return false;
+		//public virtual bool OnBindActionable (IActionAcceptor acceptor) {
+		public virtual bool OnBindActionable (PathPoint point) {
+			IActionAcceptor acceptor = point.StaticUnit as IActionAcceptor;
+			if (BoundAcceptor == acceptor) return false; 
 			BoundAcceptor = acceptor;
-			ActionHandler.instance.Bind (this);
-			/*PerformerAction action = ActionHandler.instance.Bind (this);
-			if (action != null) {
-				MobileTransform.EncircleBoundUnit (action);
+			//ActionHandler.instance.Bind (this);
+			return StartActions (point);
+		}
+
+		public bool StartActions (PathPoint point) {
+			
+			/*PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
+
+			// Find paired actions on the path
+			List<string> paired = new List<string> ();
+			if (otherPoint != null) {
+				paired = PerformableActions.GetPairedActionsBetweenAcceptors (
+					BoundAcceptor, otherPoint.StaticUnit as IActionAcceptor);
+			}*/
+
+			/*List<string> paired = GetPairedActionsOnPath ();
+			
+			List<string> bound;
+			if (paired.Count > 0) {
+
+				// If there are paired actions, match them with the enabled actions on this unit
+				bound = PerformableActions.GetBoundActions (paired);
+			} else {
+
+				// If there aren't any paired actions, find one that can be performed without a pair
+				bound = PerformableActions.GetBoundActions (
+					new List<string> (BoundAcceptor.AcceptableActions.EnabledActions.Keys));
+				Path.Points.Remove (otherPoint);
+
+				if (bound.Count > 0) {
+					string toPerform = bound[0];
+					while (PerformableActions[toPerform].EnabledState.RequiresPair && bound.Count > 0 && Path.Points.Count < 2) {
+						
+						PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (
+							point.Position, PerformableActions[toPerform].EnabledState.RequiredPair);
+
+						if (nearest != null) {
+							PerformableActions.Stop ("MoveOnPath");
+							Path.Points.Add (nearest);
+						}
+
+						bound.Remove (toPerform);
+						if (bound.Count > 0) {
+							toPerform = bound[0];
+						}
+					}
+				}
+			}*/
+
+			PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
+
+			bool pairedOnPath;
+			List<string> actions = GetAcceptedActionsAtPoint (out pairedOnPath);
+			
+			if (!pairedOnPath) {
+
+				if (actions.Count == 0) {
+
+					Debug.Log ("heard");
+				} else {
+
+					string currentAction = actions[0];
+
+					while (!CreatePathToPair (currentAction) && actions.Count > 0) {
+						actions.Remove (currentAction);
+						if (actions.Count > 0) 
+							currentAction = actions[0];
+					}
+				}
 			}
-			return true;*/
+
+			/*if (!pairedOnPath && actions.Count > 0) {
+
+				Path.Points.Remove (otherPoint);
+				string toPerform = actions[0];
+				
+				while (PerformableActions[toPerform].EnabledState.RequiresPair && Path.Points.Count < 2 && actions.Count > 0) {
+					
+					PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (
+						point.Position, PerformableActions[toPerform].EnabledState.RequiredPair);
+
+					if (nearest != null) {
+						PerformableActions.Stop ("MoveOnPath");
+						Path.Points.Add (nearest);
+					} else {
+						actions.Remove (toPerform);
+						if (actions.Count > 0) toPerform = actions[0];
+					}
+				}
+			}*/
+			
+			if (actions.Count > 0) {
+				PerformableActions.Start (actions[0]);
+				StartCoroutine (WaitForActions (() => StartActions (point)));
+				return true;
+			} 
+			
+			OnEndActions ();
+			return false;
+		}
+
+		List<string> GetAcceptedActionsAtPoint (out bool pairedOnPath) {
+			List<string> paired = GetPairedActionsOnPath ();
+			if (paired == null || paired.Count == 0) {
+				pairedOnPath = false;
+				return PerformableActions.GetBoundActions (
+					new List<string> (BoundAcceptor.AcceptableActions.EnabledActions.Keys));
+			} else {
+				pairedOnPath = true;
+				return PerformableActions.GetBoundActions (paired);
+			}
+		}
+
+		List<string> GetPairedActionsOnPath () {
+
+			PathPoint otherPoint = Path.Points.Points.Find (x => x != CurrentPoint); // Probably just the next point on the path ?
+
+			return (otherPoint == null)
+				? null
+				: PerformableActions.GetPairedActionsBetweenAcceptors (
+					BoundAcceptor, otherPoint.StaticUnit as IActionAcceptor);
+		}
+
+		bool CreatePathToPair (string actionId) {
+			
+			PerformerAction action = PerformableActions[actionId];
+
+			if (!action.EnabledState.RequiresPair) {
+				PerformableActions.Stop ("MoveOnPath");
+				Path.Points.Remove (Path.Points.Points.Find (x => x != CurrentPoint));
+				return true;
+			}
+
+			PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (
+				CurrentPoint.Position, action.EnabledState.RequiredPair);
+
+			if (nearest != null) {
+				PerformableActions.Stop ("MoveOnPath");
+				Path.Points.Remove (Path.Points.Points.Find (x => x != CurrentPoint));
+				Path.Points.Add (nearest);
+				return true;;
+			}
+
+			return false;
+		}
+
+		IEnumerator WaitForActions (System.Action action) {
+			while (PerformableActions.Performing) yield return null;
+			action ();
 		}
 
 		public virtual void OnEndActions () {
-			if (gameObject.activeSelf) StartCoroutine (CoWaitForCompleteCircle ());
+			StartCoroutine (CoWaitForCompleteCircle ());
 		}
 
 		IEnumerator CoWaitForCompleteCircle () {
-			/*while (MobileTransform.Circling) {
-				yield return null;
-			}*/
 			while (MobileTransform.Working) {
 				yield return null;
 			}
-			//StartMovingOnPath ();
-			PerformableActions.Start ("MoveOnPath");
-		}
-
-		bool StartMovingOnPath (bool reset=false) {
-			PerformableActions.PairActionsBetweenAcceptors (
-				Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
-			return MobileTransform.StartMovingOnPath (reset);
+			MoveToDestination ();
 		}
 
 		public void OnDragEnter () {
@@ -156,30 +254,26 @@ namespace Units {
 
 		void OnClickEvent (ClickEvent e) {
 			if (e.left) return;
-
-			moveOnPath.ClickedUnit = e.GetClickedOfType<UnitClickable> (); //TODO: should be a better way of doing this
-			PerformableActions.Start ("MoveOnPath");
-			/*UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
-			if (unit == null) return;
-			Path.Points.Clear ();
-			Path.Points.Add (((StaticUnit)BoundAcceptor).PathPoint);
-			Path.Points.Add (unit.StaticUnit.PathPoint);
-			MobileTransform.StartMovingOnPath (false);*/
-
-			/*UnitClickable unit = e.GetClickedOfType<UnitClickable> ();
-			if (unit == null) return;
-			if (unit.StaticUnit as IActionAcceptor == BoundAcceptor) {
-				// TODO: not working (mobile doesn't carry out the action)
-				OnBindActionable (BoundAcceptor);
-				return;
+			UnitClickable clickable = e.GetClickedOfType<UnitClickable> ();
+			Destination = clickable.StaticUnit.PathPoint;
+			if (!PerformableActions.Performing) {
+				MoveToDestination ();
 			}
-			AcceptorAction a = unit.StaticUnit.AcceptableActions.GetEnabledAction ();
-			if (a != null && PerformableActions.HasMatchingAction (a)) {
+		}
+
+		void MoveToDestination () {
+			PathPoint a = ((StaticUnit)BoundAcceptor).PathPoint;
+			if (a == Destination && Path.Points.Count < 2)
+				return;
+			if (Path.Points.Points.Contains (Destination)) {
+				PerformableActions["MoveOnPath"].Start ();	
+			} else {
 				Path.Points.Clear ();
-				Path.Points.Add (((StaticUnit)BoundAcceptor).PathPoint);
-				Path.Points.Add (unit.StaticUnit.PathPoint);
-				MobileTransform.StartMovingOnPath (false);
-			}*/
+				Path.StopMoving ();
+				Path.Points.Add (a);
+				Path.Points.Add (Destination);	
+				PerformableActions["MoveOnPath"].Start ();
+			}
 		}
 	}
 }

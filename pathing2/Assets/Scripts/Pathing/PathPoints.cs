@@ -80,8 +80,8 @@ namespace Pathing {
 
 		bool CanAddPoint (PathPoint point) {
 			if (!point.Enabled
-				|| Count > 0
-				&& !PointsHavePairs (point)) 
+				|| Count > 0)
+				//&& !PointsHavePairs (point)) 
 				return false;
 				
 			if (points.Contains (point)) {
@@ -139,14 +139,14 @@ namespace Pathing {
 			if (OnUpdatePoints != null) OnUpdatePoints ();
 		}
 
-		bool PointsHavePairs (PathPoint newPoint) {
+		/*bool PointsHavePairs (PathPoint newPoint) {
 			List<PathPoint> tempPoints = new List<PathPoint> ();
 			foreach (PathPoint p in points) {
 				tempPoints.Add (p);
 			}
 			tempPoints.Add (newPoint);
 			return newPoint.PointsHavePairs (tempPoints);
-		}
+		}*/
 
 		public static bool PathsEqual (List<PathPoint> set1, List<PathPoint> set2) {
 			if (set1 == null || set2 == null) return false;

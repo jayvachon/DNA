@@ -7,7 +7,8 @@ namespace GameActions {
 	public class CollectItemEnabledState<T> : EnabledState where T : ItemHolder {
 
 		public override bool Enabled {
-			get { return Paired && !holder.Full; }
+			//get { return Paired && !holder.Full; }
+			get { return !holder.Full; }
 		}
 
 		string requiredPair = "";
@@ -16,7 +17,7 @@ namespace GameActions {
 				if (requiredPair == "") {
 					string typeName = typeof (T).Name;
 					typeName = typeName.Substring (0, typeName.Length-6);
-					requiredPair = "Collect" + typeName;
+					requiredPair = "Deliver" + typeName;
 				}
 				return requiredPair;
 			}

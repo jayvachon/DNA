@@ -23,7 +23,11 @@ namespace GameActions {
 
 		public Inventory BoundInventory { get; set; }
 
-		public bool AttemptPair (List<IActionAcceptor> acceptors) {
+		public bool AttemptPair (IActionAcceptor acceptor) {
+			return acceptor.AcceptableActions.Has (RequiredPair);//ActionEnabled (RequiredPair);
+		}
+
+		/*public bool AttemptPair (List<IActionAcceptor> acceptors) {
 			
 			if (RequiredPair == "") {
 				return false;
@@ -35,8 +39,9 @@ namespace GameActions {
 					return true;
 				}
 			}
+
 			Paired = false;
 			return false;
-		}
+		}*/
 	}
 }

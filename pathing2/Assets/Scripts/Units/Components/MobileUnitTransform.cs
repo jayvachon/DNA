@@ -53,11 +53,7 @@ namespace Units {
 			yPos = Position.y;
 			Path = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
 			Path.MyTransform.SetParent (MobileUnit.transform);
-			Path.Init (this, new PathSettings (2, false));
-		}
-
-		void OnEnable () {
-			circling = false;
+			Path.Init (this, new PathSettings (2, false), PathRotator);
 		}
 
 		public override void OnSelect () {
@@ -66,15 +62,6 @@ namespace Units {
 
 		public override void OnUnselect () {
 			Path.Enabled = false;
-		}
-
-		public bool StartMovingOnPath (bool reset=false) {
-			if (Path.Points.Count < 2)
-				return false;
-			movementState = MovementState.Moving;
-			Path.StartMoving ();
-			PathRotator.StartMoving (reset);
-			return true;
 		}
 
 		public void StopMovingOnPath () {
@@ -99,32 +86,21 @@ namespace Units {
 		//		√ - do not perform action
 
 		public void ArriveAtPoint (PathPoint point) {
-			/*StaticUnitTransform unitTransform = point.StaticUnitTransform;
-			if (unitTransform == null) {
-				StartMovingOnPath ();
-			} else {
-				MobileUnit.OnBindActionable (unitTransform.Unit as IActionAcceptor);
+			//PerformableActions.PairActionsOnPath (Path);
+			
+			/*List<string> paired = PerformableActions.GetPairedActionsBetweenAcceptors (
+				point.StaticUnit as IActionAcceptor,
+				Path.Points.Points.Find (x => x != point).StaticUnit as IActionAcceptor);
+
+			List<string> bound = PerformableActions.GetBoundActions (paired);
+			if (bound.Count > 0) {
+				PerformableActions.Start (bound[0]);
 			}*/
 
-			/*StaticUnitTransform unitTransform = point.StaticUnitTransform;
-			if (!point.PointsHavePairs (Path.Points.Points)) {
-				Path.Points.Clear ();
-				// ugly
-				AcceptorAction a = point.StaticUnit.AcceptableActions.GetEnabledAction ();
-				Debug.Log (a);
-				if (a.EnabledState.RequiresPair) {
-					PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (point.Position, a.EnabledState.RequiredPair);
-					Debug.Log (nearest);
-					if (nearest != null) {
-						Path.Points.Add (nearest);
-						Path.Points.Add (point);
-						Debug.Log (Path.Points.Count);
-					}
-				}
-			}
-			MobileUnit.OnBindActionable ((IActionAcceptor)unitTransform.Unit);*/
+			if (MobileUnit.OnBindActionable (point))
+				EncircleBoundUnit ();
 
-			AcceptorAction a = point.StaticUnit.AcceptableActions.GetActiveAction ();//GetEnabledAction ();
+			/*AcceptorAction a = point.StaticUnit.AcceptableActions.GetActiveAction ();
 			StaticUnitTransform unitTransform = point.StaticUnitTransform;
 			if (a == null || !a.Enabled) {
 				ResetPath ();
@@ -133,10 +109,13 @@ namespace Units {
 					if (!point.PointsHavePairs (Path.Points.Points)) {
 						ResetPath ();
 						PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (point.Position, a.EnabledState.RequiredPair);
+						Debug.Log (nearest);
 						if (nearest != null) {
 							Path.Points.Add (point);
 							Path.Points.Add (nearest);
-						}
+							MobileUnit.PerformableActions.PairActionsBetweenAcceptors (
+								Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
+						} 
 					}
 				} else {
 					ResetPath ();
@@ -145,7 +124,7 @@ namespace Units {
 			MobileUnit.OnBindActionable ((IActionAcceptor)unitTransform.Unit);
 			if (MobileUnit.PerformableActions.Performing) {
 				EncircleBoundUnit ();
-			}
+			}*/
 		}
 
 		void ResetPath () {
@@ -153,16 +132,9 @@ namespace Units {
 			StopMovingOnPath ();
 		}
 
-		bool circling = false;
-		public bool Circling {
-			get { return circling; }
-		}
-
 		public void EncircleBoundUnit () {
-			//if (circling) return;
 			if (movementState == MovementState.Working) return;
 			movementState = MovementState.Working;
-			///circling = true;
 			StaticUnit su = (StaticUnit)BoundAcceptor;
 			StartCoroutine (CoEncircleBoundUnit (su.Position));
 		}
@@ -192,7 +164,6 @@ namespace Units {
 				}
 				yield return null;
 			}
-			//circling = false;
 			movementState = (Path.Points.Count > 1)
 				? MovementState.Moving
 				: MovementState.Idling;

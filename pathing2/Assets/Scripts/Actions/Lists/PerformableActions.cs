@@ -20,6 +20,10 @@ namespace GameActions {
 			get { return inputs; }
 		}
 
+		new public PerformerAction this[string id] {
+			get { return ActiveActions[id] as PerformerAction; }
+		}
+
 		Queue<PerformerAction> actionQueue = new Queue<PerformerAction> ();
 		bool debug = false;
 

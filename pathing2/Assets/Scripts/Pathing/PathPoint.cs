@@ -50,10 +50,10 @@ namespace Pathing {
 			PathManager.Instance.ExitPathPoint (dragSettings, this);
 		}
 
-		public bool PointsHavePairs (List<PathPoint> points) {
+		/*public bool PointsHavePairs (List<PathPoint> points) {
 			return ActionAcceptor.AcceptableActions.PairActionsBetweenAcceptors (
 				points.ConvertAll (x => x.ActionAcceptor));
-		}
+		}*/
 
 		public void OnDrag (DragSettings dragSettings) {}
 		public void OnPoolCreate () {}

@@ -83,105 +83,106 @@ namespace Units {
 			IActionAcceptor acceptor = point.StaticUnit as IActionAcceptor;
 			if (BoundAcceptor == acceptor) return false; 
 			BoundAcceptor = acceptor;
-			//ActionHandler.instance.Bind (this);
 			return StartActions (point);
 		}
 
 		public bool StartActions (PathPoint point) {
 			
-			/*PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
+			PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
+			AcceptableActions acceptorActions = BoundAcceptor.AcceptableActions;
+			List<string> otherPointActions = new List<string> (
+				otherPoint.StaticUnit.AcceptableActions.ActiveActions.Keys);
 
-			// Find paired actions on the path
-			List<string> paired = new List<string> ();
-			if (otherPoint != null) {
-				paired = PerformableActions.GetPairedActionsBetweenAcceptors (
-					BoundAcceptor, otherPoint.StaticUnit as IActionAcceptor);
-			}*/
-
-			/*List<string> paired = GetPairedActionsOnPath ();
+			List<string> matching = PerformableActions.GetBoundActions (
+				new List<string> (acceptorActions.ActiveActions.Keys));
 			
-			List<string> bound;
-			if (paired.Count > 0) {
+			// Do performer and acceptor have a matching action?
+			if (matching.Count == 0) {
 
-				// If there are paired actions, match them with the enabled actions on this unit
-				bound = PerformableActions.GetBoundActions (paired);
-			} else {
+				List<string> otherMatching = PerformableActions.GetBoundActions (otherPointActions);
+				
+				// Does the other point in the path have a matching action?
+				if (otherMatching.Count == 0) {
 
-				// If there aren't any paired actions, find one that can be performed without a pair
-				bound = PerformableActions.GetBoundActions (
-					new List<string> (BoundAcceptor.AcceptableActions.EnabledActions.Keys));
-				Path.Points.Remove (otherPoint);
+					// Stop moving
+					StopMoving (otherPoint);
+				} else {
 
-				if (bound.Count > 0) {
-					string toPerform = bound[0];
-					while (PerformableActions[toPerform].EnabledState.RequiresPair && bound.Count > 0 && Path.Points.Count < 2) {
-						
+					// Move to the next point
+					OnEndActions ();
+				}
+
+				return false;
+			}
+
+			string matchingId = matching[0];
+			AcceptorAction matchingAction = acceptorActions[matchingId];
+			bool matchingActionEnabled = matchingAction.Enabled && PerformableActions[matchingId].Enabled;
+			
+			// Does the matching action require a pair?
+			if (matchingAction.EnabledState.RequiresPair) {
+
+				// Is the action enabled?
+				if (matchingActionEnabled) {
+
+					PerformBoundAction (matchingId, point);
+					return true;
+				} else {
+
+					// Does the other point on the path have the required pair?
+					bool otherPointHasPair = matchingAction.EnabledState.AttemptPair (otherPoint.StaticUnit as IActionAcceptor);
+					if (otherPointHasPair) {
+
+						// Move to the next point
+						OnEndActions ();
+						return false;
+					} else {
+
 						PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (
-							point.Position, PerformableActions[toPerform].EnabledState.RequiredPair);
+							point.Position, matchingAction.EnabledState.RequiredPair);
 
-						if (nearest != null) {
+						if (nearest == null) {
+
+							// Stop moving
+							StopMoving (otherPoint);
+							return false;
+						} else {
+
+							Path.Points.Remove (otherPoint);
 							PerformableActions.Stop ("MoveOnPath");
 							Path.Points.Add (nearest);
-						}
-
-						bound.Remove (toPerform);
-						if (bound.Count > 0) {
-							toPerform = bound[0];
+							OnEndActions ();
+							return false;
 						}
 					}
 				}
-			}*/
+			} else {
+				
+				// Is the action enabled?
+				if (matchingActionEnabled) {
 
-			PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
-
-			bool pairedOnPath;
-			List<string> actions = GetAcceptedActionsAtPoint (out pairedOnPath);
-			
-			if (!pairedOnPath) {
-
-				if (actions.Count == 0) {
-
-					Debug.Log ("heard");
+					// Perform the action
+					PerformBoundAction (matchingId, point);
+					return true;
 				} else {
 
-					string currentAction = actions[0];
-
-					while (!CreatePathToPair (currentAction) && actions.Count > 0) {
-						actions.Remove (currentAction);
-						if (actions.Count > 0) 
-							currentAction = actions[0];
-					}
+					// Stop Moving
+					StopMoving (otherPoint);
+					return false;
 				}
 			}
 
-			/*if (!pairedOnPath && actions.Count > 0) {
-
-				Path.Points.Remove (otherPoint);
-				string toPerform = actions[0];
-				
-				while (PerformableActions[toPerform].EnabledState.RequiresPair && Path.Points.Count < 2 && actions.Count > 0) {
-					
-					PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (
-						point.Position, PerformableActions[toPerform].EnabledState.RequiredPair);
-
-					if (nearest != null) {
-						PerformableActions.Stop ("MoveOnPath");
-						Path.Points.Add (nearest);
-					} else {
-						actions.Remove (toPerform);
-						if (actions.Count > 0) toPerform = actions[0];
-					}
-				}
-			}*/
-			
-			if (actions.Count > 0) {
-				PerformableActions.Start (actions[0]);
-				StartCoroutine (WaitForActions (() => StartActions (point)));
-				return true;
-			} 
-			
-			OnEndActions ();
 			return false;
+		}
+
+		void StopMoving (PathPoint removePoint) {
+			Path.Points.Remove (removePoint);
+			MobileTransform.StopMovingOnPath ();
+		}
+
+		void PerformBoundAction (string id, PathPoint point) {
+			PerformableActions.Start (id);
+			StartCoroutine (WaitForActions (() => StartActions (point)));
 		}
 
 		List<string> GetAcceptedActionsAtPoint (out bool pairedOnPath) {

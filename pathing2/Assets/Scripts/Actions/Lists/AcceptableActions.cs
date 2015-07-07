@@ -7,6 +7,10 @@ namespace GameActions {
 
 	public class AcceptableActions : ActionList<AcceptorAction> {
 
+		new public AcceptorAction this[string id] {
+			get { return ActiveActions[id] as AcceptorAction; }
+		}
+
 		IActionAcceptor acceptor;
 
 		public AcceptableActions (IActionAcceptor acceptor) {

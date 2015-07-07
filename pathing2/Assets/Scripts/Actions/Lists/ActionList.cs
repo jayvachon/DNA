@@ -152,8 +152,12 @@ namespace GameActions {
 		}*/
 
 		public List<string> GetBoundActions (List<string> acceptorActions) {
-			RefreshEnabledActions ();
-			return acceptorActions.FindAll (x => ActionEnabled (x));
+			//RefreshEnabledActions ();
+			return acceptorActions.FindAll (x => Has (x));//ActionEnabled (x));
+		}
+
+		public bool AcceptorHasPair (IActionAcceptor acceptor, Action unpairedAction) {
+			return unpairedAction.EnabledState.AttemptPair (acceptor);
 		}
 
 		public List<string> GetPairedActionsBetweenAcceptors (IActionAcceptor a, IActionAcceptor b) {

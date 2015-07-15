@@ -11,6 +11,10 @@ namespace Units {
 			get { return "Clinic"; }
 		}
 
+		public override string Description {
+			get { return "Elders live longer when they're receiving care at a Clinic."; }
+		}
+
 		public override bool PathPointEnabled {
 			get { return false; }
 		}

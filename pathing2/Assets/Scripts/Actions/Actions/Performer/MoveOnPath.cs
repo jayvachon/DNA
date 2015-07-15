@@ -19,12 +19,7 @@ namespace GameActions {
 		}
 
 		public override void Start () {
-			
-			//Performer.PerformableActions.PairActionsBetweenAcceptors (
-			//	Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
-
 			Path.StartMoving ();
-
 			performing = true;
 		}
 

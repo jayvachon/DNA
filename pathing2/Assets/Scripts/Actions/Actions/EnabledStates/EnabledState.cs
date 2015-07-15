@@ -18,30 +18,12 @@ namespace GameActions {
 			get { return RequiredPair == ""; }
 		}
 
-		// TODO: Make protected after finished testing
-		public bool Paired { get; private set; }
+		protected bool Paired { get; private set; }
 
 		public Inventory BoundInventory { get; set; }
 
 		public bool AttemptPair (IActionAcceptor acceptor) {
 			return acceptor.AcceptableActions.Has (RequiredPair);//ActionEnabled (RequiredPair);
 		}
-
-		/*public bool AttemptPair (List<IActionAcceptor> acceptors) {
-			
-			if (RequiredPair == "") {
-				return false;
-			}
-
-			foreach (IActionAcceptor acceptor in acceptors) {
-				if (acceptor.AcceptableActions.Has (RequiredPair)) {
-					Paired = true;
-					return true;
-				}
-			}
-
-			Paired = false;
-			return false;
-		}*/
 	}
 }

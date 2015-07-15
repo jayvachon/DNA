@@ -10,6 +10,8 @@ namespace Units {
 
 		public override string Name { get { return "Remains"; } }
 
+		public override string Description { get { return "Deliver remains to the Giving Tree to harvest the years."; } }
+
 		Clinic boundClinic = null;
 
 		void Awake () {

@@ -13,6 +13,10 @@ namespace Units {
 			get { return "Giving Tree"; }
 		}
 
+		public override string Description {
+			get { return "The Giving Tree gives birth to Laborers and is also a portal to the next dimension."; }
+		}
+
 		public PerformableActions PerformableActions { get; private set; }
 
 		List<Vector3> createPositions;

@@ -16,9 +16,12 @@ namespace Units {
 			get { return name; }
 		}
 
+		public override string Description {
+			get { return "Construct buildings on plots."; }
+		}
+
 		bool pathPointEnabled = false;
 		public override bool PathPointEnabled {
-			//get { return pathPointEnabled; }
 			get { return true; }
 		}
 

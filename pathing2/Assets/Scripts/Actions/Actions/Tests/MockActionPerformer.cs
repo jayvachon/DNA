@@ -77,15 +77,15 @@ public class MockActionPerformer : MonoBehaviour, IInventoryHolder, IActionPerfo
 	void PrintPaired () {
 		if (!testPairing) return;
 		foreach (var action in PerformableActions.ActiveActions) {
-			string name = action.Key;
+			//string name = action.Key;
 			EnabledState es = action.Value.EnabledState;
 			if (es.RequiredPair == "") {
 				Debug.Log (action.Key + " does not require a pair");
-			} else if (es.Paired) {
+			} /*else if (es.Paired) {
 				Debug.Log (name + " is paired");
 			} else {
 				Debug.Log (name + " is unpaired");
-			}
+			}*/
 		}
 	}
 

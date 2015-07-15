@@ -11,6 +11,10 @@ namespace Units {
 			get { return "Ripe Giving Tree"; }
 		}
 
+		public override string Description {
+			get { return "To avoid drowning in the rising sea you can flee this tree and go to the next dimension."; }
+		}
+
 		public PerformableActions PerformableActions { get; private set; }
 
 		void Awake () {

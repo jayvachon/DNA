@@ -171,8 +171,6 @@ namespace Units {
 					return false;
 				}
 			}
-
-			return false;
 		}
 
 		void StopMoving (PathPoint removePoint) {

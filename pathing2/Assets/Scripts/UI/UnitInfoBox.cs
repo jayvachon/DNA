@@ -103,9 +103,11 @@ public class UnitInfoBox : MBRefs {
 	IEnumerator CoSetColliderSize () {
 		yield return new WaitForFixedUpdate ();
 		float contentHeight = contentGroup.sizeDelta.y;
-		ContentCollider.enabled = true;
-		ContentCollider.SetCenterY (contentHeight/2);
-		ContentCollider.SetSizeY (contentHeight);
+		if (ContentCollider != null) {
+			ContentCollider.enabled = true;
+			ContentCollider.SetCenterY (contentHeight/2);
+			ContentCollider.SetSizeY (contentHeight);
+		}
 	}
 
 	void InitInventory (List<ItemHolder> itemHolders) {
@@ -216,7 +218,8 @@ public class UnitInfoBox : MBRefs {
 	}
 
 	void DeactivateCollider () {
-		ContentCollider.enabled = false;
+		if (ContentCollider != null)
+			ContentCollider.enabled = false;
 	}
 
 	void ClearInventory () {

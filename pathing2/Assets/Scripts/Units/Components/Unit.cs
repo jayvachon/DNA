@@ -12,6 +12,10 @@ namespace Units {
 			get { return ""; }
 		}
 
+		public virtual string Description {
+			get { return ""; }
+		}
+
 		public UnitTransform unitTransform;
 		public UnitRenderer unitRenderer;
 		public UnitClickable unitClickable;
@@ -63,14 +67,14 @@ namespace Units {
 			Selected = true;
 			unitRenderer.OnSelect ();
 			unitTransform.OnSelect ();
-			UnitInfoBox.Instance.Open (UnitInfoContent, Transform);
+			UnitInfoBoxOverlay.Instance.Open (UnitInfoContent);
 		}
 
 		public virtual void OnUnselect () {
 			Selected = false;
 			unitRenderer.OnUnselect ();
 			unitTransform.OnUnselect ();
-			UnitInfoBox.Instance.Close ();
+			UnitInfoBoxOverlay.Instance.Close ();
 		}
 
 		// from unit T to unit U

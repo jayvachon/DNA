@@ -15,6 +15,10 @@ namespace Units {
 			get { return "Laborer"; }
 		}
 
+		public override string Description {
+			get { return "Laborers perform work until they reach retirement age."; }
+		}
+
 		YearHolder yearHolder = new YearHolder (55, 0);
 		HappinessHolder happinessHolder = new HappinessHolder (100, 100);
 

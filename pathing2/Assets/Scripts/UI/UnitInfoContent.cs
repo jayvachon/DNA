@@ -15,6 +15,11 @@ public class UnitInfoContent {
 		get { return title; }
 	}
 
+	string description;
+	public string Description {
+		get { return description; }
+	}
+
 	Inventory inventory;
 	public Inventory Inventory {
 		get { return inventory; }
@@ -34,6 +39,7 @@ public class UnitInfoContent {
 
 	void Set () {
 		title = unit.Name;
+		description = unit.Description;
 		inventory = unit.Inventory;
 		IActionPerformer actionPerformer = unit as IActionPerformer;
 		if (actionPerformer != null) {

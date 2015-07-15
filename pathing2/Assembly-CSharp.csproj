@@ -197,6 +197,7 @@
      <Compile Include="Assets\Scripts\Time\TimeManager.cs" />
      <Compile Include="Assets\Scripts\Time\TimerValues.cs" />
      <Compile Include="Assets\Scripts\UI\ActionButton.cs" />
+     <Compile Include="Assets\Scripts\UI\ActionButtonOverlay.cs" />
      <Compile Include="Assets\Scripts\UI\BuildingIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
@@ -205,10 +206,12 @@
      <Compile Include="Assets\Scripts\UI\HappinessIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\HealthIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\ItemHolderContainerUI.cs" />
+     <Compile Include="Assets\Scripts\UI\ItemHolderOverlay.cs" />
      <Compile Include="Assets\Scripts\UI\MercuryRender.cs" />
      <Compile Include="Assets\Scripts\UI\Notifications\Notification.cs" />
      <Compile Include="Assets\Scripts\UI\Notifications\NotificationCenter.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
+     <Compile Include="Assets\Scripts\UI\UnitInfoBoxOverlay.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitTransform.cs" />

@@ -10,6 +10,10 @@ namespace Units {
 		public override string Name {
 			get { return "Milkshake Derrick"; }
 		}
+
+		public override string Description {
+			get { return "Milkshakes collected from a Derrick can be used to construct buildings."; }
+		}
 		
 		void Awake () {
 			

@@ -11,6 +11,10 @@ namespace Units {
 			get { return "Jacuzzi"; }
 		}
 
+		public override string Description {
+			get { return "The Jacuzzi increases Laborer happiness so that they will work faster."; }
+		}
+
 		public override bool PathPointEnabled {
 			get { return false; }
 		}

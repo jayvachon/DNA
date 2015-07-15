@@ -58,7 +58,7 @@ public class MainCamera : MBRefs {
 			if (transform.localPosition.z > -25)
 				transform.SetLocalPositionZ (transform.localPosition.z - 0.25f);
 		}
-		anchor.LookAt (center.position);
+		transform.LookAt (center.position);
 	}
 
 	void OnSelectEvent (SelectEvent e) {

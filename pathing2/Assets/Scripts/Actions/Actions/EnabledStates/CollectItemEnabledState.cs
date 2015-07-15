@@ -7,7 +7,6 @@ namespace GameActions {
 	public class CollectItemEnabledState<T> : EnabledState where T : ItemHolder {
 
 		public override bool Enabled {
-			//get { return Paired && !holder.Full; }
 			get { return !holder.Full; }
 		}
 

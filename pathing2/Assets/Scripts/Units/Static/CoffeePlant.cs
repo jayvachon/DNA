@@ -11,6 +11,10 @@ namespace Units {
 		public override string Name {
 			get { return "Coffee Plant"; }
 		}
+
+		public override string Description {
+			get { return "Deliver coffee to the Giving Tree to create more Laborers."; }
+		}
 		
 		public PerformableActions PerformableActions { get; private set; }
 

@@ -10,8 +10,10 @@ namespace Units {
 		int sides = 5;
 		int radius = 4;
 		int rings = 5;
+		float deltaY = 1.5f;
 
 		void Awake () {
+			center.y = 0.5f + (deltaY * rings);
 			CreateGivingTree ();
 			CreatePlots ();
 		}
@@ -34,7 +36,7 @@ namespace Units {
 				float radians = (float)i * deg * Mathf.Deg2Rad;
 				Vector3 position = new Vector3 (
 					center.x + myRadius * Mathf.Sin (radians),
-					center.y,
+					center.y - index * deltaY,
 					center.z + myRadius * Mathf.Cos (radians)
 				);
 				if (index == 1 && i == 1) {

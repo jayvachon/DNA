@@ -97,65 +97,56 @@ namespace Units {
 				new List<string> (acceptorActions.ActiveActions.Keys));
 			
 			// Do performer and acceptor have a matching action?
+			// Performer & acceptor do not have matching action
 			if (matching.Count == 0) {
 
-				List<string> otherMatching = PerformableActions.GetBoundActions (otherPointActions);
-				
-				// Does the other point in the path have a matching action?
-				if (otherMatching.Count == 0) {
-
-					// Stop moving
-					StopMoving (otherPoint);
-				} else {
-
-					// Move to the next point
-					OnEndActions ();
-				}
-
+				MoveToOtherPointWithAction (otherPointActions, otherPoint);
 				return false;
 			}
 
 			string matchingId = matching[0];
 			AcceptorAction matchingAction = acceptorActions[matchingId];
 			bool matchingActionEnabled = matchingAction.Enabled && PerformableActions[matchingId].Enabled;
+			PathPoint nearestPair = Pathfinder.Instance.FindNearestWithAction (
+				point.Position, matchingAction.EnabledState.RequiredPair);
 			
+			Debug.Log (point.StaticUnit.Name + "  bound ---------- " + matchingId);
+			// Performer & acceptor have matching action
 			// Does the matching action require a pair?
 			if (matchingAction.EnabledState.RequiresPair) {
+				Debug.Log ("requires pair");
+				// Does the other point on the path have the required pair?
+				bool otherPointHasPair = matchingAction.EnabledState.AttemptPair (otherPoint.StaticUnit as IActionAcceptor);
+				if (otherPointHasPair) {
+					Debug.Log ("pair is on path");
+					// Is the action enabled?
+					if (matchingActionEnabled) {
 
-				// Is the action enabled?
-				if (matchingActionEnabled) {
-
-					PerformBoundAction (matchingId, point);
-					return true;
-				} else {
-
-					// Does the other point on the path have the required pair?
-					bool otherPointHasPair = matchingAction.EnabledState.AttemptPair (otherPoint.StaticUnit as IActionAcceptor);
-					if (otherPointHasPair) {
+						// Perform the action
+						PerformBoundAction (matchingId, point);
+						return true;
+					} else {
 
 						// Move to the next point
 						OnEndActions ();
 						return false;
+					}
+				} else {
+					Debug.Log ("pair not on path");
+					// Does a pair exist in the world?
+					
+					nearestPair = Pathfinder.Instance.FindNearestWithAction (
+						point.Position, matchingAction.EnabledState.RequiredPair);
+
+					if (nearestPair != null) {
+						return MoveToPointWithAction (nearestPair, otherPoint);
 					} else {
-
-						PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (
-							point.Position, matchingAction.EnabledState.RequiredPair);
-
-						if (nearest == null) {
-
-							// Stop moving
-							StopMoving (otherPoint);
-							return false;
-						} else {
-
-							Path.Points.Remove (otherPoint);
-							PerformableActions.Stop ("MoveOnPath");
-							Path.Points.Add (nearest);
-							OnEndActions ();
-							return false;
-						}
+						Debug.Log ("look at other");
+						MoveToOtherPointWithAction (otherPointActions, otherPoint);
+						return false;
 					}
 				}
+
 			} else {
 				
 				// Is the action enabled?
@@ -165,10 +156,8 @@ namespace Units {
 					PerformBoundAction (matchingId, point);
 					return true;
 				} else {
-
-					// Stop Moving
-					StopMoving (otherPoint);
-					return false;
+					PathPoint otherMatching = Pathfinder.Instance.FindNearestWithAction (point.Position, matchingId);
+					return MoveToPointWithAction (otherMatching, otherPoint);
 				}
 			}
 		}
@@ -176,6 +165,38 @@ namespace Units {
 		void StopMoving (PathPoint removePoint) {
 			Path.Points.Remove (removePoint);
 			MobileTransform.StopMovingOnPath ();
+		}
+
+		bool MoveToPointWithAction (PathPoint nearestPair, PathPoint otherPoint) {
+
+			if (nearestPair == null) {
+
+				// Stop moving
+				StopMoving (otherPoint);
+				return false;
+			} else {
+				Path.Points.Remove (otherPoint);
+				PerformableActions.Stop ("MoveOnPath");
+				Path.Points.Add (nearestPair);
+				OnEndActions ();
+				return false;
+			}
+		}
+
+		void MoveToOtherPointWithAction (List<string> otherPointActions, PathPoint otherPoint) {
+
+			List<string> otherMatching = PerformableActions.GetBoundActions (otherPointActions);
+				
+			// Does the other point in the path have a matching action?
+			if (otherMatching.Count == 0) {
+
+				// Stop moving
+				StopMoving (otherPoint);
+			} else {
+
+				// Move to the next point
+				OnEndActions ();
+			}
 		}
 
 		void PerformBoundAction (string id, PathPoint point) {
@@ -222,6 +243,7 @@ namespace Units {
 				PerformableActions.Stop ("MoveOnPath");
 				Path.Points.Remove (Path.Points.Points.Find (x => x != CurrentPoint));
 				Path.Points.Add (nearest);
+				Destination = nearest;
 				return true;;
 			}
 
@@ -265,7 +287,7 @@ namespace Units {
 			if (a == Destination && Path.Points.Count < 2)
 				return;
 			if (Path.Points.Points.Contains (Destination)) {
-				PerformableActions["MoveOnPath"].Start ();	
+				PerformableActions["MoveOnPath"].Start ();
 			} else {
 				Path.Points.Clear ();
 				Path.StopMoving ();

@@ -40,7 +40,7 @@ namespace Units {
 					center.z + myRadius * Mathf.Cos (radians)
 				);
 				if (index == 1 && i == 1) {
-					CreateUnit<Jacuzzi> (position);
+					CreateUnit<CoffeePlant> (position);
 				} else if (index == 1 && i == 2) {
 					CreateUnit<CoffeePlant> (position);
 				} else if (index == 2 && i == 4) {

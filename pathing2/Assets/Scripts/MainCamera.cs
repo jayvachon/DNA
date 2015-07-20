@@ -51,7 +51,7 @@ public class MainCamera : MBRefs {
 			center.SetLocalEulerAnglesY (center.localEulerAngles.y - 1);
 		}
 		if (Input.GetKey (KeyCode.UpArrow)) {
-			if (transform.localPosition.z < 0)
+			if (transform.localPosition.z < -5)
 				transform.SetLocalPositionZ (transform.localPosition.z + 0.25f);
 		}
 		if (Input.GetKey (KeyCode.DownArrow)) {

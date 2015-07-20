@@ -18,6 +18,8 @@ namespace Units {
 		
 		public PerformableActions PerformableActions { get; private set; }
 
+		static bool shortLife = false;
+
 		void Awake () {
 			
 			Inventory = new Inventory (this);
@@ -38,6 +40,10 @@ namespace Units {
 			base.OnPoolCreate ();
 			Inventory.Get<YearHolder> ().HolderEmptied += OnDie;
 			Inventory.Get<YearHolder> ().Initialize ();
+			if (!shortLife) {
+				Inventory.Get<YearHolder> ().Remove (20);
+				shortLife = true;
+			}
 			PerformableActions.SetActive ("ConsumeYear", true);
 		}
 

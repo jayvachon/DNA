@@ -3,7 +3,7 @@ using System.Collections;
 
 // Generates points arranged along Fermat's spiral
 
-public class Helix {
+public class FermatsSpiral {
 
 	public readonly Vector3 center 	= Vector3.zero;
 	public readonly int pointCount 	= 200;
@@ -40,14 +40,13 @@ public class Helix {
 		get { return positions[positions.Length-1]; }
 	}
 
-	public Helix (int pointCount=200) {
+	public FermatsSpiral (int pointCount=200) {
 		this.pointCount = pointCount;
-		CreateHelix ();
+		CreateFermatsSpiral ();
 	}
 
-	void CreateHelix () {
+	void CreateFermatsSpiral () {
 		
-		//points = new Vector4[sides * rotations];
 		positions = new Vector3[pointCount];
 		rotations = new Vector3[pointCount];
 		float radius = maxRadius;
@@ -61,12 +60,6 @@ public class Helix {
 				center.y + i * -altitude,
 				center.z + radius * Mathf.Cos (radians)
 			);
-			/*points[i] = new Vector4 (
-				center.x + radius * Mathf.Sin (radians),
-				center.y + i * -altitude,
-				center.z + radius * Mathf.Cos (radians),
-				deg
-			);*/
 		}
 
 		bottomDiameter = radius * 2;

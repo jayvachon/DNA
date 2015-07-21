@@ -134,6 +134,7 @@ namespace Pathing {
 		void UpdatePositions () {
 			positions.Clear ();
 			foreach (PathPoint point in points) {
+				Debug.Log (point.Position);
 				positions.Add (point.Position);
 			}
 			if (OnUpdatePoints != null) OnUpdatePoints ();

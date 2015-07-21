@@ -110,15 +110,15 @@ namespace Units {
 			PathPoint nearestPair = Pathfinder.Instance.FindNearestWithAction (
 				point.Position, matchingAction.EnabledState.RequiredPair);
 			
-			Debug.Log (point.StaticUnit.Name + "  bound ---------- " + matchingId);
+			//Debug.Log (point.StaticUnit.Name + "  bound ---------- " + matchingId);
 			// Performer & acceptor have matching action
 			// Does the matching action require a pair?
 			if (matchingAction.EnabledState.RequiresPair) {
-				Debug.Log ("requires pair");
+				//Debug.Log ("requires pair");
 				// Does the other point on the path have the required pair?
 				bool otherPointHasPair = matchingAction.EnabledState.AttemptPair (otherPoint.StaticUnit as IActionAcceptor);
 				if (otherPointHasPair) {
-					Debug.Log ("pair is on path");
+					//Debug.Log ("pair is on path");
 					// Is the action enabled?
 					if (matchingActionEnabled) {
 
@@ -132,7 +132,7 @@ namespace Units {
 						return false;
 					}
 				} else {
-					Debug.Log ("pair not on path");
+					//Debug.Log ("pair not on path");
 					// Does a pair exist in the world?
 					
 					nearestPair = Pathfinder.Instance.FindNearestWithAction (
@@ -141,7 +141,7 @@ namespace Units {
 					if (nearestPair != null) {
 						return MoveToPointWithAction (nearestPair, otherPoint);
 					} else {
-						Debug.Log ("look at other");
+						//Debug.Log ("look at other");
 						MoveToOtherPointWithAction (otherPointActions, otherPoint);
 						return false;
 					}

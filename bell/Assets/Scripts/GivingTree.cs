@@ -5,15 +5,15 @@ public class GivingTree : MonoBehaviour {
 
 	public Transform plot;
 
-	Helix helix;
+	FermatsSpiral spiral;
 
 	void Awake () {
-		helix = new Helix ();
-		Vector3[] positions = helix.Positions;
-		Vector3[] rotations = helix.Rotations;
+		spiral = new FermatsSpiral ();
+		Vector3[] positions = spiral.Positions;
+		Vector3[] rotations = spiral.Rotations;
 		for (int i = 0; i < positions.Length; i ++) {
 			Transform newPlot = Instantiate (plot) as Transform;
-			newPlot.position = helix.Positions[i];
+			newPlot.position = spiral.Positions[i];
 			float scale = Mathf.Lerp (1f, 0f, (float)i / (float)positions.Length);
 			newPlot.localScale = new Vector3 (scale, 0.1f * scale, scale);
 			newPlot.localEulerAngles = rotations[i];
@@ -22,6 +22,6 @@ public class GivingTree : MonoBehaviour {
 	}
 
 	void Update () {
-		helix.Draw ();
+		spiral.Draw ();
 	}
 }

@@ -6,65 +6,55 @@ namespace Units {
 
 	public class PlotsCreator : MonoBehaviour {
 
-		Vector3 center = new Vector3 (0, 0.5f, 0);
-		int sides = 5;
-		int radius = 4;
-		int rings = 5;
-		float deltaY = 1.5f;
+		[Range (0.1f, 10f)] public float radius2 = 1.25f;
+		[Range (0f, 1f)] public float altitude = 0.05f;
+		public Vector3 origin = new Vector3 (0, 6.5f, 0);
+
+		Fermat fermat = new Fermat ();
+		int pointCount;
+		Unit[] plots;
 
 		void Awake () {
-			center.y = 0.5f + (deltaY * rings);
-			CreateGivingTree ();
-			CreatePlots ();
+			pointCount = fermat.Points.Length;
+			plots = new Unit[pointCount];
+			SetPointPositions ();
 		}
 
-		void CreateGivingTree () {
-			CreateUnit<GivingTreeUnit> (center);
+		void Update () {
+			fermat.UpdateSettings (
+				new Fermat.Settings (radius2, pointCount, altitude, origin));
+			SetPointPositions ();
 		}
 
-		void CreatePlots () {
-			for (int i = 0; i < rings; i ++) {
-				CreateRing (i);
-			}
-		}
-
-		void CreateRing (int index) {
-			float myRadius = radius * index;
-			int mySides = sides * (index);
-			float deg = 360f / (float)mySides;
-			for (int i = 0; i < mySides; i ++) {
-				float radians = (float)i * deg * Mathf.Deg2Rad;
-				Vector3 position = new Vector3 (
-					center.x + myRadius * Mathf.Sin (radians),
-					center.y - index * deltaY,
-					center.z + myRadius * Mathf.Cos (radians)
-				);
-				if (index == 1 && i == 1) {
-					CreateUnit<CoffeePlant> (position);
-				} else if (index == 1 && i == 2) {
-					CreateUnit<CoffeePlant> (position);
-				} else if (index == 2 && i == 4) {
-					CreateUnit<MilkshakePool> (position);
-				} else if (index == 3 && i == 9) {
-					CreateUnit<MilkshakePool> (position);
-				} else if (index == 4 && i == 19) {
-					CreateUnit<MilkshakePool> (position);
-				} else {
-					CreateUnit<Plot> (position);
+		void SetPointPositions () {
+			Vector3[] points = fermat.Points;
+			for (int i = 0; i < points.Length; i ++) {
+				if (plots[i] == null) {
+					plots[i] = CreateUnitAtIndex (points[i], i);
 				}
-				/*if (index == 1 && i == 0) {
-					CreateUnit<MilkshakePool> (position);
-				} else {
-					CreateUnit<Plot> (position);
-				}*/
+				plots[i].Position = points[i];
+				((StaticUnit)plots[i]).PathPoint.Position = points[i];
+				plots[i].transform.SetParent (transform);
 			}
 		}
 
-		void CreateUnit<T> (Vector3 position) where T : StaticUnit {
+		Unit CreateUnitAtIndex (Vector3 position, int index) {
+			switch (index) {
+				case 0: return CreateUnit<GivingTreeUnit> (position);
+				case 1: return CreateUnit<CoffeePlant> (position);
+				case 20: return CreateUnit<MilkshakePool> (position);
+				case 40: return CreateUnit<MilkshakePool> (position);
+				case 60: return CreateUnit<MilkshakePool> (position);
+				default: return CreateUnit<Plot> (position);
+			}
+		}
+
+		Unit CreateUnit<T> (Vector3 position) where T : StaticUnit {
 			T unit = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
 			PathPoint pathPoint = Path.CreatePoint (position, unit as StaticUnit);
 			unit.Position = position; 
 			unit.PathPoint = pathPoint;
+			return (Unit)unit;
 		}
 	}
 }

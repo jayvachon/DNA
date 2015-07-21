@@ -18,7 +18,7 @@ namespace Units {
 				if (progress > 1f) progress -= 1f;
 				LocalPosition = new Vector3 (
 					GetX (progress), 
-					GetY (Mathf.Abs (1f-progress)),
+					GetY (Mathf.Abs (value*2f-1)),
 					GetZ (progress));
 			}
 		}

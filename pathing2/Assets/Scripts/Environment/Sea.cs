@@ -21,7 +21,7 @@ public class Sea : MBRefs {
 	}
 
 	const float minLevel = -3.5f;
-	const float maxLevel = 0.1f;
+	const float maxLevel = 5f;
 	public EndRising endRising;
 	float timescale = 600f; 
 

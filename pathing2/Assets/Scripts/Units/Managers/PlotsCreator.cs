@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#undef DYNAMIC_SETTINGS
+using UnityEngine;
 using System.Collections;
 using Pathing;
 
@@ -6,9 +7,15 @@ namespace Units {
 
 	public class PlotsCreator : MonoBehaviour {
 
-		[Range (0.1f, 10f)] public float radius2 = 1.25f;
+		#if DYNAMIC_SETTINGS
+		[Range (0.1f, 10f)] public float radius = 1.25f;
 		[Range (0f, 1f)] public float altitude = 0.05f;
 		public Vector3 origin = new Vector3 (0, 6.5f, 0);
+		#else
+		float radius = 1.25f;
+		float altitude = 0.05f;
+		Vector3 origin = new Vector3 (0, 6.5f, 0);
+		#endif
 
 		Fermat fermat = new Fermat ();
 		int pointCount;
@@ -17,14 +24,18 @@ namespace Units {
 		void Awake () {
 			pointCount = fermat.Points.Length;
 			plots = new Unit[pointCount];
+			fermat.UpdateSettings (
+				new Fermat.Settings (radius, pointCount, altitude, origin));
 			SetPointPositions ();
 		}
 
+		#if DYNAMIC_SETTINGS
 		void Update () {
 			fermat.UpdateSettings (
-				new Fermat.Settings (radius2, pointCount, altitude, origin));
+				new Fermat.Settings (radius, pointCount, altitude, origin));
 			SetPointPositions ();
 		}
+		#endif
 
 		void SetPointPositions () {
 			Vector3[] points = fermat.Points;

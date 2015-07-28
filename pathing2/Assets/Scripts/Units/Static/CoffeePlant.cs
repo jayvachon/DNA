@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#undef SHORTLIFE
+using UnityEngine;
 using System.Collections;
 using GameInventory;
 using GameActions;
@@ -18,7 +19,9 @@ namespace Units {
 		
 		public PerformableActions PerformableActions { get; private set; }
 
+		#if SHORTLIFE
 		static bool shortLife = false;
+		#endif
 
 		void Awake () {
 			
@@ -40,10 +43,12 @@ namespace Units {
 			base.OnPoolCreate ();
 			Inventory.Get<YearHolder> ().HolderEmptied += OnDie;
 			Inventory.Get<YearHolder> ().Initialize ();
+			#if SHORTLIFE
 			if (!shortLife) {
-				Inventory.Get<YearHolder> ().Remove (20);
+				Inventory.Get<YearHolder> ().Remove (25);
 				shortLife = true;
 			}
+			#endif
 			PerformableActions.SetActive ("ConsumeYear", true);
 		}
 

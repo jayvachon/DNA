@@ -79,7 +79,6 @@ namespace Units {
 		protected virtual void OnBind () {}
 		protected virtual void OnUnbind () {}
 
-		//public virtual bool OnBindActionable (IActionAcceptor acceptor) {
 		public virtual bool OnBindActionable (PathPoint point) {
 			IActionAcceptor acceptor = point.StaticUnit as IActionAcceptor;
 			if (BoundAcceptor == acceptor) return false; 
@@ -87,14 +86,16 @@ namespace Units {
 			return StartActions (point);
 		}
 
+		// TODO: This is a monster that needs some seriouz cleanup, but it does work
 		public bool StartActions (PathPoint point) {
 			#if DEBUG_MSG
 			Debug.Log ("=================");
 			#endif
 			PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
 			AcceptableActions acceptorActions = BoundAcceptor.AcceptableActions;
-			List<string> otherPointActions = new List<string> (
-				otherPoint.StaticUnit.AcceptableActions.ActiveActions.Keys);
+			List<string> otherPointActions = (otherPoint == null)
+				? new List<string> (0) 
+				: new List<string> (otherPoint.StaticUnit.AcceptableActions.ActiveActions.Keys);
 
 			List<string> matching = PerformableActions.GetBoundActions (
 				new List<string> (acceptorActions.ActiveActions.Keys));
@@ -148,7 +149,6 @@ namespace Units {
 					Debug.Log ("pair not on path");
 					#endif
 					// Does a pair exist in the world?
-					
 					nearestPair = Pathfinder.Instance.FindNearestWithAction (
 						point.Position, matchingAction.EnabledState.RequiredPair);
 
@@ -170,6 +170,13 @@ namespace Units {
 				
 				// Is the action enabled?
 				if (matchingActionEnabled) {
+
+					// Remove the other path point if this action does not require a pair, or if
+					// the other point on the path is not the required pair
+					if (matchingAction.EnabledState.RequiredPair == ""
+						|| !otherPointActions.Contains (matchingAction.EnabledState.RequiredPair)) {
+						Path.Points.Remove (otherPoint);
+					}
 
 					// Perform the action
 					PerformBoundAction (matchingId, point);
@@ -265,7 +272,10 @@ namespace Units {
 			while (MobileTransform.Working) {
 				yield return null;
 			}
-			MoveToDestination ();
+			if (!MobileTransform.ArriveAtPoint (
+				((StaticUnit)BoundAcceptor).PathPoint)) {
+				MoveToDestination ();
+			}
 		}
 
 		public void OnDragEnter () {

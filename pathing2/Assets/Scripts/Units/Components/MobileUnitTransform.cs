@@ -69,9 +69,12 @@ namespace Units {
 			MobileUnit.PerformableActions.Stop ("MoveOnPath");
 		}
 
-		public void ArriveAtPoint (PathPoint point) {
-			if (MobileUnit.OnBindActionable (point))
+		public bool ArriveAtPoint (PathPoint point) {
+			if (MobileUnit.OnBindActionable (point)) {
 				EncircleBoundUnit ();
+				return true;
+			}
+			return false;
 		}
 
 		void ResetPath () {

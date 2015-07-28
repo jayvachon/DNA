@@ -7,7 +7,6 @@ namespace GameActions {
 	public class AcceptDeliverItemEnabledState<T> : EnabledState {
 
 		public override bool Enabled {
-			//get { return Paired && !holder.Full; }
 			get { return !holder.Full; }
 		}
 
@@ -24,7 +23,10 @@ namespace GameActions {
 		}
 
 		public override bool RequiresPair {
-			get { return true; }
+			
+			// Not super elegant, but this works
+			// The acceptor only requires a pair if the performer does not have any coffee
+			get { return BoundInventory["Coffee"].Count == 0; }
 		}
 
 		ItemHolder holder;

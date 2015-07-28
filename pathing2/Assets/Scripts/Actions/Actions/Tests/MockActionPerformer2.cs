@@ -35,7 +35,7 @@ public class MockActionPerformer2 : MonoBehaviour, IInventoryHolder, IActionPerf
 	public virtual void OnBindActionable (IActionAcceptor acceptor) {
 		Bind ();
 		BoundAcceptor = acceptor;
-		ActionHandler.instance.Bind (this);
+		//ActionHandler.instance.Bind (this);
 	}
 
 	void Bind () {

@@ -66,65 +66,12 @@ namespace Units {
 
 		public void StopMovingOnPath () {
 			movementState = MovementState.Idling;
-			//Path.StopMoving ();
 			MobileUnit.PerformableActions.Stop ("MoveOnPath");
 		}
 
-		// On arrive at point:
-		// A. point has action
-		//		a. action requires pair
-		//			i. pair exists on path
-		//				- perform action & move to pair
-		//			ii. pair does not exist on path
-		//				a. pair exists in world
-		//					- make new path w/ pair, perform action, & move to pair
-		//				b. pair does not exist in world
-		//					- do not perform action
-		//		b. action does not require pair
-		//			- perform action
-		// √ B. point does not have action
-		//		√ - do not perform action
-
 		public void ArriveAtPoint (PathPoint point) {
-			//PerformableActions.PairActionsOnPath (Path);
-			
-			/*List<string> paired = PerformableActions.GetPairedActionsBetweenAcceptors (
-				point.StaticUnit as IActionAcceptor,
-				Path.Points.Points.Find (x => x != point).StaticUnit as IActionAcceptor);
-
-			List<string> bound = PerformableActions.GetBoundActions (paired);
-			if (bound.Count > 0) {
-				PerformableActions.Start (bound[0]);
-			}*/
-
 			if (MobileUnit.OnBindActionable (point))
 				EncircleBoundUnit ();
-
-			/*AcceptorAction a = point.StaticUnit.AcceptableActions.GetActiveAction ();
-			StaticUnitTransform unitTransform = point.StaticUnitTransform;
-			if (a == null || !a.Enabled) {
-				ResetPath ();
-			} else {
-				if (a.EnabledState.RequiresPair) {
-					if (!point.PointsHavePairs (Path.Points.Points)) {
-						ResetPath ();
-						PathPoint nearest = Pathfinder.Instance.FindNearestWithAction (point.Position, a.EnabledState.RequiredPair);
-						Debug.Log (nearest);
-						if (nearest != null) {
-							Path.Points.Add (point);
-							Path.Points.Add (nearest);
-							MobileUnit.PerformableActions.PairActionsBetweenAcceptors (
-								Path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
-						} 
-					}
-				} else {
-					ResetPath ();
-				}
-			}
-			MobileUnit.OnBindActionable ((IActionAcceptor)unitTransform.Unit);
-			if (MobileUnit.PerformableActions.Performing) {
-				EncircleBoundUnit ();
-			}*/
 		}
 
 		void ResetPath () {

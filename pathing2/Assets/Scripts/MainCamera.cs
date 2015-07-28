@@ -45,14 +45,8 @@ public class MainCamera : MBRefs {
 
 	void Update () {
 		center.SetLocalEulerAnglesY (center.localEulerAngles.y - Input.GetAxis ("Horizontal"));
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			if (transform.localPosition.z < -5)
-				transform.SetLocalPositionZ (transform.localPosition.z + 0.25f);
-		}
-		if (Input.GetKey (KeyCode.DownArrow)) {
-			if (transform.localPosition.z > -25)
-				transform.SetLocalPositionZ (transform.localPosition.z - 0.25f);
-		}
+		transform.SetLocalPositionZ (
+			Mathf.Clamp (transform.localPosition.z + Input.GetAxis ("Vertical") * 0.5f, -25f, -5f));
 		transform.LookAt (center.position);
 	}
 

@@ -18,6 +18,10 @@ namespace GameInventory {
 			get { return holders; }
 		}
 
+		public ItemHolder this[string id] {
+			get { return Get (id); }
+		}
+
 		public Inventory (IInventoryHolder holder) {
 			this.holder = holder;
 		}

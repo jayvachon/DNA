@@ -26,7 +26,7 @@ namespace GameActions {
 		 * Perform multiple actions when binding to an ActionAcceptor
 		 */
 
-		public void Bind (IBinder binder) {
+		/*public void Bind (IBinder binder) {
 			
 			if (binder.BoundAcceptor == null) return;
 			
@@ -37,12 +37,6 @@ namespace GameActions {
 			performable.RefreshEnabledActions ();
 			acceptable.Bind (performer);
 			acceptable.RefreshEnabledActions ();
-
-			// uncommment to see enabled actions on performer & acceptor
-			/*Debug.Log ("PERFORMABLE");
-			performable.PrintEnabled ();
-			Debug.Log ("ACCEPTABLE");
-			acceptable.PrintEnabled ();*/
 
 			List<PerformerAction> matching = new List<PerformerAction> ();
 			foreach (var action in performable.EnabledActions) {
@@ -63,19 +57,19 @@ namespace GameActions {
 			} else {
 				binder.OnEndActions ();
 			}
-			/*if (matching.Count > 0) {
+			if (matching.Count > 0) {
 				StartCoroutine (PerformActions (binder, matching[0]));
 				return matching[0];
 			} else {
 				StartCoroutine (PerformActions (binder, null));
 				return null;
-			}*/
-		}
+			}
+		}*/
 
-		IEnumerator WaitForActions (PerformableActions p, System.Action action) {
+		/*IEnumerator WaitForActions (PerformableActions p, System.Action action) {
 			while (p.Performing) yield return null;
 			action ();
-		}
+		}*/
 
 		/*IEnumerator PerformActions (IBinder binder, PerformerAction action) {
 			if (action != null) {
@@ -88,7 +82,7 @@ namespace GameActions {
 			}
 		}*/
 
-		List<PerformerAction> PerformInstantActions (List<PerformerAction> matchingActions) {
+		/*List<PerformerAction> PerformInstantActions (List<PerformerAction> matchingActions) {
 			List<PerformerAction> timedActions = new List<PerformerAction> ();
 			foreach (PerformerAction action in matchingActions) {
 				if (Mathf.Approximately (action.Duration, 0f)) {
@@ -99,7 +93,7 @@ namespace GameActions {
 				}
 			}
 			return timedActions;
-		}
+		}*/
 
 		/**
 		 * Perform a single action

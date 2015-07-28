@@ -23,7 +23,7 @@ namespace GameActions {
 		public Inventory BoundInventory { get; set; }
 
 		public bool AttemptPair (IActionAcceptor acceptor) {
-			return acceptor.AcceptableActions.Has (RequiredPair);//ActionEnabled (RequiredPair);
+			return acceptor.AcceptableActions.Has (RequiredPair);
 		}
 	}
 }

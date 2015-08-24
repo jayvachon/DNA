@@ -56,7 +56,9 @@ namespace Units {
 				case 20: return CreateUnit<MilkshakePool> (position);
 				case 40: return CreateUnit<MilkshakePool> (position);
 				case 60: return CreateUnit<MilkshakePool> (position);
-				default: return CreateUnit<Plot> (position);
+				default: return (Random.Range (0, (int)(pointCount/2)) < index) 
+					? CreateUnit<FertilePlot> (position)
+					: CreateUnit<Plot> (position);
 			}
 		}
 

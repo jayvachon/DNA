@@ -17,10 +17,21 @@ namespace GameInput {
 
 		Vector2 mousePosition = Vector2.zero;
 		protected Vector2 MousePosition {
-			get { return mousePosition; }
-			set { mousePosition = value; }
+			get { return Input.mousePosition; }
 		}
 		
+		Vector3 mousePositionWorld = Vector3.zero;
+		protected Vector3 MousePositionWorld {
+			get {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.Structure)) {
+					return hit.point;
+				}
+				return Vector3.zero;
+			}
+		}
+
 		int layer = -1;
 		protected int Layer { get { return layer; } }
 
@@ -33,7 +44,6 @@ namespace GameInput {
 		}
 
 		public virtual void HandleMouseDown () {
-			MousePosition = Input.mousePosition;
 			if (!mouseDown) {
 				moused = GetMouseOver ();
 				OnDown ();

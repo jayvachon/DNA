@@ -68,6 +68,15 @@ public static class ExtensionMethods {
 		}
 	}
 
+	public static List<Transform> GetChildren (this Transform transform) {
+		List<Transform> children = new List<Transform> ();
+		foreach (Transform child in transform) {
+			children.Add (child);
+		}
+		return children;
+	}
+
+	// TODO: rename to GetChildrenRecursively
 	public static List<Transform> GetAllChildren (this Transform transform) {
 		List<Transform> children = new List<Transform> ();
 		foreach (Transform child in transform) {

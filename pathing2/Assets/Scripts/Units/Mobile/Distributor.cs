@@ -41,6 +41,10 @@ namespace Units {
 			PerformableActions.Add (new CollectHappiness ());
 			PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
+
+			Upgrades.Instance.AddListener<CoffeeCapacity> (
+				(CoffeeCapacity u) => Inventory["Coffee"].Capacity = u.CurrentValue
+			);
 		}
 
 		public override void OnPoolCreate () {
@@ -61,13 +65,16 @@ namespace Units {
 			HappinessHolder happinessHolder = Inventory.Get<HappinessHolder> ();
 			happinessHolder.Initialize (100);
 			happinessHolder.HolderUpdated += OnHappinessUpdate;
-			happinessHolder.HolderUpdated += SetPathSpeed;
+			//happinessHolder.HolderUpdated += SetPathSpeed;
 			yearHolder.HolderFilled += OnRetirement;
 		}
 
 		void InitPath () {
 			Path.Active = true;
-			SetPathSpeed ();
+			Upgrades.Instance.AddListener<DistributorSpeed> (
+				(DistributorSpeed u) => Path.Speed = u.CurrentValue / TimerValues.Instance.Year
+			);
+			//SetPathSpeed ();
 		}
 
 		public override void OnPoolDestroy () {
@@ -75,7 +82,7 @@ namespace Units {
 			indicator = null;
 			PerformableActions.DeactivateAll ();
 			happinessHolder.HolderUpdated -= OnHappinessUpdate;
-			happinessHolder.HolderUpdated -= SetPathSpeed;
+			//happinessHolder.HolderUpdated -= SetPathSpeed;
 			yearHolder.HolderFilled -= OnRetirement;
 		}
 
@@ -88,12 +95,12 @@ namespace Units {
 		}
 
 		// TODO: Move to MoveOnPath action
-		void SetPathSpeed () {
+		/*void SetPathSpeed () {
 			Path.Speed = Mathf.Lerp (
 				Path.PathSettings.MinSpeed, 
 				Path.PathSettings.MaxSpeed, 
 				happinessHolder.PercentFilled) / TimerValues.Instance.Year;
-		}
+		}*/
 
 		protected override void OnChangeUnit<U> (U u) {
 			Path.Active = false;
@@ -103,10 +110,10 @@ namespace Units {
 			BoundAcceptor = null;
 		}
 
-		#if VARIABLE_TIME
+		/*#if VARIABLE_TIME
 		void Update () {
 			SetPathSpeed ();
 		}
-		#endif
+		#endif*/
 	}
 }

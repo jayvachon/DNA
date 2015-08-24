@@ -21,12 +21,14 @@ public class TimerValues : MonoBehaviour {
 
 	public float Year = 3f;
 
+	// deprecate
 	float maxPathSpeed = 1f;
 	public float MaxPathSpeed {
 		get { return maxPathSpeed; }
 		set { maxPathSpeed = value; }
 	}
-
+	
+	// deprecate
 	float minPathSpeed = 0.1f;
 	public float MinPathSpeed {
 		get { return minPathSpeed; }

@@ -71,8 +71,14 @@ namespace GameInput {
 					}
 				} else {
 
-					// if the object is moved when dragged, then OnDragExit gets called on mouse up
+					// if the object is moved when dragged, then OnDragExit gets called on mouse up instead
 					if (dragged.MoveOnDrag) {
+						dragged.Position = new Vector3 (
+							MousePositionWorld.x,
+							dragged.Position.y,
+							MousePositionWorld.z
+						);
+						Debug.Log (MousePositionWorld);
 						dragged.OnDrag (DragSettings);
 					} else {
 

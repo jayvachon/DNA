@@ -42,7 +42,7 @@ namespace Units {
 
 		void Start () {
 			Path.Active = false;
-			Path.Speed = Path.PathSettings.MinSpeed / TimerValues.Instance.Year;
+			Path.Speed = Path.PathSettings.MaxSpeed / TimerValues.Instance.Year;
 		}
 		
 		public override void OnPoolCreate () {

@@ -10,7 +10,10 @@ namespace Units {
 	
 	public class Plot : StaticUnit, IActionPerformer {
 
-		readonly string defaultName = "Plot";
+		protected virtual string DefaultName { 
+			get { return "Plot"; }
+		}
+
 		new string name = "Plot";
 		public override string Name {
 			get { return name; }
@@ -38,35 +41,36 @@ namespace Units {
 			AcceptableActions.Add (new AcceptDeliverItem<MilkshakeHolder> ());
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
 
-			Events.instance.AddListener<UnlockUnitEvent> (OnUnlockUnitEvent);
+			//Events.instance.AddListener<UnlockUnitEvent> (OnUnlockUnitEvent);
 		}
 
-		void Start () {
+		protected virtual void Start () {
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.OnStartAction += OnStartAction;
-			PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Coffee Plant (5M)");
+			//PerformableActions.Add (new GenerateUnit<CoffeePlant, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Coffee Plant (5M)");
 			PerformableActions.Add (new GenerateUnit<Jacuzzi, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Jacuzzi (10M)");
 			PerformableActions.Add (new GenerateUnit<Clinic, MilkshakeHolder> (-1, OnUnitGenerated), "Birth Clinic (15M)");
-			PerformableActions.Add (new GenerateUnit<University, MilkshakeHolder> (-1, OnUnitGenerated), "Birth University (25M)");
+			//PerformableActions.Add (new GenerateUnit<University, MilkshakeHolder> (-1, OnUnitGenerated), "Birth University (25M)");
 			PerformableActions.Add (new CancelGenerateUnit (), "Cancel");
 			SetActiveActions ();
 		}
 
-		void SetActiveActions () {
-			PerformableActions.SetActive ("GenerateCoffeePlant", false);
-			PerformableActions.SetActive ("GenerateJacuzzi", false);
-			PerformableActions.SetActive ("GenerateClinic", false);
-			PerformableActions.SetActive ("GenerateUniversity", false);
+		protected void SetActiveActions () {
+			//PerformableActions.SetActive ("GenerateCoffeePlant", false);
+			//PerformableActions.SetActive ("GenerateJacuzzi", false);
+			//PerformableActions.SetActive ("GenerateClinic", false);
+			/*PerformableActions.SetActive ("GenerateUniversity", false);
 			List<string> unlockedUnits = StaticUnitsManager.UnlockedUnits;
 			for (int i = 0; i < unlockedUnits.Count; i ++) {
 				PerformableActions.SetActive ("Generate" + unlockedUnits[i], true);
-			}
+			}*/
+			PerformableActions.ActivateAll ();
 			PerformableActions.SetActive ("CancelGenerateUnit", false);
 		}
 
 		public override void OnPoolCreate () {
-			if (name != defaultName) {
-				name = defaultName;
+			if (name != DefaultName) {
+				name = DefaultName;
 				Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, true);
 				PerformableActions.ActivateAll ();
 				SetActiveActions ();
@@ -88,7 +92,7 @@ namespace Units {
 			PerformableActions.ActivateAll ();
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
 			SetActiveActions ();
-			name = "Plot";
+			name = DefaultName;
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, false);
 			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
 			unitInfoContent.Refresh ();
@@ -115,7 +119,7 @@ namespace Units {
 			unitInfoContent.Refresh ();
 		}
 
-		void OnUnitGenerated (Unit unit) {
+		protected void OnUnitGenerated (Unit unit) {
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
 			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
 
@@ -129,8 +133,8 @@ namespace Units {
 			ObjectCreator.Instance.Destroy<Plot> (transform);
 		}
 
-		void OnUnlockUnitEvent (UnlockUnitEvent e) {
+		/*void OnUnlockUnitEvent (UnlockUnitEvent e) {
 			PerformableActions.SetActive ("Generate" + e.id, true);
-		}
+		}*/
 	}
 }

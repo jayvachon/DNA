@@ -61,6 +61,7 @@ namespace Units {
 		PathPoint Destination { get; set; }
 
 		bool moveOnRelease = true;
+		bool interrupt = false;
 
 		public void Init (IActionAcceptor acceptor) {
 			BoundAcceptor = acceptor;
@@ -233,6 +234,7 @@ namespace Units {
 		}
 
 		void PerformBoundAction (string id, PathPoint point) {
+			if (interrupt) return;
 			PerformableActions.Start (id);
 			StartCoroutine (WaitForActions (() => StartActions (point)));
 		}
@@ -265,17 +267,36 @@ namespace Units {
 		}
 
 		public virtual void OnEndActions () {
-			StartCoroutine (CoWaitForCompleteCircle ());
+			StartCoroutine (CoWaitForCompleteCircle (ActionOnEndCircling));
 		}
 
-		IEnumerator CoWaitForCompleteCircle () {
+		void ActionOnEndCircling () {
+			// Check if any new actions have become enabled
+			// If none were enabled, move to the next point
+			if (!MobileTransform.ArriveAtPoint (CurrentPoint)) {
+				MoveToDestination ();
+			}
+		}
+
+		IEnumerator CoWaitForCompleteCircle (System.Action onEnd) {
+
+			// Wait to finish circling
 			while (MobileTransform.Working) {
 				yield return null;
 			}
-			if (!MobileTransform.ArriveAtPoint (
-				((StaticUnit)BoundAcceptor).PathPoint)) {
-				MoveToDestination ();
-			}
+
+			onEnd ();
+		}
+
+		void InterruptAction () {
+			interrupt = true;
+			PerformableActions.StopAll ();
+			StartCoroutine (CoWaitForCompleteCircle (InterruptOnEndCircling));
+		}
+
+		void InterruptOnEndCircling () {
+			MoveToDestination ();
+			interrupt = false;
 		}
 
 		public void OnDragEnter () {
@@ -292,19 +313,20 @@ namespace Units {
 			Destination = clickable.StaticUnit.PathPoint;
 			if (!PerformableActions.Performing) {
 				MoveToDestination ();
+			} else {
+				InterruptAction ();
 			}
 		}
 
 		void MoveToDestination () {
-			PathPoint a = ((StaticUnit)BoundAcceptor).PathPoint;
-			if (a == Destination && Path.Points.Count < 2)
+			if (CurrentPoint == Destination && Path.Points.Count < 2)
 				return;
 			if (Path.Points.Points.Contains (Destination)) {
 				PerformableActions["MoveOnPath"].Start ();
 			} else {
 				Path.Points.Clear ();
 				Path.StopMoving ();
-				Path.Points.Add (a);
+				Path.Points.Add (CurrentPoint);
 				Path.Points.Add (Destination);	
 				PerformableActions["MoveOnPath"].Start ();
 			}

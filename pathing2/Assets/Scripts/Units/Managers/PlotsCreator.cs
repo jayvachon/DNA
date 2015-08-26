@@ -51,23 +51,27 @@ namespace Units {
 
 		Unit CreateUnitAtIndex (Vector3 position, int index) {
 			switch (index) {
-				case 0: return CreateUnit<GivingTreeUnit> (position);
-				case 1: return CreateUnit<CoffeePlant> (position);
-				case 20: return CreateUnit<MilkshakePool> (position);
-				case 40: return CreateUnit<MilkshakePool> (position);
-				case 60: return CreateUnit<MilkshakePool> (position);
-				default: return (Random.Range (0, (int)(pointCount/2)) < index) 
+				case 0: return (Unit)CreateUnit<GivingTreeUnit> (position);
+				/*case 1: return (Unit)CreateUnit<CoffeePlant> (position);
+				case 20: return (Unit)CreateUnit<MilkshakePool> (position);
+				case 40: return (Unit)CreateUnit<MilkshakePool> (position);
+				case 60: return (Unit)CreateUnit<MilkshakePool> (position);*/
+				default: 
+					DrillablePlot plot = CreateUnit<DrillablePlot> (position);
+					plot.PositionInSpiral = (float)index / (float)pointCount;
+					return (Unit)plot;
+				/*default: return (Random.Range (0, (int)(pointCount/2)) < index) 
 					? CreateUnit<FertilePlot> (position)
-					: CreateUnit<Plot> (position);
+					: CreateUnit<Plot> (position);*/
 			}
 		}
 
-		Unit CreateUnit<T> (Vector3 position) where T : StaticUnit {
+		T CreateUnit<T> (Vector3 position) where T : StaticUnit {
 			T unit = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
 			PathPoint pathPoint = Path.CreatePoint (position, unit as StaticUnit);
 			unit.Position = position; 
 			unit.PathPoint = pathPoint;
-			return (Unit)unit;
+			return unit;
 		}
 	}
 }

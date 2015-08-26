@@ -121,6 +121,9 @@
      <Compile Include="Assets\Scripts\Debugging\ActionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
+     <Compile Include="Assets\Scripts\EPPZEasing\EPPZEasing.cs" />
+     <Compile Include="Assets\Scripts\EPPZEasing\EPPZEasing_Samples.cs" />
+     <Compile Include="Assets\Scripts\EPPZEasing\EPPZEasing_Samples_Renderer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Fermat.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
@@ -227,12 +230,14 @@
      <Compile Include="Assets\Scripts\Units\Managers\PlotsCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
+     <Compile Include="Assets\Scripts\Units\MilkshakeProduction.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Corpse.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\DrillablePlot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\FertilePlot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeRipe.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />

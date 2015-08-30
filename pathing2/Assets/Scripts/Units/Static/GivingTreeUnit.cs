@@ -47,12 +47,16 @@ namespace Units {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (new CoffeeHolder (100, 50));
+			Inventory.Add (new MilkshakeHolder (100000, 30));
 			Inventory.Add (new YearHolder (350, 0));
 			Inventory.Get<YearHolder> ().HolderFilled += OnYearsCollected;
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
+			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableActions = new AcceptableActions (this);
 			AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
+			AcceptableActions.Add (new AcceptDeliverItem<MilkshakeHolder> ());
+			AcceptableActions.Add (new AcceptCollectItem<MilkshakeHolder> ());
 			AcceptableActions.Add (new AcceptDeliverAllYears ());
 
 			PerformableActions = new PerformableActions (this);

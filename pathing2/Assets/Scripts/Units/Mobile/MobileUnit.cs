@@ -89,9 +89,9 @@ namespace Units {
 
 		// TODO: This is a monster that needs some seriouz cleanup, but it does work
 		public bool StartActions (PathPoint point) {
-			#if DEBUG_MSG
-			Debug.Log ("=================");
-			#endif
+			
+			Log ("=================");
+			
 			PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
 			AcceptableActions acceptorActions = BoundAcceptor.AcceptableActions;
 			List<string> otherPointActions = (otherPoint == null)
@@ -104,12 +104,15 @@ namespace Units {
 			// Do performer and acceptor have a matching action?
 			// Performer & acceptor do not have matching action
 			if (matching.Count == 0) {
-				#if DEBUG_MSG
-				Debug.Log ("no matching actions");
-				#endif
+				Log ("no matching actions");
 				MoveToOtherPointWithAction (otherPointActions, otherPoint);
 				return false;
 			}
+
+			return PerformMatchingAction (matching, acceptorActions, point, otherPoint, otherPointActions);
+		}
+
+		bool PerformMatchingAction (List<string> matching, AcceptableActions acceptorActions, PathPoint point, PathPoint otherPoint, List<string> otherPointActions) {
 
 			string matchingId = matching[0];
 			AcceptorAction matchingAction = acceptorActions[matchingId];
@@ -117,22 +120,16 @@ namespace Units {
 			PathPoint nearestPair = Pathfinder.Instance.FindNearestWithAction (
 				point.Position, matchingAction.EnabledState.RequiredPair);
 			
-			#if DEBUG_MSG
-			Debug.Log ("matching actions");
-			#endif
+			Log ("matching action");
 			// Performer & acceptor have matching action
 			// Does the matching action require a pair?
 			matchingAction.Bind (Inventory);
 			if (matchingAction.EnabledState.RequiresPair) {
-				#if DEBUG_MSG
-				Debug.Log ("requires pair");
-				#endif
+				Log ("requires pair");
 				// Does the other point on the path have the required pair?
 				bool otherPointHasPair = matchingAction.EnabledState.AttemptPair (otherPoint.StaticUnit as IActionAcceptor);
 				if (otherPointHasPair) {
-					#if DEBUG_MSG
-					Debug.Log ("pair is on path");
-					#endif
+					Log ("pair is on path");
 					// Is the action enabled?
 					if (matchingActionEnabled) {
 
@@ -146,22 +143,24 @@ namespace Units {
 						return false;
 					}
 				} else {
-					#if DEBUG_MSG
-					Debug.Log ("pair not on path");
-					#endif
+					Log ("pair not on path");
+
+					matching.Remove (matchingId);
+					if (matching.Count > 0) {
+						Log ("looking at other matching actions");
+						return PerformMatchingAction (matching, acceptorActions, point, otherPoint, otherPointActions);
+					}
+
 					// Does a pair exist in the world?
+					Log ("looking at other points in the world");
 					nearestPair = Pathfinder.Instance.FindNearestWithAction (
 						point.Position, matchingAction.EnabledState.RequiredPair);
 
 					if (nearestPair != null) {
-						#if DEBUG_MSG
-						Debug.Log ("nearest pair is " + nearestPair.StaticUnit);
-						#endif
+						Log ("nearest pair is " + nearestPair.StaticUnit);
 						return MoveToPointWithAction (nearestPair, otherPoint);
 					} else {
-						#if DEBUG_MSG
-						Debug.Log ("no pair exists in world");
-						#endif
+						Log ("no pair exists in world");
 						MoveToOtherPointWithAction (otherPointActions, otherPoint);
 						return false;
 					}
@@ -198,15 +197,11 @@ namespace Units {
 
 			if (nearestPair == null) {
 				// Stop moving
-				#if DEBUG_MSG
-				Debug.Log ("no pair exists - stop moving");
-				#endif
+				Log ("no pair exists - stop moving");
 				StopMoving (otherPoint);
 				return false;
 			} else {
-				#if DEBUG_MSG
-				Debug.Log ("replace point");
-				#endif
+				Log ("replace point");
 				Destination = nearestPair;
 				OnEndActions ();
 				return false;
@@ -219,16 +214,12 @@ namespace Units {
 				
 			// Does the other point in the path have a matching action?
 			if (otherMatching.Count == 0) {
-				#if DEBUG_MSG
-				Debug.Log ("other point has no actions");
-				#endif
 				// Stop moving
+				Log ("other point has no actions");
 				StopMoving (otherPoint);
 			} else {
-				#if DEBUG_MSG
-				Debug.Log ("move to other point");
-				#endif
 				// Move to the next point
+				Log ("move to other point");
 				OnEndActions ();
 			}
 		}
@@ -330,6 +321,12 @@ namespace Units {
 				Path.Points.Add (Destination);	
 				PerformableActions["MoveOnPath"].Start ();
 			}
+		}
+
+		void Log (string message) {
+			#if DEBUG_MSG
+			Debug.Log (message);
+			#endif
 		}
 	}
 }

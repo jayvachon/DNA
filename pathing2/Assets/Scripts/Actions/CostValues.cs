@@ -29,6 +29,7 @@ public class CostValues : MonoBehaviour {
 				costs.Add ("GenerateJacuzzi", 10);
 				costs.Add ("GenerateClinic", 15);
 				costs.Add ("GenerateUniversity", 10);
+				costs.Add ("GenerateMilkshakePool", 15);
 			}
 			return costs;
 		}

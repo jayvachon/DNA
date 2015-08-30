@@ -16,10 +16,16 @@ public class MilkshakeProduction {
 
 	public int Production { get; private set; }
 	public int Cost { get; private set; }
+	public ProductionTier Tier { get; private set; }
 
 	public MilkshakeProduction (float position) {
 		float r = ValueBetweenMinAndMax (randomness[0], randomness[1], position);
 		float p = Mathf.Clamp01 (Random.Range (-r, r) + position);
+
+		int index = ValueBetweenMinAndMax (0, 4, p);
+		Tier = new ProductionTier (index);
+
+		// Not using these
 		Production = ValueBetweenMinAndMax (production[0], production[1], p);
 		Cost = ValueBetweenMinAndMax (cost[0], cost[1], p);
 	}

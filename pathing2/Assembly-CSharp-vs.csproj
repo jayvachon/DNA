@@ -137,8 +137,10 @@
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />
      <Compile Include="Assets\Scripts\Input\DragHandler.cs" />
+     <Compile Include="Assets\Scripts\Input\HoverHandler.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
      <Compile Include="Assets\Scripts\Input\IDraggable.cs" />
+     <Compile Include="Assets\Scripts\Input\IHoverable.cs" />
      <Compile Include="Assets\Scripts\Input\IReleasable.cs" />
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
      <Compile Include="Assets\Scripts\Input\LayerController.cs" />
@@ -172,6 +174,7 @@
      <Compile Include="Assets\Scripts\Inventory\Items\MilkItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\YearItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Player.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
@@ -235,6 +238,9 @@
      <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\ProductionTier.cs" />
+     <Compile Include="Assets\Scripts\Units\Road.cs" />
+     <Compile Include="Assets\Scripts\Units\RoadRender.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
      <Compile Include="Assets\Scripts\Units\Static\DrillablePlot.cs" />

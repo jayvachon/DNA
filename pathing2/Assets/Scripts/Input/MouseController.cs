@@ -28,15 +28,18 @@ namespace GameInput {
 		ClickManager clickManager;
 		DragManager dragManager;
 		ReleaseManager releaseManager;
+		HoverManager hoverManager;
 
 		void Awake () {
 			int[] layers = LayerController.Layers;
 			clickManager = new ClickManager (layers);
 			dragManager = new DragManager (layers);
 			releaseManager = new ReleaseManager (layers);
+			hoverManager = new HoverManager (layers);
 		}
 
 		void LateUpdate () {
+			hoverManager.HandleMouseOver ();
 			if (Input.GetMouseButton (LEFT)) {
 				clickManager.HandleMouseDown (LEFT);
 				dragManager.HandleMouseDown (LEFT);

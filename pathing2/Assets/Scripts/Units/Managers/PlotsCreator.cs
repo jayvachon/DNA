@@ -47,6 +47,7 @@ namespace Units {
 				((StaticUnit)plots[i]).PathPoint.Position = points[i];
 				plots[i].transform.SetParent (transform);
 			}
+			GeneratePaths ();
 		}
 
 		Unit CreateUnitAtIndex (Vector3 position, int index) {
@@ -59,6 +60,7 @@ namespace Units {
 				default: 
 					DrillablePlot plot = CreateUnit<DrillablePlot> (position);
 					plot.PositionInSpiral = (float)index / (float)pointCount;
+					plot.Index = index;
 					return (Unit)plot;
 				/*default: return (Random.Range (0, (int)(pointCount/2)) < index) 
 					? CreateUnit<FertilePlot> (position)
@@ -72,6 +74,18 @@ namespace Units {
 			unit.Position = position; 
 			unit.PathPoint = pathPoint;
 			return unit;
+		}
+
+		void GeneratePaths () {
+			for (int i = 0; i < plots.Length; i ++) {
+				DrillablePlot p = plots[i] as DrillablePlot;
+				if (p != null) {
+					Unit a = (i + 21 < plots.Length) ? plots[i+21] : null;
+					Unit b = (i + 13 < plots.Length) ? plots[i+13] : null;
+					Unit c = (i < 14) ? plots[0] : null;
+					p.GeneratePaths (a, b, c);
+				}
+			}
 		}
 	}
 }

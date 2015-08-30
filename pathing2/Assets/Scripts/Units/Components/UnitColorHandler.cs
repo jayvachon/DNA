@@ -11,10 +11,15 @@ namespace Units {
 		
 		public Color DefaultColor {
 			get { return defaultColor; }
+			set { 
+				defaultColor = value; 
+				Selected = false;
+			}
 		}
 
 		public Color SelectColor {
 			get { return selectColor; }
+			set { selectColor = Color.red; }
 		}
 
 		Renderer renderer;

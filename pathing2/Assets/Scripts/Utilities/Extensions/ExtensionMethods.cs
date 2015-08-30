@@ -202,9 +202,21 @@ public static class ExtensionMethods {
 	}
 
 	// Scale
+	public static void SetLocalScaleX (this Transform transform, float x) {
+		Vector3 p = transform.localScale;
+		p.x = x;
+		transform.localScale = p;
+	}
+
 	public static void SetLocalScaleY (this Transform transform, float y) {
 		Vector3 p = transform.localScale;
 		p.y = y;
+		transform.localScale = p;
+	}
+
+	public static void SetLocalScaleZ (this Transform transform, float z) {
+		Vector3 p = transform.localScale;
+		p.z = z;
 		transform.localScale = p;
 	}
 

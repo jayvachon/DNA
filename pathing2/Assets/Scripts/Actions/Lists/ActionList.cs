@@ -168,7 +168,7 @@ namespace GameActions {
 			List<string> paired = new List<string> ();
 			Dictionary<string, AcceptorAction> aActions = aa.ActiveActions;//aa.EnabledActions;
 			foreach (var action in aActions) {
-				if (action.Value.EnabledState.AttemptPair (b))
+				if (action.Value.EnabledState.AttemptPair (b)) 
 					paired.Add (action.Key);
 			}
 			return paired;

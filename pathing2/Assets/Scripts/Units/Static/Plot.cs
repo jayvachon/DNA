@@ -98,12 +98,15 @@ namespace Units {
 			unitInfoContent.Refresh ();
 		}
 
-		void GenerateUnit (string id) {
+		protected virtual void GenerateUnit (string id) {
+			
 			if (!gameObject.activeSelf) return;
+
 			pathPointEnabled = true;
 			PerformableActions.DeactivateAll ();
 			PerformableActions.SetActive ("CancelGenerateUnit", true);
 			AcceptableActions.SetActive ("DeliverMilkshake", true);
+			
 			string newUnit = "";
 			switch (id) {
 				case "GenerateMilkshakePool": 	newUnit = "Milkshake Derrick"; break;
@@ -112,7 +115,9 @@ namespace Units {
 				case "GenerateClinic": 			newUnit = "Clinic"; break;
 				case "GenerateUniversity":		newUnit = "University"; break;
 			}
+
 			name = string.Format ("{0} to Be", newUnit);
+			
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 			indicator = ObjectCreator.Instance.Create<BuildingIndicator> ().GetScript<BuildingIndicator> ();
 			indicator.Initialize (newUnit, Transform);
@@ -121,7 +126,8 @@ namespace Units {
 
 		protected void OnUnitGenerated (Unit unit) {
 			AcceptableActions.SetActive ("DeliverMilkshake", false);
-			ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
+			if (indicator != null)
+				ObjectCreator.Instance.Destroy<BuildingIndicator> (indicator.MyTransform);
 
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.Position = Position;
@@ -130,6 +136,10 @@ namespace Units {
 			if (Selected) {
 				SelectionManager.Select (staticUnit.UnitClickable);
 			}
+			DestroyThis ();
+		}
+
+		protected virtual void DestroyThis () {
 			ObjectCreator.Instance.Destroy<Plot> (transform);
 		}
 

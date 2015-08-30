@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{5B443D89-C716-0E27-D3F6-DD9080138CC7}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_0;UNITY_4_6;UNITY_STANDALONE_OSX;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Scripts\Camera\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Camera\MyCamera.cs" />
+     <Compile Include="Assets\Scripts\CameraCenter.cs" />
+     <Compile Include="Assets\Scripts\CircularMovementPath.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\AddMilkshakesEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\KeyPressEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\MouseClickEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\SelectSelectableEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\SelectUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\UnselectSelectableEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Mouse\UnselectUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\ResetCommandsEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Selectables\Buildings\CreateBuildingEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Selectables\Units\CreateCowEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\Selectables\Units\CreatePersonEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\SetCommandsEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\SubtractMilkshakesEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\_NewEventTemplate.cs" />
+     <Compile Include="Assets\Scripts\Extensions\ArrayExtended.cs" />
+     <Compile Include="Assets\Scripts\Extensions\TransformExtensions.cs" />
+     <Compile Include="Assets\Scripts\GM.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\DirectoryDrawer.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FauxHTMLHandler.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileDrawer.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\Directories\BuildDirectory.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\Directories\RootDirectory.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\Directory.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\DirectoryFilePath.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\File.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPage.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElement.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\Header1.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\ListItem.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\Paragraph.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\TextElement.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\TextType.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\TextTypes\DefaultContent.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\TextTypes\Header.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\TextTypes\Hyperlink.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\PageElements\UnorderedList.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\FileSystem\WebPages\TestPage.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\HTMLHandler.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\HTMLRenderer.cs" />
+     <Compile Include="Assets\Scripts\HTMLRendering\WebPageDrawer.cs" />
+     <Compile Include="Assets\Scripts\Inventory.cs" />
+     <Compile Include="Assets\Scripts\InventoryItem.cs" />
+     <Compile Include="Assets\Scripts\MainCamera.cs" />
+     <Compile Include="Assets\Scripts\Managers\BuildingManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\CowManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\Manager.cs" />
+     <Compile Include="Assets\Scripts\Managers\MilkshakeManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\PersonManager.cs" />
+     <Compile Include="Assets\Scripts\MaterialsManager.cs" />
+     <Compile Include="Assets\Scripts\Meshes\CustomMesh.cs" />
+     <Compile Include="Assets\Scripts\MouseController.cs" />
+     <Compile Include="Assets\Scripts\MovementPath.cs" />
+     <Compile Include="Assets\Scripts\MyGUI.cs" />
+     <Compile Include="Assets\Scripts\ObjectPool.cs" />
+     <Compile Include="Assets\Scripts\Oil.cs" />
+     <Compile Include="Assets\Scripts\Resources\IceCream.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Buildings\Building.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Buildings\Hospital.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Buildings\House.cs" />
+     <Compile Include="Assets\Scripts\Selectables\DestinationPoint.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Selectable.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Units\Cow.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Units\Person.cs" />
+     <Compile Include="Assets\Scripts\Selectables\Units\Unit.cs" />
+     <Compile Include="Assets\Scripts\StraightMovementPath.cs" />
+     <Compile Include="Assets\Scripts\Structure\CustomMeshObject.cs" />
+     <Compile Include="Assets\Scripts\Structure\GridPoint.cs" />
+     <Compile Include="Assets\Scripts\Structure\Helix.cs" />
+     <Compile Include="Assets\Scripts\Structure\Ring.cs" />
+     <Compile Include="Assets\Scripts\Structure\RingPoint.cs" />
+     <Compile Include="Assets\Scripts\Structure\TerrainGenerator.cs" />
+     <Compile Include="Assets\Scripts\Structure\TriangleGrid.cs" />
+     <Compile Include="Assets\Scripts\Structure\WorldManager.cs" />
+     <Compile Include="Assets\Scripts\TaskCollectIceCream.cs" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

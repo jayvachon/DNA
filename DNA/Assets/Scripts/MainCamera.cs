@@ -1,57 +1,62 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GameEvents;
+using GameInput;
+using Units;
 
-public class MainCamera : MonoBehaviour {
+public class MainCamera : MBRefs {
 
-	private Transform myTransform;
-	private Vector3 destPosition;
-	private Vector3 destRotation;
-	private bool moving = false;
-
-	private float radius = 7.5f;
-	private float lift = 5f;//12.5f; // Degrees
-
-	private void Awake () {
-		myTransform = transform;
-		camera.fieldOfView = 90;
+	Vector3 target;
+	Vector3 Target {
+		get { return target; }
+		set {
+			target = value;
+			StartCoroutine (CoMoveToTarget ());
+		}
 	}
 
-	/*private void SetRotation (Step step) {
-		float angle = Mathf.Atan2 (lift, radius * 0.5f) * Mathf.Rad2Deg;
-		float stepYRotation = step.transform.eulerAngles.y;
-		destRotation = new Vector3 (
-			angle,
-			stepYRotation + 180f,
-			myTransform.rotation.z
-		);
+	public Transform center;
+	Transform anchor;
+
+	protected override void Awake () {
+		base.Awake ();
+		Events.instance.AddListener<SelectEvent> (OnSelectEvent);
+		anchor = transform.parent;
 	}
 
-	private void SetPosition (Step step) {
-		float yRot = Mathf.Deg2Rad * destRotation.y;
-		destPosition = new Vector3 (
-			Mathf.Sin (yRot) * -radius * Structure.scale,
-			step.transform.position.y + lift * Structure.scale,
-			Mathf.Cos (yRot) * -radius * Structure.scale
-		);
-	}*/
-
-	private IEnumerator MoveToTransform (float time) {
-
-		moving = true;
-
+	IEnumerator CoMoveToTarget () {
+		
+		Vector3 start = anchor.position;
+		Vector3 end = target;
+		float startZ = transform.localPosition.z;
+		float endZ = -10;
+	
+		float time = 1f; 
 		float eTime = 0f;
-		Vector3 startPosition = myTransform.position;
-		Quaternion startRotation = myTransform.rotation;
-		Quaternion destRot = Quaternion.Euler (destRotation);
 
-		while (eTime < time) {
-			float progress = eTime / time;
+		while (eTime < time && end == target) {
 			eTime += Time.deltaTime;
-			myTransform.position = Vector3.Lerp (startPosition, destPosition, Mathf.SmoothStep (0f, 1f, progress));
-			myTransform.rotation = Quaternion.Lerp (startRotation, destRot, Mathf.SmoothStep (0f, 1f, progress));
+			float progress = Mathf.SmoothStep (0, 1, eTime / time);
+			anchor.position = Vector3.Lerp (start, end, progress);
+			transform.SetLocalPositionZ (Mathf.Lerp (startZ, endZ, progress)); 
 			yield return null;
 		}
+	}
 
-		moving = false;
+	void Update () {
+		center.SetLocalEulerAnglesY (center.localEulerAngles.y - Input.GetAxis ("Horizontal"));
+		transform.SetLocalPositionZ (
+			Mathf.Clamp (transform.localPosition.z + Input.GetAxis ("Vertical") * 0.5f, -35f, -5f));
+		float yLook = Mathf.Lerp (-5f, -25f, Mathf.InverseLerp (-5f, -35f, transform.localPosition.z));
+		Vector3 look = center.position;
+		look.y = yLook;
+		transform.LookAt (look);
+	}
+
+	void OnSelectEvent (SelectEvent e) {
+		/*Unit unit = e.unit;
+		if (unit != null) {
+			Target = unit.Position;
+		}*/
 	}
 }

@@ -40,6 +40,7 @@ public class Coroutine : MonoBehaviour {
 			yield return null;
 		}
 
+		coroutines.Remove (action);
 		if (endAction != null) endAction ();
 	}
 

@@ -2,21 +2,36 @@
 using System.Collections;
 using GameInventory;
 
-// This class might not be necessary
+public class Player : MonoBehaviour, IInventoryHolder {
 
-public static class Player {
+	static Player instance = null;
+	static public Player Instance {
+		get {
+			if (instance == null) {
+				instance = Object.FindObjectOfType (typeof (Player)) as Player;
+				if (instance == null) {
+					GameObject go = new GameObject ("Player");
+					DontDestroyOnLoad (go);
+					instance = go.AddComponent<Player>();
+				}
+			}
+			return instance;
+		}
+	}
 
-	static Inventory inventory;
-	static Inventory Inventory {
+	Inventory inventory;
+	public Inventory Inventory {
 		get {
 			if (inventory == null) {
+				inventory = new Inventory (this);
 				inventory.Add (new MilkshakeHolder (100000, 30));
+				inventory.Add (new CoffeeHolder (100000, 50));
 			}
 			return inventory;
 		}
 	}
 
-	public static MilkshakeHolder Milkshakes {
+	public MilkshakeHolder Milkshakes {
 		get { return (MilkshakeHolder)Inventory["Milkshakes"]; }
 	}
 }

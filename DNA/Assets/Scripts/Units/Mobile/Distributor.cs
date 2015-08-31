@@ -20,26 +20,27 @@ namespace Units {
 		}
 
 		YearHolder yearHolder = new YearHolder (55, 0);
-		HappinessHolder happinessHolder = new HappinessHolder (100, 100);
+		//HappinessHolder happinessHolder = new HappinessHolder (100, 100);
 
-		HappinessIndicator indicator;
+		//HappinessIndicator indicator;
 
 		void Awake () {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (yearHolder);
-			Inventory.Add (happinessHolder);
+			////Inventory.Add (happinessHolder);
 			Inventory.Add (new CoffeeHolder (3, 0));
 			Inventory.Add (new MilkshakeHolder (5, 0));
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
-			Inventory.Get<HappinessHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
+			//Inventory.Get<HappinessHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			PerformableActions.Add (new CollectItem<MilkshakeHolder> ());
 			PerformableActions.Add (new DeliverItem<MilkshakeHolder> ());
+			//PerformableActions.Add (new DeliverToPlayer<MilkshakeHolder> ());
 			PerformableActions.Add (new CollectItem<CoffeeHolder> ());
 			PerformableActions.Add (new DeliverItem<CoffeeHolder> ());
-			PerformableActions.Add (new CollectHappiness ());
-			PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
+			//PerformableActions.Add (new CollectHappiness ());
+			//PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
 
 			Upgrades.Instance.AddListener<CoffeeCapacity> (
@@ -56,15 +57,15 @@ namespace Units {
 		}
 
 		void InitIndicator () {
-			indicator = ObjectCreator.Instance.Create<HappinessIndicator> ().GetScript<HappinessIndicator> ();
-			indicator.Initialize (Transform);
+			//indicator = ObjectCreator.Instance.Create<HappinessIndicator> ().GetScript<HappinessIndicator> ();
+			//indicator.Initialize (Transform);
 		}
 
 		void InitInventory () {
 			Inventory.Empty ();
-			HappinessHolder happinessHolder = Inventory.Get<HappinessHolder> ();
+			/*HappinessHolder happinessHolder = Inventory.Get<HappinessHolder> ();
 			happinessHolder.Initialize (100);
-			happinessHolder.HolderUpdated += OnHappinessUpdate;
+			happinessHolder.HolderUpdated += OnHappinessUpdate;*/
 			//happinessHolder.HolderUpdated += SetPathSpeed;
 			yearHolder.HolderFilled += OnRetirement;
 		}
@@ -78,11 +79,10 @@ namespace Units {
 		}
 
 		public override void OnPoolDestroy () {
-			ObjectCreator.Instance.Destroy<HappinessIndicator> (indicator.MyTransform);
-			indicator = null;
+			//ObjectCreator.Instance.Destroy<HappinessIndicator> (indicator.MyTransform);
+			//indicator = null;
 			PerformableActions.DeactivateAll ();
-			happinessHolder.HolderUpdated -= OnHappinessUpdate;
-			//happinessHolder.HolderUpdated -= SetPathSpeed;
+			//happinessHolder.HolderUpdated -= OnHappinessUpdate;
 			yearHolder.HolderFilled -= OnRetirement;
 		}
 
@@ -91,7 +91,7 @@ namespace Units {
 		}
 
 		void OnHappinessUpdate () {
-			if (indicator != null) indicator.Fill = happinessHolder.PercentFilled;
+			//if (indicator != null) indicator.Fill = happinessHolder.PercentFilled;
 		}
 
 		// TODO: Move to MoveOnPath action
@@ -105,7 +105,7 @@ namespace Units {
 		protected override void OnChangeUnit<U> (U u) {
 			Path.Active = false;
 			Elder elder = u as Elder;
-			elder.AverageHappiness = Inventory.Get<HappinessHolder> ().Average;
+			//elder.AverageHappiness = Inventory.Get<HappinessHolder> ().Average;
 			elder.Init (BoundAcceptor);
 			BoundAcceptor = null;
 		}

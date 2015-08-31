@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GameInput;
 
 public class Road : MBRefs, IPoolable {
 
@@ -24,6 +25,10 @@ public class Road : MBRefs, IPoolable {
 		}
 	}
 
+	bool CanHighlight {
+		get { return (!built && SelectionManager.NoneSelected); }
+	}
+
 	bool built = false;
 
 	protected override void Awake () {
@@ -40,18 +45,20 @@ public class Road : MBRefs, IPoolable {
 	}
 
 	public void OnHoverEnter () {
-		if (built) return;
-		SetVisible (true);
+		if (CanHighlight)
+			SetVisible (true);
 	}
 
 	public void OnHoverExit () {
-		if (built) return;
-		SetVisible (false);
+		if (CanHighlight)
+			SetVisible (false);
 	}
 
 	public void OnClick () {
-		built = true;
-		SetVisible (true);
+		if (CanHighlight) {
+			built = true;
+			SetVisible (true);
+		}
 	}
 
 	void SetVisible (bool enabled) {

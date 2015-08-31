@@ -72,6 +72,7 @@ public class TimerValues : MonoBehaviour {
 				actionTimes.Add ("DeliverCoffee", 0.5f);
 				actionTimes.Add ("DeliverHappiness", 0.5f);
 				actionTimes.Add ("DeliverYear", 0f);
+				actionTimes.Add ("DeliverToPlayerMilkshake", 0.5f);
 
 				// Misc
 				actionTimes.Add ("OccupyUnit", 1f);
@@ -85,8 +86,10 @@ public class TimerValues : MonoBehaviour {
 		float time;
 		if (ActionTimes.TryGetValue (id, out time)) {
 			return time * Year;
+		} else {
+			Debug.LogWarning ("The id '" + id + "' was not found in TimerValues");
+			return 0.1f;
 		}
-		return -1f;
 	}
 
 	#if VARIABLE_TIME

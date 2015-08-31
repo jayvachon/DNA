@@ -140,20 +140,8 @@ namespace GameActions {
 			}
 		}
 
-		/*public void PairActionsBetweenAcceptors (List<IActionAcceptor> acceptors) {
-			foreach (var action in ActiveActions) {
-				action.Value.EnabledState.AttemptPair (acceptors);
-			}
-		}
-
-		public void PairActionsOnPath (Pathing.Path path) {
-			PairActionsBetweenAcceptors (
-				path.Points.Points.ConvertAll (x => x.StaticUnit as IActionAcceptor));
-		}*/
-
 		public List<string> GetBoundActions (List<string> acceptorActions) {
-			//RefreshEnabledActions ();
-			return acceptorActions.FindAll (x => Has (x));//ActionEnabled (x));
+			return acceptorActions.FindAll (x => Has (x));
 		}
 
 		public bool AcceptorHasPair (IActionAcceptor acceptor, Action unpairedAction) {
@@ -166,7 +154,7 @@ namespace GameActions {
 			aa.RefreshEnabledActions ();
 			ba.RefreshEnabledActions ();
 			List<string> paired = new List<string> ();
-			Dictionary<string, AcceptorAction> aActions = aa.ActiveActions;//aa.EnabledActions;
+			Dictionary<string, AcceptorAction> aActions = aa.ActiveActions;
 			foreach (var action in aActions) {
 				if (action.Value.EnabledState.AttemptPair (b)) 
 					paired.Add (action.Key);

@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{21DD6928-3DEA-0145-609A-6A5863227989}</ProjectGuid>
+	<ProjectGuid>{CD49DFDE-5B0D-20E0-8555-928F3B1FBA23}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_6_5;UNITY_4_6;UNITY_WEBPLAYER;WEBPLUG;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_IL2CPP;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;UNITY5_SCRIPTING_IN_UNITY4;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_WEBPLAYER;ENABLE_SUBSTANCE;WEBPLUG;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>/Applications/Unity 4.6.5/Unity 4.6.5.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity 4.6.5/Unity 4.6.5.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverAllYears.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverToPlayer.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptDeliverUnpairedItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptOccupyUnit.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Acceptor\AcceptorInventoryAction.cs" />
@@ -68,6 +69,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverAllYearsEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverElderEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverItemEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverToPlayerEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptDeliverUnpairedItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\Acceptor\AcceptOccupyUnitEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\CollectHappinessEnabledState.cs" />
@@ -78,6 +80,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DeliverAllItemsEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DeliverAllYearsEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DeliverItemEnabledState.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\DeliverToPlayerEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\EnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\GenerateItemEnabledState.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\EnabledStates\OccupyUnitEnabledState.cs" />
@@ -93,6 +96,7 @@
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverAllYears.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverElder.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverToPlayer.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverUnpairedItem.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\DeliverYear.cs" />
      <Compile Include="Assets\Scripts\Actions\Actions\Performer\FleeTree.cs" />
@@ -118,6 +122,7 @@
      <Compile Include="Assets\Scripts\Actions\Lists\PerformableActions.cs" />
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
+     <Compile Include="Assets\Scripts\DataManager.cs" />
      <Compile Include="Assets\Scripts\Debugging\ActionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
@@ -177,6 +182,7 @@
      <Compile Include="Assets\Scripts\Inventory\Player.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
+     <Compile Include="Assets\Scripts\Models.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
@@ -197,6 +203,26 @@
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralGenerator.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralLight.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralPivot.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Abstract\AcceptorTask.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Abstract\PerformerTask.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Abstract\Task.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskAcceptor.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskPerformer.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Lists\AcceptableTasks.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Lists\PerformableTasks.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Lists\TaskList.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\ConsumeItem.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\GenerateItem.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\GenerateUnit.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\InventoryTask.cs" />
+     <Compile Include="Assets\Scripts\Tasks\TaskDisplaySettings.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\AutoStartTest.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\ConsumeItemTest.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\EnabledTest.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\GenerateItemTest.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\MockTaskAcceptor.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\MockTaskPerformer.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\RepeatTest.cs" />
      <Compile Include="Assets\Scripts\Time\DeathTimer.cs" />
      <Compile Include="Assets\Scripts\Time\Interval.cs" />
      <Compile Include="Assets\Scripts\Time\RetirementTimer.cs" />
@@ -293,7 +319,10 @@
      <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Utilities\Pooling\PoolManager.cs" />
  <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity 4.6.5/Unity 4.6.5.app/Contents/UnityExtensions/Unity/GUISystem/4.6.5/UnityEngine.UI.dll</HintPath>
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

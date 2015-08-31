@@ -20,7 +20,7 @@ namespace GameActions {
 		}
 
 		Inventory inventory = null;
-		protected Inventory Inventory {
+		protected virtual Inventory Inventory {
 			get {
 				if (inventory == null && Performer is IInventoryHolder) {
 					IInventoryHolder holder = Performer as IInventoryHolder;
@@ -33,7 +33,7 @@ namespace GameActions {
 			}
 		}
 
-		protected Inventory AcceptorInventory {
+		protected virtual Inventory AcceptorInventory {
 			get {
 				IBinder binder = Performer as IBinder;
 				IInventoryHolder holder = binder.BoundAcceptor as IInventoryHolder;

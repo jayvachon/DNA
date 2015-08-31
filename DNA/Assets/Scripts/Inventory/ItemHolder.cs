@@ -167,7 +167,6 @@ namespace GameInventory {
 
 		public override List<Item> Remove () {
 			List<Item> removed = Remove (1);
-			NotifyHolderUpdated ();
 			return removed;
 		}
 

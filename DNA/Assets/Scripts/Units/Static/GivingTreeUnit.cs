@@ -1,4 +1,4 @@
-﻿#undef GENERATE_ALL
+#undef GENERATE_ALL
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,6 +43,10 @@ namespace Units {
 
 		int positionIndex = 4;
 
+		/*public Inventory Inventory {
+			get { return Player.Instance.Inventory; }
+		}*/		
+
 		void Awake () {
 
 			Inventory = new Inventory (this);
@@ -54,10 +58,10 @@ namespace Units {
 			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
-			AcceptableActions.Add (new AcceptDeliverItem<MilkshakeHolder> ());
+			//AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
+			AcceptableActions.Add (new AcceptDeliverToPlayer<MilkshakeHolder> ());
 			AcceptableActions.Add (new AcceptCollectItem<MilkshakeHolder> ());
-			AcceptableActions.Add (new AcceptDeliverAllYears ());
+			//AcceptableActions.Add (new AcceptDeliverAllYears ());
 
 			PerformableActions = new PerformableActions (this);
 			PerformableActions.OnStartAction += OnStartAction;

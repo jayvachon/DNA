@@ -11,8 +11,8 @@ namespace DNA.Tasks {
 		}
 
 		protected override void OnEnd () {
-			base.OnEnd ();
 			Holder.Add ();
+			base.OnEnd ();
 		}
 	}
 }

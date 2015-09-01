@@ -24,7 +24,13 @@ namespace DNA.Models {
 		Dictionary<System.Type, TaskSettings> tasks;
 
 		public TaskSettings this[System.Type taskType] {
-			get { return tasks[taskType]; }
+			get { 
+				try {
+					return tasks[taskType]; 
+				} catch {
+					throw new System.Exception ("Could not find a model for '" + taskType + "'");
+				}
+			}
 		}
 
 		public TasksSettings () {
@@ -73,6 +79,24 @@ namespace DNA.Models {
 				AutoStart = false,
 				Repeat = true,
 				Pair = null
+			});
+
+			tasks.Add (typeof (CollectItemTest<YearHolder>), new TaskSettings {
+				Title = "Collect happiness",
+				Description = "Collects a happiness from an acceptor",
+				Duration = 0.1f,
+				AutoStart = false,
+				Repeat = true,
+				Pair = typeof (AcceptDeliverItem<YearHolder>)
+			});
+
+			tasks.Add (typeof (DeliverItemTest<YearHolder>), new TaskSettings {
+				Title = "Deliver Happiness",
+				Description = "Delivers a happiness to an acceptor",
+				Duration = 0.1f,
+				AutoStart = false,
+				Repeat = true,
+				Pair = typeof (AcceptCollectItem<YearHolder>)
 			});
 		}
 	}

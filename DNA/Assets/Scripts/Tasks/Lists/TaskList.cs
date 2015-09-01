@@ -38,7 +38,13 @@ namespace DNA.Tasks {
 		}
 
 		public T this[System.Type taskType] {
-			get { return (T)tasks[taskType]; }
+			get { 
+				try {
+					return (T)tasks[taskType]; 
+				} catch {
+					throw new System.Exception ("Could not find the task '" + taskType + "'");
+				}
+			}
 		}
 
 		public void AddTask (Task task) {
@@ -88,14 +94,13 @@ namespace DNA.Tasks {
 			OnSetActive ();
 		}
 
-		/*public T Get (string id) {
+		public U Get<U> () where U : Task {
 			try {
-				return tasks[id] as T;
-			} catch (System.Exception e) {
-				Debug.LogError ("The task '" + id + "' does not exist in the list\n" + e);
-				throw;
+				return tasks[typeof (U)] as U;
+			} catch {
+				throw new System.Exception ("The task '" + typeof (U) + "' does not exist in the list\n");
 			}
-		}*/
+		}
 
 		public T GetEnabledTask () {
 			foreach (var task in enabledTasks) {

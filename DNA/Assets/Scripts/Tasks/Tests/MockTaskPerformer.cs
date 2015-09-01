@@ -15,25 +15,34 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		}
 	}
 	
-	RepeatTest repeat = new RepeatTest ();
-
 	public Inventory Inventory { get; private set; }
+
+	public MockTaskAcceptor taskAcceptor;
 
 	void Awake () {
 		
 		InitInventory ();		
 
 		//TestGenerate<MilkshakeHolder> (new GenerateItemTest<MilkshakeHolder> ());
-		TestConsume<CoffeeHolder> (new ConsumeItemTest<CoffeeHolder> ());
+		//TestConsume<CoffeeHolder> (new ConsumeItemTest<CoffeeHolder> ());
 		//TestAutoStart (new AutoStartTest ());
 		//TestRepeat (new RepeatTest ());
 		//TestEnabled ();
+
+		TestDeliver (
+			new DeliverItemTest<YearHolder> (), 
+			taskAcceptor.AcceptableTasks.Get<AcceptDeliverItemTest<YearHolder>> ());
+
+		/*TestCollect (
+			new CollectItemTest<YearHolder> (), 
+			taskAcceptor.AcceptableTasks.Get<AcceptCollectItemTest<YearHolder>> ());*/
 	}
 
 	void InitInventory () {
 		Inventory = new Inventory (this);
 		Inventory.Add (new MilkshakeHolder (5, 0));
 		Inventory.Add (new CoffeeHolder (5, 5));
+		Inventory.Add (new YearHolder (5, 5));
 	}
 
 	public void TestAutoStart (PerformerTask autoStart) {
@@ -55,23 +64,20 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	public void TestRepeat (PerformerTask repeat) {
 
 		PerformableTasks.Add (repeat);
-		repeat.onEnd += OnEndRepeat;
+		repeat.onEnd += () => {
+			Coroutine.WaitForFixedUpdate (() => {
+				if (repeat.Performing) 
+					Debug.Log ("Repeat test succeeded :)");
+				else
+					Debug.Log ("Repeat test failed :(");
+				repeat.Stop ();
+			});
+		};
 
 		if (!repeat.Settings.Repeat)
 			throw new System.Exception ("The task '" + repeat.GetType () + "' will not repeat because its data model has Repeat set to false");
 
 		repeat.Start ();
-	}
-
-	void OnEndRepeat () {
-		Coroutine.WaitForFixedUpdate (() => {
-			if (repeat.Performing) 
-				Debug.Log ("Repeat test succeeded :)");
-			else
-				Debug.Log ("Repeat test failed :(");
-			repeat.onEnd -= OnEndRepeat;
-			repeat.Stop ();
-		});
 	}
 
 	public void TestEnabled (PerformerTask task=null) {
@@ -120,5 +126,28 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		cons.Start ();
 		if (!cons.Performing)
 			Debug.Log ("Consume Item test failed because the task did not start");
+	}
+
+	public void TestDeliver<T> (DeliverItem<T> deliver, AcceptDeliverItem<T> acceptDeliver) where T : ItemHolder {
+
+		Inventory.Get<T> ().Clear ();
+		deliver.Start (acceptDeliver);
+		if (deliver.Performing)
+			Debug.Log ("Deliver test failed because the task started performing but the inventory is empty");
+
+
+		/*Inventory.Get<T> ().HolderEmptied += () => Debug.Log ("Deliver Item test succeeded :)");
+		PerformableTasks.Add (deliver);
+		deliver.Start (acceptDeliver);
+		if (!deliver.Performing)
+			Debug.Log ("Deliver Item test failed because the task did not start");*/
+	}
+
+	public void TestCollect<T> (CollectItem<T> collect, AcceptCollectItem<T> acceptCollect) where T : ItemHolder {
+		Inventory.Get<T> ().HolderFilled += () => Debug.Log ("Collect Item test succeeded :)");
+		PerformableTasks.Add (collect);
+		collect.Start (acceptCollect);
+		if (!collect.Performing)
+			Debug.Log ("Collect Item test failed because the task did not start");
 	}
 }

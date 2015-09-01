@@ -37,16 +37,18 @@ namespace DNA.Tasks {
 			if (settings.AutoStart) Start ();
 		}
 
-		public void Start () {
+		public bool Start () {
 
 			// Don't allow the action to overlap itself
-			if (!Enabled || performing) return;
+			if (!Enabled || performing) return false;
 			performing = true;
 			perform = true;
 
 			Log ("Start", true);
 			SendOnStartMessage ();
 			Coroutine.Start (settings.Duration, SetProgress, End);
+
+			return true;
 		}
 
 		public void Stop () {

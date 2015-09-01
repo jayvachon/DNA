@@ -145,17 +145,19 @@ namespace GameInventory {
 		}
 
 		public override List<Item> Add (List<Item> newItems) {
-			while (Count < Capacity && newItems.Count > 0) {
-				Item newItem = newItems[0];
-				items.Add (newItem as T);
-				if (newItem != null) {
-					newItem.Holder = this;
-					newItem.OnAdd ();
+			if (newItems.Count > 0) {
+				while (Count < Capacity && newItems.Count > 0) {
+					Item newItem = newItems[0];
+					items.Add (newItem as T);
+					if (newItem != null) {
+						newItem.Holder = this;
+						newItem.OnAdd ();
+					}
+					newItems.RemoveAt (0);
 				}
-				newItems.RemoveAt (0);
+				NotifyHolderUpdated ();
+				if (Full) NotifyHolderFilled ();
 			}
-			NotifyHolderUpdated ();
-			if (Full) NotifyHolderFilled ();
 			if (newItems.Count > 0) {
 
 				// return items that couldn't be added
@@ -218,7 +220,6 @@ namespace GameInventory {
 				List<Item> overflow = Add (items);
 				sender.Add (overflow);
 				OnTransfer ();
-				NotifyHolderUpdated ();
 			}
 		}
 

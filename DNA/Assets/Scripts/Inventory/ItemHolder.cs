@@ -45,6 +45,7 @@ namespace GameInventory {
 		public abstract Item Get (ItemHasAttribute contains);
 		public abstract bool Has (ItemHasAttribute contains);
 		public abstract List<Item> Add ();
+		public abstract List<Item> Add (int amount);
 		public abstract List<Item> Add (Item item);
 		public abstract List<Item> Add (List<Item> newItems);
 		public abstract List<Item> Remove ();
@@ -136,6 +137,14 @@ namespace GameInventory {
 
 		public override List<Item> Add () {
 			return Add (new Item () as T);
+		}
+
+		public override List<Item> Add (int amount) {
+			List<Item> temp = new List<Item> ();
+			for (int i = 0; i < amount; i ++) {
+				temp.Add (new Item () as T);
+			}
+			return Add (temp);
 		}
 		
 		public override List<Item> Add (Item item) {

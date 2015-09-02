@@ -9,15 +9,9 @@ namespace DNA.Tasks {
 		public override bool Enabled {
 			get { return !Holder.Empty; }
 		}
-
-		AcceptDeliverItem<T> accept;
-
-		public void Start (AcceptDeliverItem<T> accept) {
-			if (Start ()) this.accept = accept;
-		}
 		
 		protected override void OnEnd () {
-			accept.Inventory.Transfer<T> (Inventory, 1);
+			AcceptorInventory.Transfer<T> (Inventory, 1);
 			base.OnEnd ();
 		}
 	}

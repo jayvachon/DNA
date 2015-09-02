@@ -29,9 +29,9 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		//TestRepeat (new RepeatTest ());
 		//TestEnabled ();
 
-		TestDeliver (
+		/*TestDeliver (
 			new DeliverItemTest<YearHolder> (), 
-			taskAcceptor.AcceptableTasks.Get<AcceptDeliverItemTest<YearHolder>> ());
+			taskAcceptor.AcceptableTasks.Get<AcceptDeliverItemTest<YearHolder>> ());*/
 
 		/*TestCollect (
 			new CollectItemTest<YearHolder> (), 
@@ -113,7 +113,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	}
 
 	public void TestGenerate<T> (GenerateItem<T> gen) where T : ItemHolder {
-		Inventory.Get<T> ().HolderFilled += () => Debug.Log ("Generate Item test succeeded :)");
+		gen.onComplete += () => Debug.Log ("Generate Item test succeeded :)");
 		PerformableTasks.Add (gen);
 		gen.Start ();
 		if (!gen.Performing)
@@ -121,7 +121,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	}
 
 	public void TestConsume<T> (ConsumeItem<T> cons) where T : ItemHolder {
-		Inventory.Get<T> ().HolderEmptied += () => Debug.Log ("Consume Item test succeeded :)");
+		cons.onComplete += () => Debug.Log ("Consume Item test succeeded :)");
 		PerformableTasks.Add (cons);
 		cons.Start ();
 		if (!cons.Performing)
@@ -130,22 +130,61 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 
 	public void TestDeliver<T> (DeliverItem<T> deliver, AcceptDeliverItem<T> acceptDeliver) where T : ItemHolder {
 
-		Inventory.Get<T> ().Clear ();
-		deliver.Start (acceptDeliver);
-		if (deliver.Performing)
-			Debug.Log ("Deliver test failed because the task started performing but the inventory is empty");
-
-
-		/*Inventory.Get<T> ().HolderEmptied += () => Debug.Log ("Deliver Item test succeeded :)");
+		T holder = Inventory.Get<T> ();
+		holder.Initialize (5);
 		PerformableTasks.Add (deliver);
+
+		// Make sure the task doesn't start if the acceptor's inventory is full
+		taskAcceptor.FillHolder<T> ();
+		deliver.Start (acceptDeliver);
+		if (deliver.Performing) {
+			Debug.Log ("Deliver Item test failed because the task started but acceptor's inventory is full");
+			return;
+		}
+
+		taskAcceptor.ClearHolder<T> ();
+		deliver.onComplete += () => {
+			taskAcceptor.ClearHolder<T> ();
+			deliver.Start (acceptDeliver);
+
+			// Make sure the task doesn't start if the performer's inventory is empty
+			if (deliver.Performing)
+				Debug.Log ("Deliver Item test failed bacause the task started but performer's inventory is empty");
+			else
+				Debug.Log ("Deliver Item test succeeded :)");
+		};
+
 		deliver.Start (acceptDeliver);
 		if (!deliver.Performing)
-			Debug.Log ("Deliver Item test failed because the task did not start");*/
+			Debug.Log ("Deliver Item test failed because the task did not start");
 	}
 
 	public void TestCollect<T> (CollectItem<T> collect, AcceptCollectItem<T> acceptCollect) where T : ItemHolder {
-		Inventory.Get<T> ().HolderFilled += () => Debug.Log ("Collect Item test succeeded :)");
+		
+		T holder = Inventory.Get<T> ();
+		holder.Clear ();
 		PerformableTasks.Add (collect);
+
+		// Make sure task doesn't start if the acceptor's inventory is empty
+		taskAcceptor.ClearHolder<T> ();
+		collect.Start (acceptCollect);
+		if (collect.Performing) {
+			Debug.Log ("Collect Item test failed because the task started but acceptor's inventory is empty");
+			return;
+		}
+
+		taskAcceptor.FillHolder<T> ();
+		collect.onComplete += () => {
+			taskAcceptor.FillHolder<T> ();
+			collect.Start (acceptCollect);
+
+			// Make sure the task doesn't start if the performer's inventory is full
+			if (collect.Performing)
+				Debug.Log ("Collect Item test failed because the task started but performer's inventory is full");
+			else
+				Debug.Log ("Collect Item test succeeded :)");
+		};
+
 		collect.Start (acceptCollect);
 		if (!collect.Performing)
 			Debug.Log ("Collect Item test failed because the task did not start");

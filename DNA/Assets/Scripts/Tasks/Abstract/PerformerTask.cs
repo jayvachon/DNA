@@ -7,6 +7,7 @@ namespace DNA.Tasks {
 
 	public delegate void OnStart ();
 	public delegate void OnEnd ();
+	public delegate void OnComplete ();
 
 	public abstract class PerformerTask : Task {
 
@@ -25,6 +26,8 @@ namespace DNA.Tasks {
 
 		public OnStart onStart;
 		public OnEnd onEnd;
+		public OnComplete onComplete;
+		protected AcceptorTask acceptTask;
 
 		TaskSettings settings;
 		bool perform = false;
@@ -35,6 +38,12 @@ namespace DNA.Tasks {
 			if (settings.Repeat && settings.Duration == 0)
 				throw new System.Exception (this.GetType () + " is marked as repeating with a duration of 0. This will cause the game to hang.");
 			if (settings.AutoStart) Start ();
+		}
+
+		public void Start (AcceptorTask acceptTask) {
+			if (acceptTask.Enabled) {
+				if (Start ()) this.acceptTask = acceptTask;
+			}
 		}
 
 		public bool Start () {
@@ -62,9 +71,10 @@ namespace DNA.Tasks {
 			performing = false;
 			OnEnd ();
 			if (settings.Repeat && perform) {
-				Start ();
+				if (!Start ()) SendOnCompleteMessage ();
 			} else {
 				perform = false;
+				SendOnCompleteMessage ();
 			}
 		}
 
@@ -78,6 +88,10 @@ namespace DNA.Tasks {
 
 		protected virtual void OnEnd () {
 			if (onEnd != null) onEnd ();
+		}
+
+		void SendOnCompleteMessage () {
+			if (onComplete != null) onComplete ();
 		}
 
 		void Log (string message, bool printType) {

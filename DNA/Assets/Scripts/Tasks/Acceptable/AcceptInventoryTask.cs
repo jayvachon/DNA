@@ -19,5 +19,18 @@ namespace DNA.Tasks {
 				return inventory;
 			}
 		}
+
+		T holder = null;
+		protected T Holder {
+			get {
+				if (holder == null) {
+					holder = Inventory.Get<T> ();
+				}
+				if (holder == null) {
+					throw new System.Exception ("Inventory does not include " + typeof (T));
+				}
+				return holder;
+			}
+		}
 	}
 }

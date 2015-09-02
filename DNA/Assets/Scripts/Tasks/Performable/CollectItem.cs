@@ -10,14 +10,8 @@ namespace DNA.Tasks {
 			get { return !Holder.Full; }
 		}
 
-		AcceptCollectItem<T> accept;
-
-		public void Start (AcceptCollectItem<T> accept) {
-			if (Start ()) this.accept = accept;
-		}
-
 		protected override void OnEnd () {
-			Inventory.Transfer<T> (accept.Inventory, 1);
+			Inventory.Transfer<T> (AcceptorInventory, 1);
 			base.OnEnd ();
 		}
 	}

@@ -14,7 +14,7 @@ namespace DNA.Tasks {
 					inventory = holder.Inventory;
 				}
 				if (inventory == null) {
-					throw new System.Exception (string.Format ("ActionPerformer {0} does not implement IInventoryHolder", Performer));
+					throw new System.Exception (string.Format ("TaskPerformer {0} does not implement IInventoryHolder", Performer));
 				}
 				return inventory;
 			}
@@ -30,6 +30,18 @@ namespace DNA.Tasks {
 					throw new System.Exception ("Inventory does not include " + typeof (T));
 				}
 				return holder;
+			}
+		}
+
+		protected Inventory AcceptorInventory {
+			get {
+				try { 
+					AcceptInventoryTask<T> task = (AcceptInventoryTask<T>)acceptTask;
+					return task.Inventory;
+				}
+				catch {
+					throw new System.Exception ("No acceptor task in '" + this + "' or acceptor task is not type AcceptInventoryTask<" + typeof (T) + "'");
+				}
 			}
 		}
 	}

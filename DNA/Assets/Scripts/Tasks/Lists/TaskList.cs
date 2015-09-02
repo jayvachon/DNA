@@ -49,6 +49,8 @@ namespace DNA.Tasks {
 
 		public void AddTask (Task task) {
 			System.Type taskType = task.GetType ();
+			if (tasks.ContainsKey (taskType))
+				throw new System.Exception ("The task list '" + this + "' already contains the task '" + task + "'");
 			tasks.Add (taskType, task);
 			ActiveTasks.Add (taskType, task as T);
 			EnabledTasks.Add (taskType, task as T);
@@ -170,28 +172,18 @@ namespace DNA.Tasks {
 		 *	Debugging
 		 */
 
-		/*public List<PerformerTask> EnabledTasksList {
-			get {
-				List<PerformerTask> list = new List<PerformerTask> ();
-				foreach (var task in EnabledTasks) {
-					list.Add (task.Value as PerformerTask);
-				}
-				return list;
-			}
-		}
-
 		public virtual void Print () {
-			foreach (var task in tasks) {
-				Debug.Log (task.Key 
-					+ " enabled = " + task.Value.Enabled 
-					+ ", active = " + task.Value.Active);
-			}
-		}
-
-		public void PrintEnabled () {
-			foreach (var task in EnabledTasks) {
+			Debug.Log ("========== ALL TASKS ==========");
+			foreach (var task in tasks)
 				Debug.Log (task.Key);
-			}
-		}*/
+
+			Debug.Log ("========== ACTIVE TASKS ==========");
+			foreach (var task in activeTasks)
+				Debug.Log (task.Key);
+
+			Debug.Log ("========== ENABLED TASKS ==========");
+			foreach (var task in enabledTasks)
+				Debug.Log (task.Key);				
+		}
 	}
 }

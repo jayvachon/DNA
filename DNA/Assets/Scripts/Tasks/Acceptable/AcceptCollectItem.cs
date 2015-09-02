@@ -6,6 +6,8 @@ namespace DNA.Tasks {
 
 	public class AcceptCollectItem<T> : AcceptInventoryTask<T> where T : ItemHolder {
 
-		
+		public override bool Enabled {
+			get { return !Holder.Empty; }
+		}
 	}
 }

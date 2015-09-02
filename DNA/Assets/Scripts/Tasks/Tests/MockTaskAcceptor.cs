@@ -12,6 +12,7 @@ public class MockTaskAcceptor : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
 				acceptableTasks = new AcceptableTasks (this);
 				AcceptableTasks.Add (new AcceptCollectItemTest<YearHolder> ());
 				AcceptableTasks.Add (new AcceptDeliverItemTest<YearHolder> ());
+				acceptableTasks.Print ();
 			}
 			return acceptableTasks;
 		}
@@ -26,5 +27,21 @@ public class MockTaskAcceptor : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
 			}
 			return inventory;
 		}
+	}
+
+	public void ClearHolder<T> () where T : ItemHolder {
+		T holder = Inventory.Get<T> ();
+		holder.Clear ();
+	}
+
+	public void FillHolder<T> () where T : ItemHolder {
+		T holder = Inventory.Get<T> ();
+		holder.Initialize (5);
+	}
+
+	public void HalfFillHolder<T> () where T : ItemHolder {
+		T holder = Inventory.Get<T> ();
+		holder.Clear ();
+		holder.Add (3);
 	}
 }

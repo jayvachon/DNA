@@ -15,6 +15,10 @@ public static class DataManager {
 	}
 
 	public static TaskSettings GetTaskSettings (System.Type taskType) {
-		return Data.TasksSettings[taskType];
+		try {
+			return Data.TasksSettings[taskType];
+		} catch {
+			throw new System.Exception ("No model exists for the task '" + taskType + "'");
+		}
 	}
 }

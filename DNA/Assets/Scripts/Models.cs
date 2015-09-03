@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameInventory;
+using Units;
 using DNA.Tasks;
 
 namespace DNA.Models {
@@ -98,6 +99,31 @@ namespace DNA.Models {
 				Repeat = true,
 				Pair = typeof (AcceptCollectItem<YearHolder>)
 			});
+
+			tasks.Add (typeof (GenerateUnitTest<Distributor>), new CostTaskSettings {
+				Title = "Generate Distributor",
+				Description = "Generates a distributor",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 1 },
+					{ "Coffee", 2 }
+				}
+			});
+
+			tasks.Add (typeof (FleeTree), new CostTaskSettings {
+				Title = "Flee Tree",
+				Description = "Goes to the next level",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 1 }
+				}
+			});
 		}
 	}
 
@@ -108,5 +134,11 @@ namespace DNA.Models {
 		public float Duration { get; set; }
 		public bool AutoStart { get; set; }
 		public bool Repeat { get; set; }
+	}
+
+	public class CostTaskSettings : TaskSettings {
+
+		// ItemHolder ID, amount required
+		public Dictionary<string, int> Costs { get; set; }
 	}
 }

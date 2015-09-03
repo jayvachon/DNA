@@ -9,5 +9,7 @@ namespace DNA.Tasks {
 		public override bool Enabled {
 			get { return !Holder.Empty; }
 		}
+
+		public AcceptCollectItem (Inventory inventory=null) : base (inventory) {}
 	}
 }

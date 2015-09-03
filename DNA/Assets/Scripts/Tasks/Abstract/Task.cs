@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace DNA.Tasks {
 
-	public class Task {
+	public abstract class Task {
 
 		bool enabled = true;
 		public virtual bool Enabled { 

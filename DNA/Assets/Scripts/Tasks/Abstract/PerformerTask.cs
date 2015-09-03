@@ -28,8 +28,8 @@ namespace DNA.Tasks {
 		public OnEnd onEnd;
 		public OnComplete onComplete;
 		protected AcceptorTask acceptTask;
+		protected TaskSettings settings;
 
-		TaskSettings settings;
 		bool perform = false;
 		bool performing = false;
 

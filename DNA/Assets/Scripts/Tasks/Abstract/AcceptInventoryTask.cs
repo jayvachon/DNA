@@ -4,7 +4,7 @@ using GameInventory;
 
 namespace DNA.Tasks {
 
-	public class AcceptInventoryTask<T> : AcceptorTask where T : ItemHolder {
+	public abstract class AcceptInventoryTask<T> : AcceptorTask where T : ItemHolder {
 
 		Inventory inventory = null;
 		public Inventory Inventory {
@@ -31,6 +31,10 @@ namespace DNA.Tasks {
 				}
 				return holder;
 			}
+		}
+
+		public AcceptInventoryTask (Inventory inventory=null) {
+			this.inventory = inventory;
 		}
 	}
 }

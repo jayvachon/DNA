@@ -203,12 +203,14 @@
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralGenerator.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralLight.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralPivot.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Abstract\AcceptInventoryTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\AcceptorTask.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Abstract\CostTask.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Abstract\InventoryTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\PerformerTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\Task.cs" />
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptDeliverItem.cs" />
-     <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptInventoryTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskAcceptor.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskPerformer.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\AcceptableTasks.cs" />
@@ -217,9 +219,9 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ConsumeItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\DeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\FleeTree.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateUnit.cs" />
-     <Compile Include="Assets\Scripts\Tasks\Performable\InventoryTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AcceptCollectItemTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AcceptDeliverItemTest.cs" />
@@ -229,6 +231,7 @@
      <Compile Include="Assets\Scripts\Tasks\Tests\DeliverItemTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\EnabledTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\GenerateItemTest.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\GenerateUnitTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\MockTaskAcceptor.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\MockTaskPerformer.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\RepeatTest.cs" />

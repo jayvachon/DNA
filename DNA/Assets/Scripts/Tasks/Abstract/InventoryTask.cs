@@ -4,7 +4,7 @@ using GameInventory;
 
 namespace DNA.Tasks {
 
-	public class InventoryTask<T> : PerformerTask where T : ItemHolder {
+	public abstract class InventoryTask : PerformerTask {
 
 		Inventory inventory = null;
 		protected virtual Inventory Inventory {
@@ -19,6 +19,9 @@ namespace DNA.Tasks {
 				return inventory;
 			}
 		}
+	}
+
+	public abstract class InventoryTask<T> : InventoryTask where T : ItemHolder {
 
 		T holder = null;
 		protected T Holder {

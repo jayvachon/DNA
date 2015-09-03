@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GameInventory;
+using Units;
 using DNA.Tasks;
 
 public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder {
@@ -21,7 +22,9 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 
 	void Awake () {
 		
-		InitInventory ();		
+		InitInventory ();
+
+		TestGenerateUnit (new GenerateUnitTest<Distributor> ());
 
 		//TestGenerate<MilkshakeHolder> (new GenerateItemTest<MilkshakeHolder> ());
 		//TestConsume<CoffeeHolder> (new ConsumeItemTest<CoffeeHolder> ());
@@ -40,7 +43,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 
 	void InitInventory () {
 		Inventory = new Inventory (this);
-		Inventory.Add (new MilkshakeHolder (5, 0));
+		Inventory.Add (new MilkshakeHolder (5, 5));
 		Inventory.Add (new CoffeeHolder (5, 5));
 		Inventory.Add (new YearHolder (5, 5));
 	}
@@ -188,5 +191,10 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		collect.Start (acceptCollect);
 		if (!collect.Performing)
 			Debug.Log ("Collect Item test failed because the task did not start");
+	}
+
+	public void TestGenerateUnit<T> (GenerateUnit<T> gen) where T : Unit {
+		PerformableTasks.Add (gen);
+		gen.Start ();
 	}
 }

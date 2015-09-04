@@ -4,9 +4,9 @@ using GameInventory;
 
 namespace DNA.Tasks {
 
-	public abstract class AcceptInventoryTask<T> : AcceptorTask where T : ItemHolder {
+	public abstract class AcceptInventoryTask : AcceptorTask {
 
-		Inventory inventory = null;
+		protected Inventory inventory = null;
 		public Inventory Inventory {
 			get {
 				if (inventory == null && Acceptor is IInventoryHolder) {
@@ -19,6 +19,9 @@ namespace DNA.Tasks {
 				return inventory;
 			}
 		}
+	}
+
+	public abstract class AcceptInventoryTask<T> : AcceptInventoryTask where T : ItemHolder {
 
 		T holder = null;
 		protected T Holder {

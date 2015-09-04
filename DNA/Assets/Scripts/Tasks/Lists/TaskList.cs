@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -31,10 +32,17 @@ namespace DNA.Tasks {
 		}
 
 		// Tasks are enabled if their EnabledState is true
-		Dictionary<System.Type, T> enabledTasks = new Dictionary<System.Type, T> ();
 		public Dictionary<System.Type, T> EnabledTasks {
-			get { return enabledTasks; }
-			protected set { enabledTasks = value; }
+			get { 
+				// TODO: linq this
+				Dictionary<System.Type, T> enabledTasks = new Dictionary<System.Type, T> ();
+				foreach (var keyval in ActiveTasks) {
+					Task task = keyval.Value;
+					if (task.Enabled)
+						enabledTasks.Add (keyval.Key, task as T);
+				}
+				return enabledTasks;
+			}
 		}
 
 		public T this[System.Type taskType] {
@@ -53,7 +61,7 @@ namespace DNA.Tasks {
 				throw new System.Exception ("The task list '" + this + "' already contains the task '" + task + "'");
 			tasks.Add (taskType, task);
 			ActiveTasks.Add (taskType, task as T);
-			EnabledTasks.Add (taskType, task as T);
+			//EnabledTasks.Add (taskType, task as T);
 			NotifyTasksUpdated ();
 		}
 
@@ -73,11 +81,11 @@ namespace DNA.Tasks {
 					ActiveTasks.Add (taskType, (T)task);
 				}
 			}
-			if (task.Enabled) EnabledTasks.Add (taskType, (T)task);
+			//if (task.Enabled) EnabledTasks.Add (taskType, (T)task);
 		}
 
 		void Deactivate (System.Type taskType) {
-			EnabledTasks.Remove (taskType);
+			//EnabledTasks.Remove (taskType);
 			ActiveTasks.Remove (taskType);
 		}
 
@@ -104,12 +112,12 @@ namespace DNA.Tasks {
 			}
 		}
 
-		public T GetEnabledTask () {
-			foreach (var task in enabledTasks) {
+		/*public T GetEnabledTask () {
+			foreach (var task in EnabledTasks) {
 				return task.Value;
 			}
 			return null;
-		}
+		}*/
 
 		public T GetActiveTask () {
 			foreach (var task in activeTasks) {
@@ -126,15 +134,15 @@ namespace DNA.Tasks {
 			return EnabledTasks.ContainsKey (taskType);
 		}
 
-		public virtual void RefreshEnabledTasks () {
-			EnabledTasks.Clear ();
+		/*public virtual void RefreshEnabledTasks () {
+			enabledTasks.Clear ();
 			foreach (var keyval in ActiveTasks) {
 				Task task = keyval.Value;
 				if (task.Enabled)
-					EnabledTasks.Add (keyval.Key, task as T);
+					enabledTasks.Add (keyval.Key, task as T);
 			}
 			NotifyTasksUpdated ();
-		}
+		}*/
 
 		/*public List<string> GetBoundTasks (List<string> acceptorTasks) {
 			return acceptorTasks.FindAll (x => Has (x));
@@ -178,11 +186,11 @@ namespace DNA.Tasks {
 				Debug.Log (task.Key);
 
 			Debug.Log ("========== ACTIVE TASKS ==========");
-			foreach (var task in activeTasks)
+			foreach (var task in ActiveTasks)
 				Debug.Log (task.Key);
 
 			Debug.Log ("========== ENABLED TASKS ==========");
-			foreach (var task in enabledTasks)
+			foreach (var task in EnabledTasks)
 				Debug.Log (task.Key);				
 		}
 	}

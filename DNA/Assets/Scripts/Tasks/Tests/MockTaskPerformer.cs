@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using GameInventory;
 using Units;
 using DNA.Tasks;
@@ -11,6 +12,8 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		get {
 			if (performableTasks == null) {
 				performableTasks = new PerformableTasks (this);
+				performableTasks.Add (new CollectItemTest<YearHolder> ());
+				performableTasks.Add (new DeliverItemTest<YearHolder> ());
 			}
 			return performableTasks;
 		}
@@ -24,7 +27,8 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		
 		InitInventory ();
 
-		TestGenerateUnit (new GenerateUnitTest<Distributor> ());
+		TestMatching (this, taskAcceptor);
+		//TestGenerateUnit (new GenerateUnitTest<Distributor> ());
 
 		//TestGenerate<MilkshakeHolder> (new GenerateItemTest<MilkshakeHolder> ());
 		//TestConsume<CoffeeHolder> (new ConsumeItemTest<CoffeeHolder> ());
@@ -196,5 +200,11 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	public void TestGenerateUnit<T> (GenerateUnit<T> gen) where T : Unit {
 		PerformableTasks.Add (gen);
 		gen.Start ();
+	}
+
+	public void TestMatching (ITaskPerformer performer, ITaskAcceptor acceptor) {
+		List<PerformerTask> matches = TaskMatcher.GetEnabled (performer, acceptor);
+		foreach (PerformerTask m in matches)
+			Debug.Log (m);
 	}
 }

@@ -12,7 +12,6 @@ public class MockTaskAcceptor : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
 				acceptableTasks = new AcceptableTasks (this);
 				AcceptableTasks.Add (new AcceptCollectItemTest<YearHolder> ());
 				AcceptableTasks.Add (new AcceptDeliverItemTest<YearHolder> ());
-				acceptableTasks.Print ();
 			}
 			return acceptableTasks;
 		}

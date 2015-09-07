@@ -61,8 +61,6 @@ namespace DNA.Tasks {
 				throw new System.Exception ("The task list '" + this + "' already contains the task '" + task + "'");
 			tasks.Add (taskType, task);
 			ActiveTasks.Add (taskType, task as T);
-			//EnabledTasks.Add (taskType, task as T);
-			NotifyTasksUpdated ();
 		}
 
 		public void SetActive (System.Type taskType, bool active) {
@@ -70,22 +68,15 @@ namespace DNA.Tasks {
 				Activate (taskType);
 			else
 				Deactivate (taskType);
-			NotifyTasksUpdated ();
-			OnSetActive ();	
 		}
 
 		void Activate (System.Type taskType) {
-			Task task;
-			if (tasks.TryGetValue (taskType, out task)) {
-				if (!ActiveTasks.ContainsKey (taskType)) {
-					ActiveTasks.Add (taskType, (T)task);
-				}
+			if (!ActiveTasks.ContainsKey (taskType)) {
+				ActiveTasks.Add (taskType, (T)tasks[taskType]);
 			}
-			//if (task.Enabled) EnabledTasks.Add (taskType, (T)task);
 		}
 
 		void Deactivate (System.Type taskType) {
-			//EnabledTasks.Remove (taskType);
 			ActiveTasks.Remove (taskType);
 		}
 
@@ -94,14 +85,10 @@ namespace DNA.Tasks {
 			foreach (var task in tasks) {
 				ActiveTasks.Add (task.Key, task.Value as T);
 			}
-			NotifyTasksUpdated ();
-			OnSetActive ();
 		}
 
 		public void DeactivateAll () {
 			ActiveTasks.Clear ();
-			NotifyTasksUpdated ();
-			OnSetActive ();
 		}
 
 		public U Get<U> () where U : Task {
@@ -112,20 +99,6 @@ namespace DNA.Tasks {
 			}
 		}
 
-		/*public T GetEnabledTask () {
-			foreach (var task in EnabledTasks) {
-				return task.Value;
-			}
-			return null;
-		}*/
-
-		public T GetActiveTask () {
-			foreach (var task in activeTasks) {
-				return task.Value;
-			}
-			return null;
-		}
-
 		public bool TaskActive (System.Type taskType) {
 			return ActiveTasks.ContainsKey (taskType);
 		}
@@ -133,16 +106,6 @@ namespace DNA.Tasks {
 		public bool TaskEnabled (System.Type taskType) {
 			return EnabledTasks.ContainsKey (taskType);
 		}
-
-		/*public virtual void RefreshEnabledTasks () {
-			enabledTasks.Clear ();
-			foreach (var keyval in ActiveTasks) {
-				Task task = keyval.Value;
-				if (task.Enabled)
-					enabledTasks.Add (keyval.Key, task as T);
-			}
-			NotifyTasksUpdated ();
-		}*/
 
 		/*public List<string> GetBoundTasks (List<string> acceptorTasks) {
 			return acceptorTasks.FindAll (x => Has (x));
@@ -169,12 +132,6 @@ namespace DNA.Tasks {
 		public bool HasMatchingTask (Task task) {
 			return activeTasks.ContainsKey (task.Name);
 		}*/
-
-		public void NotifyTasksUpdated () {
-			if (onTasksUpdate != null) onTasksUpdate ();
-		}
-
-		public virtual void OnSetActive () {}
 
 		/**
 		 *	Debugging

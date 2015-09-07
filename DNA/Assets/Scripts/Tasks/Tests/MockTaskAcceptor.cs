@@ -22,7 +22,7 @@ public class MockTaskAcceptor : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
 		get {
 			if (inventory == null) {
 				inventory = new Inventory (this);
-				inventory.Add (new YearHolder (5, 0));
+				inventory.Add (new YearHolder (5, 5));
 			}
 			return inventory;
 		}

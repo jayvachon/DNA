@@ -22,12 +22,14 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	public Inventory Inventory { get; private set; }
 
 	public MockTaskAcceptor taskAcceptor;
+	public MockTaskAcceptor2 taskAcceptor2;
 
 	void Awake () {
 		
 		InitInventory ();
 
-		TestMatching (this, taskAcceptor);
+		TestBinding (this, taskAcceptor, taskAcceptor2);
+		//TestMatching (this, taskAcceptor);
 		//TestGenerateUnit (new GenerateUnitTest<Distributor> ());
 
 		//TestGenerate<MilkshakeHolder> (new GenerateItemTest<MilkshakeHolder> ());
@@ -38,7 +40,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 
 		/*TestDeliver (
 			new DeliverItemTest<YearHolder> (), 
-			taskAcceptor.AcceptableTasks.Get<AcceptDeliverItemTest<YearHolder>> ());*/
+			
 
 		/*TestCollect (
 			new CollectItemTest<YearHolder> (), 
@@ -49,7 +51,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		Inventory = new Inventory (this);
 		Inventory.Add (new MilkshakeHolder (5, 5));
 		Inventory.Add (new CoffeeHolder (5, 5));
-		Inventory.Add (new YearHolder (5, 5));
+		Inventory.Add (new YearHolder (5, 0));
 	}
 
 	public void TestAutoStart (PerformerTask autoStart) {
@@ -206,5 +208,32 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		List<PerformerTask> matches = TaskMatcher.GetEnabled (performer, acceptor);
 		foreach (PerformerTask m in matches)
 			Debug.Log (m);
+	}
+
+	public void TestBinding (ITaskPerformer performer, ITaskAcceptor acceptor, ITaskAcceptor acceptorPair) {
+		
+		MatchResult match = TaskMatcher.GetPerformable (performer, acceptor, acceptorPair);
+		if (match != null) {
+			Debug.Log (match.Match);
+			if (!match.NeedsPair) {
+				Debug.Log ("starting");
+				match.Match.onComplete += () => { Debug.Log ("finished"); };
+				match.Start ();
+			} else {
+				Debug.Log ("Needs pair of type " + match.PairType);
+				// TODO: Try to find a pair in the world
+				// if a pair was found, path to it
+				// else, perform the block below this one
+			}
+		} else {
+			match = TaskMatcher.GetPerformable (performer, acceptorPair, acceptor);
+			if (match == null) {
+				// Stop moving
+				Debug.Log ("stop moving");
+			} else {
+				// Move to the acceptor pair
+				Debug.Log ("move to other point on path");
+			}
+		}
 	}
 }

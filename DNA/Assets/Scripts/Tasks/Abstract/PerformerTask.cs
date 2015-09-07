@@ -14,11 +14,11 @@ namespace DNA.Tasks {
 		public float Progress { get; private set; }
 		public ITaskPerformer Performer { get; set; }
 
-		// For testing
 		public TaskSettings Settings {
 			get { return settings; }
 		}
 
+		// For testing
 		public bool Performing {
 			get { return performing; }
 		}
@@ -71,7 +71,15 @@ namespace DNA.Tasks {
 			performing = false;
 			OnEnd ();
 			if (settings.Repeat && perform) {
-				if (!Start ()) SendOnCompleteMessage ();
+				if (acceptTask == null) {
+					if (!Start ()) SendOnCompleteMessage ();
+				} else {
+					if (acceptTask.Enabled) {
+						if (!Start ()) SendOnCompleteMessage ();
+					} else {
+						SendOnCompleteMessage ();
+					}
+				}
 			} else {
 				perform = false;
 				SendOnCompleteMessage ();

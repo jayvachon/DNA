@@ -35,6 +35,7 @@ namespace DNA.Models {
 		}
 
 		public TasksSettings () {
+			
 			tasks = new Dictionary<System.Type, TaskSettings> ();
 			
 			tasks.Add (typeof (AutoStartTest), new TaskSettings {
@@ -88,7 +89,7 @@ namespace DNA.Models {
 				Duration = 0.1f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptDeliverItem<YearHolder>)
+				Pair = typeof (AcceptDeliverItemTest<YearHolder>)
 			});
 
 			tasks.Add (typeof (DeliverItemTest<YearHolder>), new TaskSettings {
@@ -97,7 +98,7 @@ namespace DNA.Models {
 				Duration = 0.1f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptCollectItem<YearHolder>)
+				Pair = typeof (AcceptCollectItemTest<YearHolder>)
 			});
 
 			tasks.Add (typeof (GenerateUnitTest<Distributor>), new CostTaskSettings {

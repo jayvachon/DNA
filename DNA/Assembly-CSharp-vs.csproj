@@ -212,6 +212,7 @@
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptDeliverItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskAcceptor.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskBinder.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskPerformer.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\AcceptableTasks.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\PerformableTasks.cs" />
@@ -234,6 +235,7 @@
      <Compile Include="Assets\Scripts\Tasks\Tests\GenerateItemTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\GenerateUnitTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\MockTaskAcceptor.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Tests\MockTaskAcceptor2.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\MockTaskPerformer.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\RepeatTest.cs" />
      <Compile Include="Assets\Scripts\Time\DeathTimer.cs" />

@@ -38,6 +38,36 @@ namespace DNA.Models {
 			
 			tasks = new Dictionary<System.Type, TaskSettings> ();
 			
+			tasks.Add (typeof (CollectItem<MilkshakeHolder>), new TaskSettings {
+				Title = "Collect Milkshakes",
+				Description = "Collects milkshakes",
+				Duration = 0.5f,
+				AutoStart = false,
+				Repeat = true,
+				Pair = typeof (AcceptDeliverItem<MilkshakeHolder>)
+			});
+
+			tasks.Add (typeof (DeliverItem<MilkshakeHolder>), new TaskSettings {
+				Title = "Deliver Milkshakes",
+				Description = "Delivers milkshakes",
+				Duration = 0.5f,
+				AutoStart = false,
+				Repeat = true,
+				Pair = typeof (AcceptCollectItem<MilkshakeHolder>)
+			});
+
+			tasks.Add (typeof (GenerateUnit<MilkshakePool>), new CostTaskSettings {
+				Title = "Birth Milkshake Derrick (15M)",
+				Description = "Creates a new milkshake derrick",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 15 }
+				}
+			});
+
 			tasks.Add (typeof (AutoStartTest), new TaskSettings {
 				Title = "Auto Start Test",
 				Description = "Tests to see if the action starts by itself upon creation",

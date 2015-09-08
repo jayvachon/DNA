@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using GameActions;
 using GameInventory;
+using DNA.Tasks;
 
 public class UnitInfoBox : MBRefs {
 
@@ -30,7 +31,9 @@ public class UnitInfoBox : MBRefs {
 
 	UnitInfoContent content;
 	Inventory inventory;
-	PerformableActions performableActions;
+	//PerformableActions performableActions;
+	PerformableTasks performableTasks;
+
 	List<GameObject> elders = new List<GameObject> ();
 	List<GameObject> holders = new List<GameObject> ();
 	List<GameObject> actions = new List<GameObject> ();
@@ -79,17 +82,21 @@ public class UnitInfoBox : MBRefs {
 		title.text = content.Title;
 		inventory = content.Inventory;
 		inventory.inventoryUpdated += OnInventoryUpdated;
-		performableActions = content.PerformableActions;
+		
+		/*performableActions = content.PerformableActions;
 		if (performableActions != null) {
 			performableActions.actionsUpdated += OnActionsUpdated;
-		}
+		}*/
+		performableTasks = content.PerformableTasks;
+
 		MyTransform.SetParent (transform, false);
 		LocalPosition = creationPosition;
 
 		List<ItemHolder> itemHolders = inventory.Holders;
 		InitInventory (itemHolders);
 		InitElders (itemHolders);
-		InitActions ();
+		//InitActions ();
+		InitTasks ();
 
 		SetColliderSize ();
 		Canvas.enabled = true;
@@ -168,9 +175,24 @@ public class UnitInfoBox : MBRefs {
 		}
 	}
 
+	void InitTasks () {
+
+		if (performableTasks == null)
+			return;
+
+		bool hasInputTask = false;
+		foreach (var task in performableTasks.EnabledTasks) {
+			string name = task.Value.Settings.Title;
+			if (name != null && name != "") {
+				//CreateAction (name, )
+			}
+		}
+	}
+
+	// deprecate
 	void InitActions () {
 		
-		if (performableActions == null)
+		/*if (performableActions == null)
 			return;
 
 		bool hasInputAction = false;
@@ -182,15 +204,25 @@ public class UnitInfoBox : MBRefs {
 			}
 		}
 
-		ActionsSetActive (hasInputAction);
+		ActionsSetActive (hasInputAction);*/
 	}
 
-	void CreateAction (string id, string inputName) {
+	void CreateTask (string name) {
 		Transform t = ObjectCreator.Instance.Create<ActionButton> ();
 		t.SetParent (actionsGroup.transform);
 		t.Reset ();
-		t.GetScript<ActionButton> ().Init (id, inputName, OnActionButtonPress);
+		// TODO: left off here - create a TaskButton
+		//t.GetScript<ActionButton> ().Init (id, inputName, OnActionButtonPress);
 		actions.Add (t.gameObject);
+	}
+
+	// deprecate
+	void CreateAction (string id, string inputName) {
+		/*Transform t = ObjectCreator.Instance.Create<ActionButton> ();
+		t.SetParent (actionsGroup.transform);
+		t.Reset ();
+		t.GetScript<ActionButton> ().Init (id, inputName, OnActionButtonPress);
+		actions.Add (t.gameObject);*/
 	}
 
 	/**
@@ -202,9 +234,9 @@ public class UnitInfoBox : MBRefs {
 		if (inventory != null) {
 			inventory.inventoryUpdated -= OnInventoryUpdated;
 		}
-		if (performableActions != null) {
+		/*if (performableActions != null) {
 			performableActions.actionsUpdated -= OnActionsUpdated;
-		}
+		}*/
 		if (content != null) {
 			content.contentUpdated -= OnContentUpdated;
 		}
@@ -278,7 +310,7 @@ public class UnitInfoBox : MBRefs {
 	}
 
 	void OnActionButtonPress (string id) {
-		performableActions.Start (id);
+		//performableActions.Start (id);
 	}
 
 	void OnContentUpdated () {

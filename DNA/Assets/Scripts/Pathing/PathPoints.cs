@@ -61,7 +61,7 @@ namespace Pathing {
 
 		public int Count { get { return points.Count; } }
 		public bool Empty { get { return Count == 0; } }
-		public bool Loop { get { return FirstPoint == LastPoint; } }
+		public bool Loop { get { return Count > 1 && FirstPoint == LastPoint; } }
 
 		public PathPoints (int maxLength, bool allowLoop) {
 			this.maxLength = maxLength;

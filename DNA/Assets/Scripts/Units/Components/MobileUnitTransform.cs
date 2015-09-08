@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathing;
 using GameActions;
+using DNA.Tasks;
 
 namespace Units {
 
@@ -46,6 +47,7 @@ namespace Units {
 		float xMax = 1.25f;
 		float TWO_PI;
 		float yPos;
+		bool performing = false;
 
 		protected override void Awake () {
 			base.Awake ();
@@ -70,11 +72,22 @@ namespace Units {
 		}
 
 		public bool ArriveAtPoint (PathPoint point) {
-			if (MobileUnit.OnBindActionable (point)) {
+			if (MobileUnit.OnArriveAtPoint (point)) {
+				performing = true;
+				EncircleBoundUnit (false, point.StaticUnit.Position);
+				return true;
+			}
+			return false; // TODO: don't return anything
+
+			/*if (MobileUnit.OnBindActionable (point)) {
 				EncircleBoundUnit ();
 				return true;
 			}
-			return false;
+			return false;*/
+		}
+
+		public void OnCompleteTask () {
+			performing = false;
 		}
 
 		void ResetPath () {
@@ -82,11 +95,15 @@ namespace Units {
 			StopMovingOnPath ();
 		}
 
-		public void EncircleBoundUnit () {
+		public void EncircleBoundUnit (bool overridePosition, Vector3 position) {
 			if (movementState == MovementState.Working) return;
 			movementState = MovementState.Working;
-			StaticUnit su = (StaticUnit)BoundAcceptor;
-			StartCoroutine (CoEncircleBoundUnit (su.Position));
+			if (overridePosition) {
+				StaticUnit su = (StaticUnit)BoundAcceptor;
+				StartCoroutine (CoEncircleBoundUnit (su.Position));
+			} else {
+				StartCoroutine (CoEncircleBoundUnit (position));
+			}
 		}
 
 		// TODO: clean up
@@ -97,7 +114,8 @@ namespace Units {
 			float offset = Parent.localEulerAngles.y + ((sign > 0) ? 90f : 270f);
 			float speed = Path.Speed * xMax * 2f; // Path speed * diameter
 
-			while (p < 1f || MobileUnit.PerformableActions.Performing && BoundAcceptor != null) {
+			//while (p < 1f || MobileUnit.PerformableActions.Performing && BoundAcceptor != null) {
+			while (p < 1f || performing) {
 				if (p >= 1f) p = 0f;
 				p += speed * Time.deltaTime;
 				if (sign > 0) {

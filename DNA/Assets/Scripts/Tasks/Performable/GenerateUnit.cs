@@ -5,10 +5,18 @@ using GameInventory;
 
 namespace DNA.Tasks {
 
-	public class GenerateUnit<T> : CostTask where T : Unit {
+	public class GenerateUnit : CostTask {
+		public Unit GeneratedUnit { get; protected set; }
+		public GenerateUnit (Inventory inventory=null) : base (inventory) {}
+	}
+
+	public class GenerateUnit<T> : GenerateUnit where T : Unit {
+
+		public GenerateUnit (Inventory inventory=null) : base (inventory) {}
 
 		protected override void OnEnd () {
-			Unit unit = ObjectCreator.Instance.Create<T> ().GetScript<Unit> ();
+			Purchase ();
+			GeneratedUnit = ObjectCreator.Instance.Create<T> ().GetScript<Unit> ();
 			base.OnEnd ();
 		}
 	}

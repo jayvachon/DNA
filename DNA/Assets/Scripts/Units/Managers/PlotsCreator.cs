@@ -53,8 +53,8 @@ namespace Units {
 		Unit CreateUnitAtIndex (Vector3 position, int index) {
 			switch (index) {
 				case 0: return (Unit)CreateUnit<GivingTreeUnit> (position);
-				/*case 1: return (Unit)CreateUnit<MilkshakePool> (position);
-				case 20: return (Unit)CreateUnit<MilkshakePool> (position);
+				case 4: return (Unit)CreateUnit<MilkshakePool> (position);
+				/*case 20: return (Unit)CreateUnit<MilkshakePool> (position);
 				case 40: return (Unit)CreateUnit<MilkshakePool> (position);
 				case 60: return (Unit)CreateUnit<MilkshakePool> (position);*/
 				default: 

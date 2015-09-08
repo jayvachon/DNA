@@ -6,7 +6,7 @@ using GameInput;
 
 namespace Units {
 
-	public class Corpse : MobileUnit, IActionPerformer {
+	public class Corpse : MobileUnit {
 
 		public override string Name { get { return "Remains"; } }
 
@@ -23,9 +23,9 @@ namespace Units {
 			Inventory.Add (yearHolder);
 
 			//PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
+			/*PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
 			PerformableActions.Add (new DeliverAllYears ());
-			PerformableActions.Add (new ConsumeItem<YearHolder> ());
+			PerformableActions.Add (new ConsumeItem<YearHolder> ());*/
 		}
 
 		void Start () {
@@ -38,7 +38,7 @@ namespace Units {
 			NotificationCenter.Instance.ShowNotification ("elderDied");
 		}
 
-		protected override void OnBind () {
+		/*protected override void OnBind () {
 			UnbindClinic ();
 			Clinic clinic = BoundAcceptor as Clinic;
 			if (clinic != null) {
@@ -49,7 +49,7 @@ namespace Units {
 
 		protected override void OnUnbind () {
 			UnbindClinic ();
-		}
+		}*/
 
 		void UnbindClinic () {
 			if (boundClinic != null) {

@@ -36,7 +36,9 @@ namespace DNA.Tasks {
 			}
 		}
 
-		void Purchase () {
+		public CostTask (Inventory inventory=null) : base (inventory) {}
+
+		protected void Purchase () {
 			foreach (var cost in Settings.Costs)
 				Inventory[cost.Key].Remove (cost.Value);
 		}

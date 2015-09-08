@@ -3,6 +3,7 @@ using System.Collections;
 using GameActions;
 using GameInventory;
 using Units;
+using DNA.Tasks;
 
 public delegate void ContentUpdated ();
 
@@ -25,10 +26,12 @@ public class UnitInfoContent {
 		get { return inventory; }
 	}
 
-	PerformableActions performableActions = null;
+	/*PerformableActions performableActions = null;
 	public PerformableActions PerformableActions {
 		get { return performableActions; }
-	}
+	}*/
+
+	public PerformableTasks PerformableTasks { get; private set; }
 
 	Unit unit = null;
 
@@ -41,11 +44,17 @@ public class UnitInfoContent {
 		title = unit.Name;
 		description = unit.Description;
 		inventory = unit.Inventory;
-		IActionPerformer actionPerformer = unit as IActionPerformer;
+		/*IActionPerformer actionPerformer = unit as IActionPerformer;
 		if (actionPerformer != null) {
 			performableActions = actionPerformer.PerformableActions;
 		} else {
 			performableActions = null;
+		}*/
+		ITaskPerformer performer = unit as ITaskPerformer;
+		if (performer != null) {
+			PerformableTasks = performer.PerformableTasks;
+		} else {
+			PerformableTasks = null;
 		}
 		if (contentUpdated != null) {
 			contentUpdated ();

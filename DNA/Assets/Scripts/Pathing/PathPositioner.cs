@@ -29,8 +29,12 @@ namespace Pathing {
 			get { return Positions.Count; }
 		}
 
-		PathPoint CurrentPoint {
-			get { return Points.Points[forward ? position : position-1]; }
+		public PathPoint CurrentPoint {
+			get { 
+				if (Path.Points.Count == 0)
+					return null;
+				return Points.Points[forward ? position : position-1]; 
+			}
 		}
 
 		Vector3 PrevPosition {

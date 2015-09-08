@@ -70,11 +70,11 @@ public class UnitInfoBoxOverlay : MBRefs {
 		description.text = content.Description;
 
 		// Actions
-		performableActions = content.PerformableActions;
+		/*performableActions = content.PerformableActions;
 		if (performableActions != null) {
 			performableActions.actionsUpdated += OnActionsUpdated;
 		}
-		OnActionsUpdated ();
+		OnActionsUpdated ();*/
 
 		// Inventory
 		inventory = content.Inventory;

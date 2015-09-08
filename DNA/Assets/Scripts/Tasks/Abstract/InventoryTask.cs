@@ -19,6 +19,10 @@ namespace DNA.Tasks {
 				return inventory;
 			}
 		}
+
+		public InventoryTask (Inventory inventory=null) {
+			this.inventory = inventory;
+		}
 	}
 
 	public abstract class InventoryTask<T> : InventoryTask where T : ItemHolder {
@@ -47,5 +51,7 @@ namespace DNA.Tasks {
 				}
 			}
 		}
+
+		public InventoryTask (Inventory inventory=null) : base (inventory) {}
 	}
 }

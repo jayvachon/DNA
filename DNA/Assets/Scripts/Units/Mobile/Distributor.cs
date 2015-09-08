@@ -2,9 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using GameInventory;
-using GameActions;
+//using GameActions;
 using Pathing;
 using GameInput;
+using DNA.Tasks;
 
 namespace Units {
 
@@ -34,14 +35,16 @@ namespace Units {
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 			//Inventory.Get<HappinessHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
-			PerformableActions.Add (new CollectItem<MilkshakeHolder> ());
+			PerformableTasks.Add (new CollectItem<MilkshakeHolder> ());
+			PerformableTasks.Add (new DeliverItem<MilkshakeHolder> ());
+			/*PerformableActions.Add (new CollectItem<MilkshakeHolder> ());
 			PerformableActions.Add (new DeliverItem<MilkshakeHolder> ());
 			//PerformableActions.Add (new DeliverToPlayer<MilkshakeHolder> ());
 			PerformableActions.Add (new CollectItem<CoffeeHolder> ());
 			PerformableActions.Add (new DeliverItem<CoffeeHolder> ());
 			//PerformableActions.Add (new CollectHappiness ());
 			//PerformableActions.Add (new ConsumeItem<HappinessHolder> ());
-			PerformableActions.Add (new GenerateItem<YearHolder> ());
+			PerformableActions.Add (new GenerateItem<YearHolder> ());*/
 
 			Upgrades.Instance.AddListener<CoffeeCapacity> (
 				(CoffeeCapacity u) => Inventory["Coffee"].Capacity = u.CurrentValue
@@ -106,7 +109,8 @@ namespace Units {
 			Path.Active = false;
 			Elder elder = u as Elder;
 			//elder.AverageHappiness = Inventory.Get<HappinessHolder> ().Average;
-			elder.Init (BoundAcceptor);
+			//elder.Init (BoundAcceptor);
+			elder.Init (givingTree);
 			BoundAcceptor = null;
 		}
 

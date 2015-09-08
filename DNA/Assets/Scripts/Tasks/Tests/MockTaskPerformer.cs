@@ -28,7 +28,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		
 		InitInventory ();
 
-		TestBinding (this, taskAcceptor, taskAcceptor2);
+		//TestBinding (this, taskAcceptor, taskAcceptor2);
 		//TestMatching (this, taskAcceptor);
 		//TestGenerateUnit (new GenerateUnitTest<Distributor> ());
 
@@ -73,7 +73,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	public void TestRepeat (PerformerTask repeat) {
 
 		PerformableTasks.Add (repeat);
-		repeat.onEnd += () => {
+		repeat.onEnd += (PerformerTask task) => {
 			Coroutine.WaitForFixedUpdate (() => {
 				if (repeat.Performing) 
 					Debug.Log ("Repeat test succeeded :)");
@@ -122,7 +122,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	}
 
 	public void TestGenerate<T> (GenerateItem<T> gen) where T : ItemHolder {
-		gen.onComplete += () => Debug.Log ("Generate Item test succeeded :)");
+		gen.onComplete += (PerformerTask task) => Debug.Log ("Generate Item test succeeded :)");
 		PerformableTasks.Add (gen);
 		gen.Start ();
 		if (!gen.Performing)
@@ -130,7 +130,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 	}
 
 	public void TestConsume<T> (ConsumeItem<T> cons) where T : ItemHolder {
-		cons.onComplete += () => Debug.Log ("Consume Item test succeeded :)");
+		cons.onComplete += (PerformerTask task) => Debug.Log ("Consume Item test succeeded :)");
 		PerformableTasks.Add (cons);
 		cons.Start ();
 		if (!cons.Performing)
@@ -152,7 +152,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		}
 
 		taskAcceptor.ClearHolder<T> ();
-		deliver.onComplete += () => {
+		deliver.onComplete += (PerformerTask task) => {
 			taskAcceptor.ClearHolder<T> ();
 			deliver.Start (acceptDeliver);
 
@@ -183,7 +183,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 		}
 
 		taskAcceptor.FillHolder<T> ();
-		collect.onComplete += () => {
+		collect.onComplete += (PerformerTask task) => {
 			taskAcceptor.FillHolder<T> ();
 			collect.Start (acceptCollect);
 
@@ -217,7 +217,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 			Debug.Log (match.Match);
 			if (!match.NeedsPair) {
 				Debug.Log ("starting");
-				match.Match.onComplete += () => { Debug.Log ("finished"); };
+				match.Match.onComplete += (PerformerTask task) => { Debug.Log ("finished"); };
 				match.Start ();
 			} else {
 				Debug.Log ("Needs pair of type " + match.PairType);

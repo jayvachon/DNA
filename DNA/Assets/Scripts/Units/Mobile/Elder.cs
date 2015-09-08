@@ -72,12 +72,12 @@ namespace Units {
 		}
 
 		// TODO: remove this?
-		protected override void OnBind () {
+		/*protected override void OnBind () {
 			PerformableActions.SetActive ("OccupyUnit", true);
 			IActionAcceptor boundAcceptor = BoundAcceptor;
 			BoundAcceptor = null;
 			//OnBindActionable (boundAcceptor);
-		}
+		}*/
 
 		void OnHealthUpdate () {
 			if (indicator != null) indicator.Fill = healthHolder.PercentFilled;

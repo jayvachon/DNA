@@ -5,9 +5,9 @@ using DNA.Models;
 
 namespace DNA.Tasks {
 
-	public delegate void OnStart ();
-	public delegate void OnEnd ();
-	public delegate void OnComplete ();
+	public delegate void OnStart (PerformerTask task);
+	public delegate void OnEnd (PerformerTask task);
+	public delegate void OnComplete (PerformerTask task);
 
 	public abstract class PerformerTask : Task {
 
@@ -91,15 +91,15 @@ namespace DNA.Tasks {
 		}
 
 		void SendOnStartMessage () {
-			if (onStart != null) onStart ();
+			if (onStart != null) onStart (this);
 		}
 
 		protected virtual void OnEnd () {
-			if (onEnd != null) onEnd ();
+			if (onEnd != null) onEnd (this);
 		}
 
 		void SendOnCompleteMessage () {
-			if (onComplete != null) onComplete ();
+			if (onComplete != null) onComplete (this);
 		}
 
 		void Log (string message, bool printType) {

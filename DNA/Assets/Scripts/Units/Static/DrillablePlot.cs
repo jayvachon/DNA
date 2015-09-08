@@ -32,10 +32,10 @@ namespace Units {
 
 		protected override void Start () {
 			base.Start ();
-			PerformableActions.Add (
+			/*PerformableActions.Add (
 				new GenerateUnit<MilkshakePool, MilkshakeHolder> (mp.Tier.Cost, OnUnitGenerated), 
 				"Birth Milkshake Derrick (" + mp.Tier.Cost + "M)");
-			SetActiveActions ();
+			SetActiveActions ();*/
 			unitRenderer.colorHandler.DefaultColor = mp.Tier.Color;
 			unitRenderer.colorHandler.SelectColor = Color.red;
 		}

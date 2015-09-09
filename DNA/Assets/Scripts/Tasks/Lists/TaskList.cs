@@ -15,11 +15,7 @@ namespace DNA.Tasks {
 	 *		> ITaskAcceptor
 	 */
 
-	public delegate void OnTasksUpdate ();
-
 	public abstract class TaskList<T> where T : Task {
-
-		public OnTasksUpdate onTasksUpdate;
 
 		// All tasks within this TaskList
 		Dictionary<System.Type, Task> tasks = new Dictionary<System.Type, Task> ();
@@ -90,48 +86,6 @@ namespace DNA.Tasks {
 		public void DeactivateAll () {
 			ActiveTasks.Clear ();
 		}
-
-		public U Get<U> () where U : Task {
-			try {
-				return tasks[typeof (U)] as U;
-			} catch {
-				throw new System.Exception ("The task '" + typeof (U) + "' does not exist in the list\n");
-			}
-		}
-
-		public bool TaskActive (System.Type taskType) {
-			return ActiveTasks.ContainsKey (taskType);
-		}
-
-		public bool TaskEnabled (System.Type taskType) {
-			return EnabledTasks.ContainsKey (taskType);
-		}
-
-		/*public List<string> GetBoundTasks (List<string> acceptorTasks) {
-			return acceptorTasks.FindAll (x => Has (x));
-		}
-
-		public bool AcceptorHasPair (ITaskAcceptor acceptor, Task unpairedTask) {
-			return unpairedTask.EnabledState.AttemptPair (acceptor);
-		}
-
-		public List<string> GetPairedTasksBetweenAcceptors (ITaskAcceptor a, ITaskAcceptor b) {
-			AcceptableTasks aa = a.AcceptableTasks;
-			AcceptableTasks ba = b.AcceptableTasks;
-			aa.RefreshEnabledTasks ();
-			ba.RefreshEnabledTasks ();
-			List<string> paired = new List<string> ();
-			Dictionary<string, AcceptorTask> aTasks = aa.ActiveTasks;
-			foreach (var task in aTasks) {
-				if (task.Value.EnabledState.AttemptPair (b)) 
-					paired.Add (task.Key);
-			}
-			return paired;
-		}
-
-		public bool HasMatchingTask (Task task) {
-			return activeTasks.ContainsKey (task.Name);
-		}*/
 
 		/**
 		 *	Debugging

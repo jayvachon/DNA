@@ -258,6 +258,7 @@
      <Compile Include="Assets\Scripts\UI\MercuryRender.cs" />
      <Compile Include="Assets\Scripts\UI\Notifications\Notification.cs" />
      <Compile Include="Assets\Scripts\UI\Notifications\NotificationCenter.cs" />
+     <Compile Include="Assets\Scripts\UI\TaskButton.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBoxOverlay.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />

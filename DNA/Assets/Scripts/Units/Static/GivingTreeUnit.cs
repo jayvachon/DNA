@@ -8,7 +8,7 @@ using DNA.Tasks;
 
 namespace Units {
 
-	public class GivingTreeUnit : StaticUnit, IActionPerformer {
+	public class GivingTreeUnit : StaticUnit, IActionPerformer, ITaskPerformer {
 
 		public override string Name {
 			get { return "Giving Tree"; }
@@ -19,6 +19,16 @@ namespace Units {
 		}
 
 		public PerformableActions PerformableActions { get; private set; }
+
+		PerformableTasks performableTasks;
+		public PerformableTasks PerformableTasks {
+			get {
+				if (performableTasks == null) {
+					performableTasks = new PerformableTasks (this);
+				}
+				return performableTasks;
+			}
+		}
 
 		List<Vector3> createPositions;
 		List<Vector3> CreatePositions {
@@ -65,19 +75,31 @@ namespace Units {
 			//AcceptableActions.Add (new AcceptDeliverAllYears ());*/
 			AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<MilkshakeHolder> ());
 
-			PerformableActions = new PerformableActions (this);
+			PerformableTasks.Add (new DNA.Tasks.GenerateUnit<Distributor> (Player.Instance.Inventory)).onComplete += OnGenerateDistributor;
+			/*PerformableActions = new PerformableActions (this);
 			PerformableActions.OnStartAction += OnStartAction;
 			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
 			#if GENERATE_ALL
 			PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");
 			PerformableActions.Add (new GenerateUnit<Corpse, CoffeeHolder> (0, OnUnitGenerated), "Birth Corpse (temp)");
-			#endif
+			#endif*/
 		}
 
 		void OnStartAction (string id) {
 			if (id == "GenerateDistributor") {
 				//PerformableActions.SetActive ("GenerateDistributor", false);
 			}
+		}
+
+		void OnGenerateDistributor (PerformerTask task) {
+			Unit unit = ((GenerateUnit<Distributor>)task).GeneratedUnit;
+			unit.Position = CreatePositions[positionIndex];
+			if (positionIndex >= CreatePositions.Count-1) {
+				positionIndex = 0;
+			} else {
+				positionIndex ++;
+			}
+			((MobileUnit)unit).Init (PathPoint);
 		}
 
 		void OnUnitGenerated (Unit unit) {

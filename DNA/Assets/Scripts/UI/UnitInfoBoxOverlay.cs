@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameInventory;
 using GameActions;
+using DNA.Tasks;
 
 public class UnitInfoBoxOverlay : MBRefs {
 
@@ -37,7 +38,8 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 	UnitInfoContent content;
 	Inventory inventory;
-	PerformableActions performableActions;
+	//PerformableActions performableActions;
+	PerformableTasks performableTasks;
 
 	List<GameObject> actions = new List<GameObject> ();
 	List<GameObject> holders = new List<GameObject> ();
@@ -56,7 +58,7 @@ public class UnitInfoBoxOverlay : MBRefs {
 	public void Close () {
 		
 		if (inventory != null) 			inventory.inventoryUpdated -= OnInventoryUpdated;
-		if (performableActions != null) performableActions.actionsUpdated -= OnActionsUpdated;
+		//if (performableActions != null) performableActions.actionsUpdated -= OnActionsUpdated;
 		if (content != null) 			content.contentUpdated -= OnContentUpdated;
 
 		Canvas.enabled = false;
@@ -75,6 +77,10 @@ public class UnitInfoBoxOverlay : MBRefs {
 			performableActions.actionsUpdated += OnActionsUpdated;
 		}
 		OnActionsUpdated ();*/
+		performableTasks = content.PerformableTasks;
+		ClearTasks ();
+		InitTasks ();
+		//OnTasksUpdate ();
 
 		// Inventory
 		inventory = content.Inventory;
@@ -90,13 +96,43 @@ public class UnitInfoBoxOverlay : MBRefs {
 	}
 
 	void OnActionsUpdated () {
-		ClearActions ();
-		InitActions ();
+		//ClearActions ();
+		//InitActions ();
+	}
+
+	// Tasks
+
+	void InitTasks () {
+
+		if (performableTasks != null) {
+			foreach (var task in performableTasks.EnabledTasks) {
+				Debug.Log (task.Value);
+				if (task.Value.Settings.Title != "")
+					CreateTask (task.Value);
+			}
+		}
+
+		actionSection.SetActive (actions.Count > 0);
+	}
+
+	void CreateTask (PerformerTask task) {
+		Transform t = ObjectCreator.Instance.Create<TaskButton> ();
+		t.SetParent (actionsGroup.transform);
+		t.Reset ();
+		t.GetScript<TaskButton> ().Init (task);
+		actions.Add (t.gameObject);
+	}
+
+	void ClearTasks () {
+		foreach (GameObject task in actions) {
+			ObjectPool.Destroy (task);
+		}
+		actions.Clear ();
 	}
 
 	// Actions
 
-	void InitActions () {
+	/*void InitActions () {
 		
 		if (performableActions == null) return;
 
@@ -127,7 +163,7 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 	void OnActionButtonPress (string id) {
 		performableActions.Start (id);
-	}
+	}*/
 
 	// Inventory
 

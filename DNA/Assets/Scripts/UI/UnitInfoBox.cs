@@ -182,10 +182,9 @@ public class UnitInfoBox : MBRefs {
 
 		bool hasInputTask = false;
 		foreach (var task in performableTasks.EnabledTasks) {
-			string name = task.Value.Settings.Title;
-			if (name != null && name != "") {
-				//CreateAction (name, )
-			}
+			Debug.Log (task.Value);
+			if (task.Value.Settings.Title != "")
+				CreateTask (task.Value);
 		}
 	}
 
@@ -207,8 +206,8 @@ public class UnitInfoBox : MBRefs {
 		ActionsSetActive (hasInputAction);*/
 	}
 
-	void CreateTask (string name) {
-		Transform t = ObjectCreator.Instance.Create<ActionButton> ();
+	void CreateTask (PerformerTask task) {
+		Transform t = ObjectCreator.Instance.Create<TaskButton> ();
 		t.SetParent (actionsGroup.transform);
 		t.Reset ();
 		// TODO: left off here - create a TaskButton

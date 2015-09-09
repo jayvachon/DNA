@@ -39,7 +39,7 @@ namespace DNA.Models {
 			tasks = new Dictionary<System.Type, TaskSettings> ();
 			
 			tasks.Add (typeof (CollectItem<MilkshakeHolder>), new TaskSettings {
-				Title = "Collect Milkshakes",
+				Title = "",
 				Description = "Collects milkshakes",
 				Duration = 0.5f,
 				AutoStart = false,
@@ -48,7 +48,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (DeliverItem<MilkshakeHolder>), new TaskSettings {
-				Title = "Deliver Milkshakes",
+				Title = "",
 				Description = "Delivers milkshakes",
 				Duration = 0.5f,
 				AutoStart = false,
@@ -65,6 +65,18 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new Dictionary<string, int> {
 					{ "Milkshakes", 15 }
+				}
+			});
+
+			tasks.Add (typeof (GenerateUnit<Distributor>), new CostTaskSettings {
+				Title = "Birth Laborer (15C)",
+				Description = "Creates a new laborer",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Coffee", 15 }
 				}
 			});
 

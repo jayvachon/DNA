@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
-using GameActions;
+using DNA.InventorySystem;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class GivingTreeRipe : StaticUnit, IActionPerformer {
+	public class GivingTreeRipe : StaticUnit {
 
 		public override string Name {
 			get { return "Ripe Giving Tree"; }
@@ -15,17 +14,12 @@ namespace Units {
 			get { return "To avoid drowning in the rising sea you can flee this tree and go to the next dimension."; }
 		}
 
-		public PerformableActions PerformableActions { get; private set; }
-
 		void Awake () {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (new YearHolder (500, 0));
 
-			AcceptableActions = new AcceptableActions (this);
-			
-			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new FleeTree (), "Flee Tree");
+			/*PerformableActions.Add (new FleeTree (), "Flee Tree");*/
 		}
 	}
 }

@@ -5,14 +5,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathing;
-using GameActions;
-using GameInput;
-using GameEvents;
+using DNA.InputSystem;
+using DNA.EventSystem;
 using DNA.Tasks;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class MobileUnit : Unit, IActionPerformer, ITaskPerformer {
+	public class MobileUnit : Unit, ITaskPerformer {
 
 		MobileUnitTransform mobileTransform;
 		public MobileUnitTransform MobileTransform {
@@ -45,7 +44,7 @@ namespace Units {
 			}
 		}
 
-		MoveOnPath moveOnPath;
+		/*MoveOnPath moveOnPath;
 		PerformableActions performableActions = null;
 		public PerformableActions PerformableActions { 
 			get {
@@ -56,7 +55,7 @@ namespace Units {
 				}
 				return performableActions;
 			}
-		}
+		}*/
 
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
@@ -68,7 +67,7 @@ namespace Units {
 			}
 		}
 
-		public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
+		//public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
 		
 		PathPoint CurrentPoint { 
 			get {
@@ -81,9 +80,6 @@ namespace Units {
 		}
 
 		PathPoint Destination { get; set; }
-
-		bool moveOnRelease = true;
-		bool interrupt = false;
 
 		protected PathPoint givingTree;
 		PathPoint currentPoint; // TODO: move to PathPoints

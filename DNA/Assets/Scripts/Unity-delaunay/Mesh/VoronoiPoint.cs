@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInput;
+using DNA.InputSystem;
 
 public class VoronoiPoint : MBRefs, IDraggable {
 

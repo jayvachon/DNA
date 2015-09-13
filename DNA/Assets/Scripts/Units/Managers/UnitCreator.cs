@@ -3,7 +3,7 @@ using System.Collections;
 
 // TODO: Use ObjectCreator instead
 // + add Units to ObjectBank (instead of UnitsList)
-namespace Units {
+namespace DNA.Units {
 
 	public class UnitCreator : MonoBehaviour {
 

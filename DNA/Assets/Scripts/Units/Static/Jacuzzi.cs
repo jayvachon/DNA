@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
-using GameActions;
+using DNA.InventorySystem;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class Jacuzzi : StaticUnit, IActionPerformer {
+	public class Jacuzzi : StaticUnit {
 
 		public override string Name {
 			get { return "Jacuzzi"; }
@@ -19,8 +18,6 @@ namespace Units {
 			get { return false; }
 		}
 		
-		public PerformableActions PerformableActions { get; private set; }
-
 		HappinessHolder happinessHolder = new HappinessHolder (50, 50);
 		HappinessIndicator indicator;
 
@@ -29,11 +26,9 @@ namespace Units {
 			Inventory = new Inventory (this);
 			Inventory.Add (happinessHolder);
 
-			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add (new AcceptCollectHappiness ());
+			/*AcceptableActions.Add (new AcceptCollectHappiness ());*/
 
-			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new GenerateItem<HappinessHolder> ());
+			//PerformableActions.Add (new GenerateItem<HappinessHolder> ());
 		}
 
 		public override void OnPoolCreate () {

@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
-using GameActions;
-using GameInput;
+using DNA.InventorySystem;
+using DNA.InputSystem;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class Corpse : MobileUnit {
 
@@ -54,7 +53,7 @@ namespace Units {
 		void UnbindClinic () {
 			if (boundClinic != null) {
 				boundClinic.Inventory.RemoveItem<ElderHolder> ();
-				PerformableActions.SetActive ("DeliverElder", true);
+				// PerformableActions.SetActive ("DeliverElder", true);
 				boundClinic = null;
 			}
 		}

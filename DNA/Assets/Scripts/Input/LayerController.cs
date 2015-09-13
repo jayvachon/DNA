@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameInput {
+namespace DNA.InputSystem {
 
 	public enum InputLayer {
 		UI = 5,

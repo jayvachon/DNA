@@ -4,7 +4,7 @@ using System.Collections.Generic;
 // gist by: https://gist.github.com/wmiller/3903205#file-events-cs
 // found at: http://www.willrmiller.com/?p=87
 
-namespace GameEvents {
+namespace DNA.EventSystem {
 	
 	public class GameEvent {}
 

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameEvents;
+using DNA.EventSystem;
 
-namespace GameInput {
+namespace DNA.InputSystem {
 
 	public delegate void OnRegisterClick (ClickSettings clickSettings);
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Units {
+namespace DNA.Units {
 
 	[System.Serializable]
 	public class UnitColorHandler : System.Object {

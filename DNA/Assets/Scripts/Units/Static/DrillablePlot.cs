@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameInventory;
-using GameActions;
-using GameInput;
-using GameEvents;
+using DNA.InventorySystem;
+using DNA.InputSystem;
+using DNA.EventSystem;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class DrillablePlot : Plot {
 
@@ -32,20 +31,12 @@ namespace Units {
 
 		protected override void Start () {
 			base.Start ();
-			/*PerformableActions.Add (
-				new GenerateUnit<MilkshakePool, MilkshakeHolder> (mp.Tier.Cost, OnUnitGenerated), 
-				"Birth Milkshake Derrick (" + mp.Tier.Cost + "M)");
-			SetActiveActions ();*/
 			unitRenderer.colorHandler.DefaultColor = mp.Tier.Color;
 			unitRenderer.colorHandler.SelectColor = Color.red;
 		}
 
-		protected override void GenerateUnit (string id) {
-			base.GenerateUnit (id);
-		}
-
 		protected override void DestroyThis () {
-			ObjectCreator.Instance.Destroy<DrillablePlot> (transform);
+			DestroyThis<DrillablePlot> ();
 		}
 
 		public void GeneratePaths (Unit a, Unit b, Unit c=null) {

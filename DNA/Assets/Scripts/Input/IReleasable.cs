@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace GameInput {
+namespace DNA.InputSystem {
 					 
 	public interface IReleasable {
 		void OnRelease (ReleaseSettings releaseSettings);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameEvents {
+namespace DNA.EventSystem {
 	public class UnselectEvent : GameEvent {}
 }

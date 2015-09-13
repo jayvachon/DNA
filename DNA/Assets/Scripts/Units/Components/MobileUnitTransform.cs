@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pathing;
-using GameActions;
 using DNA.Tasks;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class MobileUnitTransform : UnitTransform, IPathable {
 
@@ -68,7 +67,7 @@ namespace Units {
 
 		public void StopMovingOnPath () {
 			movementState = MovementState.Idling;
-			MobileUnit.PerformableActions.Stop ("MoveOnPath");
+			//MobileUnit.PerformableActions.Stop ("MoveOnPath");
 		}
 
 		public bool ArriveAtPoint (PathPoint point) {
@@ -99,8 +98,8 @@ namespace Units {
 			if (movementState == MovementState.Working) return;
 			movementState = MovementState.Working;
 			if (overridePosition) {
-				StaticUnit su = (StaticUnit)BoundAcceptor;
-				StartCoroutine (CoEncircleBoundUnit (su.Position));
+				//StaticUnit su = (StaticUnit)BoundAcceptor;
+				//StartCoroutine (CoEncircleBoundUnit (su.Position));
 			} else {
 				StartCoroutine (CoEncircleBoundUnit (position));
 			}

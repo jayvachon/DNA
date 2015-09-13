@@ -1,24 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameActions;
-using Units;
+using DNA.Units;
 
-namespace GameInventory {
+namespace DNA.InventorySystem {
 
 	public class BedItem : Item {
 
 		public bool IsElder {
-			get { return performer is Elder; }
+			get { return false; } //return performer is Elder; }
 		}
 
 		public bool IsCorpse {
-			get { return performer is Corpse; }
+			get { return false; } //return performer is Corpse; }
 		}
 
-		IActionPerformer performer;
+		//IActionPerformer performer;
 
-		public BedItem (IActionPerformer performer) {
-			this.performer = performer;
+		public BedItem (/*IActionPerformer performer*/) {
+			//this.performer = performer;
 		}
 	}
 }

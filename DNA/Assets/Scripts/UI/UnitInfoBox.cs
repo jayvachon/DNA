@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using GameActions;
-using GameInventory;
+using DNA.InventorySystem;
 using DNA.Tasks;
+
+// Deprecate
 
 public class UnitInfoBox : MBRefs {
 
@@ -83,10 +84,6 @@ public class UnitInfoBox : MBRefs {
 		inventory = content.Inventory;
 		inventory.inventoryUpdated += OnInventoryUpdated;
 		
-		/*performableActions = content.PerformableActions;
-		if (performableActions != null) {
-			performableActions.actionsUpdated += OnActionsUpdated;
-		}*/
 		performableTasks = content.PerformableTasks;
 
 		MyTransform.SetParent (transform, false);
@@ -180,30 +177,10 @@ public class UnitInfoBox : MBRefs {
 		if (performableTasks == null)
 			return;
 
-		bool hasInputTask = false;
 		foreach (var task in performableTasks.EnabledTasks) {
-			Debug.Log (task.Value);
 			if (task.Value.Settings.Title != "")
 				CreateTask (task.Value);
 		}
-	}
-
-	// deprecate
-	void InitActions () {
-		
-		/*if (performableActions == null)
-			return;
-
-		bool hasInputAction = false;
-		foreach (var action in performableActions.ActiveActions) {
-			string name = action.Value.Name;
-			if (performableActions.Inputs.ContainsKey (name)) {
-				CreateAction (name, performableActions.Inputs[name]);
-				hasInputAction = true;
-			}
-		}
-
-		ActionsSetActive (hasInputAction);*/
 	}
 
 	void CreateTask (PerformerTask task) {
@@ -233,9 +210,6 @@ public class UnitInfoBox : MBRefs {
 		if (inventory != null) {
 			inventory.inventoryUpdated -= OnInventoryUpdated;
 		}
-		/*if (performableActions != null) {
-			performableActions.actionsUpdated -= OnActionsUpdated;
-		}*/
 		if (content != null) {
 			content.contentUpdated -= OnContentUpdated;
 		}
@@ -243,7 +217,7 @@ public class UnitInfoBox : MBRefs {
 		Canvas.enabled = false;
 		ClearInventory ();
 		ClearElders ();
-		ClearActions ();
+		ClearTasks ();
 		DeactivateCollider ();
 		MyTransform.SetParent (null);
 	}
@@ -269,7 +243,7 @@ public class UnitInfoBox : MBRefs {
 		EldersSetActive (false);
 	}
 
-	void ClearActions () {
+	void ClearTasks () {
 		foreach (GameObject action in actions) {
 			ObjectPool.Destroy (action);
 		}
@@ -303,11 +277,6 @@ public class UnitInfoBox : MBRefs {
 		InitElders (inventory.Holders);
 	}
 
-	void OnActionsUpdated () {
-		ClearActions ();
-		InitActions ();
-	}
-
 	void OnActionButtonPress (string id) {
 		//performableActions.Start (id);
 	}
@@ -317,8 +286,7 @@ public class UnitInfoBox : MBRefs {
 		InitInventory (inventory.Holders);
 		ClearElders ();
 		InitElders (inventory.Holders);
-		ClearActions ();
-		InitActions ();
+		ClearTasks ();
 		title.text = content.Title;
 		SetColliderSize ();
 	}

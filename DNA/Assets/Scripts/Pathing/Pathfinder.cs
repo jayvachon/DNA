@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pathing;
-using Units;
+using DNA.Units;
 using DNA.Tasks;
 
 public class Pathfinder : MBRefs {
@@ -37,8 +37,9 @@ public class Pathfinder : MBRefs {
 	}
 
 	public PathPoint FindNearestWithAction (Vector3 position, string action) {
-		StaticUnit su = FindNearest (position, StaticUnits.FindAll (x => x.AcceptableActions.Has (action)));
-		return (su == null) ? null : su.PathPoint;
+		//StaticUnit su = FindNearest (position, StaticUnits.FindAll (x => x.AcceptableActions.Has (action)));
+		//return (su == null) ? null : su.PathPoint;
+		return null;
 	}
 
 	StaticUnit FindNearest (Vector3 position, List<StaticUnit> matches) {

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace GameInventory {
+namespace DNA.InventorySystem {
 
 	public interface IInventoryHolder {
 

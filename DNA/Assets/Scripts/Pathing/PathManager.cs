@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameEvents;
-using GameInput;
-using Units;
+using DNA.EventSystem;
+using DNA.InputSystem;
+using DNA.Units;
 
 namespace Pathing {
 

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameInventory;
-using Units;
+using DNA.InventorySystem;
+using DNA.Units;
 using DNA.Tasks;
 
 public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder {

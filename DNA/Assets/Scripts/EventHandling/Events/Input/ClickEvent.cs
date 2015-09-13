@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameInput;
+using DNA.InputSystem;
 
-namespace GameEvents {
+namespace DNA.EventSystem {
 	
 	public class ClickEvent : GameEvent {
 		

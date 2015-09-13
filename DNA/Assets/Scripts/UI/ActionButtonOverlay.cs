@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+// Deprecate
+
 //public delegate void ActionButtonPress (string id);
 
 public class ActionButtonOverlay : MonoBehaviour, IPoolable {

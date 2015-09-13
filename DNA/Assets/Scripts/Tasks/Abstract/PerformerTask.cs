@@ -12,13 +12,21 @@ namespace DNA.Tasks {
 	public abstract class PerformerTask : Task {
 
 		public float Progress { get; private set; }
-		public ITaskPerformer Performer { get; set; }
+		
+		ITaskPerformer performer;
+		public ITaskPerformer Performer { 
+			get { return performer; }
+			set {
+				performer = value;
+				if (settings.AutoStart) Start ();
+			}
+		}
 
 		public TaskSettings Settings {
 			get { return settings; }
 		}
 
-		// For testing
+		// For testing (?)
 		public bool Performing {
 			get { return performing; }
 		}
@@ -37,7 +45,6 @@ namespace DNA.Tasks {
 			settings = DataManager.GetTaskSettings (this.GetType ());
 			if (settings.Repeat && settings.Duration == 0)
 				throw new System.Exception (this.GetType () + " is marked as repeating with a duration of 0. This will cause the game to hang.");
-			if (settings.AutoStart) Start ();
 		}
 
 		public void Start (AcceptorTask acceptTask) {

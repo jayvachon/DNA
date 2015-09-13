@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInput;
+using DNA.InputSystem;
 using Pathing;
-using GameActions;
 using DNA.Tasks;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class StaticUnit : Unit, IActionAcceptor, ITaskAcceptor {
+	public class StaticUnit : Unit, ITaskAcceptor {
 
 		StaticUnitTransform staticTransform;
 		public StaticUnitTransform StaticTransform {
@@ -24,7 +23,6 @@ namespace Units {
 		}
 
 		public PathPoint PathPoint { get; set; }
-		public AcceptableActions AcceptableActions { get; protected set; }
 
 		AcceptableTasks acceptableTasks;
 		public AcceptableTasks AcceptableTasks {
@@ -46,7 +44,7 @@ namespace Units {
 			} else {
 				ObjectCreator.Instance.Destroy<PathPoint> (PathPoint.MyTransform);
 			}
-			ObjectCreator.Instance.Destroy<T> (transform);
+			DestroyThis<T> ();
 		}
 	}
 }

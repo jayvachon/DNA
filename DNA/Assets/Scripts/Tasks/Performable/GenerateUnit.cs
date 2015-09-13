@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Units;
-using GameInventory;
+using DNA.Units;
+using DNA.InventorySystem;
 
 namespace DNA.Tasks {
 

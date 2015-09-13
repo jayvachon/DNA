@@ -1,13 +1,13 @@
-﻿#undef SHORTLIFE
+﻿#define SHORTLIFE
 using UnityEngine;
 using System.Collections;
-using GameInventory;
-using GameActions;
-using GameInput;
+using DNA.InventorySystem;
+using DNA.InputSystem;
+using DNA.Tasks;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class CoffeePlant : StaticUnit, IActionPerformer {
+	public class CoffeePlant : StaticUnit, ITaskPerformer {
 
 		public override string Name {
 			get { return "Coffee Plant"; }
@@ -17,7 +17,15 @@ namespace Units {
 			get { return "Deliver coffee to the Giving Tree to create more Laborers."; }
 		}
 		
-		public PerformableActions PerformableActions { get; private set; }
+		PerformableTasks performableTasks;
+		public PerformableTasks PerformableTasks {
+			get {
+				if (performableTasks == null) {
+					performableTasks = new PerformableTasks (this);
+				}
+				return performableTasks;
+			}
+		}
 
 		#if SHORTLIFE
 		static bool shortLife = false;
@@ -27,21 +35,18 @@ namespace Units {
 			
 			Inventory = new Inventory (this);
 			Inventory.Add (new CoffeeHolder (20, 0));
-			Inventory.Add (new YearHolder (30, 0));
+			Inventory.Add (new YearHolder (150, 0));
 			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
-			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add (new AcceptCollectItem<CoffeeHolder> ());
+			AcceptableTasks.Add (new AcceptCollectItem<CoffeeHolder> ());
 
-			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new GenerateItem<CoffeeHolder> ());
-			PerformableActions.Add (new ConsumeItem<YearHolder> (TimerValues.Instance.Year));
-			PerformableActions.SetActive ("ConsumeYear", false);
+			PerformableTasks.Add (new GenerateItem<CoffeeHolder> ());
+			PerformableTasks.Add (new ConsumeItem<YearHolder> ()).onComplete += OnDie;
+
 		}
 
 		public override void OnPoolCreate () {
 			base.OnPoolCreate ();
-			Inventory.Get<YearHolder> ().HolderEmptied += OnDie;
 			Inventory.Get<YearHolder> ().Initialize ();
 			#if SHORTLIFE
 			if (!shortLife) {
@@ -49,13 +54,10 @@ namespace Units {
 				shortLife = true;
 			}
 			#endif
-			PerformableActions.SetActive ("ConsumeYear", true);
+			PerformableTasks[typeof (DNA.Tasks.ConsumeItem<YearHolder>)].Start ();
 		}
 
-		void OnDie () {
-			Inventory.Get<YearHolder> ().HolderEmptied -= OnDie;
-			PerformableActions.Stop ("ConsumeYear");
-			PerformableActions.SetActive ("ConsumeYear", false);
+		void OnDie (PerformerTask task) {
 			Destroy<CoffeePlant> ();
 		}
 	}

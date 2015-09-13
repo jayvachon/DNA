@@ -1,5 +1,5 @@
 ﻿
-namespace GameInput {
+namespace DNA.InputSystem {
 	
 	public interface IHoverable {
 

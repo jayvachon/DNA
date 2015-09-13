@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInput;
+using DNA.InputSystem;
 
-namespace GameEvents {
+namespace DNA.EventSystem {
 	
 	public class ReleaseEvent : GameEvent {
 

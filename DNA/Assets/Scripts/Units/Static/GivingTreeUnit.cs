@@ -2,13 +2,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameInventory;
-using GameActions;
+using DNA.InventorySystem;
 using DNA.Tasks;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class GivingTreeUnit : StaticUnit, IActionPerformer, ITaskPerformer {
+	public class GivingTreeUnit : StaticUnit, ITaskPerformer {
 
 		public override string Name {
 			get { return "Giving Tree"; }
@@ -17,8 +16,6 @@ namespace Units {
 		public override string Description {
 			get { return "The Giving Tree gives birth to Laborers and is also a portal to the next dimension."; }
 		}
-
-		public PerformableActions PerformableActions { get; private set; }
 
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
@@ -54,19 +51,9 @@ namespace Units {
 
 		int positionIndex = 4;
 
-		/*public Inventory Inventory {
-			get { return Player.Instance.Inventory; }
-		}*/		
-
 		void Awake () {
 
-			Inventory = new Inventory (this);
-			Inventory.Add (new CoffeeHolder (100, 50));
-			Inventory.Add (new MilkshakeHolder (100000, 30));
-			Inventory.Add (new YearHolder (350, 0));
-			Inventory.Get<YearHolder> ().HolderFilled += OnYearsCollected;
-			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, true);
-			Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
+			Inventory = Player.Instance.Inventory;
 
 			/*AcceptableActions = new AcceptableActions (this);
 			//AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
@@ -74,8 +61,9 @@ namespace Units {
 			AcceptableActions.Add (new AcceptCollectItem<MilkshakeHolder> ());
 			//AcceptableActions.Add (new AcceptDeliverAllYears ());*/
 			AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<MilkshakeHolder> ());
+			AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<CoffeeHolder> ());
 
-			PerformableTasks.Add (new DNA.Tasks.GenerateUnit<Distributor> (Player.Instance.Inventory)).onComplete += OnGenerateDistributor;
+			PerformableTasks.Add (new DNA.Tasks.GenerateUnit<Distributor> ()).onComplete += OnGenerateDistributor;
 			/*PerformableActions = new PerformableActions (this);
 			PerformableActions.OnStartAction += OnStartAction;
 			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
@@ -85,6 +73,7 @@ namespace Units {
 			#endif*/
 		}
 
+		// Deprecate
 		void OnStartAction (string id) {
 			if (id == "GenerateDistributor") {
 				//PerformableActions.SetActive ("GenerateDistributor", false);

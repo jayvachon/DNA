@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameEvents;
+using DNA.EventSystem;
 
-namespace GameInput {
+namespace DNA.InputSystem {
 	
 	public static class SelectionManager {
 

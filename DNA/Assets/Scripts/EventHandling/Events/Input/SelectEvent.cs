@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInput;
-using Units;
+using DNA.InputSystem;
+using DNA.Units;
 
-namespace GameEvents {
+namespace DNA.EventSystem {
 
 	public class SelectEvent : GameEvent {
 

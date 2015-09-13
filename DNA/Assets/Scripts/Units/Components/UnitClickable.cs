@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInput;
+using DNA.InputSystem;
 
-namespace Units {
+namespace DNA.Units {
 
 	// Inherit from this class to handle selection on click
 	// rename to UnitCollider

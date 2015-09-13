@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathing;
-using GameActions;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class UnitComponent : MBRefs {
 
@@ -59,11 +58,11 @@ namespace Units {
 			}
 		}
 
-		public IActionAcceptor BoundAcceptor {
+		/*public IActionAcceptor BoundAcceptor {
 			get { return MobileUnit.BoundAcceptor; }
-		}
+		}*/
 
-		PerformableActions performableActions;
+		/*PerformableActions performableActions;
 		protected PerformableActions PerformableActions {
 			get {
 				if (performableActions == null) {
@@ -71,6 +70,6 @@ namespace Units {
 				}
 				return performableActions;
 			}
-		}
+		}*/
 	}
 }

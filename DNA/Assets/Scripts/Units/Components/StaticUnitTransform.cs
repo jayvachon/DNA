@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathing;
-using GameInput;
+using DNA.InputSystem;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class StaticUnitTransform : UnitTransform {
 

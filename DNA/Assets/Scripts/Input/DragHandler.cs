@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GameInput {
+namespace DNA.InputSystem {
 
 	public class DragManager {
 

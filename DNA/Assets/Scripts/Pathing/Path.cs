@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInput;
-using GameEvents;
+using DNA.InputSystem;
+using DNA.EventSystem;
 
 namespace Pathing {
 	
@@ -15,7 +15,7 @@ namespace Pathing {
 
 	public class Path : MBRefs, IPoolable {
 
-		new bool active = true;
+		bool active = true;
 		public bool Active {
 			get { return active; }
 			set {
@@ -114,7 +114,7 @@ namespace Pathing {
 			pathPoints.Clear ();
 		}
 
-		public static PathPoint CreatePoint (Vector3 position, Units.StaticUnit staticUnit) {
+		public static PathPoint CreatePoint (Vector3 position, DNA.Units.StaticUnit staticUnit) {
 			PathPoint pathPoint = ObjectCreator.Instance.Create<PathPoint> (position).GetScript<PathPoint> ();
 			pathPoint.StaticUnit = staticUnit;
 			Pathfinder.Instance.AddPathPoint (pathPoint);

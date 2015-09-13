@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace GameInventory {
+namespace DNA.InventorySystem {
 	
 	public delegate void MilkshakeHolderFull ();
 

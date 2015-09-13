@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using Pathing;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class PlotsCreator : MonoBehaviour {
 

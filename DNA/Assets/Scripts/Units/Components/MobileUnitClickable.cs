@@ -1,10 +1,10 @@
 ﻿#undef DRAG_STYLE
 using UnityEngine;
 using System.Collections;
-using GameInput;
+using DNA.InputSystem;
 using Pathing;
 
-namespace Units {
+namespace DNA.Units {
 
 	// TODO: rename to MobileUnitCollider
 	#if DRAG_STYLE

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameInventory;
+using DNA.InventorySystem;
 
 public class InventoryDrawer : MBRefs, IInventoryHolder {
 

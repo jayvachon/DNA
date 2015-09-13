@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Units {
+namespace DNA.Units {
 
 	[RequireComponent (typeof (Renderer))]
 	public class UnitRenderer : UnitComponent {

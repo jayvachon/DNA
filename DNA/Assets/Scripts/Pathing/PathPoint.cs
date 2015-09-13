@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameActions;
-using GameInput;
-using Units;
+using DNA.InputSystem;
+using DNA.Units;
 
 namespace Pathing {
 
@@ -36,10 +35,6 @@ namespace Pathing {
 				staticUnit = value; 
 				staticUnitTransform = staticUnit.StaticTransform;
 			}
-		}
-
-		public IActionAcceptor ActionAcceptor {
-			get { return staticUnit as IActionAcceptor; }
 		}
 
 		public void OnDragEnter (DragSettings dragSettings) {

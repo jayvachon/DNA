@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
-using GameActions;
+using DNA.InventorySystem;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class Clinic : StaticUnit, IActionPerformer {
+	public class Clinic : StaticUnit {
 
 		public override string Name {
 			get { return "Clinic"; }
@@ -19,8 +18,6 @@ namespace Units {
 			get { return false; }
 		}
 
-		public PerformableActions PerformableActions { get; private set; }
-
 		HealthHolder healthHolder = new HealthHolder (300, 300);
 		HealthIndicator indicator;
 
@@ -29,11 +26,10 @@ namespace Units {
 			Inventory = new Inventory (this);
 			Inventory.Add (healthHolder);
 
-			AcceptableActions = new AcceptableActions (this);
-			AcceptableActions.Add (new AcceptCollectItem<HealthHolder> ());
+			//AcceptableActions.Add (new AcceptCollectItem<HealthHolder> ());
 
-			PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new GenerateItem<HealthHolder> ());
+			/*PerformableActions = new PerformableActions (this);
+			PerformableActions.Add (new GenerateItem<HealthHolder> ());*/
 		}
 
 		public override void OnPoolCreate () {

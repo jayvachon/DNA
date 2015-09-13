@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameInventory {
+namespace DNA.InventorySystem {
 	public class DistributorItem : Item {}
 }

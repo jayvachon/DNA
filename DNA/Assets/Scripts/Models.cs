@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using GameInventory;
-using Units;
+using DNA.InventorySystem;
+using DNA.Units;
 using DNA.Tasks;
 
 namespace DNA.Models {
@@ -38,6 +38,10 @@ namespace DNA.Models {
 			
 			tasks = new Dictionary<System.Type, TaskSettings> ();
 			
+			/**
+			 *	CollectItem
+			 */
+
 			tasks.Add (typeof (CollectItem<MilkshakeHolder>), new TaskSettings {
 				Title = "",
 				Description = "Collects milkshakes",
@@ -46,6 +50,32 @@ namespace DNA.Models {
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<MilkshakeHolder>)
 			});
+
+			tasks.Add (typeof (CollectItem<CoffeeHolder>), new TaskSettings {
+				Title = "",
+				Description = "Collects coffee",
+				Duration = 0.5f,
+				AutoStart = false,
+				Repeat = true,
+				Pair = typeof (AcceptDeliverItem<CoffeeHolder>)
+			});
+
+			/**
+			 *	Consume
+			 */
+
+			tasks.Add (typeof (ConsumeItem<YearHolder>), new TaskSettings {
+				Title = "",
+				Description = "Consumes year",
+				Duration = 1f,
+				AutoStart = false,
+				Repeat = true,
+				Pair = null
+			});
+
+			/**
+			 *	DeliverItem
+			 */
 
 			tasks.Add (typeof (DeliverItem<MilkshakeHolder>), new TaskSettings {
 				Title = "",
@@ -56,6 +86,32 @@ namespace DNA.Models {
 				Pair = typeof (AcceptCollectItem<MilkshakeHolder>)
 			});
 
+			tasks.Add (typeof (DeliverItem<CoffeeHolder>), new TaskSettings {
+				Title = "",
+				Description = "Delivers coffee",
+				Duration = 0.5f,
+				AutoStart = false,
+				Repeat = true,
+				Pair = typeof (AcceptCollectItem<CoffeeHolder>)
+			});
+
+			/**
+			 *	GenerateItem
+			 */
+
+			tasks.Add (typeof (GenerateItem<CoffeeHolder>), new TaskSettings {
+				Title = "",
+				Description = "Generates coffee",
+				Duration = 1.5f,
+				AutoStart = true,
+				Repeat = true,
+				Pair = null
+			});
+
+			/**
+			 *	GenerateUnit
+			 */
+
 			tasks.Add (typeof (GenerateUnit<MilkshakePool>), new CostTaskSettings {
 				Title = "Birth Milkshake Derrick (15M)",
 				Description = "Creates a new milkshake derrick",
@@ -65,6 +121,18 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new Dictionary<string, int> {
 					{ "Milkshakes", 15 }
+				}
+			});
+
+			tasks.Add (typeof (GenerateUnit<CoffeePlant>), new CostTaskSettings {
+				Title = "Birth Coffee Plant (10M)",
+				Description = "Creates a new coffee plant",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 10 }
 				}
 			});
 
@@ -79,6 +147,26 @@ namespace DNA.Models {
 					{ "Coffee", 15 }
 				}
 			});
+
+			/**
+			 *	Misc
+			 */
+
+			tasks.Add (typeof (FleeTree), new CostTaskSettings {
+				Title = "Flee Tree",
+				Description = "Goes to the next level",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 1 }
+				}
+			});
+
+			/**
+			 *	Tests
+			 */
 
 			tasks.Add (typeof (AutoStartTest), new TaskSettings {
 				Title = "Auto Start Test",
@@ -153,18 +241,6 @@ namespace DNA.Models {
 				Costs = new Dictionary<string, int> {
 					{ "Milkshakes", 1 },
 					{ "Coffee", 2 }
-				}
-			});
-
-			tasks.Add (typeof (FleeTree), new CostTaskSettings {
-				Title = "Flee Tree",
-				Description = "Goes to the next level",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 1 }
 				}
 			});
 		}

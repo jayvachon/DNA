@@ -5,8 +5,8 @@ namespace DNA.Tasks {
 
 	public class TaskDisplaySettings {
 
-		readonly string Title;
-		readonly string Description;
+		public readonly string Title;
+		public readonly string Description;
 
 		public TaskDisplaySettings (string title, string description) {
 			Title = title;

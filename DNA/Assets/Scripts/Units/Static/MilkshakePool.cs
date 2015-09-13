@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
-//using GameActions;
+using DNA.InventorySystem;
 using DNA.Tasks;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class MilkshakePool : StaticUnit {
 
@@ -21,9 +20,6 @@ namespace Units {
 			Inventory = new Inventory (this);
 			Inventory.Add (new MilkshakeHolder (50, 50));
 			Inventory.Get<MilkshakeHolder> ().HolderEmptied += OnEmpty;
-
-			//AcceptableActions = new AcceptableActions (this);
-			//AcceptableActions.Add (new AcceptCollectItem<MilkshakeHolder> ());
 
 			AcceptableTasks.Add (new AcceptCollectItem<MilkshakeHolder> ());
 		}

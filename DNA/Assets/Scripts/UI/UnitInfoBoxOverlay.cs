@@ -2,8 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using GameInventory;
-using GameActions;
+using DNA.InventorySystem;
 using DNA.Tasks;
 
 public class UnitInfoBoxOverlay : MBRefs {
@@ -38,7 +37,6 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 	UnitInfoContent content;
 	Inventory inventory;
-	//PerformableActions performableActions;
 	PerformableTasks performableTasks;
 
 	List<GameObject> actions = new List<GameObject> ();
@@ -57,9 +55,8 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 	public void Close () {
 		
-		if (inventory != null) 			inventory.inventoryUpdated -= OnInventoryUpdated;
-		//if (performableActions != null) performableActions.actionsUpdated -= OnActionsUpdated;
-		if (content != null) 			content.contentUpdated -= OnContentUpdated;
+		if (inventory != null)	inventory.inventoryUpdated -= OnInventoryUpdated;
+		if (content != null)	content.contentUpdated -= OnContentUpdated;
 
 		Canvas.enabled = false;
 		boxCollider.SetActive (false);
@@ -71,16 +68,10 @@ public class UnitInfoBoxOverlay : MBRefs {
 		title.text = content.Title;
 		description.text = content.Description;
 
-		// Actions
-		/*performableActions = content.PerformableActions;
-		if (performableActions != null) {
-			performableActions.actionsUpdated += OnActionsUpdated;
-		}
-		OnActionsUpdated ();*/
+		// Tasks
 		performableTasks = content.PerformableTasks;
 		ClearTasks ();
 		InitTasks ();
-		//OnTasksUpdate ();
 
 		// Inventory
 		inventory = content.Inventory;
@@ -93,11 +84,6 @@ public class UnitInfoBoxOverlay : MBRefs {
 	void OnInventoryUpdated () {
 		ClearInventory ();
 		InitInventory ();
-	}
-
-	void OnActionsUpdated () {
-		//ClearActions ();
-		//InitActions ();
 	}
 
 	// Tasks
@@ -129,41 +115,6 @@ public class UnitInfoBoxOverlay : MBRefs {
 		}
 		actions.Clear ();
 	}
-
-	// Actions
-
-	/*void InitActions () {
-		
-		if (performableActions == null) return;
-
-		foreach (var action in performableActions.ActiveActions) {
-			string name = action.Value.Name;
-			if (performableActions.Inputs.ContainsKey (name)) {
-				CreateAction (name, performableActions.Inputs[name]);
-			}
-		}
-
-		actionSection.SetActive (actions.Count > 0);
-	}
-
-	void CreateAction (string id, string inputName) {
-		Transform t = ObjectCreator.Instance.Create<ActionButtonOverlay> ();
-		t.SetParent (actionsGroup.transform);
-		t.Reset ();
-		t.GetScript<ActionButtonOverlay> ().Init (id, inputName, OnActionButtonPress);
-		actions.Add (t.gameObject);
-	}
-
-	void ClearActions () {
-		foreach (GameObject action in actions) {
-			ObjectPool.Destroy (action);
-		}
-		actions.Clear ();
-	}
-
-	void OnActionButtonPress (string id) {
-		performableActions.Start (id);
-	}*/
 
 	// Inventory
 

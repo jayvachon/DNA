@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
-using GameActions;
-using GameInput;
+using DNA.InventorySystem;
+using DNA.InputSystem;
 
-namespace Units {
+namespace DNA.Units {
 
-	public class Elder : MobileUnit, IActionPerformer {
+	public class Elder : MobileUnit {
 
 		public override string Name { get { return "Elder"; } }
 
@@ -32,12 +31,12 @@ namespace Units {
 			Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			healthHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
-			PerformableActions.Add (new ConsumeItem<HealthHolder> ());
+			/*PerformableActions.Add (new ConsumeItem<HealthHolder> ());
 			PerformableActions.Add (new CollectHealth ());
 
 			PerformableActions.Add (new GenerateItem<YearHolder> ());
 			PerformableActions.Add (new OccupyUnit ());
-			PerformableActions.SetActive ("OccupyUnit", false);
+			PerformableActions.SetActive ("OccupyUnit", false);*/
 		}
 
 		void Start () {
@@ -48,7 +47,7 @@ namespace Units {
 		public override void OnPoolCreate () {
 			InitInventory ();
 			InitIndicator ();
-			PerformableActions.Start ("ConsumeHealth");
+			//PerformableActions.Start ("ConsumeHealth");
 			NotificationCenter.Instance.ShowNotification ("laborerRetired");
 		}
 
@@ -84,7 +83,7 @@ namespace Units {
 		}
 
 		void OnDie () {
-			PerformableActions.Stop ("ConsumeHealth");
+			//PerformableActions.Stop ("ConsumeHealth");
 			ChangeUnit<Elder, Corpse> ();
 		}
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class UnitTransform : UnitComponent {
 		protected override int ParentUnit { get { return 0; } }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 // TODO: Rename to "ItemGroup"
 
-namespace GameInventory {
+namespace DNA.InventorySystem {
 
 	public delegate void HolderUpdated (); // TODO: rename to OnHolderUpdate
 	public delegate void HolderFilled ();  // TODO: rename to OnHolderFull

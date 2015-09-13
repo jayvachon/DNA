@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using GameInventory;
+using DNA.InventorySystem;
 
 [RequireComponent (typeof (Image))]
 public class ElderAvatar : MBRefs, IPoolable {

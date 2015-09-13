@@ -13,8 +13,8 @@ public class SpiralCamera : MonoBehaviour {
 		}
 	}
 
-	float speed = 0.05f;
-	float time = 0f;
+	/*float speed = 0.05f;
+	float time = 0f;*/
 
 	/*void Update () {
 		time += speed * Time.deltaTime;

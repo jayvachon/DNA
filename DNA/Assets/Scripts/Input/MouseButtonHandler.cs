@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace GameInput {
+namespace DNA.InputSystem {
 
 	public abstract class MouseButtonHandler<T> where T : class {
 
@@ -15,12 +15,10 @@ namespace GameInput {
 			get { return moused; }
 		}
 
-		Vector2 mousePosition = Vector2.zero;
 		protected Vector2 MousePosition {
 			get { return Input.mousePosition; }
 		}
 		
-		Vector3 mousePositionWorld = Vector3.zero;
 		protected Vector3 MousePositionWorld {
 			get {
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);

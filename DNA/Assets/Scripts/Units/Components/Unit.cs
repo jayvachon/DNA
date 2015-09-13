@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using GameInventory;
-using GameActions;
-using GameInput;
+using DNA.InventorySystem;
+using DNA.InputSystem;
 
-namespace Units {
+namespace DNA.Units {
 
 	public class Unit : MonoBehaviour, INameable, IPoolable, IInventoryHolder {
 		
@@ -21,6 +20,7 @@ namespace Units {
 		public UnitClickable unitClickable;
 
 		#if UNITY_EDITOR
+			// Ostensibly so that the inventory can be viewed in the inspector
 			public Inventory inventory;
 			public Inventory Inventory {
 				get {
@@ -85,7 +85,7 @@ namespace Units {
 				SelectionManager.Select (to.UnitClickable);
 			}
 			OnChangeUnit (to);
-			ObjectCreator.Instance.Destroy<T> (transform);
+			DestroyThis<T> ();
 		}
 
 		protected virtual void OnChangeUnit<U> (U u) where U : Unit {}
@@ -103,6 +103,10 @@ namespace Units {
 
 		protected void RefreshInfoContent () {
 			UnitInfoContent.Refresh ();
+		}
+
+		protected void DestroyThis<T> () where T : Unit {
+			ObjectCreator.Instance.Destroy<T> (transform);
 		}
 	}
 }

@@ -18,6 +18,7 @@ namespace DNA.Units {
 		#endif
 
 		Fermat fermat = new Fermat ();
+		Fermat fowFermat = new Fermat ();
 		int pointCount;
 		Unit[] plots;
 
@@ -26,6 +27,8 @@ namespace DNA.Units {
 			plots = new Unit[pointCount];
 			fermat.UpdateSettings (
 				new Fermat.Settings (radius, pointCount, altitude, origin));
+			fowFermat.UpdateSettings (
+				new Fermat.Settings (radius + 0.25f, pointCount, altitude, origin));
 			SetPointPositions ();
 		}
 
@@ -39,15 +42,22 @@ namespace DNA.Units {
 
 		void SetPointPositions () {
 			Vector3[] points = fermat.Points;
+			Vector3[] fowPoints = fowFermat.Points;
 			for (int i = 0; i < points.Length; i ++) {
 				if (plots[i] == null) {
 					plots[i] = CreateUnitAtIndex (points[i], i);
 				}
+				if (i > 20)
+					CreateFogOfWar (fowPoints[i]);
 				plots[i].Position = points[i];
 				((StaticUnit)plots[i]).PathPoint.Position = points[i];
 				plots[i].transform.SetParent (transform);
 			}
 			GeneratePaths ();
+		}
+
+		void CreateFogOfWar (Vector3 position) {
+			ObjectCreator.Instance.Create<FogOfWarParticles> (position);
 		}
 
 		Unit CreateUnitAtIndex (Vector3 position, int index) {

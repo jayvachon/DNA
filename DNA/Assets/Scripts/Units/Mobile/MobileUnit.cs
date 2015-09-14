@@ -44,19 +44,6 @@ namespace DNA.Units {
 			}
 		}
 
-		/*MoveOnPath moveOnPath;
-		PerformableActions performableActions = null;
-		public PerformableActions PerformableActions { 
-			get {
-				if (performableActions == null) {
-					performableActions = new PerformableActions (this, false);
-					moveOnPath = new MoveOnPath (this);
-					performableActions.Add (moveOnPath);
-				}
-				return performableActions;
-			}
-		}*/
-
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
 			get {
@@ -67,8 +54,6 @@ namespace DNA.Units {
 			}
 		}
 
-		//public IActionAcceptor BoundAcceptor { get; protected set; } //TODO: should be private set
-		
 		PathPoint CurrentPoint { 
 			get {
 				PathPoint currPoint = Path.Positioner.CurrentPoint;
@@ -83,10 +68,6 @@ namespace DNA.Units {
 
 		protected PathPoint givingTree;
 		PathPoint currentPoint; // TODO: move to PathPoints
-
-		/*public void Init (IActionAcceptor acceptor) {
-			BoundAcceptor = acceptor;
-		}*/
 
 		public void Init (PathPoint givingTree) {
 			this.givingTree = givingTree;

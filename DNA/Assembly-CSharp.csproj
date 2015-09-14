@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\SelectEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\UnselectEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\FogOfWar\FogOfWarParticles.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />

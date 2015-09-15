@@ -55,7 +55,8 @@ public class Road : MBRefs, IPoolable {
 	}
 
 	public void OnClick () {
-		if (CanHighlight) {
+		if (CanHighlight && Player.Instance.Milkshakes.Count >= 5) {
+			Player.Instance.Milkshakes.Remove (5);
 			built = true;
 			SetVisible (true);
 		}

@@ -1,7 +1,10 @@
 ﻿#undef DYNAMIC_SETTINGS
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Pathing;
+using Delaunay;
+using Delaunay.Geo;
 
 namespace DNA.Units {
 
@@ -21,6 +24,10 @@ namespace DNA.Units {
 		Fermat fowFermat = new Fermat ();
 		int pointCount;
 		Unit[] plots;
+
+		List<LineSegment> edges = null;
+		float mapWidth = 200f;
+		float mapHeight = 200f;
 
 		void Awake () {
 			pointCount = fermat.Points.Length;
@@ -54,6 +61,16 @@ namespace DNA.Units {
 				plots[i].transform.SetParent (transform);
 			}
 			GeneratePaths ();
+
+			List<uint> colors = new List<uint> ();
+			foreach (Vector3 point in points)
+				colors.Add (0);
+
+			List<Vector3> ps = new List<Vector3> (points);
+			Delaunay.Voronoi v = new Delaunay.Voronoi (
+				ps.ConvertAll (x => new Vector2 (x.x, x.z)), colors, new Rect (-mapWidth*0.5f, -mapHeight*0.5f, mapWidth, mapHeight));
+			//edges = v.VoronoiDiagram ();
+			edges = v.DelaunayTriangulation ();
 		}
 
 		void CreateFogOfWar (Vector3 position) {
@@ -96,6 +113,27 @@ namespace DNA.Units {
 					p.GeneratePaths (a, b, c);
 				}
 			}
+		}
+
+		void OnDrawGizmos () {
+			if (edges != null) {
+				Gizmos.color = Color.black;
+				for (int i = 0; i< edges.Count; i++) {
+					Vector2 left = (Vector2)edges [i].p0;
+					Vector2 right = (Vector2)edges [i].p1;
+					Gizmos.DrawLine (new Vector3 (left.x, 6.5f, left.y), new Vector3 (right.x, 6.5f, right.y));
+				}
+			}
+
+			Gizmos.color = Color.yellow;
+			float l = -mapWidth*0.5f;
+			float r = mapWidth*0.5f;
+			float t = -mapHeight*0.5f;
+			float b = mapHeight*0.5f;
+			Gizmos.DrawLine (new Vector3 (l, 0, t), new Vector3 (r, 0, t));
+			Gizmos.DrawLine (new Vector3 (l, 0, t), new Vector3 (l, 0, b));
+			Gizmos.DrawLine (new Vector3 (l, 0, b), new Vector3 (r, 0, b));
+			Gizmos.DrawLine (new Vector3 (r, 0, t), new Vector3 (r, 0, b));
 		}
 	}
 }

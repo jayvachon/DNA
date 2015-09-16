@@ -42,6 +42,9 @@ public class Road : MBRefs, IPoolable {
 		float distance = Vector3.Distance (a, b);
 		RoadRender.SetLocalScaleZ (distance);
 		RoadRender.SetLocalPositionZ (distance*0.5f);
+
+		built = true;
+		SetVisible (true);
 	}
 
 	public void OnHoverEnter () {

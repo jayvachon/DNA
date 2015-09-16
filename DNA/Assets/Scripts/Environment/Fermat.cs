@@ -42,6 +42,11 @@ public class Fermat {
 		}
 	}
 
+	public Fermat (Settings? settings=null) {
+		if (settings != null)
+			this.settings = (Settings)settings;
+	}
+
 	int Fibonacci (int n) {
 		if (n <= 0)
 			return 0;

@@ -38,20 +38,5 @@ namespace DNA.Units {
 		protected override void DestroyThis () {
 			DestroyThis<DrillablePlot> ();
 		}
-
-		public void GeneratePaths (Unit a, Unit b, Unit c=null) {
-			if (a != null) {
-				Road r1 = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
-				r1.SetPoints (Position, a.Position);
-			}
-			if (b != null) {
-				Road r2 = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
-				r2.SetPoints (Position, b.Position);
-			}
-			if (c != null) {
-				Road r3 = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
-				r3.SetPoints (Position, c.Position);
-			}
-		}
 	}
 }

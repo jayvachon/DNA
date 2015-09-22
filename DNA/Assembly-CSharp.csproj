@@ -100,7 +100,8 @@
      <Compile Include="Assets\Scripts\Inventory\Player.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
-     <Compile Include="Assets\Scripts\MathBySmarterPeople\Dijkstra.cs" />
+     <Compile Include="Assets\Scripts\MathBySmarterPeople\Dijkstra\Dijkstra_deprecate.cs" />
+     <Compile Include="Assets\Scripts\MathBySmarterPeople\Dijkstra\Engine.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\EPPZEasing\EPPZEasing.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\EPPZEasing\EPPZEasing_Samples.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\EPPZEasing\EPPZEasing_Samples_Renderer.cs" />
@@ -125,6 +126,7 @@
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\geom\Winding.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\utils\IDisposable.cs" />
      <Compile Include="Assets\Scripts\Models.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />

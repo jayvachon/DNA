@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace Delaunay
 {
@@ -24,6 +25,10 @@ namespace Delaunay
 			{
 				return - CompareLengths_MAX (edge0, edge1);
 			}
+			
+			public List<Vector2> Points {
+				get { return new List<Vector2> { (Vector2)p0, (Vector2)p1 }; }
+			}
 
 			public Nullable<Vector2> p0;
 			public Nullable<Vector2> p1;
@@ -33,7 +38,6 @@ namespace Delaunay
 				this.p0 = p0;
 				this.p1 = p1;
 			}
-		
 		}
 	}
 }

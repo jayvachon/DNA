@@ -2,7 +2,7 @@
 
 // http://www.codeproject.com/Articles/19919/Shortest-Path-Problem-Dijkstra-s-Algorithm
 
-public class Dijkstra {
+public class Dijkstra_deprecate {
 
 	private int rank = 0;
 	private int[,] L;
@@ -10,7 +10,7 @@ public class Dijkstra {
 	public int[] D;
 	private int trank = 0;
 
-	public Dijkstra(int paramRank,int [,]paramArray)
+	public Dijkstra_deprecate(int paramRank,int [,]paramArray)
 	{
 	   L = new int[paramRank, paramRank];
 	   C = new int[paramRank];

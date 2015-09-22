@@ -18,7 +18,6 @@ public static class TreeGrid {
 		get { return PointsArr.Length; }
 	}
 
-
 	static List<Vector3> points;
 	public static List<Vector3> Points {
 		get {
@@ -44,13 +43,16 @@ public static class TreeGrid {
 		get {
 			if (voronoi == null) {
 				
-				// TODO: don't require this in the voronoi constructor
+				// TODO: don't require colors in the voronoi constructor
 				List<uint> colors = new List<uint> ();
 				foreach (Vector3 point in Points)
 					colors.Add (0);
 
 				voronoi = new Delaunay.Voronoi (
-					Points.ConvertAll (x => new Vector2 (x.x, x.z)), colors, new Rect (-mapWidth*0.5f, -mapHeight*0.5f, mapWidth, mapHeight));
+					Points.ConvertAll (x => new Vector2 (x.x, x.z)), 
+					colors, 
+					new Rect (-mapWidth*0.5f, -mapHeight*0.5f, mapWidth, mapHeight)
+				);
 			}
 			return voronoi;
 		}

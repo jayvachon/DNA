@@ -149,6 +149,7 @@
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralPivot.cs" />
      <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWarCreator.cs" />
      <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWarParticles.cs" />
+     <Compile Include="Assets\Scripts\Structure\GridPoint.cs" />
      <Compile Include="Assets\Scripts\Structure\RoadsManager.cs" />
      <Compile Include="Assets\Scripts\Structure\TreeGrid.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\AcceptInventoryTask.cs" />

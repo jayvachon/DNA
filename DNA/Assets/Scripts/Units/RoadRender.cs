@@ -2,34 +2,37 @@
 using System.Collections;
 using DNA.InputSystem;
 
-public class RoadRender : MBRefs, IClickable, IHoverable {
+namespace DNA.Paths {
 
-	public virtual InputLayer[] IgnoreLayers {
-		get { return new InputLayer[] { InputLayer.UI }; }
-	}
+	public class RoadRender : MBRefs, IClickable, IHoverable {
 
-	Road road = null;
-	Road Road {
-		get {
-			if (road == null) {
-				road = Parent.GetComponent<Road> ();
-			}
-			return road;
+		public virtual InputLayer[] IgnoreLayers {
+			get { return new InputLayer[] { InputLayer.UI }; }
 		}
-	}
 
-	public void OnHoverEnter () {
-		Road.OnHoverEnter ();
-	}
+		Road road = null;
+		Road Road {
+			get {
+				if (road == null) {
+					road = Parent.GetComponent<Road> ();
+				}
+				return road;
+			}
+		}
 
-	public void OnHoverExit () {
-		Road.OnHoverExit ();
-	}
+		public void OnHoverEnter () {
+			Road.OnHoverEnter ();
+		}
 
-	public void OnClick (ClickSettings clickSettings) {
-		if (clickSettings.left)
-			Road.OnClick ();
-	}
+		public void OnHoverExit () {
+			Road.OnHoverExit ();
+		}
 
-	public void OnHover () {}
+		public void OnClick (ClickSettings clickSettings) {
+			if (clickSettings.left)
+				Road.OnClick ();
+		}
+
+		public void OnHover () {}
+	}
 }

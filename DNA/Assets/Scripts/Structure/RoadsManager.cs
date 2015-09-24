@@ -4,15 +4,47 @@ using System.Collections.Generic;
 using Delaunay;
 using Delaunay.Geo;
 
-public class RoadsManager : MonoBehaviour {
+namespace DNA.Paths {
 
-	void Awake () {
-		foreach (LineSegment edge in TreeGrid.Connections) {
-			List<Vector3> v3edge = TreeGrid.EdgeToV3 (edge);
-			Road road = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
-			road.SetPoints (v3edge[0], v3edge[1]);
+	public class RoadsManager : MonoBehaviour {
+
+		List<GridPoint> path;
+		int index = 0;
+
+		void Awake () {
+			//CreateRoads ();
+			//PathfindingTest ();
+		}
+
+		void CreateRoads () {
+			foreach (GridPoint[] connection in TreeGrid.Connections) {
+				Road road = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
+				road.SetPoints (connection[0].Position, connection[1].Position);
+			}
+		}
+
+		void Update () {
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				index ++;
+				path = Pathfinder.GetShortestPath (TreeGrid.Points[0], TreeGrid.Points[index]);;
+				Debug.Log (path.Count);
+			}
+		}
+
+		/*void PathfindingTest () {
+			path = Pathfinder.GetShortestPath (TreeGrid.Points[0], TreeGrid.Points[12]);
+			foreach (GridPoint gp in path) {
+				Debug.Log (gp.Position);
+			}
+		}*/
+
+		void OnDrawGizmos () {
+			if (path != null) {
+				Gizmos.color = Color.yellow;
+				for (int i = 0; i < path.Count-1; i ++) {
+					Gizmos.DrawLine (path[i].Position, path[i+1].Position);
+				}
+			}
 		}
 	}
-
-	
 }

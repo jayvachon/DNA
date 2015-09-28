@@ -126,6 +126,8 @@
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\geom\Winding.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\utils\IDisposable.cs" />
      <Compile Include="Assets\Scripts\Models.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\Connection.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathElement.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />

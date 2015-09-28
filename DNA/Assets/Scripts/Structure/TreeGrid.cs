@@ -18,6 +18,8 @@ namespace DNA {
 
 		// Public properties
 
+		public static int Version { get; private set; }
+
 		static List<GridPoint> points;
 		public static List<GridPoint> Points {
 			get {
@@ -30,51 +32,31 @@ namespace DNA {
 			}
 		}
 
-		static List<GridPoint[]> connections;
-		public static List<GridPoint[]> Connections {
+		static List<Connection> connections;
+		public static List<Connection> Connections {
 			get {
 				if (connections == null) {
 					
 					List<LineSegment> segments = Voronoi.DelaunayTriangulation ();
-					connections = new List<GridPoint[]> ();
+					connections = new List<Connection> ();
 
 					foreach (LineSegment segment in segments) {
 
 						List<Vector2> s = segment.Points;
 
 						connections.Add (
-							new [] {
-								Points.Find (p => Mathf.Approximately (s[0].x, p.Position.x) 
-									&& Mathf.Approximately (s[0].y, p.Position.z)),
-								Points.Find (p => Mathf.Approximately (s[1].x, p.Position.x) 
-									&& Mathf.Approximately (s[1].y, p.Position.z))
+							new Connection () {
+								Points = new [] {
+									Points.Find (p => Mathf.Approximately (s[0].x, p.Position.x) 
+										&& Mathf.Approximately (s[0].y, p.Position.z)),
+									Points.Find (p => Mathf.Approximately (s[1].x, p.Position.x) 
+										&& Mathf.Approximately (s[1].y, p.Position.z))
+								}
 							}
 						);
 					}
 				}
 				return connections;
-			}
-		}
-
-		static Path<GridPoint>[] paths;
-		public static Path<GridPoint>[] Paths {
-			get {
-				if (paths == null) {
-					
-					paths = new Path<GridPoint>[Connections.Count];
-
-					for (int i = 0; i < paths.Length; i ++) {
-
-						GridPoint[] connection = Connections[i];
-						
-						paths[i] = new Path<GridPoint> () {
-							Source = connection[0],
-							Destination = connection[1],
-							Cost = (int)Vector3.Distance (connection[0].Position, connection[1].Position)
-						};
-					}
-				}
-				return paths;
 			}
 		}
 

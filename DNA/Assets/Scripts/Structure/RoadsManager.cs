@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Delaunay;
 using Delaunay.Geo;
+using DNA.Paths.Dijkstra;
 
 namespace DNA.Paths {
 
@@ -13,13 +14,12 @@ namespace DNA.Paths {
 
 		void Awake () {
 			//CreateRoads ();
-			//PathfindingTest ();
 		}
 
 		void CreateRoads () {
-			foreach (GridPoint[] connection in TreeGrid.Connections) {
+			foreach (Connection c in TreeGrid.Connections) {
 				Road road = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
-				road.SetPoints (connection[0].Position, connection[1].Position);
+				road.SetPoints (c.Positions[0], c.Positions[1]);
 			}
 		}
 
@@ -27,24 +27,23 @@ namespace DNA.Paths {
 			if (Input.GetKeyDown (KeyCode.Space)) {
 				index ++;
 				path = Pathfinder.GetShortestPath (TreeGrid.Points[0], TreeGrid.Points[index]);;
-				Debug.Log (path.Count);
+			}
+			if (Input.GetKeyDown (KeyCode.A)) {
+				// 264
+				// 244
+				TreeGrid.Connections[244].SetFree ();
+				//TreeGrid.Connections[244].DisablePath ();
 			}
 		}
 
-		/*void PathfindingTest () {
-			path = Pathfinder.GetShortestPath (TreeGrid.Points[0], TreeGrid.Points[12]);
-			foreach (GridPoint gp in path) {
-				Debug.Log (gp.Position);
-			}
-		}*/
-
 		void OnDrawGizmos () {
+			Gizmos.color = Color.black;
 			if (path != null) {
-				Gizmos.color = Color.yellow;
 				for (int i = 0; i < path.Count-1; i ++) {
 					Gizmos.DrawLine (path[i].Position, path[i+1].Position);
 				}
 			}
+			Gizmos.DrawLine (TreeGrid.Connections[244].Positions[0], TreeGrid.Connections[244].Positions[1]);
 		}
 	}
 }

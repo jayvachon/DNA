@@ -2,9 +2,9 @@
 using System.Collections;
 using DNA.Units;
 
-namespace DNA {
+namespace DNA.Paths {
 
-	public class GridPoint {
+	public class GridPoint : PathElement {
 
 		public Vector3 Position { get; set; }
 		public StaticUnit Unit { get; set; }

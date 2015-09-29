@@ -127,8 +127,13 @@
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\utils\IDisposable.cs" />
      <Compile Include="Assets\Scripts\Models.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Connection.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\GridPoint.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathDebugger.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathElement.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Pathfinder.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointContainer.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointsManager.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadsManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
@@ -151,8 +156,6 @@
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralPivot.cs" />
      <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWarCreator.cs" />
      <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWarParticles.cs" />
-     <Compile Include="Assets\Scripts\Structure\GridPoint.cs" />
-     <Compile Include="Assets\Scripts\Structure\RoadsManager.cs" />
      <Compile Include="Assets\Scripts\Structure\TreeGrid.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\AcceptInventoryTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\AcceptorTask.cs" />

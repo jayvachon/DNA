@@ -7,6 +7,15 @@ namespace DNA.Paths {
 
 	public class Road : MBRefs, IPoolable {
 
+		Connection connection;
+		public Connection Connection {
+			get { return connection; }
+			set {
+				connection = value;
+				SetPoints (connection.Positions[0], connection.Positions[1]);
+			}
+		}
+
 		Transform roadRender;
 		Transform RoadRender {
 			get {
@@ -45,8 +54,8 @@ namespace DNA.Paths {
 			RoadRender.SetLocalScaleZ (distance);
 			RoadRender.SetLocalPositionZ (distance*0.5f);
 
-			built = true;
-			SetVisible (true);
+			//built = true;
+			//SetVisible (true);
 		}
 
 		public void OnHoverEnter () {
@@ -61,9 +70,10 @@ namespace DNA.Paths {
 
 		public void OnClick () {
 			if (CanHighlight && Player.Instance.Milkshakes.Count >= 5) {
-				Player.Instance.Milkshakes.Remove (5);
+				//Player.Instance.Milkshakes.Remove (5);
 				built = true;
 				SetVisible (true);
+				Connection.SetFree ();
 			}
 		}
 

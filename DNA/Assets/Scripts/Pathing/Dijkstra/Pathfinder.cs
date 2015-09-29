@@ -21,8 +21,8 @@ namespace DNA.Paths {
 
 					int j = 0;
 					for (int i = 0; i < paths.Length; i += 2) {
-						paths[i] = connections[j].Path2Way[0];
-						paths[i+1] = connections[j++].Path2Way[1];
+						paths[i] = connections[j].Path[0];
+						paths[i+1] = connections[j++].Path[1];
 					}
 
 					version.SetUpToDate ();

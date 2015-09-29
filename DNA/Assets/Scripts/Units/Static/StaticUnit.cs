@@ -18,10 +18,12 @@ namespace DNA.Units {
 			}
 		}
 		
+		// TODO: deprecate
 		public virtual bool PathPointEnabled {
 			get { return true; }
 		}
 
+		// TODO: deprecate
 		public PathPoint PathPoint { get; set; }
 
 		AcceptableTasks acceptableTasks;

@@ -18,8 +18,6 @@ namespace DNA {
 
 		// Public properties
 
-		public static int Version { get; private set; }
-
 		static List<GridPoint> points;
 		public static List<GridPoint> Points {
 			get {

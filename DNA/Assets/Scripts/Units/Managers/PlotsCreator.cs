@@ -56,7 +56,7 @@ namespace DNA.Units {
 				((StaticUnit)plots[i]).PathPoint.Position = points[i];
 				plots[i].transform.SetParent (transform);
 			}
-			GeneratePaths ();
+			//GeneratePaths ();
 		}
 
 		void CreateFogOfWar (Vector3 position) {
@@ -83,9 +83,9 @@ namespace DNA.Units {
 
 		T CreateUnit<T> (Vector3 position) where T : StaticUnit {
 			T unit = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
-			PathPoint pathPoint = Path.CreatePoint (position, unit as StaticUnit);
+			//PathPoint pathPoint = Path.CreatePoint (position, unit as StaticUnit);
 			unit.Position = position; 
-			unit.PathPoint = pathPoint;
+			//unit.PathPoint = pathPoint;
 			return unit;
 		}
 

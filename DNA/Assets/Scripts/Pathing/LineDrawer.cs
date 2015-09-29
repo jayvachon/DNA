@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// TODO: Move to DNA.Paths
 namespace Pathing {
 
 	[RequireComponent (typeof (LineRenderer))]

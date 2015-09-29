@@ -86,22 +86,24 @@ public class ObjectPool : MonoBehaviour {
 
 	public static Transform Instantiate (string poolName, Vector3 position) {
 		Transform t = ObjectPool.GetPool (poolName).GetInstance (position);
-		#if UNITY_EDITOR && DEBUG
-		if (t.GetScript<IPoolable> () == null) {
-			Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", t));
+		//#if UNITY_EDITOR && DEBUG
+		// TODO: don't do this
+		if (t.GetScript<IPoolable> () != null) {
+			//Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", t));
+			t.GetScript<IPoolable> ().OnPoolCreate ();
 		}
-		#endif
-		t.GetScript<IPoolable> ().OnPoolCreate ();
+		//#endif
 		return t;
 	}
 
 	public static void Destroy (string poolName, Transform instance) {
-		#if UNITY_EDITOR && DEBUG
-		if (instance.GetScript<IPoolable> () == null) {
-			Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", instance));
+		//#if UNITY_EDITOR && DEBUG
+		// TODO: don't do this
+		if (instance.GetScript<IPoolable> () != null) {
+			//Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", instance));
+			instance.GetScript<IPoolable>().OnPoolDestroy ();
 		}
-		#endif
-		instance.GetScript<IPoolable>().OnPoolDestroy ();
+		//#endif
 		instance.SetParent (null);
 		ObjectPool.GetPool (poolName).ReleaseInstance (instance);
 	}

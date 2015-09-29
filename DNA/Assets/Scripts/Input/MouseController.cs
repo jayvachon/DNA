@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.EventSystem;
 
+// TODO: deprecate this and use Unity's event systems instead
+
 namespace DNA.InputSystem {
 
 	public class MouseController : MonoBehaviour {

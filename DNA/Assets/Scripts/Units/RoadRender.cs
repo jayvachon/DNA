@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using DNA.InputSystem;
 
 namespace DNA.Paths {
 
-	public class RoadRender : MBRefs, IClickable, IHoverable {
+	public class RoadRender : MBRefs, /*IClickable, IHoverable, */IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler {
 
 		public virtual InputLayer[] IgnoreLayers {
 			get { return new InputLayer[] { InputLayer.UI }; }
@@ -21,16 +22,28 @@ namespace DNA.Paths {
 		}
 
 		public void OnHoverEnter () {
-			Road.OnHoverEnter ();
+			//Road.OnHoverEnter ();
 		}
 
 		public void OnHoverExit () {
-			Road.OnHoverExit ();
+			//Road.OnHoverExit ();
 		}
 
 		public void OnClick (ClickSettings clickSettings) {
-			if (clickSettings.left)
-				Road.OnClick ();
+			//if (clickSettings.left)
+				//Road.OnClick ();
+		}
+
+		public void OnPointerEnter (PointerEventData e) {
+			Road.OnHoverEnter ();
+		}
+
+		public void OnPointerExit (PointerEventData e) {
+			Road.OnHoverExit ();
+		}
+
+		public void OnPointerDown (PointerEventData e) {
+			Road.OnClick ();
 		}
 
 		public void OnHover () {}

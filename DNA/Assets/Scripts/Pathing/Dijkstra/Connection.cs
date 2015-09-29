@@ -19,45 +19,36 @@ namespace DNA.Paths {
 				return positions;
 			}
 		}
-		
-		// Might be better just to use the 2way property (this one might be extraneous - not being used by anything atm)
-		Path<GridPoint> path;
-		public Path<GridPoint> Path {
+
+		Path<GridPoint>[] path;
+		public Path<GridPoint>[] Path {
 			get {
 				if (path == null) {
-					path = new Path<GridPoint> () {
+
+					Path<GridPoint> p = new Path<GridPoint> () {
 						Source = Points[0],
 						Destination = Points[1],
 						Cost = (int)Vector3.Distance (Positions[0], Positions[1])
+					};
+
+					path = new [] {
+						p,
+						new Path<GridPoint> () {
+							Source = p.Destination,
+							Destination = p.Source,
+							Cost = p.Cost
+						}
 					};
 				}
 				return path;
 			}
 		}
 
-		Path<GridPoint>[] path2Way;
-		public Path<GridPoint>[] Path2Way {
-			get {
-				if (path2Way == null) {
-					path2Way = new [] {
-						Path,
-						new Path<GridPoint> () {
-							Source = Path.Destination,
-							Destination = Path.Source,
-							Cost = Path.Cost
-						}
-					};
-				}
-				return path2Way;
-			}
-		}
-
 		public int Cost {
-			get { return Path.Cost; }
+			get { return Path[0].Cost; }
 			set {
-				Path.Cost = value;
-				Path2Way[0].Cost = value;
-				Path2Way[1].Cost = value;
+				Path[0].Cost = value;
+				Path[1].Cost = value;
 				UpdateVersion ();
 			}
 		}

@@ -44,5 +44,17 @@ namespace DNA.Paths {
 
 			return pathList;
 		}
+
+		public static List<Connection> PointsToConnections (List<GridPoint> points) {
+
+			List<Connection> all = TreeGrid.Connections;
+			List<Connection> connections = new List<Connection> ();
+
+			for (int i = 0; i < points.Count-1; i ++) {
+				connections.Add (all.Find (x => x.ContainsPoints (points[i], points[i+1])));
+			}
+
+			return connections;
+		}
 	}
 }

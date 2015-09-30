@@ -7,6 +7,7 @@ namespace DNA.Paths {
 	public class Connection : PathElement {
 
 		public GridPoint[] Points { get; set; }
+		public Road Road { get; set; }
 
 		Vector3[] positions;
 		public Vector3[] Positions {
@@ -42,6 +43,10 @@ namespace DNA.Paths {
 				}
 				return path;
 			}
+		}
+
+		public bool ContainsPoints (GridPoint a, GridPoint b) {
+			return Points[0] == a && Points[1] == b || Points[0] == b && Points[1] == a;
 		}
 
 		public int Cost {

@@ -90,14 +90,14 @@ namespace DNA.Units {
 		}
 
 		void GeneratePaths () {
-			for (int i = 0; i < plots.Length; i ++) {
+			/*for (int i = 0; i < plots.Length; i ++) {
 				DrillablePlot p = plots[i] as DrillablePlot;
 				if (p != null) {
 					Unit a = (i + 21 < plots.Length) ? plots[i+21] : null;
 					Unit b = (i + 13 < plots.Length) ? plots[i+13] : null;
 					Unit c = (i < 14) ? plots[0] : null;
 				}
-			}
+			}*/
 		}
 	}
 }

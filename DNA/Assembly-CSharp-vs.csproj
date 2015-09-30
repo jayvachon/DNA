@@ -49,12 +49,14 @@
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
      <Compile Include="Assets\Scripts\DataManager.cs" />
+     <Compile Include="Assets\Scripts\Debugging\DebugMenu.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Fermat.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\ClickPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\ClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\ReleaseEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\SelectEvent.cs" />
@@ -133,6 +135,7 @@
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointContainer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointsManager.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadConstructor.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadsManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
@@ -148,6 +151,7 @@
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
      <Compile Include="Assets\Scripts\Pathing\Pathfinder.cs" />
+     <Compile Include="Assets\Scripts\PlayerActionState.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\Floret.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\HSBColor.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralCamera.cs" />

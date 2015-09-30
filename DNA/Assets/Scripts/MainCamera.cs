@@ -47,7 +47,7 @@ public class MainCamera : MBRefs {
 		center.SetLocalEulerAnglesY (center.localEulerAngles.y - Input.GetAxis ("Horizontal"));
 		transform.SetLocalPositionZ (
 			Mathf.Clamp (transform.localPosition.z + Input.GetAxis ("Vertical") * 0.5f, -35f, -5f));
-		float yLook = Mathf.Lerp (-5f, -25f, Mathf.InverseLerp (-5f, -35f, transform.localPosition.z));
+		//float yLook = Mathf.Lerp (-5f, -25f, Mathf.InverseLerp (-5f, -35f, transform.localPosition.z));
 		Vector3 look = center.position;
 		//look.y = yLook;
 		transform.LookAt (look);

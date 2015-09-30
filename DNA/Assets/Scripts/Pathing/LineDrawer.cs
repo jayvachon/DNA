@@ -10,20 +10,25 @@ namespace Pathing {
 
 		public float startWidth = 0.5f;
 		public float endWidth = 0.5f;
-		LineRenderer lineRenderer;
 
-		void Awake () {
-			lineRenderer = GetComponent<LineRenderer> ();
-			lineRenderer.SetWidth (startWidth, endWidth);
+		LineRenderer lineRenderer = null;
+		LineRenderer LineRenderer {
+			get {
+				if (lineRenderer == null) {
+					lineRenderer = GetComponent<LineRenderer> ();
+					lineRenderer.SetWidth (startWidth, endWidth);
+				}
+				return lineRenderer;
+			}
 		}
-
+		
 		public void UpdatePositions (List<Vector3> positions) {
-			lineRenderer.SetVertexPositions (positions);
-			lineRenderer.enabled = true;
+			LineRenderer.SetVertexPositions (positions);
+			LineRenderer.enabled = true;
 		}
 
 		public void Clear () {
-			lineRenderer.enabled = false;
+			LineRenderer.enabled = false;
 		}
 	}
 }

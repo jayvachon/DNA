@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using DNA.Paths;
 using DNA.Units;
+using DNA.EventSystem;
 
 namespace DNA {
 
@@ -34,7 +35,7 @@ namespace DNA {
 
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {
-			PathDebugger.AddPoint (Point);
+			Events.instance.Raise (new ClickPointEvent (this));
 		}
 		#endregion
 	}

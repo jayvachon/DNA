@@ -9,7 +9,7 @@ namespace DNA.Paths {
 
 	public class RoadsManager : MBRefs {
 
-		void Awake () {
+		new void Awake () {
 			CreateRoads ();
 		}
 

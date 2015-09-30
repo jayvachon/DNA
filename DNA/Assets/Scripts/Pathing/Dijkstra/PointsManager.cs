@@ -8,7 +8,7 @@ namespace DNA {
 
 	public class PointsManager : MBRefs {
 
-		void Awake () {
+		new void Awake () {
 			CreatePoints ();
 		}
 

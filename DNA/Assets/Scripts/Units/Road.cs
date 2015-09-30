@@ -12,6 +12,7 @@ namespace DNA.Paths {
 			get { return connection; }
 			set {
 				connection = value;
+				connection.Road = this;
 				SetPoints (connection.Positions[0], connection.Positions[1]);
 			}
 		}
@@ -42,9 +43,8 @@ namespace DNA.Paths {
 
 		bool built = false;
 
-		protected override void Awake () {
-			base.Awake ();
-			SetVisible (false);	
+		void OnEnable () {
+			SetVisible (false);
 		}
 
 		public void SetPoints (Vector3 a, Vector3 b) {
@@ -71,10 +71,14 @@ namespace DNA.Paths {
 		public void OnClick () {
 			if (CanHighlight && Player.Instance.Milkshakes.Count >= 5) {
 				//Player.Instance.Milkshakes.Remove (5);
-				built = true;
-				SetVisible (true);
-				Connection.SetFree ();
+				Build ();
 			}
+		}
+
+		public void Build () {
+			built = true;
+			SetVisible (true);
+			Connection.SetFree ();
 		}
 
 		void SetVisible (bool enabled) {

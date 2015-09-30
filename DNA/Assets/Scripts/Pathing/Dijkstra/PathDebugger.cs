@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pathing;
+using DNA.EventSystem;
 
 namespace DNA.Paths {
 
@@ -10,6 +11,10 @@ namespace DNA.Paths {
 		static bool first = true;
 		static List<GridPoint> points = new List<GridPoint> ();
 		static List<GridPoint> path;
+
+		public static bool Enabled {
+			get { return PathDebugger.Instance.gameObject.activeSelf; }
+		}
 
 		LineDrawer line = null;
 		LineDrawer Line {
@@ -44,6 +49,19 @@ namespace DNA.Paths {
 				path = Pathfinder.GetShortestPath (points[0], points[1]);
 				Instance.Line.UpdatePositions (path.ConvertAll (x => x.Position));
 			}
+		}
+
+		void OnEnable () {
+			Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
+		}
+
+		void OnDisable () {
+			Events.instance.RemoveListener<ClickPointEvent> (OnClickPointEvent);
+		}
+
+		void OnClickPointEvent (ClickPointEvent e) {
+			if (PathDebugger.Enabled)
+				PathDebugger.AddPoint (e.Container.Point);
 		}
 	}
 }

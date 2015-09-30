@@ -45,6 +45,16 @@ namespace DNA.Paths {
 			}
 		}
 
+		float length = -1;
+		public float Length {
+			get {
+				if (Mathf.Approximately (-1, length)) {
+					length = Vector3.Distance (Positions[0], Positions[1]);
+				}
+				return length;
+			}
+		}
+
 		public bool ContainsPoints (GridPoint a, GridPoint b) {
 			return Points[0] == a && Points[1] == b || Points[0] == b && Points[1] == a;
 		}
@@ -55,6 +65,8 @@ namespace DNA.Paths {
 				Path[0].Cost = value;
 				Path[1].Cost = value;
 				UpdateVersion ();
+				if (onUpdateCost != null)
+					onUpdateCost (value);
 			}
 		}
 
@@ -65,5 +77,9 @@ namespace DNA.Paths {
 		public void DisablePath () {
 			Cost = int.MaxValue;
 		}
+
+		public delegate void OnUpdateCost (int cost);
+
+		public OnUpdateCost onUpdateCost;
 	}
 }

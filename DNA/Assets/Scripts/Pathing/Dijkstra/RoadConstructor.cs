@@ -39,10 +39,9 @@ namespace DNA.Paths {
 		readonly List<GridPoint> path = new List<GridPoint> ();
 
 		public void Build () {
-			List<Road> roads = Pathfinder.PointsToConnections (path).ConvertAll (x => x.Road);
-			foreach (Road r in roads) {
-				r.Build ();
-			}
+			List<Connection> connections = Pathfinder.PointsToConnections (path);
+			foreach (Connection c in connections)
+				c.SetFree ();
 			Clear ();
 		}
 

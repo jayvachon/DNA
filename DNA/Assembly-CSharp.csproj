@@ -129,14 +129,16 @@
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\utils\IDisposable.cs" />
      <Compile Include="Assets\Scripts\Models.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Connection.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\ConnectionContainer.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\ConnectionsManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\GridPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathDebugger.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathElement.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointContainer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointsManager.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\Road.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadConstructor.cs" />
-     <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadsManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
@@ -240,8 +242,6 @@
      <Compile Include="Assets\Scripts\Units\Mobile\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
      <Compile Include="Assets\Scripts\Units\ProductionTier.cs" />
-     <Compile Include="Assets\Scripts\Units\Road.cs" />
-     <Compile Include="Assets\Scripts\Units\RoadRender.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
      <Compile Include="Assets\Scripts\Units\Static\DrillablePlot.cs" />

@@ -78,11 +78,13 @@ namespace DNA.Paths.Dijkstra {
 	            var _selectedPaths = Paths.Where(p => p.Source.Equals(_locationToProcess));
 	            foreach (Path<T> path in _selectedPaths)
 	            {
-	                if (ShortestPaths[path.Destination].Key > path.Cost + ShortestPaths[path.Source].Key)
+	            	int pathCost = path.Cost;
+	            	
+	                if (ShortestPaths[path.Destination].Key > pathCost + ShortestPaths[path.Source].Key)
 	                {
 	                    ShortestPaths.Set(
 	                        path.Destination,
-	                        path.Cost + ShortestPaths[path.Source].Key,
+	                        pathCost + ShortestPaths[path.Source].Key,
 	                        ShortestPaths[path.Source].Value.Union(new Path<T>[] { path }).ToArray());
 	                }
 	            } // foreach

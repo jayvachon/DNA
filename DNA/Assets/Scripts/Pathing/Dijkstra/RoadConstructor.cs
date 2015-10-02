@@ -25,6 +25,20 @@ namespace DNA.Paths {
 			}
 		}
 
+		public int NewSegmentCount {
+			get {
+				
+				if (connections == null || connections.Count == 0)
+					return 0;
+				
+				int count = 0;
+				foreach (Connection c in connections) {
+					if (c.Cost > 0) count ++;
+				}
+				return count;
+			}
+		}
+
 		LineDrawer drawer = null;
 		LineDrawer Drawer {
 			get {
@@ -37,11 +51,11 @@ namespace DNA.Paths {
 
 		readonly List<GridPoint> points = new List<GridPoint> ();
 		readonly List<GridPoint> path = new List<GridPoint> ();
+		List<Connection> connections;
 
 		public void Build () {
-			List<Connection> connections = Pathfinder.PointsToConnections (path);
 			foreach (Connection c in connections)
-				c.SetFree ();
+				c.SetCost ("free");
 			Clear ();
 		}
 
@@ -67,10 +81,12 @@ namespace DNA.Paths {
 			path.Clear ();
 			for (int i = 0; i < points.Count-1; i ++)
 				path.AddRange (Pathfinder.GetShortestPath (points[i], points[i+1]));
+			connections = Pathfinder.PointsToConnections (path);
 			Drawer.UpdatePositions (path.ConvertAll (x => x.Position));
 		}
 
 		void Clear () {
+			path.Clear ();
 			points.Clear ();
 			Drawer.Clear ();
 		}

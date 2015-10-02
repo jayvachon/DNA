@@ -9,13 +9,13 @@ namespace DNA.Tasks {
 	public abstract class CostTask: InventoryTask {
 
 		CostTaskSettings costSettings;
-		new public CostTaskSettings Settings {
+		new public virtual CostTaskSettings Settings {
 			get {
 				if (costSettings == null) {
 					try {
 						costSettings = (CostTaskSettings)settings;
 					} catch {
-						throw new System.Exception (this + "' requires a CostTaskSettings model");
+						throw new System.Exception (this + " requires a CostTaskSettings model");
 					}
 				}
 				return costSettings;
@@ -23,6 +23,10 @@ namespace DNA.Tasks {
 		}
 
 		public override bool Enabled {
+			get { return CanAfford; }
+		}
+
+		bool CanAfford {
 			get {
 				foreach (var cost in Settings.Costs) {
 					try {

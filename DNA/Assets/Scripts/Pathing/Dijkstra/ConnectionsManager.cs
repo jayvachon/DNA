@@ -18,7 +18,6 @@ namespace DNA.Paths {
 				ConnectionContainer c = ObjectCreator.Instance.Create<ConnectionContainer> ().GetScript<ConnectionContainer> ();
 				c.Connection = connections[i];
 				c.Parent = MyTransform;
-				c.CreateRoad ();
 			}
 		}
 	}

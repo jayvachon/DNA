@@ -31,14 +31,35 @@ namespace DNA.Paths {
 			}
 		}
 
+		static Path<GridPoint>[] pathsIgnoreCost;
+		static Path<GridPoint>[] PathsIgnoreCost {
+			get {
+
+				List<Connection> connections = TreeGrid.Connections;
+				paths = new Path<GridPoint>[connections.Count*2];
+
+				int j = 0;
+				for (int i = 0; i < paths.Length; i += 2) {
+
+					Connection c = connections[j++];
+
+					paths[i] = c.Path[0];
+					paths[i].Cost = c.Costs["default"];
+					paths[i+1] = c.Path[1];
+					paths[i+1].Cost = c.Costs["default"];
+				}
+
+				return paths;
+			}
+		}
+
 		public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
-			
+
 			var path = Engine.CalculateShortestPathBetween<GridPoint> (a, b, Paths);
 			List<GridPoint> pathList = new List<GridPoint> ();
 
-			foreach (Path<GridPoint> gp in path) {
+			foreach (Path<GridPoint> gp in path)
 				pathList.Add (gp.Source);
-			}
 
 			pathList.Add (path.Last.Value.Destination);
 
@@ -51,7 +72,8 @@ namespace DNA.Paths {
 			List<Connection> connections = new List<Connection> ();
 
 			for (int i = 0; i < points.Count-1; i ++) {
-				connections.Add (all.Find (x => x.ContainsPoints (points[i], points[i+1])));
+				if (points[i] != points[i+1])
+					connections.Add (all.Find (x => x.ContainsPoints (points[i], points[i+1])));
 			}
 
 			return connections;

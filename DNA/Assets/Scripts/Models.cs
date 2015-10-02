@@ -164,6 +164,18 @@ namespace DNA.Models {
 				}
 			});
 
+			tasks.Add (typeof (BuildRoad), new CostTaskSettings {
+				Title = "Build road",
+				Description = "Builds a road",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 5 }
+				}
+			});
+
 			/**
 			 *	Tests
 			 */

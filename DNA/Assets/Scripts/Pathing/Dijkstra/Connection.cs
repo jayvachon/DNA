@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.Paths.Dijkstra;
 
 namespace DNA.Paths {
@@ -29,7 +30,7 @@ namespace DNA.Paths {
 					Path<GridPoint> p = new Path<GridPoint> () {
 						Source = Points[0],
 						Destination = Points[1],
-						Cost = (int)Vector3.Distance (Positions[0], Positions[1])
+						Cost = Costs["default"]//(int)Vector3.Distance (Positions[0], Positions[1])
 					};
 
 					path = new [] {
@@ -40,6 +41,8 @@ namespace DNA.Paths {
 							Cost = p.Cost
 						}
 					};
+
+					pathCost = Costs["default"];
 				}
 				return path;
 			}
@@ -59,23 +62,39 @@ namespace DNA.Paths {
 			return Points[0] == a && Points[1] == b || Points[0] == b && Points[1] == a;
 		}
 
-		public int Cost {
-			get { return Path[0].Cost; }
-			set {
-				Path[0].Cost = value;
-				Path[1].Cost = value;
-				UpdateVersion ();
-				if (onUpdateCost != null)
-					onUpdateCost (value);
+		Dictionary<string, int> costs;
+		public Dictionary<string, int> Costs {
+			get {
+				if (costs == null) {
+					costs = new Dictionary<string, int> () {
+						{ "default", (int)Length },
+						{ "free", 0 },
+						{ "disabled", int.MaxValue }
+					};
+				}
+				return costs;
 			}
 		}
 
-		public void SetFree () {
-			Cost = 0;
+		int pathCost;
+		public int Cost {
+			get { return pathCost; }
+			set {
+				pathCost = value;
+				Path[0].Cost = pathCost;
+				Path[1].Cost = pathCost;
+				UpdateVersion ();
+				if (onUpdateCost != null)
+					onUpdateCost (pathCost);
+			}
 		}
 
-		public void DisablePath () {
-			Cost = int.MaxValue;
+		public void SetCost (string key) {
+			try {
+				Cost = Costs[key];
+			} catch {
+				throw new System.Exception ("Costs does not contain the key '" + key + "'");
+			}
 		}
 
 		public delegate void OnUpdateCost (int cost);

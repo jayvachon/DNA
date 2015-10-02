@@ -177,6 +177,7 @@
      <Compile Include="Assets\Scripts\Tasks\Lists\AcceptableTasks.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\PerformableTasks.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\TaskList.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\BuildRoad.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ConsumeItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\DeliverItem.cs" />

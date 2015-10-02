@@ -13,7 +13,7 @@ namespace DNA.Paths {
 			set {
 				connection = value;
 				connection.onUpdateCost += OnUpdateCost;
-				SetPoints (connection.Positions[0], connection.Positions[1]);
+				SetPosition (connection.Positions[0], connection.Positions[1]);
 			}
 		}
 
@@ -36,17 +36,17 @@ namespace DNA.Paths {
 			ColliderEnabled = false;
 		}
 
-		public void CreateRoad () {
+		void CreateRoad () {
 			Road r = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
 			Connection.Road = r;
 			r.MyTransform.SetParent (MyTransform);
 			r.MyTransform.localPosition = Vector3.zero;
 			r.MyTransform.rotation = MyTransform.rotation;
 			r.MyTransform.localScale = MyTransform.localScale;
-			r.SetRendererScale (Connection.Length);
+			r.Init (Connection.Length);
 		}
 
-		void SetPoints (Vector3 a, Vector3 b) {
+		void SetPosition (Vector3 a, Vector3 b) {
 			Position = a;
 			MyTransform.LookAt (b);
 			OnSetPoints ();
@@ -55,8 +55,8 @@ namespace DNA.Paths {
 		protected virtual void OnSetPoints () {}
 
 		void OnUpdateCost (int cost) {
-			if (cost == 0 && Connection.Road != null)
-				Connection.Road.Build ();
+			if (cost == 0 && Connection.Road == null)
+				CreateRoad ();
 		}
 
 		#region IPointerDownHandler implementation

@@ -20,7 +20,14 @@ namespace DNA {
 				PointContainer pc = ObjectCreator.Instance.Create<PointContainer> ().GetScript<PointContainer> ();
 				pc.Point = gpoints[i];
 				pc.Parent = MyTransform;
-				pc.SetStaticUnit<DrillablePlot> ();
+				CreateStaticUnit (pc, i);
+			}
+		}
+
+		void CreateStaticUnit (PointContainer pc, int index) {
+			switch (index) {
+				case 0:		pc.SetStaticUnit<GivingTreeUnit> (); break;
+				default: 	pc.SetStaticUnit<DrillablePlot> (); break;
 			}
 		}
 	}

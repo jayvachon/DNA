@@ -102,7 +102,7 @@ public class UnitInfoBoxOverlay : MBRefs {
 	}
 
 	void CreateTask (PerformerTask task) {
-		Transform t = ObjectCreator.Instance.Create<TaskButton> ();
+		Transform t = ObjectPool.Instantiate<TaskButton> ().transform;
 		t.SetParent (actionsGroup.transform);
 		t.Reset ();
 		t.GetScript<TaskButton> ().Init (task);
@@ -133,7 +133,7 @@ public class UnitInfoBoxOverlay : MBRefs {
 	}
 
 	void CreateHolder (ItemHolder holder) {
-		Transform t = ObjectCreator.Instance.Create<ItemHolderOverlay> ();
+		Transform t = ObjectPool.Instantiate<ItemHolderOverlay> ().transform;
 		t.SetParent (inventoryGroup.transform);
 		t.Reset ();
 		t.GetScript<ItemHolderOverlay> ().Text = holder.DisplaySettings.ShowCapacity 

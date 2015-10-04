@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using DNA.Tasks;
 
-public class TaskButton : MBRefs, IPoolable {
+public class TaskButton : MBRefs {
 
 	Text text = null;
 	Text Text {
@@ -25,7 +25,4 @@ public class TaskButton : MBRefs, IPoolable {
 	public void OnPress () {
 		task.Start ();
 	}
-
-	public void OnPoolCreate () {}
-	public void OnPoolDestroy () {}
 }

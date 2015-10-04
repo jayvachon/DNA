@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public delegate void ActionButtonPress (string id);
 
-public class ActionButton : MonoBehaviour, IPoolable {
+public class ActionButton : MonoBehaviour {
 
 	public Text text;
 	string id = "";
@@ -19,7 +19,4 @@ public class ActionButton : MonoBehaviour, IPoolable {
 	public void OnPress () {
 		actionButtonPress (id);
 	}
-
-	public void OnPoolCreate () {}
-	public void OnPoolDestroy () {}
 }

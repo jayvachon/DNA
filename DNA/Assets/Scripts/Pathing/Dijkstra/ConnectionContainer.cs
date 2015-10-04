@@ -37,7 +37,7 @@ namespace DNA.Paths {
 		}
 
 		void CreateRoad () {
-			Road r = ObjectCreator.Instance.Create<Road> ().GetScript<Road> ();
+			Road r = ObjectPool.Instantiate<Road> ();
 			Connection.Road = r;
 			r.MyTransform.SetParent (MyTransform);
 			r.MyTransform.localPosition = Vector3.zero;

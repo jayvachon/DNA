@@ -44,11 +44,13 @@ namespace DNA.Units {
 			Path.Speed = Path.PathSettings.MaxSpeed / TimerValues.Instance.Year;
 		}
 		
-		public override void OnPoolCreate () {
+		//public override void OnPoolCreate () {
+		protected override void OnEnable () {
 			InitInventory ();
 			InitIndicator ();
 			//PerformableActions.Start ("ConsumeHealth");
 			NotificationCenter.Instance.ShowNotification ("laborerRetired");
+			base.OnEnable ();
 		}
 
 		void InitInventory () {
@@ -60,14 +62,16 @@ namespace DNA.Units {
 		}
 
 		void InitIndicator () {
-			indicator = ObjectCreator.Instance.Create<HealthIndicator> ().GetScript<HealthIndicator> ();
+			indicator = ObjectPool.Instantiate<HealthIndicator> ();
 			indicator.Initialize (Transform);
 		}
 
-		public override void OnPoolDestroy () {
+		//public override void OnPoolDestroy () {
+		protected override void OnDisable () {
 			healthHolder.HolderEmptied -= OnDie;
-			ObjectCreator.Instance.Destroy<HealthIndicator> (indicator.MyTransform);
+			ObjectPool.Destroy<HealthIndicator> (indicator.MyTransform);
 			indicator = null;
+			base.OnDisable ();
 		}
 
 		// TODO: remove this?

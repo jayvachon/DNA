@@ -31,15 +31,19 @@ namespace DNA.Units {
 			//PerformableActions.Add (new GenerateItem<HappinessHolder> ());
 		}
 
-		public override void OnPoolCreate () {
+		//public override void OnPoolCreate () {
+		protected override void OnEnable () {
 			happinessHolder.HolderUpdated += OnHappinessUpdate;
-			indicator = ObjectCreator.Instance.Create<HappinessIndicator> ().GetScript<HappinessIndicator> ();
+			indicator = ObjectPool.Instantiate<HappinessIndicator> ();
 			indicator.Initialize (Transform, 1.5f);
+			base.OnEnable ();
 		}
 
-		public override void OnPoolDestroy () {
+		//public override void OnPoolDestroy () {
+		protected override void OnDisable () {
 			happinessHolder.HolderUpdated -= OnHappinessUpdate;
-			ObjectCreator.Instance.Destroy<HappinessIndicator> (indicator.MyTransform);
+			ObjectPool.Destroy<HappinessIndicator> (indicator.MyTransform);
+			base.OnDisable ();
 		}
 
 		void OnHappinessUpdate () {

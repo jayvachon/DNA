@@ -31,11 +31,11 @@ namespace DNA.Units {
 			Path.Active = false;
 		}
 
-		public override void OnPoolCreate () {
+		/*public override void OnPoolCreate () {
 			MobileClickable.CanDrag = true;
 			MobileClickable.CanSelect = true;
 			NotificationCenter.Instance.ShowNotification ("elderDied");
-		}
+		}*/
 
 		/*protected override void OnBind () {
 			UnbindClinic ();
@@ -59,7 +59,7 @@ namespace DNA.Units {
 		}
 
 		void OnDeliverYears () {
-			ObjectCreator.Instance.Destroy<Corpse> (transform);
+			ObjectPool.Destroy<Corpse> (transform);
 		}
 	}
 }

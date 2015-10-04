@@ -7,7 +7,7 @@ using DNA.Tasks;
 
 // Deprecate
 
-public class UnitInfoBox : MBRefs {
+/*public class UnitInfoBox : MBRefs {
 
 	public RectTransform contentGroup;
 
@@ -70,13 +70,13 @@ public class UnitInfoBox : MBRefs {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			Close ();
 		}
-	}
+	}*/
 
 	/**
 	 *	Opening
 	 */
 
-	public void Open (UnitInfoContent content, Transform transform) {
+	/*public void Open (UnitInfoContent content, Transform transform) {
 		
 		this.content = content;
 		content.contentUpdated += OnContentUpdated;
@@ -130,7 +130,7 @@ public class UnitInfoBox : MBRefs {
 				CreateHolder (holder);
 				activateInventory = true;
 			}*/
-		}
+		/*}
 
 		if (activateInventory)
 			InventorySetActive (true);
@@ -199,13 +199,13 @@ public class UnitInfoBox : MBRefs {
 		t.Reset ();
 		t.GetScript<ActionButton> ().Init (id, inputName, OnActionButtonPress);
 		actions.Add (t.gameObject);*/
-	}
+	/*}
 
 	/**
 	 *	Closing
 	 */
 
-	public void Close () {
+	/*public void Close () {
 		
 		if (inventory != null) {
 			inventory.inventoryUpdated -= OnInventoryUpdated;
@@ -270,7 +270,7 @@ public class UnitInfoBox : MBRefs {
 	 *	Messages
 	 */
 
-	void OnInventoryUpdated () {
+	/*void OnInventoryUpdated () {
 		ClearInventory ();
 		InitInventory (inventory.Holders);
 		ClearElders ();
@@ -290,4 +290,4 @@ public class UnitInfoBox : MBRefs {
 		title.text = content.Title;
 		SetColliderSize ();
 	}
-}
+}*/

@@ -4,7 +4,7 @@ using System.Collections;
 using DNA.InventorySystem;
 
 [RequireComponent (typeof (Image))]
-public class ElderAvatar : MBRefs, IPoolable {
+public class ElderAvatar : MBRefs {
 
 	ElderItem elder;
 	bool trackHealth = false;
@@ -49,14 +49,11 @@ public class ElderAvatar : MBRefs, IPoolable {
 	}
 
 	public void OnEnable () {
+		trackHealth = true;
 		StartCoroutine (CoTrackHealth ());
 	}
 
-	public void OnPoolCreate () {
-		trackHealth = true;
-	}
-
-	public void OnPoolDestroy () {
+	public void OnDisable () {
 		trackHealth = false;
 	}
 }

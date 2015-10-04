@@ -55,12 +55,14 @@ namespace DNA.Units {
 			PerformableTasks.Add (new DNA.Tasks.GenerateUnit<CoffeePlant> (Player.Instance.Inventory)).onEnd += OnGenerateUnit;
 		}
 
-		public override void OnPoolCreate () {
+		//public override void OnPoolCreate () {
+		protected override void OnEnable () {
 			if (name != DefaultName) {
 				name = DefaultName;
 				Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, true);
 				RefreshInfoContent ();
 			}
+			base.OnEnable ();
 		}
 
 		void OnGenerateUnit (PerformerTask task) {

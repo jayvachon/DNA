@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BuildingIndicator : FloatingIndicator, IPoolable {
+public class BuildingIndicator : FloatingIndicator {
 
 	public Transform clinicRender;
 	public Transform coffeeRender;
@@ -24,12 +24,12 @@ public class BuildingIndicator : FloatingIndicator, IPoolable {
 		StartSpinning ();
 	}
 
-	public override void OnPoolCreate () {
+	public override void OnEnable () {
 		MyTransform.SetChildrenActive (false);
 	}
 
-	public override void OnPoolDestroy () {
-		base.OnPoolDestroy ();
+	public override void OnDisable () {
 		MyTransform.SetChildrenActive (false);		
+		base.OnDisable ();
 	}
 }

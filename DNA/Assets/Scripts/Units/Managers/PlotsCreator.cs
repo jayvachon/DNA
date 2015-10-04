@@ -82,7 +82,7 @@ namespace DNA.Units {
 		}
 
 		T CreateUnit<T> (Vector3 position) where T : StaticUnit {
-			T unit = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
+			T unit = ObjectPool.Instantiate<T> ();
 			//PathPoint pathPoint = Path.CreatePoint (position, unit as StaticUnit);
 			unit.Position = position; 
 			//unit.PathPoint = pathPoint;

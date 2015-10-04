@@ -45,8 +45,10 @@ namespace DNA.Units {
 
 		}
 
-		public override void OnPoolCreate () {
-			base.OnPoolCreate ();
+		//public override void OnPoolCreate () {
+		protected override void OnEnable () {
+			//base.OnPoolCreate ();
+			base.OnEnable ();
 			Inventory.Get<YearHolder> ().Initialize ();
 			#if SHORTLIFE
 			if (!shortLife) {

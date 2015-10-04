@@ -6,7 +6,7 @@ using DNA.Units;
 
 namespace Pathing {
 
-	public class PathPoint : MBRefs, IPoolable, IDraggable {
+	public class PathPoint : MBRefs, IDraggable {
 
 		public bool Enabled { 
 			get { return StaticUnit.PathPointEnabled; }
@@ -46,7 +46,5 @@ namespace Pathing {
 		}
 
 		public void OnDrag (DragSettings dragSettings) {}
-		public void OnPoolCreate () {}
-		public void OnPoolDestroy () {}
 	}
 }

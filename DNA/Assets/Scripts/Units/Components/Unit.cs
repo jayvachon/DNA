@@ -5,7 +5,7 @@ using DNA.InputSystem;
 
 namespace DNA.Units {
 
-	public class Unit : MonoBehaviour, INameable, IPoolable, IInventoryHolder {
+	public class Unit : MonoBehaviour, INameable, IInventoryHolder {
 		
 		public virtual string Name {
 			get { return ""; }
@@ -79,7 +79,7 @@ namespace DNA.Units {
 
 		// Change this unit T to unit U
 		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {
-			U to = ObjectCreator.Instance.Create<U> ().GetScript<U> ();
+			U to = ObjectPool.Instantiate<U> ();
 			to.Position = Position;
 			if (Selected) {
 				SelectionManager.Select (to.UnitClickable);
@@ -90,11 +90,11 @@ namespace DNA.Units {
 
 		protected virtual void OnChangeUnit<U> (U u) where U : Unit {}
 
-		public virtual void OnPoolCreate () {
+		protected virtual void OnEnable () {
 			EmissionsManager.Instance.AddUnit (this);
 		}
 
-		public virtual void OnPoolDestroy () {
+		protected virtual void OnDisable () {
 			EmissionsManager.Instance.RemoveUnit (this);
 			if (Selected) {
 				SelectionManager.Unselect ();
@@ -106,7 +106,7 @@ namespace DNA.Units {
 		}
 
 		protected void DestroyThis<T> () where T : Unit {
-			ObjectCreator.Instance.Destroy<T> (transform);
+			ObjectPool.Destroy<T> (transform);
 		}
 	}
 }

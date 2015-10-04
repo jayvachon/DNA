@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FloatingIndicator : MBRefs, IPoolable {
+public class FloatingIndicator : MBRefs {
 
 	[SerializeField] float spinSpeed = 15f;
 	public Transform mercury;
@@ -21,11 +21,11 @@ public class FloatingIndicator : MBRefs, IPoolable {
 		StartCoroutine (CoSpin ());
 	}
 
-	public virtual void OnPoolCreate () {
+	public virtual void OnEnable () {
 		StartSpinning ();
 	}
 
-	public virtual void OnPoolDestroy () {
+	public virtual void OnDisable () {
 		spinning = false;
 	}
 

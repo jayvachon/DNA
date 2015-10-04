@@ -15,7 +15,7 @@ namespace DNA.Paths {
 			List<Connection> connections = TreeGrid.Connections;
 
 			for (int i = 0; i < connections.Count; i ++) {
-				ConnectionContainer c = ObjectCreator.Instance.Create<ConnectionContainer> ().GetScript<ConnectionContainer> ();
+				ConnectionContainer c = ObjectPool.Instantiate<ConnectionContainer> ();
 				c.Connection = connections[i];
 				c.Parent = MyTransform;
 			}

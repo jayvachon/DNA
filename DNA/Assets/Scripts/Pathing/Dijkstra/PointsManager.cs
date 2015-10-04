@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.Paths;
 using DNA.Units;
 
-namespace DNA {
+namespace DNA.Paths {
 
 	public class PointsManager : MBRefs {
 
@@ -17,7 +16,7 @@ namespace DNA {
 			List<GridPoint> gpoints = TreeGrid.Points;
 
 			for (int i = 0; i < gpoints.Count; i ++) {
-				PointContainer pc = ObjectCreator.Instance.Create<PointContainer> ().GetScript<PointContainer> ();
+				PointContainer pc = ObjectPool.Instantiate<PointContainer> ();
 				pc.Point = gpoints[i];
 				pc.Parent = MyTransform;
 				CreateStaticUnit (pc, i);

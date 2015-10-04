@@ -40,10 +40,12 @@ namespace DNA.Units {
 			);
 		}
 
-		public override void OnPoolCreate () {
+		//public override void OnPoolCreate () {
+		protected override void OnEnable () {
 			InitInventory ();
 			InitPath ();
 			RefreshInfoContent ();
+			base.OnEnable ();
 		}
 
 		void InitInventory () {
@@ -58,8 +60,10 @@ namespace DNA.Units {
 			);
 		}
 
-		public override void OnPoolDestroy () {
+		//public override void OnPoolDestroy () {
+		protected override void OnDisable () {
 			yearHolder.HolderFilled -= OnRetirement;
+			base.OnDisable ();
 		}
 
 		void OnRetirement () {

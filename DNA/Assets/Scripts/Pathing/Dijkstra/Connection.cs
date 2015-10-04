@@ -30,7 +30,7 @@ namespace DNA.Paths {
 					Path<GridPoint> p = new Path<GridPoint> () {
 						Source = Points[0],
 						Destination = Points[1],
-						Cost = Costs["default"]//(int)Vector3.Distance (Positions[0], Positions[1])
+						Cost = Costs["default"]
 					};
 
 					path = new [] {

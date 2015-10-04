@@ -20,7 +20,7 @@ namespace DNA {
 		}
 
 		public void SetStaticUnit<T> () where T : StaticUnit {
-			T u = ObjectCreator.Instance.Create<T> ().GetScript<T> ();
+			T u = ObjectPool.Instantiate<T> ();
 			Point.Unit = u;
 			u.Transform.SetParent (MyTransform);
 			u.Transform.localPosition = Vector3.zero;

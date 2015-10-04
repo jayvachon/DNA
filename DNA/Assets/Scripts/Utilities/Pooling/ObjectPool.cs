@@ -1,110 +1,199 @@
-﻿#define DEBUG
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-//https://gist.github.com/nickgravelyn/4385548
+#if UNITY_EDITOR
+using System.IO;
+using UnityEditor;
+#endif
 
-// All pool objects must implement the IPoolable interface
-public class ObjectPool : MonoBehaviour {
+public class ObjectPool {
 
-	private static readonly Dictionary<string, ObjectPool> _poolsByName = new Dictionary<string, ObjectPool> ();
-	
-	public static ObjectPool GetPool(string name) {
-		if (_poolsByName.ContainsKey (name)) {
-			return _poolsByName[name];
-		}
-		return null;
+	static readonly Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool> ();
+	Stack<MonoBehaviour> inactive = new Stack<MonoBehaviour> ();
+	List<MonoBehaviour> active = new List<MonoBehaviour> ();
+
+	MonoBehaviour prefab;
+
+	[MenuItem ("Object Pool/Refresh Resources")]
+	static void RefreshResources () {
+		// TODO: for each asset in resources/prefabs, delete the asset and re-copy the asset in the project directory ONLY IF the asset exists in the project directory
+		// (right now this is just deleting all the prefabs so that they can be re-created at runtime)
+		PoolIOHandler.DeletePrefabsInResources ();
 	}
-	
-	[SerializeField]
-	private string _poolName = string.Empty;
-	
-	[SerializeField]
-	private Transform _prefab = null;
-	
-	[SerializeField]
-	private int _initialCount = 0;
-	
-	[SerializeField]
-	private bool _parentInstances = false;
-	
-	private readonly Stack<Transform> _instances = new Stack<Transform> ();
-	
-	public void Init (string poolName, Transform prefab) {
-		_poolName = poolName;
-		_prefab = prefab;
-		System.Diagnostics.Debug.Assert(_prefab);
-		_poolsByName[_poolName] = this;
-		
-		for (int i = 0; i < _initialCount; i++) {
-			var t = Instantiate(_prefab) as Transform;
-			InitializeInstance(t);
-			ReleaseInstance(t);
-		}
 
-		// DontDestroyOnLoad (this);
+	public void Init<T> (string id) where T : MonoBehaviour {
+		prefab = PoolIOHandler.LoadPrefab<T> (id);
 	}
-	
-	public Transform GetInstance (Vector3 position = new Vector3()) {
 
-		Transform t = null;
-		
-		if (_instances.Count > 0) {
-			t = _instances.Pop();
+	static ObjectPool GetPool (string id) {
+		return GetPool<MonoBehaviour> (id);
+	}
+
+	static ObjectPool GetPool<T> () where T : MonoBehaviour {
+		return GetPool<T> (typeof (T).Name);
+	}
+
+	static ObjectPool GetPool<T> (string id) where T : MonoBehaviour {
+		ObjectPool op;
+		if (pools.TryGetValue (id, out op)) {
+			return op;
 		} else {
-			t = Instantiate(_prefab) as Transform;
+			return CreatePool<T> (id);
+		}
+	}
+
+	static ObjectPool CreatePool<T> (string id) where T : MonoBehaviour {
+		ObjectPool newPool = new ObjectPool ();
+		newPool.Init<T> (id);
+		pools.Add (id, newPool);
+		return newPool;
+	}
+
+	MonoBehaviour CreateInstance () {
+
+		MonoBehaviour m;
+
+		if (inactive.Count > 0) {
+			m = inactive.Pop ();
+		} else {
+			m = MonoBehaviour.Instantiate (prefab) as MonoBehaviour;
 		}
 
-		// Here's a hack -- when the level restarts, the object pool retains its stack of inactive instances,
-		// even though instances in the stack are destroyed when the level starts
-		if (t == null) {
-			_instances.Clear ();
-			t = Instantiate(_prefab) as Transform;
-		}
-		
-		t.position = position;
-		InitializeInstance (t);
-		
+		active.Add (m);
+		m.gameObject.SetActive (true);
+
+		return m;
+	}
+
+	void ReleaseInstance (MonoBehaviour instance) {
+		instance.gameObject.SetActive (false);
+		active.Remove (instance);
+		inactive.Push (instance);
+	}
+
+	public static T Instantiate<T> () where T : MonoBehaviour {
+		return GetPool<T> ().CreateInstance ().GetComponent<T> () as T;
+	}
+
+	public static T Instantiate<T> (Vector3 position) where T : MonoBehaviour {
+		T t = Instantiate<T> ();
+		t.transform.position = position;
 		return t;
 	}
-	
-	private void InitializeInstance (Transform instance) {
 
-		if (_parentInstances) {
-			instance.parent = transform;
-		}
-		
-		instance.SetActiveRecursively (true);
-	}
-	
-	public void ReleaseInstance (Transform instance) {
-
-		instance.SetActiveRecursively (false);
-		_instances.Push (instance);
-	}
-
-	public static Transform Instantiate (string poolName, Vector3 position) {
-		Transform t = ObjectPool.GetPool (poolName).GetInstance (position);
-		//#if UNITY_EDITOR && DEBUG
-		// TODO: don't do this
-		if (t.GetScript<IPoolable> () != null) {
-			//Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", t));
-			t.GetScript<IPoolable> ().OnPoolCreate ();
-		}
-		//#endif
+	public static T Instantiate<T> (Vector3 position, Quaternion rotation) where T : MonoBehaviour {
+		T t = Instantiate<T> ();
+		t.transform.position = position;
+		t.transform.localRotation = rotation;
 		return t;
 	}
 
-	public static void Destroy (string poolName, Transform instance) {
-		//#if UNITY_EDITOR && DEBUG
-		// TODO: don't do this
-		if (instance.GetScript<IPoolable> () != null) {
-			//Debug.LogError (string.Format ("The object {0} must implement the IPoolable interface", instance));
-			instance.GetScript<IPoolable>().OnPoolDestroy ();
-		}
-		//#endif
-		instance.SetParent (null);
-		ObjectPool.GetPool (poolName).ReleaseInstance (instance);
+	public static void Destroy (GameObject go) {
+		Destroy<MonoBehaviour> (go);
 	}
+
+	public static void Destroy (Transform t) {
+		Destroy<MonoBehaviour> (t);
+	}
+
+	public static void Destroy<T> (T t) where T : MonoBehaviour {
+		GetPool<T> ().ReleaseInstance (t);
+	}
+
+	public static void Destroy<T> (Transform t) where T : MonoBehaviour {
+		GetPool<T> ().ReleaseInstance (t.GetComponent<MonoBehaviour> ());
+	}
+
+	public static void Destroy<T> (GameObject go) where T : MonoBehaviour {
+		GetPool<T> ().ReleaseInstance (go.GetComponent<MonoBehaviour> ());
+	}
+}
+
+public static class PoolIOHandler {
+
+	static string ApplicationPath {
+		get { return Application.dataPath; }
+	}
+
+	static string ResourcesPath {
+		get { return ApplicationPath + "/Resources/Prefabs/"; }
+	}
+
+	static string Path {
+		get { return "Prefabs/"; }
+	}
+
+	/**
+	  * Loads a prefab with the given id
+	  * First tries to load the prefab from Resources
+	  * Failing that, searches for the prefab in the project and copies it into the Resources folder
+	  * Failing that, tries to create a new prefab with the given type T
+	 */
+	public static MonoBehaviour LoadPrefab<T> (string id) where T : MonoBehaviour {
+		
+		#if UNITY_EDITOR
+
+		MonoBehaviour prefab = LoadMonoBehaviour (id);
+		if (prefab == null) {
+			string projectPath = FindPrefabDirectory (id, ApplicationPath);
+			if (projectPath != "") {
+				string p = "Assets" + projectPath.Replace (Application.dataPath, "");
+				AssetDatabase.CopyAsset (p, "Assets/Resources/Prefabs/" + id + ".prefab");
+				AssetDatabase.Refresh ();
+			} else {
+				AddPrefab<T> (id);
+			}
+			return LoadMonoBehaviour (id);
+		} else {
+			return prefab;
+		}
+
+		#else
+
+		try {
+			return LoadMonoBehaviour (id);
+		} catch {
+			throw new System.Exception ("No prefab named '" + id + "' exists in the Resources directory");
+		}
+
+		#endif
+	}
+
+	static MonoBehaviour LoadMonoBehaviour (string id) {
+		return Resources.Load (Path + id, typeof (MonoBehaviour)) as MonoBehaviour;
+	}
+
+	#if UNITY_EDITOR
+	public static void DeletePrefabsInResources () {
+		string[] files = Directory.GetFiles (ResourcesPath, "*.prefab");
+		foreach (string f in files)
+			AssetDatabase.DeleteAsset ("Assets" + f.Replace (Application.dataPath, ""));
+	}
+
+	static string FindPrefabDirectory (string id, string path) {
+
+		string[] directories = Directory.GetDirectories (path);
+
+		// TODO: http://docs.unity3d.com/ScriptReference/AssetDatabase.FindAssets.html
+		foreach (string d in directories) {
+			string[] files = Directory.GetFiles (d, "*.prefab");
+			foreach (string f in files) {
+				if (f.Contains (id + ".prefab"))
+					return f;
+			}
+			string s = FindPrefabDirectory (id, d);
+			if (s != "") return s;
+		}
+
+		return "";
+	}
+
+	static void AddPrefab<T> (string id) where T : MonoBehaviour {
+		GameObject go = new GameObject (id);
+		go.AddComponent<T> ();
+		PrefabUtility.CreatePrefab ("Assets/Resources/Prefabs/" + id + ".prefab", go);
+		Object.DestroyImmediate (go);
+	}
+	#endif
 }

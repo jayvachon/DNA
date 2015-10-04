@@ -52,7 +52,7 @@ namespace DNA.Units {
 			base.Awake ();
 			TWO_PI = Mathf.PI * 2f;
 			yPos = Position.y;
-			Path = ObjectCreator.Instance.Create<Path> ().GetScript<Path> ();
+			Path = ObjectPool.Instantiate<Path> ();
 			Path.MyTransform.SetParent (MobileUnit.transform);
 			Path.Init (this, new PathSettings (2, false), PathRotator);
 		}

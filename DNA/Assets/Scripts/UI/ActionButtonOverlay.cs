@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 //public delegate void ActionButtonPress (string id);
 
-public class ActionButtonOverlay : MonoBehaviour, IPoolable {
+public class ActionButtonOverlay : MonoBehaviour {
 
 	public Text text;
 	string id = "";
@@ -21,7 +21,4 @@ public class ActionButtonOverlay : MonoBehaviour, IPoolable {
 	public void OnPress () {
 		actionButtonPress (id);
 	}
-
-	public void OnPoolCreate () {}
-	public void OnPoolDestroy () {}
 }

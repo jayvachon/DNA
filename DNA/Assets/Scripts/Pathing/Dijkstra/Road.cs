@@ -5,14 +5,11 @@ using DNA.InputSystem;
 
 namespace DNA.Paths {
 
-	public class Road : MBRefs, IPoolable {
+	public class Road : MBRefs {
 
 		public void Init (float length) {
 			MyTransform.localScale = new Vector3 (0.1f, 0.1f, length);
 			MyTransform.SetLocalPositionZ (length*0.5f);
 		}
-
-		public void OnPoolCreate () {}
-		public void OnPoolDestroy () {}
 	}
 }

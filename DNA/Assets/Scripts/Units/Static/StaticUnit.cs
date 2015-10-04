@@ -38,13 +38,13 @@ namespace DNA.Units {
 
 		protected void Destroy<T> (bool enablePathPoint=true) where T : StaticUnit {
 			if (enablePathPoint) {
-				StaticUnit plot = ObjectCreator.Instance.Create<Plot> (Vector3.zero).GetScript<Plot> () as StaticUnit;
+				StaticUnit plot = ObjectPool.Instantiate<Plot> () as StaticUnit;
 				plot.Position = Position;
 				plot.PathPoint = PathPoint;
 				PathPoint.StaticUnit = plot;
 				if (Selected) SelectionManager.Select (plot.UnitClickable);
 			} else {
-				ObjectCreator.Instance.Destroy<PathPoint> (PathPoint.MyTransform);
+				ObjectPool.Destroy<PathPoint> (PathPoint.MyTransform);
 			}
 			DestroyThis<T> ();
 		}

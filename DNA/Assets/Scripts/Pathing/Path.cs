@@ -13,7 +13,7 @@ namespace Pathing {
 	 *			> MouseDrawer
 	 */
 
-	public class Path : MBRefs, IPoolable {
+	public class Path : MBRefs {
 
 		bool active = true;
 		public bool Active {
@@ -115,14 +115,11 @@ namespace Pathing {
 		}
 
 		public static PathPoint CreatePoint (Vector3 position, DNA.Units.StaticUnit staticUnit) {
-			PathPoint pathPoint = ObjectCreator.Instance.Create<PathPoint> (position).GetScript<PathPoint> ();
+			PathPoint pathPoint = ObjectPool.Instantiate<PathPoint> (position);
 			pathPoint.StaticUnit = staticUnit;
 			Pathfinder.Instance.AddPathPoint (pathPoint);
 			return pathPoint;
 		}
-
-		public void OnPoolCreate () {}
-		public void OnPoolDestroy () {}
 	}
 
 	public class PathSettings {

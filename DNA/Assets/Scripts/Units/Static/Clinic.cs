@@ -32,15 +32,17 @@ namespace DNA.Units {
 			PerformableActions.Add (new GenerateItem<HealthHolder> ());*/
 		}
 
-		public override void OnPoolCreate () {
+		//public override void OnPoolCreate () {
+		protected override void OnEnable () {
 			healthHolder.HolderUpdated += OnHealthUpdate;
-			indicator = ObjectCreator.Instance.Create<HealthIndicator> ().GetScript<HealthIndicator> ();
+			indicator = ObjectPool.Instantiate<HealthIndicator> ();
 			indicator.Initialize (Transform, 1.5f);
 		}
 
-		public override void OnPoolDestroy () {
+		//public override void OnPoolDestroy () {
+		protected override void OnDisable () {
 			healthHolder.HolderUpdated -= OnHealthUpdate;
-			ObjectCreator.Instance.Destroy<HealthIndicator> (indicator.MyTransform);
+			ObjectPool.Destroy<HealthIndicator> (indicator.MyTransform);
 		}
 
 		void OnHealthUpdate () {

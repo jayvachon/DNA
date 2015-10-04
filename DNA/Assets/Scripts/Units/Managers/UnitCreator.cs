@@ -5,7 +5,7 @@ using System.Collections;
 // + add Units to ObjectBank (instead of UnitsList)
 namespace DNA.Units {
 
-	public class UnitCreator : MonoBehaviour {
+	/*public class UnitCreator : MonoBehaviour {
 
 		static UnitCreator instanceInternal = null;
 		static public UnitCreator instance {
@@ -37,5 +37,5 @@ namespace DNA.Units {
 			DontDestroyOnLoad (go);
 			go.AddComponent<ObjectPool> ().Init (prefabName, UnitsList.instance.GetUnit (prefabName).transform);
 		}
-	}
+	}*/
 }

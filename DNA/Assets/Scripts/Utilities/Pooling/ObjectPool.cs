@@ -88,7 +88,8 @@ public class ObjectPool {
 
 	public static void Destroy (string id) {
 		ObjectPool op = GetPool (id);
-		op.ReleaseInstance (op.active[0]);
+		if (op.active.Count > 0)
+			op.ReleaseInstance (op.active[0]);
 	}
 
 	public static void Destroy (GameObject go) {

@@ -64,6 +64,7 @@ namespace DNA.Paths {
 
 		void OnClickPointEvent (ClickPointEvent e) {
 
+			// TODO: this could obv be cleaned up
 			// If both points have roads, find shortest route
 			// If second point does not have a road, find cheapest route
 
@@ -74,19 +75,41 @@ namespace DNA.Paths {
 					return;
 				points.Add (newPoint);
 				ObjectPool.Instantiate ("ConstructionStartIndicator", newPoint.Position);
+				return;
 			} else if (points.Count == 1) {
-				if (points.Contains (newPoint)) {
-					// toggle
+				
+				if (newPoint == points[0]) {
+					Clear ();
+					return;
+				}
+
+				ObjectPool.Instantiate ("ConstructionEndIndicator", newPoint.Position);
+				points.Add (newPoint);
+				
+
+			} else if (points.Count == 2) {
+				if (newPoint == points[0]) {
+					Clear ();
+					return;
+				}
+				if (newPoint == points[1]) {
+					points.RemoveAt (1);
+					path.Clear ();
+					Drawer.Clear ();
+					ObjectPool.Destroy ("ConstructionEndIndicator");
 					return;
 				} else {
-					ObjectPool.Instantiate ("ConstructionEndIndicator", newPoint.Position);
+					points.RemoveAt (1);
 					points.Add (newPoint);
-					if (newPoint.HasRoad)
-						GenerateShortestPath ();
-					else
-						GenerateCheapestPath ();
+					ObjectPool.Destroy ("ConstructionEndIndicator");
+					ObjectPool.Instantiate ("ConstructionEndIndicator", newPoint.Position);
 				}
 			}
+
+			if (newPoint.HasRoad)
+				GenerateShortestPath ();
+			else
+				GenerateCheapestPath ();
 		}
 
 		void GenerateShortestPath () {

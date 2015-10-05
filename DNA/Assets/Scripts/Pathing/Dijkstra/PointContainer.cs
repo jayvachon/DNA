@@ -20,12 +20,20 @@ namespace DNA {
 		}
 
 		public void SetStaticUnit<T> () where T : StaticUnit {
+			RemoveStaticUnit ();
 			T u = ObjectPool.Instantiate<T> ();
 			Point.Unit = u;
-			u.Transform.SetParent (MyTransform);
-			u.Transform.localPosition = Vector3.zero;
-			u.Transform.rotation = MyTransform.rotation;
+			u.transform.SetParent (MyTransform);
+			u.transform.localPosition = Vector3.zero;
+			u.transform.rotation = MyTransform.rotation;
 			LookAtCenter ();
+		}
+
+		void RemoveStaticUnit () {
+			if (Point.Unit != null) {
+				ObjectPool.Destroy (Point.Unit.transform);
+				Point.Unit = null;
+			}
 		}
 
 		void LookAtCenter () {

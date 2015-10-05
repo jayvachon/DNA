@@ -72,21 +72,23 @@ public class ObjectPool {
 		inactive.Push (instance);
 	}
 
-	public static T Instantiate<T> () where T : MonoBehaviour {
-		return GetPool<T> ().CreateInstance ().GetComponent<T> () as T;
+	public static MonoBehaviour Instantiate (string id, Vector3 position=new Vector3 (), Quaternion rotation=new Quaternion ()) {
+		MonoBehaviour m = GetPool (id).CreateInstance ();
+		m.transform.position = position;
+		m.transform.localRotation = rotation;
+		return m;
 	}
 
-	public static T Instantiate<T> (Vector3 position) where T : MonoBehaviour {
-		T t = Instantiate<T> ();
-		t.transform.position = position;
-		return t;
-	}
-
-	public static T Instantiate<T> (Vector3 position, Quaternion rotation) where T : MonoBehaviour {
-		T t = Instantiate<T> ();
+	public static T Instantiate<T> (Vector3 position=new Vector3 (), Quaternion rotation=new Quaternion ()) where T : MonoBehaviour {
+		T t = GetPool<T> ().CreateInstance ().GetComponent<T> () as T;
 		t.transform.position = position;
 		t.transform.localRotation = rotation;
 		return t;
+	}
+
+	public static void Destroy (string id) {
+		ObjectPool op = GetPool (id);
+		op.ReleaseInstance (op.active[0]);
 	}
 
 	public static void Destroy (GameObject go) {

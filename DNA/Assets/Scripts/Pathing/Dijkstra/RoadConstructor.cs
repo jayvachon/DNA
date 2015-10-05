@@ -64,23 +64,43 @@ namespace DNA.Paths {
 
 		void OnClickPointEvent (ClickPointEvent e) {
 
-			// If the point already exists in the list, remove it (toggle)
-			// If the point already exists on the path, ignore it
+			// If both points have roads, find shortest route
+			// If second point does not have a road, find cheapest route
 
-			if (points.Contains (e.Point)) {
-				points.Remove (e.Point);
-			} else {
-				if (path.Contains (e.Point))
+			GridPoint newPoint = e.Point;
+
+			if (points.Count == 0) {
+				if (!newPoint.HasRoad)
 					return;
-				points.Add (e.Point);
+				points.Add (newPoint);
+				ObjectPool.Instantiate ("ConstructionStartIndicator", newPoint.Position);
+			} else if (points.Count == 1) {
+				if (points.Contains (newPoint)) {
+					// toggle
+					return;
+				} else {
+					ObjectPool.Instantiate ("ConstructionEndIndicator", newPoint.Position);
+					points.Add (newPoint);
+					if (newPoint.HasRoad)
+						GenerateShortestPath ();
+					else
+						GenerateCheapestPath ();
+				}
 			}
-			GeneratePath ();
 		}
 
-		void GeneratePath () {
+		void GenerateShortestPath () {
 			path.Clear ();
 			for (int i = 0; i < points.Count-1; i ++)
 				path.AddRange (Pathfinder.GetShortestPath (points[i], points[i+1]));
+			connections = Pathfinder.PointsToConnections (path);
+			Drawer.UpdatePositions (path.ConvertAll (x => x.Position));
+		}
+
+		void GenerateCheapestPath () {
+			path.Clear ();
+			for (int i = 0; i < points.Count-1; i ++)
+				path.AddRange (Pathfinder.GetCheapestPath (points[i], points[i+1]));
 			connections = Pathfinder.PointsToConnections (path);
 			Drawer.UpdatePositions (path.ConvertAll (x => x.Position));
 		}
@@ -89,6 +109,8 @@ namespace DNA.Paths {
 			path.Clear ();
 			points.Clear ();
 			Drawer.Clear ();
+			ObjectPool.Destroy ("ConstructionStartIndicator");
+			ObjectPool.Destroy ("ConstructionEndIndicator");
 		}
 
 		void OnChangeState (ActionState state) {

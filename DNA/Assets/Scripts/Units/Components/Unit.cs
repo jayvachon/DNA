@@ -91,11 +91,11 @@ namespace DNA.Units {
 		protected virtual void OnChangeUnit<U> (U u) where U : Unit {}
 
 		protected virtual void OnEnable () {
-			EmissionsManager.Instance.AddUnit (this);
+			EmissionsManager.AddUnit (this);
 		}
 
 		protected virtual void OnDisable () {
-			EmissionsManager.Instance.RemoveUnit (this);
+			EmissionsManager.RemoveUnit (this);
 			if (Selected) {
 				SelectionManager.Unselect ();
 			}

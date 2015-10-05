@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	void LevelStart () {
-		EmissionsManager.Instance.Reset ();
+		EmissionsManager.Reset ();
 		Sea.Instance.BeginRising ();
 	}
 

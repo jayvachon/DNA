@@ -7,8 +7,22 @@ namespace DNA.Paths {
 
 	public class PointsManager : MBRefs {
 
-		new void Awake () {
+		readonly List<PointContainer> points = new List<PointContainer> ();
+
+		public List<PointContainer> Points {
+			get { return points; }
+		}
+
+		public void Init () {
 			CreatePoints ();
+		}
+
+		public void SetUnitAtIndex<T> (int index) where T : StaticUnit {
+			points[index].SetStaticUnit<T> ();
+		}
+
+		public List<Connection> GetConnectionsAtIndex (int index) {
+			return points[index].Point.Connections;
 		}
 
 		void CreatePoints () {
@@ -19,14 +33,8 @@ namespace DNA.Paths {
 				PointContainer pc = ObjectPool.Instantiate<PointContainer> ();
 				pc.Point = gpoints[i];
 				pc.Parent = MyTransform;
-				CreateStaticUnit (pc, i);
-			}
-		}
-
-		void CreateStaticUnit (PointContainer pc, int index) {
-			switch (index) {
-				case 0:		pc.SetStaticUnit<GivingTreeUnit> (); break;
-				default: 	pc.SetStaticUnit<DrillablePlot> (); break;
+				pc.SetStaticUnit<DrillablePlot> ();
+				points.Add (pc);
 			}
 		}
 	}

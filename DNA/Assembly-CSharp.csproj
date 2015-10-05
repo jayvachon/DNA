@@ -267,7 +267,6 @@
      <Compile Include="Assets\Scripts\Utilities\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Utilities\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectPool.cs" />
-     <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectPoolDebugger.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

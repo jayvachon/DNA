@@ -41,17 +41,17 @@ namespace DNA {
 					foreach (LineSegment segment in segments) {
 
 						List<Vector2> s = segment.Points;
+						
+						GridPoint p1 = Points.Find (p => Mathf.Approximately (s[0].x, p.Position.x) 
+							&& Mathf.Approximately (s[0].y, p.Position.z));
+						GridPoint p2 = Points.Find (p => Mathf.Approximately (s[1].x, p.Position.x) 
+							&& Mathf.Approximately (s[1].y, p.Position.z));
 
-						connections.Add (
-							new Connection () {
-								Points = new [] {
-									Points.Find (p => Mathf.Approximately (s[0].x, p.Position.x) 
-										&& Mathf.Approximately (s[0].y, p.Position.z)),
-									Points.Find (p => Mathf.Approximately (s[1].x, p.Position.x) 
-										&& Mathf.Approximately (s[1].y, p.Position.z))
-								}
-							}
-						);
+						Connection c = new Connection (new [] { p1, p2 });
+						
+						p1.Connections.Add (c);
+						p2.Connections.Add (c);
+						connections.Add (c);
 					}
 				}
 				return connections;

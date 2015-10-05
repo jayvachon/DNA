@@ -53,9 +53,17 @@ namespace DNA.Paths {
 			}
 		}
 
-		public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
+		public static List<GridPoint> GetCheapestPath (GridPoint a, GridPoint b) {
+			return GetPath (a, b, Paths);
+		}
 
-			var path = Engine.CalculateShortestPathBetween<GridPoint> (a, b, Paths);
+		public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
+			return GetPath (a, b, PathsIgnoreCost);
+		}
+
+		static List<GridPoint> GetPath (GridPoint a, GridPoint b, Path<GridPoint>[] pathToUse) {
+
+			var path = Engine.CalculateShortestPathBetween<GridPoint> (a, b, pathToUse);
 			List<GridPoint> pathList = new List<GridPoint> ();
 
 			foreach (Path<GridPoint> gp in path)

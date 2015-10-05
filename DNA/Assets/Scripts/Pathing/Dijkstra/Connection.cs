@@ -7,7 +7,7 @@ namespace DNA.Paths {
 
 	public class Connection : PathElement {
 
-		public GridPoint[] Points { get; set; }
+		public GridPoint[] Points { get; private set; }
 		public Road Road { get; set; }
 
 		Vector3[] positions;
@@ -100,5 +100,10 @@ namespace DNA.Paths {
 		public delegate void OnUpdateCost (int cost);
 
 		public OnUpdateCost onUpdateCost;
+
+		public Connection (GridPoint[] points) {
+			Points = points;
+			Cost = Costs["default"];
+		}
 	}
 }

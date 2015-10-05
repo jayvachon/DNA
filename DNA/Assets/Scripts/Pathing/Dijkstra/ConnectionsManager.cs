@@ -6,18 +6,25 @@ namespace DNA.Paths {
 
 	public class ConnectionsManager : MBRefs {
 
-		new void Awake () {
+		List<ConnectionContainer> connections = new List<ConnectionContainer> ();
+
+		public void Init () {
 			CreateConnections ();
+		}
+
+		public void EnableRoadAtIndex (int index) {
+			connections[index].Connection.SetCost ("free");
 		}
 
 		void CreateConnections () {
 
-			List<Connection> connections = TreeGrid.Connections;
+			List<Connection> gconnections = TreeGrid.Connections;
 
-			for (int i = 0; i < connections.Count; i ++) {
+			for (int i = 0; i < gconnections.Count; i ++) {
 				ConnectionContainer c = ObjectPool.Instantiate<ConnectionContainer> ();
-				c.Connection = connections[i];
+				c.Connection = gconnections[i];
 				c.Parent = MyTransform;
+				connections.Add (c);
 			}
 		}
 	}

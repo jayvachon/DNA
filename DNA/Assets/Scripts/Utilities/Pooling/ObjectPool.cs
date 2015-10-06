@@ -7,6 +7,8 @@ using System.IO;
 using UnityEditor;
 #endif
 
+// TODO: this only works if the prefab has a script attached to it
+
 public class ObjectPool {
 
 	static readonly Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool> ();
@@ -93,11 +95,11 @@ public class ObjectPool {
 	}
 
 	public static void Destroy (GameObject go) {
-		Destroy<MonoBehaviour> (go);
+		Destroy (go.GetComponent<MonoBehaviour> ().GetType ().Name);
 	}
 
 	public static void Destroy (Transform t) {
-		Destroy<MonoBehaviour> (t);
+		Destroy (t.GetComponent<MonoBehaviour> ().GetType ().Name);
 	}
 
 	public static void Destroy<T> (T t) where T : MonoBehaviour {
@@ -194,7 +196,6 @@ public static class PoolIOHandler {
 
 	static void AddPrefab<T> (string id) where T : MonoBehaviour {
 		GameObject go = new GameObject (id);
-		go.AddComponent<T> ();
 		PrefabUtility.CreatePrefab ("Assets/Resources/Prefabs/" + id + ".prefab", go);
 		Object.DestroyImmediate (go);
 	}

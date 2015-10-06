@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum ActionState {
-	Idle, RoadConstruction
+	Idle, RoadConstruction, BuildingConstruction
 }
 
 public static class PlayerActionState {

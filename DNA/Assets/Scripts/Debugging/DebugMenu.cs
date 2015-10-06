@@ -12,9 +12,9 @@ public class DebugMenu : MonoBehaviour {
 			else if (PlayerActionState.State == ActionState.RoadConstruction)
 				PlayerActionState.Set (ActionState.Idle);
 		}
-		if (GUILayout.Button ("Buy road")) {
+		/*if (GUILayout.Button ("Buy road")) {
 			Player.Instance.PerformableTasks[typeof (BuildRoad)].Start ();
 			PlayerActionState.Set (ActionState.Idle);
-		}
+		}*/
 	}
 }

@@ -209,6 +209,7 @@
      <Compile Include="Assets\Scripts\UI\ActionButton.cs" />
      <Compile Include="Assets\Scripts\UI\ActionButtonOverlay.cs" />
      <Compile Include="Assets\Scripts\UI\BuildingIndicator.cs" />
+     <Compile Include="Assets\Scripts\UI\ConstructPrompt.cs" />
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\FloatingIndicator.cs" />

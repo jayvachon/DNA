@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.EventSystem;
 using Pathing;
+using DNA.Tasks;
 
 namespace DNA.Paths {
 
@@ -32,9 +33,9 @@ namespace DNA.Paths {
 					return 0;
 				
 				int count = 0;
-				foreach (Connection c in connections) {
+				foreach (Connection c in connections)
 					if (c.Cost > 0) count ++;
-				}
+
 				return count;
 			}
 		}
@@ -48,6 +49,8 @@ namespace DNA.Paths {
 				return drawer;
 			}
 		}
+
+		public ConstructPrompt prompt;
 
 		readonly List<GridPoint> points = new List<GridPoint> ();
 		readonly List<GridPoint> path = new List<GridPoint> ();
@@ -110,6 +113,17 @@ namespace DNA.Paths {
 				GenerateShortestPath ();
 			else
 				GenerateCheapestPath ();
+
+			// TODO: handle all of this in a construction manager or something
+			if (points.Count == 2) {
+				BuildRoad b = Player.Instance.PerformableTasks[typeof (BuildRoad)] as BuildRoad;
+				prompt.Open ("Purchase " + b.Settings.Costs["Milkshakes"] + "M", () => {
+					b.Start ();
+					PlayerActionState.Set (ActionState.Idle);
+				});
+			} else {
+				prompt.Close ();
+			}
 		}
 
 		void GenerateShortestPath () {

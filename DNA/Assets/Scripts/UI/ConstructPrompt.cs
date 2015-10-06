@@ -17,6 +17,7 @@ public class ConstructPrompt : MonoBehaviour {
 		confirmText.text = text;
 		confirmButton.onClick.RemoveAllListeners ();
 		confirmButton.onClick.AddListener (onPress);
+		confirmButton.onClick.AddListener (Close);
 		container.gameObject.SetActive (true);
 	}
 

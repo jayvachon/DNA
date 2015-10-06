@@ -8,7 +8,8 @@ namespace DNA.Tasks {
 
 	public class BuildRoad : CostTask {
 
-		int segmentCost;
+		// TODO: this whole segment deal is super hacky
+		int segmentCost = -1;
 		
 		CostTaskSettings costSettings;
 		public override CostTaskSettings Settings {
@@ -16,17 +17,23 @@ namespace DNA.Tasks {
 				if (costSettings == null) {
 					try {
 						costSettings = (CostTaskSettings)settings;
-						segmentCost = costSettings.Costs["Milkshakes"]; // TODO: make this more robust (account for any resources)
 					} catch {
 						throw new System.Exception (this + " requires a CostTaskSettings model");
 					}
 				}
-				costSettings.Costs["Milkshakes"] = segmentCost * RoadConstructor.Instance.NewSegmentCount;
+				if (segmentCost > -1)
+					costSettings.Costs["Milkshakes"] = Cost;
 				return costSettings;
 			}
 		}
 
-		public BuildRoad (Inventory inventory=null) : base (inventory) {}
+		public int Cost {
+			get { return segmentCost * RoadConstructor.Instance.NewSegmentCount; }
+		}
+
+		public BuildRoad (Inventory inventory=null) : base (inventory) {
+			segmentCost = Settings.Costs["Milkshakes"];
+		}
 
 		protected override void OnEnd () {
 			Purchase ();

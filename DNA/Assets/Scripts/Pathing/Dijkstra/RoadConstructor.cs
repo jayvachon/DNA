@@ -117,7 +117,7 @@ namespace DNA.Paths {
 			// TODO: handle all of this in a construction manager or something
 			if (points.Count == 2) {
 				BuildRoad b = Player.Instance.PerformableTasks[typeof (BuildRoad)] as BuildRoad;
-				prompt.Open ("Purchase " + b.Settings.Costs["Milkshakes"] + "M", () => {
+				prompt.Open ("Purchase " + b.Cost + "M", () => {
 					b.Start ();
 					PlayerActionState.Set (ActionState.Idle);
 				});

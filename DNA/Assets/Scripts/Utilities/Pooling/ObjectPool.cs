@@ -7,8 +7,6 @@ using System.IO;
 using UnityEditor;
 #endif
 
-// TODO: this only works if the prefab has a script attached to it
-
 public class ObjectPool {
 
 	static readonly Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool> ();

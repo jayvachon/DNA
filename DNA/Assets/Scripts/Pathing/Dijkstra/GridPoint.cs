@@ -8,7 +8,6 @@ namespace DNA.Paths {
 	public class GridPoint : PathElement {
 
 		public Vector3 Position { get; set; }
-		public StaticUnit Unit { get; set; }
 
 		public readonly List<Connection> connections = new List<Connection> ();
 		public List<Connection> Connections {

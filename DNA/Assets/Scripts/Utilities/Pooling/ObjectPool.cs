@@ -93,11 +93,15 @@ public class ObjectPool {
 	}
 
 	public static void Destroy (GameObject go) {
-		Destroy (go.GetComponent<MonoBehaviour> ().GetType ().Name);
+		MonoBehaviour m = go.GetComponent<MonoBehaviour> ();
+		ObjectPool op = GetPool (m.GetType ().Name);
+		op.ReleaseInstance (m);
 	}
 
 	public static void Destroy (Transform t) {
-		Destroy (t.GetComponent<MonoBehaviour> ().GetType ().Name);
+		MonoBehaviour m = t.GetComponent<MonoBehaviour> ();
+		ObjectPool op = GetPool (m.GetType ().Name);
+		op.ReleaseInstance (m);
 	}
 
 	public static void Destroy<T> (T t) where T : MonoBehaviour {

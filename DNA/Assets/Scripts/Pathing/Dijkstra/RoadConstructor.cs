@@ -40,6 +40,10 @@ namespace DNA.Paths {
 			}
 		}
 
+		public int PointCount {
+			get { return points.Count; }
+		}
+
 		LineDrawer drawer = null;
 		LineDrawer Drawer {
 			get {
@@ -62,16 +66,11 @@ namespace DNA.Paths {
 			Clear ();
 		}
 
-		void OnEnable () { PlayerActionState.onChange += OnChangeState; }
-		void OnDisable () { PlayerActionState.onChange -= OnChangeState; }
-
-		void OnClickPointEvent (ClickPointEvent e) {
+		public void AddPoint (GridPoint newPoint) {
 
 			// TODO: this could obv be cleaned up
 			// If both points have roads, find shortest route
 			// If second point does not have a road, find cheapest route
-
-			GridPoint newPoint = e.Point;
 
 			if (points.Count == 0) {
 				if (!newPoint.HasRoad)
@@ -113,17 +112,6 @@ namespace DNA.Paths {
 				GenerateShortestPath ();
 			else
 				GenerateCheapestPath ();
-
-			// TODO: handle all of this in a construction manager or something
-			if (points.Count == 2) {
-				BuildRoad b = Player.Instance.PerformableTasks[typeof (BuildRoad)] as BuildRoad;
-				prompt.Open ("Purchase " + b.Cost + "M", () => {
-					b.Start ();
-					PlayerActionState.Set (ActionState.Idle);
-				});
-			} else {
-				prompt.Close ();
-			}
 		}
 
 		void GenerateShortestPath () {
@@ -142,21 +130,12 @@ namespace DNA.Paths {
 			Drawer.UpdatePositions (path.ConvertAll (x => x.Position));
 		}
 
-		void Clear () {
+		public void Clear () {
 			path.Clear ();
 			points.Clear ();
 			Drawer.Clear ();
 			ObjectPool.Destroy ("ConstructionStartIndicator");
 			ObjectPool.Destroy ("ConstructionEndIndicator");
-		}
-
-		void OnChangeState (ActionState state) {
-			if (state == ActionState.RoadConstruction) {
-				Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
-			} else {
-				Events.instance.RemoveListener<ClickPointEvent> (OnClickPointEvent);
-				Clear ();
-			}
 		}
 	}
 }

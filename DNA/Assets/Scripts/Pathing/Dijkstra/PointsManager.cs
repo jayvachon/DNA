@@ -13,9 +13,6 @@ namespace DNA.Paths {
 			get { return points; }
 		}
 
-		void OnEnable () { PlayerActionState.onChange += OnChangeState; }
-		void OnDisable () { PlayerActionState.onChange -= OnChangeState; }
-
 		public void Init () {
 			CreatePoints ();
 		}
@@ -39,23 +36,6 @@ namespace DNA.Paths {
 				pc.SetStaticUnit<DrillablePlot> ();
 				points.Add (pc);
 			}
-		}
-
-		void EnableHighlighting () {
-			foreach (PointContainer point in points)
-				point.EnableHighlighting ();
-		}
-
-		void DisableHighlighting () {
-			foreach (PointContainer point in points)
-				point.DisableHighlighting ();
-		}
-
-		void OnChangeState (ActionState state) {
-			if (state == ActionState.RoadConstruction || state == ActionState.BuildingConstruction)
-				EnableHighlighting ();
-			else
-				DisableHighlighting ();
 		}
 	}
 }

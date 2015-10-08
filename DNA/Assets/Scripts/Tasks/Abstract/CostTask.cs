@@ -26,7 +26,7 @@ namespace DNA.Tasks {
 			get { return CanAfford; }
 		}
 
-		bool CanAfford {
+		protected bool CanAfford {
 			get {
 				foreach (var cost in Settings.Costs) {
 					try {

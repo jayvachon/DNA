@@ -61,6 +61,8 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\ReleaseEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\SelectEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\UnselectEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\MouseEnterPointEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\MouseExitPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
@@ -99,7 +101,6 @@
      <Compile Include="Assets\Scripts\Inventory\Items\HealthItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\YearItem.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Player.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Dijkstra\Dijkstra_deprecate.cs" />
@@ -133,8 +134,10 @@
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\ConnectionsManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\EnvironmentSetupManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\GridPoint.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\IPathElementObject.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathDebugger.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathElement.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathElementContainer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointContainer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointsManager.cs" />
@@ -154,7 +157,8 @@
      <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
      <Compile Include="Assets\Scripts\Pathing\Pathfinder.cs" />
-     <Compile Include="Assets\Scripts\PlayerActionState.cs" />
+     <Compile Include="Assets\Scripts\Player\Player.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerActionState.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\Floret.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\HSBColor.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralCamera.cs" />
@@ -185,6 +189,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\FleeTree.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateUnit.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\IConstructable.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskMatcher.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AcceptCollectItemTest.cs" />
@@ -223,6 +228,7 @@
      <Compile Include="Assets\Scripts\UI\Notifications\Notification.cs" />
      <Compile Include="Assets\Scripts\UI\Notifications\NotificationCenter.cs" />
      <Compile Include="Assets\Scripts\UI\TaskButton.cs" />
+     <Compile Include="Assets\Scripts\UI\UI.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBoxOverlay.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />

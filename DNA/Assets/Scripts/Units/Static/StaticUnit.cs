@@ -3,10 +3,11 @@ using System.Collections;
 using DNA.InputSystem;
 using Pathing;
 using DNA.Tasks;
+using DNA.Paths;
 
 namespace DNA.Units {
 
-	public class StaticUnit : Unit, ITaskAcceptor {
+	public class StaticUnit : Unit, IPathElementObject, ITaskAcceptor {
 
 		StaticUnitTransform staticTransform;
 		public StaticUnitTransform StaticTransform {

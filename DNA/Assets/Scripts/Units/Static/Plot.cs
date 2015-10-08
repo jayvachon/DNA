@@ -51,8 +51,8 @@ namespace DNA.Units {
 		}
 
 		protected virtual void Start () {
-			PerformableTasks.Add (new DNA.Tasks.GenerateUnit<MilkshakePool> (Player.Instance.Inventory)).onEnd += OnGenerateUnit;
-			PerformableTasks.Add (new DNA.Tasks.GenerateUnit<CoffeePlant> (Player.Instance.Inventory)).onEnd += OnGenerateUnit;
+			//PerformableTasks.Add (new DNA.Tasks.GenerateUnit<MilkshakePool> (Player.Instance.Inventory)).onEnd += OnGenerateUnit;
+			//PerformableTasks.Add (new DNA.Tasks.GenerateUnit<CoffeePlant> (Player.Instance.Inventory)).onEnd += OnGenerateUnit;
 		}
 
 		//public override void OnPoolCreate () {

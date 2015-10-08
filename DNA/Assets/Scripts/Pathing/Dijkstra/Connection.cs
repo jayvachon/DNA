@@ -8,7 +8,6 @@ namespace DNA.Paths {
 	public class Connection : PathElement {
 
 		public GridPoint[] Points { get; private set; }
-		public Road Road { get; set; }
 
 		Vector3[] positions;
 		public Vector3[] Positions {

@@ -2,7 +2,7 @@
 using System.Collections;
 
 public enum ActionState {
-	Idle, RoadConstruction, BuildingConstruction
+	Idle, Construction
 }
 
 public static class PlayerActionState {
@@ -17,8 +17,10 @@ public static class PlayerActionState {
 	public static OnChange onChange;
 
 	public static void Set (ActionState newState) {
-		state = newState;
-		if (onChange != null)
-			onChange (state);
+		if (state != newState) {
+			state = newState;
+			if (onChange != null)
+				onChange (state);
+		}
 	}
 }

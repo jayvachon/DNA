@@ -5,7 +5,7 @@ using System.Collections;
 namespace DNA.Paths {
 
 	[RequireComponent (typeof (BoxCollider))]
-	public class ConnectionContainer : MBRefs, IPointerDownHandler {
+	public class ConnectionContainer : PathElementContainer {
 
 		Connection connection;
 		public Connection Connection {
@@ -38,7 +38,7 @@ namespace DNA.Paths {
 
 		void CreateRoad () {
 			Road r = ObjectPool.Instantiate<Road> ();
-			Connection.Road = r;
+			Connection.Object = r as IPathElementObject;
 			r.MyTransform.SetParent (MyTransform);
 			r.MyTransform.localPosition = Vector3.zero;
 			r.MyTransform.rotation = MyTransform.rotation;
@@ -55,12 +55,8 @@ namespace DNA.Paths {
 		protected virtual void OnSetPoints () {}
 
 		void OnUpdateCost (int cost) {
-			if (cost == 0 && Connection.Road == null)
+			if (cost == 0 && Connection.Object == null)
 				CreateRoad ();
 		}
-
-		#region IPointerDownHandler implementation
-		public void OnPointerDown (PointerEventData e) {}
-		#endregion
 	}
 }

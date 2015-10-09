@@ -45,9 +45,9 @@ namespace DNA {
 			get {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
-					performableTasks.Add (new BuildRoad ());
-					performableTasks.Add (new GenerateUnit<CoffeePlant> ()).onEnd += OnGenerateUnit;
-					performableTasks.Add (new GenerateUnit<MilkshakePool> ()).onEnd += OnGenerateUnit;
+					performableTasks.Add (new ConstructRoad ());
+					performableTasks.Add (new ConstructUnit<CoffeePlant> ());
+					performableTasks.Add (new ConstructUnit<MilkshakePool> ());
 				}
 				return performableTasks;
 			}
@@ -67,12 +67,6 @@ namespace DNA {
 			Events.instance.AddListener<MouseExitPointEvent> (OnMouseExitPointEvent);
 		}
 
-		void OnGenerateUnit (PerformerTask task) {
-			StaticUnit unit = ((GenerateUnit)task).GeneratedUnit as StaticUnit;
-			ConstructionTarget.SetStaticUnit (unit);
-			constructionTargets.Clear ();
-		}
-
 		public void SetConstructionPen<T> () where T : IConstructable {
 			if (pen != typeof (T)) {
 				UI.Instance.ConstructPrompt.Close ();
@@ -82,15 +76,18 @@ namespace DNA {
 			PlayerActionState.Set (ActionState.Construction);
 		}
 
-		void Construct (GridPoint point) {
+		void Construct (GridPoint point, PointContainer container) {
 
-			if (pen == typeof (BuildRoad)) {
+			if (pen == typeof (ConstructRoad)) {
 				RoadConstructor.Instance.AddPoint (point);
 				if (RoadConstructor.Instance.PointCount < 2)
 					return;
 			}
 
 			CostTask t = (CostTask)PerformableTasks[pen];
+			ConstructUnit c = t as ConstructUnit;
+			if (c != null)
+				c.ElementContainer = container;
 
 			string text = "Purchase: ";
 			foreach (var cost in t.Settings.Costs) {
@@ -101,13 +98,13 @@ namespace DNA {
 
 		bool CanConstructOnPoint (GridPoint point) {
 			return PlayerActionState.State == ActionState.Construction 
-				&& (PerformableTasks[pen] as IConstructable).CanConstructOnPoint (point);
+				&& (PerformableTasks[pen] as IConstructable).CanConstruct (point);
 		}
 
 		void OnClickPointEvent (ClickPointEvent e) {
 			constructionTargets.Add (e.Container);
 			if (CanConstructOnPoint (e.Point)) {
-				Construct (e.Point);
+				Construct (e.Point, e.Container);
 			}
 		}
 

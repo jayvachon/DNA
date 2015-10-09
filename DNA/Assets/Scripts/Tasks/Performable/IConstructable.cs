@@ -6,6 +6,6 @@ namespace DNA.Tasks {
 
 	public interface IConstructable {
 
-		bool CanConstructOnPoint (GridPoint point);
+		bool CanConstruct (PathElement element);
 	}
 }

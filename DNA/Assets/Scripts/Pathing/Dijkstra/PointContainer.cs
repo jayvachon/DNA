@@ -16,20 +16,12 @@ namespace DNA {
 			set {
 				point = value;
 				Position = point.Position;
+				Element = point;
 			}
 		}
 
 		public void SetStaticUnit<T> () where T : StaticUnit {
-			T u = ObjectPool.Instantiate<T> ();
-			SetStaticUnit (u);			
-		}
-
-		public void SetStaticUnit (StaticUnit u) {
-			RemoveStaticUnit ();
-			Point.Object = u as IPathElementObject;
-			u.transform.SetParent (MyTransform);
-			u.transform.localPosition = Vector3.zero;
-			u.transform.rotation = MyTransform.rotation;
+			SetObject (ObjectPool.Instantiate<T> ());
 			LookAtCenter ();
 		}
 
@@ -48,6 +40,10 @@ namespace DNA {
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
 		public void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new ClickPointEvent (this));
+
+			// temp -- just for testing
+			if (Element.State == DevelopmentState.UnderConstruction)
+				EndConstruction ();
 		}
 
 		public void OnPointerEnter (PointerEventData e) {

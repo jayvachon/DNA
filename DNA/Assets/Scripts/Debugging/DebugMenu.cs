@@ -11,13 +11,13 @@ namespace DNA {
 		void OnGUI () {
 			GUILayout.Space (40);
 			if (GUILayout.Button ("Plan road")) {
-				Player.Instance.SetConstructionPen<BuildRoad> ();
+				Player.Instance.SetConstructionPen<ConstructRoad> ();
 			}
 			if (GUILayout.Button ("Birth Coffee Plant")) {
-				Player.Instance.SetConstructionPen<GenerateUnit<CoffeePlant>> ();
+				Player.Instance.SetConstructionPen<ConstructUnit<CoffeePlant>> ();
 			}
 			if (GUILayout.Button ("Birth Milkshake Derrick")) {
-				Player.Instance.SetConstructionPen<GenerateUnit<MilkshakePool>> ();
+				Player.Instance.SetConstructionPen<ConstructUnit<MilkshakePool>> ();
 			}
 		}
 	}

@@ -11,7 +11,7 @@ namespace DNA.Tasks {
 		public GenerateUnit (Inventory inventory=null) : base (inventory) {}
 	}
 
-	public class GenerateUnit<T> : GenerateUnit, IConstructable where T : Unit {
+	public class GenerateUnit<T> : GenerateUnit where T : Unit {
 
 		public GenerateUnit (Inventory inventory=null) : base (inventory) {}
 
@@ -19,10 +19,6 @@ namespace DNA.Tasks {
 			Purchase ();
 			GeneratedUnit = ObjectPool.Instantiate<T> ();
 			base.OnEnd ();
-		}
-
-		public bool CanConstructOnPoint (GridPoint point) {
-			return CanAfford && point.HasRoad && point.Object.GetType () == typeof (DrillablePlot);
 		}
 	}
 }

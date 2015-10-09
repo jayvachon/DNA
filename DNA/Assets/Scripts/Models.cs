@@ -61,6 +61,34 @@ namespace DNA.Models {
 			});
 
 			/**
+			 *	Construct
+			 */
+
+			tasks.Add (typeof (ConstructUnit<CoffeePlant>), new CostTaskSettings {
+				Title = "Birth Coffee Plant (10M)",
+				Description = "Creates a new coffee plant",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 10 }
+				}
+			});
+
+			tasks.Add (typeof (ConstructUnit<MilkshakePool>), new CostTaskSettings {
+				Title = "Birth Milkshake Derrick (15M)",
+				Description = "Creates a new milkshake derrick",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 15 }
+				}
+			});
+
+			/**
 			 *	Consume
 			 */
 
@@ -164,7 +192,7 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (BuildRoad), new CostTaskSettings {
+			tasks.Add (typeof (ConstructRoad), new CostTaskSettings {
 				Title = "Build road",
 				Description = "Builds a road",
 				Duration = 0f,

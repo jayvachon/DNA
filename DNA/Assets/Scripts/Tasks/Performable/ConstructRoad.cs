@@ -6,7 +6,7 @@ using DNA.Paths;
 
 namespace DNA.Tasks {
 
-	public class BuildRoad : CostTask, IConstructable {
+	public class ConstructRoad : CostTask, IConstructable {
 
 		// TODO: this whole segment deal is super hacky
 		int segmentCost = -1;
@@ -31,7 +31,7 @@ namespace DNA.Tasks {
 			get { return segmentCost * RoadConstructor.Instance.NewSegmentCount; }
 		}
 
-		public BuildRoad (Inventory inventory=null) : base (inventory) {
+		public ConstructRoad (Inventory inventory=null) : base (inventory) {
 			segmentCost = Settings.Costs["Milkshakes"];
 		}
 
@@ -41,8 +41,8 @@ namespace DNA.Tasks {
 			base.OnEnd ();
 		}
 
-		public bool CanConstructOnPoint (GridPoint point) {
-			return CanAfford && point.HasRoad || RoadConstructor.Instance.PointCount > 0;
+		public bool CanConstruct (PathElement element) {
+			return CanAfford && ((GridPoint)element).HasRoad || RoadConstructor.Instance.PointCount > 0;
 		}
 	}
 }

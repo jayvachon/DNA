@@ -14,6 +14,7 @@ namespace DNA.Paths {
 				connection = value;
 				connection.onUpdateCost += OnUpdateCost;
 				SetPosition (connection.Positions[0], connection.Positions[1]);
+				Element = connection;
 			}
 		}
 

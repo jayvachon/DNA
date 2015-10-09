@@ -61,7 +61,7 @@ namespace DNA.Tasks {
 			perform = true;
 
 			Log ("Start", true);
-			SendOnStartMessage ();
+			OnStart ();
 			Coroutine.Start (settings.Duration, SetProgress, End);
 
 			return true;
@@ -97,7 +97,7 @@ namespace DNA.Tasks {
 			Progress = progress;
 		}
 
-		void SendOnStartMessage () {
+		protected virtual void OnStart () {
 			if (onStart != null) onStart (this);
 		}
 

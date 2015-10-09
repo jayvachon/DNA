@@ -3,7 +3,19 @@ using System.Collections;
 
 namespace DNA.Paths {
 
+	public enum DevelopmentState { 
+		Undeveloped, 
+		UnderConstruction, 
+		Developed 
+	}
+
 	public class PathElement {
+
+		DevelopmentState state = DevelopmentState.Undeveloped;
+		public DevelopmentState State {
+			get { return state; }
+			set { state = value; }
+		}
 
 		public IPathElementObject Object { get; set; }
 

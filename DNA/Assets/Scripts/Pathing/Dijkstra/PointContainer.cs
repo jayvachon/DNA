@@ -20,8 +20,8 @@ namespace DNA {
 			}
 		}
 
-		public void SetStaticUnit<T> () where T : StaticUnit {
-			SetObject (ObjectPool.Instantiate<T> ());
+		public override void SetObject<T> () {
+			base.SetObject<T> ();
 			LookAtCenter ();
 		}
 

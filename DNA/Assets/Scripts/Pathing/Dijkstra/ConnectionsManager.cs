@@ -6,14 +6,14 @@ namespace DNA.Paths {
 
 	public class ConnectionsManager : MBRefs {
 
-		List<ConnectionContainer> connections = new List<ConnectionContainer> ();
+		static List<ConnectionContainer> connections = new List<ConnectionContainer> ();
+
+		public static ConnectionContainer GetContainer (Connection connection) {
+			return connections.Find (x => x.Connection == connection);
+		}
 
 		public void Init () {
 			CreateConnections ();
-		}
-
-		public void EnableRoadAtIndex (int index) {
-			connections[index].Connection.SetCost ("free");
 		}
 
 		void CreateConnections () {

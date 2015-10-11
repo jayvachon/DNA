@@ -75,12 +75,12 @@ namespace DNA.Units {
 
 		public override void OnSelect () {
 			base.OnSelect ();
-			Events.instance.AddListener<ClickEvent> (OnClickEvent);
+			//Events.instance.AddListener<ClickEvent> (OnClickEvent);
 		}
 
 		public override void OnUnselect () {
 			base.OnUnselect ();
-			Events.instance.RemoveListener<ClickEvent> (OnClickEvent);
+			//Events.instance.RemoveListener<ClickEvent> (OnClickEvent);
 		}
 
 		public bool OnArriveAtPoint (PathPoint point) {
@@ -148,19 +148,19 @@ namespace DNA.Units {
 
 		public virtual void OnDragRelease (Unit unit) {}
 
-		void OnClickEvent (ClickEvent e) {
+		/*void OnClickEvent (ClickEvent e) {
 			if (e.left) return;
 			UnitClickable clickable = e.GetClickedOfType<UnitClickable> ();
 			if (clickable == null) return;
 			Destination = clickable.StaticUnit.PathPoint;
 
 			MoveToDestination ();
-			/*if (!PerformableActions.Performing) {
-				MoveToDestination ();
-			} else {
-				InterruptAction ();
-			}*/
-		}
+			//if (!PerformableActions.Performing) {
+				//MoveToDestination ();
+			//} else {
+				//InterruptAction ();
+			//}
+		}*/
 
 		void MoveToDestination () {
 			if (CurrentPoint == Destination && Path.Points.Count < 2)

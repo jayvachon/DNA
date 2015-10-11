@@ -5,17 +5,20 @@ using System.Collections;
 namespace DNA.Paths {
 
 	[RequireComponent (typeof (BoxCollider))]
-	public class ConnectionContainer : PathElementContainer {
+	public class ConnectionContainer : PathElementContainer, IPointerDownHandler {
 
 		Connection connection;
 		public Connection Connection {
 			get { return connection; }
 			set {
 				connection = value;
-				connection.onUpdateCost += OnUpdateCost;
 				SetPosition (connection.Positions[0], connection.Positions[1]);
 				Element = connection;
 			}
+		}
+
+		protected override Vector3 Anchor {
+			get { return MyTransform.InverseTransformPoint (Connection.Center); }
 		}
 
 		new BoxCollider collider = null;
@@ -37,16 +40,6 @@ namespace DNA.Paths {
 			ColliderEnabled = false;
 		}
 
-		void CreateRoad () {
-			Road r = ObjectPool.Instantiate<Road> ();
-			Connection.Object = r as IPathElementObject;
-			r.MyTransform.SetParent (MyTransform);
-			r.MyTransform.localPosition = Vector3.zero;
-			r.MyTransform.rotation = MyTransform.rotation;
-			r.MyTransform.localScale = MyTransform.localScale;
-			r.Init (Connection.Length);
-		}
-
 		void SetPosition (Vector3 a, Vector3 b) {
 			Position = a;
 			MyTransform.LookAt (b);
@@ -55,9 +48,19 @@ namespace DNA.Paths {
 
 		protected virtual void OnSetPoints () {}
 
-		void OnUpdateCost (int cost) {
-			if (cost == 0 && Connection.Object == null)
-				CreateRoad ();
+		#region IPointerDownHandler implementation
+		public void OnPointerDown (PointerEventData e) {
+			if (Element.State == DevelopmentState.UnderConstruction)
+				EndConstruction ();
+		}
+		#endregion
+
+		protected override void OnSetObject (IPathElementObject obj) {
+			Road r = obj as Road;
+			if (r != null) {
+				connection.SetCost ("free");
+				r.Init (Connection.Length);
+			}
 		}
 	}
 }

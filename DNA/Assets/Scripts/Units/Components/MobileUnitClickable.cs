@@ -1,5 +1,6 @@
 ﻿#undef DRAG_STYLE
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using DNA.InputSystem;
 using Pathing;
@@ -43,12 +44,19 @@ namespace DNA.Units {
 			}
 		}
 		
-		public override void OnClick (ClickSettings clickSettings) {
+		public override void OnPointerDown (PointerEventData e) {
+			if (!CanSelect) return;
+			if (e.button == PointerEventData.InputButton.Left) {
+				SelectionManager.Select (this);
+			}
+		}
+
+		/*public override void OnClick (ClickSettings clickSettings) {
 			if (!CanSelect) return;
 			if (clickSettings.left) {
 				SelectionManager.Select (this);
 			}
-		}
+		}*/
 
 		#if DRAG_STYLE
 		public void OnDragEnter (DragSettings dragSettings) {

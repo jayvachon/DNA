@@ -22,7 +22,7 @@ namespace DNA {
 			// Create initial roads
 			List<Connection> topConnections = points.GetConnectionsAtIndex (0);
 			for (int i = 0; i < topConnections.Count; i ++) {
-				topConnections[i].SetCost ("free");
+				ConnectionsManager.GetContainer (topConnections[i]).SetObject<Road> ();
 			}
 		}
 	}

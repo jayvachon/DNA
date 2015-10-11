@@ -21,6 +21,16 @@ namespace DNA.Paths {
 			}
 		}
 
+		Vector3 center = Vector3.zero;
+		public Vector3 Center {
+			get {
+				if (center == Vector3.zero) {
+					center = Vector3.Lerp (Positions[0], Positions[1], 0.5f);
+				}
+				return center;
+			}
+		}
+
 		Path<GridPoint>[] path;
 		public Path<GridPoint>[] Path {
 			get {
@@ -83,22 +93,16 @@ namespace DNA.Paths {
 				Path[0].Cost = pathCost;
 				Path[1].Cost = pathCost;
 				UpdateVersion ();
-				if (onUpdateCost != null)
-					onUpdateCost (pathCost);
 			}
 		}
 
 		public void SetCost (string key) {
 			try {
 				Cost = Costs[key];
-			} catch {
-				throw new System.Exception ("Costs does not contain the key '" + key + "'");
+			} catch (System.Exception e) {
+				throw new System.Exception ("Costs does not contain the key '" + key + "' because " + e);
 			}
 		}
-
-		public delegate void OnUpdateCost (int cost);
-
-		public OnUpdateCost onUpdateCost;
 
 		public Connection (GridPoint[] points) {
 			Points = points;

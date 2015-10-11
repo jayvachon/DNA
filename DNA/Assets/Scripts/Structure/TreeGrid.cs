@@ -11,8 +11,8 @@ namespace DNA {
 	public static class TreeGrid {
 
 		// Private fields
-
-		static Fermat fermat = new Fermat (new Fermat.Settings (1.25f, 200, 0.05f, new Vector3 (0, 6.5f, 0)));
+		
+		static Fermat fermat = new Fermat (new Fermat.Settings (1.5f, 200, 0.05f, new Vector3 (0, 6.5f, 0)));
 		static float mapWidth = 200f;
 		static float mapHeight = 200f;
 

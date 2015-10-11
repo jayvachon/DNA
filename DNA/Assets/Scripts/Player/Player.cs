@@ -28,7 +28,7 @@ namespace DNA {
 			get {
 				if (inventory == null) {
 					inventory = new Inventory (this);
-					inventory.Add (new MilkshakeHolder (100000, 30));
+					inventory.Add (new MilkshakeHolder (100000, 130));
 					inventory.Add (new CoffeeHolder (100000, 50));
 					inventory.Add (new YearHolder (5, 0));
 				}

@@ -13,9 +13,10 @@ namespace DNA.Units {
 
 		public override string Description {
 			get { 
-				return "This plot can be drilled for milkshakes. \n" 
+				return "terp";
+				/*return "This plot can be drilled for milkshakes. \n" 
 					+ mp.Tier.Return + " return\n"
-					+ "index: " + Index;
+					+ "index: " + Index;*/
 			}
 		}
 

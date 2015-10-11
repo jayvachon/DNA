@@ -92,7 +92,6 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 		if (performableTasks != null) {
 			foreach (var task in performableTasks.EnabledTasks) {
-				Debug.Log (task.Value);
 				if (task.Value.Settings.Title != "")
 					CreateTask (task.Value);
 			}

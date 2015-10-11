@@ -79,6 +79,8 @@
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />
      <Compile Include="Assets\Scripts\Input\ReleaseHandler.cs" />
      <Compile Include="Assets\Scripts\Input\ScreenPositionHandler.cs" />
+     <Compile Include="Assets\Scripts\Input\SelectSettings.cs" />
+     <Compile Include="Assets\Scripts\Input\SelectionHandler.cs" />
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\BedHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\CoffeeHolder.cs" />

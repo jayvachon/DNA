@@ -18,7 +18,7 @@ namespace DNA.Paths {
 		}
 
 		public void SetUnitAtIndex<T> (int index) where T : StaticUnit {
-			points[index].SetStaticUnit<T> ();
+			points[index].SetObject<T> ();
 		}
 
 		public List<Connection> GetConnectionsAtIndex (int index) {
@@ -33,7 +33,7 @@ namespace DNA.Paths {
 				PointContainer pc = ObjectPool.Instantiate<PointContainer> ();
 				pc.Point = gpoints[i];
 				pc.Parent = MyTransform;
-				pc.SetStaticUnit<DrillablePlot> ();
+				pc.SetObject<DrillablePlot> ();
 				points.Add (pc);
 			}
 		}

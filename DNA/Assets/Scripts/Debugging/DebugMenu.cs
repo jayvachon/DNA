@@ -8,8 +8,12 @@ namespace DNA {
 
 	public class DebugMenu : MonoBehaviour {
 
+		bool showMenu = false;
+
 		void OnGUI () {
 			GUILayout.Space (40);
+			showMenu = GUILayout.Toggle (showMenu, "Show menu");
+			if (!showMenu) return;
 			if (GUILayout.Button ("Plan road")) {
 				Player.Instance.SetConstructionPen<ConstructRoad> ();
 			}

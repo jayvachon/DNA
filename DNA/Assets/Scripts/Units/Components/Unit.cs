@@ -6,7 +6,7 @@ using DNA.InputSystem;
 namespace DNA.Units {
 
 	public class Unit : MonoBehaviour, INameable, IInventoryHolder {
-		
+
 		public virtual string Name {
 			get { return ""; }
 		}

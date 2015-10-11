@@ -62,7 +62,7 @@ namespace DNA.Paths {
 
 		public void Build () {
 			foreach (Connection c in connections)
-				c.SetCost ("free");
+				ConnectionsManager.GetContainer (c).BeginConstruction<Road> ();
 			Clear ();
 		}
 

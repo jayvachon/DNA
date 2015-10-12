@@ -2,6 +2,8 @@
 using System.Collections;
 using DNA.EventSystem;
 
+// deprecated 10/11
+
 namespace DNA.InputSystem {
 	
 	public static class SelectionManager {

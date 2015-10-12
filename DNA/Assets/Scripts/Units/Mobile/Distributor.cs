@@ -43,7 +43,7 @@ namespace DNA.Units {
 		//public override void OnPoolCreate () {
 		protected override void OnEnable () {
 			InitInventory ();
-			InitPath ();
+			//InitPath ();
 			RefreshInfoContent ();
 			base.OnEnable ();
 		}
@@ -53,12 +53,12 @@ namespace DNA.Units {
 			yearHolder.HolderFilled += OnRetirement;
 		}
 
-		void InitPath () {
+		/*void InitPath () {
 			Path.Active = true;
 			Upgrades.Instance.AddListener<DistributorSpeed> (
 				(DistributorSpeed u) => Path.Speed = u.CurrentValue / TimerValues.Instance.Year
 			);
-		}
+		}*/
 
 		//public override void OnPoolDestroy () {
 		protected override void OnDisable () {

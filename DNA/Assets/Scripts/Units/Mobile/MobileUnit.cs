@@ -1,6 +1,6 @@
 ﻿#undef DEBUG_MSG
-
 using UnityEngine;
+using UnityEngine.EventSystems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using DNA.Tasks;
 
 namespace DNA.Units {
 
-	public class MobileUnit : Unit, ITaskPerformer {
+	public class MobileUnit : Unit, ITaskPerformer, IPointerDownHandler {
 
 		MobileUnitTransform mobileTransform;
 		public MobileUnitTransform MobileTransform {
@@ -71,16 +71,6 @@ namespace DNA.Units {
 
 		public void Init (PathPoint givingTree) {
 			this.givingTree = givingTree;
-		}
-
-		public override void OnSelect () {
-			base.OnSelect ();
-			//Events.instance.AddListener<ClickEvent> (OnClickEvent);
-		}
-
-		public override void OnUnselect () {
-			base.OnUnselect ();
-			//Events.instance.RemoveListener<ClickEvent> (OnClickEvent);
 		}
 
 		public bool OnArriveAtPoint (PathPoint point) {
@@ -146,8 +136,6 @@ namespace DNA.Units {
 			onEnd ();
 		}
 
-		public virtual void OnDragRelease (Unit unit) {}
-
 		/*void OnClickEvent (ClickEvent e) {
 			if (e.left) return;
 			UnitClickable clickable = e.GetClickedOfType<UnitClickable> ();
@@ -183,5 +171,11 @@ namespace DNA.Units {
 			Debug.Log (message);
 			#endif
 		}
+
+		#region IPointerDownHandler implementation
+		public void OnPointerDown (PointerEventData e) {
+			SelectionHandler.ClickSelectable (this, e);
+		}
+		#endregion
 	}
 }

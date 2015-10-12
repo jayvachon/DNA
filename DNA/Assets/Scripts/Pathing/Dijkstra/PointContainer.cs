@@ -4,6 +4,7 @@ using System.Collections;
 using DNA.Paths;
 using DNA.Units;
 using DNA.EventSystem;
+using DNA.InputSystem;
 
 namespace DNA {
 
@@ -39,7 +40,10 @@ namespace DNA {
 
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
 		public void OnPointerDown (PointerEventData e) {
+			
 			Events.instance.Raise (new ClickPointEvent (this));
+			if (Point.Object is Unit)
+				SelectionHandler.ClickSelectable (Point.Unit, e);
 
 			// temp -- just for testing
 			if (Element.State == DevelopmentState.UnderConstruction)

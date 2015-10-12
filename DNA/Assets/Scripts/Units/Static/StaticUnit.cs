@@ -38,6 +38,7 @@ namespace DNA.Units {
 		}
 
 		protected void Destroy<T> (bool enablePathPoint=true) where T : StaticUnit {
+			Debug.Log ("destroy");
 			if (enablePathPoint) {
 				StaticUnit plot = ObjectPool.Instantiate<Plot> () as StaticUnit;
 				plot.Position = Position;

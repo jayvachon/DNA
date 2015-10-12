@@ -18,7 +18,8 @@ namespace DNA.Paths {
 		}
 
 		public void SetUnitAtIndex<T> (int index) where T : StaticUnit {
-			points[index].SetObject<T> ();
+			points[index].BeginConstruction<T> ();
+			points[index].EndConstruction ();
 		}
 
 		public List<Connection> GetConnectionsAtIndex (int index) {

@@ -56,14 +56,14 @@ namespace DNA.Units {
 		}
 
 		//public override void OnPoolCreate () {
-		protected override void OnEnable () {
+		/*protected override void OnEnable () {
 			if (name != DefaultName) {
 				name = DefaultName;
 				Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, true);
 				RefreshInfoContent ();
 			}
 			base.OnEnable ();
-		}
+		}*/
 
 		void OnGenerateUnit (PerformerTask task) {
 			Unit unit = ((GenerateUnit)task).GeneratedUnit;

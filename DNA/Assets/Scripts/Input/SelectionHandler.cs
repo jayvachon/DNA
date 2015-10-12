@@ -26,9 +26,19 @@ namespace DNA.InputSystem {
 			}
 		}
 
+		static SelectionHandler () {
+			EmptyClickHandler.Instance.onClick += OnEmptyClick;
+		}
+
 		public static void ClickSelectable (ISelectable selectable, PointerEventData e) {
-			if (e.button == selectable.settings.SelectButton)
+			SelectSettings settings = selectable.SelectSettings;
+			if (!settings.CanSelect)
+				return;
+			if (e.button == settings.SelectButton) {
 				HandleSelect (selectable);
+			} else if (e.button == settings.UnselectButton) {
+				Unselect (selectable);
+			}
 		}
 
 		static void HandleSelect (ISelectable selectable) {
@@ -70,6 +80,43 @@ namespace DNA.InputSystem {
 
 		static bool IsSelected (ISelectable selectable) {
 			return selected.Contains (selectable);
+		}
+
+		static void OnEmptyClick () {
+			UnselectAll ();
+		}
+	}
+
+	public class EmptyClickHandler : MonoBehaviour {
+
+		static EmptyClickHandler instance = null;
+		static public EmptyClickHandler Instance {
+			get {
+				if (instance == null) {
+					instance = Object.FindObjectOfType (typeof (EmptyClickHandler)) as EmptyClickHandler;
+					if (instance == null) {
+						GameObject go = new GameObject ("EmptyClickHandler");
+						DontDestroyOnLoad (go);
+						instance = go.AddComponent<EmptyClickHandler>();
+					}
+				}
+				return instance;
+			}
+		}
+
+		public delegate void OnClick ();
+
+		public OnClick onClick;
+
+		void Update () {
+			if (Input.GetMouseButtonDown (0) || Input.GetMouseButtonDown (1)) {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
+				if (!Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+					if (onClick != null)
+						onClick ();
+				}
+			}
 		}
 	}
 }

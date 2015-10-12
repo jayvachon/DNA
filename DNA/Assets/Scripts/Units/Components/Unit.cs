@@ -5,7 +5,7 @@ using DNA.InputSystem;
 
 namespace DNA.Units {
 
-	public class Unit : MonoBehaviour, INameable, IInventoryHolder {
+	public class Unit : MonoBehaviour, INameable, IInventoryHolder, ISelectable {
 
 		public virtual string Name {
 			get { return ""; }
@@ -63,20 +63,6 @@ namespace DNA.Units {
 			set { unitTransform.Position = value; }
 		}
 
-		public virtual void OnSelect () {
-			Selected = true;
-			unitRenderer.OnSelect ();
-			unitTransform.OnSelect ();
-			UnitInfoBoxOverlay.Instance.Open (UnitInfoContent);
-		}
-
-		public virtual void OnUnselect () {
-			Selected = false;
-			unitRenderer.OnUnselect ();
-			unitTransform.OnUnselect ();
-			UnitInfoBoxOverlay.Instance.Close ();
-		}
-
 		// Change this unit T to unit U
 		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {
 			U to = ObjectPool.Instantiate<U> ();
@@ -108,5 +94,31 @@ namespace DNA.Units {
 		protected void DestroyThis<T> () where T : Unit {
 			ObjectPool.Destroy<T> (transform);
 		}
+
+		#region ISelectable implementation
+		SelectSettings selectSettings;
+		public SelectSettings SelectSettings {
+			get { 
+				if (selectSettings == null) {
+					selectSettings = new SelectSettings ();
+				}
+				return selectSettings;
+			}
+		}
+
+		public virtual void OnSelect () {
+			Selected = true;
+			unitRenderer.OnSelect ();
+			unitTransform.OnSelect ();
+			UnitInfoBoxOverlay.Instance.Open (UnitInfoContent);
+		}
+
+		public virtual void OnUnselect () {
+			Selected = false;
+			unitRenderer.OnUnselect ();
+			unitTransform.OnUnselect ();
+			UnitInfoBoxOverlay.Instance.Close ();
+		}
+		#endregion
 	}
 }

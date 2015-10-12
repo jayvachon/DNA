@@ -20,14 +20,19 @@ namespace DNA.Units {
 			}
 		}
 
-		MilkshakeProduction mp;
+		//MilkshakeProduction mp;
 		float positionInSpiral = 0f;
 		public float PositionInSpiral { 
 			get { return positionInSpiral; }
 			set {
 				positionInSpiral = value;
-				mp = new MilkshakeProduction (positionInSpiral);
+				//mp = new MilkshakeProduction (positionInSpiral);
 			}
+		}
+
+		protected override void OnEnable () {
+			base.OnEnable ();
+			SelectSettings.CanSelect = false;
 		}
 
 		protected override void Start () {

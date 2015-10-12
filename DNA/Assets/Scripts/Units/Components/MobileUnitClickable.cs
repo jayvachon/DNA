@@ -7,6 +7,8 @@ using Pathing;
 
 namespace DNA.Units {
 
+	// deprecate this
+
 	// TODO: rename to MobileUnitCollider
 	#if DRAG_STYLE
 	public class MobileUnitClickable : UnitClickable, IDraggable, IReleasable {
@@ -43,20 +45,6 @@ namespace DNA.Units {
 				return collider;
 			}
 		}
-		
-		public override void OnPointerDown (PointerEventData e) {
-			if (!CanSelect) return;
-			if (e.button == PointerEventData.InputButton.Left) {
-				SelectionManager.Select (this);
-			}
-		}
-
-		/*public override void OnClick (ClickSettings clickSettings) {
-			if (!CanSelect) return;
-			if (clickSettings.left) {
-				SelectionManager.Select (this);
-			}
-		}*/
 
 		#if DRAG_STYLE
 		public void OnDragEnter (DragSettings dragSettings) {

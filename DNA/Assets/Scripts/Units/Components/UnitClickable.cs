@@ -9,10 +9,16 @@ namespace DNA.Units {
 	// rename to UnitCollider
 
 	[RequireComponent (typeof (Collider))]
-	public class UnitClickable : UnitComponent, IPointerDownHandler, ISelectable {//, IClickable, ISelectable {
+	public class UnitClickable : UnitComponent, IPointerDownHandler, ISelectable {
 
+		SelectSettings selectSettings;
 		public SelectSettings SelectSettings {
-			get { return new SelectSettings (false); }
+			get { 
+				if (selectSettings == null) {
+					selectSettings = new SelectSettings ();
+				}
+				return selectSettings;
+			}
 		}
 
 		protected override int ParentUnit { get { return 1; } }
@@ -27,26 +33,15 @@ namespace DNA.Units {
 			get { return new InputLayer[] { InputLayer.UI }; }
 		}
 
+		void OnEnable () {
+			gameObject.SetActive (false);
+		}
+
 		#region IPointerDownHandler implementation
 		public virtual void OnPointerDown (PointerEventData e) {
 			SelectionHandler.ClickSelectable (this, e);
-			/*if (!CanSelect) return;
-			if (e.button == PointerEventData.InputButton.Left) {
-				SelectionManager.ToggleSelect (this);
-			} else {
-				SelectionManager.Unselect ();
-			}*/
 		}
 		#endregion
-
-		/*public virtual void OnClick (ClickSettings clickSettings) {
-			if (!CanSelect) return;
-			if (clickSettings.left) {
-				SelectionManager.ToggleSelect (this);
-			} else {
-				SelectionManager.Unselect ();
-			}
-		}*/
 		
 		public void OnSelect () {
 			Unit.OnSelect ();

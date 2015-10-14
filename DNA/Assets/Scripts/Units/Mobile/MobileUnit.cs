@@ -4,14 +4,25 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Pathing;
+//using Pathing;
 using DNA.InputSystem;
 using DNA.EventSystem;
 using DNA.Tasks;
+using DNA.Paths;
 
 namespace DNA.Units {
 
-	public class MobileUnit : Unit, ITaskPerformer, IPointerDownHandler {
+	public class MobileUnit : Unit, ITaskPerformer, IPointerDownHandler, ISelectableOverrider {
+
+		#region ISelectableOverrider implementation
+		public UnityEngine.EventSystems.PointerEventData.InputButton OverrideButton {
+			get { return UnityEngine.EventSystems.PointerEventData.InputButton.Right; }
+		}
+
+		public virtual void OnOverrideSelect () {
+			
+		}
+		#endregion
 
 		MobileUnitTransform mobileTransform;
 		public MobileUnitTransform MobileTransform {
@@ -20,27 +31,6 @@ namespace DNA.Units {
 					mobileTransform = UnitTransform as MobileUnitTransform;
 				}
 				return mobileTransform;
-			}
-		}
-
-		MobileUnitClickable mobileClickable;
-		public MobileUnitClickable MobileClickable {
-			get {
-				if (mobileClickable == null) {
-					mobileClickable = UnitClickable as MobileUnitClickable;
-				}
-				return mobileClickable;
-			}
-		}
-
-		Path path = null;
-		public Path Path {
-			get { 
-				if (path == null) {
-					IPathable pathable = MobileTransform as IPathable; 
-					path = pathable.Path;
-				}
-				return path;
 			}
 		}
 
@@ -54,7 +44,32 @@ namespace DNA.Units {
 			}
 		}
 
-		PathPoint CurrentPoint { 
+		public void SetStartPoint (IPathElementObject point) {
+
+		}
+
+		/*MobileUnitClickable mobileClickable;
+		public MobileUnitClickable MobileClickable {
+			get {
+				if (mobileClickable == null) {
+					mobileClickable = UnitClickable as MobileUnitClickable;
+				}
+				return mobileClickable;
+			}
+		}*/
+
+		/*Path path = null;
+		public Path Path {
+			get { 
+				if (path == null) {
+					IPathable pathable = MobileTransform as IPathable; 
+					path = pathable.Path;
+				}
+				return path;
+			}
+		}*/
+
+		/*PathPoint CurrentPoint { 
 			get {
 				PathPoint currPoint = Path.Positioner.CurrentPoint;
 				if (currPoint == null) {
@@ -71,9 +86,9 @@ namespace DNA.Units {
 
 		public void Init (PathPoint givingTree) {
 			this.givingTree = givingTree;
-		}
+		}*/
 
-		public bool OnArriveAtPoint (PathPoint point) {
+		/*public bool OnArriveAtPoint (PathPoint point) {
 			
 			currentPoint = point;
 			PathPoint otherPoint = Path.Points.Points.Find (x => x != point);
@@ -83,9 +98,9 @@ namespace DNA.Units {
 			MatchResult match = TaskMatcher.GetPerformable (this, acceptor, acceptorPair);
 			if (match != null) {
 				if (!match.NeedsPair) {
-					/*if (match.PairType == null) {
-						Path.Points.Remove (otherPoint);
-					}*/
+					//if (match.PairType == null) {
+					//	Path.Points.Remove (otherPoint);
+					//}
 					match.Match.onComplete += OnCompleteTask;
 					match.Start ();
 					return true;
@@ -134,7 +149,7 @@ namespace DNA.Units {
 				yield return null;
 
 			onEnd ();
-		}
+		}*/
 
 		/*void OnClickEvent (ClickEvent e) {
 			if (e.left) return;
@@ -150,7 +165,7 @@ namespace DNA.Units {
 			//}
 		}*/
 
-		void MoveToDestination () {
+		/*void MoveToDestination () {
 			if (CurrentPoint == Destination && Path.Points.Count < 2)
 				return;
 			if (Path.Points.Points.Contains (Destination)) {
@@ -170,7 +185,7 @@ namespace DNA.Units {
 			#if DEBUG_MSG
 			Debug.Log (message);
 			#endif
-		}
+		}*/
 
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {

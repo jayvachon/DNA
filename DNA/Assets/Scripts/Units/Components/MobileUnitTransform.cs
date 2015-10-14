@@ -71,11 +71,11 @@ namespace DNA.Units {
 		}
 
 		public bool ArriveAtPoint (PathPoint point) {
-			if (MobileUnit.OnArriveAtPoint (point)) {
+			/*if (MobileUnit.OnArriveAtPoint (point)) {
 				performing = true;
 				EncircleBoundUnit (false, point.StaticUnit.Position);
 				return true;
-			}
+			}*/
 			return false; // TODO: don't return anything
 
 			/*if (MobileUnit.OnBindActionable (point)) {

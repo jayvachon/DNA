@@ -34,10 +34,17 @@ namespace DNA.InputSystem {
 			SelectSettings settings = selectable.SelectSettings;
 			if (!settings.CanSelect)
 				return;
-			if (e.button == settings.SelectButton) {
-				HandleSelect (selectable);
-			} else if (e.button == settings.UnselectButton) {
-				Unselect (selectable);
+
+			List<ISelectableOverrider> selectablesWithOverride = GetSelectablesWithOverride (e.button);
+			if (selectablesWithOverride.Count > 0) {
+				foreach (ISelectableOverrider sel in selectablesWithOverride)
+					sel.OnOverrideSelect ();
+			} else {
+				if (e.button == settings.SelectButton) {
+					HandleSelect (selectable);
+				} else if (e.button == settings.UnselectButton) {
+					Unselect (selectable);
+				}
 			}
 		}
 
@@ -84,6 +91,11 @@ namespace DNA.InputSystem {
 
 		static void OnEmptyClick () {
 			UnselectAll ();
+		}
+
+		static List<ISelectableOverrider> GetSelectablesWithOverride (PointerEventData.InputButton button) {
+			return selected.FindAll (x => x is ISelectableOverrider && ((ISelectableOverrider)x).OverrideButton == button)
+				.ConvertAll (x => (ISelectableOverrider)x);
 		}
 	}
 

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.InventorySystem;
 using DNA.Tasks;
+using DNA.Paths;
 
 namespace DNA.Units {
 
@@ -88,7 +89,8 @@ namespace DNA.Units {
 			} else {
 				positionIndex ++;
 			}
-			((MobileUnit)unit).Init (PathPoint);
+			((MobileUnit)unit).SetStartPoint (this);
+			//((MobileUnit)unit).Init (PathPoint);
 		}
 
 		void OnUnitGenerated (Unit unit) {
@@ -98,7 +100,7 @@ namespace DNA.Units {
 			} else {
 				positionIndex ++;
 			}
-			((MobileUnit)unit).Init (PathPoint);
+			//((MobileUnit)unit).Init (PathPoint);
 			//((MobileUnit)unit).Init (this);
 			//PerformableActions.SetActive ("GenerateDistributor", true);
 			//RefreshInfoContent ();

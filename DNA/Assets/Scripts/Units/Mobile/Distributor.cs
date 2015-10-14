@@ -71,9 +71,9 @@ namespace DNA.Units {
 		}
 
 		protected override void OnChangeUnit<U> (U u) {
-			Path.Active = false;
-			Elder elder = u as Elder;
-			elder.Init (givingTree);
+			//Path.Active = false;
+			//Elder elder = u as Elder;
+			//elder.Init (givingTree);
 		}
 	}
 }

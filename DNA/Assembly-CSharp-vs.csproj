@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\Input\IHoverable.cs" />
      <Compile Include="Assets\Scripts\Input\IReleasable.cs" />
      <Compile Include="Assets\Scripts\Input\ISelectable.cs" />
+     <Compile Include="Assets\Scripts\Input\ISelectableOverrider.cs" />
      <Compile Include="Assets\Scripts\Input\LayerController.cs" />
      <Compile Include="Assets\Scripts\Input\MouseButtonHandler.cs" />
      <Compile Include="Assets\Scripts\Input\MouseController.cs" />

@@ -28,7 +28,7 @@ namespace DNA.Units {
 		}
 
 		void Start () {
-			Path.Active = false;
+			//Path.Active = false;
 		}
 
 		/*public override void OnPoolCreate () {

@@ -9,6 +9,9 @@ namespace DNA.Units {
 
 	public class StaticUnit : Unit, IPathElementObject, ITaskAcceptor {
 
+		public PathElement Element { get; set; }
+
+		// deprecate
 		StaticUnitTransform staticTransform;
 		public StaticUnitTransform StaticTransform {
 			get {
@@ -18,7 +21,7 @@ namespace DNA.Units {
 				return staticTransform;
 			}
 		}
-		
+
 		// TODO: deprecate
 		public virtual bool PathPointEnabled {
 			get { return true; }

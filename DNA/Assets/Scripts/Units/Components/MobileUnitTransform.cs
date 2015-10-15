@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathing;
 using DNA.Tasks;
+using DNA.Paths;
 
 namespace DNA.Units {
 

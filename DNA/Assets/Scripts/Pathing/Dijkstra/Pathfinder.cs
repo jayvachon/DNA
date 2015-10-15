@@ -63,6 +63,11 @@ namespace DNA.Paths {
 
 		static List<GridPoint> GetPath (GridPoint a, GridPoint b, Path<GridPoint>[] pathToUse) {
 
+			#if UNITY_EDITOR
+			if (a == b)
+				throw new System.Exception ("No path could be found because the two points are the same");
+			#endif
+
 			var path = Engine.CalculateShortestPathBetween<GridPoint> (a, b, pathToUse);
 			List<GridPoint> pathList = new List<GridPoint> ();
 

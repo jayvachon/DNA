@@ -17,7 +17,14 @@ namespace DNA.Paths {
 			set { state = value; }
 		}
 
-		public IPathElementObject Object { get; set; }
+		IPathElementObject obj;
+		public IPathElementObject Object {
+			get { return obj; }
+			set {
+				obj = value;
+				obj.Element = this;
+			}
+		}
 
 		static int version = 0;
 		int myVersion = 0;

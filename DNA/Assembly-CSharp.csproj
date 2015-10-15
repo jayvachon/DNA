@@ -144,6 +144,7 @@
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointContainer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointsManager.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\Positioner.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Road.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadConstructor.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />

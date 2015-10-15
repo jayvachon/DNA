@@ -6,6 +6,6 @@ namespace DNA {
 
 	public class ConstructionSite : MBRefs, IPathElementObject {
 
-		
+		public PathElement Element { get; set; }
 	}
 }

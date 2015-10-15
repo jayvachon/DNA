@@ -1,4 +1,4 @@
-﻿#undef DEBUG_MSG
+#undef DEBUG_MSG
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
@@ -19,8 +19,9 @@ namespace DNA.Units {
 			get { return UnityEngine.EventSystems.PointerEventData.InputButton.Right; }
 		}
 
-		public virtual void OnOverrideSelect () {
-			
+		public virtual void OnOverrideSelect (ISelectable overridenSelectable) {
+			StaticUnit u = overridenSelectable as StaticUnit;
+			positioner.Destination = (GridPoint)u.Element;
 		}
 		#endregion
 
@@ -44,8 +45,10 @@ namespace DNA.Units {
 			}
 		}
 
-		public void SetStartPoint (IPathElementObject point) {
+		Positioner positioner;
 
+		public void SetStartPoint (GridPoint point) {
+			positioner = new Positioner (MobileTransform.MyTransform, point);
 		}
 
 		/*MobileUnitClickable mobileClickable;

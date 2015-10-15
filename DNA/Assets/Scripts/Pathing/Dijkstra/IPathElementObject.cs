@@ -3,5 +3,7 @@ using System.Collections;
 
 namespace DNA.Paths {
 
-	public interface IPathElementObject {}
+	public interface IPathElementObject {
+		PathElement Element { get; set; }
+	}
 }

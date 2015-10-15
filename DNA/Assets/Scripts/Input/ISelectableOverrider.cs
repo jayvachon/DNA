@@ -6,6 +6,6 @@ namespace DNA.InputSystem {
 	
 	public interface ISelectableOverrider {
 		PointerEventData.InputButton OverrideButton { get; }
-		void OnOverrideSelect ();
+		void OnOverrideSelect (ISelectable overridenSelectable);
 	}
 }

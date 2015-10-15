@@ -89,7 +89,7 @@ namespace DNA.Units {
 			} else {
 				positionIndex ++;
 			}
-			((MobileUnit)unit).SetStartPoint (this);
+			((MobileUnit)unit).SetStartPoint ((GridPoint)Element);
 			//((MobileUnit)unit).Init (PathPoint);
 		}
 

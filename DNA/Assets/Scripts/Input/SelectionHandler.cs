@@ -38,7 +38,7 @@ namespace DNA.InputSystem {
 			List<ISelectableOverrider> selectablesWithOverride = GetSelectablesWithOverride (e.button);
 			if (selectablesWithOverride.Count > 0) {
 				foreach (ISelectableOverrider sel in selectablesWithOverride)
-					sel.OnOverrideSelect ();
+					sel.OnOverrideSelect (selectable);
 			} else {
 				if (e.button == settings.SelectButton) {
 					HandleSelect (selectable);

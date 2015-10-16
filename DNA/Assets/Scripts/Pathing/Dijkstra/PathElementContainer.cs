@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DNA.Paths;
+using DNA.Units;
 
 namespace DNA {
 

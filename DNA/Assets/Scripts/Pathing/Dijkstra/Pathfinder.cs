@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using DNA.Paths.Dijkstra;
@@ -51,6 +52,33 @@ namespace DNA.Paths {
 
 				return paths;
 			}
+		}
+
+		static Path<GridPoint>[] FreePaths {
+			get {
+
+				List<Connection> connections = TreeGrid.Connections.FindAll (x => x.Cost == 0);
+				paths = new Path<GridPoint>[connections.Count*2];
+
+				int j = 0;
+				for (int i = 0; i < paths.Length; i += 2) {
+					
+					Connection c = connections[j++];
+
+					paths[i] = c.Path[0];
+					paths[i+1] = c.Path[1];
+				}
+
+				return paths;
+			}
+		}
+
+		public static List<GridPoint> ConnectedPoints {
+			get { return TreeGrid.Points.FindAll (x => x.HasRoad); }
+		}
+
+		public static List<GridPoint> GetFreePath (GridPoint a, GridPoint b) {
+			return GetPath (a, b, FreePaths);
 		}
 
 		public static List<GridPoint> GetCheapestPath (GridPoint a, GridPoint b) {

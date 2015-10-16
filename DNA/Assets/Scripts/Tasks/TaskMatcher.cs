@@ -9,8 +9,11 @@ namespace DNA.Tasks {
 
 		public static MatchResult GetPerformable (ITaskPerformer performer, ITaskAcceptor acceptor, ITaskAcceptor acceptorPair) {
 			
-			List<PerformerTask> matches = GetEnabled (performer, acceptor);
 			MatchResult match = null;
+			List<PerformerTask> matches = GetEnabled (performer, acceptor);
+
+			if (matches.Count == 0)
+				return null;
 
 			// Prioritizes tasks that don't require a pair, or whose pair exists between the acceptors
 			foreach (PerformerTask task in matches) {
@@ -29,6 +32,25 @@ namespace DNA.Tasks {
 			}
 
 			return match;
+		}
+
+		public static MatchResult GetPerformable (ITaskPerformer performer, ITaskAcceptor acceptor) {
+
+			List<PerformerTask> matches = GetEnabled (performer, acceptor);
+
+			if (matches.Count == 0)
+				return null;
+
+			// Prioritizes tasks that don't require a pair, or whose pair exists between the acceptors
+			foreach (PerformerTask task in matches) {
+
+				AcceptorTask acceptorTask = GetAcceptor (task, acceptor);
+				if (task.Settings.Pair == null) {
+					return new MatchResult (task, false, acceptorTask);
+				}
+			}
+
+			return new MatchResult (matches[0], true, GetAcceptor (matches[0], acceptor));
 		}
 
 		public static List<PerformerTask> GetActive (ITaskPerformer performer, ITaskAcceptor acceptor) {
@@ -88,8 +110,8 @@ namespace DNA.Tasks {
 			Acceptor = acceptor;
 		}
 
-		public void Start () {
-			if (NeedsPair)
+		public void Start (bool ignorePair=false) {
+			if (!ignorePair && NeedsPair) // TODO: this check might be excessive
 				throw new System.Exception ("The task " + Match + " is unpaired and will not start.");
 			if (Acceptor != null) {
 				Match.Start (Acceptor);

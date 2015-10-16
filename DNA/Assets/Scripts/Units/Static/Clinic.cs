@@ -14,10 +14,6 @@ namespace DNA.Units {
 			get { return "Elders live longer when they're receiving care at a Clinic."; }
 		}
 
-		public override bool PathPointEnabled {
-			get { return false; }
-		}
-
 		HealthHolder healthHolder = new HealthHolder (300, 300);
 		HealthIndicator indicator;
 

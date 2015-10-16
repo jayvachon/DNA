@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\HappinessHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\HealthHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Holders\LaborHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\MilkshakeHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\YearHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\IInventoryHolder.cs" />
@@ -102,6 +103,7 @@
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\HappinessItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\HealthItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Items\LaborItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\YearItem.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />

@@ -1,11 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DNA.InventorySystem;
 using DNA.Paths;
+using DNA.Tasks;
 
-namespace DNA {
+namespace DNA.Units {
 
-	public class ConstructionSite : MBRefs, IPathElementObject {
+	public class ConstructionSite : StaticUnit, IPathElementObject {
 
-		public PathElement Element { get; set; }
+		void Awake () {
+			Inventory = new Inventory (this);
+			Inventory.Add (new LaborHolder (1000, 10)).HolderEmptied += OnEndConstruction;
+			AcceptableTasks.Add (new AcceptCollectItem<LaborHolder> ());
+		}
+
+		void OnEndConstruction () {
+			Debug.Log (":)");
+		}
 	}
 }

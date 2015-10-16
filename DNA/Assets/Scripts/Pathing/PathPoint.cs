@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using DNA.InputSystem;
 using DNA.Units;
 
+// deprecate
+
 namespace Pathing {
 
 	public class PathPoint : MBRefs, IDraggable {
 
 		public bool Enabled { 
-			get { return StaticUnit.PathPointEnabled; }
+			//get { return StaticUnit.PathPointEnabled; }
+			get { return true; }
 		}
 
 		public bool MoveOnDrag { get { return false; } }
@@ -18,7 +21,7 @@ namespace Pathing {
 			get { return new InputLayer[] { InputLayer.UI }; }
 		}
 
-		StaticUnitTransform staticUnitTransform;
+		/*StaticUnitTransform staticUnitTransform;
 		public StaticUnitTransform StaticUnitTransform {
 			get { 
 				if (staticUnitTransform == null) {
@@ -26,14 +29,14 @@ namespace Pathing {
 				}
 				return staticUnitTransform; 
 			}
-		}
+		}*/
 
 		StaticUnit staticUnit;
 		public StaticUnit StaticUnit {
 			get { return staticUnit; }
 			set { 
 				staticUnit = value; 
-				staticUnitTransform = staticUnit.StaticTransform;
+				//staticUnitTransform = staticUnit.StaticTransform;
 			}
 		}
 

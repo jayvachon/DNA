@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathing;
 
+// deprecate
+
 namespace DNA.Units {
 
 	// TODO: remove fog of war from here and use TreeGrid to create plots
@@ -53,7 +55,7 @@ namespace DNA.Units {
 				if (i > 20)
 					CreateFogOfWar (fowPoints[i]);
 				plots[i].Position = points[i];
-				((StaticUnit)plots[i]).PathPoint.Position = points[i];
+				//((StaticUnit)plots[i]).PathPoint.Position = points[i];
 				plots[i].transform.SetParent (transform);
 			}
 			//GeneratePaths ();

@@ -27,6 +27,7 @@ namespace DNA.Units {
 			Inventory.Add (yearHolder);
 			Inventory.Add (new CoffeeHolder (3, 0));
 			Inventory.Add (new MilkshakeHolder (5, 0));
+			Inventory.Add (new LaborHolder (1, 0));
 			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
 			PerformableTasks.Add (new CollectItem<MilkshakeHolder> ());
@@ -34,6 +35,7 @@ namespace DNA.Units {
 			PerformableTasks.Add (new CollectItem<CoffeeHolder> ());
 			PerformableTasks.Add (new DeliverItem<CoffeeHolder> ());
 			PerformableTasks.Add (new ConsumeItem<YearHolder> ());
+			PerformableTasks.Add (new CollectItem<LaborHolder> ()).onEnd += (PerformerTask t) => { Inventory["Labor"].Clear (); };
 
 			Upgrades.Instance.AddListener<CoffeeCapacity> (
 				(CoffeeCapacity u) => Inventory["Coffee"].Capacity = u.CurrentValue

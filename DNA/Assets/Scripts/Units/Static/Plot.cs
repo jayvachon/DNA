@@ -23,10 +23,6 @@ namespace DNA.Units {
 			get { return "Construct buildings on plots."; }
 		}
 
-		public override bool PathPointEnabled {
-			get { return true; }
-		}
-
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
 			get {
@@ -69,8 +65,8 @@ namespace DNA.Units {
 			Unit unit = ((GenerateUnit)task).GeneratedUnit;
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.Position = Position;
-			staticUnit.PathPoint = PathPoint;
-			PathPoint.StaticUnit = staticUnit;
+			//staticUnit.PathPoint = PathPoint;
+			//PathPoint.StaticUnit = staticUnit;
 			if (Selected) SelectionManager.Select (staticUnit.UnitClickable);
 			DestroyThis ();
 		}

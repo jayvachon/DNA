@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace DNA.Paths {
 
+	public delegate void OnArriveAtDestination (GridPoint point);
+
 	public class Positioner {
 
 		GridPoint destination;
@@ -25,6 +27,8 @@ namespace DNA.Paths {
 		List<Vector3> Points {
 			get { return path.ConvertAll (x => x.Position); }
 		}
+
+		public OnArriveAtDestination OnArriveAtDestination { get; set; }
 
 		int pathPosition = 0;
 		float speed = 5f;
@@ -69,7 +73,7 @@ namespace DNA.Paths {
 		void CalculatPath () {
 			if (path != null)
 				startPoint = path[pathPosition];
-			path = Pathfinder.GetCheapestPath (startPoint, endPoint);
+			path = Pathfinder.GetFreePath (startPoint, endPoint);
 			pathPosition = 0;
 		}
 
@@ -82,7 +86,14 @@ namespace DNA.Paths {
 			}
 			if (HasNextPoint) {
 				MoveToNextPoint ();
+			} else {
+				SendArriveAtDestinationMessage ();
 			}
+		}
+
+		void SendArriveAtDestinationMessage () {
+			if (OnArriveAtDestination != null)
+				OnArriveAtDestination (path[path.Count-1]);
 		}
 	}
 }

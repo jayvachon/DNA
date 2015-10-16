@@ -63,7 +63,7 @@ namespace DNA.Units {
 			set { unitTransform.Position = value; }
 		}
 
-		// Change this unit T to unit U
+		// Changes this unit T to unit U
 		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {
 			U to = ObjectPool.Instantiate<U> ();
 			to.Position = Position;

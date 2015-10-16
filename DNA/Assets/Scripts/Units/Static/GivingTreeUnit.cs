@@ -36,7 +36,7 @@ namespace DNA.Units {
 					int positionCount = 8;
 					float radius = 2;
 					float deg = 360f / (float)positionCount;
-					Vector3 center = StaticTransform.Position;
+					Vector3 center = UnitTransform.Position;//StaticTransform.Position;
 					for (int i = 0; i < positionCount; i ++) {
 						float radians = (float)i * deg * Mathf.Deg2Rad;
 						createPositions.Add (new Vector3 (

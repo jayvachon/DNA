@@ -14,10 +14,6 @@ namespace DNA.Units {
 			get { return "The Jacuzzi increases Laborer happiness so that they will work faster."; }
 		}
 
-		public override bool PathPointEnabled {
-			get { return false; }
-		}
-		
 		HappinessHolder happinessHolder = new HappinessHolder (50, 50);
 		HappinessIndicator indicator;
 

@@ -69,8 +69,6 @@ namespace DNA.Paths {
 		public void AddPoint (GridPoint newPoint) {
 
 			// TODO: this could obv be cleaned up
-			// If both points have roads, find shortest route
-			// If second point does not have a road, find cheapest route
 
 			if (points.Count == 0) {
 				if (!newPoint.HasRoad)
@@ -108,10 +106,14 @@ namespace DNA.Paths {
 				}
 			}
 
-			if (newPoint.HasRoad)
+			GenerateShortestPath ();
+
+			// If both points have roads, find shortest route
+			// If second point does not have a road, find cheapest route
+			/*if (newPoint.HasRoad)
 				GenerateShortestPath ();
 			else
-				GenerateCheapestPath ();
+				GenerateCheapestPath ();*/
 		}
 
 		void GenerateShortestPath () {

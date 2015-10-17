@@ -11,8 +11,6 @@ namespace DNA.Units {
 
 		public PathElement Element { get; set; }
 
-		public PathPoint PathPoint { get; set; }*/
-
 		AcceptableTasks acceptableTasks;
 		public AcceptableTasks AcceptableTasks {
 			get {
@@ -31,7 +29,7 @@ namespace DNA.Units {
 				StaticUnit plot = ObjectPool.Instantiate<Plot> () as StaticUnit;
 				plot.Position = Position;
 				if (Selected) SelectionManager.Select (plot.UnitClickable);
-			} 
+			}
 			DestroyThis<T> ();
 		}
 	}

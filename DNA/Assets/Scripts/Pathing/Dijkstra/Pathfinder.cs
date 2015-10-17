@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace DNA.Paths {
 		static Path<GridPoint>[] paths;
 		static Path<GridPoint>[] Paths {
 			get {
-				if (paths == null || !version.UpToDate) {
+				//if (paths == null || !version.UpToDate) {
 
 					List<Connection> connections = TreeGrid.Connections;
 					paths = new Path<GridPoint>[connections.Count*2];
@@ -27,7 +28,7 @@ namespace DNA.Paths {
 					}
 
 					version.SetUpToDate ();
-				}
+				//}
 				return paths;
 			}
 		}
@@ -87,6 +88,27 @@ namespace DNA.Paths {
 
 		public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
 			return GetPath (a, b, PathsIgnoreCost);
+		}
+
+		public static GridPoint FindNearestPoint (GridPoint a, Func<GridPoint, bool> requirement=null) {
+			
+			if (requirement == null)
+				requirement = (GridPoint p) => { return true; };
+
+			GridPoint nearest = null;
+			int shortestPath = int.MaxValue;
+
+			foreach (GridPoint b in ConnectedPoints) {
+				if (b.Object != null && requirement (b)) {
+					int pathLength = GetFreePath (a, b).Count;
+					if (pathLength < shortestPath) {
+						nearest = b;
+						shortestPath = pathLength;
+					}
+				}
+			}
+
+			return nearest;
 		}
 
 		static List<GridPoint> GetPath (GridPoint a, GridPoint b, Path<GridPoint>[] pathToUse) {

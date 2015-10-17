@@ -24,7 +24,7 @@ namespace DNA.Units {
 
 			GridPoint p = (GridPoint)u.Element;
 			if (PointTaskMatch (p) != null)
-				positioner.Destination = p;
+				TaskPoint = p;
 		}
 		#endregion
 
@@ -48,6 +48,15 @@ namespace DNA.Units {
 			}
 		}
 
+		GridPoint taskPoint;
+		GridPoint TaskPoint {
+			get { return taskPoint; }
+			set {
+				taskPoint = value;
+				positioner.Destination = taskPoint;
+			}
+		}
+
 		Positioner positioner;
 
 		public void SetStartPoint (GridPoint point) {
@@ -55,16 +64,28 @@ namespace DNA.Units {
 			positioner.OnArriveAtDestination += OnArriveAtDestination;
 		}
 
+		/**
+		 *	Assigning tasks:
+		 *	  1. With unit selected, right click a point and see if it has tasks (OnOverrideSelect -> PointHasTaskMatch)
+		 *	  2. When unit arrives at destination, start task and add callback if task needs a pair (OnArriveAtDestination -> PointHasTaskMatch -> OnCompleteTask)
+		 *	  3. (if task needs pair) Find the pair on the path and move to it (OnCompleteTask)
+		 */
+
 		void OnArriveAtDestination (GridPoint point) {
+
+			// Check if the point has any tasks to perform
+			// If so, start the task. If the task needs a pair, listen for when the task completes
 			MatchResult match = PointTaskMatch (point);
-			if (match.PairType != null)
-				match.Match.onComplete += OnCompleteTask;
-			if (match != null)
+			if (match != null) {
+				if (match.PairType != null)
+					match.Match.onComplete += OnCompleteTask;
 				match.Start (true);
+			}
 		}
 
 		MatchResult PointTaskMatch (GridPoint point) {
 
+			// Check if the point has any tasks to perform
 			ITaskAcceptor acceptor = point.Unit as ITaskAcceptor;
 			MatchResult match = TaskMatcher.GetPerformable (this, acceptor);
 
@@ -74,23 +95,26 @@ namespace DNA.Units {
 			if (!match.NeedsPair)
 				return match;
 
+			// If it does but needs a pair, check if a pair exists in the world
 			GridPoint p = DNA.Paths.Pathfinder.ConnectedPoints.FirstOrDefault (
-				x => x.Object != null 
-				&& x.Object is Unit
-				&& TaskMatcher.GetPair (match.Match, ((ITaskAcceptor)x.Unit)) != null);
+				x => TaskMatcher.GetPair (match.Match, x) != null);
 
 			return (p == null) ? null : match;
 		}
 
 		void OnCompleteTask (PerformerTask t) {
-			
-			// TODO: this should find the closest acceptor
-			GridPoint p = DNA.Paths.Pathfinder.ConnectedPoints.FirstOrDefault (
-				x => x.Object != null 
-				&& x.Object is Unit
-				&& TaskMatcher.GetPair (t, ((ITaskAcceptor)x.Unit)) != null);
 
-			positioner.Destination = p;
+			// Check if the assigned TaskPoint can pair with the task
+			if (TaskMatcher.GetPair (t, TaskPoint) != null) {
+				positioner.Destination = TaskPoint;
+			} else {
+
+				// If not, find the closest one that can
+				positioner.Destination = DNA.Paths.Pathfinder.FindNearestPoint (
+					positioner.Destination,
+					(GridPoint p) => { return TaskMatcher.GetPair (t, p) != null; }
+				);
+			}
 
 			t.onComplete -= OnCompleteTask;
 		}

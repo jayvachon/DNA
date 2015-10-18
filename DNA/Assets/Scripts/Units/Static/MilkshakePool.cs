@@ -17,15 +17,13 @@ namespace DNA.Units {
 		
 		void Awake () {
 			
+			unitRenderer.SetColors (new Color (0.294f, 0.741f, 0.847f));
+
 			Inventory = new Inventory (this);
-			Inventory.Add (new MilkshakeHolder (50, 50));
-			Inventory.Get<MilkshakeHolder> ().HolderEmptied += OnEmpty;
+			Inventory.Add (new MilkshakeHolder (100, 100));
+			Inventory.Get<MilkshakeHolder> ().HolderEmptied += () => { Element.State = DevelopmentState.Abandoned; };
 
 			AcceptableTasks.Add (new AcceptCollectItem<MilkshakeHolder> ());
-		}
-
-		void OnEmpty () {
-			Destroy<MilkshakePool> ();
 		}
 	}
 }

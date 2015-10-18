@@ -1,20 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace DNA.Paths {
+namespace DNA {
 
 	public enum DevelopmentState { 
 		Undeveloped, 
 		UnderConstruction, 
-		Developed 
+		Developed,
+		Abandoned
 	}
+}
+
+namespace DNA.Paths {
+
+	public delegate void OnSetObject (IPathElementObject obj);
+	public delegate void OnSetState (DevelopmentState state);
 
 	public class PathElement {
 
 		DevelopmentState state = DevelopmentState.Undeveloped;
 		public DevelopmentState State {
 			get { return state; }
-			set { state = value; }
+			set { 
+				state = value; 
+				if (OnSetState != null)
+					OnSetState (state);
+			}
 		}
 
 		IPathElementObject obj;
@@ -23,8 +34,13 @@ namespace DNA.Paths {
 			set {
 				obj = value;
 				obj.Element = this;
+				if (OnSetObject != null)
+					OnSetObject (obj);
 			}
 		}
+
+		public OnSetObject OnSetObject { get; set; }
+		public OnSetState OnSetState { get; set; }
 
 		static int version = 0;
 		int myVersion = 0;

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using DNA.InputSystem;
-using Pathing;
 
 namespace DNA.Units {
 

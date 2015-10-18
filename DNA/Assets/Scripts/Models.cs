@@ -81,7 +81,7 @@ namespace DNA.Models {
 				Repeat = false,
 				Pair = null,
 				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 10 }
+					{ "Milkshakes", 20 }
 				}
 			});
 
@@ -93,7 +93,7 @@ namespace DNA.Models {
 				Repeat = false,
 				Pair = null,
 				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 15 }
+					{ "Milkshakes", 35 }
 				}
 			});
 
@@ -209,7 +209,7 @@ namespace DNA.Models {
 				Repeat = false,
 				Pair = null,
 				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 5 }
+					{ "Milkshakes", 20 }
 				}
 			});
 

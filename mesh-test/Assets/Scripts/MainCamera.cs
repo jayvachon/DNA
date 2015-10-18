@@ -13,7 +13,7 @@ public class MainCamera : MonoBehaviour {
 
 	private void Awake () {
 		myTransform = transform;
-		camera.fieldOfView = 90;
+		GetComponent<Camera>().fieldOfView = 90;
 	}
 
 	/*private void SetRotation (Step step) {

@@ -46,7 +46,7 @@ public class Selectable : MonoBehaviour {
 		this.selectColor = selectColor;
 		this.keys = keys;
 		this.descriptions = descriptions;
-		renderer.SetColor (defaultColor);
+		GetComponent<Renderer>().SetColor (defaultColor);
 	}
 
 	public void ToggleSelect () {
@@ -58,7 +58,7 @@ public class Selectable : MonoBehaviour {
 		if (!canSelect) return;
 		if (selected) return;
 		selected = true;
-		renderer.SetColor (selectColor);
+		GetComponent<Renderer>().SetColor (selectColor);
 		Events.instance.Raise (new SelectSelectableEvent (this));
 		SetCommands ();
 		OnSelect ();
@@ -74,7 +74,7 @@ public class Selectable : MonoBehaviour {
 		if (!canSelect) return;
 		if (!selected) return;
 		selected = false;
-		renderer.SetColor (defaultColor);
+		GetComponent<Renderer>().SetColor (defaultColor);
 		Events.instance.Raise (new UnselectSelectableEvent (this));
 		ResetCommands ();
 		OnUnselect ();

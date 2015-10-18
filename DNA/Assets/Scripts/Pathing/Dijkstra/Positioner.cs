@@ -21,7 +21,7 @@ namespace DNA.Paths {
 		}
 
 		bool HasNextPoint {
-			get { return path.Count > 1 && pathPosition+1 <= path.Count-1; }
+			get { return path != null && path.Count > 1 && pathPosition+1 <= path.Count-1; }
 		}
 
 		List<Vector3> Points {
@@ -31,7 +31,7 @@ namespace DNA.Paths {
 		public OnArriveAtDestination OnArriveAtDestination { get; set; }
 
 		int pathPosition = 0;
-		float speed = 5f;
+		float speed = 3f;
 		bool moving = false;
 
 		Transform mover;
@@ -48,7 +48,7 @@ namespace DNA.Paths {
 
 		public void StartMoving () {
 			if (moving) return;
-			CalculatPath ();
+			CalculatePath ();
 			if (HasNextPoint) {
 				MoveToNextPoint ();
 			}
@@ -70,20 +70,28 @@ namespace DNA.Paths {
 			);
 		}
 
-		void CalculatPath () {
-			if (path != null)
+		void CalculatePath () {
+
+			if (path != null && path.Count > 0)
 				startPoint = path[pathPosition];
-			path = Pathfinder.GetFreePath (startPoint, endPoint);
-			pathPosition = 0;
+
+			List<GridPoint> newPath = Pathfinder.GetFreePath (startPoint, endPoint);
+			if (newPath.Count > 0) {
+				path = newPath;
+				pathPosition = 0;
+			}
 		}
 
 		void OnArriveAtPoint () {
 			moving = false;
 			pathPosition ++;
+
+			// Check if the destination has been updated
 			if (endPoint != Destination) {
 				endPoint = Destination;
-				CalculatPath ();
+				CalculatePath ();
 			}
+
 			if (HasNextPoint) {
 				MoveToNextPoint ();
 			} else {
@@ -92,7 +100,7 @@ namespace DNA.Paths {
 		}
 
 		void SendArriveAtDestinationMessage () {
-			if (OnArriveAtDestination != null)
+			if (OnArriveAtDestination != null) 
 				OnArriveAtDestination (path[path.Count-1]);
 		}
 	}

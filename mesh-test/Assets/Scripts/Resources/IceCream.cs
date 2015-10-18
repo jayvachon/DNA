@@ -22,7 +22,7 @@ public class IceCream : MonoBehaviour {
 			1f,
 			Mathf.Sin (angle) * horSpeed
 		);
-		rigidbody.AddForce (direction * 150, ForceMode.Impulse);
+		GetComponent<Rigidbody>().AddForce (direction * 150, ForceMode.Impulse);
 	}
 
 	public void Collect () {

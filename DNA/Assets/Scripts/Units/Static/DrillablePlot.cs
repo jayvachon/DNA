@@ -11,6 +11,25 @@ namespace DNA.Units {
 
 		public int Index { get; set; }
 
+		public float DistanceToCenter {
+			set {
+				/*unitRenderer.SetColors (HSBColor.Lerp (
+					HSBColor.FromColor (unitRenderer.GetColor (unitRenderer.PrimaryColor)), 
+					HSBColor.Black, value)
+						.ToColor ());*/
+			}
+		}
+
+		public float Fertility {
+			set {
+				unitRenderer.SetColors (HSBColor.Lerp (
+					HSBColor.FromColor (unitRenderer.GetColor (unitRenderer.PrimaryColor)), 
+					HSBColor.Black, value)
+						.ToColor ());
+				Debug.Log (value);
+			}
+		}
+
 		public override string Description {
 			get { 
 				return "terp";

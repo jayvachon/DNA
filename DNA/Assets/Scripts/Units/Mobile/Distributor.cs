@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using DNA.InventorySystem;
-using Pathing;
 using DNA.InputSystem;
 using DNA.Tasks;
 
@@ -22,6 +21,8 @@ namespace DNA.Units {
 		YearHolder yearHolder = new YearHolder (275, 0);
 
 		void Awake () {
+
+			unitRenderer.SetColors (new Color (1f, 0.5f, 1f));
 
 			Inventory = new Inventory (this);
 			Inventory.Add (yearHolder);

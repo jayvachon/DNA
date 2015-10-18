@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.Models;
 using DNA.InventorySystem;
 using DNA.Paths;
+using DNA.Units;
 
 namespace DNA.Tasks {
 
@@ -37,12 +39,20 @@ namespace DNA.Tasks {
 
 		protected override void OnEnd () {
 			Purchase ();
-			RoadConstructor.Instance.Build ();
+			List<Connection> connections = RoadConstructor.Instance.Connections;
+			foreach (Connection c in connections) {
+				ConstructionSite site = ConnectionsManager.GetContainer (c).BeginConstruction<Road> ();
+				site.LaborCost = segmentCost;
+				site.RoadPlan = new RoadPlan (connections);
+			}
+			RoadConstructor.Instance.Clear ();
 			base.OnEnd ();
 		}
 
 		public bool CanConstruct (PathElement element) {
-			return CanAfford && ((GridPoint)element).HasRoad || RoadConstructor.Instance.PointCount > 0;
+			return CanAfford 
+				&& ((GridPoint)element).HasRoad 
+				|| RoadConstructor.Instance.PointCount > 0;
 		}
 	}
 }

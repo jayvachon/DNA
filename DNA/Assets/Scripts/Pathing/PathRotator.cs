@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Pathing {
+// for reference
+//namespace Pathing {
 
-	public class PathRotator : MBRefs {
+	/*public class PathRotator : MBRefs {
 
 		Transform mobileTransform;
 		Transform MobileTransform {
@@ -82,5 +83,5 @@ namespace Pathing {
 			bool same2 = line[0].Equals (otherLine[1]) && line[1].Equals (otherLine[0]);
 			return same1 || same2;
 		}
-	}
-}
+	}*/
+//}

@@ -7,6 +7,14 @@ public struct HSBColor
     public float s;
     public float b;
     public float a;
+    
+    public static HSBColor Black {
+        get { return new HSBColor (0, 0, 0); }
+    }
+
+    public static HSBColor White {
+        get { return new HSBColor (0, 0, 1); }
+    }
  
     public HSBColor(float h, float s, float b, float a)
     {

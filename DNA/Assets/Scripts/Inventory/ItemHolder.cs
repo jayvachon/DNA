@@ -44,6 +44,7 @@ namespace DNA.InventorySystem {
 		public abstract void Initialize (int count=-1);
 		public abstract Item Get (ItemHasAttribute contains);
 		public abstract bool Has (ItemHasAttribute contains);
+		public abstract List<Item> Set (int amount);
 		public abstract List<Item> Add ();
 		public abstract List<Item> Add (int amount);
 		public abstract List<Item> Add (Item item);
@@ -133,6 +134,11 @@ namespace DNA.InventorySystem {
 				}
 			}
 			return false;
+		}
+
+		public override List<Item> Set (int amount) {
+			Clear ();
+			return Add (amount);
 		}
 
 		public override List<Item> Add () {

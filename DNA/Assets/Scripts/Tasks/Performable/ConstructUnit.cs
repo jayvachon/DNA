@@ -13,7 +13,9 @@ namespace DNA.Tasks {
 		public ConstructUnit (Inventory inventory=null) : base (inventory) {}
 
 		public bool CanConstruct (PathElement element) {
-			return CanAfford && ((GridPoint)element).HasRoad && element.State == DevelopmentState.Undeveloped;
+			return CanAfford 
+				&& ((GridPoint)element).HasRoad 
+				&& element.State == DevelopmentState.Undeveloped;
 		}
 	}
 
@@ -22,7 +24,7 @@ namespace DNA.Tasks {
 		protected override void OnEnd () {
 			Purchase ();
 			try {
-				ElementContainer.BeginConstruction<T> ();	
+				ElementContainer.BeginConstruction<T> ().LaborCost = TotalCost;	
 			} catch {
 				throw new System.Exception ("The path element container has not been set for the task '" + this + ".' Be sure to call SetConstructionPoint (container)");
 			}

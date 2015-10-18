@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Pathing;
 using DNA.EventSystem;
 
 namespace DNA.Paths {

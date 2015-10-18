@@ -19,6 +19,8 @@ namespace DNA.Units {
 
 		void Awake () {
 			
+			unitRenderer.SetColors (new Color (0f, 0.5f, 1f));
+
 			Inventory = new Inventory (this);
 			Inventory.Add (happinessHolder);
 

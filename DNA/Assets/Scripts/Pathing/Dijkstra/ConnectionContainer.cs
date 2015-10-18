@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using DNA.EventSystem;
+using DNA.InputSystem;
+using DNA.Units;
 
 namespace DNA.Paths {
 
@@ -50,8 +53,9 @@ namespace DNA.Paths {
 
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {
-			if (Element.State == DevelopmentState.UnderConstruction)
-				EndConstruction ();
+			Events.instance.Raise (new ClickConnectionEvent (this));
+			if (Connection.Object is Unit)
+				SelectionHandler.ClickSelectable ((ISelectable)Connection.Object, e);
 		}
 		#endregion
 

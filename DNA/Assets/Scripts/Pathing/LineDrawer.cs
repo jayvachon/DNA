@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-// TODO: Move to DNA.Paths
-namespace Pathing {
+namespace DNA.Paths {
 
 	[RequireComponent (typeof (LineRenderer))]
 	public class LineDrawer : MonoBehaviour {

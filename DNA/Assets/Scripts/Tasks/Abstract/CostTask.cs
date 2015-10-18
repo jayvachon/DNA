@@ -5,8 +5,8 @@ using DNA.Models;
 
 namespace DNA.Tasks {
 
-	// surely there's a better name for this (tasks that cost resources)
-	public abstract class CostTask: InventoryTask {
+	// Task that costs resources
+	public abstract class CostTask : InventoryTask {
 
 		CostTaskSettings costSettings;
 		new public virtual CostTaskSettings Settings {
@@ -37,6 +37,18 @@ namespace DNA.Tasks {
 					}
 				}
 				return true;
+			}
+		}
+
+		int totalCost = 0;
+		protected int TotalCost {
+			get {
+				if (totalCost == 0) {
+					foreach (var cost in Settings.Costs) {
+						totalCost += Inventory[cost.Key].Count;
+					}
+				}
+				return totalCost;
 			}
 		}
 

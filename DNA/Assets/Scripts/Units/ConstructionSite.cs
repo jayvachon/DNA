@@ -8,14 +8,20 @@ namespace DNA.Units {
 
 	public class ConstructionSite : StaticUnit, IPathElementObject {
 
-		void Awake () {
-			Inventory = new Inventory (this);
-			Inventory.Add (new LaborHolder (1000, 10)).HolderEmptied += OnEndConstruction;
-			AcceptableTasks.Add (new AcceptCollectItem<LaborHolder> ());
+		public int LaborCost {
+			get { return Inventory["Labor"].Count; }
+			set { Inventory["Labor"].Set (value); }
 		}
 
-		void OnEndConstruction () {
-			Debug.Log (":)");
+		public RoadPlan RoadPlan { get; set; }
+
+		void Awake () {
+
+			unitRenderer.SetColors (new Color (1f, 1f, 1f));
+
+			Inventory = new Inventory (this);
+			Inventory.Add (new LaborHolder (1000, 0));
+			AcceptableTasks.Add (new AcceptCollectItem<LaborHolder> ());
 		}
 	}
 }

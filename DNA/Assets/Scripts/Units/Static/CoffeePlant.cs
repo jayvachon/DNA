@@ -33,21 +33,24 @@ namespace DNA.Units {
 
 		void Awake () {
 			
+			unitRenderer.SetColors (new Color (0.204f, 0.612f, 0.325f));
+
 			Inventory = new Inventory (this);
 			Inventory.Add (new CoffeeHolder (20, 0));
-			Inventory.Add (new YearHolder (150, 0));
+			Inventory.Add (new YearHolder (250, 0));
 			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableTasks.Add (new AcceptCollectItem<CoffeeHolder> ());
 
 			PerformableTasks.Add (new GenerateItem<CoffeeHolder> ());
-			PerformableTasks.Add (new ConsumeItem<YearHolder> ()).onComplete += OnDie;
+			PerformableTasks.Add (new ConsumeItem<YearHolder> ()).onComplete += (PerformerTask t) => { 
+				Element.State = DevelopmentState.Abandoned; 
+				PerformableTasks[typeof (GenerateItem<CoffeeHolder>)].Stop ();
+			};
 
 		}
 
-		//public override void OnPoolCreate () {
 		protected override void OnEnable () {
-			//base.OnPoolCreate ();
 			base.OnEnable ();
 			Inventory.Get<YearHolder> ().Initialize ();
 			#if SHORTLIFE
@@ -57,10 +60,6 @@ namespace DNA.Units {
 			}
 			#endif
 			PerformableTasks[typeof (DNA.Tasks.ConsumeItem<YearHolder>)].Start ();
-		}
-
-		void OnDie (PerformerTask task) {
-			Destroy<CoffeePlant> ();
 		}
 	}
 }

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using DNA.EventSystem;
-using Pathing;
 using DNA.Tasks;
 
 namespace DNA.Paths {
@@ -29,11 +28,11 @@ namespace DNA.Paths {
 		public int NewSegmentCount {
 			get {
 				
-				if (connections == null || connections.Count == 0)
+				if (Connections == null || Connections.Count == 0)
 					return 0;
 				
 				int count = 0;
-				foreach (Connection c in connections)
+				foreach (Connection c in Connections)
 					if (c.Cost > 0) count ++;
 
 				return count;
@@ -54,17 +53,11 @@ namespace DNA.Paths {
 			}
 		}
 
-		public ConstructPrompt prompt;
+		public List<Connection> Connections { get; private set; }
 
+		public ConstructPrompt prompt;
 		readonly List<GridPoint> points = new List<GridPoint> ();
 		readonly List<GridPoint> path = new List<GridPoint> ();
-		List<Connection> connections;
-
-		public void Build () {
-			foreach (Connection c in connections)
-				ConnectionsManager.GetContainer (c).BeginConstruction<Road> ();
-			Clear ();
-		}
 
 		public void AddPoint (GridPoint newPoint) {
 
@@ -120,7 +113,7 @@ namespace DNA.Paths {
 			path.Clear ();
 			for (int i = 0; i < points.Count-1; i ++)
 				path.AddRange (Pathfinder.GetShortestPath (points[i], points[i+1]));
-			connections = Pathfinder.PointsToConnections (path);
+			Connections = Pathfinder.PointsToConnections (path);
 			Drawer.UpdatePositions (path.ConvertAll (x => x.Position));
 		}
 
@@ -128,7 +121,7 @@ namespace DNA.Paths {
 			path.Clear ();
 			for (int i = 0; i < points.Count-1; i ++)
 				path.AddRange (Pathfinder.GetCheapestPath (points[i], points[i+1]));
-			connections = Pathfinder.PointsToConnections (path);
+			Connections = Pathfinder.PointsToConnections (path);
 			Drawer.UpdatePositions (path.ConvertAll (x => x.Position));
 		}
 

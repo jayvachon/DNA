@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DNA.InputSystem;
-using Pathing;
 using DNA.Tasks;
 using DNA.Paths;
 
@@ -9,7 +8,14 @@ namespace DNA.Units {
 
 	public class StaticUnit : Unit, IPathElementObject, ITaskAcceptor {
 
-		public PathElement Element { get; set; }
+		PathElement element;
+		public PathElement Element { 
+			get { return element; }
+			set {
+				element = value;
+				element.OnSetState += OnSetState;
+			}
+		}
 
 		AcceptableTasks acceptableTasks;
 		public AcceptableTasks AcceptableTasks {
@@ -21,10 +27,19 @@ namespace DNA.Units {
 			}
 		}
 
+		protected override void OnDisable () {
+			base.OnDisable ();
+			Element.OnSetState -= OnSetState;
+		}
+
+		void OnSetState (DevelopmentState state) {
+			if (state == DevelopmentState.Abandoned)
+				unitRenderer.SetAbandoned ();
+		}
+
 		// TODO: update this to work with new points
 		// this happens e.g. when coffee runs out of resources
 		protected void Destroy<T> (bool enablePathPoint=true) where T : StaticUnit {
-			Debug.Log ("destroy");
 			if (enablePathPoint) {
 				StaticUnit plot = ObjectPool.Instantiate<Plot> () as StaticUnit;
 				plot.Position = Position;

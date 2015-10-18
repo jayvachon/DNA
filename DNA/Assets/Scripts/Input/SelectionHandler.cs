@@ -32,14 +32,14 @@ namespace DNA.InputSystem {
 
 		public static void ClickSelectable (ISelectable selectable, PointerEventData e) {
 			SelectSettings settings = selectable.SelectSettings;
-			if (!settings.CanSelect)
-				return;
 
 			List<ISelectableOverrider> selectablesWithOverride = GetSelectablesWithOverride (e.button);
 			if (selectablesWithOverride.Count > 0) {
 				foreach (ISelectableOverrider sel in selectablesWithOverride)
 					sel.OnOverrideSelect (selectable);
 			} else {
+				if (!settings.CanSelect)
+					return;
 				if (e.button == settings.SelectButton) {
 					HandleSelect (selectable);
 				} else if (e.button == settings.UnselectButton) {
@@ -96,39 +96,6 @@ namespace DNA.InputSystem {
 		static List<ISelectableOverrider> GetSelectablesWithOverride (PointerEventData.InputButton button) {
 			return selected.FindAll (x => x is ISelectableOverrider && ((ISelectableOverrider)x).OverrideButton == button)
 				.ConvertAll (x => (ISelectableOverrider)x);
-		}
-	}
-
-	public class EmptyClickHandler : MonoBehaviour {
-
-		static EmptyClickHandler instance = null;
-		static public EmptyClickHandler Instance {
-			get {
-				if (instance == null) {
-					instance = Object.FindObjectOfType (typeof (EmptyClickHandler)) as EmptyClickHandler;
-					if (instance == null) {
-						GameObject go = new GameObject ("EmptyClickHandler");
-						DontDestroyOnLoad (go);
-						instance = go.AddComponent<EmptyClickHandler>();
-					}
-				}
-				return instance;
-			}
-		}
-
-		public delegate void OnClick ();
-
-		public OnClick onClick;
-
-		void Update () {
-			if (Input.GetMouseButtonDown (0) || Input.GetMouseButtonDown (1)) {
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit;
-				if (!Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-					if (onClick != null)
-						onClick ();
-				}
-			}
 		}
 	}
 }

@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Environment\Fermat.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\ClickContainerEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\ClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\ReleaseEvent.cs" />
@@ -68,6 +69,7 @@
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />
      <Compile Include="Assets\Scripts\Input\DragHandler.cs" />
+     <Compile Include="Assets\Scripts\Input\EmptyClickHandler.cs" />
      <Compile Include="Assets\Scripts\Input\HoverHandler.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
      <Compile Include="Assets\Scripts\Input\IDraggable.cs" />
@@ -149,20 +151,12 @@
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Positioner.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Road.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadConstructor.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadPlan.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
-     <Compile Include="Assets\Scripts\Pathing\IPathable.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
-     <Compile Include="Assets\Scripts\Pathing\Path.cs" />
-     <Compile Include="Assets\Scripts\Pathing\PathComponent.cs" />
-     <Compile Include="Assets\Scripts\Pathing\PathDrawer.cs" />
-     <Compile Include="Assets\Scripts\Pathing\PathManager.cs" />
-     <Compile Include="Assets\Scripts\Pathing\PathPoint.cs" />
-     <Compile Include="Assets\Scripts\Pathing\PathPoints.cs" />
-     <Compile Include="Assets\Scripts\Pathing\PathPositioner.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
-     <Compile Include="Assets\Scripts\Pathing\Pathfinder.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerActionState.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\Floret.cs" />
@@ -281,6 +275,7 @@
      <Compile Include="Assets\Scripts\Utilities\Extensions\TrigMap.cs" />
      <Compile Include="Assets\Scripts\Utilities\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Utilities\Misc\MBRefs.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Misc\ObjectColor.cs" />
      <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectPool.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

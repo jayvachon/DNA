@@ -4,37 +4,36 @@ using System.Collections.Generic;
 
 namespace DNA.Units {
 
-	[RequireComponent (typeof (Renderer))]
-	public class UnitRenderer : UnitComponent {
+	public class UnitRenderer : ObjectColor {
 
-		public UnitColorHandler colorHandler = new UnitColorHandler ();
+		public void SetColors (Color def, Color? selected=null, Color? abandoned=null) {
+			
+			Color s = (selected == null)
+				? Color.red
+				: (Color)selected;
 
-		protected override int ParentUnit { get { return 1; } }
+			Color a = (abandoned == null) 
+				? HSBColor.Lerp (HSBColor.FromColor (def), HSBColor.Black, 0.67f).ToColor ()
+				: (Color)abandoned;
 
-		new void Awake () {
-			colorHandler.Init (GetComponent<Renderer>());
-			SetRenderersInChildren ();
+			AddColor ("default", def);
+			AddColor ("selected", s);
+			AddColor ("abandoned", a);
+			SetColor ("default");
+		}
+
+		public void SetAbandoned () {
+			PrimaryColor = "abandoned";
+			if (CurrentColor != "selected")
+				SetColor ("abandoned");
 		}
 
 		public void OnSelect () {
-			colorHandler.Selected = true;
-			SetRenderersInChildren ();
+			SetColor ("selected");
 		}
 
 		public void OnUnselect () {
-			colorHandler.Selected = false;
-			SetRenderersInChildren ();
-		}
-
-		void SetRenderersInChildren () {
-			List<Transform> children = MyTransform.GetAllChildren ();
-			Renderer colorHandlerRenderer = colorHandler.Renderer;
-			foreach (Transform child in children) {
-				Renderer childRenderer = child.GetComponent<Renderer> ();
-				if (childRenderer != null) {
-					childRenderer.sharedMaterial = colorHandlerRenderer.sharedMaterial;
-				}
-			}
+			SetColor ();
 		}
 	}
 }

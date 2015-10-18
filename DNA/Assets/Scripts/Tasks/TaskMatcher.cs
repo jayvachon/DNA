@@ -61,8 +61,12 @@ namespace DNA.Tasks {
 			return GetMatching (performer.PerformableTasks.EnabledTasks, acceptor.AcceptableTasks.EnabledTasks);
 		}
 
-		public static AcceptorTask GetPair (PerformerTask task, DNA.Paths.GridPoint acceptor) {
-			return GetPair (task, ((ITaskAcceptor)acceptor.Unit));
+		public static AcceptorTask GetPair (PerformerTask task, DNA.Paths.PathElement acceptor) {
+			try {
+				return GetPair (task, ((ITaskAcceptor)acceptor.Object));
+			} catch {
+				throw new System.Exception (acceptor.Object + " does not implement the ITaskAcceptor interface");
+			}
 		}
 
 		public static AcceptorTask GetPair (PerformerTask task, ITaskAcceptor acceptor) {

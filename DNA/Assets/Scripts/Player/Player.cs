@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.EventSystem;
 using DNA.InventorySystem;
+using DNA.InputSystem;
 using DNA.Tasks;
 using DNA.Paths;
 using DNA.Units;
@@ -65,6 +66,11 @@ namespace DNA {
 			Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
 			Events.instance.AddListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
 			Events.instance.AddListener<MouseExitPointEvent> (OnMouseExitPointEvent);
+			EmptyClickHandler.Instance.onClick += OnEmptyClick;
+		}
+
+		void OnDisable () {
+			EmptyClickHandler.Instance.onClick -= OnEmptyClick;
 		}
 
 		public void SetConstructionPen<T> () where T : IConstructable {
@@ -118,6 +124,11 @@ namespace DNA {
 			if (CanConstructOnPoint (e.Point)) {
 				ObjectPool.Destroy ("PointHighlight");
 			}
+		}
+
+		void OnEmptyClick () {
+			pen = null;
+			PlayerActionState.Set (ActionState.Idle);
 		}
 	}
 }

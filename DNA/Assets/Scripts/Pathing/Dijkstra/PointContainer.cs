@@ -21,9 +21,10 @@ namespace DNA {
 			}
 		}
 
-		public override void SetObject<T> () {
-			base.SetObject<T> ();
+		public override T SetObject<T> () {
+			T obj = base.SetObject<T> ();
 			LookAtCenter ();
+			return obj;
 		}
 
 		void RemoveStaticUnit () {
@@ -40,14 +41,9 @@ namespace DNA {
 
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
 		public void OnPointerDown (PointerEventData e) {
-			
 			Events.instance.Raise (new ClickPointEvent (this));
 			if (Point.Object is Unit)
 				SelectionHandler.ClickSelectable (Point.Unit, e);
-
-			// temp -- just for testing
-			if (Element.State == DevelopmentState.UnderConstruction)
-				EndConstruction ();
 		}
 
 		public void OnPointerEnter (PointerEventData e) {

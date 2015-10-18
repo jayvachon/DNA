@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// deprecate
+
 namespace DNA.Units {
 
 	[System.Serializable]

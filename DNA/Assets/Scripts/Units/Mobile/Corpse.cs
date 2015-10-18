@@ -15,6 +15,8 @@ namespace DNA.Units {
 
 		void Awake () {
 
+			unitRenderer.SetColors (Color.black);
+
 			Inventory = new Inventory (this);
 			YearHolder yearHolder = new YearHolder (500, 0);
 			yearHolder.HolderEmptied += OnDeliverYears;

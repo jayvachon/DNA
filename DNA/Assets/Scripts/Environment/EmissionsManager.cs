@@ -23,10 +23,14 @@ public static class EmissionsManager {
 	};
 
 	public static void AddUnit (Unit unit) {
-		float emissionValue;
-		if (emissionsValues.TryGetValue (unit.Name, out emissionValue)) {
-			EmissionsRate += emissionValue;
-		}
+
+		// Give the sea a frame to find itself
+		Coroutine.WaitForFixedUpdate (() => {
+			float emissionValue;
+			if (emissionsValues.TryGetValue (unit.Name, out emissionValue)) {
+				EmissionsRate += emissionValue;
+			}
+		});
 	}
 
 	public static void RemoveUnit (Unit unit) {

@@ -37,6 +37,8 @@ namespace DNA.Units {
 
 		void Awake () {
 
+			unitRenderer.SetColors (new Color (0.47f, 0.043f, 0.24f));
+
 			Inventory = new Inventory (this);
 			Inventory.Add (new MilkshakeHolder (0, 0));
 

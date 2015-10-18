@@ -79,7 +79,10 @@ namespace DNA.Paths {
 		}
 
 		public static List<GridPoint> GetFreePath (GridPoint a, GridPoint b) {
-			return GetPath (a, b, FreePaths);
+			Path<GridPoint>[] free = FreePaths;
+			return (PathsHavePoint (a, free) && PathsHavePoint (b, free)) 
+				? GetPath (a, b, FreePaths)
+				: new List<GridPoint> ();
 		}
 
 		public static List<GridPoint> GetCheapestPath (GridPoint a, GridPoint b) {
@@ -128,6 +131,10 @@ namespace DNA.Paths {
 
 			return pathList;
 		}
+
+		static bool PathsHavePoint (GridPoint p, Path<GridPoint>[] paths) {
+			return System.Array.Find<Path<GridPoint>> (paths, x => x.Source == p || x.Destination == p) != null;
+ 		}
 
 		public static List<Connection> PointsToConnections (List<GridPoint> points) {
 

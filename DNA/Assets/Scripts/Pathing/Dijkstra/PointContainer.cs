@@ -21,8 +21,19 @@ namespace DNA {
 			}
 		}
 
+		Fertility fertility;
+
+		public void SetFertility (float distanceToCenter, float val) {
+			fertility = new Fertility (distanceToCenter, val);
+		}
+
 		public override T SetObject<T> () {
 			T obj = base.SetObject<T> ();
+			try {
+				(obj as StaticUnit).FertilityTier = fertility.Value;
+			} catch {
+				throw new System.Exception ("Fertility has not been set or '" + obj + "' is not a StaticUnit");
+			}
 			LookAtCenter ();
 			return obj;
 		}
@@ -35,7 +46,8 @@ namespace DNA {
 		}
 
 		void LookAtCenter () {
-			MyTransform.LookAt (new Vector3 (0, -28.7f, 0), Vector3.up);
+			float y = -75;
+			MyTransform.LookAt (new Vector3 (0, y, 0), Vector3.up);
 			MyTransform.SetLocalEulerAnglesX (MyTransform.localEulerAngles.x - 90f);
 		}
 

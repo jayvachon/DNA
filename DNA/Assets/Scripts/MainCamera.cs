@@ -18,6 +18,8 @@ public class MainCamera : MBRefs {
 	public Transform center;
 	Transform anchor;
 
+	float[] zConstraints = new [] { -60f, -5f };
+
 	protected override void Awake () {
 		base.Awake ();
 		Events.instance.AddListener<SelectEvent> (OnSelectEvent);
@@ -46,10 +48,11 @@ public class MainCamera : MBRefs {
 	void Update () {
 		center.SetLocalEulerAnglesY (center.localEulerAngles.y - Input.GetAxis ("Horizontal"));
 		transform.SetLocalPositionZ (
-			Mathf.Clamp (transform.localPosition.z + Input.GetAxis ("Vertical") * 0.5f, -35f, -5f));
+			Mathf.Clamp (transform.localPosition.z + Input.GetAxis ("Vertical") * 0.5f, zConstraints[0], zConstraints[1]));
+		float yLook = Mathf.Lerp (0f, zConstraints[0] / 2f, Mathf.InverseLerp (zConstraints[1], zConstraints[0], transform.localPosition.z));
 		//float yLook = Mathf.Lerp (-5f, -25f, Mathf.InverseLerp (-5f, -35f, transform.localPosition.z));
 		Vector3 look = center.position;
-		//look.y = yLook;
+		look.y = yLook;
 		transform.LookAt (look);
 	}
 

@@ -9,6 +9,10 @@ namespace DNA.Paths {
 
 		public PathElement Element { get; set; }
 
+		new void Awake () {
+			GetComponent<Renderer> ().SetColor (Color.black);
+		}
+
 		public void Init (float length) {
 			MyTransform.localScale = new Vector3 (0.1f, 0.1f, length);
 		}

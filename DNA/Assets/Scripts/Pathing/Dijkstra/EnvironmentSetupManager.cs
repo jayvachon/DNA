@@ -13,11 +13,20 @@ namespace DNA {
 
 		void Awake () {
 			
+			points.OnLoadPoints += OnLoadPoints;
+			connections.OnLoadConnections += OnLoadConnections;
 			points.Init ();
 			connections.Init ();
+			
+		}
+
+		void OnLoadPoints () {
 
 			// Create Giving Tree
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
+		}
+
+		void OnLoadConnections () {
 			
 			// Create initial roads
 			List<Connection> topConnections = points.GetConnectionsAtIndex (0);

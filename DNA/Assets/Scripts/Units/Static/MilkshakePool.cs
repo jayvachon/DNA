@@ -25,5 +25,10 @@ namespace DNA.Units {
 
 			AcceptableTasks.Add (new AcceptCollectItem<MilkshakeHolder> ());
 		}
+
+		protected override void OnSetFertility (int tier) {
+			Inventory["Milkshakes"].Capacity = (int)(100 * Fertility.Multipliers[tier]);
+			Inventory["Milkshakes"].Initialize ();
+		}
 	}
 }

@@ -5,6 +5,8 @@ using DNA.Units;
 
 namespace DNA.Paths {
 
+	public delegate void OnLoadPoints ();
+
 	public class PointsManager : MBRefs {
 
 		readonly List<PointContainer> points = new List<PointContainer> ();
@@ -13,8 +15,10 @@ namespace DNA.Paths {
 			get { return points; }
 		}
 
+		public OnLoadPoints OnLoadPoints { get; set; }
+
 		public void Init () {
-			CreatePoints ();
+			StartCoroutine (CreatePoints ());
 		}
 
 		public void SetUnitAtIndex<T> (int index) where T : StaticUnit {
@@ -26,28 +30,47 @@ namespace DNA.Paths {
 			return points[index].Point.Connections;
 		}
 
-		void CreatePoints () {
+		IEnumerator CreatePoints () {
 			
+			const int blockSize = 100;
+			const float perlinScale = 20f;
+
 			List<GridPoint> gpoints = TreeGrid.Points;
 			int pointCount = gpoints.Count;
 
 			for (int i = 0; i < pointCount; i ++) {
+
+
 				PointContainer pc = ObjectPool.Instantiate<PointContainer> ();
 				pc.Point = gpoints[i];
 				pc.Parent = MyTransform;
-				DrillablePlot p = pc.SetObject<DrillablePlot> ();
 
-				float progress = (float)i / (float)pointCount;
+				float distanceToCenter = (float)i / (float)pointCount;
+				float val = Mathf.PerlinNoise (
+					((pc.Point.Position.x / 100f) + 1f) / 2f * perlinScale,
+					((pc.Point.Position.z / 100f) + 1f) / 2f * perlinScale
+				);
+
+				pc.SetFertility (distanceToCenter, val);
+
+				pc.SetObject<DrillablePlot> ();
+
+				/*float progress = (float)i / (float)pointCount;
 				p.DistanceToCenter = progress;
-				float x = ((pc.Point.Position.x / 100f) + 1f) / 2f;
-				float y = ((pc.Point.Position.z / 100f) + 1f) / 2f;
-				Debug.Log (x + ", " + y);
-				p.Fertility = Mathf.PerlinNoise (x, y);
-				//p.Fertility = Mathf.PerlinNoise (progress, progress);
-				//p.Fertility = Random.value;
+				p.Value = Mathf.PerlinNoise (
+					((pc.Point.Position.x / 100f) + 1f) / 2f * perlinScale,
+					((pc.Point.Position.z / 100f) + 1f) / 2f * perlinScale
+				);
+				p.UpdateFertility ();*/
 				
 				points.Add (pc);
+
+				if (i % blockSize == 0)
+					yield return null;
 			}
+
+			if (OnLoadPoints != null)
+				OnLoadPoints ();
 		}
 	}
 }

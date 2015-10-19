@@ -27,6 +27,15 @@ namespace DNA.Units {
 			}
 		}
 
+		int fertilityTier;
+		public int FertilityTier {
+			get { return fertilityTier; }
+			set { 
+				fertilityTier = value;
+				OnSetFertility (value);
+			}
+		}
+
 		protected override void OnDisable () {
 			base.OnDisable ();
 			Element.OnSetState -= OnSetState;
@@ -47,5 +56,7 @@ namespace DNA.Units {
 			}
 			DestroyThis<T> ();
 		}
+
+		protected virtual void OnSetFertility (int fertility) {} 
 	}
 }

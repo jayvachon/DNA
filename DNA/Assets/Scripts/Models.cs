@@ -63,7 +63,7 @@ namespace DNA.Models {
 			tasks.Add (typeof (CollectItem<LaborHolder>), new TaskSettings {
 				Title = "",
 				Description = "Collects labor",
-				Duration = 0.1f,
+				Duration = 1f,
 				AutoStart = false,
 				Repeat = true,
 				Pair = null

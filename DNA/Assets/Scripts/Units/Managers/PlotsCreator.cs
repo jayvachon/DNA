@@ -73,8 +73,8 @@ namespace DNA.Units {
 				case 60: return (Unit)CreateUnit<MilkshakePool> (position);*/
 				default: 
 					DrillablePlot plot = CreateUnit<DrillablePlot> (position);
-					plot.PositionInSpiral = (float)index / (float)pointCount;
-					plot.Index = index;
+					//plot.PositionInSpiral = (float)index / (float)pointCount;
+					//plot.Index = index;
 					return (Unit)plot;
 				/*default: return (Random.Range (0, (int)(pointCount/2)) < index) 
 					? CreateUnit<FertilePlot> (position)

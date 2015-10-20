@@ -35,7 +35,7 @@ namespace DNA.Units {
 			PerformableTasks.Add (new DeliverItem<MilkshakeHolder> ());
 			PerformableTasks.Add (new CollectItem<CoffeeHolder> ());
 			PerformableTasks.Add (new DeliverItem<CoffeeHolder> ());
-			PerformableTasks.Add (new ConsumeItem<YearHolder> ());
+			PerformableTasks.Add (new GenerateItem<YearHolder> ());
 			PerformableTasks.Add (new CollectItem<LaborHolder> ()).onEnd += (PerformerTask t) => { Inventory["Labor"].Clear (); };
 
 			Upgrades.Instance.AddListener<CoffeeCapacity> (
@@ -48,6 +48,7 @@ namespace DNA.Units {
 			InitInventory ();
 			//InitPath ();
 			RefreshInfoContent ();
+			PerformableTasks[typeof (GenerateItem<YearHolder>)].Start ();
 			base.OnEnable ();
 		}
 
@@ -65,8 +66,9 @@ namespace DNA.Units {
 
 		//public override void OnPoolDestroy () {
 		protected override void OnDisable () {
-			yearHolder.HolderFilled -= OnRetirement;
 			base.OnDisable ();
+			yearHolder.HolderFilled -= OnRetirement;
+			PerformableTasks[typeof (GenerateItem<YearHolder>)].Stop ();
 		}
 
 		void OnRetirement () {

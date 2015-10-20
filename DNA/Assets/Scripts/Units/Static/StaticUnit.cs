@@ -38,7 +38,8 @@ namespace DNA.Units {
 
 		protected override void OnDisable () {
 			base.OnDisable ();
-			Element.OnSetState -= OnSetState;
+			if (Element != null)
+				Element.OnSetState -= OnSetState;
 		}
 
 		void OnSetState (DevelopmentState state) {

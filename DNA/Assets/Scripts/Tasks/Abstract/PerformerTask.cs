@@ -1,4 +1,5 @@
-﻿#undef DEBUG_MSG
+﻿#undef QUARTER_TIME
+#undef DEBUG_MSG
 using UnityEngine;
 using System.Collections;
 using DNA.Models;
@@ -38,8 +39,8 @@ namespace DNA.Tasks {
 		protected AcceptorTask acceptTask;
 		protected TaskSettings settings;
 
-		bool perform = false;
-		bool performing = false;
+		bool perform = false;	 // should the task be performing?
+		bool performing = false; // is the task performing now?
 
 		public PerformerTask () {
 			settings = DataManager.GetTaskSettings (this.GetType ());
@@ -62,7 +63,11 @@ namespace DNA.Tasks {
 
 			Log ("Start", true);
 			OnStart ();
+			#if QUARTER_TIME
+			Coroutine.Start (settings.Duration*0.25f, SetProgress, End);
+			#else
 			Coroutine.Start (settings.Duration, SetProgress, End);
+			#endif
 
 			return true;
 		}
@@ -79,7 +84,12 @@ namespace DNA.Tasks {
 			OnEnd ();
 			if (settings.Repeat && perform) {
 				if (acceptTask == null) {
-					if (!Start ()) SendOnCompleteMessage ();
+					if (!Start ()) {
+						SendOnCompleteMessage ();
+						if (settings.Repeat && settings.AutoStart) {
+							StartOnEnable ();
+						}
+					}
 				} else {
 					if (acceptTask.Enabled) {
 						if (!Start ()) SendOnCompleteMessage ();
@@ -95,6 +105,20 @@ namespace DNA.Tasks {
 
 		void SetProgress (float progress) {
 			Progress = progress;
+		}
+
+		void StartOnEnable () {
+			if (!Enabled) {
+				float time = settings.Duration;
+				#if QUARTER_TIME
+				time *= 0.25f;
+				#endif
+				Coroutine.WaitForSeconds (time, () => {
+					if (!Start ()) {
+						StartOnEnable ();
+					}
+				});
+			}
 		}
 
 		protected virtual void OnStart () {

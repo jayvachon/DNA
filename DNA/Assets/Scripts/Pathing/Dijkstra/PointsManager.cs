@@ -40,7 +40,6 @@ namespace DNA.Paths {
 
 			for (int i = 0; i < pointCount; i ++) {
 
-
 				PointContainer pc = ObjectPool.Instantiate<PointContainer> ();
 				pc.Point = gpoints[i];
 				pc.Parent = MyTransform;
@@ -52,16 +51,7 @@ namespace DNA.Paths {
 				);
 
 				pc.SetFertility (distanceToCenter, val);
-
 				pc.SetObject<DrillablePlot> ();
-
-				/*float progress = (float)i / (float)pointCount;
-				p.DistanceToCenter = progress;
-				p.Value = Mathf.PerlinNoise (
-					((pc.Point.Position.x / 100f) + 1f) / 2f * perlinScale,
-					((pc.Point.Position.z / 100f) + 1f) / 2f * perlinScale
-				);
-				p.UpdateFertility ();*/
 				
 				points.Add (pc);
 

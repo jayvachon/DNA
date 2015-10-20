@@ -51,6 +51,14 @@ namespace DNA {
 			MyTransform.SetLocalEulerAnglesX (MyTransform.localEulerAngles.x - 90f);
 		}
 
+		protected override void OnEndConstruction (IPathElementObject obj) {
+			try {
+				(obj as StaticUnit).FertilityTier = fertility.Value;
+			} catch {
+				throw new System.Exception ("Fertility has not been set or '" + obj + "' is not a StaticUnit");
+			}
+		}
+
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
 		public void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new ClickPointEvent (this));

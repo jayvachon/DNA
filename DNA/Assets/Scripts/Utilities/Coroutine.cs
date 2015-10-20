@@ -44,6 +44,15 @@ public class Coroutine : MonoBehaviour {
 		if (endAction != null) endAction ();
 	}
 
+	public static void WaitForSeconds (float time, System.Action onEnd) {
+		Coroutine.Instance.StartCoroutine (Coroutine.CoWaitForSeconds (time, onEnd));
+	}
+
+	static IEnumerator CoWaitForSeconds (float time, System.Action onEnd) {
+		yield return new WaitForSeconds (time);
+		onEnd ();
+	}
+
 	public static void WaitForFixedUpdate (System.Action action) {
 		Coroutine.Instance.StartCoroutine (Coroutine.CoWaitForFixedUpdate (action));
 	}

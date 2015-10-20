@@ -10,26 +10,12 @@ namespace DNA.Units {
 	public class DrillablePlot : Plot {
 
 		public override string Description {
-			get { 
-				return "An undeveloped plot valued at " + FertilityTier + "/" + Fertility.TierCount;
-				/*return "This plot can be drilled for milkshakes. \n" 
-					+ mp.Tier.Return + " return\n"
-					+ "index: " + Index;*/
-			}
+			get { return "An undeveloped plot valued at " + FertilityTier + "/" + Fertility.TierCount; }
 		}
 
 		protected override void OnEnable () {
 			base.OnEnable ();
 			SelectSettings.CanSelect = false;
-		}
-
-		protected override void Start () {
-			base.Start ();
-
-			// TODO Do this (tier business) based on y position
-
-			//unitRenderer.colorHandler.DefaultColor = mp.Tier.Color;
-			//unitRenderer.colorHandler.SelectColor = Color.red;
 		}
 
 		protected override void OnSetFertility (int fertility) {

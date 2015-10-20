@@ -145,6 +145,15 @@ namespace DNA.Models {
 				Pair = null
 			});
 
+			tasks.Add (typeof (GenerateItem<YearHolder>), new TaskSettings {
+				Title = "",
+				Description = "Generates year",
+				Duration = 1f,
+				AutoStart = true,
+				Repeat = true,
+				Pair = null
+			});
+
 			/**
 			 *	GenerateUnit
 			 */

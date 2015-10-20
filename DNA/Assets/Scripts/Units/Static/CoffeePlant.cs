@@ -44,7 +44,8 @@ namespace DNA.Units {
 
 			PerformableTasks.Add (new GenerateItem<CoffeeHolder> ());
 			PerformableTasks.Add (new ConsumeItem<YearHolder> ()).onComplete += (PerformerTask t) => { 
-				Element.State = DevelopmentState.Abandoned; 
+				if (Element != null)
+					Element.State = DevelopmentState.Abandoned; 
 				PerformableTasks[typeof (GenerateItem<CoffeeHolder>)].Stop ();
 			};
 
@@ -53,6 +54,7 @@ namespace DNA.Units {
 		protected override void OnEnable () {
 			base.OnEnable ();
 			Inventory.Get<YearHolder> ().Initialize ();
+			Inventory.Get<CoffeeHolder> ().Initialize (2);
 			#if SHORTLIFE
 			if (!shortLife) {
 				Inventory.Get<YearHolder> ().Remove (25);
@@ -60,6 +62,18 @@ namespace DNA.Units {
 			}
 			#endif
 			PerformableTasks[typeof (DNA.Tasks.ConsumeItem<YearHolder>)].Start ();
+			PerformableTasks[typeof (DNA.Tasks.GenerateItem<CoffeeHolder>)].Start ();
+		}
+
+		protected override void OnDisable () {
+			base.OnDisable ();
+			PerformableTasks[typeof (GenerateItem<CoffeeHolder>)].Stop ();
+			PerformableTasks[typeof (ConsumeItem<YearHolder>)].Stop ();
+		}
+
+		protected override void OnSetFertility (int tier) {
+			Inventory["Milkshakes"].Capacity = (int)(20 * Fertility.Multipliers[tier]);
+			Inventory["Milkshakes"].Initialize (2);
 		}
 	}
 }

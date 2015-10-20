@@ -19,6 +19,7 @@ namespace DNA {
 			// Set the project to turn into once labor completes
 			if (Element.State == DevelopmentState.Undeveloped) {
 				project = (IPathElementObject)ObjectPool.Instantiate<T> ();
+				(project as MonoBehaviour).gameObject.SetActive (false);
 				site = (ConstructionSite)SetObject<ConstructionSite> ();
 				site.Inventory["Labor"].HolderEmptied += EndConstruction;
 				Element.State = DevelopmentState.UnderConstruction;
@@ -48,8 +49,10 @@ namespace DNA {
 			// Turn into the project set when construction began
 			// Mark this container as developed so that nothing else can be built here
 			site.Inventory["Labor"].HolderEmptied -= EndConstruction;
+			(project as MonoBehaviour).gameObject.SetActive (true);
 			SetObject (project);
 			Element.State = DevelopmentState.Developed;
+			OnEndConstruction (project);
 			site = null;
 			project = null;
 		}
@@ -60,5 +63,6 @@ namespace DNA {
 		}
 
 		protected virtual void OnSetObject (IPathElementObject obj) {}
+		protected virtual void OnEndConstruction (IPathElementObject obj) {}
 	}
 }

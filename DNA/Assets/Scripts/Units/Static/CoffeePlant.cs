@@ -72,8 +72,8 @@ namespace DNA.Units {
 		}
 
 		protected override void OnSetFertility (int tier) {
-			Inventory["Milkshakes"].Capacity = (int)(20 * Fertility.Multipliers[tier]);
-			Inventory["Milkshakes"].Initialize (2);
+			Inventory["Coffee"].Capacity = (int)(20 * Fertility.Multipliers[tier]);
+			Inventory["Coffee"].Initialize (2);
 		}
 	}
 }

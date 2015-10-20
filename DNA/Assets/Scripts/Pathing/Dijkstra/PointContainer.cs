@@ -52,11 +52,9 @@ namespace DNA {
 		}
 
 		protected override void OnEndConstruction (IPathElementObject obj) {
-			try {
-				(obj as StaticUnit).FertilityTier = fertility.Value;
-			} catch {
-				throw new System.Exception ("Fertility has not been set or '" + obj + "' is not a StaticUnit");
-			}
+			StaticUnit s = obj as StaticUnit;
+			if (s != null)
+				s.FertilityTier = fertility.Value;
 		}
 
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation

@@ -29,13 +29,16 @@ namespace DNA.Units {
 
 			GridPoint p = u.Element as GridPoint;
 
-			// If the current point was selected, run OnArrive again to check for updates
-			if (p == CurrentPoint) {
+			// If the current point was selected and a task is not being performed, run OnArrive again to check for updates
+			if (p == CurrentPoint && currentTask != null) {
 				OnArriveAtDestination (CurrentPoint);
 				return;
 			}
 
 			if (p != null) {
+
+				// If a task is being performed, stop it
+				InterruptTask ();
 
 				// If the selected object is a GridPoint with a road, move to it
 				if (p.HasRoad) {
@@ -113,6 +116,7 @@ namespace DNA.Units {
 			}
 		}
 
+		PerformerTask currentTask;
 		Connection currentRoadConstruction;
 		Positioner positioner;
 
@@ -141,6 +145,7 @@ namespace DNA.Units {
 
 			// Check if the point has any tasks to perform
 			// If so, start the task. If the task needs a pair, listen for when the task completes
+			// Failing that, check if the point is on a road under construction
 			if (!TryStartMatch ()) {
 				TryConstructRoad ();
 			}
@@ -153,8 +158,9 @@ namespace DNA.Units {
 		bool TryStartMatch () {
 			MatchResult match = PointTaskMatch (CurrentPoint);
 			if (match != null) {
+				currentTask = match.Match;
 				if (match.PairType != null)
-					match.Match.onComplete += OnCompleteTask;
+					currentTask.onComplete += OnCompleteTask;
 				match.Start (true);
 				return true;
 			}
@@ -166,8 +172,9 @@ namespace DNA.Units {
 			if (currentRoadConstruction != null) {
 				MatchResult match = TaskMatcher.GetPerformable (this, currentRoadConstruction.Object as ITaskAcceptor);
 				if (match != null) {
+					currentTask = match.Match;
+					currentTask.onComplete += OnCompleteRoad;
 					match.Start ();
-					match.Match.onComplete += OnCompleteRoad;
 				}
 			}
 		}
@@ -206,11 +213,20 @@ namespace DNA.Units {
 			}
 
 			t.onComplete -= OnCompleteTask;
+			currentTask = null;
 		}
 
 		void OnCompleteRoad (PerformerTask t) {
 			RoadConstructionPoint = Array.Find (currentRoadConstruction.Points, x => x != RoadConstructionPoint);
 			t.onComplete -= OnCompleteRoad;
+		}
+
+		void InterruptTask () {
+			if (currentTask != null) {
+				currentTask.onComplete -= OnCompleteTask;
+				currentTask.Stop ();
+				currentTask = null;
+			}
 		}
 
 		/*IEnumerator CoWaitForCompleteCircle (System.Action onEnd) {

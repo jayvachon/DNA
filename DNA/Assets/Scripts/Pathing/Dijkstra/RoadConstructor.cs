@@ -112,7 +112,7 @@ namespace DNA.Paths {
 		void GenerateShortestPath () {
 			path.Clear ();
 			for (int i = 0; i < points.Count-1; i ++)
-				path.AddRange (Pathfinder.GetShortestPath (points[i], points[i+1]));
+				path.AddRange (Pathfinder.GetPathNoOverlap (points[i], points[i+1]));
 			Connections = Pathfinder.PointsToConnections (path);
 			Drawer.UpdatePositions (path.ConvertAll (x => x.Position));
 		}

@@ -75,6 +75,9 @@ namespace DNA.Paths {
 			if (path != null && path.Count > 0)
 				startPoint = path[pathPosition];
 
+			if (startPoint == endPoint)
+				return;
+				
 			List<GridPoint> newPath = Pathfinder.GetFreePath (startPoint, endPoint);
 			if (newPath.Count > 0) {
 				path = newPath;

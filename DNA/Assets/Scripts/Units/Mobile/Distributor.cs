@@ -18,7 +18,7 @@ namespace DNA.Units {
 			get { return "Laborers perform work until they reach retirement age."; }
 		}
 
-		YearHolder yearHolder = new YearHolder (275, 0);
+		YearHolder yearHolder = new YearHolder (350, 0);
 
 		void Awake () {
 

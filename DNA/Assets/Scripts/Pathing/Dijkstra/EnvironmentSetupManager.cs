@@ -31,7 +31,9 @@ namespace DNA {
 			// Create initial roads
 			List<Connection> topConnections = points.GetConnectionsAtIndex (0);
 			for (int i = 0; i < topConnections.Count; i ++) {
-				ConnectionsManager.GetContainer (topConnections[i]).SetObject<Road> ();
+				ConnectionContainer c = ConnectionsManager.GetContainer (topConnections[i]);
+				c.BeginConstruction<Road> ();
+				c.EndConstruction ();
 			}
 		}
 	}

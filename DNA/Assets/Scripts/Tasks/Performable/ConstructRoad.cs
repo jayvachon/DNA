@@ -42,8 +42,10 @@ namespace DNA.Tasks {
 			List<Connection> connections = RoadConstructor.Instance.Connections;
 			foreach (Connection c in connections) {
 				ConstructionSite site = ConnectionsManager.GetContainer (c).BeginConstruction<Road> ();
-				site.LaborCost = segmentCost;
-				site.RoadPlan = new RoadPlan (connections);
+				if (site != null) {
+					site.LaborCost = segmentCost;
+					site.RoadPlan = new RoadPlan (connections);
+				}
 			}
 			RoadConstructor.Instance.Clear ();
 			base.OnEnd ();

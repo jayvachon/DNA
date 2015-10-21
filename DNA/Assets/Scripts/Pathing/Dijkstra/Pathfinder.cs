@@ -33,44 +33,66 @@ namespace DNA.Paths {
 			}
 		}
 
+		static Path<GridPoint>[] pathsNoFree;
+		static Path<GridPoint>[] PathsNoFree {
+			get {
+
+				List<Connection> connections = TreeGrid.Connections.FindAll (x => x.Cost > 0);
+				pathsNoFree = new Path<GridPoint>[connections.Count*2];
+
+				int j = 0;
+
+				for (int i = 0; i < pathsNoFree.Length; i += 2) {
+
+					Connection c = connections[j++];
+
+					pathsNoFree[i] = c.Path[0];
+					pathsNoFree[i+1] = c.Path[1];
+				}
+
+				return pathsNoFree;
+			}
+		}
+
 		static Path<GridPoint>[] pathsIgnoreCost;
 		static Path<GridPoint>[] PathsIgnoreCost {
 			get {
 
 				List<Connection> connections = TreeGrid.Connections;
-				paths = new Path<GridPoint>[connections.Count*2];
+				pathsIgnoreCost = new Path<GridPoint>[connections.Count*2];
 
 				int j = 0;
-				for (int i = 0; i < paths.Length; i += 2) {
+				for (int i = 0; i < pathsIgnoreCost.Length; i += 2) {
 
 					Connection c = connections[j++];
 
-					paths[i] = c.Path[0];
-					paths[i].Cost = c.Costs["default"];
-					paths[i+1] = c.Path[1];
-					paths[i+1].Cost = c.Costs["default"];
+					pathsIgnoreCost[i] = c.Path[0];
+					pathsIgnoreCost[i].Cost = c.Costs["default"];
+					pathsIgnoreCost[i+1] = c.Path[1];
+					pathsIgnoreCost[i+1].Cost = c.Costs["default"];
 				}
 
-				return paths;
+				return pathsIgnoreCost;
 			}
 		}
 
+		static Path<GridPoint>[] freePaths;
 		static Path<GridPoint>[] FreePaths {
 			get {
 
 				List<Connection> connections = TreeGrid.Connections.FindAll (x => x.Cost == 0);
-				paths = new Path<GridPoint>[connections.Count*2];
+				freePaths = new Path<GridPoint>[connections.Count*2];
 
 				int j = 0;
-				for (int i = 0; i < paths.Length; i += 2) {
+				for (int i = 0; i < freePaths.Length; i += 2) {
 					
 					Connection c = connections[j++];
 
-					paths[i] = c.Path[0];
-					paths[i+1] = c.Path[1];
+					freePaths[i] = c.Path[0];
+					freePaths[i+1] = c.Path[1];
 				}
 
-				return paths;
+				return freePaths;
 			}
 		}
 
@@ -91,6 +113,10 @@ namespace DNA.Paths {
 
 		public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
 			return GetPath (a, b, PathsIgnoreCost);
+		}
+
+		public static List<GridPoint> GetPathNoOverlap (GridPoint a, GridPoint b) {
+			return GetPath (a, b, PathsNoFree);
 		}
 
 		public static GridPoint FindNearestPoint (GridPoint a, Func<GridPoint, bool> requirement=null) {

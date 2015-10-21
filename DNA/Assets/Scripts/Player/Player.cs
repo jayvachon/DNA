@@ -70,7 +70,8 @@ namespace DNA {
 		}
 
 		void OnDisable () {
-			EmptyClickHandler.Instance.onClick -= OnEmptyClick;
+			if (EmptyClickHandler.Instance != null)
+				EmptyClickHandler.Instance.onClick -= OnEmptyClick;
 		}
 
 		public void SetConstructionPen<T> () where T : IConstructable {

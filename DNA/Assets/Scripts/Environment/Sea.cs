@@ -10,17 +10,17 @@ public class Sea : MBRefs {
 		get {
 			if (instance == null) {
 				instance = Object.FindObjectOfType (typeof (Sea)) as Sea;
-				if (instance == null) {
+				/*if (instance == null) {
 					GameObject go = new GameObject ("Sea");
 					DontDestroyOnLoad (go);
 					instance = go.AddComponent<Sea>();
-				}
+				}*/
 			}
 			return instance;
 		}
 	}
 
-	const float minLevel = -3.5f;
+	const float minLevel = -10f;
 	const float maxLevel = 5f;
 	public EndRising endRising;
 	float timescale = 600f; 

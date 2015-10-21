@@ -10,11 +10,11 @@ namespace DNA.InputSystem {
 			get {
 				if (instance == null) {
 					instance = Object.FindObjectOfType (typeof (EmptyClickHandler)) as EmptyClickHandler;
-					if (instance == null) {
+					/*if (instance == null) {
 						GameObject go = new GameObject ("EmptyClickHandler");
 						DontDestroyOnLoad (go);
 						instance = go.AddComponent<EmptyClickHandler>();
-					}
+					}*/
 				}
 				return instance;
 			}

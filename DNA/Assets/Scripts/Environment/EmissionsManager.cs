@@ -25,7 +25,7 @@ public static class EmissionsManager {
 	public static void AddUnit (Unit unit) {
 
 		// Give the sea a frame to find itself
-		Coroutine.WaitForFixedUpdate (() => {
+		Coroutine.WaitForSeconds (1f, () => {
 			float emissionValue;
 			if (emissionsValues.TryGetValue (unit.Name, out emissionValue)) {
 				EmissionsRate += emissionValue;

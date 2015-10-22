@@ -37,7 +37,7 @@ namespace DNA.Units {
 
 			Inventory = new Inventory (this);
 			Inventory.Add (new CoffeeHolder (20, 0));
-			Inventory.Add (new YearHolder (250, 0));
+			Inventory.Add (new YearHolder (350, 0));
 			Inventory.Get<CoffeeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 
 			AcceptableTasks.Add (new AcceptCollectItem<CoffeeHolder> ());

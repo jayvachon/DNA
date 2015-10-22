@@ -45,7 +45,7 @@ namespace DNA.Models {
 			tasks.Add (typeof (CollectItem<MilkshakeHolder>), new TaskSettings {
 				Title = "",
 				Description = "Collects milkshakes",
-				Duration = 0.5f,
+				Duration = 2f,
 				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<MilkshakeHolder>)
@@ -54,7 +54,7 @@ namespace DNA.Models {
 			tasks.Add (typeof (CollectItem<CoffeeHolder>), new TaskSettings {
 				Title = "",
 				Description = "Collects coffee",
-				Duration = 0.5f,
+				Duration = 1.5f,
 				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<CoffeeHolder>)

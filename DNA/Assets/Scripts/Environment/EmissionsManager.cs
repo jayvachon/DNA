@@ -10,7 +10,8 @@ public static class EmissionsManager {
 		get { return emissionsRate; }
 		set { 
 			emissionsRate = value; 
-			Sea.Instance.Rate = emissionsRate;
+			if (Sea.Instance != null)
+				Sea.Instance.Rate = emissionsRate;
 		}
 	}
 

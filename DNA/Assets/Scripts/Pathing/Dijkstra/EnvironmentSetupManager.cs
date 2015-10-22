@@ -10,11 +10,13 @@ namespace DNA {
 
 		public PointsManager points;
 		public ConnectionsManager connections;
+		public FogOfWarManager fogOfWar;
 
 		void Awake () {
 			
 			points.OnLoadPoints += OnLoadPoints;
 			connections.OnLoadConnections += OnLoadConnections;
+			fogOfWar.Init ();
 			points.Init ();
 			connections.Init ();
 			

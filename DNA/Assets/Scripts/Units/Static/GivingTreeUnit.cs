@@ -85,7 +85,7 @@ namespace DNA.Units {
 
 		void OnGenerateDistributor (PerformerTask task) {
 			Unit unit = ((GenerateUnit<Distributor>)task).GeneratedUnit;
-			unit.Position = CreatePositions[positionIndex];
+			//unit.Position = CreatePositions[positionIndex];
 			if (positionIndex >= CreatePositions.Count-1) {
 				positionIndex = 0;
 			} else {

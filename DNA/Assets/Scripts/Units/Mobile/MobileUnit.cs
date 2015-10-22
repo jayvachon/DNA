@@ -12,7 +12,7 @@ using DNA.Paths;
 
 namespace DNA.Units {
 
-	public class MobileUnit : Unit, ITaskPerformer, IPointerDownHandler, ISelectableOverrider {
+	public class MobileUnit : Unit, ITaskPerformer, IPointerDownHandler, ISelectableOverrider, IPathElementVisitor {
 
 		#region ISelectableOverrider implementation
 		public UnityEngine.EventSystems.PointerEventData.InputButton OverrideButton {
@@ -30,8 +30,9 @@ namespace DNA.Units {
 			GridPoint p = u.Element as GridPoint;
 
 			// If the current point was selected and a task is not being performed, run OnArrive again to check for updates
-			if (p == CurrentPoint && currentTask != null) {
-				OnArriveAtDestination (CurrentPoint);
+			if (p == CurrentPoint) {
+				if (currentTask != null)
+					OnArriveAtDestination (CurrentPoint);
 				return;
 			}
 
@@ -98,7 +99,11 @@ namespace DNA.Units {
 			set {
 				if (currentPoint == value)
 					return;
+				if (currentPoint != null)
+					currentPoint.RemoveVisitor (this);
 				currentPoint = value;
+				if (currentPoint != null)
+					currentPoint.RegisterVisitor (this);
 				if (currentPoint != null && currentPoint == TaskPoint) {
 					TaskPoint.OnSetObject += OnChangeTaskPointObject;
 				} else if (TaskPoint != null) {
@@ -237,6 +242,36 @@ namespace DNA.Units {
 
 			onEnd ();
 		}*/
+
+		IEnumerator CoMoveToYPosition (float endY) {
+			
+			float time = 0.15f;
+			float eTime = 0f;
+			float startY = Transform.localPosition.y;
+		
+			while (eTime < time) {
+				eTime += Time.deltaTime;
+				float progress = Mathf.SmoothStep (0, 1, eTime / time);
+				Transform.SetLocalPositionY (Mathf.Lerp (startY, endY, progress));
+				yield return null;
+			}
+
+			Transform.SetLocalPositionY (endY);
+		}
+
+		#region IPathElementVisitor implementation
+		int visitorIndex = 0;
+		public int VisitorIndex {
+			get { return visitorIndex; }
+			set {
+				visitorIndex = value;
+				if (visitorIndex > 0)
+					StartCoroutine (CoMoveToYPosition (7.5f + 1.15f * visitorIndex));
+				else
+					StartCoroutine (CoMoveToYPosition (0f));
+			}
+		}
+		#endregion
 
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {

@@ -142,6 +142,7 @@
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\EnvironmentSetupManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\GridPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\IPathElementObject.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\IPathElementVisitor.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathDebugger.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathElement.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PathElementContainer.cs" />
@@ -165,7 +166,8 @@
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralGenerator.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralLight.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralPivot.cs" />
-     <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWarCreator.cs" />
+     <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWar.cs" />
+     <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWarManager.cs" />
      <Compile Include="Assets\Scripts\Structure\FogOfWar\FogOfWarParticles.cs" />
      <Compile Include="Assets\Scripts\Structure\TreeGrid.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\AcceptInventoryTask.cs" />

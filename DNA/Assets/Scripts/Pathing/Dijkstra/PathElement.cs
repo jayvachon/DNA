@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace DNA {
 
@@ -44,6 +45,7 @@ namespace DNA.Paths {
 
 		static int version = 0;
 		int myVersion = 0;
+		List<IPathElementVisitor> visitors = new List<IPathElementVisitor> ();
 
 		public bool UpToDate { get { return myVersion == version; } }
 
@@ -53,6 +55,19 @@ namespace DNA.Paths {
 
 		public void SetUpToDate () {
 			myVersion = version;
+		}
+
+		public void RegisterVisitor (IPathElementVisitor visitor) {
+			visitors.Add (visitor);
+			visitor.VisitorIndex = visitors.Count;
+		}
+
+		public void RemoveVisitor (IPathElementVisitor visitor) {
+			visitors.Remove (visitor);
+			visitor.VisitorIndex = 0;
+			for (int i = 0; i < visitors.Count; i ++) {
+				visitors[i].VisitorIndex = i+1;
+			}
 		}
 	}
 }

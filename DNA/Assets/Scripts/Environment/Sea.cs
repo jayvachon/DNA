@@ -10,11 +10,6 @@ public class Sea : MBRefs {
 		get {
 			if (instance == null) {
 				instance = Object.FindObjectOfType (typeof (Sea)) as Sea;
-				/*if (instance == null) {
-					GameObject go = new GameObject ("Sea");
-					DontDestroyOnLoad (go);
-					instance = go.AddComponent<Sea>();
-				}*/
 			}
 			return instance;
 		}

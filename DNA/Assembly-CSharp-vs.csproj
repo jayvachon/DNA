@@ -108,6 +108,12 @@
      <Compile Include="Assets\Scripts\Inventory\Items\LaborItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\YearItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Group\YearGroup.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\IInventoryHolder.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Item.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\ItemGroup.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Items\YearItem.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Dijkstra\Dijkstra_deprecate.cs" />

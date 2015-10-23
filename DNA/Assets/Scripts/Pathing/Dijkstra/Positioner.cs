@@ -31,7 +31,7 @@ namespace DNA.Paths {
 		public OnArriveAtDestination OnArriveAtDestination { get; set; }
 
 		int pathPosition = 0;
-		float speed = 3f;
+		float speed = 2f;
 		bool moving = false;
 
 		Transform mover;
@@ -39,7 +39,7 @@ namespace DNA.Paths {
 		GridPoint endPoint;
 		List<GridPoint> path;
 
-		public Positioner (Transform mover, GridPoint startPoint, float speed=5f) {
+		public Positioner (Transform mover, GridPoint startPoint, float speed=2f) {
 			this.mover = mover;
 			this.startPoint = startPoint;
 			endPoint = startPoint;

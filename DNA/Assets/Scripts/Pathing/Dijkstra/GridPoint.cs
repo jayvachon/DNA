@@ -27,5 +27,7 @@ namespace DNA.Paths {
 		public bool HasRoad {
 			get { return Connections.Find (x => x.Cost == x.Costs["free"]) != null; }
 		}
+
+		public bool HasFog { get; set; }
 	}
 }

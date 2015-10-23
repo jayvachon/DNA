@@ -96,6 +96,30 @@ namespace DNA.Paths {
 			}
 		}
 
+		static Path<GridPoint>[] clearPaths;
+		static Path<GridPoint>[] ClearPaths {
+			get {
+
+				List<Connection> connections = TreeGrid.Connections.FindAll (
+					x => x.Cost > 0
+					&& (!x.Path[0].Source.HasFog 
+					|| !x.Path[0].Destination.HasFog));
+
+				clearPaths = new Path<GridPoint>[connections.Count*2];
+
+				int j = 0;
+				for (int i = 0; i < clearPaths.Length; i += 2) {
+					
+					Connection c = connections[j++];
+
+					clearPaths[i] = c.Path[0];
+					clearPaths[i+1] = c.Path[1];
+				}
+
+				return clearPaths;
+			}
+		}
+
 		public static List<GridPoint> ConnectedPoints {
 			get { return TreeGrid.Points.FindAll (x => x.HasRoad); }
 		}
@@ -116,7 +140,8 @@ namespace DNA.Paths {
 		}
 
 		public static List<GridPoint> GetPathNoOverlap (GridPoint a, GridPoint b) {
-			return GetPath (a, b, PathsNoFree);
+			//return GetPath (a, b, PathsNoFree);
+			return GetPath (a, b, ClearPaths);
 		}
 
 		public static GridPoint FindNearestPoint (GridPoint a, Func<GridPoint, bool> requirement=null) {

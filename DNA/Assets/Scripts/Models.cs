@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.InventorySystem;
+using InventorySystem;
 using DNA.Units;
 using DNA.Tasks;
 
@@ -42,25 +42,25 @@ namespace DNA.Models {
 			 *	CollectItem
 			 */
 
-			tasks.Add (typeof (CollectItem<MilkshakeHolder>), new TaskSettings {
+			tasks.Add (typeof (CollectItem<MilkshakeGroup>), new TaskSettings {
 				Title = "",
 				Description = "Collects milkshakes",
 				Duration = 2f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptDeliverItem<MilkshakeHolder>)
+				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>)
 			});
 
-			tasks.Add (typeof (CollectItem<CoffeeHolder>), new TaskSettings {
+			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
 				Title = "",
 				Description = "Collects coffee",
 				Duration = 1.5f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptDeliverItem<CoffeeHolder>)
+				Pair = typeof (AcceptDeliverItem<CoffeeGroup>)
 			});
 
-			tasks.Add (typeof (CollectItem<LaborHolder>), new TaskSettings {
+			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
 				Title = "",
 				Description = "Collects labor",
 				Duration = 1f,
@@ -101,7 +101,7 @@ namespace DNA.Models {
 			 *	Consume
 			 */
 
-			tasks.Add (typeof (ConsumeItem<YearHolder>), new TaskSettings {
+			tasks.Add (typeof (ConsumeItem<YearGroup>), new TaskSettings {
 				Title = "",
 				Description = "Consumes year",
 				Duration = 1f,
@@ -114,29 +114,29 @@ namespace DNA.Models {
 			 *	DeliverItem
 			 */
 
-			tasks.Add (typeof (DeliverItem<MilkshakeHolder>), new TaskSettings {
+			tasks.Add (typeof (DeliverItem<MilkshakeGroup>), new TaskSettings {
 				Title = "",
 				Description = "Delivers milkshakes",
 				Duration = 2f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptCollectItem<MilkshakeHolder>)
+				Pair = typeof (AcceptCollectItem<MilkshakeGroup>)
 			});
 
-			tasks.Add (typeof (DeliverItem<CoffeeHolder>), new TaskSettings {
+			tasks.Add (typeof (DeliverItem<CoffeeGroup>), new TaskSettings {
 				Title = "",
 				Description = "Delivers coffee",
 				Duration = 1.5f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptCollectItem<CoffeeHolder>)
+				Pair = typeof (AcceptCollectItem<CoffeeGroup>)
 			});
 
 			/**
 			 *	GenerateItem
 			 */
 
-			tasks.Add (typeof (GenerateItem<CoffeeHolder>), new TaskSettings {
+			tasks.Add (typeof (GenerateItem<CoffeeGroup>), new TaskSettings {
 				Title = "",
 				Description = "Generates coffee",
 				Duration = 2f,
@@ -145,7 +145,7 @@ namespace DNA.Models {
 				Pair = null
 			});
 
-			tasks.Add (typeof (GenerateItem<YearHolder>), new TaskSettings {
+			tasks.Add (typeof (GenerateItem<YearGroup>), new TaskSettings {
 				Title = "",
 				Description = "Generates year",
 				Duration = 1f,
@@ -253,7 +253,7 @@ namespace DNA.Models {
 				Pair = null
 			});
 
-			tasks.Add (typeof (GenerateItemTest<MilkshakeHolder>), new TaskSettings {
+			tasks.Add (typeof (GenerateItemTest<MilkshakeGroup>), new TaskSettings {
 				Title = "Generate Milkshakes",
 				Description = "Creates a milkshake",
 				Duration = 0.1f,
@@ -262,7 +262,7 @@ namespace DNA.Models {
 				Pair = null
 			});
 
-			tasks.Add (typeof (ConsumeItemTest<CoffeeHolder>), new TaskSettings {
+			tasks.Add (typeof (ConsumeItemTest<CoffeeGroup>), new TaskSettings {
 				Title = "Consume Coffee",
 				Description = "Destroys a coffee",
 				Duration = 0.1f,
@@ -271,22 +271,22 @@ namespace DNA.Models {
 				Pair = null
 			});
 
-			tasks.Add (typeof (CollectItemTest<YearHolder>), new TaskSettings {
+			tasks.Add (typeof (CollectItemTest<YearGroup>), new TaskSettings {
 				Title = "Collect happiness",
 				Description = "Collects a happiness from an acceptor",
 				Duration = 0.1f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptDeliverItemTest<YearHolder>)
+				Pair = typeof (AcceptDeliverItemTest<YearGroup>)
 			});
 
-			tasks.Add (typeof (DeliverItemTest<YearHolder>), new TaskSettings {
+			tasks.Add (typeof (DeliverItemTest<YearGroup>), new TaskSettings {
 				Title = "Deliver Happiness",
 				Description = "Delivers a happiness to an acceptor",
 				Duration = 0.1f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptCollectItemTest<YearHolder>)
+				Pair = typeof (AcceptCollectItemTest<YearGroup>)
 			});
 
 			tasks.Add (typeof (GenerateUnitTest<Distributor>), new CostTaskSettings {
@@ -315,7 +315,7 @@ namespace DNA.Models {
 
 	public class CostTaskSettings : TaskSettings {
 
-		// ItemHolder ID, amount required
+		// ItemGroup ID, amount required
 		public Dictionary<string, int> Costs { get; set; }
 	}
 }

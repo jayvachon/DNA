@@ -9,6 +9,6 @@ namespace InventorySystem {
 			get { return "Years"; }
 		}
 
-		public YearGroup (int capacity, int startCount) : base (capacity, startCount) {}
+		public YearGroup (int startCount=0, int capacity=-1) : base (startCount, capacity) {}
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 using DNA.Paths;
 using DNA.Units;
-using DNA.InventorySystem;
+using InventorySystem;
 
 namespace DNA.Tasks {
 
@@ -24,7 +24,7 @@ namespace DNA.Tasks {
 		protected override void OnEnd () {
 			Purchase ();
 			try {
-				ElementContainer.BeginConstruction<T> ().LaborCost = TotalCost;	
+				ElementContainer.BeginConstruction<T> ().LaborCost = TotalCost;
 			} catch {
 				throw new System.Exception ("The path element container has not been set for the task '" + this + ".' Be sure to call SetConstructionPoint (container)");
 			}

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.InventorySystem;
 using DNA.Tasks;
+using InventorySystem;
 
 public class UnitInfoBoxOverlay : MBRefs {
 
@@ -55,7 +56,7 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 	public void Close () {
 		
-		if (inventory != null)	inventory.inventoryUpdated -= OnInventoryUpdated;
+		if (inventory != null)	inventory.onUpdate -= OnInventoryUpdated;
 		if (content != null)	content.contentUpdated -= OnContentUpdated;
 
 		Canvas.enabled = false;
@@ -75,7 +76,7 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 		// Inventory
 		inventory = content.Inventory;
-		inventory.inventoryUpdated += OnInventoryUpdated;
+		inventory.onUpdate += OnInventoryUpdated;
 		OnInventoryUpdated ();
 
 		Canvas.enabled = true;
@@ -119,19 +120,33 @@ public class UnitInfoBoxOverlay : MBRefs {
 
 	void InitInventory () {
 		
-		List<ItemHolder> itemHolders = inventory.Holders;
-		if (itemHolders.Count == 0) return;
+		//List<ItemHolder> itemHolders = inventory.Holders;
+		List<ItemGroup> groups = inventory.Groups.Values.ToList ();
+		if (groups.Count == 0) return;
 
-		foreach (ItemHolder holder in itemHolders) {
-			if (holder.Count > 0 || holder.DisplaySettings.ShowWhenEmpty) {
-				CreateHolder (holder);
+		foreach (ItemGroup group in groups) {
+			if (!group.Empty) {
+				CreateGroup (group);
 			}
+			/*if (holder.Count > 0 || holder.DisplaySettings.ShowWhenEmpty) {
+				CreateHolder (holder);
+			}*/
 		}
 
 		inventorySection.SetActive (holders.Count > 0);
 	}
 
-	void CreateHolder (ItemHolder holder) {
+	void CreateGroup (ItemGroup group) {
+		Transform t = ObjectPool.Instantiate<ItemHolderOverlay> ().transform;
+		t.SetParent (inventoryGroup.transform);
+		t.Reset ();
+		/*t.GetScript<ItemHolderOverlay> ().Text = group.DisplaySettings.ShowCapacity 
+			? string.Format ("{0}: {1}/{2}", group.Name, group.Count, group.Capacity)
+			: string.Format ("{0}: {1}", group.Name, group.Count);*/
+		holders.Add (t.gameObject);
+	}
+
+	/*void CreateHolder (ItemHolder holder) {
 		Transform t = ObjectPool.Instantiate<ItemHolderOverlay> ().transform;
 		t.SetParent (inventoryGroup.transform);
 		t.Reset ();
@@ -139,7 +154,7 @@ public class UnitInfoBoxOverlay : MBRefs {
 			? string.Format ("{0}: {1}/{2}", holder.Name, holder.Count, holder.Capacity)
 			: string.Format ("{0}: {1}", holder.Name, holder.Count);
 		holders.Add (t.gameObject);
-	}
+	}*/
 
 	void ClearInventory () {
 		foreach (GameObject holder in holders) {

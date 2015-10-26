@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 
 namespace DNA.Units {
 
@@ -14,15 +14,15 @@ namespace DNA.Units {
 			get { return "The Jacuzzi increases Laborer happiness so that they will work faster."; }
 		}
 
-		HappinessHolder happinessHolder = new HappinessHolder (50, 50);
+		//HappinessHolder happinessHolder = new HappinessHolder (50, 50);
 		HappinessIndicator indicator;
 
 		void Awake () {
 			
 			unitRenderer.SetColors (new Color (0f, 0.5f, 1f));
 
-			Inventory = new Inventory (this);
-			Inventory.Add (happinessHolder);
+			//Inventory = new Inventory (this);
+			//Inventory.Add (happinessHolder);
 
 			/*AcceptableActions.Add (new AcceptCollectHappiness ());*/
 
@@ -31,7 +31,7 @@ namespace DNA.Units {
 
 		//public override void OnPoolCreate () {
 		protected override void OnEnable () {
-			happinessHolder.HolderUpdated += OnHappinessUpdate;
+			//happinessHolder.HolderUpdated += OnHappinessUpdate;
 			indicator = ObjectPool.Instantiate<HappinessIndicator> ();
 			indicator.Initialize (Transform, 1.5f);
 			base.OnEnable ();
@@ -39,14 +39,14 @@ namespace DNA.Units {
 
 		//public override void OnPoolDestroy () {
 		protected override void OnDisable () {
-			happinessHolder.HolderUpdated -= OnHappinessUpdate;
+			//happinessHolder.HolderUpdated -= OnHappinessUpdate;
 			ObjectPool.Destroy<HappinessIndicator> (indicator.MyTransform);
 			base.OnDisable ();
 		}
 
 		void OnHappinessUpdate () {
 			//TODO: should set indicator as listener on init (and set position & parent) --- basically move all this out of the unit
-			indicator.Fill = happinessHolder.PercentFilled;
+			//indicator.Fill = happinessHolder.PercentFilled;
 		}
 	}
 }

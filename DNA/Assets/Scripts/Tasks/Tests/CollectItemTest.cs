@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+using InventorySystem;
 
 namespace DNA.Tasks {
 
-	public class CollectItemTest<T> : CollectItem<T> where T : ItemHolder {}
+	public class CollectItemTest<T> : CollectItem<T> where T : ItemGroup {}
 }

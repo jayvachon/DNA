@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 using DNA.InputSystem;
+using InventorySystem;
 
 namespace DNA.Units {
 

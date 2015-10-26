@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using DNA.EventSystem;
-using DNA.InventorySystem;
 using DNA.InputSystem;
 using DNA.Tasks;
 using DNA.Paths;
 using DNA.Units;
+using InventorySystem;
 
 namespace DNA {
 
@@ -29,16 +29,16 @@ namespace DNA {
 			get {
 				if (inventory == null) {
 					inventory = new Inventory (this);
-					inventory.Add (new MilkshakeHolder (100000, 130));
-					inventory.Add (new CoffeeHolder (100000, 50));
-					inventory.Add (new YearHolder (5, 0));
+					Inventory.Add (new MilkshakeGroup (130));
+					Inventory.Add (new CoffeeGroup (50));
+					Inventory.Add (new YearGroup (5));
 				}
 				return inventory;
 			}
 		}
 
-		public MilkshakeHolder Milkshakes {
-			get { return (MilkshakeHolder)Inventory["Milkshakes"]; }
+		public MilkshakeGroup Milkshakes {
+			get { return Inventory.Get<MilkshakeGroup> (); }
 		}
 
 		PerformableTasks performableTasks;

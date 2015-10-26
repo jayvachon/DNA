@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+using InventorySystem;
 using DNA.Tasks;
 
 public class MockTaskAcceptor : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
@@ -10,8 +10,8 @@ public class MockTaskAcceptor : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
 		get {
 			if (acceptableTasks == null) {
 				acceptableTasks = new AcceptableTasks (this);
-				AcceptableTasks.Add (new AcceptCollectItemTest<YearHolder> ());
-				AcceptableTasks.Add (new AcceptDeliverItemTest<YearHolder> ());
+				AcceptableTasks.Add (new AcceptCollectItemTest<YearGroup> ());
+				AcceptableTasks.Add (new AcceptDeliverItemTest<YearGroup> ());
 			}
 			return acceptableTasks;
 		}
@@ -22,25 +22,26 @@ public class MockTaskAcceptor : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
 		get {
 			if (inventory == null) {
 				inventory = new Inventory (this);
-				inventory.Add (new YearHolder (5, 5));
+				inventory.Add (new YearGroup (5, 5));
 			}
 			return inventory;
 		}
 	}
 
-	public void ClearHolder<T> () where T : ItemHolder {
-		T holder = Inventory.Get<T> ();
-		holder.Clear ();
+	public void ClearGroup<T> () where T : ItemGroup {
+		Inventory.Get<T> ().Clear ();
 	}
 
-	public void FillHolder<T> () where T : ItemHolder {
-		T holder = Inventory.Get<T> ();
-		holder.Initialize (5);
+	public void FillGroup<T> () where T : ItemGroup {
+		Inventory.Get<T> ().Fill ();
+		//T group = Inventory.Get<T> ();
+		//group.Initialize (5);
 	}
 
-	public void HalfFillHolder<T> () where T : ItemHolder {
-		T holder = Inventory.Get<T> ();
-		holder.Clear ();
-		holder.Add (3);
+	public void HalfFillGroup<T> () where T : ItemGroup {
+		Inventory.Get<T> ().Set (3);
+		//T group = Inventory.Get<T> ();
+		//group.Clear ();
+		//group.Add (3);
 	}
 }

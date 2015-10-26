@@ -6,6 +6,7 @@ namespace InventorySystem {
 
 	public delegate void OnUpdate ();
 	public delegate void OnEmpty ();
+	public delegate void OnFill ();
 	public delegate void OnAdd<T> (List<T> items) where T : Item;
 
 	/// <summary>
@@ -52,7 +53,7 @@ namespace InventorySystem {
 		/// Get whether or not a capacity has been set.
 		/// </summary>
 		public bool HasCapacity {
-			get { return Capacity == -1; }
+			get { return Capacity != -1; }
 		}
 
 		/// <summary>
@@ -70,6 +71,13 @@ namespace InventorySystem {
 		}
 
 		/// <summary>
+		/// Returns true if the group is at capacity.
+		/// </summary>
+		public bool Full {
+			get { return Count == Capacity; }
+		}
+
+		/// <summary>
 		/// Called any time an item is added or removed.
 		/// </summary>
 		public OnUpdate onUpdate;
@@ -79,6 +87,11 @@ namespace InventorySystem {
 		/// </summary>
 		public OnEmpty onEmpty;
 
+		/// <summary>
+		/// Called when the group reaches capacity.
+		/// </summary>
+		public OnFill onFill;
+
 		public abstract void Initialize (Inventory inventory);
 		public abstract void Set (int count);
 		public abstract void Add (int count);
@@ -86,11 +99,13 @@ namespace InventorySystem {
 		public abstract void Add (List<Item> newItems);
 		public abstract void Remove (int count);
 		public abstract Item Remove (Item item=null, bool sendUpdate=true);
+		public abstract void Fill ();
 		public abstract void Clear ();
-		public abstract void Transfer (ItemGroup toGroup, Item item);
+		public abstract void Transfer (ItemGroup toGroup, Item item=null);
 		public abstract bool Contains (Item item);
 		protected abstract void SendUpdateMessage ();
 		protected abstract void SendEmptyMessage ();
+		protected abstract void SendFillMessage ();
 		public abstract void Print ();
 	}
 
@@ -111,7 +126,7 @@ namespace InventorySystem {
 		/// </summary>
 		public OnAdd<T> onAdd;
 
-		public ItemGroup (int capacity=-1, int startCount=0) {
+		public ItemGroup (int startCount=0, int capacity=-1) {
 			Capacity = capacity;
 			Set (startCount);
 		}
@@ -128,12 +143,12 @@ namespace InventorySystem {
 		/// <summary>
 		/// Set the number of items.
 		/// </summary>
-		public override void Set (int count) {
-			if (count == Count) return;
-			if (Count < count) {
-				Add (count - Count);
+		public override void Set (int newCount) {
+			if (newCount == Count) return;
+			if (Count < newCount) {
+				Add (newCount - Count);
 			} else {
-				Remove (Count - count);
+				Remove (Count - newCount);
 			}
 		}
 
@@ -165,7 +180,7 @@ namespace InventorySystem {
 		public override void Add (List<Item> newItems) {
 			
 			List<Item> addedItems = new List<Item> ();
-			while (newItems.Count > 0 && HasCapacity && Count < Capacity) {
+			while (newItems.Count > 0 && (!HasCapacity || Count < Capacity)) {
 				Item newItem = newItems[0];
 				if (newItem != null) {
 					newItem.Initialize (Inventory, this);
@@ -177,6 +192,8 @@ namespace InventorySystem {
 
 			SendAddMessage (addedItems.ConvertAll (x => (T)x));
 			SendUpdateMessage ();
+			if (Count == Capacity)
+				SendFillMessage ();
 		}
 
 		/// <summary>
@@ -213,11 +230,20 @@ namespace InventorySystem {
 		}
 
 		/// <summary>
+		/// Fills group to capacity, if a capacity has been set.
+		/// </summary>
+		public override void Fill () {
+			if (!HasCapacity) return;
+			Set (Capacity);
+		}
+
+		/// <summary>
 		/// Removes all items.
 		/// </summary>
 		public override void Clear () {
 			items.Clear ();
 			SendUpdateMessage ();
+			SendEmptyMessage ();
 		}
 
 		/// <summary>
@@ -225,9 +251,9 @@ namespace InventorySystem {
 		/// </summary>
 		/// <param name="toGroup">ItemGroup to send the item to.</param>
 		/// <param name="item">The Item to transfer.</param>
-		public override void Transfer (ItemGroup toGroup, Item item) {
-			Remove (item);
-			toGroup.Add (item);
+		public override void Transfer (ItemGroup toGroup, Item item=null) {
+			Item i = Remove (item);
+			toGroup.Add (i);
 		}
 
 		/// <summary>
@@ -249,6 +275,10 @@ namespace InventorySystem {
 
 		protected void SendAddMessage (List<T> items) {
 			if (onAdd != null) onAdd (items);
+		}
+
+		protected override void SendFillMessage () {
+			if (onFill != null) onFill ();
 		}
 
 		/// <summary>

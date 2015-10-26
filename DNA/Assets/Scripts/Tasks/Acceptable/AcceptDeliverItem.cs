@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+using InventorySystem;
 
 namespace DNA.Tasks {
 
-	public class AcceptDeliverItem<T> : AcceptInventoryTask<T> where T : ItemHolder {
+	public class AcceptDeliverItem<T> : AcceptInventoryTask<T> where T : ItemGroup {
 
 		public override System.Type AcceptedTask {
 			get { return typeof (DeliverItem<T>); }
 		}
 
 		public override bool Enabled {
-			get { return !Holder.Full; }
+			get { return !Group.Full; }
 		}	
 
 		public AcceptDeliverItem (Inventory inventory=null) : base (inventory) {}

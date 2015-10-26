@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 using DNA.Paths;
 using DNA.Tasks;
+using InventorySystem;
 
 namespace DNA.Units {
 
@@ -20,8 +21,10 @@ namespace DNA.Units {
 			unitRenderer.SetColors (new Color (1f, 1f, 1f));
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new LaborHolder (1000, 0));
-			AcceptableTasks.Add (new AcceptCollectItem<LaborHolder> ());
+			//Inventory.Add (new LaborHolder (1000, 0));
+			Inventory.Add (new LaborGroup ());
+			//AcceptableTasks.Add (new AcceptCollectItem<LaborHolder> ());
+			AcceptableTasks.Add (new AcceptCollectItem<LaborGroup> ());
 		}
 	}
 }

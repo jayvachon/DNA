@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using DNA.InventorySystem;
+using InventorySystem;
 
 namespace DNA {
 
@@ -19,27 +19,27 @@ namespace DNA {
 			}
 		}
 
-		ItemHolder holder;
-		ItemHolder Holder {
+		ItemGroup group;
+		ItemGroup Group {
 			get {
-				if (holder == null) {
+				if (group == null) {
 					try {
-						holder = Player.Instance.Inventory[groupId];
+						group = Player.Instance.Inventory[groupId];
 					} catch {
 						throw new System.Exception ("Could not find an item group called '" + groupId + "'");
 					}
 				}
-				return holder;
+				return group;
 			}
 		}
 
 		void Start () {
-			Holder.HolderUpdated += OnUpdate;
+			Group.onUpdate += OnUpdate;
 			OnUpdate ();
 		}
 
 		void OnUpdate () {
-			CountText.text = Holder.Count.ToString ();
+			CountText.text = Group.Count.ToString ();
 		}
 	}
 }

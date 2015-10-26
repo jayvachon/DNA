@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 using DNA.InputSystem;
+using InventorySystem;
 
 namespace DNA.Units {
 
@@ -11,17 +12,21 @@ namespace DNA.Units {
 
 		public override string Description { get { return "Deliver remains to the Giving Tree to harvest the years."; } }
 
-		Clinic boundClinic = null;
+		//Clinic boundClinic = null;
 
 		void Awake () {
 
 			unitRenderer.SetColors (Color.black);
 
 			Inventory = new Inventory (this);
-			YearHolder yearHolder = new YearHolder (500, 0);
-			yearHolder.HolderEmptied += OnDeliverYears;
-			yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, false);
-			Inventory.Add (yearHolder);
+			//YearHolder yearHolder = new YearHolder (500, 0);
+			YearGroup years = new YearGroup (0, 500);
+			years.onEmpty += OnDeliverYears;
+			//yearHolder.HolderEmptied += OnDeliverYears;
+			//yearHolder.DisplaySettings = new ItemHolderDisplaySettings (true, false);
+
+			//Inventory.Add (yearHolder);
+			Inventory.Add (years);
 
 			//PerformableActions = new PerformableActions (this);
 			/*PerformableActions.Add (new DeliverUnpairedItem<ElderHolder> ());
@@ -52,13 +57,13 @@ namespace DNA.Units {
 			UnbindClinic ();
 		}*/
 
-		void UnbindClinic () {
+		/*void UnbindClinic () {
 			if (boundClinic != null) {
 				boundClinic.Inventory.RemoveItem<ElderHolder> ();
 				// PerformableActions.SetActive ("DeliverElder", true);
 				boundClinic = null;
 			}
-		}
+		}*/
 
 		void OnDeliverYears () {
 			ObjectPool.Destroy<Corpse> (transform);

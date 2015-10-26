@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using DNA.Models;
-using DNA.InventorySystem;
 using DNA.Paths;
 using DNA.Units;
+using InventorySystem;
 
 namespace DNA.Tasks {
 

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 using DNA.Units;
 using DNA.Tasks;
+using InventorySystem;
 
 public delegate void ContentUpdated ();
 

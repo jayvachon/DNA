@@ -39,13 +39,21 @@ namespace InventorySystem {
 			}
 		}
 
+		public OnUpdate onUpdate;
+
+		public readonly IInventoryHolder Holder;
+
+		public Inventory (IInventoryHolder holder=null) {
+			Holder = holder;
+		}
+
 		/// <summary>
 		/// Get an ItemGroup by type.
 		/// </summary>
 		public T Get<T> () where T : ItemGroup {
 			foreach (var group in Groups) {
-				if (group.Key.GetType () == typeof (T))
-					return group.Key as T;
+				if (group.Value.GetType () == typeof (T))
+					return group.Value as T;
 			}
 			return null;
 		}
@@ -54,9 +62,30 @@ namespace InventorySystem {
 		/// Add an ItemGroup.
 		/// </summary>
 		/// <param name="group">The ItemGroup to add.</param>
-		public void Add (ItemGroup group) {
+		public ItemGroup Add (ItemGroup group) {
 			group.Initialize (this);
+			group.onUpdate += OnUpdate;
 			groups.Add (group.ID, group);
+			return group;
+		}
+
+		/// <summary>
+		/// Clears all the ItemGroups in the inventory
+		/// </summary>
+		public void Clear () {
+			foreach (var group in Groups)
+				group.Value.Clear ();
+		}
+
+		void OnUpdate () {
+			if (onUpdate != null)
+				onUpdate ();
+		}
+
+		public void Print () {
+			foreach (var group in Groups) {
+				Debug.Log (group.Key + ": " + group.Value.Count);
+			}
 		}
 	}
 }

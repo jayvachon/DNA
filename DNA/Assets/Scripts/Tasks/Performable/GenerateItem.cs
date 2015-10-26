@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+using InventorySystem;
 
 namespace DNA.Tasks {
 
-	public class GenerateItem<T> : InventoryTask<T> where T : ItemHolder {
+	public class GenerateItem<T> : InventoryTask<T> where T : ItemGroup {
 
 		public override bool Enabled {
-			get { return !Holder.Full; }
+			get { return !Group.Full; }
 		}
 
 		protected override void OnEnd () {
-			Holder.Add ();
+			Group.Add ();
 			base.OnEnd ();
 		}
 	}

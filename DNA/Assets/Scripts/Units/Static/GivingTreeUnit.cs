@@ -2,9 +2,10 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 using DNA.Tasks;
 using DNA.Paths;
+using InventorySystem;
 
 namespace DNA.Units {
 
@@ -58,15 +59,13 @@ namespace DNA.Units {
 
 			Inventory = Player.Instance.Inventory;
 
-			/*AcceptableActions = new AcceptableActions (this);
-			//AcceptableActions.Add (new AcceptDeliverItem<CoffeeHolder> ());
-			AcceptableActions.Add (new AcceptDeliverToPlayer<MilkshakeHolder> ());
-			AcceptableActions.Add (new AcceptCollectItem<MilkshakeHolder> ());
-			//AcceptableActions.Add (new AcceptDeliverAllYears ());*/
-			AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<MilkshakeHolder> ());
-			AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<CoffeeHolder> ());
+			//AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<MilkshakeHolder> ());
+			AcceptableTasks.Add (new AcceptDeliverItem<MilkshakeGroup> ());
+			//AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<CoffeeHolder> ());
+			AcceptableTasks.Add (new AcceptDeliverItem<CoffeeGroup> ());
 
-			PerformableTasks.Add (new DNA.Tasks.GenerateUnit<Distributor> ()).onComplete += OnGenerateDistributor;
+			PerformableTasks.Add (new GenerateUnit<Distributor> ()).onComplete += OnGenerateDistributor;
+
 			/*PerformableActions = new PerformableActions (this);
 			PerformableActions.OnStartAction += OnStartAction;
 			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
@@ -110,6 +109,12 @@ namespace DNA.Units {
 
 		void OnYearsCollected () {
 			ChangeUnit<GivingTreeUnit, GivingTreeRipe> ();
+		}
+
+		void Update () {
+			if (Input.GetKeyDown (KeyCode.Q)) {
+				PerformableTasks[typeof (GenerateUnit<Distributor>)].Start ();
+			}
 		}
 	}
 }

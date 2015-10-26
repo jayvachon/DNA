@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+using InventorySystem;
 
 namespace DNA.Tasks {
-	public class DeliverItemTest<T> : DeliverItem<T> where T : ItemHolder {}
+	public class DeliverItemTest<T> : DeliverItem<T> where T : ItemGroup {}
 }

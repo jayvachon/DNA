@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
 using DNA.Tasks;
+using InventorySystem;
 
 public class MockTaskAcceptor2 : MonoBehaviour, IInventoryHolder, ITaskAcceptor {
 
@@ -11,7 +11,7 @@ public class MockTaskAcceptor2 : MonoBehaviour, IInventoryHolder, ITaskAcceptor 
 			if (acceptableTasks == null) {
 				acceptableTasks = new AcceptableTasks (this);
 				//AcceptableTasks.Add (new AcceptCollectItemTest<YearHolder> ());
-				AcceptableTasks.Add (new AcceptDeliverItemTest<YearHolder> ());
+				AcceptableTasks.Add (new AcceptDeliverItemTest<YearGroup> ());
 			}
 			return acceptableTasks;
 		}
@@ -22,7 +22,7 @@ public class MockTaskAcceptor2 : MonoBehaviour, IInventoryHolder, ITaskAcceptor 
 		get {
 			if (inventory == null) {
 				inventory = new Inventory (this);
-				inventory.Add (new YearHolder (5, 0));
+				inventory.Add (new YearGroup (0, 5));
 			}
 			return inventory;
 		}

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 
 namespace DNA.Units {
 
@@ -14,15 +14,15 @@ namespace DNA.Units {
 			get { return "Elders live longer when they're receiving care at a Clinic."; }
 		}
 
-		HealthHolder healthHolder = new HealthHolder (300, 300);
+		//HealthHolder healthHolder = new HealthHolder (300, 300);
 		HealthIndicator indicator;
 
 		void Awake () {
 
 			unitRenderer.SetColors (new Color (1f, 0.898f, 0.231f));
 
-			Inventory = new Inventory (this);
-			Inventory.Add (healthHolder);
+			//Inventory = new Inventory (this);
+			//Inventory.Add (healthHolder);
 
 			//AcceptableActions.Add (new AcceptCollectItem<HealthHolder> ());
 
@@ -32,20 +32,20 @@ namespace DNA.Units {
 
 		//public override void OnPoolCreate () {
 		protected override void OnEnable () {
-			healthHolder.HolderUpdated += OnHealthUpdate;
+			//healthHolder.HolderUpdated += OnHealthUpdate;
 			indicator = ObjectPool.Instantiate<HealthIndicator> ();
 			indicator.Initialize (Transform, 1.5f);
 		}
 
 		//public override void OnPoolDestroy () {
 		protected override void OnDisable () {
-			healthHolder.HolderUpdated -= OnHealthUpdate;
+			//healthHolder.HolderUpdated -= OnHealthUpdate;
 			ObjectPool.Destroy<HealthIndicator> (indicator.MyTransform);
 		}
 
 		void OnHealthUpdate () {
 			//TODO: should set indicator as listener on init (and set position & parent) --- basically move all this out of the unit
-			indicator.Fill = healthHolder.PercentFilled;
+			//indicator.Fill = healthHolder.PercentFilled;
 		}
 	}
 }

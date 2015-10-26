@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
 using DNA.InputSystem;
 using DNA.EventSystem;
 using DNA.Tasks;
+using InventorySystem;
 
 namespace DNA.Units {
 	
@@ -40,7 +41,8 @@ namespace DNA.Units {
 			unitRenderer.SetColors (new Color (0.47f, 0.043f, 0.24f));
 
 			Inventory = new Inventory (this);
-			Inventory.Add (new MilkshakeHolder (0, 0));
+			//Inventory.Add (new MilkshakeHolder (0, 0));
+			Inventory.Add (new MilkshakeGroup ());
 
 			/*AcceptableActions.Add (new GameActions.AcceptDeliverItem<MilkshakeHolder> ());
 			AcceptableActions.SetActive ("DeliverMilkshake", false);*/

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DNA.InventorySystem;
+//using DNA.InventorySystem;
+using InventorySystem;
 
 namespace DNA.Tasks {
 
@@ -25,9 +26,9 @@ namespace DNA.Tasks {
 		}
 	}
 
-	public abstract class InventoryTask<T> : InventoryTask where T : ItemHolder {
+	public abstract class InventoryTask<T> : InventoryTask where T : ItemGroup {//ItemHolder {
 
-		T holder = null;
+		/*T holder = null;
 		protected T Holder {
 			get {
 				if (holder == null) {
@@ -37,6 +38,19 @@ namespace DNA.Tasks {
 					throw new System.Exception ("Inventory does not include " + typeof (T));
 				}
 				return holder;
+			}
+		}*/
+
+		T group = null;
+		protected T Group {
+			get {
+				if (group == null) {
+					group = Inventory.Get<T> ();
+				}
+				if (group == null) {
+					throw new System.Exception ("Inventory does not include " + typeof (T));
+				}
+				return group;
 			}
 		}
 

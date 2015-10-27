@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-//using DNA.InventorySystem;
 using DNA.Tasks;
 using DNA.Paths;
 using InventorySystem;
@@ -59,9 +58,7 @@ namespace DNA.Units {
 
 			Inventory = Player.Instance.Inventory;
 
-			//AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<MilkshakeHolder> ());
 			AcceptableTasks.Add (new AcceptDeliverItem<MilkshakeGroup> ());
-			//AcceptableTasks.Add (new DNA.Tasks.AcceptDeliverItem<CoffeeHolder> ());
 			AcceptableTasks.Add (new AcceptDeliverItem<CoffeeGroup> ());
 
 			PerformableTasks.Add (new GenerateUnit<Distributor> ()).onComplete += OnGenerateDistributor;

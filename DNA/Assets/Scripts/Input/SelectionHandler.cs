@@ -5,7 +5,11 @@ using System.Collections.Generic;
 
 namespace DNA.InputSystem {
 
+	public delegate void OnUpdateSelection (List<ISelectable> selectable);
+
 	public static class SelectionHandler {
+
+		public static OnUpdateSelection onUpdateSelection;
 
 		static List<ISelectable> selected = new List<ISelectable> ();
 
@@ -70,6 +74,7 @@ namespace DNA.InputSystem {
 				UnselectAll ();
 			selected.Add (selectable);
 			selectable.OnSelect ();
+			SendUpdateSelectionMessage ();
 		}
 
 		static void Unselect (ISelectable selectable) {
@@ -77,6 +82,7 @@ namespace DNA.InputSystem {
 				UnselectAll ();
 			selected.Remove (selectable);
 			selectable.OnUnselect ();
+			SendUpdateSelectionMessage ();			
 		}
 
 		static void UnselectAll () {
@@ -91,11 +97,17 @@ namespace DNA.InputSystem {
 
 		static void OnEmptyClick () {
 			UnselectAll ();
+			SendUpdateSelectionMessage ();
 		}
 
 		static List<ISelectableOverrider> GetSelectablesWithOverride (PointerEventData.InputButton button) {
 			return selected.FindAll (x => x is ISelectableOverrider && ((ISelectableOverrider)x).OverrideButton == button)
 				.ConvertAll (x => (ISelectableOverrider)x);
+		}
+
+		static void SendUpdateSelectionMessage () {
+			if (onUpdateSelection != null)
+				onUpdateSelection (selected);
 		}
 	}
 }

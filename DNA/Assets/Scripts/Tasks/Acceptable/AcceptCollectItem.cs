@@ -11,10 +11,7 @@ namespace DNA.Tasks {
 		}
 		
 		public override bool Enabled {
-			get { 
-				//Debug.Log ("Not empty? " + !Group.Empty);
-				//Debug.Log (Group.Count);
-				return !Group.Empty; }
+			get { return !Group.Empty; }
 		}
 
 		public AcceptCollectItem (Inventory inventory=null) : base (inventory) {}

@@ -53,9 +53,9 @@ namespace DNA.Units {
 				if (Element != null)
 					Element.State = DevelopmentState.Abandoned; 
 				//PerformableTasks[typeof (GenerateItem<CoffeeHolder>)].Stop ();
-				PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Stop ();
+				PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Stop (); // TODO: this appears not to be working
+				//Debug.Log (PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Performing);
 			};
-
 		}
 
 		protected override void OnEnable () {

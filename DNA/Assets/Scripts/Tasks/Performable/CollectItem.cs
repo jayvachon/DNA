@@ -11,7 +11,6 @@ namespace DNA.Tasks {
 		}
 
 		protected override void OnEnd () {
-			//Inventory.Transfer<T> (AcceptorInventory, 1);
 			AcceptorInventory.Get<T> ().Transfer (Group);
 			base.OnEnd ();
 		}

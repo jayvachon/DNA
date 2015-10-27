@@ -65,6 +65,8 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseEnterPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseExitPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\GUI\GuiManager.cs" />
+     <Compile Include="Assets\Scripts\GUI\GuiSelectableListener.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />

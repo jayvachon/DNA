@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using DNA.InventorySystem;
 using DNA.InputSystem;
 using InventorySystem;
 
@@ -111,14 +110,12 @@ namespace DNA.Units {
 			Selected = true;
 			unitRenderer.OnSelect ();
 			unitTransform.OnSelect ();
-			UnitInfoBoxOverlay.Instance.Open (UnitInfoContent);
 		}
 
 		public virtual void OnUnselect () {
 			Selected = false;
 			unitRenderer.OnUnselect ();
 			unitTransform.OnUnselect ();
-			UnitInfoBoxOverlay.Instance.Close ();
 		}
 		#endregion
 	}

@@ -94,10 +94,10 @@ namespace DNA.Tasks {
 		/// </summary>
 		public static List<PerformerTask> GetTasksInCommon (List<ITaskPerformer> performers) {
 
-			if (performers.Count < 2)
-				return new List<PerformerTask> ();
-
 			Dictionary<System.Type, PerformerTask> firstTasks = performers[0].PerformableTasks.EnabledTasks;
+
+			if (performers.Count < 2)
+				return firstTasks.Values.ToList ().ConvertAll (x => x as PerformerTask);
 
 			foreach (ITaskPerformer p in performers) {
 

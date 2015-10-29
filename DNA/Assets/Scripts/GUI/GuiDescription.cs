@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using DNA.InputSystem;
@@ -6,7 +7,10 @@ using DNA.Units;
 
 public class GuiDescription : GuiSelectableListener {
 
-	string name;
+	public Text Name;
+	public Text Description;
+
+	new string name;
 	string description;
 
 	void Awake () {
@@ -18,6 +22,7 @@ public class GuiDescription : GuiSelectableListener {
 		if (selected.Count == 0) {
 			name = "";
 			description = "";
+			SetGroupActive (false);
 			return;
 		}
 
@@ -37,6 +42,7 @@ public class GuiDescription : GuiSelectableListener {
 		if (commonUnit == null) {
 			name = "";
 			description = "";
+			SetGroupActive (false);
 			return;
 		}
 
@@ -45,8 +51,10 @@ public class GuiDescription : GuiSelectableListener {
 		description = commonUnit.Description;
 
 		if (commonUnit != null) {
-			Debug.Log (name);
-			Debug.Log (description);
+			Name.text = name;
+			Description.text = description;
 		}
+
+		SetGroupActive (commonUnit != null);
 	}
 }

@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiDescription.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiInventory.cs" />
+     <Compile Include="Assets\Scripts\GUI\GuiItemGroup.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiManager.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiSelectableListener.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiTasks.cs" />

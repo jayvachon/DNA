@@ -16,12 +16,11 @@ namespace DNA.Units {
 		}
 
 		void Awake () {
-
-			Inventory = new Inventory (this);
-			//Inventory.Add (new YearHolder (500, 0));
-			Inventory.Add (new YearGroup (0, 500));
-
 			/*PerformableActions.Add (new FleeTree (), "Flee Tree");*/
+		}
+
+		protected override void OnInitInventory (Inventory i) {
+			Inventory.Add (new YearGroup (0, 500));
 		}
 	}
 }

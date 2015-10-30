@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using DNA.Tasks;
+using DNA;
 
 public class TaskButton : MBRefs {
 
@@ -23,6 +24,10 @@ public class TaskButton : MBRefs {
 	}
 
 	public void OnPress () {
-		task.Start ();
+		if (task is ConstructRoad || task is ConstructUnit) {
+			Player.Instance.SetConstructionPen (task.GetType ());
+		} else {
+			task.Start ();
+		}
 	}
 }

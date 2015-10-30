@@ -30,7 +30,6 @@ public class GuiTasks : GuiSelectableListener {
 	protected override void OnUpdateSelection (List<ISelectable> selected) {
 
 		if (selected.Count == 0) {
-			//SetGroupActive (false);
 			SetButtons (Player.Instance.PerformableTasks.EnabledTasks.Values.ToList ());
 			return;
 		}

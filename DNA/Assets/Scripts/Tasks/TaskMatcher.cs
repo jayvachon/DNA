@@ -94,6 +94,9 @@ namespace DNA.Tasks {
 		/// </summary>
 		public static List<PerformerTask> GetTasksInCommon (List<ITaskPerformer> performers) {
 
+			if (performers.Count == 0)
+				return new List<PerformerTask> ();
+
 			Dictionary<System.Type, PerformerTask> firstTasks = performers[0].PerformableTasks.EnabledTasks;
 
 			if (performers.Count < 2)

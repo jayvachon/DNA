@@ -35,6 +35,7 @@ namespace DNA.InputSystem {
 		}
 
 		public static void ClickSelectable (ISelectable selectable, PointerEventData e) {
+			
 			SelectSettings settings = selectable.SelectSettings;
 
 			List<ISelectableOverrider> selectablesWithOverride = GetSelectablesWithOverride (e.button);

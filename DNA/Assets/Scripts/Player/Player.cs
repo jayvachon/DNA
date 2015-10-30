@@ -74,13 +74,17 @@ namespace DNA {
 				EmptyClickHandler.Instance.onClick -= OnEmptyClick;
 		}
 
-		public void SetConstructionPen<T> () where T : IConstructable {
-			if (pen != typeof (T)) {
+		public void SetConstructionPen (System.Type type) {
+			if (pen != type) {
 				UI.Instance.ConstructPrompt.Close ();
 				RoadConstructor.Instance.Clear ();
 			}
-			pen = typeof (T);
+			pen = type;
 			PlayerActionState.Set (ActionState.Construction);
+		}
+
+		public void SetConstructionPen<T> () where T : IConstructable {
+			SetConstructionPen (typeof (T));
 		}
 
 		void Construct (GridPoint point, PointContainer container) {

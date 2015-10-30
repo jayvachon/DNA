@@ -79,6 +79,7 @@ namespace DNA.Units {
 			get {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
+					OnInitPerformableTasks (performableTasks);
 				}
 				return performableTasks;
 			}
@@ -157,7 +158,9 @@ namespace DNA.Units {
 		}
 
 		void OnChangeTaskPointObject (IPathElementObject obj) {
-			TryStartMatch ();
+			
+			// Need to wait a frame so that construction site can have its cost set
+			Coroutine.WaitForFixedUpdate (() => TryStartMatch ());
 		}
 
 		bool TryStartMatch () {
@@ -258,6 +261,8 @@ namespace DNA.Units {
 
 			Transform.SetLocalPositionY (endY);
 		}
+
+		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
 		#region IPathElementVisitor implementation
 		int visitorIndex = 0;

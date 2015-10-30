@@ -22,6 +22,7 @@ namespace DNA.Units {
 			get {
 				if (acceptableTasks == null) {
 					acceptableTasks = new AcceptableTasks (this);
+					OnInitAcceptableTasks (acceptableTasks);
 				}
 				return acceptableTasks;
 			}
@@ -58,6 +59,7 @@ namespace DNA.Units {
 			DestroyThis<T> ();
 		}
 
-		protected virtual void OnSetFertility (int fertility) {} 
+		protected virtual void OnInitAcceptableTasks (AcceptableTasks a) {}
+		protected virtual void OnSetFertility (int fertility) {}
 	}
 }

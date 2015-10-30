@@ -8,9 +8,9 @@ namespace DNA {
 
 	public class DebugMenu : MonoBehaviour {
 
-		bool showMenu = false;
+		//bool showMenu = false;
 
-		void OnGUI () {
+		/*void OnGUI () {
 			GUILayout.Space (40);
 			showMenu = GUILayout.Toggle (showMenu, "Show menu");
 			if (!showMenu) return;
@@ -23,6 +23,6 @@ namespace DNA {
 			if (GUILayout.Button ("Birth Milkshake Derrick")) {
 				Player.Instance.SetConstructionPen<ConstructUnit<MilkshakePool>> ();
 			}
-		}
+		}*/
 	}
 }

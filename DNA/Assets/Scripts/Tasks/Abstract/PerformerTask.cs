@@ -1,4 +1,4 @@
-﻿#undef QUARTER_TIME
+﻿#define QUARTER_TIME
 #undef DEBUG_MSG
 using UnityEngine;
 using System.Collections;
@@ -114,6 +114,8 @@ namespace DNA.Tasks {
 				time *= 0.25f;
 				#endif
 				Coroutine.WaitForSeconds (time, () => {
+					if (!perform)
+						return;
 					if (!Start ()) {
 						StartOnEnable ();
 					}

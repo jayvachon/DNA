@@ -19,20 +19,20 @@ namespace DNA.Units {
 		public UnitRenderer unitRenderer;
 		public UnitClickable unitClickable;
 
-		#if UNITY_EDITOR
-			// Ostensibly so that the inventory can be viewed in the inspector
-			public Inventory inventory;
-			public Inventory Inventory {
-				get {
-					return inventory;
+		Inventory inventory;
+		public Inventory Inventory {
+			get {
+				if (inventory == null) {
+					inventory = new Inventory (this);
+					OnInitInventory (inventory);
 				}
-				protected set {
-					inventory = value;
-				}
+				return inventory;
 			}
-		#else
-			public Inventory Inventory { get; protected set; }
-		#endif
+			protected set {
+				inventory = value;
+				OnInitInventory (inventory);
+			}
+		}
 		
 		protected bool Selected { get; private set;}
 
@@ -94,6 +94,8 @@ namespace DNA.Units {
 		protected void DestroyThis<T> () where T : Unit {
 			ObjectPool.Destroy<T> (transform);
 		}
+
+		protected virtual void OnInitInventory (Inventory i) {}
 
 		#region ISelectable implementation
 		SelectSettings selectSettings;

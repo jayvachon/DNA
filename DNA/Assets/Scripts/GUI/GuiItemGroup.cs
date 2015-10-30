@@ -25,12 +25,29 @@ public class GuiItemGroup : MBRefs {
 		}
 	}
 
+	ItemGroup group;
+	ItemGroup Group {
+		get { return group; }
+		set {
+			if (group != null) {
+				group.onUpdate -= SetText;
+			}
+			group = value;
+			group.onUpdate += SetText;
+			SetText ();
+		}
+	}
+
 	public void Init (ItemGroup group) {
-		ItemName.text = group.ID;
-		if (group.HasCapacity) {
-			Amount.text = group.Count.ToString () + "/" + group.Capacity.ToString ();
+		Group = group;
+		ItemName.text = Group.ID;
+	}
+
+	void SetText () {
+		if (Group.HasCapacity) {
+			Amount.text = Group.Count.ToString () + "/" + Group.Capacity.ToString ();
 		} else {
-			Amount.text = group.Count.ToString ();
+			Amount.text = Group.Count.ToString ();
 		}
 	}
 }

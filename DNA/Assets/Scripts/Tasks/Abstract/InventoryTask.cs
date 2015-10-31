@@ -14,6 +14,9 @@ namespace DNA.Tasks {
 					inventory = holder.Inventory;
 				}
 				if (inventory == null) {
+					if (Performer == null) {
+						throw new System.Exception ("'Performer' has not been set for the InventoryTask '" + this + "'");
+					}
 					throw new System.Exception (string.Format ("TaskPerformer {0} does not implement IInventoryHolder", Performer));
 				}
 				return inventory;

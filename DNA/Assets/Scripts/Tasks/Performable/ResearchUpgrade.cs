@@ -8,5 +8,10 @@ namespace DNA.Tasks {
 		public ResearchUpgrade () : base () {
 			Settings.Duration = TotalCost;
 		}
+
+		protected override void OnEnd () {
+			Purchase ();
+			base.OnEnd ();
+		}
 	}
 }

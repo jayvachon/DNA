@@ -44,9 +44,8 @@ namespace DNA.Tasks {
 		protected int TotalCost {
 			get {
 				if (totalCost == 0) {
-					foreach (var cost in Settings.Costs) {
-						totalCost += Inventory[cost.Key].Count;
-					}
+					foreach (var cost in Settings.Costs)
+						totalCost += cost.Value;
 				}
 				return totalCost;
 			}

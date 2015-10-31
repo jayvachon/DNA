@@ -26,6 +26,9 @@ namespace DNA {
 
 			// Create Giving Tree
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
+			points.SetUnitAtIndex<MilkshakePool> (1);
+
+			// TODO: randomly create coffee plants(?)
 		}
 
 		void OnLoadConnections () {

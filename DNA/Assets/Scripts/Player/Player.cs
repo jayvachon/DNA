@@ -49,6 +49,7 @@ namespace DNA {
 					performableTasks.Add (new ConstructRoad ());
 					performableTasks.Add (new ConstructUnit<CoffeePlant> ());
 					performableTasks.Add (new ConstructUnit<MilkshakePool> ());
+					performableTasks.Add (new ConstructUnit<University> ());
 				}
 				return performableTasks;
 			}

@@ -63,5 +63,5 @@ namespace DNA.Units {
 			Inventory["Coffee"].Capacity = (int)(20 * Fertility.Multipliers[tier]);
 			Inventory["Coffee"].Set (2);
 		}
-		}
+	}
 }

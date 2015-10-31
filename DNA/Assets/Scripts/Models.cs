@@ -74,7 +74,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (ConstructUnit<CoffeePlant>), new CostTaskSettings {
-				Title = "Birth Coffee Plant (10M)",
+				Title = "Birth Coffee Plant (20M)",
 				Description = "Creates a new coffee plant",
 				Duration = 0f,
 				AutoStart = false,
@@ -86,7 +86,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (ConstructUnit<MilkshakePool>), new CostTaskSettings {
-				Title = "Birth Milkshake Derrick (15M)",
+				Title = "Birth Milkshake Derrick (35M)",
 				Description = "Creates a new milkshake derrick",
 				Duration = 0f,
 				AutoStart = false,
@@ -94,6 +94,18 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new Dictionary<string, int> {
 					{ "Milkshakes", 35 }
+				}
+			});
+
+			tasks.Add (typeof (ConstructUnit<University>), new CostTaskSettings {
+				Title = "Birth University (50M)",
+				Description = "Creates a new university",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 50 }
 				}
 			});
 
@@ -195,6 +207,20 @@ namespace DNA.Models {
 			});
 
 			/**
+			 *	ResearchUpgrade
+			 */
+
+			tasks.Add (typeof (ResearchUpgrade<CoffeeCapacity>), new CostTaskSettings {
+				Title = "Upgrade Laborer coffee capacity",
+				Description = "Laborers will be able to carry more coffee",
+				AutoStart = false,
+				Repeat = false,
+				Costs = new Dictionary<string, int> {
+					{ "Milkshakes", 50 }
+				}
+			});
+
+			/**
 			 *	Misc
 			 */
 
@@ -211,7 +237,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (ConstructRoad), new CostTaskSettings {
-				Title = "Build road",
+				Title = "Birth road",
 				Description = "Builds a road",
 				Duration = 0f,
 				AutoStart = false,

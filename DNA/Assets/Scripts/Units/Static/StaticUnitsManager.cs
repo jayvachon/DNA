@@ -26,7 +26,7 @@ public class StaticUnitsManager {
 		get {
 			if (unlockedUnits == null) {
 				unlockedUnits = new List<string> () {
-					//"University",
+					"University",
 					"Clinic",
 					"Jacuzzi",
 					"CoffeePlant"

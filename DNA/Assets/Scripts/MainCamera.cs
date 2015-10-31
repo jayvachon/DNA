@@ -19,6 +19,7 @@ public class MainCamera : MBRefs {
 	Transform anchor;
 
 	float[] zConstraints = new [] { -60f, -5f };
+	float[] zoomConstraints = new[] { 15f, 40f };
 
 	protected override void Awake () {
 		base.Awake ();
@@ -46,6 +47,13 @@ public class MainCamera : MBRefs {
 	}
 
 	void Update () {
+		
+		transform.SetLocalPositionY (
+			Mathf.Clamp (transform.localPosition.y + Input.GetAxis ("Mouse ScrollWheel"),
+				zoomConstraints[0],
+				zoomConstraints[1])
+		);
+
 		center.SetLocalEulerAnglesY (center.localEulerAngles.y - Input.GetAxis ("Horizontal"));
 		transform.SetLocalPositionZ (
 			Mathf.Clamp (transform.localPosition.z + Input.GetAxis ("Vertical") * 0.5f, zConstraints[0], zConstraints[1]));

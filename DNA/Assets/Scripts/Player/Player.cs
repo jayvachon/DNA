@@ -31,7 +31,7 @@ namespace DNA {
 					inventory = new Inventory (this);
 					Inventory.Add (new MilkshakeGroup (130));
 					Inventory.Add (new CoffeeGroup (50));
-					Inventory.Add (new YearGroup (5));
+					Inventory.Add (new YearGroup ());
 				}
 				return inventory;
 			}
@@ -50,6 +50,7 @@ namespace DNA {
 					performableTasks.Add (new ConstructUnit<CoffeePlant> ());
 					performableTasks.Add (new ConstructUnit<MilkshakePool> ());
 					performableTasks.Add (new ConstructUnit<University> ());
+					performableTasks.Add (new ConstructUnit<Clinic> ());
 				}
 				return performableTasks;
 			}
@@ -102,7 +103,7 @@ namespace DNA {
 				c.ElementContainer = container;
 
 			string text = "Purchase: ";
-			foreach (var cost in t.Settings.Costs) {
+			foreach (var cost in t.Costs) {
 				text += cost.Value.ToString () + cost.Key.Substring (0, 1);
 			}
 			UI.Instance.ConstructPrompt.Open (text, () => t.Start ());

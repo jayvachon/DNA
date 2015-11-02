@@ -24,7 +24,7 @@ namespace DNA.Tasks {
 					}
 				}
 				if (segmentCost > -1)
-					costSettings.Costs["Milkshakes"] = Cost;
+					costSettings.Costs[0]["Milkshakes"] = Cost;
 				return costSettings;
 			}
 		}
@@ -34,7 +34,7 @@ namespace DNA.Tasks {
 		}
 
 		public ConstructRoad (Inventory inventory=null) : base (inventory) {
-			segmentCost = Settings.Costs["Milkshakes"];
+			segmentCost = Settings.Costs[0]["Milkshakes"];
 		}
 
 		protected override void OnEnd () {

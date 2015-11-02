@@ -60,10 +60,14 @@ public class Upgrades {
 		}
 	}
 
-	public void SetLevel<T> (int level) where T : Upgrade {
+	public void SetLevel<T> (int level=-1) where T : Upgrade {
 		KeyValuePair<Upgrade, UpgradeDelegate> del;
 		if (delegates.TryGetValue (typeof (T), out del)) {
-			del.Key.CurrentLevel = level;
+			if (level == -1) {
+				del.Key.CurrentLevel ++;
+			} else {
+				del.Key.CurrentLevel = level;
+			}
 			del.Value.Invoke (del.Key);
 		}
 	}

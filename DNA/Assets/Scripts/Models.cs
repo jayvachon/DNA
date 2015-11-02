@@ -43,8 +43,6 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (CollectItem<MilkshakeGroup>), new TaskSettings {
-				Title = "",
-				Description = "Collects milkshakes",
 				Duration = 2f,
 				AutoStart = false,
 				Repeat = true,
@@ -52,8 +50,6 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
-				Title = "",
-				Description = "Collects coffee",
 				Duration = 1.5f,
 				AutoStart = false,
 				Repeat = true,
@@ -61,12 +57,15 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
-				Title = "",
-				Description = "Collects labor",
 				Duration = 1f,
 				AutoStart = false,
-				Repeat = true,
-				Pair = null
+				Repeat = true
+			});
+
+			tasks.Add (typeof (CollectItem<HealthGroup>), new TaskSettings {
+				Duration = 2f,
+				AutoStart = false,
+				Repeat = true
 			});
 
 			/**
@@ -77,11 +76,10 @@ namespace DNA.Models {
 				Title = "Birth Coffee Plant (20M)",
 				Description = "Creates a new coffee plant",
 				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 20 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 20 }
+					}
 				}
 			});
 
@@ -89,11 +87,10 @@ namespace DNA.Models {
 				Title = "Birth Milkshake Derrick (35M)",
 				Description = "Creates a new milkshake derrick",
 				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 35 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 20 }
+					}
 				}
 			});
 
@@ -101,11 +98,21 @@ namespace DNA.Models {
 				Title = "Birth University (50M)",
 				Description = "Creates a new university",
 				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 50 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 50 }
+					}
+				}
+			});
+
+			tasks.Add (typeof (ConstructUnit<Clinic>), new CostTaskSettings {
+				Title = "Birth Clinic (40M)",
+				Description = "Creates a new Clinic",
+				Duration = 0f,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 40 }
+					}
 				}
 			});
 
@@ -149,8 +156,6 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (GenerateItem<CoffeeGroup>), new TaskSettings {
-				Title = "",
-				Description = "Generates coffee",
 				Duration = 2f,
 				AutoStart = true,
 				Repeat = true,
@@ -158,9 +163,14 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (GenerateItem<YearGroup>), new TaskSettings {
-				Title = "",
-				Description = "Generates year",
 				Duration = 1f,
+				AutoStart = true,
+				Repeat = true,
+				Pair = null
+			});
+
+			tasks.Add (typeof (GenerateItem<HealthGroup>), new TaskSettings {
+				Duration = 5f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
@@ -170,30 +180,6 @@ namespace DNA.Models {
 			 *	GenerateUnit
 			 */
 
-			tasks.Add (typeof (GenerateUnit<MilkshakePool>), new CostTaskSettings {
-				Title = "Birth Milkshake Derrick (15M)",
-				Description = "Creates a new milkshake derrick",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 15 }
-				}
-			});
-
-			tasks.Add (typeof (GenerateUnit<CoffeePlant>), new CostTaskSettings {
-				Title = "Birth Coffee Plant (10M)",
-				Description = "Creates a new coffee plant",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 10 }
-				}
-			});
-
 			tasks.Add (typeof (GenerateUnit<Distributor>), new CostTaskSettings {
 				Title = "Birth Laborer (15C)",
 				Description = "Creates a new laborer",
@@ -201,8 +187,10 @@ namespace DNA.Models {
 				AutoStart = false,
 				Repeat = false,
 				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Coffee", 15 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 15 }
+					}
 				}
 			});
 
@@ -215,8 +203,16 @@ namespace DNA.Models {
 				Description = "Laborers will be able to carry more coffee",
 				AutoStart = false,
 				Repeat = false,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 50 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 50 }
+					},
+					new Dictionary<string, int> {
+						{ "Milkshakes", 100 }
+					},
+					new Dictionary<string, int> {
+						{ "Milkshakes", 200 }
+					}
 				}
 			});
 
@@ -231,8 +227,10 @@ namespace DNA.Models {
 				AutoStart = false,
 				Repeat = false,
 				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 1 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 1 }
+					}
 				}
 			});
 
@@ -243,8 +241,10 @@ namespace DNA.Models {
 				AutoStart = false,
 				Repeat = false,
 				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 20 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 20 }
+					}
 				}
 			});
 
@@ -322,9 +322,11 @@ namespace DNA.Models {
 				AutoStart = false,
 				Repeat = false,
 				Pair = null,
-				Costs = new Dictionary<string, int> {
-					{ "Milkshakes", 1 },
-					{ "Coffee", 2 }
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 2 },
+						{ "Coffee", 1 }
+					}
 				}
 			});
 		}
@@ -341,7 +343,9 @@ namespace DNA.Models {
 
 	public class CostTaskSettings : TaskSettings {
 
-		// ItemGroup ID, amount required
-		public Dictionary<string, int> Costs { get; set; }
+		// An array of costs. The CostTask will use the Costs at the first array position, then iterate the array if there are more elements.
+		// This is useful for e.g. upgrades
+		// <ItemGroup ID, amount required>
+		public Dictionary<string, int>[] Costs { get; set; }
 	}
 }

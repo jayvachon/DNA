@@ -19,7 +19,7 @@ public class MainCamera : MBRefs {
 	Transform anchor;
 
 	float[] zConstraints = new [] { -60f, -5f };
-	float[] zoomConstraints = new[] { 15f, 40f };
+	float[] zoomConstraints = new[] { 15f, 60f };
 
 	protected override void Awake () {
 		base.Awake ();

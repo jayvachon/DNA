@@ -128,6 +128,8 @@
      <Compile Include="Assets\Scripts\Inventory\new\Items\LaborItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\YearItem.cs" />
+     <Compile Include="Assets\Scripts\Levee\Levee.cs" />
+     <Compile Include="Assets\Scripts\Levee\LeveeWall.cs" />
      <Compile Include="Assets\Scripts\LevelManager.cs" />
      <Compile Include="Assets\Scripts\MainCamera.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Dijkstra\Dijkstra_deprecate.cs" />

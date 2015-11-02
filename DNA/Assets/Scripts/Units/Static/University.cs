@@ -11,6 +11,10 @@ namespace DNA.Units {
 			get { return "University"; }
 		}
 
+		public override string Description {
+			get { return "Upgrade units by conducting research at the University."; }
+		}
+
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
 			get {

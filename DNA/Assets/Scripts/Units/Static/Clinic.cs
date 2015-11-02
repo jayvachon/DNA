@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using DNA.InventorySystem;
+using DNA.Tasks;
+using InventorySystem;
 
 namespace DNA.Units {
 
-	public class Clinic : StaticUnit {
+	public class Clinic : StaticUnit, ITaskPerformer {
 
 		public override string Name {
 			get { return "Clinic"; }
@@ -14,30 +15,42 @@ namespace DNA.Units {
 			get { return "Elders live longer when they're receiving care at a Clinic."; }
 		}
 
-		//HealthHolder healthHolder = new HealthHolder (300, 300);
+		PerformableTasks performableTasks;
+		public PerformableTasks PerformableTasks {
+			get {
+				if (performableTasks == null) {
+					performableTasks = new PerformableTasks (this);
+					OnInitPerformableTasks (performableTasks);
+				}
+				return performableTasks;
+			}
+		}
+
 		HealthIndicator indicator;
 
 		void Awake () {
-
 			unitRenderer.SetColors (new Color (1f, 0.898f, 0.231f));
-
-			//Inventory = new Inventory (this);
-			//Inventory.Add (healthHolder);
-
-			//AcceptableActions.Add (new AcceptCollectItem<HealthHolder> ());
-
-			/*PerformableActions = new PerformableActions (this);
-			PerformableActions.Add (new GenerateItem<HealthHolder> ());*/
 		}
 
-		//public override void OnPoolCreate () {
+		protected override void OnInitInventory (Inventory i) {
+			i.Add (new HealthGroup (200, 200));
+		}
+
+		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
+			a.Add (new AcceptCollectItem<HealthGroup> ());
+		}
+
+		protected void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new GenerateItem<HealthGroup> ());
+		}
+
 		protected override void OnEnable () {
 			//healthHolder.HolderUpdated += OnHealthUpdate;
 			indicator = ObjectPool.Instantiate<HealthIndicator> ();
 			indicator.Initialize (Transform, 1.5f);
 		}
 
-		//public override void OnPoolDestroy () {
+		//public override vod OnPoolDestroy () {
 		protected override void OnDisable () {
 			//healthHolder.HolderUpdated -= OnHealthUpdate;
 			ObjectPool.Destroy<HealthIndicator> (indicator.MyTransform);

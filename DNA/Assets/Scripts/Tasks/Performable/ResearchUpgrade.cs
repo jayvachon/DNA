@@ -9,8 +9,13 @@ namespace DNA.Tasks {
 			Settings.Duration = TotalCost;
 		}
 
-		protected override void OnEnd () {
+		protected override void OnStart () {
 			Purchase ();
+			base.OnStart ();
+		}
+
+		protected override void OnEnd () {
+			Upgrades.Instance.SetLevel<T> ();
 			base.OnEnd ();
 		}
 	}

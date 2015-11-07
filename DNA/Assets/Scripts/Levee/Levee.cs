@@ -15,7 +15,6 @@ namespace DNA {
 			float deg = 360 / (float)count;
 			for (int i = 0; i < count; i ++) {
 				float radians = deg * i * Mathf.Deg2Rad;
-				//Transform t = Instantiate (pentagonFlower) as Transform;
 				Transform t = ObjectPool.Instantiate<LeveeWall> ().transform;
 				t.position = new Vector3 (
 					Mathf.Sin (radians) * radius,
@@ -28,6 +27,8 @@ namespace DNA {
 					t.localEulerAngles.z
 				);
 				t.SetParent (transform);
+				t.SetLocalPositionY (0.5f);
+				t.SetLocalScaleY (1f);
 			}
 		}
 	}

@@ -5,12 +5,12 @@ public class LevelManager : MonoBehaviour {
 
 	void Awake () {
 		LevelStart ();
-		Sea.Instance.endRising += OnEndRising;
+		//Sea.Instance.endRising += OnEndRising;
 	}
 
 	void LevelStart () {
 		EmissionsManager.Reset ();
-		Sea.Instance.BeginRising ();
+		//Sea.Instance.BeginRising ();
 	}
 
 	void OnEndRising () {

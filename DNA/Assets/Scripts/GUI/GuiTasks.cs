@@ -19,7 +19,7 @@ public class GuiTasks : GuiSelectableListener {
 		bool hasTask = false;
 		DisplableButtons ();
 		foreach (PerformerTask t in tasks) {
-			if (t.Settings.Title != "") {
+			if (t.Settings.Title != null && t.Settings.Title != "") {
 				EnableButton (t);
 				hasTask = true;
 			}

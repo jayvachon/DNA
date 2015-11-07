@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Fermat.cs" />
+     <Compile Include="Assets\Scripts\Environment\InnerSea.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickContainerEvent.cs" />

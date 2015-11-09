@@ -98,13 +98,22 @@ namespace DNA.Units {
 		GridPoint CurrentPoint {
 			get { return currentPoint; }
 			set {
+
+				// Early exit if being set to the same value
 				if (currentPoint == value)
 					return;
+
+				// If the point was previously set, remove any listeners
 				if (currentPoint != null)
 					currentPoint.RemoveVisitor (this);
+				
 				currentPoint = value;
+
+				// Add listeners if not being set to null
 				if (currentPoint != null)
 					currentPoint.RegisterVisitor (this);
+
+				// If this point is also the TaskPoint, listen for when the object is changed
 				if (currentPoint != null && currentPoint == TaskPoint) {
 					TaskPoint.OnSetObject += OnChangeTaskPointObject;
 				} else if (TaskPoint != null) {

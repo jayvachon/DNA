@@ -1,28 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InnerSea : MBRefs {
+namespace DNA {
 
-	const float minLevel = -5f;
-	const float maxLevel = 10f;
+	public class InnerSea : Sea2 {
 
-	void Awake () {
-		MyTransform.SetLocalPositionY (minLevel);
-		StartCoroutine (CoRise ());
-	}
+		bool rising = false;
+		public float OuterLevel { get; set; }
 
-	IEnumerator CoRise () {
-		
-		float time = 7f;
-		float eTime = 0f;
-	
-		while (eTime < time) {
-			eTime += Time.deltaTime;
-			float progress = Mathf.SmoothStep (0, 1, eTime / time);
-			MyTransform.SetLocalPositionY (Mathf.Lerp (minLevel, maxLevel, progress));
-			yield return null;
+		protected override void Awake () {
+			base.Awake ();
+			riseRate = 0.01f;
 		}
 
-		StartCoroutine (CoRise ());
+		public void StartRising () {
+			rising = true;
+		}
+
+		public void StopRising () {
+			rising = false;
+		}
+
+		void Update () {
+			if (rising && Level < OuterLevel)
+				Level += riseRate;
+			if (!rising)
+				Level -= riseRate;
+		}
 	}
 }

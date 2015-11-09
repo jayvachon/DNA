@@ -5,5 +5,8 @@ namespace DNA {
 
 	public class LeveeWall : MonoBehaviour {
 
+		void Awake () {
+			GetComponent<Renderer> ().SetColor (Palette.Tan);
+		}
 	}
 }

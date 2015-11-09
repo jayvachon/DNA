@@ -12,9 +12,9 @@ namespace DNA {
 
 		// Private fields
 		
-		static Fermat fermat = new Fermat (new Fermat.Settings (1.75f, 300, 0.033f, new Vector3 (0, 6.5f, 0)));
-		static float mapWidth = 300f;
-		static float mapHeight = 300f;
+		static Fermat fermat = new Fermat (new Fermat.Settings (1.75f, 400, 0.033f, new Vector3 (0, 6.5f, 0)));
+		static float mapWidth = 400;
+		static float mapHeight = 400;
 
 		// Public properties
 

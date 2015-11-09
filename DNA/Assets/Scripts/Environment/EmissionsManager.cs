@@ -6,42 +6,31 @@ using DNA.Units;
 public static class EmissionsManager {
 
 	static float emissionsRate = 0f;
-	public static float EmissionsRate {
-		get { return emissionsRate; }
-		set { 
-			emissionsRate = value; 
-			if (Sea.Instance != null)
-				Sea.Instance.Rate = emissionsRate;
+
+	public delegate void OnUpdate (float val);
+
+	public static OnUpdate onUpdate;
+
+	public static void AddEmissions (float val) {
+		if (!Mathf.Approximately (val, 0f)) {
+			emissionsRate += val;
+			SendUpdateMessage ();
 		}
 	}
 
-	// Units' emissions. Values are relative & should be set between 0 and 1
-	static Dictionary<string, float> emissionsValues = new Dictionary<string, float> () {
-		{ "Milkshake Derrick", 0.25f },
-		{ "Jacuzzi", 0.15f },
-		{ "Clinic", 0.1f },
-		{ "Laborer", 0.05f }
-	};
-
-	public static void AddUnit (Unit unit) {
-
-		// Give the sea a frame to find itself
-		Coroutine.WaitForSeconds (1f, () => {
-			float emissionValue;
-			if (emissionsValues.TryGetValue (unit.Name, out emissionValue)) {
-				EmissionsRate += emissionValue;
-			}
-		});
+	public static void RemoveEmissions (float val) {
+		if (!Mathf.Approximately (val, 0f)) {
+			emissionsRate -= val;
+			SendUpdateMessage ();
+		}
 	}
 
-	public static void RemoveUnit (Unit unit) {
-		float emissionValue;
-		if (emissionsValues.TryGetValue (unit.Name, out emissionValue)) {
-			EmissionsRate -= emissionValue;
-		}
+	static void SendUpdateMessage () {
+		if (onUpdate != null)
+			onUpdate (emissionsRate);
 	}
 
 	public static void Reset () {
-		EmissionsRate = 0f;
+		emissionsRate = 0f;
 	}
 }

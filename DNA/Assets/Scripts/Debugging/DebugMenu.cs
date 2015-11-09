@@ -31,6 +31,7 @@ namespace DNA {
 				.ConvertAll (x => x as ConstructionSite);
 
 			if (constructionSites.Count > 0) {
+				DisableButtons ();
 				EnableButton ("Construct", () => {
 					foreach (ConstructionSite c in constructionSites) {
 						c.Inventory["Labor"].Clear ();

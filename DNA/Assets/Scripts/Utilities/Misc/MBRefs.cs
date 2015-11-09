@@ -14,11 +14,6 @@ public class MBRefs : MonoBehaviour {
 		}
 	}
 
-	protected Vector3 startPosition;
-	public Vector3 StartPosition {
-		get { return startPosition; }
-	}
-
 	protected Vector2 V2Position {
 		get {
 			Vector3 pos = Camera.main.WorldToScreenPoint (MyTransform.position);
@@ -44,9 +39,5 @@ public class MBRefs : MonoBehaviour {
 	public Transform Parent {
 		get { return MyTransform.parent; }
 		set { MyTransform.SetParent (value); }
-	}
-
-	protected virtual void Awake () {
-		startPosition = MyTransform.position;
 	}
 }

@@ -6,14 +6,6 @@ using InventorySystem;
 namespace DNA.Units {
 
 	public class MilkshakePool : StaticUnit {
-
-		public override string Name {
-			get { return "Milkshake Derrick"; }
-		}
-
-		public override string Description {
-			get { return "Milkshakes collected from a Derrick can be used to construct buildings."; }
-		}
 		
 		void Awake () {
 			unitRenderer.SetColors (new Color (0.294f, 0.741f, 0.847f));

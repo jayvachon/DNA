@@ -23,6 +23,10 @@ public static class ExtensionMethods {
 		return Mathf.Approximately (vector3.x, otherVector3.x) && Mathf.Approximately (vector3.y, otherVector3.y) && Mathf.Approximately (vector3.z, otherVector3.z);
 	}
 
+	public static Quaternion ToQuaternion (this Vector3 vector3) {
+		return Quaternion.Euler (vector3.x, vector3.y, vector3.z);
+	}
+
 	/**
 	 *	LineRenderer
 	 */

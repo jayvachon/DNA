@@ -55,7 +55,11 @@
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Fermat.cs" />
      <Compile Include="Assets\Scripts\Environment\InnerSea.cs" />
+     <Compile Include="Assets\Scripts\Environment\OuterSea.cs" />
+     <Compile Include="Assets\Scripts\Environment\OuterSeaPiece.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
+     <Compile Include="Assets\Scripts\Environment\Sea2.cs" />
+     <Compile Include="Assets\Scripts\Environment\SeaManager.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickContainerEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickPointEvent.cs" />
@@ -138,6 +142,7 @@
      <Compile Include="Assets\Scripts\MathBySmarterPeople\EPPZEasing\EPPZEasing.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\EPPZEasing\EPPZEasing_Samples.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\EPPZEasing\EPPZEasing_Samples_Renderer.cs" />
+     <Compile Include="Assets\Scripts\MathBySmarterPeople\RegularPolygon.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\Delaunay\DelaunayHelpers.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\Delaunay\Edge.cs" />
      <Compile Include="Assets\Scripts\MathBySmarterPeople\Unity-delaunay\Delaunay\EdgeList.cs" />
@@ -185,6 +190,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerActionState.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\Floret.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\HSBColor.cs" />
+     <Compile Include="Assets\Scripts\ScreenEffects\Palette.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralCamera.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralGenerator.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralLight.cs" />

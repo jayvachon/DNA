@@ -15,7 +15,12 @@ namespace DNA.Units {
 
 		protected override void OnEnable () {
 			base.OnEnable ();
-			SelectSettings.CanSelect = false;
+			PlayerActionState.onChange += OnChangePlayerActionState;
+		}
+
+		protected override void OnDisable () {
+			base.OnDisable ();
+			PlayerActionState.onChange -= OnChangePlayerActionState;
 		}
 
 		protected override void OnSetFertility (int fertility) {
@@ -24,6 +29,14 @@ namespace DNA.Units {
 
 		protected override void DestroyThis () {
 			DestroyThis<DrillablePlot> ();
+		}
+
+		void OnChangePlayerActionState (ActionState state) {
+			if (state == ActionState.Construction) {
+				SelectSettings.CanSelect = false;
+			} else {
+				SelectSettings.CanSelect = true;
+			}
 		}
 	}
 }

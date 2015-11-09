@@ -2,17 +2,28 @@
 using System.Collections;
 using DNA.InputSystem;
 using InventorySystem;
+using DNA.Models;
 
 namespace DNA.Units {
 
 	public class Unit : MonoBehaviour, INameable, IInventoryHolder, ISelectable {
 
 		public virtual string Name {
-			get { return ""; }
+			get { return Settings.Title; }
 		}
 
 		public virtual string Description {
-			get { return ""; }
+			get { return Settings.Description; }
+		}
+
+		public UnitSettings settings;
+		public UnitSettings Settings {
+			get {
+				if (settings == null) {
+					settings = DataManager.GetUnitSettings (this.GetType ());
+				}
+				return settings;
+			}
 		}
 
 		public UnitTransform unitTransform;
@@ -77,11 +88,11 @@ namespace DNA.Units {
 		protected virtual void OnChangeUnit<U> (U u) where U : Unit {}
 
 		protected virtual void OnEnable () {
-			EmissionsManager.AddUnit (this);
+			EmissionsManager.AddEmissions (Settings.Emissions);
 		}
 
 		protected virtual void OnDisable () {
-			EmissionsManager.RemoveUnit (this);
+			EmissionsManager.RemoveEmissions (Settings.Emissions);
 			if (Selected) {
 				SelectionManager.Unselect ();
 			}

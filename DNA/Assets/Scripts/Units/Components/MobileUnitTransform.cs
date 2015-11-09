@@ -23,8 +23,7 @@ namespace DNA.Units {
 		float yPos;
 		bool performing = false;
 
-		protected override void Awake () {
-			base.Awake ();
+		void Awake () {
 			TWO_PI = Mathf.PI * 2f;
 			yPos = Position.y;
 		}

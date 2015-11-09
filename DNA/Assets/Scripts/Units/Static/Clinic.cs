@@ -7,14 +7,6 @@ namespace DNA.Units {
 
 	public class Clinic : StaticUnit, ITaskPerformer {
 
-		public override string Name {
-			get { return "Clinic"; }
-		}
-
-		public override string Description {
-			get { return "Elders live longer when they're receiving care at a Clinic."; }
-		}
-
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
 			get {

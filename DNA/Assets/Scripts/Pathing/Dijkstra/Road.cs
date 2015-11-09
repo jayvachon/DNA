@@ -9,7 +9,7 @@ namespace DNA.Paths {
 
 		public PathElement Element { get; set; }
 
-		new void Awake () {
+		void Awake () {
 			GetComponent<Renderer> ().SetColor (Color.black);
 		}
 

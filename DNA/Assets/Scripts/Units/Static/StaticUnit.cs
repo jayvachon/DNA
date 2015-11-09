@@ -37,6 +37,9 @@ namespace DNA.Units {
 			}
 		}
 
+		float timeOnSetFlood;
+		float maxDamageTime = 120f; // The number of seconds a unit must be flooded to sustain full damage
+
 		protected override void OnDisable () {
 			base.OnDisable ();
 			if (Element != null)
@@ -46,6 +49,19 @@ namespace DNA.Units {
 		void OnSetState (DevelopmentState state) {
 			if (state == DevelopmentState.Abandoned)
 				unitRenderer.SetAbandoned ();
+			if (state == DevelopmentState.Flooded) {
+				timeOnSetFlood = Time.time;
+			}
+			if (state != DevelopmentState.Flooded) {
+				if (timeOnSetFlood > 0f) {
+					CalculateDamage ();
+					timeOnSetFlood = 0f;
+				}
+			}
+		}
+
+		void CalculateDamage () {
+			Element.Damage = Mathf.InverseLerp (0, maxDamageTime, Time.time - timeOnSetFlood);
 		}
 
 		// TODO: update this to work with new points

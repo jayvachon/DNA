@@ -28,6 +28,12 @@ namespace DNA {
 				f.Point = gpoints[i];
 				f.Parent = MyTransform;
 				f.Position = f.Point.Position;
+				/*float scale = Mathf.Max (0.5f, Mathf.Pow (i, 1.0000001f) * 0.02f);
+				f.transform.localScale = new Vector3 (
+					f.transform.localScale.x * scale,
+					f.transform.localScale.y * scale,
+					f.transform.localScale.z * scale
+				);*/
 				LookAtCenter (f.MyTransform);
 
 				if (i % blockSize == 0)

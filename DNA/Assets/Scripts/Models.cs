@@ -8,6 +8,7 @@ using DNA.Tasks;
 namespace DNA.Models {
 
 	public class GameData {
+		
 		TasksSettings tasksSettings;
 		public TasksSettings TasksSettings {
 			get {
@@ -16,6 +17,106 @@ namespace DNA.Models {
 				}
 				return tasksSettings;
 			}
+		}
+
+		UnitsSettings unitsSettings;
+		public UnitsSettings UnitsSettings {
+			get {
+				if (unitsSettings == null) {
+					unitsSettings = new UnitsSettings ();
+				}
+				return unitsSettings;
+			}
+		}
+	}
+
+	public class UnitsSettings {
+
+		Dictionary<System.Type, UnitSettings> units;
+
+		public UnitSettings this[System.Type unitType] {
+			get { 
+				try {
+					return units[unitType]; 
+				} catch {
+					throw new System.Exception ("Could not find a model for '" + unitType + "'");
+				}
+			}
+		}
+
+		public UnitsSettings () {
+
+			units = new Dictionary<System.Type, UnitSettings> ();
+
+			units.Add (typeof (Distributor), new UnitSettings {
+				Symbol = "laborer",
+				Title = "Laborer",
+				Description = "Laborers perform work until they reach retirement age.",
+				Emissions = 0.01f
+			});
+
+			units.Add (typeof (Elder), new UnitSettings {
+				Symbol = "elder",
+				Title = "Elder",
+				Description = "Elders need to be cared for.",
+				Emissions = 0.01f
+			});
+
+			units.Add (typeof (Corpse), new UnitSettings {
+				Symbol = "corpse",
+				Title = "Remains",
+				Description = "Deliver remains to the Giving Tree to harvest the years.",
+				Emissions = 0f
+			});
+
+			units.Add (typeof (MilkshakePool), new UnitSettings {
+				Symbol = "derrick",
+				Title = "Milkshake Derrick",
+				Description = "Milkshakes collected from a Derrick can be used to construct buildings.",
+				Emissions = 1f
+			});
+
+			units.Add (typeof (CoffeePlant), new UnitSettings {
+				Symbol = "coffee",
+				Title = "Coffee Plant",
+				Description = "Deliver coffee to the Giving Tree to create more Laborers.",
+				Emissions = -0.01f
+			});
+
+			units.Add (typeof (University), new UnitSettings {
+				Symbol = "university",
+				Title = "University",
+				Description = "Upgrade units by conducting research at the University.",
+				Emissions = 0.5f
+			});
+
+			units.Add (typeof (Clinic), new UnitSettings {
+				Symbol = "clinic",
+				Title = "Clinic",
+				Description = "Elders live longer when they're receiving care at a Clinic.",
+				Emissions = 0.75f
+			});
+
+			units.Add (typeof (DrillablePlot), new UnitSettings {
+				Symbol = "plot",
+				Title = "Plot",
+				Description = "This plot can be drilled for milkshakes.",
+				Emissions = 0f
+			});
+
+			units.Add (typeof (GivingTreeUnit), new UnitSettings {
+				Symbol = "tree",
+				Title = "Giving Tree",
+				Description = "The Giving Tree gives birth to Laborers and is also a portal to the next dimension.",
+				Emissions = 0f
+			});
+
+			units.Add (typeof (ConstructionSite), new UnitSettings {
+				Symbol = "construction",
+				Title = "Construction Site",
+				Description = "A building to be.",
+				Emissions = 0f
+			});
 		}
 	}
 
@@ -347,5 +448,12 @@ namespace DNA.Models {
 		// This is useful for e.g. upgrades
 		// <ItemGroup ID, amount required>
 		public Dictionary<string, int>[] Costs { get; set; }
+	}
+
+	public class UnitSettings {
+		public string Symbol { get; set; }
+		public string Title { get; set; }
+		public string Description { get; set; }
+		public float Emissions { get; set; }
 	}
 }

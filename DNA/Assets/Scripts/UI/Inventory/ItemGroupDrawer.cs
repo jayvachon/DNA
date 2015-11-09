@@ -8,16 +8,7 @@ namespace DNA {
 	public class ItemGroupDrawer : MBRefs {
 
 		public string groupId;
-
-		Text countText = null;
-		Text CountText {
-			get {
-				if (countText == null) {
-					countText = MyTransform.GetChild (1).GetComponent<Text> ();
-				}
-				return countText;
-			}
-		}
+		public Text countText;
 
 		ItemGroup group;
 		ItemGroup Group {
@@ -39,7 +30,7 @@ namespace DNA {
 		}
 
 		void OnUpdate () {
-			CountText.text = Group.Count.ToString ();
+			countText.text = Group.Count.ToString ();
 		}
 	}
 }

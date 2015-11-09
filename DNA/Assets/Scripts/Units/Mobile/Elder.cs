@@ -8,10 +8,6 @@ namespace DNA.Units {
 
 	public class Elder : MobileUnit {
 
-		public override string Name { get { return "Elder"; } }
-
-		public override string Description { get { return "Elders need to be cared for."; } }
-
 		HealthManager2 healthManager = new HealthManager2 ();
 		public HealthManager2 HealthManager {
 			get { return healthManager; }

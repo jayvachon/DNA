@@ -10,14 +10,6 @@ namespace DNA.Units {
 
 	public class GivingTreeUnit : StaticUnit, ITaskPerformer {
 
-		public override string Name {
-			get { return "Giving Tree"; }
-		}
-
-		public override string Description {
-			get { return "The Giving Tree gives birth to Laborers and is also a portal to the next dimension."; }
-		}
-
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
 			get {

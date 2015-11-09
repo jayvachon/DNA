@@ -8,6 +8,9 @@ namespace DNA {
 		Undeveloped, 
 		UnderConstruction, 
 		Developed,
+		Flooded,
+		Damaged,
+		UnderRepair,
 		Abandoned
 	}
 }
@@ -23,9 +26,11 @@ namespace DNA.Paths {
 		public DevelopmentState State {
 			get { return state; }
 			set { 
-				state = value; 
-				if (OnSetState != null)
-					OnSetState (state);
+				if (state != value) {
+					state = value; 
+					if (OnSetState != null)
+						OnSetState (state);
+				}
 			}
 		}
 
@@ -40,12 +45,25 @@ namespace DNA.Paths {
 			}
 		}
 
+		float damage = 0;
+		public float Damage {
+			get { return damage; }
+			set { 
+				damage = Mathf.Clamp01 (value);
+				if (Mathf.Approximately (damage, 1f) && State != DevelopmentState.Undeveloped) {
+					// TODO: handle construction sites
+					State = DevelopmentState.Abandoned;
+				}
+			}
+		}
+
 		public OnSetObject OnSetObject { get; set; }
 		public OnSetState OnSetState { get; set; }
 
 		static int version = 0;
 		int myVersion = 0;
 		List<IPathElementVisitor> visitors = new List<IPathElementVisitor> ();
+		DevelopmentState stateBeforeFlood;
 
 		public bool UpToDate { get { return myVersion == version; } }
 
@@ -67,6 +85,17 @@ namespace DNA.Paths {
 			visitor.VisitorIndex = 0;
 			for (int i = 0; i < visitors.Count; i ++) {
 				visitors[i].VisitorIndex = i+1;
+			}
+		}
+
+		public void SetFloodLevel (float floodLevel) {
+			if (floodLevel > 0) {
+				if (State != DevelopmentState.Flooded) {
+					stateBeforeFlood = State;
+					State = DevelopmentState.Flooded;
+				}
+			} else {
+				State = stateBeforeFlood;
 			}
 		}
 	}

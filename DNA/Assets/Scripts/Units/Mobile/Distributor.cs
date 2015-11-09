@@ -10,14 +10,6 @@ namespace DNA.Units {
 	// TODO: Rename to Laborer
 	public class Distributor : MobileUnit {
 
-		public override string Name { 
-			get { return "Laborer"; }
-		}
-
-		public override string Description {
-			get { return "Laborers perform work until they reach retirement age."; }
-		}
-
 		void Awake () {
 
 			unitRenderer.SetColors (new Color (1f, 0.5f, 1f));

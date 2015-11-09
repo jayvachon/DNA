@@ -30,7 +30,7 @@ public class NotificationCenter : MBRefs {
 		}
 	}
 
-	List<string> queuedNotifications = new List<string> ();
+	//List<string> queuedNotifications = new List<string> ();
 
 	Dictionary<string, string> notifications;
 	Dictionary<string, string> Notifications {
@@ -45,24 +45,24 @@ public class NotificationCenter : MBRefs {
 	}
 
 	public void ShowNotification (string id) {
-		string content;
+		/*string content;
 		if (Notifications.TryGetValue (id, out content)) {
 			ShowCustomNotification (content);
 			Notifications.Remove (id);
-		}
+		}*/
 	}
 
 	public void ShowCustomNotification (string content) {
-		queuedNotifications.Add (content);
+		/*queuedNotifications.Add (content);
 		if (queuedNotifications.Count == 1) {
 			Notification.SetContent (content);
-		}
+		}*/
 	}
 
 	public void RemoveNotification (string content) {
-		queuedNotifications.Remove (content);
+		/*queuedNotifications.Remove (content);
 		if (queuedNotifications.Count > 0) {
 			Notification.SetContent (queuedNotifications[0]);
-		}
+		}*/
 	}
 }

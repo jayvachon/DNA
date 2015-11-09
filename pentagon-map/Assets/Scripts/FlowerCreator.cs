@@ -6,7 +6,6 @@ public class FlowerCreator : MonoBehaviour {
 	public Transform pentagonFlower;
 
 	void Awake () {
-		//Instantiate (pentagonFlower, Vector3.zero, Quaternion.identity);
 		CreateFlowers ();
 	}
 

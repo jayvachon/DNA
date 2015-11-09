@@ -7,14 +7,6 @@ using InventorySystem;
 namespace DNA.Units {
 
 	public class CoffeePlant : StaticUnit, ITaskPerformer {
-
-		public override string Name {
-			get { return "Coffee Plant"; }
-		}
-
-		public override string Description {
-			get { return "Deliver coffee to the Giving Tree to create more Laborers."; }
-		}
 		
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {

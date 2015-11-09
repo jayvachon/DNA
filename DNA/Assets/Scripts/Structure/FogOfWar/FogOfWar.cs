@@ -51,8 +51,8 @@ namespace DNA {
 
 		List<GridPoint>[] neighbors = new List<GridPoint>[3];
 
-		protected override void Awake () {
-			GetComponent<Renderer> ().SetColor (new Color (0, 0, 0, 1));
+		void Awake () {
+			GetComponent<Renderer> ().SetColor (Palette.Green);
 		}
 		
 		void OnSetState (DevelopmentState state) { RemoveIfDeveloped (state); }
@@ -62,7 +62,7 @@ namespace DNA {
 
 		void FadeIfDeveloped (DevelopmentState state) {
 			if (state == DevelopmentState.Developed) {
-				GetComponent<Renderer> ().SetColor (new Color (0, 0, 0, 0.5f));
+				GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.5f));
 			}
 		}
 

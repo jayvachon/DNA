@@ -21,4 +21,12 @@ public static class DataManager {
 			throw new System.Exception ("No model exists for the task '" + taskType + "'");
 		}
 	}
+
+	public static UnitSettings GetUnitSettings (System.Type unitType) {
+		try {
+			return Data.UnitsSettings[unitType];
+		} catch {
+			throw new System.Exception ("No model exists for the task '" + unitType + "'");
+		}
+	}
 }

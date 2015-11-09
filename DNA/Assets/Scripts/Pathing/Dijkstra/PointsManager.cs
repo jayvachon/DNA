@@ -16,9 +16,12 @@ namespace DNA.Paths {
 		}
 
 		public OnLoadPoints OnLoadPoints { get; set; }
+		public SeaManager sea;
+		List<PointContainer> flooded = new List<PointContainer> ();
 
 		public void Init () {
 			StartCoroutine (CreatePoints ());
+			InvokeRepeating ("ApplySeaLevel", 1f, 1f);
 		}
 
 		public void SetUnitAtIndex<T> (int index) where T : StaticUnit {
@@ -61,6 +64,19 @@ namespace DNA.Paths {
 
 			if (OnLoadPoints != null)
 				OnLoadPoints ();
+		}
+
+		void ApplySeaLevel () {
+			float seaLevel = sea.SeaLevel;
+			List<PointContainer> newFlooded = Points.FindAll (x => x.Position.y < seaLevel);
+			foreach (PointContainer p in flooded) {
+				if (!newFlooded.Contains (p)) 
+					p.Element.SetFloodLevel (0);
+			}
+			foreach (PointContainer p in newFlooded) {
+				p.Element.SetFloodLevel (seaLevel - p.Position.y);
+			}
+			flooded = newFlooded;
 		}
 	}
 }

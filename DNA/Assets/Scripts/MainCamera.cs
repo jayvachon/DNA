@@ -21,8 +21,7 @@ public class MainCamera : MBRefs {
 	float[] zConstraints = new [] { -60f, -5f };
 	float[] zoomConstraints = new[] { 15f, 60f };
 
-	protected override void Awake () {
-		base.Awake ();
+	void Awake () {
 		Events.instance.AddListener<SelectEvent> (OnSelectEvent);
 		anchor = transform.parent;
 	}

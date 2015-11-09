@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// deprecate
 public delegate void EndRising ();
 
 public class Sea : MBRefs {

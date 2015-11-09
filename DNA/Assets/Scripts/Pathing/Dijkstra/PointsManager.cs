@@ -71,10 +71,10 @@ namespace DNA.Paths {
 			List<PointContainer> newFlooded = Points.FindAll (x => x.Position.y < seaLevel);
 			foreach (PointContainer p in flooded) {
 				if (!newFlooded.Contains (p)) 
-					p.Element.SetFloodLevel (0);
+					p.SetFloodLevel (0);
 			}
 			foreach (PointContainer p in newFlooded) {
-				p.Element.SetFloodLevel (seaLevel - p.Position.y);
+				p.SetFloodLevel (seaLevel - p.Position.y);
 			}
 			flooded = newFlooded;
 		}

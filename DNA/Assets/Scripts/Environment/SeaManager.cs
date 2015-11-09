@@ -20,6 +20,13 @@ namespace DNA {
 			get { return outer.Level > levee.Position.y + levee.Height; }
 		}
 
+		#if DEBUG
+		void Start () {
+			outer.Level = 5;
+			inner.Level = 5;
+		}
+		#endif
+
 		void Update () {
 			if (Breached != breachedCache) {
 				breachedCache = Breached;

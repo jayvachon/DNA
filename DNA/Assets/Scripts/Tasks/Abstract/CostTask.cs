@@ -44,7 +44,7 @@ namespace DNA.Tasks {
 		}
 
 		int totalCost = 0;
-		protected int TotalCost {
+		public int TotalCost {
 			get {
 				if (totalCost == 0) {
 					foreach (var cost in Settings.Costs[Level])

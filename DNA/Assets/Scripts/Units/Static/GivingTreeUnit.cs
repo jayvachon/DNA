@@ -71,6 +71,8 @@ namespace DNA.Units {
 			}
 		}
 
+		protected override void CalculateDamage () {}
+
 		void OnGenerateDistributor (PerformerTask task) {
 			Unit unit = ((GenerateUnit<Distributor>)task).GeneratedUnit;
 			//unit.Position = CreatePositions[positionIndex];

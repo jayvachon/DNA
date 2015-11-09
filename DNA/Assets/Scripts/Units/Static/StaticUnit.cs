@@ -60,7 +60,7 @@ namespace DNA.Units {
 			}
 		}
 
-		void CalculateDamage () {
+		protected virtual void CalculateDamage () {
 			Element.Damage = Mathf.InverseLerp (0, maxDamageTime, Time.time - timeOnSetFlood);
 		}
 

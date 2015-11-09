@@ -287,6 +287,7 @@
      <Compile Include="Assets\Scripts\Units\Mobile\Elder.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
      <Compile Include="Assets\Scripts\Units\ProductionTier.cs" />
+     <Compile Include="Assets\Scripts\Units\RepairSite.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
      <Compile Include="Assets\Scripts\Units\Static\DrillablePlot.cs" />

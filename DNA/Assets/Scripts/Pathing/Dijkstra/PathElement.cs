@@ -50,9 +50,15 @@ namespace DNA.Paths {
 			get { return damage; }
 			set { 
 				damage = Mathf.Clamp01 (value);
-				if (Mathf.Approximately (damage, 1f) && State != DevelopmentState.Undeveloped) {
-					// TODO: handle construction sites
-					State = DevelopmentState.Abandoned;
+
+				// TODO: handle UnderConstruction state
+				if (State != DevelopmentState.Undeveloped) {
+					if (damage > 0f) {
+						State = DevelopmentState.Damaged;
+					}
+					if (Mathf.Approximately (damage, 1f)) {
+						State = DevelopmentState.Abandoned;
+					}
 				}
 			}
 		}

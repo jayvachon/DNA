@@ -117,6 +117,13 @@ namespace DNA.Models {
 				Description = "A building to be.",
 				Emissions = 0f
 			});
+
+			units.Add (typeof (RepairSite), new UnitSettings {
+				Symbol = "repair",
+				Title = "Repair Site",
+				Description = "A damaged building that needs repairs.",
+				Emissions = 0f
+			});
 		}
 	}
 

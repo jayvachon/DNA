@@ -18,6 +18,10 @@ public static class Palette {
 		get { return new Color (0.25f, 0, 0.847f); }
 	}
 
+	public static Color White {
+		get { return new Color (1f, 1f, 1f); }
+	}
+
 	public static Color ApplyAlpha (Color c, float alpha) {
 		return new Color (c.r, c.g, c.b, alpha);
 	}

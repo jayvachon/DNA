@@ -18,6 +18,12 @@ namespace DNA {
 		ConstructionSite site;
 		RepairSite repairSite;
 
+		DamageHandler damageHandler;
+
+		void Awake () {
+			damageHandler = new DamageHandler (OnDamage, OnDestroy);
+		}
+
 		public ConstructionSite BeginConstruction<T> () where T : MonoBehaviour, IPathElementObject {
 
 			// Create a construction site and listen for labor to be completed
@@ -42,18 +48,16 @@ namespace DNA {
 			Element.State = DevelopmentState.Developed;
 			OnEndConstruction (project);
 			site = null;
-			project = null;
 		}
 
-		public void BeginRepair () {
+		public void BeginRepair (float damageAmount) {
 			if (Element.State == DevelopmentState.Damaged) {
 				project = Element.Object;
 				(project as MonoBehaviour).gameObject.SetActive (false);
 				repairSite = (RepairSite)SetObject<RepairSite> ();
 				repairSite.Inventory["Labor"].onEmpty += EndRepair;
 				Element.State = DevelopmentState.UnderRepair;
-
-				// TODO: Set repair cost
+				repairSite.LaborCost = (int)(DataManager.GetConstructionCost ((project as Unit).Settings.Symbol) * damageAmount);
 			}
 		}
 
@@ -64,7 +68,6 @@ namespace DNA {
 			Element.State = DevelopmentState.Developed;
 			//OnEndRepair (project);
 			repairSite = null;
-			project = null;
 		}
 
 		public virtual T SetObject<T> () where T : MonoBehaviour, IPathElementObject {
@@ -90,14 +93,74 @@ namespace DNA {
 		}
 
 		public void SetFloodLevel (float floodLevel) {
-			Element.SetFloodLevel (floodLevel);
-			if (Element.State != DevelopmentState.Flooded && Element.Damage > 0) {
-				BeginRepair ();
+			damageHandler.SetFloodLevel (floodLevel, Element);
+		}
+
+		void OnDamage (float damageAmount) {
+			Unit u = project as Unit;
+			if (u != null && u.Settings.TakesDamage) {
+				Element.State = DevelopmentState.Damaged;
+				BeginRepair (damageAmount);
 			}
+		}
+
+		void OnDestroy () {
+			Element.State = DevelopmentState.Abandoned;
 		}
 
 		protected virtual void OnSetObject (IPathElementObject obj) {}
 		protected virtual void OnEndConstruction (IPathElementObject obj) {}
 		//protected virtual void OnEndRepair (IPathElementObject obj) {}
+
+		class DamageHandler {
+
+			public delegate void OnDamage (float amount);
+			public delegate void OnDestroy ();
+
+			public OnDamage onDamage;
+			public OnDestroy onDestroy;
+
+			float damage = 0;
+			public float Damage {
+				get { return damage; }
+			}
+
+			bool Flooded {
+				get { return startFloodTime > -1; }
+				set { startFloodTime = value ? Time.time : -1; }
+			}
+
+			const float maxFloodTime = 120f;
+			float startFloodTime = -1;
+			DevelopmentState stateBeforeFlood;
+
+			public DamageHandler (OnDamage onDamage, OnDestroy onDestroy) {
+				this.onDestroy += onDestroy;
+				this.onDamage += onDamage;
+			}
+
+			public void SetFloodLevel (float floodLevel, PathElement element) {
+				if (floodLevel > 0) {
+					if (!Flooded) {
+						Flooded = true;
+						stateBeforeFlood = element.State;
+						element.State = DevelopmentState.Flooded;
+					}
+				} else {
+					if (Flooded) {
+						damage = Mathf.InverseLerp (0, maxFloodTime, Time.time - startFloodTime);
+						element.State = stateBeforeFlood;
+						if (element.State != DevelopmentState.Undeveloped) {
+							if (Mathf.Approximately (damage, 1f)) {
+								onDestroy ();
+							} else if (damage > 0f) {
+								onDamage (damage);
+							}
+						}
+						Flooded = false;
+					}
+				}
+			}
+		}
 	}
 }

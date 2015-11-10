@@ -73,56 +73,64 @@ namespace DNA.Models {
 				Symbol = "derrick",
 				Title = "Milkshake Derrick",
 				Description = "Milkshakes collected from a Derrick can be used to construct buildings.",
-				Emissions = 1f
+				Emissions = 1f,
+				TakesDamage = true
 			});
 
 			units.Add (typeof (CoffeePlant), new UnitSettings {
 				Symbol = "coffee",
 				Title = "Coffee Plant",
 				Description = "Deliver coffee to the Giving Tree to create more Laborers.",
-				Emissions = -0.01f
+				Emissions = -0.01f,
+				TakesDamage = true
 			});
 
 			units.Add (typeof (University), new UnitSettings {
 				Symbol = "university",
 				Title = "University",
 				Description = "Upgrade units by conducting research at the University.",
-				Emissions = 0.5f
+				Emissions = 0.5f,
+				TakesDamage = true
 			});
 
 			units.Add (typeof (Clinic), new UnitSettings {
 				Symbol = "clinic",
 				Title = "Clinic",
 				Description = "Elders live longer when they're receiving care at a Clinic.",
-				Emissions = 0.75f
+				Emissions = 0.75f,
+				TakesDamage = true
 			});
 
 			units.Add (typeof (DrillablePlot), new UnitSettings {
 				Symbol = "plot",
 				Title = "Plot",
 				Description = "This plot can be drilled for milkshakes.",
-				Emissions = 0f
+				Emissions = 0f,
+				TakesDamage = false
 			});
 
 			units.Add (typeof (GivingTreeUnit), new UnitSettings {
 				Symbol = "tree",
 				Title = "Giving Tree",
 				Description = "The Giving Tree gives birth to Laborers and is also a portal to the next dimension.",
-				Emissions = 0f
+				Emissions = 0f,
+				TakesDamage = false
 			});
 
 			units.Add (typeof (ConstructionSite), new UnitSettings {
 				Symbol = "construction",
 				Title = "Construction Site",
 				Description = "A building to be.",
-				Emissions = 0f
+				Emissions = 0f,
+				TakesDamage = false
 			});
 
 			units.Add (typeof (RepairSite), new UnitSettings {
 				Symbol = "repair",
 				Title = "Repair Site",
 				Description = "A damaged building that needs repairs.",
-				Emissions = 0f
+				Emissions = 0f,
+				TakesDamage = false
 			});
 		}
 	}
@@ -131,6 +139,10 @@ namespace DNA.Models {
 	public class TasksSettings {
 		
 		Dictionary<System.Type, TaskSettings> tasks;
+
+		public Dictionary<System.Type, TaskSettings> Tasks {
+			get { return tasks; }
+		}
 
 		public TaskSettings this[System.Type taskType] {
 			get { 
@@ -151,6 +163,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (CollectItem<MilkshakeGroup>), new TaskSettings {
+				Symbol = "collect_milkshake",
 				Duration = 2f,
 				AutoStart = false,
 				Repeat = true,
@@ -158,6 +171,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
+				Symbol = "collect_coffee",
 				Duration = 1.5f,
 				AutoStart = false,
 				Repeat = true,
@@ -165,12 +179,14 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
+				Symbol = "collect_labor",
 				Duration = 1f,
 				AutoStart = false,
 				Repeat = true
 			});
 
 			tasks.Add (typeof (CollectItem<HealthGroup>), new TaskSettings {
+				Symbol = "collect_health",
 				Duration = 2f,
 				AutoStart = false,
 				Repeat = true
@@ -181,6 +197,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (ConstructUnit<CoffeePlant>), new CostTaskSettings {
+				Symbol = "construct_coffee",
 				Title = "Birth Coffee Plant (20M)",
 				Description = "Creates a new coffee plant",
 				Duration = 0f,
@@ -192,6 +209,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (ConstructUnit<MilkshakePool>), new CostTaskSettings {
+				Symbol = "construct_derrick",
 				Title = "Birth Milkshake Derrick (35M)",
 				Description = "Creates a new milkshake derrick",
 				Duration = 0f,
@@ -203,6 +221,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (ConstructUnit<University>), new CostTaskSettings {
+				Symbol = "construct_university",
 				Title = "Birth University (50M)",
 				Description = "Creates a new university",
 				Duration = 0f,
@@ -214,6 +233,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (ConstructUnit<Clinic>), new CostTaskSettings {
+				Symbol = "construct_clinic",
 				Title = "Birth Clinic (40M)",
 				Description = "Creates a new Clinic",
 				Duration = 0f,
@@ -229,6 +249,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (ConsumeItem<YearGroup>), new TaskSettings {
+				Symbol = "construct_year",
 				Title = "",
 				Description = "Consumes year",
 				Duration = 1f,
@@ -242,6 +263,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (DeliverItem<MilkshakeGroup>), new TaskSettings {
+				Symbol = "deliver_milkshake",
 				Title = "",
 				Description = "Delivers milkshakes",
 				Duration = 2f,
@@ -251,6 +273,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (DeliverItem<CoffeeGroup>), new TaskSettings {
+				Symbol = "construct_coffee",
 				Title = "",
 				Description = "Delivers coffee",
 				Duration = 1.5f,
@@ -264,6 +287,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (GenerateItem<CoffeeGroup>), new TaskSettings {
+				Symbol = "generate_coffee",
 				Duration = 2f,
 				AutoStart = true,
 				Repeat = true,
@@ -271,6 +295,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (GenerateItem<YearGroup>), new TaskSettings {
+				Symbol = "generate_year",
 				Duration = 1f,
 				AutoStart = true,
 				Repeat = true,
@@ -278,6 +303,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (GenerateItem<HealthGroup>), new TaskSettings {
+				Symbol = "generate_health",
 				Duration = 5f,
 				AutoStart = true,
 				Repeat = true,
@@ -289,6 +315,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (GenerateUnit<Distributor>), new CostTaskSettings {
+				Symbol = "generate_laborer",
 				Title = "Birth Laborer (15C)",
 				Description = "Creates a new laborer",
 				Duration = 0f,
@@ -307,6 +334,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (ResearchUpgrade<CoffeeCapacity>), new CostTaskSettings {
+				Symbol = "reseach_coffee",
 				Title = "Upgrade Laborer coffee capacity",
 				Description = "Laborers will be able to carry more coffee",
 				AutoStart = false,
@@ -441,6 +469,7 @@ namespace DNA.Models {
 	}
 
 	public class TaskSettings {
+		public string Symbol { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public System.Type Pair { get; set; }
@@ -462,5 +491,6 @@ namespace DNA.Models {
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public float Emissions { get; set; }
+		public bool TakesDamage { get; set; }
 	}
 }

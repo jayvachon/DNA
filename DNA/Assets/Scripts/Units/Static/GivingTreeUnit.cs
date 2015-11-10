@@ -64,25 +64,14 @@ namespace DNA.Units {
 			#endif*/
 		}
 
-		// Deprecate
-		void OnStartAction (string id) {
-			if (id == "GenerateDistributor") {
-				//PerformableActions.SetActive ("GenerateDistributor", false);
-			}
-		}
-
-		protected override void CalculateDamage () {}
-
 		void OnGenerateDistributor (PerformerTask task) {
 			Unit unit = ((GenerateUnit<Distributor>)task).GeneratedUnit;
-			//unit.Position = CreatePositions[positionIndex];
 			if (positionIndex >= CreatePositions.Count-1) {
 				positionIndex = 0;
 			} else {
 				positionIndex ++;
 			}
 			((MobileUnit)unit).SetStartPoint ((GridPoint)Element);
-			//((MobileUnit)unit).Init (PathPoint);
 		}
 
 		void OnUnitGenerated (Unit unit) {
@@ -92,20 +81,10 @@ namespace DNA.Units {
 			} else {
 				positionIndex ++;
 			}
-			//((MobileUnit)unit).Init (PathPoint);
-			//((MobileUnit)unit).Init (this);
-			//PerformableActions.SetActive ("GenerateDistributor", true);
-			//RefreshInfoContent ();
 		}
 
 		void OnYearsCollected () {
 			ChangeUnit<GivingTreeUnit, GivingTreeRipe> ();
-		}
-
-		void Update () {
-			if (Input.GetKeyDown (KeyCode.Q)) {
-				PerformableTasks[typeof (GenerateUnit<Distributor>)].Start ();
-			}
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 using DNA.Models;
 
@@ -32,11 +33,14 @@ namespace DNA {
 			}
 		}
 
-		public static int GetConstructionCost<T> () where T : Units.StaticUnit, Paths.IPathElementObject {
+		public static int GetConstructionCost (string unitSymbol) {
 			try {
-				return new Tasks.GenerateUnit<T> ().TotalCost;
+				return (Data.TasksSettings.Tasks
+					.Values.Where (x => x.Symbol == "construct_" + unitSymbol)
+					.ToList ()[0] as CostTaskSettings)
+					.Costs[0].Sum (x => x.Value);
 			} catch {
-				throw new System.Exception ("Could not find the cost of GenerateUnit<" + typeof (T) + ">");
+				throw new System.Exception ("Could not find a cost for the unit '" + unitSymbol + "'");
 			}
 		}
 	}

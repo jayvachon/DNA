@@ -17,19 +17,8 @@ namespace DNA {
 
 		protected override void Awake () {
 			base.Awake ();
-			Init ();
-		}
-
-		void Init () {
-			RegularPolygon edges = levee.edges;
-			for (int i = 0; i < edges.SideCount; i ++) {
-				OuterSeaPiece sea = ObjectPool.Instantiate<OuterSeaPiece> (
-					edges.Positions[i],
-					new Vector3 (90, 0, 0).ToQuaternion ()
-				);
-				sea.Parent = MyTransform;
-				sea.transform.SetLocalPositionY (0f);
-				edges.ApplyAngleY (sea.MyTransform, i);
+			foreach (Transform child in MyTransform) {
+				child.GetComponent<Renderer> ().SetColor (Palette.Blue);
 			}
 		}
 

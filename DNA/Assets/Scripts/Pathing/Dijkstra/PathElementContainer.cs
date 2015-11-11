@@ -12,6 +12,10 @@ namespace DNA {
 		public virtual PathElement Element { get; protected set; }
 		protected virtual Vector3 Anchor { get { return Vector3.zero; } }
 
+		Unit UnitProject {
+			get { return project as Unit; }
+		}
+
 		int constructionCost;
 
 		IPathElementObject project;
@@ -21,7 +25,7 @@ namespace DNA {
 		DamageHandler damageHandler;
 
 		void Awake () {
-			damageHandler = new DamageHandler (OnDamage, OnDestroy);
+			damageHandler = new DamageHandler (OnDamage);
 		}
 
 		public ConstructionSite BeginConstruction<T> () where T : MonoBehaviour, IPathElementObject {
@@ -52,22 +56,31 @@ namespace DNA {
 
 		public void BeginRepair (float damageAmount) {
 			if (Element.State == DevelopmentState.Damaged) {
-				project = Element.Object;
-				(project as MonoBehaviour).gameObject.SetActive (false);
-				repairSite = (RepairSite)SetObject<RepairSite> ();
-				repairSite.Inventory["Labor"].onEmpty += EndRepair;
+				if (UnitProject.gameObject.activeSelf) {
+					UnitProject.gameObject.SetActive (false);
+					repairSite = (RepairSite)SetObject<RepairSite> ();
+					repairSite.Inventory["Labor"].onEmpty += EndRepair;
+				}
 				Element.State = DevelopmentState.UnderRepair;
-				repairSite.LaborCost = (int)(DataManager.GetConstructionCost ((project as Unit).Settings.Symbol) * damageAmount);
+			}
+			if (Element.State == DevelopmentState.UnderRepair) {
+				repairSite.LaborCost = (int)(DataManager.GetConstructionCost (UnitProject.Settings.Symbol) * damageAmount);
 			}
 		}
 
 		public void EndRepair () {
 			repairSite.Inventory["Labor"].onEmpty -= EndRepair;
-			(project as MonoBehaviour).gameObject.SetActive (true);
+			UnitProject.gameObject.SetActive (true);
 			SetObject (project);
 			Element.State = DevelopmentState.Developed;
 			//OnEndRepair (project);
 			repairSite = null;
+		}
+
+		public void Abandon () {
+			if (Element.State == DevelopmentState.UnderRepair)
+				EndRepair ();
+			Element.State = DevelopmentState.Abandoned;
 		}
 
 		public virtual T SetObject<T> () where T : MonoBehaviour, IPathElementObject {
@@ -97,15 +110,16 @@ namespace DNA {
 		}
 
 		void OnDamage (float damageAmount) {
+			if (Mathf.Approximately (0f, damageAmount)) return;
 			Unit u = project as Unit;
 			if (u != null && u.Settings.TakesDamage) {
-				Element.State = DevelopmentState.Damaged;
-				BeginRepair (damageAmount);
+				if (damageAmount < 1f) {
+					Element.State = DevelopmentState.Damaged;
+					BeginRepair (damageAmount);
+				} else {
+					Abandon ();
+				}
 			}
-		}
-
-		void OnDestroy () {
-			Element.State = DevelopmentState.Abandoned;
 		}
 
 		protected virtual void OnSetObject (IPathElementObject obj) {}
@@ -115,10 +129,8 @@ namespace DNA {
 		class DamageHandler {
 
 			public delegate void OnDamage (float amount);
-			public delegate void OnDestroy ();
 
 			public OnDamage onDamage;
-			public OnDestroy onDestroy;
 
 			float damage = 0;
 			public float Damage {
@@ -134,8 +146,7 @@ namespace DNA {
 			float startFloodTime = -1;
 			DevelopmentState stateBeforeFlood;
 
-			public DamageHandler (OnDamage onDamage, OnDestroy onDestroy) {
-				this.onDestroy += onDestroy;
+			public DamageHandler (OnDamage onDamage) {
 				this.onDamage += onDamage;
 			}
 
@@ -148,14 +159,10 @@ namespace DNA {
 					}
 				} else {
 					if (Flooded) {
-						damage = Mathf.InverseLerp (0, maxFloodTime, Time.time - startFloodTime);
+						damage += Mathf.Clamp01 (Mathf.InverseLerp (0, maxFloodTime, Time.time - startFloodTime));
 						element.State = stateBeforeFlood;
 						if (element.State != DevelopmentState.Undeveloped) {
-							if (Mathf.Approximately (damage, 1f)) {
-								onDestroy ();
-							} else if (damage > 0f) {
-								onDamage (damage);
-							}
+							onDamage (damage);
 						}
 						Flooded = false;
 					}

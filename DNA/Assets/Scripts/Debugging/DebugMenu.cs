@@ -16,12 +16,12 @@ namespace DNA {
 		public List<Button> buttons;
 
 		void OnEnable () {
-			SelectionHandler.onUpdateSelection += OnUpdateSelection;
+			//SelectionHandler.onUpdateSelection += OnUpdateSelection;
 			DisableButtons ();
 		}
 
 		void OnDisable () {
-			SelectionHandler.onUpdateSelection -= OnUpdateSelection;
+			//SelectionHandler.onUpdateSelection -= OnUpdateSelection;
 		}
 
 		void OnUpdateSelection (List<ISelectable> selectables) {

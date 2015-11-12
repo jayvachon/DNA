@@ -44,6 +44,7 @@ namespace DNA {
 			return site;
 		}
 
+		[DebuggableMethod ()]
 		public void EndConstruction () {
 
 			// Turn into the project set when construction began
@@ -107,7 +108,6 @@ namespace DNA {
 				ObjectPool.Destroy (((MonoBehaviour)Element.Object).transform);
 		}
 
-		[DebuggableMethod ()]
 		public void SetFloodLevel (float floodLevel) {
 			damageHandler.SetFloodLevel (floodLevel, Element);
 		}

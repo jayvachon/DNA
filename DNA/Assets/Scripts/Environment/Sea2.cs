@@ -5,7 +5,6 @@ namespace DNA {
 
 	public class Sea2 : MBRefs {
 
-		protected float riseRate = 0f;
 		protected readonly float MinLevel = -10f;
 		protected readonly float MaxLevel = 10f;
 

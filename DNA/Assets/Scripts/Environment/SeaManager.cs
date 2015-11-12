@@ -1,5 +1,4 @@
-﻿#undef DEBUG
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 namespace DNA {
@@ -14,36 +13,51 @@ namespace DNA {
 		public OuterSea outer;
 		public InnerSea inner;
 
-		bool breachedCache = false;
+		float pumpRate = 0f;
+		float riseRate = 0f;
+		float displacementCoefficient = 0.00001f;
 
-		bool Breached {
-			get { return outer.Level > levee.Position.y + levee.Height; }
+		float LeveeTop {
+			get { return levee.Position.y + levee.Height; }
 		}
 
-		#if DEBUG
-		void Start () {
-			outer.Level = 5;
-			inner.Level = 5;
+		void OnEnable () { EmissionsManager.onUpdate += OnUpdateEmissions; }
+		void OnDisable () { EmissionsManager.onUpdate -= OnUpdateEmissions; }
+
+		[DebuggableMethod ()]
+		void OnUpdateEmissions (float val) {
+			riseRate = val * displacementCoefficient;
 		}
-		#endif
+
+		[DebuggableMethod ()]
+		void SetLeveeHeight (float height) {
+			levee.Height = height;
+		}
+
+		[DebuggableMethod ()]
+		void SetPumpRate (float rate) {
+			pumpRate = rate * displacementCoefficient;
+		}
 
 		void Update () {
-			if (Breached != breachedCache) {
-				breachedCache = Breached;
-				if (breachedCache) {
-					inner.StartRising ();
-				} else {
-					inner.StopRising ();
-				}
+			
+			// Outer sea rises until it reaches top of the levee
+			if (outer.Level <= LeveeTop) {
+				outer.Level += riseRate;
+
+				// Inner sea is pumped if levee hasn't been breached
+				inner.Level -= pumpRate;
 			}
-			if (breachedCache) {
-				inner.OuterLevel = outer.Level;
+
+			// Inner sea rises if outer sea has reached top of levee
+			if (outer.Level >= LeveeTop) {
+				inner.Level += riseRate;
 			}
-			#if DEBUG
-			if (Input.GetKeyDown (KeyCode.C)) {
-				levee.Height += 1f;
+
+			// Both seas rise once inner sea reaches top of levee
+			if (inner.Level >= LeveeTop) {
+				outer.Level = inner.Level;
 			}
-			#endif
 		}
 	}
 }

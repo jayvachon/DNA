@@ -44,7 +44,7 @@ namespace DNA.Units {
 				// If the selected object is a GridPoint with a road, move to it
 				if (p.HasRoad) {
 					CurrentPoint = null;
-					TaskPoint = p;
+					positioner.Destination = p;
 				} else {
 
 					// If the selected object is a GridPoint with a road under construction, move to it
@@ -85,13 +85,10 @@ namespace DNA.Units {
 			}
 		}
 
-		GridPoint taskPoint;
-		GridPoint TaskPoint {
-			get { return taskPoint; }
-			set {
-				taskPoint = value;
-				positioner.Destination = taskPoint;
-			}
+		GridPoint lastMatchedPoint = null;
+		GridPoint LastMatchedPoint {
+			get { return lastMatchedPoint; }
+			set { lastMatchedPoint = value; }
 		}
 
 		GridPoint currentPoint;
@@ -104,20 +101,17 @@ namespace DNA.Units {
 					return;
 
 				// If the point was previously set, remove any listeners
-				if (currentPoint != null)
+				if (currentPoint != null) {
 					currentPoint.RemoveVisitor (this);
+					currentPoint.OnSetObject -= OnChangeCurrentPointObject;
+				}
 				
 				currentPoint = value;
 
 				// Add listeners if not being set to null
-				if (currentPoint != null)
+				if (currentPoint != null) {
 					currentPoint.RegisterVisitor (this);
-
-				// If this point is also the TaskPoint, listen for when the object is changed
-				if (currentPoint != null && currentPoint == TaskPoint) {
-					TaskPoint.OnSetObject += OnChangeTaskPointObject;
-				} else if (TaskPoint != null) {
-					TaskPoint.OnSetObject -= OnChangeTaskPointObject;
+					currentPoint.OnSetObject += OnChangeCurrentPointObject;
 				}
 			}
 		}
@@ -149,13 +143,13 @@ namespace DNA.Units {
 		 */
 
 		void OnArriveAtDestination (GridPoint point) {
-
+			
 			CurrentPoint = point;
 
 			// If a road construction site was assigned, build the road
 			if (point == RoadConstructionPoint) {
-				TryConstructRoad ();
-				return;
+				if (TryConstructRoad ())
+					return;
 			}
 
 			// Check if the point has any tasks to perform
@@ -166,7 +160,7 @@ namespace DNA.Units {
 			}
 		}
 
-		void OnChangeTaskPointObject (IPathElementObject obj) {
+		void OnChangeCurrentPointObject (IPathElementObject obj) {
 			
 			// Need to wait a frame so that construction site can have its cost set
 			Coroutine.WaitForFixedUpdate (() => TryStartMatch ());
@@ -184,7 +178,7 @@ namespace DNA.Units {
 			return false;
 		}
 
-		void TryConstructRoad () {
+		bool TryConstructRoad () {
 			currentRoadConstruction = CurrentPoint.Connections.Find (x => x.State == DevelopmentState.UnderConstruction);
 			if (currentRoadConstruction != null) {
 				MatchResult match = TaskMatcher.GetPerformable (this, currentRoadConstruction.Object as ITaskAcceptor);
@@ -192,8 +186,12 @@ namespace DNA.Units {
 					currentTask = match.Match;
 					currentTask.onComplete += OnCompleteRoad;
 					match.Start ();
+					return true;
 				}
+			} else {
+				RoadConstructionPoint = null;
 			}
+			return false;
 		}
 
 		MatchResult PointTaskMatch (GridPoint point) {
@@ -217,11 +215,16 @@ namespace DNA.Units {
 
 		void OnCompleteTask (PerformerTask t) {
 
-			// Check if the assigned TaskPoint can pair with the task
-			if (TaskMatcher.GetPair (t, TaskPoint) != null) {
-				positioner.Destination = TaskPoint;
-			} else {
+			t.onComplete -= OnCompleteTask;
+			if (TryStartMatch ()) {
+				return;
+			}
 
+			// Check if the last matched point can pair with the task
+			if (LastMatchedPoint != null && TaskMatcher.GetPair (t, LastMatchedPoint) != null) {
+				positioner.Destination = LastMatchedPoint;
+			} else {
+				
 				// If not, find the closest one that can
 				positioner.Destination = Pathfinder.FindNearestPoint (
 					positioner.Destination,
@@ -229,8 +232,8 @@ namespace DNA.Units {
 				);
 			}
 
-			t.onComplete -= OnCompleteTask;
 			currentTask = null;
+			LastMatchedPoint = CurrentPoint;
 		}
 
 		void OnCompleteRoad (PerformerTask t) {

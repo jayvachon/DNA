@@ -24,5 +24,11 @@ namespace DNA.Units {
 			Inventory["Milkshakes"].Capacity = (int)(150 * Fertility.Multipliers[tier]);
 			Inventory["Milkshakes"].Fill ();
 		}
+
+		protected override void OnSetState (DevelopmentState state) {
+			base.OnSetState (state);
+			if (state == DevelopmentState.Abandoned)
+				Inventory["Milkshakes"].Clear ();
+		}
 	}
 }

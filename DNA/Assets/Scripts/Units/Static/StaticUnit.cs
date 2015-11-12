@@ -43,7 +43,7 @@ namespace DNA.Units {
 				Element.OnSetState -= OnSetState;
 		}
 
-		void OnSetState (DevelopmentState state) {
+		protected virtual void OnSetState (DevelopmentState state) {
 			if (state == DevelopmentState.Abandoned)
 				unitRenderer.SetAbandoned ();
 		}

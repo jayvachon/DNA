@@ -305,6 +305,7 @@
      <Compile Include="Assets\Scripts\Upgrades\Upgrades.cs" />
      <Compile Include="Assets\Scripts\Upgrades\UpgradesTest.cs" />
      <Compile Include="Assets\Scripts\Utilities\Coroutine.cs" />
+     <Compile Include="Assets\Scripts\Utilities\DebuggableMethod.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\MaterialsExtended.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\TrigMap.cs" />

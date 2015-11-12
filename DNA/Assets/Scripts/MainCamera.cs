@@ -18,8 +18,8 @@ public class MainCamera : MBRefs {
 	public Transform center;
 	Transform anchor;
 
-	float[] zConstraints = new [] { -60f, -5f };
-	float[] zoomConstraints = new[] { 15f, 60f };
+	float[] zConstraints = new [] { -80f, -5f };
+	float[] zoomConstraints = new[] { 15f, 80f };
 
 	void Awake () {
 		Events.instance.AddListener<SelectEvent> (OnSelectEvent);

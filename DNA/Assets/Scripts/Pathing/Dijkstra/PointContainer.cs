@@ -9,7 +9,7 @@ using DNA.InputSystem;
 namespace DNA {
 
 	[RequireComponent (typeof (BoxCollider))]
-	public class PointContainer : PathElementContainer, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler {
+	public class PointContainer : PathElementContainer, IPointerEnterHandler, IPointerExitHandler {
 
 		GridPoint point;
 		public GridPoint Point { 
@@ -27,8 +27,8 @@ namespace DNA {
 			fertility = new Fertility (distanceToCenter, val);
 		}
 
-		public override T SetObject<T> () {
-			T obj = base.SetObject<T> ();
+		public override T SetObject<T> (bool destroyPrevious=true) {
+			T obj = base.SetObject<T> (destroyPrevious);
 			try {
 				(obj as StaticUnit).FertilityTier = fertility.Value;
 			} catch {
@@ -58,7 +58,7 @@ namespace DNA {
 		}
 
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
-		public void OnPointerDown (PointerEventData e) {
+		public override void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new ClickPointEvent (this));
 			if (Point.Object is Unit)
 				SelectionHandler.ClickSelectable (Point.Unit, e);

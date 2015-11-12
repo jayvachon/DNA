@@ -8,7 +8,7 @@ using DNA.Units;
 namespace DNA.Paths {
 
 	[RequireComponent (typeof (BoxCollider))]
-	public class ConnectionContainer : PathElementContainer, IPointerDownHandler {
+	public class ConnectionContainer : PathElementContainer {
 
 		Connection connection;
 		public Connection Connection {
@@ -52,7 +52,7 @@ namespace DNA.Paths {
 		protected virtual void OnSetPoints () {}
 
 		#region IPointerDownHandler implementation
-		public void OnPointerDown (PointerEventData e) {
+		public override void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new ClickConnectionEvent (this));
 			if (Connection.Object is Unit)
 				SelectionHandler.ClickSelectable ((ISelectable)Connection.Object, e);

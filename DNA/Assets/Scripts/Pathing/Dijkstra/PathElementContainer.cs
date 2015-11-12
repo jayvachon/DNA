@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using DNA.Paths;
@@ -7,7 +8,7 @@ using InventorySystem;
 
 namespace DNA {
 
-	public class PathElementContainer : MBRefs {
+	public class PathElementContainer : MBRefs, IPointerDownHandler {
 
 		public virtual PathElement Element { get; protected set; }
 		protected virtual Vector3 Anchor { get { return Vector3.zero; } }
@@ -32,6 +33,7 @@ namespace DNA {
 
 			// Create a construction site and listen for labor to be completed
 			// Set the project to turn into once labor completes
+
 			if (Element.State == DevelopmentState.Undeveloped) {
 				project = (IPathElementObject)ObjectPool.Instantiate<T> ();
 				(project as MonoBehaviour).gameObject.SetActive (false);
@@ -46,6 +48,7 @@ namespace DNA {
 
 			// Turn into the project set when construction began
 			// Mark this container as developed so that nothing else can be built here
+
 			site.Inventory["Labor"].onEmpty -= EndConstruction;
 			(project as MonoBehaviour).gameObject.SetActive (true);
 			SetObject (project);
@@ -54,11 +57,11 @@ namespace DNA {
 			site = null;
 		}
 
-		public void BeginRepair (float damageAmount) {
+		void BeginRepair (float damageAmount) {
 			if (Element.State == DevelopmentState.Damaged) {
 				if (UnitProject.gameObject.activeSelf) {
 					UnitProject.gameObject.SetActive (false);
-					repairSite = (RepairSite)SetObject<RepairSite> ();
+					repairSite = (RepairSite)SetObject<RepairSite> (false);
 					repairSite.Inventory["Labor"].onEmpty += EndRepair;
 				}
 				Element.State = DevelopmentState.UnderRepair;
@@ -68,29 +71,28 @@ namespace DNA {
 			}
 		}
 
-		public void EndRepair () {
+		void EndRepair () {
 			repairSite.Inventory["Labor"].onEmpty -= EndRepair;
 			UnitProject.gameObject.SetActive (true);
 			SetObject (project);
 			Element.State = DevelopmentState.Developed;
-			//OnEndRepair (project);
 			repairSite = null;
 		}
 
-		public void Abandon () {
+		void Abandon () {
 			if (Element.State == DevelopmentState.UnderRepair)
 				EndRepair ();
 			Element.State = DevelopmentState.Abandoned;
 		}
 
-		public virtual T SetObject<T> () where T : MonoBehaviour, IPathElementObject {
+		public virtual T SetObject<T> (bool destroyPrevious=true) where T : MonoBehaviour, IPathElementObject {
 			IPathElementObject obj = ObjectPool.Instantiate<T> ();
-			SetObject (obj);
+			SetObject (obj, destroyPrevious);
 			return obj as T;
 		}
 
-		protected void SetObject (IPathElementObject obj) {
-			RemoveObject ();
+		protected void SetObject (IPathElementObject obj, bool destroyPrevious=true) {
+			if (destroyPrevious) RemoveObject ();
 			Element.Object = obj;
 			Transform objTransform = ((MonoBehaviour)obj).transform;
 			objTransform.SetParent (MyTransform);
@@ -105,6 +107,7 @@ namespace DNA {
 				ObjectPool.Destroy (((MonoBehaviour)Element.Object).transform);
 		}
 
+		[DebuggableMethod ()]
 		public void SetFloodLevel (float floodLevel) {
 			damageHandler.SetFloodLevel (floodLevel, Element);
 		}
@@ -124,7 +127,12 @@ namespace DNA {
 
 		protected virtual void OnSetObject (IPathElementObject obj) {}
 		protected virtual void OnEndConstruction (IPathElementObject obj) {}
-		//protected virtual void OnEndRepair (IPathElementObject obj) {}
+
+		#region IPointerDownHandler implementation
+		public virtual void OnPointerDown (PointerEventData e) {
+
+		}
+		#endregion
 
 		class DamageHandler {
 
@@ -142,7 +150,7 @@ namespace DNA {
 				set { startFloodTime = value ? Time.time : -1; }
 			}
 
-			const float maxFloodTime = 120f;
+			const float maxFloodTime = 10f;//120f;
 			float startFloodTime = -1;
 			DevelopmentState stateBeforeFlood;
 

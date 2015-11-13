@@ -277,13 +277,22 @@ namespace DNA.Units {
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
 		#region IPathElementVisitor implementation
+		Fermat surroundPositions = new Fermat (new Fermat.Settings (0.75f, 100, 0, Vector3.zero));
+
 		int visitorIndex = 0;
 		public int VisitorIndex {
 			get { return visitorIndex; }
 			set {
 				visitorIndex = value;
+				/*if (visitorIndex == 0) {
+					Transform.SetLocalPositionY (9f);
+					//Transform.SetLocalPosition (Vector3.zero);
+				} else {
+					Vector3 p = surroundPositions[visitorIndex];
+					Transform.SetLocalPosition (new Vector3 (p.x, 9f, p.z));
+				}*/
 				if (visitorIndex > 0)
-					StartCoroutine (CoMoveToYPosition (7.5f + 1.15f * visitorIndex));
+					StartCoroutine (CoMoveToYPosition (10.5f + 1.15f * visitorIndex));
 				else
 					StartCoroutine (CoMoveToYPosition (0f));
 			}

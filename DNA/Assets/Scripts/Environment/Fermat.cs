@@ -42,6 +42,10 @@ public class Fermat {
 		}
 	}
 
+	public Vector3 this[int index] {
+		get { return Points[index]; }
+	}
+
 	public Fermat (Settings? settings=null) {
 		if (settings != null)
 			this.settings = (Settings)settings;

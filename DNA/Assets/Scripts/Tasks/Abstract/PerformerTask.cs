@@ -1,4 +1,4 @@
-﻿#define QUARTER_TIME
+﻿#undef QUARTER_TIME
 #undef DEBUG_MSG
 using UnityEngine;
 using System.Collections;

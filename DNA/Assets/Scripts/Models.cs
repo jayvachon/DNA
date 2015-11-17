@@ -329,6 +329,36 @@ namespace DNA.Models {
 				}
 			});
 
+			tasks.Add (typeof (GenerateUnit<Elder>), new CostTaskSettings {
+				Symbol = "generate_elder",
+				Title = "Birth Elder",
+				Description = "Creates a new elder",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 0 }
+					}
+				}
+			});
+
+			tasks.Add (typeof (GenerateUnit<Corpse>), new CostTaskSettings {
+				Symbol = "generate_corpse",
+				Title = "Birth Corpse",
+				Description = "Creates a new corpse",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 0 }
+					}
+				}
+			});
+
 			/**
 			 *	ResearchUpgrade
 			 */

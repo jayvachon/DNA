@@ -47,40 +47,38 @@ namespace DNA.Units {
 		void Awake () {
 
 			unitRenderer.SetColors (new Color (0.808f, 0.945f, 0.604f));
-
 			Inventory = Player.Instance.Inventory;
 
-			AcceptableTasks.Add (new AcceptDeliverItem<MilkshakeGroup> ());
-			AcceptableTasks.Add (new AcceptDeliverItem<CoffeeGroup> ());
-
 			PerformableTasks.Add (new GenerateUnit<Distributor> ()).onComplete += OnGenerateDistributor;
+			PerformableTasks.Add (new GenerateUnit<Elder> ()).onComplete += OnGenerateElder;
+			PerformableTasks.Add (new GenerateUnit<Corpse> ()).onComplete += OnGenerateCorpse;
 
-			/*PerformableActions = new PerformableActions (this);
-			PerformableActions.OnStartAction += OnStartAction;
-			PerformableActions.Add (new GenerateUnit<Distributor, CoffeeHolder> (-1, OnUnitGenerated), "Birth Laborer (15C)");
-			#if GENERATE_ALL
-			PerformableActions.Add (new GenerateUnit<Elder, CoffeeHolder> (0, OnUnitGenerated), "Birth Elder (temp)");
-			PerformableActions.Add (new GenerateUnit<Corpse, CoffeeHolder> (0, OnUnitGenerated), "Birth Corpse (temp)");
-			#endif*/
+		}
+
+		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
+			a.Add (new AcceptDeliverItem<MilkshakeGroup> ());
+			a.Add (new AcceptDeliverItem<CoffeeGroup> ());
 		}
 
 		void OnGenerateDistributor (PerformerTask task) {
-			Unit unit = ((GenerateUnit<Distributor>)task).GeneratedUnit;
+			OnUnitGenerated (((GenerateUnit<Distributor>)task).GeneratedUnit);
+		}
+
+		void OnGenerateElder (PerformerTask task) {
+			OnUnitGenerated (((GenerateUnit<Elder>)task).GeneratedUnit);
+		}
+
+		void OnGenerateCorpse (PerformerTask task) {
+			OnUnitGenerated (((GenerateUnit<Corpse>)task).GeneratedUnit);
+		}
+
+		void OnUnitGenerated (Unit unit) {
 			if (positionIndex >= CreatePositions.Count-1) {
 				positionIndex = 0;
 			} else {
 				positionIndex ++;
 			}
 			((MobileUnit)unit).SetStartPoint ((GridPoint)Element);
-		}
-
-		void OnUnitGenerated (Unit unit) {
-			unit.Position = CreatePositions[positionIndex];
-			if (positionIndex >= CreatePositions.Count-1) {
-				positionIndex = 0;
-			} else {
-				positionIndex ++;
-			}
 		}
 
 		void OnYearsCollected () {

@@ -274,6 +274,22 @@ namespace DNA.Units {
 			Transform.SetLocalPositionY (endY);
 		}
 
+		IEnumerator CoMoveToPosition (Vector3 pos) {
+
+			float time = 0.15f;
+			float eTime = 0f;
+			Vector3 startPosition = Transform.localPosition;
+
+			while (eTime < time) {
+				eTime += Time.deltaTime;
+				float progress = Mathf.SmoothStep (0, 1, eTime / time);
+				Transform.localPosition = Vector3.Lerp (startPosition, pos, progress);
+				yield return null;
+			}
+
+			Transform.localPosition = pos;
+		}
+
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
 		#region IPathElementVisitor implementation
@@ -284,17 +300,12 @@ namespace DNA.Units {
 			get { return visitorIndex; }
 			set {
 				visitorIndex = value;
-				/*if (visitorIndex == 0) {
-					Transform.SetLocalPositionY (9f);
-					//Transform.SetLocalPosition (Vector3.zero);
+				if (visitorIndex > 0) {
+					Vector3 sp = surroundPositions[visitorIndex] + Transform.localPosition;
+					StartCoroutine (CoMoveToPosition (new Vector3 (sp.x, 8.5f, sp.z)));
 				} else {
-					Vector3 p = surroundPositions[visitorIndex];
-					Transform.SetLocalPosition (new Vector3 (p.x, 9f, p.z));
-				}*/
-				if (visitorIndex > 0)
-					StartCoroutine (CoMoveToYPosition (10.5f + 1.15f * visitorIndex));
-				else
-					StartCoroutine (CoMoveToYPosition (0f));
+					StartCoroutine (CoMoveToPosition (new Vector3 (0, 0, 0)));
+				}
 			}
 		}
 		#endregion

@@ -17,19 +17,10 @@ namespace DNA.Units {
 			set { Inventory.RemoveItems<HealthHolder> (100 - value); }
 		}*/
 
-		HealthIndicator indicator;
-		//HealthHolder healthHolder;
-		//HealthGroup healthGroup;
-
 		void Awake () {
 
 			unitRenderer.SetColors (new Color (0.447f, 0.251f, 0.447f));
 
-			Inventory = new Inventory (this);
-			//Inventory.Add (new YearHolder (500, 65));
-			Inventory.Add (new YearGroup (65, 500));
-			//healthHolder = (HealthHolder)Inventory.Add (new HealthHolder (100, 100));
-			Inventory.Add (new HealthGroup (100, 100));
 			//Inventory.Get<YearHolder> ().DisplaySettings = new ItemHolderDisplaySettings (true, false);
 			//healthHolder.DisplaySettings = new ItemHolderDisplaySettings (true, true);
 
@@ -41,61 +32,30 @@ namespace DNA.Units {
 			PerformableActions.SetActive ("OccupyUnit", false);*/
 		}
 
-		void Start () {
-			//Path.Active = false;
-			//Path.Speed = Path.PathSettings.MaxSpeed / TimerValues.Instance.Year;
+		protected override void OnInitInventory (Inventory i) {
+			i.Add (new YearGroup (65, 500));
+			i.Add (new HealthGroup (100, 100));
 		}
-		
-		//public override void OnPoolCreate () {
+
 		protected override void OnEnable () {
 			InitInventory ();
-			InitIndicator ();
-			//PerformableActions.Start ("ConsumeHealth");
 			NotificationCenter.Instance.ShowNotification ("laborerRetired");
 			base.OnEnable ();
 		}
 
 		void InitInventory () {
-			/*Inventory.Get<YearHolder> ().Clear ();
-			Inventory.AddItems<YearHolder> (65);
-			Inventory.AddItems<HealthHolder> (100);
-			healthHolder.HolderUpdated += OnHealthUpdate;
-			healthHolder.HolderEmptied += OnDie;*/
 			Inventory["Years"].Clear ();
 			Inventory["Years"].Set (65);
 			Inventory["Health"].Set (100);
-			Inventory["Health"].onUpdate += OnHealthUpdate;
 			Inventory["Health"].onEmpty += OnDie;
 		}
 
-		void InitIndicator () {
-			indicator = ObjectPool.Instantiate<HealthIndicator> ();
-			indicator.Initialize (Transform);
-		}
-
-		//public override void OnPoolDestroy () {
 		protected override void OnDisable () {
-			//healthHolder.HolderEmptied -= OnDie;
 			Inventory["Health"].onEmpty -= OnDie;
-			ObjectPool.Destroy<HealthIndicator> (indicator.MyTransform);
-			indicator = null;
 			base.OnDisable ();
 		}
 
-		// TODO: remove this?
-		/*protected override void OnBind () {
-			PerformableActions.SetActive ("OccupyUnit", true);
-			IActionAcceptor boundAcceptor = BoundAcceptor;
-			BoundAcceptor = null;
-			//OnBindActionable (boundAcceptor);
-		}*/
-
-		void OnHealthUpdate () {
-			//if (indicator != null) indicator.Fill = healthHolder.PercentFilled;
-		}
-
 		void OnDie () {
-			//PerformableActions.Stop ("ConsumeHealth");
 			ChangeUnit<Elder, Corpse> ();
 		}
 

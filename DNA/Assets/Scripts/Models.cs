@@ -414,6 +414,21 @@ namespace DNA.Models {
 				}
 			});
 
+			tasks.Add (typeof (UpgradeLevee), new CostTaskSettings {
+				Title = "Upgrade levee",
+				Description = "Raises the levee wall",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 100 },
+						{ "Milkshakes", 100 }
+					}
+				}
+			});
+
 			/**
 			 *	Tests
 			 */

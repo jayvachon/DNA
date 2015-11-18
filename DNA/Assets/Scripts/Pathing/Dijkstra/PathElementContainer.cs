@@ -129,9 +129,7 @@ namespace DNA {
 		protected virtual void OnEndConstruction (IPathElementObject obj) {}
 
 		#region IPointerDownHandler implementation
-		public virtual void OnPointerDown (PointerEventData e) {
-
-		}
+		public virtual void OnPointerDown (PointerEventData e) {}
 		#endregion
 
 		class DamageHandler {

@@ -30,11 +30,6 @@ namespace DNA {
 		}
 
 		[DebuggableMethod ()]
-		void SetLeveeHeight (float height) {
-			levee.Height = height;
-		}
-
-		[DebuggableMethod ()]
 		void SetPumpRate (float rate) {
 			pumpRate = rate * displacementCoefficient;
 		}

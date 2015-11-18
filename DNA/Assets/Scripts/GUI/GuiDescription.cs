@@ -30,7 +30,7 @@ public class GuiDescription : GuiSelectableListener {
 			.FindAll (x => x is Unit)
 			.ConvertAll (x => x as Unit);
 
-		Unit commonUnit = units[0];
+		Unit commonUnit = units.Count > 0 ? units[0] : null;
 
 		foreach (Unit u in units) {
 			if (u.Name != commonUnit.Name) {

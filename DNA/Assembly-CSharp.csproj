@@ -224,6 +224,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\IConstructable.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ResearchUnit.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ResearchUpgrade.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\UpgradeLevee.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskMatcher.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AcceptCollectItemTest.cs" />

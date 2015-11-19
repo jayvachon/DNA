@@ -22,6 +22,7 @@ namespace DNA.Units {
 		public virtual void OnOverrideSelect (ISelectable overridenSelectable) {
 
 			StaticUnit u = overridenSelectable as StaticUnit;
+			Debug.Log (u);
 
 			// Only interested in StaticUnits
 			if (u == null)
@@ -85,12 +86,6 @@ namespace DNA.Units {
 			}
 		}
 
-		GridPoint lastMatchedPoint = null;
-		GridPoint LastMatchedPoint {
-			get { return lastMatchedPoint; }
-			set { lastMatchedPoint = value; }
-		}
-
 		GridPoint currentPoint;
 		GridPoint CurrentPoint {
 			get { return currentPoint; }
@@ -125,6 +120,11 @@ namespace DNA.Units {
 			}
 		}
 
+		public bool PerformingTask {
+			get { return currentTask != null; }
+		}
+
+		GridPoint lastMatchedPoint = null;
 		PerformerTask currentTask;
 		Connection currentRoadConstruction;
 		Positioner positioner;
@@ -221,8 +221,8 @@ namespace DNA.Units {
 			}
 
 			// Check if the last matched point can pair with the task
-			if (LastMatchedPoint != null && TaskMatcher.GetPair (t, LastMatchedPoint) != null) {
-				positioner.Destination = LastMatchedPoint;
+			if (lastMatchedPoint != null && TaskMatcher.GetPair (t, lastMatchedPoint) != null) {
+				positioner.Destination = lastMatchedPoint;
 			} else {
 				
 				// If not, find the closest one that can
@@ -233,7 +233,7 @@ namespace DNA.Units {
 			}
 
 			currentTask = null;
-			LastMatchedPoint = CurrentPoint;
+			lastMatchedPoint = CurrentPoint;
 		}
 
 		void OnCompleteRoad (PerformerTask t) {

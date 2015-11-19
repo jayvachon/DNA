@@ -29,8 +29,8 @@ namespace DNA.Units {
 		}
 
 		protected override void OnInitInventory (Inventory i) {
-			i.Add (new CoffeeGroup (0, 20));
-			i.Add (new YearGroup (0, 300));
+			i.Add (new CoffeeGroup (0, 10));
+			i.Add (new YearGroup (0, 1200));
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {

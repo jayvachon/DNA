@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -242,5 +243,13 @@ public static class ExtensionMethods {
 		Vector3 colliderSize = collider.size;
 		colliderSize.y = size;
 		collider.size = colliderSize;
+	}
+
+	/**
+	 *	EventSystems
+	 */
+
+	public static bool LeftClicked (this PointerEventData e) {
+		return e.button == PointerEventData.InputButton.Left;
 	}
 }

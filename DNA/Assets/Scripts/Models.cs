@@ -288,7 +288,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (GenerateItem<CoffeeGroup>), new TaskSettings {
 				Symbol = "generate_coffee",
-				Duration = 2f,
+				Duration = 3f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
@@ -316,7 +316,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (GenerateUnit<Distributor>), new CostTaskSettings {
 				Symbol = "generate_laborer",
-				Title = "Birth Laborer (15C)",
+				Title = "Birth Laborer (25C)",
 				Description = "Creates a new laborer",
 				Duration = 0f,
 				AutoStart = false,
@@ -324,7 +324,7 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Coffee", 15 }
+						{ "Coffee", 25 }
 					}
 				}
 			});

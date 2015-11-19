@@ -115,6 +115,10 @@ public class ObjectPool {
 	public static void Destroy<T> (GameObject go) where T : MonoBehaviour {
 		GetPool<T> ().ReleaseInstance (go.GetComponent<MonoBehaviour> ());
 	}
+
+	public static List<T> GetActiveObjects<T> () where T : MonoBehaviour {
+		return GetPool<T> ().active.ConvertAll (x => (T)x);
+	}
 }
 
 public static class PoolIOHandler {

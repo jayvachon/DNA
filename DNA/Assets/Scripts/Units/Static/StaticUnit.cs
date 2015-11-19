@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.InputSystem;
 using DNA.Tasks;
 using DNA.Paths;
+using UnityEngine.EventSystems;
 
 namespace DNA.Units {
 
-	public class StaticUnit : Unit, IPathElementObject, ITaskAcceptor {
+	public class StaticUnit : Unit, IPathElementObject, ITaskAcceptor, IPointerDownHandler {
 
 		PathElement element;
 		public PathElement Element { 
@@ -58,6 +60,20 @@ namespace DNA.Units {
 			}
 			DestroyThis<T> ();
 		}
+
+		#region IPointerDownHandler implementation
+		public void OnPointerDown (PointerEventData e) {
+			if (!e.LeftClicked ()) {
+				if (AcceptableTasks.EnabledTasks.Count > 0) {
+					List<Distributor> laborers = ObjectPool.GetActiveObjects<Distributor> ();
+					Distributor available = laborers.Find (x => !x.PerformingTask);
+					if (available != null) {
+						available.OnOverrideSelect (this);
+					}
+				}
+			}
+		}
+		#endregion
 
 		protected virtual void OnInitAcceptableTasks (AcceptableTasks a) {}
 		protected virtual void OnSetFertility (int fertility) {}

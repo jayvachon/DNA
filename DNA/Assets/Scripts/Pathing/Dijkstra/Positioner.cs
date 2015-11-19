@@ -31,7 +31,7 @@ namespace DNA.Paths {
 		public OnArriveAtDestination OnArriveAtDestination { get; set; }
 
 		int pathPosition = 0;
-		float speed = 2f;
+		float speed = 1.5f;
 		bool moving = false;
 
 		Transform mover;

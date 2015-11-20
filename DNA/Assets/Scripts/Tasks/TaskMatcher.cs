@@ -155,6 +155,14 @@ namespace DNA.Tasks {
 			}
 		}
 
+		public int GetPerformCount () {
+			AcceptInventoryTask a = Acceptor as AcceptInventoryTask;
+			if (a == null)
+				return 0;
+
+			return a.GetPerformCount (Match);
+		}
+
 		public void Print () {
 			Debug.Log (Match + " Acceptor is: " + Acceptor + " - Needs pair ? " + NeedsPair);
 		}

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using DNA.InventorySystem;
 using InventorySystem;
 
 namespace DNA.Tasks {
@@ -20,22 +19,19 @@ namespace DNA.Tasks {
 				return inventory;
 			}
 		}
+
+		public int GetPerformCount (PerformerTask p) {
+			IInventoryHolder h = p.Performer as IInventoryHolder;
+			if (h == null)
+				return 0;
+
+			return PerformCount (h.Inventory);
+		}
+
+		protected virtual int PerformCount (Inventory i) { return 0; }
 	}
 
-	public abstract class AcceptInventoryTask<T> : AcceptInventoryTask where T : ItemGroup {//ItemHolder {
-
-		/*T holder = null;
-		protected T Holder {
-			get {
-				if (holder == null) {
-					holder = Inventory.Get<T> ();
-				}
-				if (holder == null) {
-					throw new System.Exception ("Inventory does not include " + typeof (T));
-				}
-				return holder;
-			}
-		}*/
+	public abstract class AcceptInventoryTask<T> : AcceptInventoryTask where T : ItemGroup {
 
 		T group = null;
 		protected T Group {

@@ -22,7 +22,6 @@ namespace DNA.Units {
 		public virtual void OnOverrideSelect (ISelectable overridenSelectable) {
 
 			StaticUnit u = overridenSelectable as StaticUnit;
-			Debug.Log (u);
 
 			// Only interested in StaticUnits
 			if (u == null)
@@ -32,7 +31,7 @@ namespace DNA.Units {
 
 			// If the current point was selected and a task is not being performed, run OnArrive again to check for updates
 			if (p == CurrentPoint) {
-				if (currentTask != null)
+				if (currentMatch != null)
 					OnArriveAtDestination (CurrentPoint);
 				return;
 			}
@@ -121,16 +120,17 @@ namespace DNA.Units {
 		}
 
 		public bool PerformingTask {
-			get { return currentTask != null; }
+			get { return currentMatch != null; }
 		}
 
 		GridPoint lastMatchedPoint = null;
-		PerformerTask currentTask;
+		MatchResult currentMatch;
 		Connection currentRoadConstruction;
 		Positioner positioner;
 
 		public void SetStartPoint (GridPoint point) {
-			positioner = new Positioner (MobileTransform.MyTransform, point);
+			positioner = new Positioner (MyTransform, point);
+			//positioner = new Positioner (MobileTransform.MyTransform, point);
 			positioner.OnArriveAtDestination += OnArriveAtDestination;
 			CurrentPoint = point;
 		}
@@ -169,9 +169,14 @@ namespace DNA.Units {
 		bool TryStartMatch () {
 			MatchResult match = PointTaskMatch (CurrentPoint);
 			if (match != null) {
-				currentTask = match.Match;
-				if (match.PairType != null)
-					currentTask.onComplete += OnCompleteTask;
+				currentMatch = match;
+				if (match.PairType != null) {
+
+					//performCount = currentMatch.GetPerformCount (); // move this to its own class
+					BeginEncircling ();
+
+					currentMatch.Match.onComplete += OnCompleteTask;
+				}
 				match.Start (true);
 				return true;
 			}
@@ -183,8 +188,8 @@ namespace DNA.Units {
 			if (currentRoadConstruction != null) {
 				MatchResult match = TaskMatcher.GetPerformable (this, currentRoadConstruction.Object as ITaskAcceptor);
 				if (match != null) {
-					currentTask = match.Match;
-					currentTask.onComplete += OnCompleteRoad;
+					currentMatch = match;
+					currentMatch.Match.onComplete += OnCompleteRoad;
 					match.Start ();
 					return true;
 				}
@@ -232,7 +237,7 @@ namespace DNA.Units {
 				);
 			}
 
-			currentTask = null;
+			currentMatch = null;
 			lastMatchedPoint = CurrentPoint;
 		}
 
@@ -242,21 +247,39 @@ namespace DNA.Units {
 		}
 
 		void InterruptTask () {
-			if (currentTask != null) {
-				currentTask.onComplete -= OnCompleteTask;
-				currentTask.Stop ();
-				currentTask = null;
+			if (currentMatch != null) {
+				currentMatch.Match.onComplete -= OnCompleteTask;
+				currentMatch.Match.Stop ();
+				currentMatch = null;
 			}
 		}
 
-		/*IEnumerator CoWaitForCompleteCircle (System.Action onEnd) {
+		// move this to its own class
+		#region encircling
 
-			// Wait to finish circling
-			while (MobileTransform.Working)
+		void BeginEncircling () {
+			int performCount = currentMatch.GetPerformCount ();
+			float time = currentMatch.Match.Settings.Duration * performCount;
+			Parent = CurrentPoint.Unit.MyTransform;
+			Transform.SetLocalPositionZ (1.5f);
+			MyTransform.LookAt (positioner.PreviousPosition);
+			StartCoroutine (CoEncircle (time));
+		}
+
+		IEnumerator CoEncircle (float time) {
+			
+			float eTime = 0f;
+			float startRotation = MyTransform.localEulerAngles.y;
+		
+			while (eTime < time) {
+				eTime += Time.deltaTime;
+				float progress = Mathf.SmoothStep (0, 1, eTime / time);
+				MyTransform.SetLocalEulerAnglesY (Mathf.Lerp (startRotation, startRotation + 360f, progress));
 				yield return null;
+			}
+		}
 
-			onEnd ();
-		}*/
+		#endregion
 
 		IEnumerator CoMoveToYPosition (float endY) {
 			
@@ -300,12 +323,12 @@ namespace DNA.Units {
 			get { return visitorIndex; }
 			set {
 				visitorIndex = value;
-				if (visitorIndex > 0) {
+				/*if (visitorIndex > 0) {
 					Vector3 sp = surroundPositions[visitorIndex] + Transform.localPosition;
 					StartCoroutine (CoMoveToPosition (new Vector3 (sp.x, 8.5f, sp.z)));
 				} else {
 					StartCoroutine (CoMoveToPosition (new Vector3 (0, 0, 0)));
-				}
+				}*/
 			}
 		}
 		#endregion

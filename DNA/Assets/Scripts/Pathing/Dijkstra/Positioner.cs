@@ -20,6 +20,14 @@ namespace DNA.Paths {
 			}
 		}
 
+		public Vector3 PreviousPosition {
+			get {
+				if (Points == null)
+					return Vector3.zero;
+				return Points[Mathf.Max (0, pathPosition-1)];
+			}
+		}
+
 		bool HasNextPoint {
 			get { return path != null && path.Count > 1 && pathPosition+1 <= path.Count-1; }
 		}

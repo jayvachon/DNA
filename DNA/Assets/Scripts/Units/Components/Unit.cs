@@ -6,7 +6,7 @@ using DNA.Models;
 
 namespace DNA.Units {
 
-	public class Unit : MonoBehaviour, INameable, IInventoryHolder, ISelectable {
+	public class Unit : MBRefs, INameable, IInventoryHolder, ISelectable {
 
 		public virtual string Name {
 			get { return Settings.Title; }
@@ -69,10 +69,10 @@ namespace DNA.Units {
 			get { return unitTransform.MyTransform; }
 		}
 
-		public Vector3 Position {
+		/*public Vector3 Position {
 			get { return Transform.position; }
 			set { unitTransform.Position = value; }
-		}
+		}*/
 
 		// Changes this unit T to unit U
 		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {

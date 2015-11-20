@@ -15,5 +15,14 @@ namespace DNA.Tasks {
 		}
 
 		public AcceptCollectItem (Inventory inventory=null) : base (inventory) {}
+
+		protected override int PerformCount (Inventory i) {
+			T performerGroup = i.Get<T> ();
+			if (performerGroup.HasCapacity) {
+				return Mathf.Min (Group.Count, performerGroup.Capacity - performerGroup.Count);
+			} else {
+				return Group.Count;
+			}
+		}
 	}
 }

@@ -38,16 +38,20 @@ namespace DNA.Paths {
 
 		public OnArriveAtDestination OnArriveAtDestination { get; set; }
 
+		Vector3 ghostPosition;
+		Vector3 position;
+		float pathAngle;
 		int pathPosition = 0;
 		float speed = 1.5f;
 		bool moving = false;
+		float radius = 1.5f;
 
 		Transform mover;
 		GridPoint startPoint;
 		GridPoint endPoint;
 		List<GridPoint> path;
 
-		public Positioner (Transform mover, GridPoint startPoint, float speed=2f) {
+		public Positioner (Transform mover, GridPoint startPoint, float speed=1.5f) {
 			this.mover = mover;
 			this.startPoint = startPoint;
 			endPoint = startPoint;
@@ -70,11 +74,92 @@ namespace DNA.Paths {
 			Vector3 to = Points[pathPosition+1];
 			float distance = Vector3.Distance (from, to);
 			float time = distance / speed;
+			pathAngle = Vector3.Angle (from - to, Vector3.forward);
 
 			Coroutine.Start (
 				time, 
-				(float t) => { mover.position = Vector3.Lerp (from, to, t); }, 
+				//(float t) => { mover.position = Vector3.Lerp (from, to, t); }, 
+				(float t) => { Move (t, from, to); }, 
 				OnArriveAtPoint
+			);
+		}
+
+		void Move (float t, Vector3 from, Vector3 to) {
+
+			GizmosDrawer.Instance.Clear ();
+			//GizmosDrawer.Instance.Add (new GizmoLine (from, to));
+			//GizmosDrawer.Instance.Add (new GizmoRay (from, to.normalized));
+			DrawPointInLineDirection (from);
+
+			ghostPosition = Vector3.Lerp (from, to, t);
+			GizmosDrawer.Instance.Add (new GizmoSphere (ghostPosition, 0.5f));
+
+			float distanceToTarget = Mathf.Infinity;
+			float distanceToOrigin = Mathf.Infinity;
+
+			if (t > 0.5f) {
+				distanceToTarget = Vector3.Distance (ghostPosition, to);
+				//DrawCircleAroundPivot (to);
+			} else {
+				distanceToOrigin = Vector3.Distance (ghostPosition, from);
+				//DrawCircleAroundPivot (from);
+			}
+			
+			if (distanceToTarget <= radius) {
+				mover.position = GetPointAroundAxis (to, 90f);
+				//mover.RotateAround (to, Vector3.up, Time.deltaTime * speed*460 * Mathf.Abs (distanceToTarget / radius-1));
+			} else if (distanceToOrigin <= radius) {
+				mover.position = GetPointAroundAxis (from, 90f);
+				//mover.RotateAround (from, Vector3.up, Time.deltaTime * speed*460 * Mathf.Abs (distanceToOrigin / radius-1));
+			} else {
+				position = ghostPosition;
+				mover.position = position;
+			}
+		}
+
+		void DrawPointInLineDirection (Vector3 pivot) {
+
+			float r = pathAngle * Mathf.Deg2Rad;
+			Vector3 position = new Vector3 (
+				pivot.x + radius * Mathf.Sin (r),
+				pivot.y,
+				pivot.z + radius * Mathf.Cos (r)
+			);
+
+			GizmosDrawer.Instance.Add (new GizmoSphere (position, 0.25f));
+		}
+
+		void DrawCircleAroundPivot (Vector3 pivot) {
+			
+			int count = 12;
+			float deg = 360f / (float)count;
+
+			for (int i = 0; i < count; i ++) {
+				float r = (float)i * deg * Mathf.Deg2Rad;
+				Vector3 position = new Vector3 (
+					pivot.x + radius * Mathf.Sin (r),
+					pivot.y,
+					pivot.z + radius * Mathf.Cos (r)
+				);
+				if (Mathf.Approximately (0f, deg * i)) {
+					GizmosDrawer.Instance.Add (new GizmoLine (pivot, position));
+				}
+				GizmosDrawer.Instance.Add (new GizmoSphere (position, 0.2f));
+			}
+		}
+
+		Vector3 GetPointAroundAxis (Vector3 pivot, float angle) {
+
+			float sign = Mathf.Sign (pivot.x);
+			float offset = pathAngle + ((sign > 0) ? 90f : 270f);
+
+
+
+			//float r = (pathAngle + angle) * Mathf.Deg2Rad;
+			return new Vector3 (
+				pivot.x + radius * Mathf.Sin (Mathf.PI * 2 * Mathf.Deg2Rad),
+				pivot.y,
+				pivot.z + radius * Mathf.Cos (Mathf.PI * 2 * Mathf.Deg2Rad)
 			);
 		}
 

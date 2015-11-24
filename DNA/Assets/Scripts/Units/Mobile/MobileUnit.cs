@@ -128,11 +128,16 @@ namespace DNA.Units {
 		Connection currentRoadConstruction;
 		Positioner positioner;
 
+		/*protected override void OnEnable () {
+			base.OnEnable ();
+			Transform.SetLocalPositionZ (1.5f);
+		}*/
+
 		public void SetStartPoint (GridPoint point) {
 			positioner = new Positioner (MyTransform, point);
-			//positioner = new Positioner (MobileTransform.MyTransform, point);
 			positioner.OnArriveAtDestination += OnArriveAtDestination;
 			CurrentPoint = point;
+			MyTransform.SetLocalPosition (point.Position);
 		}
 
 		/**
@@ -171,10 +176,7 @@ namespace DNA.Units {
 			if (match != null) {
 				currentMatch = match;
 				if (match.PairType != null) {
-
-					//performCount = currentMatch.GetPerformCount (); // move this to its own class
 					BeginEncircling ();
-
 					currentMatch.Match.onComplete += OnCompleteTask;
 				}
 				match.Start (true);
@@ -261,9 +263,8 @@ namespace DNA.Units {
 			int performCount = currentMatch.GetPerformCount ();
 			float time = currentMatch.Match.Settings.Duration * performCount;
 			Parent = CurrentPoint.Unit.MyTransform;
-			Transform.SetLocalPositionZ (1.5f);
-			MyTransform.LookAt (positioner.PreviousPosition);
-			StartCoroutine (CoEncircle (time));
+			//MyTransform.LookAt (positioner.PreviousPosition);
+			//StartCoroutine (CoEncircle (time));
 		}
 
 		IEnumerator CoEncircle (float time) {
@@ -277,6 +278,8 @@ namespace DNA.Units {
 				MyTransform.SetLocalEulerAnglesY (Mathf.Lerp (startRotation, startRotation + 360f, progress));
 				yield return null;
 			}
+
+			Parent = null;
 		}
 
 		#endregion

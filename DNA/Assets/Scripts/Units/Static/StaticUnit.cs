@@ -63,6 +63,7 @@ namespace DNA.Units {
 
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {
+			Debug.Log (e.LeftClicked ());
 			if (!e.LeftClicked ()) {
 				if (AcceptableTasks.EnabledTasks.Count > 0) {
 					List<Distributor> laborers = ObjectPool.GetActiveObjects<Distributor> ();

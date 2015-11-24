@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
      <Compile Include="Assets\Scripts\DataManager.cs" />
      <Compile Include="Assets\Scripts\Debugging\DebugMenu.cs" />
+     <Compile Include="Assets\Scripts\Debugging\GizmosDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
@@ -185,6 +186,10 @@
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementPoint.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementTest.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Movement\PathMover.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Movement\ProjectionMatrix.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerActionState.cs" />

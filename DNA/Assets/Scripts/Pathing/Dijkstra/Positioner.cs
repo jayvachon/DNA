@@ -89,7 +89,7 @@ namespace DNA.Paths {
 			GizmosDrawer.Instance.Clear ();
 			//GizmosDrawer.Instance.Add (new GizmoLine (from, to));
 			//GizmosDrawer.Instance.Add (new GizmoRay (from, to.normalized));
-			DrawPointInLineDirection (from);
+			DrawPointInLineDirection (from, to);
 
 			ghostPosition = Vector3.Lerp (from, to, t);
 			GizmosDrawer.Instance.Add (new GizmoSphere (ghostPosition, 0.5f));
@@ -117,9 +117,16 @@ namespace DNA.Paths {
 			}
 		}
 
-		void DrawPointInLineDirection (Vector3 pivot) {
+		void DrawPointInLineDirection (Vector3 pivot, Vector3 target) {
 
-			float r = pathAngle * Mathf.Deg2Rad;
+			Quaternion q = new Quaternion ();
+			q = Quaternion.LookRotation (target - pivot);
+
+			Vector3 e = q.eulerAngles.normalized;
+
+			float a = Vector3.Angle (target - pivot, Vector3.forward);
+			float r = a * Mathf.Deg2Rad;
+			Debug.Log (a);
 			Vector3 position = new Vector3 (
 				pivot.x + radius * Mathf.Sin (r),
 				pivot.y,
@@ -131,7 +138,7 @@ namespace DNA.Paths {
 
 		void DrawCircleAroundPivot (Vector3 pivot) {
 			
-			int count = 12;
+			int count = 4;
 			float deg = 360f / (float)count;
 
 			for (int i = 0; i < count; i ++) {

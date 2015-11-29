@@ -187,6 +187,7 @@
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementPoint.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementTest.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMover.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\ProjectionMatrix.cs" />

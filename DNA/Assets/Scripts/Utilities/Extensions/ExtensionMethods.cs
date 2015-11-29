@@ -14,6 +14,10 @@ public static class ExtensionMethods {
 		return Mathf.Round (fl * (magnitude)) / magnitude;
 	}
 
+	public static float Map (this float value, float from1, float to1, float from2, float to2) {
+	    return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+	}
+
 	/**
 	 *	Vector3
 	 */
@@ -24,8 +28,28 @@ public static class ExtensionMethods {
 		return Mathf.Approximately (vector3.x, otherVector3.x) && Mathf.Approximately (vector3.y, otherVector3.y) && Mathf.Approximately (vector3.z, otherVector3.z);
 	}
 
+	/**
+	 *	Quaternion
+	 */
+
 	public static Quaternion ToQuaternion (this Vector3 vector3) {
 		return Quaternion.Euler (vector3.x, vector3.y, vector3.z);
+	}
+
+	// TODO: this could be made more generic (specify counter/clockwise, set angle axis)
+	public static Quaternion SlerpClockwise (this Quaternion from, Quaternion to, float t) {
+
+		Vector3 a = to * Vector3.forward;
+		Vector3 b = from * Vector3.forward;
+
+		// true if turning clockwise
+		if (Mathf.Sign (Mathf.DeltaAngle (Mathf.Atan2 (a.x, a.z) * Mathf.Rad2Deg, Mathf.Atan2 (b.x, b.z) * Mathf.Rad2Deg)) == -1)
+			return Quaternion.Slerp (from, to, t);
+
+		Quaternion mid = Quaternion.Slerp (from, to, 0.5f) * Quaternion.AngleAxis (180f, Vector3.up);
+		return (t < 0.5f)
+			? Quaternion.Slerp (from, mid, t * 2f)
+			: Quaternion.Slerp (mid, to, (t-0.5f) * 2f);
 	}
 
 	/**

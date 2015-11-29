@@ -122,7 +122,7 @@ namespace DNA.Paths {
 			Quaternion q = new Quaternion ();
 			q = Quaternion.LookRotation (target - pivot);
 
-			Vector3 e = q.eulerAngles.normalized;
+			//Vector3 e = q.eulerAngles.normalized;
 
 			float a = Vector3.Angle (target - pivot, Vector3.forward);
 			float r = a * Mathf.Deg2Rad;
@@ -158,7 +158,7 @@ namespace DNA.Paths {
 		Vector3 GetPointAroundAxis (Vector3 pivot, float angle) {
 
 			float sign = Mathf.Sign (pivot.x);
-			float offset = pathAngle + ((sign > 0) ? 90f : 270f);
+			//float offset = pathAngle + ((sign > 0) ? 90f : 270f);
 
 
 

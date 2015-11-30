@@ -42,9 +42,16 @@ public static class ExtensionMethods {
 		Vector3 a = to * Vector3.forward;
 		Vector3 b = from * Vector3.forward;
 
+		float delta = Mathf.DeltaAngle (Mathf.Atan2 (a.x, a.z) * Mathf.Rad2Deg, Mathf.Atan2 (b.x, b.z) * Mathf.Rad2Deg);
+
 		// true if turning clockwise
-		if (Mathf.Sign (Mathf.DeltaAngle (Mathf.Atan2 (a.x, a.z) * Mathf.Rad2Deg, Mathf.Atan2 (b.x, b.z) * Mathf.Rad2Deg)) == -1)
+		if (Mathf.Sign (delta) == -1)
 			return Quaternion.Slerp (from, to, t);
+
+		if (Mathf.Approximately (delta, 0) && t < 1f) {
+			Vector3 e = to.eulerAngles;
+			to = Quaternion.Euler (e.x-0.1f, e.y, e.z-0.1f);
+		}
 
 		Quaternion mid = Quaternion.Slerp (from, to, 0.5f) * Quaternion.AngleAxis (180f, Vector3.up);
 		return (t < 0.5f)

@@ -40,7 +40,7 @@ namespace DNA.Paths {
 
 		Vector3 ghostPosition;
 		Vector3 position;
-		float pathAngle;
+		//float pathAngle;
 		int pathPosition = 0;
 		float speed = 1.5f;
 		bool moving = false;
@@ -74,7 +74,7 @@ namespace DNA.Paths {
 			Vector3 to = Points[pathPosition+1];
 			float distance = Vector3.Distance (from, to);
 			float time = distance / speed;
-			pathAngle = Vector3.Angle (from - to, Vector3.forward);
+			//pathAngle = Vector3.Angle (from - to, Vector3.forward);
 
 			Coroutine.Start (
 				time, 
@@ -119,8 +119,8 @@ namespace DNA.Paths {
 
 		void DrawPointInLineDirection (Vector3 pivot, Vector3 target) {
 
-			Quaternion q = new Quaternion ();
-			q = Quaternion.LookRotation (target - pivot);
+			//Quaternion q = new Quaternion ();
+			//q = Quaternion.LookRotation (target - pivot);
 
 			//Vector3 e = q.eulerAngles.normalized;
 
@@ -157,7 +157,7 @@ namespace DNA.Paths {
 
 		Vector3 GetPointAroundAxis (Vector3 pivot, float angle) {
 
-			float sign = Mathf.Sign (pivot.x);
+			//float sign = Mathf.Sign (pivot.x);
 			//float offset = pathAngle + ((sign > 0) ? 90f : 270f);
 
 

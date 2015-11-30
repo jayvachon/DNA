@@ -22,6 +22,10 @@ public class PathMovementRotation : MonoBehaviour {
 	Vector3 ghost = Vector3.zero;
 	Vector3 mover = Vector3.zero;
 	Quaternion ghostRotation;
+	Quaternion moverRotation;
+
+	Vector3 fromPosition = Vector3.zero;
+	Vector3 toPosition = Vector3.zero;
 
 	List<Vector3> Points {
 		get { return new List<Vector3> () { ptA, ptB, ptC }; }
@@ -32,6 +36,9 @@ public class PathMovementRotation : MonoBehaviour {
 		UpdateBPosition ();
 		UpdateCPosition ();
 		mover.z = ghost.z - radius;
+		moverRotation = Quaternion.LookRotation (mover - ghost);
+		//toPosition = GetPointAroundAxis (ptA, moverRotation.eulerAngles.y);
+		fromPosition = GetPointAroundAxis (ptA, moverRotation.eulerAngles.y);
 
 		SetClockRotations ();
 	}
@@ -128,8 +135,10 @@ public class PathMovementRotation : MonoBehaviour {
 		DrawRotationLine (ptB, ptA);
 		DrawRotationLine (ptB, ptC);
 		DrawRotationLine (ptC, ptB);
-		GizmosDrawer.Instance.Add (new GizmoSphere (ghost, 0.2f));
+		GizmosDrawer.Instance.Add (new GizmoSphere (ghost, 0.2f, Color.white));
 		GizmosDrawer.Instance.Add (new GizmoSphere (mover, 0.25f));
+		GizmosDrawer.Instance.Add (new GizmoSphere (fromPosition, 0.2f, Color.red));
+		GizmosDrawer.Instance.Add (new GizmoSphere (toPosition, 0.2f, Color.green));
 
 		/*float a = ghostRotation.eulerAngles.y * Mathf.Deg2Rad;
 		Vector3 v = new Vector3 (
@@ -139,46 +148,91 @@ public class PathMovementRotation : MonoBehaviour {
 		);
 		GizmosDrawer.Instance.Add (new GizmoLine (ghost, v));*/
 
+		/*float a = moverRotation.eulerAngles.y * Mathf.Deg2Rad;
+		Vector3 v = new Vector3 (
+			mover.x + radius * Mathf.Sin (a),
+			mover.y,
+			mover.z + radius * Mathf.Cos (a)
+		);
+		GizmosDrawer.Instance.Add (new GizmoLine (mover, v));*/
+
 		DrawClock ();
 	}
 
 	void SetMoverPosition () {
 
-		Vector3 curr = GetPointAtPosition(path[pathPosition]);
+		Quaternion to = Quaternion.identity;
+		Quaternion from = Quaternion.identity;
+		Vector3 curr = GetPointAtPosition (path[pathPosition]);
 		Vector3 prev = pathPosition > 0 ? GetPointAtPosition (path[pathPosition-1]) : curr;
-		Vector3 next = pathPosition+1 < path.Count-1 ? GetPointAtPosition (path[pathPosition+1]) : curr;
-		Vector3 prev2 = pathPosition > 1 ? GetPointAtPosition (path[pathPosition-2]) : prev;
 		Vector3 nearest = curr;
-		float distanceToNext = Vector3.Distance (ghost, curr);
+
+		float distanceToCurr = Vector3.Distance (ghost, curr);
 		float distanceToPrev = Vector3.Distance (ghost, prev);
 		float p = 0f;
 
-		Quaternion from;
-		Quaternion to;
+		// if closer to the target
+		if (distanceToCurr <= radius) {
 
-		if (distanceToNext < distanceToPrev) {
-			nearest = curr;
-			from = Quaternion.LookRotation (prev - curr);
-			to = Quaternion.LookRotation (next - curr);
-			if (distanceToNext <= radius) {
-				p = (distanceToNext / radius).Map (1f, 0f, 0f, 0.5f);
-			} else {
-				p = 0f;
+			p = (distanceToCurr / radius).Map (1f, 0f, 0f, 0.5f);
+			Vector3 next = pathPosition+1 < path.Count-1 ? GetPointAtPosition (path[pathPosition+1]) : curr;
+
+			// if continuing on to the next point after this one
+			if (next != curr) {
+
+				// set "to" rotation to look at the next point
+				to = Quaternion.LookRotation (next - curr);
+				toPosition = GetPointAroundAxis (curr, to.eulerAngles.y);
+
+				// set "from" rotation to look at the previous point
+				from = Quaternion.LookRotation (prev - curr);
+				fromPosition = GetPointAroundAxis (curr, from.eulerAngles.y);
+
+			// if stopping at this point
+			} else if (prev != curr) {
+				to = Quaternion.LookRotation (prev - curr);
+				toPosition = GetPointAroundAxis (curr, to.eulerAngles.y);
+				mover = toPosition;
+
+				from = Quaternion.LookRotation (prev - curr);
+				fromPosition = GetPointAroundAxis (curr, from.eulerAngles.y);
+
+				return;
 			}
-		} else {
+
+			from = Quaternion.LookRotation (fromPosition - curr);
+
+		// if closer to the origin
+		} else if (distanceToPrev <= radius/* && prev != curr*/) {
+
 			nearest = prev;
-			from = Quaternion.LookRotation (prev2 - prev);
+
+			p = distanceToPrev / radius;
+			if (pathPosition > 1)
+				p = p.Map (0f, 1f, 0.5f, 1f);
+
+			// set rotation to look at the target point
 			to = Quaternion.LookRotation (curr - prev);
-			if (distanceToPrev <= radius) {
-				p = (distanceToPrev / radius).Map (0f, 1f, 0.5f, 1f);
-			} else {
-				p = 1f;
-			}
+			toPosition = GetPointAroundAxis (prev, to.eulerAngles.y);
+
+			from = Quaternion.LookRotation (fromPosition - prev);
+
+			// if just starting out and already pointing at target, don't do a full rotation
+			if (pathPosition == 1 && from == to)
+				return;
+
+		} else {
+			mover = ghost;
+			return;
+		}
+
+		if (p >= 0.99f) {
+			fromPosition = toPosition;
 		}
 
 		Quaternion q = from.SlerpClockwise (to, p);
-
 		mover = GetPointAroundAxis (nearest, q.eulerAngles.y);
+
 	}
 
 	void StartMover () {
@@ -193,22 +247,7 @@ public class PathMovementRotation : MonoBehaviour {
 		Vector3 t = GetPointAtPosition (path[nextIdx]);
 		pointPosition = path[nextIdx];
 
-		Quaternion fromAngle = Quaternion.LookRotation (f-t);//Quaternion.LookRotation (t - f);
-		Quaternion toAngle;
-		Quaternion prevAngle = fromAngle;
-
-		if (pathPosition-1 >= 0) {
-			prevAngle = Quaternion.LookRotation (GetPointAtPosition (path[idx]) - GetPointAtPosition (path[idx-1]));
-		}
-
-		if (pathPosition < path.Count-1) {
-			toAngle = Quaternion.LookRotation (GetPointAtPosition (path[nextIdx+1]) - GetPointAtPosition (path[idx+1]));
-			pathPosition ++;
-		} else {
-			path.Clear ();
-			toAngle = fromAngle;
-			pathPosition = 0;
-		}
+		pathPosition ++;
 
 		float speed = 2f;
 		float distance = Vector3.Distance (f, t);
@@ -216,90 +255,28 @@ public class PathMovementRotation : MonoBehaviour {
 
 		Coroutine.Start (
 			time, 
-			(float p) => { Move (p, f, t, fromAngle, toAngle, prevAngle); }, 
+			(float p) => { Move (p, f, t); }, 
 			OnArriveAtPoint
 		);
 	}
 
-	void Move (float t, Vector3 from, Vector3 to, Quaternion fromAngle, Quaternion toAngle, Quaternion prevAngle) {
-
-		Quaternion direction = Quaternion.LookRotation (to - from);
-		Quaternion inverse = Quaternion.LookRotation (from - to);
+	void Move (float t, Vector3 from, Vector3 to) {
 		ghost = Vector3.Lerp (from, to, t);
-
-		float distanceToTarget = Mathf.Infinity;
-		float distanceToOrigin = Mathf.Infinity;
-
-		if (t > 0.5f) {
-			distanceToTarget = Vector3.Distance (ghost, to) / radius * 0.5f;
-		} else {
-			distanceToOrigin = 0.5f + (Vector3.Distance (ghost, from) / radius * 0.5f);
-		}
-
-		Quaternion q = Quaternion.Slerp (fromAngle, toAngle, 0.5f) * Quaternion.AngleAxis(180f, Vector3.up);
-
 		SetMoverPosition ();
-
-		//Quaternion q = Quaternion.Slerp (inverse, direction, 0.5f);
-		//Quaternion q = ClockwiseSlerp (fromAngle, toAngle, t);
-		//Quaternion q = fromAngle.SlerpClockwise (toAngle, t);
-
-		//ghostRotation = Quaternion.Lerp (inverse, q, t);
-
-		/*Vector3? nearest = null;
-		Quaternion current = new Quaternion ();
-		Quaternion next = new Quaternion ();
-
-		float p = 0f;
-		if (distanceToTarget <= 1f) {
-			p = distanceToTarget.Map (1f, 0f, 0f, 0.5f);
-			nearest = to;
-			//current = inverse;
-			//next = direction;
-			current = fromAngle;
-			next = toAngle;
-		} else if (distanceToOrigin <= 1f) {
-			p = distanceToOrigin;//distanceToOrigin.Map (0f, 1f, 0f, 1f);
-			nearest = from;
-			//current = direction;
-			//next = inverse;
-			current = prevAngle;
-			next = fromAngle;
-
-			Debug.Log ("------------");
-			Debug.Log (current.eulerAngles.y + ", " + next.eulerAngles.y);
-		} 
-
-		if (nearest != null) {
-			Quaternion w = current.SlerpClockwise (next, p);
-			mover = GetPointAroundAxis ((Vector3)nearest, w.eulerAngles.y);
-		}*/
-
-		/*if (distanceToOrigin <= 1f) {
-			// 0->1
-			//mover = GetPointAroundAxis (direction, from, direction.eulerAngles.y);
-
-		} else if (distanceToTarget <= 1f) {
-			// 1->0
-			if (distanceToTarget < 0.5f) {
-				mover = GetPointAroundAxis (to, q.eulerAngles.y);
-			} else {
-				mover = GetPointAroundAxis (to, inverse.eulerAngles.y);
-			}
-		} else {
-			mover = ghost;
-		}*/
 	}
 
 	void OnArriveAtPoint () {
 		moving = false;
-		if (path.Count > 0)
+		if (pathPosition == path.Count-1) {
+			path.Clear ();
+			pathPosition = 0;
+		} else {
 			StartMover ();
+		}
 	}
 
 	Vector3 GetPointAroundAxis (Vector3 pivot, float angle) {
 		
-		//float r = (direction.eulerAngles.y + angle) * Mathf.Deg2Rad;
 		float r = angle * Mathf.Deg2Rad;
 
 		Vector3 position = new Vector3 (
@@ -356,6 +333,7 @@ public class PathMovementRotation : MonoBehaviour {
 		float b = Random.Range (0, 360);
 		rotA = Quaternion.AngleAxis (a, Vector3.up);
 		rotB = Quaternion.AngleAxis (b, Vector3.up);
+		rotA = rotB;
 		rotC = rotA;
 	}
 

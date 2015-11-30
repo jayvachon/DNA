@@ -45,13 +45,16 @@ public class GizmoSphere : GizmoShape {
 
 	Vector3 position;
 	float radius;
+	Color color;
 
-	public GizmoSphere (Vector3 position, float radius) {
+	public GizmoSphere (Vector3 position, float radius, Color color=default(Color)) {
 		this.position = position;
 		this.radius = radius;
+		this.color = color == default(Color) ? Color.black : color;
 	}
 
 	public override void Draw () {
+		Gizmos.color = color;
 		Gizmos.DrawSphere (position, radius);
 	}
 }

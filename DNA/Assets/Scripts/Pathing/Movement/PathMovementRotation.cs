@@ -38,7 +38,7 @@ public class PathMovementRotation : MonoBehaviour {
 			EndPoint = endPoint;
 		}
 
-		Vector3 GetPointAroundAxis (Vector3 pivot, float angle) {
+		public Vector3 GetPointAroundAxis (Vector3 pivot, float angle) {
 			
 			float radius = 1f;
 			float r = angle * Mathf.Deg2Rad;
@@ -55,40 +55,86 @@ public class PathMovementRotation : MonoBehaviour {
 
 	public class Rotator {
 
-		RotationPair currRot;
-		RotationPair prevRot;
+		RotationPair targetRot;
+		RotationPair originRot;
 		RotationPair nearest;
-		Vector3 position;
+		Vector3 prevPosition;
+		float proximity;
+		float radius = 1f;
 
-		public void SetRotationPairs (RotationPair curr, RotationPair prev) {
-			currRot = curr;
-			prevRot = prev;
+		public Vector3 Position { get; set; }
+
+		// TODO: pass in transform instead & set the start position here
+		public void Init (Vector3 startPosition) {
+			prevPosition = startPosition;
 		}
 
-		public void SetNearTarget () {
+		public void InitMovement (Vector3 origin, Vector3 target, Vector3 next) {
 
-			nearest = currRot;
-
-			if (nearest.EndPoint) {
-				position = nearest.ToPosition;
+			Quaternion to = Quaternion.identity;
+			Quaternion from = Quaternion.identity;
+			
+			if (next != target) {
+				to = Quaternion.LookRotation (next - target); 		// set "to" rotation to look at the next point
+				from = Quaternion.LookRotation (origin - target); 	// set "from" rotation to look at the previous point
+			} else if (origin != target) {
+				to = Quaternion.LookRotation (origin - target);
+				from = to;
 			}
 
-			/*fromRot = currRot.From;
-			toRot = currRot.To;
+			targetRot = new RotationPair (target, from, to, (origin != target && next == target));
 
-			toPosition = currRot.ToPosition;
-			fromPosition = currRot.FromPosition;
-
-			if (currRot.EndPoint) {
-				mover = toPosition;
-				return;
-			}
-
-			from = Quaternion.LookRotation (fromPosition - currRot.Pivot);*/
+			to = Quaternion.LookRotation (target - origin);
+			from = to;
+			originRot = new RotationPair (origin, from, to, false);
 		}
 
-		public void SetNearOrigin () {
-			nearest = prevRot;
+		// TODO: instead of returning a position, apply position to a transform
+		public Vector3 GetPosition (Vector3 ghostPosition, int pathPosition) {
+			
+			bool approachingTarget = OnApproachTarget (ghostPosition);
+			bool departingOrigin = OnDepartOrigin (ghostPosition, pathPosition);
+
+			if (!approachingTarget && !departingOrigin) {
+				return ghostPosition;
+			} else {
+
+				if (nearest.EndPoint) {
+					return nearest.ToPosition;
+				}
+
+				Quaternion from = Quaternion.LookRotation (prevPosition - nearest.Pivot);
+				Quaternion q = from.SlerpClockwise (nearest.To, proximity);
+				return nearest.GetPointAroundAxis (nearest.Pivot, q.eulerAngles.y);
+			}
+		}
+
+		bool OnApproachTarget (Vector3 ghostPosition) {
+
+			float distance = Vector3.Distance (ghostPosition, targetRot.Pivot);
+			if (distance > radius)
+				return false;
+
+			proximity = (distance / radius).Map (1f, 0f, 0f, 0.5f);
+			nearest = targetRot;
+			prevPosition = targetRot.FromPosition;
+
+			return true;
+		}
+
+		bool OnDepartOrigin (Vector3 ghostPosition, int pathPosition) {
+
+			float distance = Vector3.Distance (ghostPosition, originRot.Pivot);
+			if (distance > radius)
+				return false;
+
+			proximity = distance / radius;
+			if (pathPosition > 1)
+				proximity = proximity.Map (0f, 1f, 0.5f, 1f);
+
+			nearest = originRot;
+
+			return true;
 		}
 	}
 
@@ -130,6 +176,7 @@ public class PathMovementRotation : MonoBehaviour {
 		mover.z = ghost.z - radius;
 		moverRotation = Quaternion.LookRotation (mover - ghost);
 		fromPosition = GetPointAroundAxis (ptA, moverRotation.eulerAngles.y);
+		rotator.Init (fromPosition);
 
 		SetClockRotations ();
 	}
@@ -252,7 +299,7 @@ public class PathMovementRotation : MonoBehaviour {
 
 	void SetMoverPosition () {
 
-		Quaternion to = Quaternion.identity;
+		/*Quaternion to = Quaternion.identity;
 		Quaternion from = Quaternion.identity;
 		Vector3 nearest = currRot.Pivot;
 
@@ -260,72 +307,77 @@ public class PathMovementRotation : MonoBehaviour {
 		float distanceToPrev = Vector3.Distance (ghost, prevRot.Pivot);
 		float p = 0f;
 
+		bool runOld = false;
+
 		// if closer to the target
-		if (distanceToCurr <= radius) {
+		if (runOld) {
+			if (distanceToCurr <= radius) {
 
-			p = (distanceToCurr / radius).Map (1f, 0f, 0f, 0.5f);
-			rotator.SetNearTarget ();
+				//Debug.Log ("A: " + distanceToCurr);
+				p = (distanceToCurr / radius).Map (1f, 0f, 0f, 0.5f);
 
-			from = currRot.From;
-			to = currRot.To;
+				from = currRot.From;
+				to = currRot.To;
 
-			toPosition = currRot.ToPosition;
-			fromPosition = currRot.FromPosition;
+				toPosition = currRot.ToPosition;
+				fromPosition = currRot.FromPosition;
+				
+				if (currRot.EndPoint) {
+					mover = toPosition;
+					return;
+				}
 
-			if (currRot.EndPoint) {
-				mover = toPosition;
+				from = Quaternion.LookRotation (fromPosition - currRot.Pivot);
+
+			// if closer to the origin
+			} else if (distanceToPrev <= radius) {
+
+				nearest = prevRot.Pivot;
+
+				p = distanceToPrev / radius;
+				if (pathPosition > 1)
+					p = p.Map (0f, 1f, 0.5f, 1f);
+
+				// set rotation to look at the target point
+				to = prevRot.To;
+				toPosition = prevRot.ToPosition;
+
+				from = Quaternion.LookRotation (fromPosition - prevRot.Pivot);
+
+				// if just starting out and already pointing at target, don't do a full rotation
+				// redundant?
+				//if (pathPosition == 1 && from == to)
+					//return;
+
+			} else {
+				mover = ghost;
 				return;
 			}
 
-			from = Quaternion.LookRotation (fromPosition - currRot.Pivot);
-
-		// if closer to the origin
-		} else if (distanceToPrev <= radius) {
-
-			nearest = prevRot.Pivot;
-
-			p = distanceToPrev / radius;
-			if (pathPosition > 1)
-				p = p.Map (0f, 1f, 0.5f, 1f);
-
-			rotator.SetNearOrigin ();
-
-			// set rotation to look at the target point
-			to = prevRot.To;
-			toPosition = prevRot.ToPosition;
-
-			from = Quaternion.LookRotation (fromPosition - prevRot.Pivot);
-
-			// if just starting out and already pointing at target, don't do a full rotation
-			if (pathPosition == 1 && from == to)
-				return;
-
-		} else {
-			mover = ghost;
-			return;
-		}
-
-		if (p >= 0.99f) {
-			fromPosition = toPosition;
-		}
-
-		Quaternion q = from.SlerpClockwise (to, p);
-		mover = GetPointAroundAxis (nearest, q.eulerAngles.y);
-
+			// Debug.Log (from.eulerAngles.y);
+			// Debug.Log (fromPosition);
+			Quaternion q = from.SlerpClockwise (to, p);
+			//Debug.Log (fromPosition + "\n" + nearest + "\n" + prevRot.To + "\n" + p + "\n" + q.eulerAngles.y);
+			mover = GetPointAroundAxis (nearest, q.eulerAngles.y);
+		} 
+		else 
+		{*/
+			mover = rotator.GetPosition (ghost, pathPosition);
+		//}
 	}
 
 	void StartMover () {
 		
 		if (moving) return;
-		moving = true;
+		moving = false;
 
 		Vector3 f = GetPointAtPosition (path[pathPosition]);
 		Vector3 t = GetPointAtPosition (path[pathPosition+1]);
 		pointPosition = path[pathPosition+1];
+		Vector3 next = pathPosition+2 < path.Count-1 ? GetPointAtPosition (path[pathPosition+2]) : t;
 
-		Vector3 curr = t;
+		/*Vector3 curr = t;
 		Vector3 prev = f;
-		Vector3 next = pathPosition+2 < path.Count-1 ? GetPointAtPosition (path[pathPosition+2]) : curr;
 
 		Quaternion to = Quaternion.identity;
 		Quaternion from = Quaternion.identity;
@@ -348,9 +400,11 @@ public class PathMovementRotation : MonoBehaviour {
 
 		to = Quaternion.LookRotation (curr - prev);
 		from = Quaternion.LookRotation (currRot.FromPosition - prev); // not actually getting used
-		prevRot = new RotationPair (prev, from, to, false);
+		prevRot = new RotationPair (prev, from, to, false);*/
 
-		rotator.SetRotationPairs (currRot, prevRot);
+		//rotator.SetRotationPairs (currRot, prevRot);
+
+		rotator.InitMovement (f, t, next);
 
 		pathPosition ++;
 

@@ -28,6 +28,19 @@ public static class ExtensionMethods {
 		return Mathf.Approximately (vector3.x, otherVector3.x) && Mathf.Approximately (vector3.y, otherVector3.y) && Mathf.Approximately (vector3.z, otherVector3.z);
 	}
 
+	public static Vector3 GetPointAroundAxis (this Vector3 pivot, float angle, float radius=1f) {
+		
+		float r = angle * Mathf.Deg2Rad;
+
+		Vector3 position = new Vector3 (
+			pivot.x + radius * Mathf.Sin (r),
+			pivot.y,
+			pivot.z + radius * Mathf.Cos (r)
+		);
+
+		return position;
+	}
+
 	/**
 	 *	Quaternion
 	 */
@@ -48,6 +61,7 @@ public static class ExtensionMethods {
 		if (Mathf.Sign (delta) == -1)
 			return Quaternion.Slerp (from, to, t);
 
+		// if the two angles are equal, do a full rotation
 		if (Mathf.Approximately (delta, 0) && t < 1f) {
 			Vector3 e = to.eulerAngles;
 			to = Quaternion.Euler (e.x-0.1f, e.y, e.z-0.1f);
@@ -57,6 +71,22 @@ public static class ExtensionMethods {
 		return (t < 0.5f)
 			? Quaternion.Slerp (from, mid, t * 2f)
 			: Quaternion.Slerp (mid, to, (t-0.5f) * 2f);
+	}
+
+	// TODO: this could be made more generic (specify counter/clockwise, set angle axis)
+	public static float ArcLengthClockwise (this Quaternion from, Quaternion to, float radius) {
+
+		Vector3 a = to * Vector3.forward;
+		Vector3 b = from * Vector3.forward;
+
+		float delta = Mathf.DeltaAngle (Mathf.Atan2 (a.x, a.z) * Mathf.Rad2Deg, Mathf.Atan2 (b.x, b.z) * Mathf.Rad2Deg);
+
+		// if the two angles are equal, return a full rotation
+		if (Mathf.Approximately (delta, 0))
+			return 2f * Mathf.PI * radius;
+
+		return delta * Mathf.Deg2Rad * radius;
+
 	}
 
 	/**

@@ -191,6 +191,7 @@
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementTest.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMover.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\ProjectionMatrix.cs" />
+     <Compile Include="Assets\Scripts\Pathing\PathGhost.cs" />
      <Compile Include="Assets\Scripts\Pathing\PathRotator.cs" />
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerActionState.cs" />

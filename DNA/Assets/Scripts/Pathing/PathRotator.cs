@@ -38,6 +38,34 @@ public class PathRotator {
 		}
 	}
 
+	public class Trajectory {
+
+		public readonly float OriginArc;
+		public readonly float TargetArc;
+		public readonly Vector3 GhostStart;
+		public readonly Vector3 GhostEnd;
+		public readonly Vector3 Target;
+		public readonly bool TargetIsEnd;
+
+		public Trajectory (
+			float radius,
+			Vector3 origin, 
+			Vector3 target, 
+			Quaternion originRotationFrom, 
+			Quaternion originRotationTo, 
+			Quaternion targetRotationFrom,
+			Quaternion targetRotationTo,
+			bool targetIsEnd) {
+
+			OriginArc = originRotationFrom.ArcLengthClockwise (originRotationTo, radius);
+			TargetArc = targetRotationFrom.ArcLengthClockwise (targetRotationTo, radius);
+			GhostStart = origin.GetPointAroundAxis (originRotationTo.eulerAngles.y);
+			GhostEnd = target.GetPointAroundAxis (targetRotationFrom.eulerAngles.y);
+			Target = target;
+			TargetIsEnd = targetIsEnd;
+		}
+	}
+
 	Transform mover;
 	Transform ghost;
 
@@ -63,7 +91,7 @@ public class PathRotator {
 		prevPosition = initialPoint.GetPointAroundAxis (moverRotation.eulerAngles.y);
 	}
 
-	public void InitMovement (Vector3 origin, Vector3 target, Vector3 next) {
+	public Trajectory InitMovement (Vector3 origin, Vector3 target, Vector3 next) {
 
 		Quaternion to = Quaternion.identity;
 		Quaternion from = Quaternion.identity;
@@ -76,13 +104,21 @@ public class PathRotator {
 			from = to;
 		}
 
+		// Set target rotation pair
 		targetRot = new RotationPair (target, from, to, (origin != target && next == target));
+
+		// Set origin rotation pair
 		to = Quaternion.LookRotation (target - origin);
 		from = to;
-
-		Debug.Log (from.ArcLengthClockwise (to, radius));
-
 		originRot = new RotationPair (origin, from, to, false);
+
+		return new Trajectory (radius, origin, target,
+			Quaternion.LookRotation (prevPosition - originRot.Pivot),
+			to,
+			targetRot.From,
+			targetRot.To,
+			targetRot.EndPoint
+		);
 	}
 
 	public void ApplyPosition (int pathPosition) {
@@ -113,7 +149,6 @@ public class PathRotator {
 			}
 
 			Quaternion q = from.SlerpClockwise (nearest.To, proximity);
-
 			mover.position = nearest.Pivot.GetPointAroundAxis (q.eulerAngles.y);
 		}
 	}

@@ -76,6 +76,7 @@ public static class ExtensionMethods {
 	// TODO: this could be made more generic (specify counter/clockwise, set angle axis)
 	public static float ArcLengthClockwise (this Quaternion from, Quaternion to, float radius) {
 
+		// Debug.Log (from + ", " + to);
 		Vector3 a = to * Vector3.forward;
 		Vector3 b = from * Vector3.forward;
 

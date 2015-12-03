@@ -6,6 +6,7 @@ public class PathMover : MBRefs {
 
 	Transform ghost;
 	PathRotator rotator;
+	PathRotator.Trajectory trajectory;
 
 	void OnEnable () {
 		// TODO: dynamically create ghost when the mover begins moving, destroy it when the mover stops
@@ -24,6 +25,68 @@ public class PathMover : MBRefs {
 		rotator.ApplyPosition (pathPosition);
 	}
 
+	IEnumerator CoMove2 () {
+		
+		float speed = 2f;
+
+		Vector3 start = ghost.position;
+		Vector3 end = trajectory.GhostStart;
+		float distance = trajectory.OriginArc;
+		float time = distance / speed;
+		float eTime = 0f;
+
+		// if mover already pointing in the right direction, snap the ghost to the mover (don't do a rotation)		
+		if (Vector3.Distance (Position, end) < 0.1f) {
+			ghost.position = end;
+		} else {
+
+			// otherwise, do the rotation
+			while (eTime < time) {
+				eTime += Time.deltaTime;
+				ghost.position = Vector3.Lerp (start, end, eTime / time);
+				rotator.ApplyPosition (pathPosition);			
+				yield return null;
+			}
+		}
+
+		// move along the path (no rotations)
+		start = trajectory.GhostStart;
+		end = trajectory.GhostEnd;
+		distance = Vector3.Distance (start, end);
+		time = distance / speed;
+		eTime = 0f;
+
+		while (eTime < time) {
+			eTime += Time.deltaTime;
+			ghost.position = Vector3.Lerp (start, end, eTime / time);
+			rotator.ApplyPosition (pathPosition);
+			yield return null;
+		}
+
+		// if this is the final stop, snap ghost to the target (don't do a rotation)
+		if (trajectory.TargetIsEnd) {
+			ghost.position = trajectory.Target;
+			OnArriveAtPoint ();
+			yield break;
+		}
+
+		// rotate around the target
+		start = trajectory.GhostEnd;
+		end = trajectory.Target;
+		distance = trajectory.TargetArc;
+		time = distance / speed;
+		eTime = 0f;
+
+		while (eTime < time) {
+			eTime += Time.deltaTime;
+			ghost.position = Vector3.Lerp (start, end, eTime / time);
+			rotator.ApplyPosition (pathPosition);
+			yield return null;
+		}
+
+		OnArriveAtPoint ();
+	}
+
 	IEnumerator CoMove (Vector3 from, Vector3 to) {
 		
 		float speed = 2f;
@@ -33,7 +96,7 @@ public class PathMover : MBRefs {
 	
 		while (eTime < time) {
 			eTime += Time.deltaTime;
-			//ghost.position = Vector3.Lerp (from, to, eTime / time);
+			// ghost.position = Vector3.Lerp (from, to, eTime / time);
 			Move (eTime / time, from, to);
 			yield return null;
 		}
@@ -65,7 +128,7 @@ public class PathMover : MBRefs {
 		pointPosition = path[pathPosition+1];
 		Vector3 next = pathPosition+2 < path.Count-1 ? GetPointAtPosition (path[pathPosition+2]) : t;
 
-		rotator.InitMovement (f, t, next);
+		trajectory = rotator.InitMovement (f, t, next);
 
 		pathPosition ++;
 
@@ -73,13 +136,8 @@ public class PathMover : MBRefs {
 		float distance = Vector3.Distance (f, t);
 		float time = distance / speed;
 
-		/*Coroutine.Start (
-			time, 
-			(float p) => { Move (p, f, t); }, 
-			OnArriveAtPoint
-		);*/
-
-		StartCoroutine (CoMove (f, t));
+		//StartCoroutine (CoMove (f, t));
+		StartCoroutine (CoMove2 ());
 	}
 
 	void Update () {

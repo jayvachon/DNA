@@ -46,6 +46,7 @@ public class PathRotator {
 		public readonly Vector3 GhostEnd;
 		public readonly Vector3 Target;
 		public readonly bool TargetIsEnd;
+		public readonly Vector3 Origin;
 
 		public Trajectory (
 			float radius,
@@ -57,6 +58,7 @@ public class PathRotator {
 			Quaternion targetRotationTo,
 			bool targetIsEnd) {
 
+			Origin = origin;
 			OriginArc = originRotationFrom.ArcLengthClockwise (originRotationTo, radius);
 			TargetArc = targetRotationFrom.ArcLengthClockwise (targetRotationTo, radius);
 			GhostStart = origin.GetPointAroundAxis (originRotationTo.eulerAngles.y);
@@ -67,7 +69,7 @@ public class PathRotator {
 	}
 
 	Transform mover;
-	Transform ghost;
+	// Transform ghost;
 
 	RotationPair targetRot;
 	RotationPair originRot;
@@ -84,14 +86,15 @@ public class PathRotator {
 		prevPosition = startPosition;
 	}*/
 
-	public PathRotator (Transform mover, Transform ghost, Vector3 initialPoint) {
+	// public PathRotator (Transform mover, Transform ghost, Vector3 initialPoint) {
+	public PathRotator (Transform mover, Vector3 initialPoint) {
 		this.mover = mover;
-		this.ghost = ghost;
-		Quaternion moverRotation = Quaternion.LookRotation (mover.position - ghost.position);
+		// this.ghost = ghost;
+		Quaternion moverRotation = Quaternion.LookRotation (mover.position - initialPoint);
 		prevPosition = initialPoint.GetPointAroundAxis (moverRotation.eulerAngles.y);
 	}
 
-	public Trajectory InitMovement (Vector3 origin, Vector3 target, Vector3 next) {
+	public Trajectory InitMovement (Vector3 origin, Vector3 target, Vector3 next, bool end) {
 
 		Quaternion to = Quaternion.identity;
 		Quaternion from = Quaternion.identity;
@@ -105,7 +108,7 @@ public class PathRotator {
 		}
 
 		// Set target rotation pair
-		targetRot = new RotationPair (target, from, to, (origin != target && next == target));
+		targetRot = new RotationPair (target, from, to, end);
 
 		// Set origin rotation pair
 		to = Quaternion.LookRotation (target - origin);
@@ -121,13 +124,13 @@ public class PathRotator {
 		);
 	}
 
-	public void ApplyPosition (int pathPosition) {
+	public void ApplyPosition (Vector3 ghostPosition, int pathPosition) {
 		
-		bool approachingTarget = OnApproachTarget ();
-		bool departingOrigin = OnDepartOrigin (pathPosition);
+		bool approachingTarget = OnApproachTarget (ghostPosition);
+		bool departingOrigin = OnDepartOrigin (ghostPosition, pathPosition);
 
 		if (!approachingTarget && !departingOrigin) {
-			mover.position = ghost.position;
+			mover.position = ghostPosition;
 			insideRadius = false;
 			return;
 		} else {
@@ -159,9 +162,9 @@ public class PathRotator {
 		return speed;
 	}
 
-	bool OnApproachTarget () {
+	bool OnApproachTarget (Vector3 ghostPosition) {
 
-		float distance = Vector3.Distance (ghost.position, targetRot.Pivot);
+		float distance = Vector3.Distance (ghostPosition, targetRot.Pivot);
 		if (distance > radius)
 			return false;
 
@@ -172,9 +175,9 @@ public class PathRotator {
 		return true;
 	}
 
-	bool OnDepartOrigin (int pathPosition) {
+	bool OnDepartOrigin (Vector3 ghostPosition, int pathPosition) {
 
-		float distance = Vector3.Distance (ghost.position, originRot.Pivot);
+		float distance = Vector3.Distance (ghostPosition, originRot.Pivot);
 		if (distance > radius)
 			return false;
 

@@ -76,17 +76,19 @@ public static class ExtensionMethods {
 	// TODO: this could be made more generic (specify counter/clockwise, set angle axis)
 	public static float ArcLengthClockwise (this Quaternion from, Quaternion to, float radius) {
 
-		// Debug.Log (from + ", " + to);
 		Vector3 a = to * Vector3.forward;
 		Vector3 b = from * Vector3.forward;
 
 		float delta = Mathf.DeltaAngle (Mathf.Atan2 (a.x, a.z) * Mathf.Rad2Deg, Mathf.Atan2 (b.x, b.z) * Mathf.Rad2Deg);
 
+		if (Mathf.Sign (delta) == -1)
+			return delta * Mathf.Deg2Rad * radius;
+
 		// if the two angles are equal, return a full rotation
 		if (Mathf.Approximately (delta, 0))
 			return 2f * Mathf.PI * radius;
 
-		return delta * Mathf.Deg2Rad * radius;
+		return (360 - delta) * Mathf.Deg2Rad * radius;
 
 	}
 

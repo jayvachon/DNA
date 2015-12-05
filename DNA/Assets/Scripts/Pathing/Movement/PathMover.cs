@@ -7,7 +7,7 @@ public class PathMover : MBRefs {
 	// Transform ghost;
 	PathRotator rotator;
 	PathRotator.Trajectory trajectory;
-	Vector3 ghostPosition;
+	public Vector3 ghostPosition;
 
 	void OnEnable () {
 		// ghost = ObjectPool.Instantiate<PathGhost> ().transform;
@@ -23,6 +23,8 @@ public class PathMover : MBRefs {
 	IEnumerator CoMove2 () {
 		
 		float speed = 2f;
+
+		/** Rotate so that the mover is pointing in the direction it will be going **/
 
 		ghostPosition = trajectory.Origin;
 		Vector3 start = ghostPosition;
@@ -45,7 +47,8 @@ public class PathMover : MBRefs {
 			}
 		}
 
-		// move along the path (no rotations)
+		/** Move along the path **/
+
 		start = trajectory.GhostStart;
 		end = trajectory.GhostEnd;
 		distance = Vector3.Distance (start, end);
@@ -66,7 +69,7 @@ public class PathMover : MBRefs {
 			yield break;
 		}
 
-		// rotate around the target
+		/** If continuing onto another point, rotate to point in the direction of the next point **/
 		start = trajectory.GhostEnd;
 		end = trajectory.Target;
 		distance = trajectory.TargetArc;
@@ -105,7 +108,7 @@ public class PathMover : MBRefs {
 		Vector3 f = GetPointAtPosition (path[pathPosition]);
 		Vector3 t = GetPointAtPosition (path[pathPosition+1]);
 		pointPosition = path[pathPosition+1];
-		Vector3 next = pathPosition+2 < path.Count-1 ? GetPointAtPosition (path[pathPosition+2]) : t;
+		Vector3 next = pathPosition+1 < path.Count-1 ? GetPointAtPosition (path[pathPosition+2]) : f;
 
 		trajectory = rotator.InitMovement (f, t, next, pathPosition+1 == path.Count-1);
 
@@ -124,7 +127,7 @@ public class PathMover : MBRefs {
 			StartMover ();
 		}
 		if (Input.GetKeyDown (KeyCode.M)) {
-			SetMultiplePath (2);
+			SetMultiplePath (3);
 			StartMover ();
 		}
 	}

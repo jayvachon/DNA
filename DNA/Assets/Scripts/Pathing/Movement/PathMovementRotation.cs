@@ -148,6 +148,7 @@ public class PathMovementRotation : MonoBehaviour {
 	RotationPair currRot;
 	RotationPair prevRot;
 
+	public PathMover pm;
 	public Vector3 ptA;
 	public Vector3 ptB;
 	public Vector3 ptC;
@@ -283,6 +284,7 @@ public class PathMovementRotation : MonoBehaviour {
 		GizmosDrawer.Instance.Add (new GizmoSphere (mover, 0.25f));
 		GizmosDrawer.Instance.Add (new GizmoSphere (fromPosition, 0.2f, Color.red));
 		GizmosDrawer.Instance.Add (new GizmoSphere (toPosition, 0.2f, Color.green));
+		GizmosDrawer.Instance.Add (new GizmoSphere (pm.ghostPosition, 0.2f, Color.black));
 
 		/*float a = ghostRotation.eulerAngles.y * Mathf.Deg2Rad;
 		Vector3 v = new Vector3 (

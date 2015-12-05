@@ -69,7 +69,6 @@ public class PathRotator {
 	}
 
 	Transform mover;
-	// Transform ghost;
 
 	RotationPair targetRot;
 	RotationPair originRot;
@@ -81,12 +80,6 @@ public class PathRotator {
 
 	public Vector3 Position { get; set; }
 
-	// TODO: pass in transform instead & set the start position here
-	/*public void Init (Vector3 startPosition) {
-		prevPosition = startPosition;
-	}*/
-
-	// public PathRotator (Transform mover, Transform ghost, Vector3 initialPoint) {
 	public PathRotator (Transform mover, Vector3 initialPoint) {
 		this.mover = mover;
 		// this.ghost = ghost;
@@ -99,12 +92,12 @@ public class PathRotator {
 		Quaternion to = Quaternion.identity;
 		Quaternion from = Quaternion.identity;
 		
-		if (next != target) {
-			to = Quaternion.LookRotation (next - target); 		// set "to" rotation to look at the next point
-			from = Quaternion.LookRotation (origin - target); 	// set "from" rotation to look at the previous point
-		} else if (origin != target) {
+		if (end) {
 			to = Quaternion.LookRotation (origin - target);
 			from = to;
+		} else {
+			to = Quaternion.LookRotation (next - target); 		// set "to" rotation to look at the next point
+			from = Quaternion.LookRotation (origin - target); 	// set "from" rotation to look at the previous point
 		}
 
 		// Set target rotation pair
@@ -154,12 +147,6 @@ public class PathRotator {
 			Quaternion q = from.SlerpClockwise (nearest.To, proximity);
 			mover.position = nearest.Pivot.GetPointAroundAxis (q.eulerAngles.y);
 		}
-	}
-
-	public float GetStepSize (float speed) {
-		if (!insideRadius)
-			return speed;
-		return speed;
 	}
 
 	bool OnApproachTarget (Vector3 ghostPosition) {

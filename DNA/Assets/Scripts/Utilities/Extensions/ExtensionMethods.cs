@@ -64,7 +64,7 @@ public static class ExtensionMethods {
 		// if the two angles are equal, do a full rotation
 		if (Mathf.Approximately (delta, 0) && t < 1f) {
 			Vector3 e = to.eulerAngles;
-			to = Quaternion.Euler (e.x-0.1f, e.y, e.z-0.1f);
+			to = Quaternion.Euler (e.x + Mathf.Sin (0.5f * Mathf.Deg2Rad), e.y, e.z + Mathf.Cos (0.5f * Mathf.Deg2Rad));
 		}
 
 		Quaternion mid = Quaternion.Slerp (from, to, 0.5f) * Quaternion.AngleAxis (180f, Vector3.up);

@@ -10,7 +10,7 @@ namespace DNA {
 		public Levee Levee { get; set; }
 
 		void Awake () {
-			GetComponent<Renderer> ().SetColor (Palette.Tan);
+			GetComponent<Renderer> ().SetColor (Palette.DarkBlue);
 		}
 
 		#region IPointerDownHandler implementation

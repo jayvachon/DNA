@@ -52,7 +52,7 @@ namespace DNA {
 		List<GridPoint>[] neighbors = new List<GridPoint>[3];
 
 		void Awake () {
-			GetComponent<Renderer> ().SetColor (Palette.Green);
+			GetComponent<Renderer> ().SetColor (Palette.YellowGreen);
 		}
 		
 		void OnSetState (DevelopmentState state) { RemoveIfDeveloped (state); }

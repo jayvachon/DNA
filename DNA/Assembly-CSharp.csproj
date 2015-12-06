@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />
      <Compile Include="Assets\Scripts\Input\DragHandler.cs" />
      <Compile Include="Assets\Scripts\Input\EmptyClickHandler.cs" />
+     <Compile Include="Assets\Scripts\Input\HotkeyHandler.cs" />
      <Compile Include="Assets\Scripts\Input\HoverHandler.cs" />
      <Compile Include="Assets\Scripts\Input\IClickable.cs" />
      <Compile Include="Assets\Scripts\Input\IDraggable.cs" />

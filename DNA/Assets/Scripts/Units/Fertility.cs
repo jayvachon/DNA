@@ -13,7 +13,7 @@ public class Fertility {
 		get {
 			if (colors == null) {
 				colors = new Color[] {
-					new Color (0.992f, 0.886f, 0.914f),
+					new Color (0.604f, 0.906f, 0.914f),
 					new Color (0.816f, 0.98f, 0.886f),
 					new Color (0.98f, 0.706f, 0.792f),
 					new Color (0.435f, 0.961f, 0.565f),

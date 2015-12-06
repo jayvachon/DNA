@@ -58,6 +58,10 @@ namespace DNA.Paths {
 			Events.instance.Raise (new ClickConnectionEvent (this));
 			if (Connection.Object is Unit)
 				SelectionHandler.ClickSelectable ((ISelectable)Connection.Object, e);
+			IPointerDownHandler pdh = Connection.Object as IPointerDownHandler;
+			if (pdh != null) {
+				pdh.OnPointerDown (e);
+			}
 		}
 		#endregion
 

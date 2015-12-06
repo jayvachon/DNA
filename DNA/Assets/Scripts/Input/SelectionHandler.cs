@@ -34,6 +34,11 @@ namespace DNA.InputSystem {
 			EmptyClickHandler.Instance.onClick += OnEmptyClick;
 		}
 
+		public static void SelectSingle (ISelectable selectable) {
+			UnselectAll ();
+			Select (selectable);
+		}
+
 		public static void ClickSelectable (ISelectable selectable, PointerEventData e) {
 			
 			SelectSettings settings = selectable.SelectSettings;

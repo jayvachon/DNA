@@ -14,11 +14,11 @@ namespace DNA.Units {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
 					PerformableTasks.Add (new GenerateItem<CoffeeGroup> ());
-					PerformableTasks.Add (new GenerateItem<YearGroup> ()).onComplete += (PerformerTask t) => { 
+					/*PerformableTasks.Add (new GenerateItem<YearGroup> ()).onComplete += (PerformerTask t) => { 
 						if (Element != null)
 							Element.State = DevelopmentState.Abandoned; 
 						PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Stop ();
-					};
+					};*/
 				}
 				return performableTasks;
 			}
@@ -30,7 +30,7 @@ namespace DNA.Units {
 
 		protected override void OnInitInventory (Inventory i) {
 			i.Add (new CoffeeGroup (0, 10));
-			i.Add (new YearGroup (0, 1200));
+			// i.Add (new YearGroup (0, 1200));
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
@@ -39,16 +39,16 @@ namespace DNA.Units {
 
 		protected override void OnEnable () {
 			base.OnEnable ();
-			Inventory["Years"].Clear ();
+			// Inventory["Years"].Clear ();
 			Inventory["Coffee"].Set (2);
-			PerformableTasks[typeof (GenerateItem<YearGroup>)].Start ();
+			// PerformableTasks[typeof (GenerateItem<YearGroup>)].Start ();
 			PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Start ();
 		}
 
 		protected override void OnDisable () {
 			base.OnDisable ();
 			PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Stop ();
-			PerformableTasks[typeof (GenerateItem<YearGroup>)].Stop ();
+			// PerformableTasks[typeof (GenerateItem<YearGroup>)].Stop ();
 		}
 
 		protected override void OnSetFertility (int tier) {

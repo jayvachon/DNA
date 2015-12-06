@@ -9,13 +9,60 @@
 bugs\
 - laborers become un-assignable\
 - able to plan road even if it\'92s unaffordable\
-- don\'92t allow road to be planned if resources < a single segment\
 - laborers do not rotate correctly from the giving tree after they\'92ve been instantiated\
 - cannot interrupt laborers performing tasks\
-- can\'92t right click on road construction sites to assign idle laborers\
 - sometimes can\'92t unselect by clicking on the ground\
+- elders can\'92t move\
 \
 features\
 - encircle construction/repair sites\
 - always show task buttons, but make disabled task buttons noninteractable \
-}
+- laborers should immediately respond to interruptions - reverse direction on paths, stop tasks, etc.\
+- building a road to a coffee plant should remove the fog of war around the plant as if it had been built\
+- visually communicate plot fertility\
+- progress bars on construction sites\
+- allow construction on plots connected to planned roads\
+- \'93collection centers\'94 for milkshakes, coffee\
+- levee shouldn\'92t be built by default. player should build, then upgrade\
+\
+design problems\
+- it\'92s possible to run out of milkshakes and not be able to build derricks to gather more\
+- need a way of selecting the levee when it\'92s under water (maybe just automatically pull up the levee menu when you zoom all the way out (OR show it in the default menu [birth buildings])\
+- laborers turning into elders is not fun. you lose development momentum & it\'92s really hard to pick up steam again.\
+	> try adding variation to retirement ages so there\'92s any easier transition\
+\
+hotkeys\
+- \
+\
+reproducing bugs\
+- interrupt a laborer collecting milkshakes\
+- let laborer become elder, then create laborer. the new laborer will try to carry out the tasks of the previous one before it became an elder\
+- when laborers finish construction and switch to doing a task on a building, they jump back & forth between the current & previous point on the path\
+\
+balancing\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 - start tier 1 fertility plots higher up\
+- \'93even\'94 random distribution of coffee plants\
+- start with coffee for two laborers plus some (so that buying the 3rd laborer comes quicker)\
+- minimum milkshake pool capacity = 150\
+- coffee plants should have a finite capacity, but number should start high\
+- levee upgrades should become successively more expensive\
+\
+light settings\
+ambient source: color 141, 31, 13\
+ambient intensity: 1\
+fog color: 176, 225, 106\
+fog mode: exponential square\
+density: 0.006\
+\
+directional light\
+	> color: 206, 241, 154\
+	> intensity: 0.66\
+\
+spotlight\
+	> 190, 158, 200\
+	> range: 85\
+	> angle: 140\
+	> intensity: 8\
+\
+228 181 45}

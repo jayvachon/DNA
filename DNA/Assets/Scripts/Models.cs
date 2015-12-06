@@ -101,6 +101,14 @@ namespace DNA.Models {
 				TakesDamage = true
 			});
 
+			units.Add (typeof (Flower), new UnitSettings {
+				Symbol = "flower",
+				Title = "Flower",
+				Description = "Flowers are really pretty :)",
+				Emissions = -0.1f,
+				TakesDamage = true
+			});
+
 			units.Add (typeof (DrillablePlot), new UnitSettings {
 				Symbol = "plot",
 				Title = "Plot",
@@ -235,11 +243,23 @@ namespace DNA.Models {
 			tasks.Add (typeof (ConstructUnit<Clinic>), new CostTaskSettings {
 				Symbol = "construct_clinic",
 				Title = "Birth Clinic (40M)",
-				Description = "Creates a new Clinic",
+				Description = "Creates a new clinic",
 				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 40 }
+					}
+				}
+			});
+
+			tasks.Add (typeof (ConstructUnit<Flower>), new CostTaskSettings {
+				Symbol = "construct_flower",
+				Title = "Birth Flower (10M)",
+				Description = "Creates a new flower",
+				Duration = 0f,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 10 }
 					}
 				}
 			});

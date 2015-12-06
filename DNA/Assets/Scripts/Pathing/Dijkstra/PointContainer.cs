@@ -62,6 +62,10 @@ namespace DNA {
 			Events.instance.Raise (new ClickPointEvent (this));
 			if (Point.Object is Unit)
 				SelectionHandler.ClickSelectable (Point.Unit, e);
+			IPointerDownHandler pdh = Point.Object as IPointerDownHandler;
+			if (pdh != null) {
+				pdh.OnPointerDown (e);
+			}
 		}
 
 		public void OnPointerEnter (PointerEventData e) {

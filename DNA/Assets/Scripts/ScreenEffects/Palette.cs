@@ -22,6 +22,10 @@ public static class Palette {
 		get { return new Color (1f, 1f, 1f); }
 	}
 
+	public static Color Yellow {
+		get { return new Color (1f, 0.898f, 0.231f); }
+	}
+
 	public static Color ApplyAlpha (Color c, float alpha) {
 		return new Color (c.r, c.g, c.b, alpha);
 	}

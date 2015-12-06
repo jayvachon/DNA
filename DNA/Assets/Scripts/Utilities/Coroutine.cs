@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ public class Coroutine : MonoBehaviour {
 	static public Coroutine Instance {
 		get {
 			if (instance == null) {
-				instance = Object.FindObjectOfType (typeof (Coroutine)) as Coroutine;
+				instance = UnityEngine.Object.FindObjectOfType (typeof (Coroutine)) as Coroutine;
 				if (instance == null) {
 					GameObject go = new GameObject ("Coroutine");
 					DontDestroyOnLoad (go);
@@ -42,6 +43,15 @@ public class Coroutine : MonoBehaviour {
 
 		coroutines.Remove (action);
 		if (endAction != null) endAction ();
+	}
+
+	public static void WaitForCondition (Func<bool> condition, System.Action onEnd) {
+		Coroutine.Instance.StartCoroutine (Coroutine.CoWaitForCondition (condition, onEnd));
+	}
+
+	static IEnumerator CoWaitForCondition (Func<bool> condition, System.Action onEnd) {
+		while (!condition ()) yield return null;
+		onEnd ();
 	}
 
 	public static void WaitForSeconds (float time, System.Action onEnd) {

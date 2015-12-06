@@ -23,10 +23,6 @@ namespace DNA.Units {
 			Inventory = Player.Instance.Inventory;
 		}
 
-		protected override void OnInitInventory (Inventory i) {
-			i.Add (new LaborGroup ());
-		}
-
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
 			a.Add (new AcceptCollectItem<LaborGroup> ());
 		}

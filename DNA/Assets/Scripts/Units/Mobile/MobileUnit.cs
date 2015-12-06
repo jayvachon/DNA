@@ -119,8 +119,8 @@ namespace DNA.Units {
 			}
 		}
 
-		public bool PerformingTask {
-			get { return currentMatch != null; }
+		public bool Idle {
+			get { return currentMatch == null && !positioner.Moving; }
 		}
 
 		GridPoint lastMatchedPoint = null;
@@ -128,16 +128,21 @@ namespace DNA.Units {
 		Connection currentRoadConstruction;
 		Positioner positioner;
 
-		/*protected override void OnEnable () {
-			base.OnEnable ();
-			Transform.SetLocalPositionZ (1.5f);
-		}*/
+		static float startRotation = 0f;
+		static float StartRotation {
+			get {
+				float r = startRotation;
+				startRotation += 30;
+				if (startRotation > 360)
+					startRotation -= 360;
+				return r;
+			}
+		}
 
 		public void SetStartPoint (GridPoint point) {
-			positioner = new Positioner (MyTransform, point);
+			positioner = new Positioner (MyTransform, point, StartRotation);
 			positioner.OnArriveAtDestination += OnArriveAtDestination;
 			CurrentPoint = point;
-			MyTransform.SetLocalPosition (point.Position);
 		}
 
 		/**
@@ -262,59 +267,10 @@ namespace DNA.Units {
 		void BeginEncircling () {
 			int performCount = currentMatch.GetPerformCount ();
 			float time = currentMatch.Match.Settings.Duration * performCount;
-			Parent = CurrentPoint.Unit.MyTransform;
-			//MyTransform.LookAt (positioner.PreviousPosition);
-			//StartCoroutine (CoEncircle (time));
-		}
-
-		IEnumerator CoEncircle (float time) {
-			
-			float eTime = 0f;
-			float startRotation = MyTransform.localEulerAngles.y;
-		
-			while (eTime < time) {
-				eTime += Time.deltaTime;
-				float progress = Mathf.SmoothStep (0, 1, eTime / time);
-				MyTransform.SetLocalEulerAnglesY (Mathf.Lerp (startRotation, startRotation + 360f, progress));
-				yield return null;
-			}
-
-			Parent = null;
+			positioner.RotateAroundPoint (time);
 		}
 
 		#endregion
-
-		IEnumerator CoMoveToYPosition (float endY) {
-			
-			float time = 0.15f;
-			float eTime = 0f;
-			float startY = Transform.localPosition.y;
-		
-			while (eTime < time) {
-				eTime += Time.deltaTime;
-				float progress = Mathf.SmoothStep (0, 1, eTime / time);
-				Transform.SetLocalPositionY (Mathf.Lerp (startY, endY, progress));
-				yield return null;
-			}
-
-			Transform.SetLocalPositionY (endY);
-		}
-
-		IEnumerator CoMoveToPosition (Vector3 pos) {
-
-			float time = 0.15f;
-			float eTime = 0f;
-			Vector3 startPosition = Transform.localPosition;
-
-			while (eTime < time) {
-				eTime += Time.deltaTime;
-				float progress = Mathf.SmoothStep (0, 1, eTime / time);
-				Transform.localPosition = Vector3.Lerp (startPosition, pos, progress);
-				yield return null;
-			}
-
-			Transform.localPosition = pos;
-		}
 
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
@@ -326,12 +282,6 @@ namespace DNA.Units {
 			get { return visitorIndex; }
 			set {
 				visitorIndex = value;
-				/*if (visitorIndex > 0) {
-					Vector3 sp = surroundPositions[visitorIndex] + Transform.localPosition;
-					StartCoroutine (CoMoveToPosition (new Vector3 (sp.x, 8.5f, sp.z)));
-				} else {
-					StartCoroutine (CoMoveToPosition (new Vector3 (0, 0, 0)));
-				}*/
 			}
 		}
 		#endregion

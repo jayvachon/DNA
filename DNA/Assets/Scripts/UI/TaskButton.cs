@@ -16,6 +16,16 @@ public class TaskButton : MBRefs {
 		}
 	}
 
+	Button button = null;
+	public Button Button {
+		get {
+			if (button == null) {
+				button = GetComponent<Button> ();
+			}
+			return button;
+		}
+	}
+
 	PerformerTask task;
 
 	public void Init (PerformerTask task) {

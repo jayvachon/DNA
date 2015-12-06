@@ -72,17 +72,14 @@ public class PathRotator {
 
 	RotationPair targetRot;
 	RotationPair originRot;
-	RotationPair nearest;
+	public RotationPair nearest;
 	Vector3 prevPosition;
 	float proximity;
 	float radius = 1f;
-	bool insideRadius = false;
 
-	public Vector3 Position { get; set; }
-
-	public PathRotator (Transform mover, Vector3 initialPoint) {
+	public PathRotator (Transform mover, Vector3 initialPoint, float radius=1f) {
 		this.mover = mover;
-		// this.ghost = ghost;
+		this.radius = radius;
 		Quaternion moverRotation = Quaternion.LookRotation (mover.position - initialPoint);
 		prevPosition = initialPoint.GetPointAroundAxis (moverRotation.eulerAngles.y);
 	}
@@ -124,11 +121,8 @@ public class PathRotator {
 
 		if (!approachingTarget && !departingOrigin) {
 			mover.position = ghostPosition;
-			insideRadius = false;
 			return;
 		} else {
-
-			insideRadius = true;
 
 			// don't spin if approaching the final target
 			if (nearest.EndPoint) {
@@ -147,6 +141,13 @@ public class PathRotator {
 			Quaternion q = from.SlerpClockwise (nearest.To, proximity);
 			mover.position = nearest.Pivot.GetPointAroundAxis (q.eulerAngles.y);
 		}
+	}
+
+	public void RotateAroundPoint (float p) {
+		// Quaternion moverRotation = Quaternion.LookRotation (mover.position - nearest.Pivot);
+		// Quaternion q = moverRotation.SlerpClockwise (nearest.To, p);
+		Quaternion q = nearest.From.SlerpClockwise (nearest.To, p);
+		mover.position = nearest.Pivot.GetPointAroundAxis (q.eulerAngles.y);
 	}
 
 	bool OnApproachTarget (Vector3 ghostPosition) {
@@ -169,7 +170,7 @@ public class PathRotator {
 			return false;
 
 		proximity = distance / radius;
-		if (pathPosition > 1)
+		if (pathPosition > 0)
 			proximity = proximity.Map (0f, 1f, 0.5f, 1f);
 
 		nearest = originRot;

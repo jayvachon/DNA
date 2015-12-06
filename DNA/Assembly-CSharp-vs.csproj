@@ -299,6 +299,7 @@
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
      <Compile Include="Assets\Scripts\Units\Static\DrillablePlot.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Flower.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeRipe.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Jacuzzi.cs" />

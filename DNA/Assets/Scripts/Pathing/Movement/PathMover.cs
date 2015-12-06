@@ -114,10 +114,6 @@ public class PathMover : MBRefs {
 
 		pathPosition ++;
 
-		float speed = 2f;
-		float distance = Vector3.Distance (f, t);
-		float time = distance / speed;
-
 		StartCoroutine (CoMove2 ());
 	}
 

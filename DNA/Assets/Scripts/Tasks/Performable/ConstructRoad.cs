@@ -30,7 +30,7 @@ namespace DNA.Tasks {
 		}
 
 		public int Cost {
-			get { return segmentCost * RoadConstructor.Instance.NewSegmentCount; }
+			get { return segmentCost * Mathf.Max (1, RoadConstructor.Instance.NewSegmentCount); }
 		}
 
 		public ConstructRoad (Inventory inventory=null) : base (inventory) {

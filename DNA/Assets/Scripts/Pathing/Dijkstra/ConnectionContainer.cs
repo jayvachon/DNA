@@ -17,6 +17,7 @@ namespace DNA.Paths {
 				connection = value;
 				SetPosition (connection.Positions[0], connection.Positions[1]);
 				Element = connection;
+				Collider.size = new Vector3 (1f, 0.1f, connection.Length);
 			}
 		}
 
@@ -40,11 +41,12 @@ namespace DNA.Paths {
 		}
 
 		void OnEnable () {
-			ColliderEnabled = false;
+			// ColliderEnabled = false;
 		}
 
 		void SetPosition (Vector3 a, Vector3 b) {
-			Position = a;
+			// Position = a;
+			Position = Vector3.Lerp (a, b, 0.5f);
 			MyTransform.LookAt (b);
 			OnSetPoints ();
 		}

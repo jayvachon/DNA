@@ -32,6 +32,7 @@ namespace DNA {
 					Inventory.Add (new MilkshakeGroup (130));
 					Inventory.Add (new CoffeeGroup (50));
 					Inventory.Add (new YearGroup ());
+					Inventory.Add (new LaborGroup ());
 				}
 				return inventory;
 			}
@@ -47,7 +48,8 @@ namespace DNA {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
 					performableTasks.Add (new ConstructRoad ());
-					performableTasks.Add (new ConstructUnit<CoffeePlant> ());
+					// performableTasks.Add (new ConstructUnit<CoffeePlant> ());
+					performableTasks.Add (new ConstructUnit<Flower> ());
 					performableTasks.Add (new ConstructUnit<MilkshakePool> ());
 					performableTasks.Add (new ConstructUnit<University> ());
 					performableTasks.Add (new ConstructUnit<Clinic> ());

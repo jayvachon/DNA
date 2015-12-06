@@ -30,7 +30,7 @@ public class GuiTasks : GuiSelectableListener {
 	protected override void OnUpdateSelection (List<ISelectable> selected) {
 
 		if (selected.Count == 0) {
-			SetButtons (Player.Instance.PerformableTasks.EnabledTasks.Values.ToList ());
+			SetButtons (Player.Instance.PerformableTasks.ActiveTasks.Values.ToList ());
 			return;
 		}
 
@@ -47,6 +47,7 @@ public class GuiTasks : GuiSelectableListener {
 		if (button != null) {
 			button.gameObject.SetActive (true);
 			button.Init (t);
+			button.Button.interactable = t.Enabled;
 		}
 	}
 

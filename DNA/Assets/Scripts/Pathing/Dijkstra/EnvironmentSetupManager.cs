@@ -16,19 +16,33 @@ namespace DNA {
 			
 			points.OnLoadPoints += OnLoadPoints;
 			connections.OnLoadConnections += OnLoadConnections;
-			fogOfWar.Init ();
+			fogOfWar.OnLoadFog += OnLoadFog;
 			points.Init ();
 			connections.Init ();
 			
 		}
 
 		void OnLoadPoints () {
+			CreateCoffeePlants ();
+			fogOfWar.Init ();
+		}
 
-			// Create Giving Tree
+		void OnLoadFog () {
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
 			points.SetUnitAtIndex<MilkshakePool> (4);
+		}
 
-			// TODO: randomly create coffee plants(?)
+		void CreateCoffeePlants () {
+
+			int first = Random.Range (6, 20);
+			points.SetUnitAtIndex<CoffeePlant> (first);
+
+			int pointsCount = points.Points.Count;
+			for (int i = 20; i < pointsCount; i ++) {
+				if (Random.value < 0.1f) {
+					points.SetUnitAtIndex<CoffeePlant> (i);
+				}
+			}
 		}
 
 		void OnLoadConnections () {

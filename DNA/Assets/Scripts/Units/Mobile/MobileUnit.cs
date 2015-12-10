@@ -220,6 +220,26 @@ namespace DNA.Units {
 
 		MatchResult PointTaskMatch (GridPoint point) {
 
+/* OLD:
+			ITaskAcceptor acceptor = point.Unit as ITaskAcceptor;
+-			MatchResult match = TaskMatcher.GetPerformable (this, acceptor);
+-
+-			if (match == null)
+-				return null;
+-
+-			// This might be a better behavior than checking for a pair
+-			// The task is performed whether or not a pair exists. It still pairs if one is available, otherwise performs the task to the best of its ability			
+-			return match;
+-
+-			/*if (!match.NeedsPair)
+-				return match;
+-
+-			// If it does but needs a pair, check if a pair exists in the world
+-			GridPoint p = Pathfinder.ConnectedPoints.FirstOrDefault (
+-				x => TaskMatcher.GetPair (match.Match, x) != null);
+-
+-			return (p == null) ? null : match;*/
+
 			// Check if the point has any tasks to perform
 			return TaskMatcher.GetPerformable (this, point.Unit as ITaskAcceptor);
 		}

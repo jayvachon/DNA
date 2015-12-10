@@ -46,7 +46,6 @@ namespace DNA.Units {
 
 		void Awake () {
 
-			// unitRenderer.SetColors (new Color (0.808f, 0.945f, 0.604f));
 			Inventory = Player.Instance.Inventory;
 
 			PerformableTasks.Add (new GenerateUnit<Distributor> ()).onComplete += OnGenerateDistributor;

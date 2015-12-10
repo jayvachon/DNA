@@ -7,10 +7,6 @@ namespace DNA.Units {
 
 	public class MilkshakePool : StaticUnit {
 		
-		void Awake () {
-			// unitRenderer.SetColors (new Color (0.294f, 0.741f, 0.847f));
-		}
-
 		protected override void OnInitInventory (Inventory i) {
 			i.Add (new MilkshakeGroup (100, 100));
 			i["Milkshakes"].onEmpty += () => { Element.State = DevelopmentState.Abandoned; };

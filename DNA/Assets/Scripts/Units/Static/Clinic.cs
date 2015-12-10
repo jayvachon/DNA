@@ -20,10 +20,6 @@ namespace DNA.Units {
 
 		HealthIndicator indicator;
 
-		void Awake () {
-			// unitRenderer.SetColors (new Color (1f, 0.898f, 0.231f));
-		}
-
 		protected override void OnInitInventory (Inventory i) {
 			i.Add (new HealthGroup (200, 200));
 		}

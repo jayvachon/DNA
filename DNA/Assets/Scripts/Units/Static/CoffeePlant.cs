@@ -24,10 +24,6 @@ namespace DNA.Units {
 			}
 		}
 
-		void Awake () {
-			unitRenderer.SetColors (new Color (0.204f, 0.612f, 0.325f));
-		}
-
 		protected override void OnInitInventory (Inventory i) {
 			i.Add (new CoffeeGroup (0, 10));
 			// i.Add (new YearGroup (0, 1200));

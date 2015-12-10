@@ -19,7 +19,6 @@ namespace DNA.Units {
 		}
 
 		void Awake () {
-			unitRenderer.SetColors (new Color (0.831f, 0.231f, 1f));
 			Inventory = Player.Instance.Inventory;
 		}
 

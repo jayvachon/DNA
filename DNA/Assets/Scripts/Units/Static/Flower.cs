@@ -7,8 +7,5 @@ namespace DNA.Units {
 
 	public class Flower : StaticUnit {
 
-		void Awake () {
-			unitRenderer.SetColors (Palette.Yellow);
-		}
 	}
 }

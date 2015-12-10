@@ -8,7 +8,7 @@ namespace DNA.Units {
 	public class MilkshakePool : StaticUnit {
 		
 		void Awake () {
-			unitRenderer.SetColors (new Color (0.294f, 0.741f, 0.847f));
+			// unitRenderer.SetColors (new Color (0.294f, 0.741f, 0.847f));
 		}
 
 		protected override void OnInitInventory (Inventory i) {
@@ -21,7 +21,7 @@ namespace DNA.Units {
 		}
 
 		protected override void OnSetFertility (int tier) {
-			Inventory["Milkshakes"].Capacity = (int)(5 * Fertility.Multipliers[tier]);
+			Inventory["Milkshakes"].Capacity = (int)(150 * Fertility.Multipliers[tier]);
 			Inventory["Milkshakes"].Fill ();
 		}
 

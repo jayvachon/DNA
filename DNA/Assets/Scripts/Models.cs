@@ -109,6 +109,14 @@ namespace DNA.Models {
 				TakesDamage = true
 			});
 
+			units.Add (typeof (CollectionCenter), new UnitSettings {
+				Symbol = "collector",
+				Title = "Collection Center",
+				Description = "Resources can be desposited here so that laborers don't have to go all the way back to the Giving Tree.",
+				Emissions = 0.2f,
+				TakesDamage = true
+			});
+
 			units.Add (typeof (DrillablePlot), new UnitSettings {
 				Symbol = "plot",
 				Title = "Plot",
@@ -260,6 +268,18 @@ namespace DNA.Models {
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 10 }
+					}
+				}
+			});
+
+			tasks.Add (typeof (ConstructUnit<CollectionCenter>), new CostTaskSettings {
+				Symbol = "construct_collector",
+				Title = "Birth Collection Center (50M)",
+				Description = "Creates a new collection center",
+				Duration = 0f,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 50 }
 					}
 				}
 			});

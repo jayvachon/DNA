@@ -27,6 +27,11 @@ public class Coroutine : MonoBehaviour {
 		Coroutine.Instance.StartCoroutine (Coroutine.CoCoroutine (time, action, endAction));
 	}
 
+	public static void StartWithCondition (float time, System.Action<float> action, Func<bool> condition, System.Action endAction=null) {
+		coroutines.Add (action);
+		Coroutine.Instance.StartCoroutine (Coroutine.CoCoroutineWithCondition (time, action, condition, endAction));
+	}
+
 	public static void Stop (System.Action<float> action) {
 		coroutines.Remove (action);
 	}
@@ -38,6 +43,20 @@ public class Coroutine : MonoBehaviour {
 		while (eTime < time && coroutines.Contains (action)) {
 			eTime += Time.deltaTime;
 			action (eTime / time);			
+			yield return null;
+		}
+
+		coroutines.Remove (action);
+		if (endAction != null) endAction ();
+	}
+
+	static IEnumerator CoCoroutineWithCondition (float time, System.Action<float> action, Func<bool> condition, System.Action endAction=null) {
+
+		float eTime = 0f;
+
+		while (eTime < time && coroutines.Contains (action) && condition ()) {
+			eTime += Time.deltaTime;
+			action (eTime / time);
 			yield return null;
 		}
 

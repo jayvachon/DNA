@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseEnterPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseExitPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\Flower\FlowerMesh.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiDescription.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiInventory.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiItemGroup.cs" />
@@ -235,6 +236,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\UpgradeLevee.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskMatcher.cs" />
+     <Compile Include="Assets\Scripts\Tasks\TaskPen.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AcceptCollectItemTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AcceptDeliverItemTest.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AutoStartTest.cs" />
@@ -277,13 +279,20 @@
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitTransform.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\ClinicRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\CoffeePlantRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\CollectionCenterRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\DerrickRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\FlowerRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\GivingTreeRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\UnitRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\UniversityRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Unit.cs" />
      <Compile Include="Assets\Scripts\Units\Components\UnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\UnitColorHandler.cs" />
      <Compile Include="Assets\Scripts\Units\Components\UnitComponent.cs" />
-     <Compile Include="Assets\Scripts\Units\Components\UnitRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\UnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\ConstructionSite.cs" />
      <Compile Include="Assets\Scripts\Units\Fertility.cs" />
@@ -299,6 +308,7 @@
      <Compile Include="Assets\Scripts\Units\RepairSite.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\CollectionCenter.cs" />
      <Compile Include="Assets\Scripts\Units\Static\DrillablePlot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Flower.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeRipe.cs" />

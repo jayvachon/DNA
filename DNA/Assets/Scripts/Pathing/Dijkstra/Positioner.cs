@@ -67,16 +67,16 @@ namespace DNA.Paths {
 		}
 
 		public void RotateAroundPoint (float time) {
-			Coroutine.Start (time, (float p) => {
-				encircling = true;
-				rotator.RotateAroundPoint (p);
-			}, () => {
-				encircling = false;
-			});
+			encircling = true;
+			Coroutine.StartWithCondition (time, 
+				(float p) => { rotator.RotateAroundPoint (p); }, 
+				() => { return encircling; },
+				() => { encircling = false; }
+			);
 		}
 
 		public void InterruptRotateAround () {
-			// TODO: speed up rotation to regular speed			
+			encircling = false;
 		}
 
 		public void StartMoving () {
@@ -86,11 +86,14 @@ namespace DNA.Paths {
 			if (!HasNextPoint) return;
 			
 			Coroutine.WaitForCondition (() => { return !encircling; }, () => {
+				
 				Vector3 from = path[pathPosition].Position;
 	 			Vector3 to = path[pathPosition+1].Position;
 				Vector3 next = pathPosition+1 < path.Count-1 ? path[pathPosition+2].Position : from;
+				Debug.Log (from);
 
 				trajectory = rotator.InitMovement (from, to, next, pathPosition+1 == path.Count-1);
+				Debug.Log (trajectory.TargetArc);
 				pathPosition ++;
 
 				BeginMove ();

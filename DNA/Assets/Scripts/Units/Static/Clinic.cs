@@ -21,7 +21,7 @@ namespace DNA.Units {
 		HealthIndicator indicator;
 
 		void Awake () {
-			unitRenderer.SetColors (new Color (1f, 0.898f, 0.231f));
+			// unitRenderer.SetColors (new Color (1f, 0.898f, 0.231f));
 		}
 
 		protected override void OnInitInventory (Inventory i) {
@@ -37,6 +37,7 @@ namespace DNA.Units {
 		}
 
 		protected override void OnEnable () {
+			base.OnEnable ();
 			//healthHolder.HolderUpdated += OnHealthUpdate;
 			indicator = ObjectPool.Instantiate<HealthIndicator> ();
 			indicator.Initialize (Transform, 1.5f);
@@ -44,6 +45,7 @@ namespace DNA.Units {
 
 		//public override vod OnPoolDestroy () {
 		protected override void OnDisable () {
+			base.OnDisable ();
 			//healthHolder.HolderUpdated -= OnHealthUpdate;
 			ObjectPool.Destroy<HealthIndicator> (indicator.MyTransform);
 		}

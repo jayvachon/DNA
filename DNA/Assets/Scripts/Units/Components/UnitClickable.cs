@@ -8,6 +8,8 @@ namespace DNA.Units {
 	// Inherit from this class to handle selection on click
 	// rename to UnitCollider
 
+	// DEPRECATE !?
+
 	[RequireComponent (typeof (Collider))]
 	public class UnitClickable : UnitComponent, IPointerDownHandler, ISelectable {
 

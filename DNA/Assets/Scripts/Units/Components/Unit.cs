@@ -28,7 +28,7 @@ namespace DNA.Units {
 
 		public UnitTransform unitTransform;
 		public UnitRenderer unitRenderer;
-		public UnitClickable unitClickable;
+		public UnitClickable unitClickable; // deprecate
 
 		Inventory inventory;
 		public Inventory Inventory {
@@ -57,6 +57,7 @@ namespace DNA.Units {
 			}
 		}
 
+		// deprecate
 		public UnitClickable UnitClickable {
 			get { return unitClickable; }
 		}
@@ -89,12 +90,23 @@ namespace DNA.Units {
 
 		protected virtual void OnEnable () {
 			EmissionsManager.AddEmissions (Settings.Emissions);
+			if (UnitRenderer.Renderers.ContainsKey(Settings.Symbol)) {
+				unitRenderer = ObjectPool.Instantiate (UnitRenderer.Renderers[Settings.Symbol]) as UnitRenderer;
+				unitRenderer.transform.SetParent (MyTransform);
+				unitRenderer.transform.localPosition = unitRenderer.Offset;
+			}
 		}
 
 		protected virtual void OnDisable () {
 			EmissionsManager.RemoveEmissions (Settings.Emissions);
 			if (Selected) {
 				SelectionManager.Unselect ();
+			}
+			if (UnitRenderer.Renderers.ContainsKey(Settings.Symbol)) {
+				if (unitRenderer != null) {
+					ObjectPool.Destroy (unitRenderer);
+					unitRenderer = null;
+				}
 			}
 		}
 

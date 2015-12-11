@@ -57,6 +57,8 @@ namespace DNA.Tasks {
 		public bool Start () {
 
 			// Don't allow the action to overlap itself
+			// if (Settings.Symbol == "construct_flower")
+				// Debug.Log ("???? "+ Enabled);
 			if (!Enabled || performing) return false;
 			performing = true;
 			perform = true;

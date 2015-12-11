@@ -24,7 +24,10 @@ namespace DNA.Tasks {
 		}
 
 		public override bool Enabled {
-			get { return CanAfford; }
+			get { 
+				if (Settings.Symbol == "construct_flower")
+					Debug.Log (CanAfford);
+				return CanAfford; }
 		}
 
 		public virtual int Level { get; protected set; }

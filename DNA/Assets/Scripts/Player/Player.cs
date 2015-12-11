@@ -131,7 +131,7 @@ namespace DNA {
 			}
 		}
 
-		void OnEmptyClick () {
+		void OnEmptyClick (ISelectable selectable) {
 			pen = null;
 			PlayerActionState.Set (ActionState.Idle);
 		}

@@ -33,6 +33,10 @@ namespace DNA {
 			}
 		}
 
+		public static string GetUnitSymbol (System.Type unitType) {
+			return GetUnitSettings (unitType).Symbol;
+		}
+
 		public static int GetConstructionCost (string unitSymbol) {
 			try {
 				return (Data.TasksSettings.Tasks

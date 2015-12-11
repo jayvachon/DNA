@@ -13,6 +13,10 @@ namespace DNA.InputSystem {
 
 		static List<ISelectable> selected = new List<ISelectable> ();
 
+		public static List<ISelectable> Selected {
+			get { return selected; }
+		}
+
 		static KeyCode[] multiSelect = new [] { 
 			KeyCode.LeftControl, 
 			KeyCode.RightControl, 
@@ -30,8 +34,23 @@ namespace DNA.InputSystem {
 			}
 		}
 
+		static bool listenForEmptyClick = false;
+		static bool ListenForEmptyClick {
+			set {
+				if (value && !listenForEmptyClick) {
+					EmptyClickHandler.Instance.onClick += OnEmptyClick;
+					Debug.Log ("listening");
+				}
+				if (!value && listenForEmptyClick) {
+					EmptyClickHandler.Instance.onClick -= OnEmptyClick;
+					Debug.Log ("not listenting");
+				}
+				listenForEmptyClick = value;
+			}
+		}
+
 		static SelectionHandler () {
-			EmptyClickHandler.Instance.onClick += OnEmptyClick;
+			// EmptyClickHandler.Instance.onClick += OnEmptyClick;
 		}
 
 		public static void SelectSingle (ISelectable selectable) {
@@ -81,6 +100,7 @@ namespace DNA.InputSystem {
 			selected.Add (selectable);
 			selectable.OnSelect ();
 			SendUpdateSelectionMessage ();
+			ListenForEmptyClick = true;
 		}
 
 		static void Unselect (ISelectable selectable) {
@@ -88,22 +108,30 @@ namespace DNA.InputSystem {
 				UnselectAll ();
 			selected.Remove (selectable);
 			selectable.OnUnselect ();
-			SendUpdateSelectionMessage ();			
+			SendUpdateSelectionMessage ();
+			if (selected.Count == 0)
+				ListenForEmptyClick = false;
 		}
 
 		static void UnselectAll () {
 			foreach (ISelectable s in selected)
 				s.OnUnselect ();
 			selected.Clear ();
+			ListenForEmptyClick = false;
 		}
 
 		static bool IsSelected (ISelectable selectable) {
 			return selected.Contains (selectable);
 		}
 
-		static void OnEmptyClick () {
-			UnselectAll ();
-			SendUpdateSelectionMessage ();
+		static void OnEmptyClick (ISelectable selectable) {
+			if (selectable == null) {
+				UnselectAll ();
+				SendUpdateSelectionMessage ();
+			} else {
+				// List<ISelectable> cancel = selected.FindAll (x => x.SelectSettings.ContainsCanceller (selectable));
+				Debug.Log (selectable.GetType ());
+			}
 		}
 
 		static List<ISelectableOverrider> GetSelectablesWithOverride (PointerEventData.InputButton button) {

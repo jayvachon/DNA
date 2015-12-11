@@ -21,10 +21,6 @@ namespace DNA.Paths {
 			}
 		}
 
-		protected override Vector3 Anchor {
-			get { return MyTransform.InverseTransformPoint (Connection.Center); }
-		}
-
 		new BoxCollider collider = null;
 		BoxCollider Collider {
 			get {

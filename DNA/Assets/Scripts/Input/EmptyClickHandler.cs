@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DNA.Units;
+using DNA.EventSystem;
 
 namespace DNA.InputSystem {
 
@@ -20,32 +21,18 @@ namespace DNA.InputSystem {
 
 		public OnClick onClick;
 
+		void OnEnable () { Events.instance.AddListener<PointerDownEvent> (OnPointerDownEvent); }
+		void OnDisable () { Events.instance.RemoveListener<PointerDownEvent> (OnPointerDownEvent); }
+
 		void Start () {
 			if (onClick != null)
 				onClick (null);
 		}
 
-		void Update () {
-			if (Input.GetMouseButtonDown (0) || Input.GetMouseButtonDown (1)) {
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit;
-				if (onClick != null) {
+		void OnPointerDownEvent (PointerDownEvent e) {
+			if (onClick != null)
+				onClick (e.ClickedObject.GetType ());
 
-					System.Type clickType = null;
-
-					if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.UI)) {
-						return;
-					}
-
-					if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-						MonoBehaviour mb = hit.transform.GetComponent<MonoBehaviour> ();
-						if (mb != null)
-							clickType = mb.GetType ();
-					}
-
-					onClick (clickType);
-				}
-			}
 		}
 	}
 }

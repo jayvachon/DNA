@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.Paths;
 using DNA.Tasks;
+using DNA.InputSystem;
 using InventorySystem;
 
 namespace DNA.Units {
@@ -11,6 +13,21 @@ namespace DNA.Units {
 		public int LaborCost {
 			get { return Inventory["Labor"].Count; }
 			set { Inventory["Labor"].Set (value); }
+		}
+
+		public override SelectSettings SelectSettings {
+			get { 
+				if (selectSettings == null) {
+					selectSettings = new SelectSettings (
+						new List<System.Type> () {
+							typeof (Ground),
+							typeof (DNA.Paths.ConnectionContainer),
+							typeof (FogOfWar)
+						}
+					);
+				}
+				return selectSettings;
+			}
 		}
 
 		public RoadPlan RoadPlan { get; set; }

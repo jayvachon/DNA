@@ -309,6 +309,7 @@ namespace DNA.Units {
 
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {
+			Events.instance.Raise (new PointerDownEvent (this));
 			SelectionHandler.ClickSelectable (this, e);
 		}
 		#endregion

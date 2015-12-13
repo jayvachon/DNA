@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DNA.InputSystem;
+using DNA.EventSystem;
 using DNA.Tasks;
 using DNA.Paths;
 using UnityEngine.EventSystems;
@@ -63,6 +64,7 @@ namespace DNA.Units {
 
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {
+			Events.instance.Raise (new PointerDownEvent (this));
 			if (!e.LeftClicked () && SelectionHandler.Selected.Count == 0) {
 				if (AcceptableTasks.EnabledTasks.Count > 0) {
 					List<Distributor> laborers = ObjectPool.GetActiveObjects<Distributor> ();

@@ -17,7 +17,8 @@ namespace DNA.Units {
 						{ "derrick", "DerrickRenderer" },
 						{ "flower", "FlowerRenderer" },
 						{ "tree", "GivingTreeRenderer" },
-						{ "university", "UniversityRenderer" }
+						{ "university", "UniversityRenderer" },
+						{ "road", "RoadRenderer" }
 					};
 				}
 				return renderers;

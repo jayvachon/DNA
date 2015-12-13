@@ -124,12 +124,13 @@ namespace DNA.Units {
 		protected virtual void OnInitInventory (Inventory i) {}
 
 		#region ISelectable implementation
-		SelectSettings selectSettings;
-		public SelectSettings SelectSettings {
+		protected SelectSettings selectSettings;
+		public virtual SelectSettings SelectSettings {
 			get { 
 				if (selectSettings == null) {
 					selectSettings = new SelectSettings (
 						new List<System.Type> () {
+							typeof (Ground),
 							typeof (DNA.Paths.ConnectionContainer),
 							typeof (FogOfWar)
 						}

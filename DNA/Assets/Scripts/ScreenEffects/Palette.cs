@@ -38,6 +38,10 @@ public static class Palette {
 		get { return new Color (1f, 0.898f, 0.231f); }
 	}
 
+	public static Color Black {
+		get { return new Color (0.2f, 0.2f, 0.2f); }
+	}
+
 	public static Color ApplyAlpha (Color c, float alpha) {
 		return new Color (c.r, c.g, c.b, alpha);
 	}

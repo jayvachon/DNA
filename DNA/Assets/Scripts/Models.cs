@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using InventorySystem;
 using DNA.Units;
 using DNA.Tasks;
+using DNA.Paths;
 
 namespace DNA.Models {
 
@@ -47,6 +48,13 @@ namespace DNA.Models {
 		public UnitsSettings () {
 
 			units = new Dictionary<System.Type, UnitSettings> ();
+
+			units.Add (typeof (Road), new UnitSettings {
+				Symbol = "road",
+				Title = "Road",
+				Description = "Roads connect buildings so that laborers can reach them.",
+				Emissions = 0f
+			});
 
 			units.Add (typeof (Distributor), new UnitSettings {
 				Symbol = "laborer",

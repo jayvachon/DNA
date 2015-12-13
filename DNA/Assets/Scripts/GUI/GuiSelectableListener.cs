@@ -9,6 +9,7 @@ public class GuiSelectableListener : MonoBehaviour {
 
 	protected void Init () {
 		SelectionHandler.onUpdateSelection += OnUpdateSelection;
+		OnUpdateSelection (new List<ISelectable> ());
 	}
 
 	protected virtual void OnUpdateSelection (List<ISelectable> selected) {}

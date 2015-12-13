@@ -90,10 +90,8 @@ namespace DNA.Paths {
 				Vector3 from = path[pathPosition].Position;
 	 			Vector3 to = path[pathPosition+1].Position;
 				Vector3 next = pathPosition+1 < path.Count-1 ? path[pathPosition+2].Position : from;
-				Debug.Log (from);
 
 				trajectory = rotator.InitMovement (from, to, next, pathPosition+1 == path.Count-1);
-				Debug.Log (trajectory.TargetArc);
 				pathPosition ++;
 
 				BeginMove ();

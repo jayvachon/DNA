@@ -2,36 +2,21 @@
 using System.Collections;
 using DNA.Units;
 using DNA.Tasks;
+using DNA.EventSystem;
 
 namespace DNA.InputSystem {
 
-	public static class GameCursor {
+	public class GameCursor : MonoBehaviour {
 
-		public static Vector3? Target {
-			get { return GameCursorMB.Instance.Target; }
-			set { GameCursorMB.Instance.Target = value; }
-		}
-
-		public static void SetVisual (PerformerTask task, UnitRenderer visual) {
-			GameCursorMB.Instance.SetVisual (task, visual);
-		}
-
-		public static void RemoveVisual () {
-			GameCursorMB.Instance.RemoveVisual ();
-		}
-	}
-
-	public class GameCursorMB : MonoBehaviour {
-
-		static GameCursorMB instance = null;
-		static public GameCursorMB Instance {
+		static GameCursor instance = null;
+		static public GameCursor Instance {
 			get {
 				if (instance == null) {
-					instance = Object.FindObjectOfType (typeof (GameCursorMB)) as GameCursorMB;
+					instance = Object.FindObjectOfType (typeof (GameCursor)) as GameCursor;
 					if (instance == null) {
-						GameObject go = new GameObject ("GameCursorMB");
+						GameObject go = new GameObject ("GameCursor");
 						DontDestroyOnLoad (go);
-						instance = go.AddComponent<GameCursorMB>();
+						instance = go.AddComponent<GameCursor>();
 					}
 				}
 				return instance;
@@ -46,6 +31,12 @@ namespace DNA.InputSystem {
 			set { target = value; }
 		}
 
+		public delegate void OnClick (bool overTarget);
+		public OnClick onClick;
+
+		void OnEnable () { Events.instance.AddListener<PointerDownEvent> (OnPointerDownEvent); }
+		void OnDisable () { Events.instance.RemoveListener<PointerDownEvent> (OnPointerDownEvent); }
+
 		public void SetVisual (PerformerTask task, UnitRenderer newVisual) {
 			RemoveVisual ();
 			this.visual = newVisual;
@@ -53,15 +44,23 @@ namespace DNA.InputSystem {
 		}
 
 		public void RemoveVisual () {
-			if (visual != null) ObjectPool.Destroy (visual);
+			if (visual != null) {
+				ObjectPool.Destroy (visual);
+				visual = null;
+			}
+		}
+
+		void OnPointerDownEvent (PointerDownEvent e) {
+			if (onClick != null)
+				onClick (Target != null);
 		}
 
 		IEnumerator CoVisualFollowCursor (PerformerTask task) {
-		
+
 			while (visual != null) {
+				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+				RaycastHit hit;
 				if (Target == null) {
-					Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-					RaycastHit hit;
 					if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.Structure)) {
 						visual.transform.position = Vector3.Lerp (ray.origin, hit.point, 0.9f);
 					}

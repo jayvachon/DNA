@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\UnselectEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseEnterPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseExitPointEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\PointerDownEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
      <Compile Include="Assets\Scripts\Flower\FlowerMesh.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiDescription.cs" />
@@ -200,6 +201,7 @@
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerActionState.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\Floret.cs" />
+     <Compile Include="Assets\Scripts\ScreenEffects\Ground.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\HSBColor.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\Palette.cs" />
      <Compile Include="Assets\Scripts\ScreenEffects\SpiralCamera.cs" />
@@ -287,6 +289,7 @@
      <Compile Include="Assets\Scripts\Units\Components\Renderers\DerrickRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\FlowerRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\GivingTreeRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\RoadRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UnitRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UniversityRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitClickable.cs" />

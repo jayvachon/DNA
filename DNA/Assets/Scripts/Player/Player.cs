@@ -70,12 +70,12 @@ namespace DNA {
 			Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
 			Events.instance.AddListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
 			Events.instance.AddListener<MouseExitPointEvent> (OnMouseExitPointEvent);
-			EmptyClickHandler.Instance.onClick += OnEmptyClick;
+			// EmptyClickHandler.Instance.onClick += OnEmptyClick;
 		}
 
 		void OnDisable () {
-			if (EmptyClickHandler.Instance != null)
-				EmptyClickHandler.Instance.onClick -= OnEmptyClick;
+			// if (EmptyClickHandler.Instance != null)
+				// EmptyClickHandler.Instance.onClick -= OnEmptyClick;
 		}
 
 		public void SetConstructionPen (System.Type type) {

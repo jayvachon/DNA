@@ -12,12 +12,11 @@ public class GuiTasks : GuiSelectableListener {
 
 	void Awake () {
 		Init ();
-		DisplableButtons ();
 	}
 
 	public void SetButtons (List<PerformerTask> tasks) {
 		bool hasTask = false;
-		DisplableButtons ();
+		DisableButtons ();
 		foreach (PerformerTask t in tasks) {
 			if (t.Settings.Title != null && t.Settings.Title != "") {
 				EnableButton (t);
@@ -51,7 +50,7 @@ public class GuiTasks : GuiSelectableListener {
 		}
 	}
 
-	void DisplableButtons () {
+	void DisableButtons () {
 		foreach (TaskButton button in buttons)
 			button.gameObject.SetActive (false);
 	}

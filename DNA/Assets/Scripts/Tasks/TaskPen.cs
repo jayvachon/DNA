@@ -14,27 +14,33 @@ namespace DNA.Tasks {
 		public static void Set (PerformerTask newTask) {
 
 			task = newTask;
-			System.Type[] taskTypes = task.GetType ().GetGenericArguments ();
+			System.Type[] taskTypes = task is ConstructRoad
+				? new [] { typeof (Road) }
+				: task.GetType ().GetGenericArguments ();
 
 			if (taskTypes.Length > 0) {
 				string renderer = UnitRenderer.GetRenderer (DataManager.GetUnitSymbol (taskTypes[0]));
-				GameCursor.SetVisual (task, ObjectPool.Instantiate (renderer) as UnitRenderer);
-				EmptyClickHandler.Instance.onClick += OnEmptyClick;
+				GameCursor.Instance.SetVisual (task, ObjectPool.Instantiate (renderer) as UnitRenderer);
 			}
 
+			GameCursor.Instance.onClick += OnClick;
 			Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
 			Events.instance.AddListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
 			Events.instance.AddListener<MouseExitPointEvent> (OnMouseExitPointEvent);
 		}
 
-		static void OnEmptyClick (System.Type type) {
-			Remove ();
+		static void OnClick (bool overTarget) {
+			if (!overTarget) {
+				Remove ();
+			}
 		}
 
 		static void Remove () {
 			task = null;
-			GameCursor.RemoveVisual ();
-			EmptyClickHandler.Instance.onClick -= OnEmptyClick;
+			UI.Instance.ConstructPrompt.Close ();
+			RoadConstructor.Instance.Clear ();
+			GameCursor.Instance.onClick -= OnClick;
+			GameCursor.Instance.RemoveVisual ();
 			Events.instance.RemoveListener<ClickPointEvent> (OnClickPointEvent);
 			Events.instance.RemoveListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
 			Events.instance.RemoveListener<MouseExitPointEvent> (OnMouseExitPointEvent);
@@ -73,22 +79,22 @@ namespace DNA.Tasks {
 			if (c != null) {
 				c.ElementContainer = container;
 				c.Start ();
+				Remove ();
 			}
 		}
 
 		static void OnClickPointEvent (ClickPointEvent e) {
 			Construct (e.Point, e.Container);
-			GameCursor.Target = null;
 		}
 
 		static void OnMouseEnterPointEvent (MouseEnterPointEvent e) {
 			if (CanConstructOnPoint (e.Point)) {
-				GameCursor.Target = e.Point.Position;
+				GameCursor.Instance.Target = e.Point.Position;
 			}
 		}
 
 		static void OnMouseExitPointEvent (MouseExitPointEvent e) {
-			GameCursor.Target = null;
+			GameCursor.Instance.Target = null;
 		}
 	}
 }

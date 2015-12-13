@@ -36,7 +36,7 @@ public class GuiInventory : GuiSelectableListener {
 				break;
 		}
 
-		DisplableGroups ();
+		DisableGroups ();
 		foreach (var g in commonGroups) {
 			EnableGroup (g.Value);
 			hasGroups = true;
@@ -53,7 +53,7 @@ public class GuiInventory : GuiSelectableListener {
 		}
 	}
 
-	void DisplableGroups () {
+	void DisableGroups () {
 		foreach (GuiItemGroup group in itemGroups)
 			group.gameObject.SetActive (false);
 	}

@@ -19,6 +19,7 @@ public class ConstructPrompt : MonoBehaviour {
 		confirmButton.onClick.RemoveAllListeners ();
 		confirmButton.onClick.AddListener (onConfirm);
 		confirmButton.onClick.AddListener (Close);
+		cancelButton.onClick.RemoveAllListeners ();
 		cancelButton.onClick.AddListener (Close);
 		if (onDeny != null)
 			cancelButton.onClick.AddListener (onDeny);

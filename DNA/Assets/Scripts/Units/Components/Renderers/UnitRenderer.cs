@@ -7,7 +7,7 @@ namespace DNA.Units {
 	public class UnitRenderer : ObjectColor {
 
 		static Dictionary<string, string> renderers;
-		public static Dictionary<string, string> Renderers {
+		static Dictionary<string, string> Renderers {
 			get {
 				if (renderers == null) {
 					renderers = new Dictionary<string, string> () {
@@ -22,6 +22,14 @@ namespace DNA.Units {
 				}
 				return renderers;
 			}
+		}
+
+		public static string GetRenderer (string key) {
+			string r;
+			if (Renderers.TryGetValue (key, out r)) {
+				return r;
+			}
+			return "";
 		}
 
 		public virtual Vector3 Offset { get { return Vector3.zero; } }

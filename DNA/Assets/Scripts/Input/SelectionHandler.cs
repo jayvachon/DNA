@@ -39,18 +39,12 @@ namespace DNA.InputSystem {
 			set {
 				if (value && !listenForEmptyClick) {
 					EmptyClickHandler.Instance.onClick += OnEmptyClick;
-					Debug.Log ("listening");
 				}
 				if (!value && listenForEmptyClick) {
 					EmptyClickHandler.Instance.onClick -= OnEmptyClick;
-					Debug.Log ("not listenting");
 				}
 				listenForEmptyClick = value;
 			}
-		}
-
-		static SelectionHandler () {
-			// EmptyClickHandler.Instance.onClick += OnEmptyClick;
 		}
 
 		public static void SelectSingle (ISelectable selectable) {
@@ -124,13 +118,14 @@ namespace DNA.InputSystem {
 			return selected.Contains (selectable);
 		}
 
-		static void OnEmptyClick (ISelectable selectable) {
-			if (selectable == null) {
+		static void OnEmptyClick (System.Type type) {
+			if (type == null) {
 				UnselectAll ();
 				SendUpdateSelectionMessage ();
 			} else {
-				// List<ISelectable> cancel = selected.FindAll (x => x.SelectSettings.ContainsCanceller (selectable));
-				Debug.Log (selectable.GetType ());
+				List<ISelectable> cancel = selected.FindAll (x => x.SelectSettings.HasSelectionCanceller (type));
+				foreach (ISelectable c in cancel)
+					Unselect (c);
 			}
 		}
 

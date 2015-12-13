@@ -14,7 +14,7 @@ namespace DNA.Tasks {
 
 		public bool CanConstruct (PathElement element) {
 			return CanAfford 
-				&& ((GridPoint)element).HasRoad 
+				// && ((GridPoint)element).HasRoad 
 				&& element.State == DevelopmentState.Undeveloped;
 		}
 	}

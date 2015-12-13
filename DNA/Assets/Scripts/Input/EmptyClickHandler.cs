@@ -16,7 +16,7 @@ namespace DNA.InputSystem {
 			}
 		}
 
-		public delegate void OnClick (ISelectable selectable);
+		public delegate void OnClick (System.Type type);
 
 		public OnClick onClick;
 
@@ -30,12 +30,20 @@ namespace DNA.InputSystem {
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 				RaycastHit hit;
 				if (onClick != null) {
-					if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
-						Debug.Log ((hit.transform.GetComponent<MonoBehaviour> ()).GetType ()); // TODO: pass the type into onClick and have SelectSettings check for *types* in SelectionCancellers
-						onClick (hit.transform.GetComponent<MonoBehaviour> () as ISelectable);
-					} else {
-						onClick (null);
+
+					System.Type clickType = null;
+
+					if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.UI)) {
+						return;
 					}
+
+					if (Physics.Raycast (ray, out hit, Mathf.Infinity)) {
+						MonoBehaviour mb = hit.transform.GetComponent<MonoBehaviour> ();
+						if (mb != null)
+							clickType = mb.GetType ();
+					}
+
+					onClick (clickType);
 				}
 			}
 		}

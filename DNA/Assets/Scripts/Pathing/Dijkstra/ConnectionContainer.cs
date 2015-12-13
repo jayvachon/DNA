@@ -36,12 +36,7 @@ namespace DNA.Paths {
 			set { Collider.enabled = value; }
 		}
 
-		void OnEnable () {
-			// ColliderEnabled = false;
-		}
-
 		void SetPosition (Vector3 a, Vector3 b) {
-			// Position = a;
 			Position = Vector3.Lerp (a, b, 0.5f);
 			MyTransform.LookAt (b);
 			OnSetPoints ();

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.InputSystem;
 using InventorySystem;
 using DNA.Models;
@@ -90,8 +91,9 @@ namespace DNA.Units {
 
 		protected virtual void OnEnable () {
 			EmissionsManager.AddEmissions (Settings.Emissions);
-			if (UnitRenderer.Renderers.ContainsKey(Settings.Symbol)) {
-				unitRenderer = ObjectPool.Instantiate (UnitRenderer.Renderers[Settings.Symbol]) as UnitRenderer;
+			string renderer = UnitRenderer.GetRenderer (Settings.Symbol);
+			if (renderer != "") {
+				unitRenderer = ObjectPool.Instantiate (renderer) as UnitRenderer;
 				unitRenderer.transform.SetParent (MyTransform);
 				unitRenderer.transform.localPosition = unitRenderer.Offset;
 			}
@@ -102,7 +104,8 @@ namespace DNA.Units {
 			if (Selected) {
 				SelectionManager.Unselect ();
 			}
-			if (UnitRenderer.Renderers.ContainsKey(Settings.Symbol)) {
+			string renderer = UnitRenderer.GetRenderer (Settings.Symbol);
+			if (renderer != "") {
 				if (unitRenderer != null) {
 					ObjectPool.Destroy (unitRenderer);
 					unitRenderer = null;
@@ -125,7 +128,12 @@ namespace DNA.Units {
 		public SelectSettings SelectSettings {
 			get { 
 				if (selectSettings == null) {
-					selectSettings = new SelectSettings ();
+					selectSettings = new SelectSettings (
+						new List<System.Type> () {
+							typeof (DNA.Paths.ConnectionContainer),
+							typeof (FogOfWar)
+						}
+					);
 				}
 				return selectSettings;
 			}

@@ -35,7 +35,7 @@ public class TaskButton : MBRefs {
 
 	public void OnPress () {
 		if (task is ConstructRoad || task is ConstructUnit) {
-			Player.Instance.SetConstructionPen (task.GetType ());
+			// Player.Instance.SetConstructionPen (task.GetType ());
 			TaskPen.Set (task);
 		} else {
 			task.Start ();

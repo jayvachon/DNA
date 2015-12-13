@@ -7,8 +7,17 @@ namespace DNA.InputSystem {
 
 	public static class GameCursor {
 
+		public static Vector3? Target {
+			get { return GameCursorMB.Instance.Target; }
+			set { GameCursorMB.Instance.Target = value; }
+		}
+
 		public static void SetVisual (PerformerTask task, UnitRenderer visual) {
 			GameCursorMB.Instance.SetVisual (task, visual);
+		}
+
+		public static void RemoveVisual () {
+			GameCursorMB.Instance.RemoveVisual ();
 		}
 	}
 
@@ -31,22 +40,33 @@ namespace DNA.InputSystem {
 
 		UnitRenderer visual;
 
+		Vector3? target = null;
+		public Vector3? Target {
+			get { return target; }
+			set { target = value; }
+		}
+
 		public void SetVisual (PerformerTask task, UnitRenderer newVisual) {
-			if (visual != null) {
-				ObjectPool.Destroy (visual);
-			}
+			RemoveVisual ();
 			this.visual = newVisual;
 			StartCoroutine (CoVisualFollowCursor (task));
+		}
+
+		public void RemoveVisual () {
+			if (visual != null) ObjectPool.Destroy (visual);
 		}
 
 		IEnumerator CoVisualFollowCursor (PerformerTask task) {
 		
 			while (visual != null) {
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.Structure)) {
-					visual.transform.position = Vector3.Lerp (ray.origin, hit.point, 0.9f);
-					// Debug.Log (task.Enabled);
+				if (Target == null) {
+					Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+					RaycastHit hit;
+					if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.Structure)) {
+						visual.transform.position = Vector3.Lerp (ray.origin, hit.point, 0.9f);
+					}
+				} else {
+					visual.transform.position = Vector3.Lerp (visual.transform.position, (Vector3)Target, 0.25f);
 				}
 				yield return null;
 			}

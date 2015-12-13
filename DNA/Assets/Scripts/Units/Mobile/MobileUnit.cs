@@ -297,7 +297,6 @@ namespace DNA.Units {
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
 		#region IPathElementVisitor implementation
-		Fermat surroundPositions = new Fermat (new Fermat.Settings (0.75f, 100, 0, Vector3.zero));
 
 		int visitorIndex = 0;
 		public int VisitorIndex {

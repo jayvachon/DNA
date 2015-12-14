@@ -27,6 +27,8 @@ public class ObjectColor : MonoBehaviour {
 		{ "default", Color.white }
 	};
 
+	float alpha = 1f;
+
 	protected virtual void OnEnable () {
 		if (PrimaryColor != null) {
 			SetColor (PrimaryColor);
@@ -50,6 +52,16 @@ public class ObjectColor : MonoBehaviour {
 			CurrentColor = id;
 		} catch {
 			throw new System.Exception ("No color with the id '" + id + "' exists");
+		}
+	}
+
+	public void SetAlpha (float newAlpha) {
+		if (newAlpha != alpha) {
+			Color c = GetColor (CurrentColor);
+			Color newColor = new Color (c.r, c.g, c.b, newAlpha);
+			Renderer.SetColor (newColor);
+			SetColorInChildren ();
+			alpha = newAlpha;
 		}
 	}
 

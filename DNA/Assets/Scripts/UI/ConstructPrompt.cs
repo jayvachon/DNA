@@ -14,11 +14,12 @@ public class ConstructPrompt : MonoBehaviour {
 		Close ();
 	}
 
-	public void Open (string text, UnityAction onConfirm, UnityAction onDeny=null) {
+	public void Open (string text, UnityAction onConfirm, UnityAction onDeny=null, bool confirmEnabled=true) {
 		confirmText.text = text;
 		confirmButton.onClick.RemoveAllListeners ();
 		confirmButton.onClick.AddListener (onConfirm);
 		confirmButton.onClick.AddListener (Close);
+		confirmButton.interactable = confirmEnabled;
 		cancelButton.onClick.RemoveAllListeners ();
 		cancelButton.onClick.AddListener (Close);
 		if (onDeny != null)

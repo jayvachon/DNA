@@ -14,7 +14,7 @@ namespace DNA {
 			set {
 				
 				point = value;
-				point.HasFog = true;
+				point.Fog = this;
 				point.OnSetState += OnSetState;
 				
 				neighbors[0] = new List<GridPoint> ();
@@ -52,8 +52,23 @@ namespace DNA {
 
 		List<GridPoint>[] neighbors = new List<GridPoint>[3];
 
-		void Awake () {
+		public enum FogState { Solid, Faded, Empty }
+		FogState state = FogState.Empty;
+		public FogState State {
+			get { return state; }
+			set {
+				state = value;
+				if (onUpdateState != null)
+					onUpdateState (state);
+			}
+		}
+
+		public delegate void OnUpdateState (FogState state);
+		public OnUpdateState onUpdateState;
+
+		void OnEnable () {
 			GetComponent<Renderer> ().SetColor (Palette.YellowGreen);
+			State = FogState.Solid;
 		}
 		
 		void OnSetState (DevelopmentState state) { RemoveIfDeveloped (state); }
@@ -61,17 +76,19 @@ namespace DNA {
 		void OnNeighborSetState2 (DevelopmentState state) { FadeIfDeveloped (state); }
 		void OnNeighborSetState3 (DevelopmentState state) { FadeIfDeveloped (state); }
 
-		void FadeIfDeveloped (DevelopmentState state) {
-			if (state == DevelopmentState.Developed) {
+		void FadeIfDeveloped (DevelopmentState devState) {
+			if (devState == DevelopmentState.Developed) {
 				GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.5f));
+				State = FogState.Faded;
 			}
 		}
 
-		void RemoveIfDeveloped (DevelopmentState state) {
-			if (state == DevelopmentState.Developed) {
-				Point.HasFog = false;
+		void RemoveIfDeveloped (DevelopmentState devState) {
+			if (devState == DevelopmentState.Developed) {
+				Point.Fog = null;
 				ObjectPool.Destroy (this);
 				RemoveListeners ();
+				State = FogState.Empty;
 			}
 		}
 

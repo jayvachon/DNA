@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UI : MonoBehaviour {
 
@@ -14,5 +15,22 @@ public class UI : MonoBehaviour {
 	}
 
 	public ConstructPrompt ConstructPrompt;
+	List<ProgressBar> progressBars = new List<ProgressBar> ();
 
+	public ProgressBar CreateProgressBar (Vector3 position) {
+		ProgressBar pbar = ObjectPool.Instantiate<ProgressBar> () as ProgressBar;
+		pbar.transform.SetParent (transform);
+		pbar.transform.position = new Vector3 (
+			position.x,
+			position.y + 2f,
+			position.z
+		);
+		progressBars.Add (pbar);
+		return pbar;
+	}
+
+	public void DestroyProgressBar (ProgressBar pbar) {
+		if (pbar != null)
+			ObjectPool.Destroy<ProgressBar> (pbar);
+	}
 }

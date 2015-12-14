@@ -32,7 +32,6 @@ namespace DNA.InputSystem {
 		void OnPointerDownEvent (PointerDownEvent e) {
 			if (onClick != null)
 				onClick (e.ClickedObject.GetType ());
-
 		}
 	}
 }

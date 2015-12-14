@@ -194,8 +194,8 @@ namespace DNA.Units {
 				currentMatch = match;
 				if (match.PairType != null) {
 					BeginEncircling ();
-					currentMatch.Match.onComplete += OnCompleteTask;
 				}
+				currentMatch.Match.onComplete += OnCompleteTask;
 				match.Start (true);
 				return true;
 			}
@@ -247,7 +247,11 @@ namespace DNA.Units {
 		void OnCompleteTask (PerformerTask t) {
 
 			t.onComplete -= OnCompleteTask;
-			if (TryStartMatch ()) {
+			
+			if (!TryStartMatch ()) {
+				if (TryConstructRoad ())
+					return;
+			} else {
 				return;
 			}
 
@@ -297,7 +301,6 @@ namespace DNA.Units {
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
 		#region IPathElementVisitor implementation
-
 		int visitorIndex = 0;
 		public int VisitorIndex {
 			get { return visitorIndex; }

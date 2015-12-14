@@ -78,6 +78,21 @@ namespace InventorySystem {
 		}
 
 		/// <summary>
+		/// Returns the percentage of the group that has been filled with items.
+		/// </summary>
+		public float PercentFilled {
+			get {
+				if (!HasCapacity) {
+					Debug.LogWarning ("The ItemGroup " + this + " does not have a capacity and will always return 100% filled.");
+					return 1f;
+				}
+				float capacity = (float)Capacity;
+				float count = (float)Count;
+				return count / capacity;
+			}
+		}
+
+		/// <summary>
 		/// Called any time an item is added or removed.
 		/// </summary>
 		public OnUpdate onUpdate;
@@ -233,7 +248,10 @@ namespace InventorySystem {
 		/// Fills group to capacity, if a capacity has been set.
 		/// </summary>
 		public override void Fill () {
-			if (!HasCapacity) return;
+			if (!HasCapacity) {
+				Debug.LogWarning ("The ItemGroup " + this + " cannot be filled because a capacity has not been set.");
+				return;
+			}
 			Set (Capacity);
 		}
 

@@ -10,6 +10,7 @@ namespace DNA.Tasks {
 	public static class TaskPen {
 
 		static PerformerTask task;
+		static UnitRenderer visual;
 
 		public static void Set (PerformerTask newTask) {
 
@@ -20,7 +21,9 @@ namespace DNA.Tasks {
 
 			if (taskTypes.Length > 0) {
 				string renderer = UnitRenderer.GetRenderer (DataManager.GetUnitSymbol (taskTypes[0]));
-				GameCursor.Instance.SetVisual (task, ObjectPool.Instantiate (renderer) as UnitRenderer);
+				visual = ObjectPool.Instantiate (renderer) as UnitRenderer;
+				visual.SetAlpha (0.33f);
+				GameCursor.Instance.SetVisual (task, visual);
 			}
 
 			GameCursor.Instance.onClick += OnClick;
@@ -30,13 +33,12 @@ namespace DNA.Tasks {
 		}
 
 		static void OnClick (bool overTarget) {
-			if (!overTarget) {
-				Remove ();
-			}
+			if (!overTarget) Remove ();
 		}
 
 		static void Remove () {
 			task = null;
+			GameCursor.Instance.Target = null;
 			UI.Instance.ConstructPrompt.Close ();
 			RoadConstructor.Instance.Clear ();
 			GameCursor.Instance.onClick -= OnClick;
@@ -71,7 +73,8 @@ namespace DNA.Tasks {
 					() => {
 						RoadConstructor.Instance.Clear ();
 						Remove ();
-					}
+					},
+					task.Enabled
 				);
 			}
 
@@ -90,11 +93,13 @@ namespace DNA.Tasks {
 		static void OnMouseEnterPointEvent (MouseEnterPointEvent e) {
 			if (CanConstructOnPoint (e.Point)) {
 				GameCursor.Instance.Target = e.Point.Position;
+				visual.SetAlpha (1f);
 			}
 		}
 
 		static void OnMouseExitPointEvent (MouseExitPointEvent e) {
 			GameCursor.Instance.Target = null;
+			visual.SetAlpha (0.33f);
 		}
 	}
 }

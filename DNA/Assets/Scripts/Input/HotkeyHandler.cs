@@ -89,6 +89,9 @@ public class HotkeyHandler : MonoBehaviour {
 		new Hotkey (KeyCode.L, () => {
 			GivingTreeUnit tree = ObjectPool.GetActiveObjects<GivingTreeUnit> ()[0];
 			tree.PerformableTasks[typeof (GenerateUnit<Distributor>)].Start ();
+		}),
+		new Hotkey (KeyCode.Escape, () => {
+			SelectionHandler.Clear ();
 		})
 	};
 

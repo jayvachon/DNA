@@ -6,27 +6,39 @@
 
 \f0\fs24 \cf0 to do\
 \
-bugs\
+:::: bugs ::::\
+\
+demo\
 - laborers become un-assignable\
-- able to plan road even if it\'92s unaffordable\
-- laborers do not rotate correctly from the giving tree after they\'92ve been instantiated\
 - cannot interrupt laborers performing tasks\
 - elders can\'92t move\
-- laborers don\'92t automatically start construction on a road after completing a building\
 \
-features\
+postdemo\
+- after construction, laborers should look for additional construction\
+- laborers do not rotate correctly from the giving tree after they\'92ve been instantiated\
+\
+:::: features ::::\
+\
+demo\
+- progress bars are backwards (just switch back/mercury colors)\
+- visually communicate plot fertility\
+- click fog of war to unselect unit\
+\
+postdemo\
 - encircle construction/repair sites\
-- always show task buttons, but make disabled task buttons noninteractable \
 - laborers should immediately respond to interruptions - reverse direction on paths, stop tasks, etc.\
 - building a road to a coffee plant should remove the fog of war around the plant as if it had been built\
-- visually communicate plot fertility\
-- progress bars on construction sites\
-- allow construction on plots any plots (whether or not they\'92re on roads- players\'92ll need to build roads to them anyways)\
 - levee shouldn\'92t be built by default. player should build, then upgrade\
+- scale hitboxes to unit\
+- darker blue sea color\
 \
-design problems\
-- it\'92s possible to run out of milkshakes and not be able to build derricks to gather more\
+:::: design problems ::::\
+\
+demo\
 - need a way of selecting the levee when it\'92s under water (maybe just automatically pull up the levee menu when you zoom all the way out (OR show it in the default menu [birth buildings])\
+\
+postdemo\
+- it\'92s possible to run out of milkshakes and not be able to build derricks to gather more\
 - laborers turning into elders is not fun. you lose development momentum & it\'92s really hard to pick up steam again.\
 	> try adding variation to retirement ages so there\'92s any easier transition\
 \
@@ -38,8 +50,12 @@ reproducing bugs\
 - let laborer become elder, then create laborer. the new laborer will try to carry out the tasks of the previous one before it became an elder\
 - when laborers finish construction and switch to doing a task on a building, they jump back & forth between the current & previous point on the path\
 \
-balancing\
+:::: balancing ::::\
+\
+demo\
 - start tier 1 fertility plots higher up\
-- \'93even\'94 random distribution of coffee plants\
 - coffee plants should have a finite capacity, but number should start high\
+\
+postdemo\
+- \'93even\'94 random distribution of coffee plants\
 - levee upgrades should become successively more expensive}

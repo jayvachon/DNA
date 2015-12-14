@@ -12,7 +12,10 @@ namespace DNA.Units {
 
 		public int LaborCost {
 			get { return Inventory["Labor"].Count; }
-			set { Inventory["Labor"].Set (value); }
+			set { 
+				Inventory["Labor"].Capacity = value;
+				Inventory["Labor"].Fill ();
+			}
 		}
 
 		public override SelectSettings SelectSettings {
@@ -32,16 +35,48 @@ namespace DNA.Units {
 
 		public RoadPlan RoadPlan { get; set; }
 
+		ProgressBar pbar;
+
 		void Awake () {
 			unitRenderer.SetColors (new Color (1f, 1f, 1f));
 		}
 
+		protected override void OnEnable () {
+			base.OnEnable ();
+			Coroutine.WaitForFixedUpdate (() => {
+				if (gameObject.activeSelf) {
+					GridPoint gp = Element as GridPoint;
+					if (gp != null) {
+						pbar = UI.Instance.CreateProgressBar (gp.Position);
+					} else {
+						Connection c = Element as Connection;
+						if (c != null)
+							pbar = UI.Instance.CreateProgressBar (c.Center);
+					}
+				}
+			});
+		}
+		
+		protected override void OnDisable () { 
+			base.OnDisable ();
+			if (UI.Instance != null) {
+				UI.Instance.DestroyProgressBar (pbar); 
+				pbar = null;
+			}
+		}
+
 		protected override void OnInitInventory (Inventory i) {
-			i.Add (new LaborGroup ());
+			i.Add (new LaborGroup ()).onUpdate += OnUpdateLabor;
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
 			a.Add (new AcceptCollectItem<LaborGroup> ());
+		}
+
+		void OnUpdateLabor () {
+			if (pbar != null)
+				pbar.SetProgress (Inventory["Labor"].PercentFilled);
+			Debug.Log (Inventory["Labor"].PercentFilled);
 		}
 	}
 }

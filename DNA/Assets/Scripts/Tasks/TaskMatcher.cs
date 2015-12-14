@@ -92,12 +92,14 @@ namespace DNA.Tasks {
 		/// <summary>
 		/// Gets the Performer Tasks that the performers share in common
 		/// </summary>
-		public static List<PerformerTask> GetTasksInCommon (List<ITaskPerformer> performers) {
+		public static List<PerformerTask> GetTasksInCommon (List<ITaskPerformer> performers, bool getActive=false) {
 
 			if (performers.Count == 0)
 				return new List<PerformerTask> ();
 
-			Dictionary<System.Type, PerformerTask> firstTasks = performers[0].PerformableTasks.EnabledTasks;
+			Dictionary<System.Type, PerformerTask> firstTasks = getActive 
+				? performers[0].PerformableTasks.ActiveTasks
+				: performers[0].PerformableTasks.EnabledTasks;
 
 			if (performers.Count < 2)
 				return firstTasks.Values.ToList ().ConvertAll (x => x as PerformerTask);

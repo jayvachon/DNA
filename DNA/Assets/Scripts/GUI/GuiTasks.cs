@@ -37,7 +37,7 @@ public class GuiTasks : GuiSelectableListener {
 			.FindAll (x => x is ITaskPerformer)
 			.ConvertAll (x => x as ITaskPerformer);
 
-		List<PerformerTask> tasks = TaskMatcher.GetTasksInCommon (performers);
+		List<PerformerTask> tasks = TaskMatcher.GetTasksInCommon (performers, true);
 		SetButtons (tasks);
 	}
 

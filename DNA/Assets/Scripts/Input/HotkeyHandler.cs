@@ -92,6 +92,7 @@ public class HotkeyHandler : MonoBehaviour {
 		}),
 		new Hotkey (KeyCode.Escape, () => {
 			SelectionHandler.Clear ();
+			TaskPen.Remove ();
 		})
 	};
 

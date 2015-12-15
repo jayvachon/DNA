@@ -145,6 +145,11 @@ namespace DNA.Units {
 			}
 		}
 
+		public bool moving = false;
+		void Update () {
+			moving = positioner.moving;
+		}
+
 		public void SetStartPoint (GridPoint point) {
 			positioner = new Positioner (MyTransform, point, StartRotation);
 			positioner.OnArriveAtDestination += OnArriveAtDestination;

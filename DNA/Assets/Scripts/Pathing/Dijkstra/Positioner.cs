@@ -38,7 +38,7 @@ namespace DNA.Paths {
 
 		public OnArriveAtDestination OnArriveAtDestination { get; set; }
 
-		bool moving = false;
+		public bool moving = false;
 		bool encircling = false;
 		public bool Moving { get { return moving; } }
 
@@ -55,7 +55,7 @@ namespace DNA.Paths {
 		PathRotator rotator;
 		PathRotator.Trajectory trajectory;
 
-		public Positioner (Transform mover, GridPoint startPoint, float startRotation=0f, float speed=1.5f) {
+		public Positioner (Transform mover, GridPoint startPoint, float startRotation=0f, float speed=0.75f) {//float speed=1.5f) {
 			this.mover = mover;
 			this.startPoint = startPoint;
 			endPoint = startPoint;
@@ -80,7 +80,7 @@ namespace DNA.Paths {
 		}
 
 		public void StartMoving () {
-
+			
 			if (moving) return;
 			CalculatePath ();
 			if (!HasNextPoint) return;
@@ -95,6 +95,7 @@ namespace DNA.Paths {
 				pathPosition ++;
 
 				BeginMove ();
+				Debug.Log ("begin");
 			});
 		}
 

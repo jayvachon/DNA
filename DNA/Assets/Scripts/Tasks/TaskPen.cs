@@ -36,7 +36,7 @@ namespace DNA.Tasks {
 			if (!overTarget) Remove ();
 		}
 
-		static void Remove () {
+		public static void Remove () {
 			task = null;
 			GameCursor.Instance.Target = null;
 			UI.Instance.ConstructPrompt.Close ();

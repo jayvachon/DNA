@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using DNA.Paths;
 using DNA.InputSystem;
+using DNA.EventSystem;
 
 namespace DNA {
 
-	public class FogOfWar : MBRefs {
+	public class FogOfWar : MBRefs, IPointerDownHandler {
 
 		GridPoint point;
 		public GridPoint Point {
@@ -104,5 +106,11 @@ namespace DNA {
 				}
 			}
 		}
+
+		#region IPointerDownHandler implementation
+		public void OnPointerDown (PointerEventData e) {
+			Events.instance.Raise (new PointerDownEvent (this));
+		}
+		#endregion
 	}
 }

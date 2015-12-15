@@ -144,8 +144,6 @@ public class PathRotator {
 	}
 
 	public void RotateAroundPoint (float p) {
-		// Quaternion moverRotation = Quaternion.LookRotation (mover.position - nearest.Pivot);
-		// Quaternion q = moverRotation.SlerpClockwise (nearest.To, p);
 		Quaternion q = nearest.From.SlerpClockwise (nearest.To, p);
 		mover.position = nearest.Pivot.GetPointAroundAxis (q.eulerAngles.y);
 	}

@@ -25,8 +25,8 @@ namespace DNA.Units {
 		}
 
 		protected override void OnInitInventory (Inventory i) {
-			i.Add (new CoffeeGroup (0, 10));
-			// i.Add (new YearGroup (0, 1200));
+			// i.Add (new CoffeeGroup (0, 10));
+			i.Add (new CoffeeGroup ());
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
@@ -36,20 +36,23 @@ namespace DNA.Units {
 		protected override void OnEnable () {
 			base.OnEnable ();
 			// Inventory["Years"].Clear ();
-			Inventory["Coffee"].Set (2);
+			// Inventory["Coffee"].Set (2);
 			// PerformableTasks[typeof (GenerateItem<YearGroup>)].Start ();
-			PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Start ();
+			// PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Start ();
 		}
 
 		protected override void OnDisable () {
 			base.OnDisable ();
-			PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Stop ();
+			// PerformableTasks[typeof (GenerateItem<CoffeeGroup>)].Stop ();
 			// PerformableTasks[typeof (GenerateItem<YearGroup>)].Stop ();
 		}
 
 		protected override void OnSetFertility (int tier) {
-			Inventory["Coffee"].Capacity = (int)(20 * Fertility.Multipliers[tier]);
-			Inventory["Coffee"].Set (2);
+			int amount = (int)(2000 * Fertility.Multipliers[tier]);
+			Inventory["Coffee"].Capacity = amount;
+			Debug.Log (amount);
+			// Inventory["Coffee"].Set (2);
+			Inventory["Coffee"].Fill ();
 		}
 	}
 }

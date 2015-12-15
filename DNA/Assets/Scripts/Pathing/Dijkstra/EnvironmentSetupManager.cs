@@ -25,6 +25,7 @@ namespace DNA {
 		void OnLoadPoints () {
 			CreateCoffeePlants ();
 			fogOfWar.Init ();
+			// OnLoadFog ();
 		}
 
 		void OnLoadFog () {

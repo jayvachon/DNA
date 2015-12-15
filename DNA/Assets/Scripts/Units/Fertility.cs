@@ -14,11 +14,11 @@ public class Fertility {
 			if (colors == null) {
 				colors = new Color[] {
 					new Color (0.604f, 0.906f, 0.914f),
-					new Color (0.816f, 0.98f, 0.886f),
-					new Color (0.98f, 0.706f, 0.792f),
-					new Color (0.435f, 0.961f, 0.565f),
-					new Color (0.918f, 0.243f, 0.388f),
-					new Color (0f, 0.796f, 0.169f)
+					new Color (0.576f, 0.98f, 0f),
+					new Color (0.98f, 0.604f, 0.784f),
+					new Color (0.114f, 0.589f, 0.961f),
+					new Color (0.251f, 0.843f, 0.192f),
+					new Color (0.686f, 0.301f, 1f)
 				};
 			}
 			return colors;
@@ -32,7 +32,7 @@ public class Fertility {
 	public Fertility (float distanceToCenter, float maxValue) {
 		DistanceToCenter = distanceToCenter;
 		MaxValue = maxValue;
-		float f = (DistanceToCenter * 1.5f) * MaxValue;
+		float f = (DistanceToCenter * 2f) * MaxValue;
 		Value = Mathf.Min (TierCount-1, Mathf.RoundToInt (f * (float)TierCount));
 	}
 }

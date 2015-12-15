@@ -78,7 +78,7 @@ namespace DNA {
 
 		void FadeIfDeveloped (DevelopmentState devState) {
 			if (devState == DevelopmentState.Developed) {
-				GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.5f));
+				GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
 				State = FogState.Faded;
 			}
 		}

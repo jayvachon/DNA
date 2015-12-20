@@ -190,7 +190,9 @@
      <Compile Include="Assets\Scripts\Pathing\Figure8\FigureEight.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PathRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Figure8\PointB.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Figure8\PointRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\LineDrawer.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Movement\Mover.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementPoint.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementRotation.cs" />
      <Compile Include="Assets\Scripts\Pathing\Movement\PathMovementTest.cs" />
@@ -330,6 +332,7 @@
      <Compile Include="Assets\Scripts\Upgrades\Upgrade.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Upgrades.cs" />
      <Compile Include="Assets\Scripts\Upgrades\UpgradesTest.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Co.cs" />
      <Compile Include="Assets\Scripts\Utilities\Coroutine.cs" />
      <Compile Include="Assets\Scripts\Utilities\DebuggableMethod.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\ExtensionMethods.cs" />

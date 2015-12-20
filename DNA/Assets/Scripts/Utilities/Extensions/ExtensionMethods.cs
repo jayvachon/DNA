@@ -28,6 +28,10 @@ public static class ExtensionMethods {
 		return Mathf.Approximately (vector3.x, otherVector3.x) && Mathf.Approximately (vector3.y, otherVector3.y) && Mathf.Approximately (vector3.z, otherVector3.z);
 	}
 
+	public static Vector3 GetPointAroundAxis (this Vector3 pivot, Quaternion angle, float radius=1f) {
+		return GetPointAroundAxis (pivot, angle.eulerAngles.y, radius);
+	}
+
 	public static Vector3 GetPointAroundAxis (this Vector3 pivot, float angle, float radius=1f) {
 		
 		float r = angle * Mathf.Deg2Rad;

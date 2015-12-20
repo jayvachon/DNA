@@ -15,10 +15,11 @@ namespace DNA {
 			get { return point; }
 			set {
 				
+				// TODO: listen for changed connections rather than point state changes				
 				point = value;
 				point.Fog = this;
 				point.OnSetState += OnSetState;
-				
+
 				neighbors[0] = new List<GridPoint> ();
 				foreach (Connection c in point.Connections) {
 					GridPoint other = System.Array.Find (c.Points, x => x != point);

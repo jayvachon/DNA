@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+// TODO: deprecate this - use Co class instead
+
 public class Coroutine : MonoBehaviour {
 
 	static Coroutine instance = null;

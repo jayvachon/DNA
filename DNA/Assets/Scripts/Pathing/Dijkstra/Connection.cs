@@ -7,6 +7,8 @@ namespace DNA.Paths {
 
 	public class Connection : PathElement {
 
+		public delegate void OnUpdateCost (int cost);
+
 		public GridPoint[] Points { get; private set; }
 
 		Vector3[] positions;
@@ -93,8 +95,12 @@ namespace DNA.Paths {
 				Path[0].Cost = pathCost;
 				Path[1].Cost = pathCost;
 				UpdateVersion ();
+				if (onUpdateCost != null)
+					onUpdateCost (pathCost);
 			}
 		}
+
+		public OnUpdateCost onUpdateCost;
 
 		public void SetCost (string key) {
 			try {

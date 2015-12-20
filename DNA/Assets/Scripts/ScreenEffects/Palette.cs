@@ -19,7 +19,7 @@ public static class Palette {
 	}
 
 	public static Color Sea {
-		get { return new Color (0.4f, 0.227f, 0.847f); }
+		get { return new Color (0.126f, 0.227f, 0.847f); }
 	}
 
 	public static Color DarkBlue {

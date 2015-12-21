@@ -8,63 +8,59 @@ using System.Collections.Generic;
 public class Co : MonoBehaviour {
 
 	bool running;
-	float time;
+	float duration;
 	System.Action<float> action;
 	System.Action onEnd;
 	Func<bool> condition;
 
 	// TODO: add static functions for waitforseconds, waitforcondition, etc.
 
-	public static Co Start (float time, System.Action<float> action, System.Action onEnd=null, Func<bool> condition=null) {
+	public static Co Start (float duration, System.Action<float> action, System.Action onEnd=null, Func<bool> condition=null) {
 		Co co = ObjectPool.Instantiate<Co> ();
-		co.Begin (time, action, onEnd, condition);
+		co.Begin (duration, action, onEnd, condition);
 		return co;
 	}
 
-	public void Stop (bool triggerOnEnd=true) {
-		if (!triggerOnEnd) onEnd = null;
-		End ();
-	}
+	void Begin (float duration, System.Action<float> action, System.Action onEnd, Func<bool> condition) {
 
-	void Begin (float time, System.Action<float> action, System.Action onEnd, Func<bool> condition) {
-
-		this.time = time;
+		this.duration = duration;
 		this.action = action;
 		this.onEnd = onEnd;
 		this.condition = condition;
 
-		running = true;
-		StartCoroutine (CoStart ());
+		StartCoroutine (CoRun ());
+	}
+
+	public void Stop (bool triggerOnEnd=true) {
+		if (!triggerOnEnd) onEnd = null;
+		running = false;
 	}
 
 	void End () {
 		if (onEnd != null) onEnd ();
-		running = false;
 		ObjectPool.Destroy (transform);
-	}
-
-	void OnDisable () {
 		running = false;
-		time = 0f;
+		duration = 0f;
 		action = null;
-		onEnd = null;
 		condition = null;
+		onEnd = null;
 	}
 
-	IEnumerator CoStart () {
+	IEnumerator CoRun () {
 		
 		float eTime = 0f;
+		running = true;
 	
 		if (condition != null) {
-			while (eTime < time && running && condition ()) {
+			while (eTime < duration && running && condition ()) {
 				eTime += Time.deltaTime;
-				action (eTime / time);
+				action (eTime / duration);
 				yield return null;
 			}
 		} else {
-			while (eTime < time && running) {
+			while (eTime < duration && running) {
 				eTime += Time.deltaTime;
-				action (eTime / time);
+				action (eTime / duration);
 				yield return null;
 			}
 		}

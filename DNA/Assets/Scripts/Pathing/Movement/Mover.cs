@@ -44,9 +44,13 @@ public class Mover : MonoBehaviour {
 
 				// If inside the radius of the origin, rotate before moving
 				this.rotationOrigin = Quaternion.LookRotation (moverPosition - origin);
-				this.rotationTarget = Quaternion.LookRotation (target - origin);
+				this.rotationTarget = (Vector3.Distance (origin, target) > 0.1f) 
+					? Quaternion.LookRotation (target - origin) 
+					: rotationOrigin;
 				this.translateOrigin = origin.GetPointAroundAxis (rotationTarget, radius);
-				this.translateTarget = target.GetPointAroundAxis (Quaternion.LookRotation (origin - target), radius);
+				this.translateTarget = (Vector3.Distance (origin, target) > 0.1f) 
+					? target.GetPointAroundAxis (Quaternion.LookRotation (origin - target), radius) 
+					: translateOrigin;
 			}
 		}
 	}
@@ -64,8 +68,10 @@ public class Mover : MonoBehaviour {
 		Vector3 position;
 
 		public delegate void OnEndMove ();
+		public delegate void OnEndRotation ();
 
 		public OnEndMove onEndMove;
+		public OnEndRotation onEndRotation;
 
 		float RotationTime {
 			get { return Mathf.Abs (trajectory.rotationOrigin.ArcLengthClockwise (trajectory.rotationTarget , settings.radius)) / settings.speed; }
@@ -97,14 +103,15 @@ public class Mover : MonoBehaviour {
 			}
 		}
 
-		public void FullRotation (float duration) {
-			Rotate (duration, EndMove);
+		public void FullRotation (float duration, Vector3 point) {
+			trajectory = new Trajectory (mover.position, point, point, settings.radius);
+			Rotate (duration, EndRotation);
 		}
 
 		void Rotate (float duration, System.Action onEnd) {
-			if (rotateCo != null && rotateCo.gameObject.activeSelf)
-				rotateCo.Stop (false);
-			rotateCo = Co.Start (duration, UpdateRotation, Translate);
+			// if (rotateCo != null && rotateCo.gameObject.activeSelf)
+				// rotateCo.Stop (false);
+			rotateCo = Co.Start (duration, UpdateRotation, onEnd);
 		}
 
 		void UpdateRotation (float p) {
@@ -113,8 +120,8 @@ public class Mover : MonoBehaviour {
 		}
 
 		void Translate () {
-			if (translateCo != null && translateCo.gameObject.activeSelf)
-				translateCo.Stop (false);
+			// if (translateCo != null && translateCo.gameObject.activeSelf)
+				// translateCo.Stop (false);
 			translateCo = Co.Start (TranslateTime, UpdateTranslation, EndMove);
 		}
 
@@ -126,6 +133,11 @@ public class Mover : MonoBehaviour {
 			if (onEndMove != null)
 				onEndMove ();
 		}
+
+		void EndRotation () {
+			if (onEndRotation != null)
+				onEndRotation ();
+		}
 	}
 
 	MovementBehaviour movement;
@@ -133,17 +145,20 @@ public class Mover : MonoBehaviour {
 	Trajectory trajectory;
 
 	// <temp vars>
+	public Transform weirdTarget;
 	public Transform[] targets;
 	int pathPosition = 0;
 	// </temp vars>
 
 	void OnEnable () {
 		movement = new MovementBehaviour (transform, settings);
-		movement.onEndMove += OnEndMove;
+		// movement.onEndMove += OnEndMove;
+		movement.onEndMove += OnArrive;
 	}
 
 	void OnDisable () {
-		movement.onEndMove -= OnEndMove;
+		movement.onEndMove -= OnArrive;
+		// movement.onEndMove -= OnEndMove;
 	}
 
 	void StartMove () {
@@ -152,9 +167,16 @@ public class Mover : MonoBehaviour {
 	}
 
 	void MoveToMiddleTarget () {
-		movement.onEndMove -= OnEndMove;
-		trajectory = new Trajectory (transform.position, targets[pathPosition].position, targets[1].position, settings.radius);
-		movement.SetTrajectory (trajectory);
+		// movement.onEndMove -= OnEndMove;
+		StartMove ();
+	}
+
+	void OnArrive () {
+		if (pathPosition < targets.Length-2) {
+			pathPosition ++;
+		} else {
+			pathPosition = 0;
+		}
 	}
 
 	void OnEndMove () {
@@ -177,7 +199,11 @@ public class Mover : MonoBehaviour {
 			MoveToMiddleTarget ();
 		}
 		if (Input.GetKeyDown (KeyCode.E)) {
-			movement.FullRotation (3f);
+			movement.FullRotation (3f, targets[pathPosition].position);
+		}
+		if (Input.GetKeyDown (KeyCode.R)) {
+			trajectory = new Trajectory (transform.position, targets[pathPosition].position, weirdTarget.position, settings.radius);
+			movement.SetTrajectory (trajectory);
 		}
 	}
 

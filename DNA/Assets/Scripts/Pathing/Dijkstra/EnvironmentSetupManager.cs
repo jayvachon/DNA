@@ -57,6 +57,13 @@ namespace DNA {
 				c.BeginConstruction<Road> ();
 				c.EndConstruction ();
 			}
+
+			/*List<Connection> topConnections2 = points.GetConnectionsAtIndex (12);
+			for (int i = 0; i < topConnections2.Count; i ++) {
+				ConnectionContainer d = ConnectionsManager.GetContainer (topConnections2[i]);
+				d.BeginConstruction<Road> ();
+				d.EndConstruction ();
+			}*/
 		}
 	}
 }

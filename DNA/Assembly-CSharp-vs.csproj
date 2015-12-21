@@ -184,6 +184,7 @@
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointContainer.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\PointsManager.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Positioner.cs" />
+     <Compile Include="Assets\Scripts\Pathing\Dijkstra\Positioner2.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\Road.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadConstructor.cs" />
      <Compile Include="Assets\Scripts\Pathing\Dijkstra\RoadPlan.cs" />
@@ -334,6 +335,7 @@
      <Compile Include="Assets\Scripts\Upgrades\UpgradesTest.cs" />
      <Compile Include="Assets\Scripts\Utilities\Co.cs" />
      <Compile Include="Assets\Scripts\Utilities\Coroutine.cs" />
+     <Compile Include="Assets\Scripts\Utilities\CoroutineManager.cs" />
      <Compile Include="Assets\Scripts\Utilities\DebuggableMethod.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\MaterialsExtended.cs" />

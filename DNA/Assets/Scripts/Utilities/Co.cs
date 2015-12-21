@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 // TODO: rename to Coroutine once current Coroutine class has been removed
 
-public class Co : MonoBehaviour {
+public class Co {
 
 	bool running;
 	float duration;
@@ -13,10 +13,14 @@ public class Co : MonoBehaviour {
 	System.Action onEnd;
 	Func<bool> condition;
 
+	public bool Running {
+		get { return running; }
+	}
+
 	// TODO: add static functions for waitforseconds, waitforcondition, etc.
 
 	public static Co Start (float duration, System.Action<float> action, System.Action onEnd=null, Func<bool> condition=null) {
-		Co co = ObjectPool.Instantiate<Co> ();
+		Co co = new Co ();
 		co.Begin (duration, action, onEnd, condition);
 		return co;
 	}
@@ -28,7 +32,7 @@ public class Co : MonoBehaviour {
 		this.onEnd = onEnd;
 		this.condition = condition;
 
-		StartCoroutine (CoRun ());
+		CoroutineManager.Instance.StartCoroutine (CoRun ());
 	}
 
 	public void Stop (bool triggerOnEnd=true) {
@@ -38,7 +42,6 @@ public class Co : MonoBehaviour {
 
 	void End () {
 		if (onEnd != null) onEnd ();
-		ObjectPool.Destroy (transform);
 		running = false;
 		duration = 0f;
 		action = null;

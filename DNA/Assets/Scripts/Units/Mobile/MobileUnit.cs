@@ -44,7 +44,8 @@ namespace DNA.Units {
 				// If the selected object is a GridPoint with a road, move to it
 				if (p.HasRoad) {
 					CurrentPoint = null;
-					positioner.Destination = p;
+					// positioner.Destination = p;
+					p2.Destination = p;
 				} else {
 
 					// If the selected object is a GridPoint with a road under construction, move to it
@@ -121,18 +122,20 @@ namespace DNA.Units {
 			get { return roadConstructionPoint; }
 			set {
 				roadConstructionPoint = value;
-				positioner.Destination = roadConstructionPoint;
+				// positioner.Destination = roadConstructionPoint;
+				p2.Destination = roadConstructionPoint;
 			}
 		}
 
 		public bool Idle {
-			get { return currentMatch == null && !positioner.Moving; }
+			get { return currentMatch == null && !p2.Moving; }//!positioner.Moving; }
 		}
 
 		GridPoint lastMatchedPoint = null;
 		MatchResult currentMatch;
 		Connection currentRoadConstruction;
-		Positioner positioner;
+		// Positioner positioner;
+		Positioner2 p2;
 
 		static float startRotation = 0f;
 		static float StartRotation {
@@ -147,13 +150,17 @@ namespace DNA.Units {
 
 		public bool moving = false;
 		void Update () {
-			moving = positioner.moving;
+			// moving = positioner.moving;
+			moving = p2.Moving;
 		}
 
-		public void SetStartPoint (GridPoint point) {
-			positioner = new Positioner (MyTransform, point, StartRotation);
-			positioner.OnArriveAtDestination += OnArriveAtDestination;
-			CurrentPoint = point;
+		public void SetStartPoint (GridPoint startPoint) {
+			// positioner = new Positioner (MyTransform, startPoint, StartRotation);
+			// positioner.OnArriveAtDestination += OnArriveAtDestination;
+			p2 = new Positioner2 (MyTransform, startPoint);
+			p2.onArriveAtDestination += OnArriveAtDestination;
+			Position = startPoint.Position.GetPointAroundAxis (StartRotation, 1.25f);
+			CurrentPoint = startPoint;
 		}
 
 		/**
@@ -166,6 +173,8 @@ namespace DNA.Units {
 		void OnArriveAtDestination (GridPoint point) {
 			
 			CurrentPoint = point;
+			Debug.Log (CurrentPoint.Position);
+			Debug.Log (CurrentPoint.Unit);
 
 			// If a road construction site was assigned, build the road
 			if (point == RoadConstructionPoint) {
@@ -263,12 +272,17 @@ namespace DNA.Units {
 			// TODO: handle special case where e.g. collection center is built closer to resources
 			// Check if the last matched point can pair with the task
 			if (lastMatchedPoint != null && TaskMatcher.GetPair (t, lastMatchedPoint) != null) {
-				positioner.Destination = lastMatchedPoint;
+				// positioner.Destination = lastMatchedPoint;
+				p2.Destination = lastMatchedPoint;
 			} else {
 				
 				// If not, find the closest one that can
-				positioner.Destination = Pathfinder.FindNearestPoint (
+				/*positioner.Destination = Pathfinder.FindNearestPoint (
 					positioner.Destination,
+					(GridPoint p) => { return TaskMatcher.GetPair (t, p) != null; }
+				);*/
+				p2.Destination = Pathfinder.FindNearestPoint (
+					p2.Destination,
 					(GridPoint p) => { return TaskMatcher.GetPair (t, p) != null; }
 				);
 			}
@@ -288,7 +302,7 @@ namespace DNA.Units {
 				currentMatch.Match.onComplete -= OnCompleteTask;
 				currentMatch.Match.Stop ();
 				currentMatch = null;
-				positioner.InterruptRotateAround ();
+				// positioner.InterruptRotateAround ();
 			}
 		}
 
@@ -298,7 +312,8 @@ namespace DNA.Units {
 		void BeginEncircling () {
 			int performCount = currentMatch.GetPerformCount ();
 			float time = currentMatch.Match.Settings.Duration * performCount;
-			positioner.RotateAroundPoint (time);
+			// positioner.RotateAroundPoint (time);
+			p2.RotateAroundPoint (time);
 		}
 
 		#endregion

@@ -114,5 +114,9 @@ namespace DNA.Paths {
 			Points = points;
 			Cost = Costs["default"];
 		}
+
+		public GridPoint GetOtherPoint (GridPoint point) {
+			return System.Array.Find (Points, x => x != point);
+		}
 	}
 }

@@ -128,7 +128,7 @@ namespace DNA.Units {
 		}
 
 		public bool Idle {
-			get { return currentMatch == null && !p2.Moving; }//!positioner.Moving; }
+			get { return currentMatch == null && !p2.Moving; }
 		}
 
 		GridPoint lastMatchedPoint = null;
@@ -295,6 +295,7 @@ namespace DNA.Units {
 			if (currentRoadConstruction != null)
 				RoadConstructionPoint = Array.Find (currentRoadConstruction.Points, x => x != RoadConstructionPoint);
 			t.onComplete -= OnCompleteRoad;
+			currentMatch = null;
 		}
 
 		void InterruptTask () {

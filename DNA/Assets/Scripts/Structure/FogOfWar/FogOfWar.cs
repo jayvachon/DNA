@@ -14,100 +14,60 @@ namespace DNA {
 		public GridPoint Point {
 			get { return point; }
 			set {
-				
-				// TODO: listen for changed connections rather than point state changes				
+
 				point = value;
 				point.Fog = this;
-				point.OnSetState += OnSetState;
 
-				neighbors[0] = new List<GridPoint> ();
-				foreach (Connection c in point.Connections) {
-					GridPoint other = System.Array.Find (c.Points, x => x != point);
-					other.OnSetState += OnNeighborSetState1;
-					neighbors[0].Add (other);
-				}
+				List<Connection> connections = point.Connections;
 
-				for (int i = 1; i < neighbors.Length; i ++) {
-					neighbors[i] = new List<GridPoint> ();
-					foreach (GridPoint p in neighbors[i-1]) {
-						foreach (Connection c in p.Connections) {
-							GridPoint a = c.Points[0];
-							GridPoint b = c.Points[1];
-							if (!neighbors[i-1].Contains (a) && !neighbors[i].Contains (a) && a != point) {
-								neighbors[i].Add (a);
-								if (i == 1)
-									a.OnSetState += OnNeighborSetState2;
-								if (i == 2)
-									a.OnSetState += OnNeighborSetState3;
-							}
-							if (!neighbors[i-1].Contains (b) && !neighbors[i].Contains (b) && b != point) {
-								neighbors[i].Add (b);	
-								if (i == 1)
-									b.OnSetState += OnNeighborSetState2;
-								if (i == 2)
-									b.OnSetState += OnNeighborSetState3;
-							}
-						}
-					}
+				foreach (Connection c in connections) {
+					c.onUpdateCost += (int cost) => {
+						OnUpdateConnection (cost);
+						RemoveNeighbors ();
+					};
 				}
 			}
 		}
-
-		List<GridPoint>[] neighbors = new List<GridPoint>[3];
-
-		public enum FogState { Solid, Faded, Empty }
-		FogState state = FogState.Empty;
-		public FogState State {
-			get { return state; }
-			set {
-				state = value;
-				if (onUpdateState != null)
-					onUpdateState (state);
-			}
-		}
-
-		public delegate void OnUpdateState (FogState state);
-		public OnUpdateState onUpdateState;
 
 		void OnEnable () {
 			GetComponent<Renderer> ().SetColor (Palette.YellowGreen);
-			State = FogState.Solid;
 		}
 		
-		void OnSetState (DevelopmentState state) { RemoveIfDeveloped (state); }
-		void OnNeighborSetState1 (DevelopmentState state) { RemoveIfDeveloped (state); }
-		void OnNeighborSetState2 (DevelopmentState state) { FadeIfDeveloped (state); }
-		void OnNeighborSetState3 (DevelopmentState state) { FadeIfDeveloped (state); }
-
-		void FadeIfDeveloped (DevelopmentState devState) {
-			if (devState == DevelopmentState.Developed) {
-				GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
-				State = FogState.Faded;
+		public void Init () {
+			if (Point.Connections.Find (x => x.Cost == 0) != null) {
+				OnUpdateConnection (0);
+				RemoveNeighbors ();
 			}
 		}
 
-		void RemoveIfDeveloped (DevelopmentState devState) {
-			if (devState == DevelopmentState.Developed) {
-				Point.Fog = null;
-				ObjectPool.Destroy (this);
-				RemoveListeners ();
-				State = FogState.Empty;
-			}
-		}
-
-		void RemoveListeners () {
-			for (int i = 0; i < neighbors.Length; i ++) {
-				foreach (GridPoint p in neighbors[i]) {
-					if (i == 0)
-						p.OnSetState -= OnNeighborSetState1;
-					if (i == 1)
-						p.OnSetState -= OnNeighborSetState2;
-					if (i == 2)
-						p.OnSetState -= OnNeighborSetState3;
+		public void Remove () {
+			Point.Fog = null;
+			ObjectPool.Destroy (this);
+			foreach (Connection c in Point.Connections) {
+				GridPoint other = c.GetOtherPoint (Point);
+				FogOfWar f = other.Fog;
+				if (f != null) {
+					f.Fade ();
 				}
 			}
 		}
 
+		public void Fade () {
+			GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
+		}
+
+		void OnUpdateConnection (int cost) {
+			if (cost == 0) Remove ();
+		}
+
+		void RemoveNeighbors () {
+			List<GridPoint> n = Point.Connections.ConvertAll (x => x.GetOtherPoint (Point));
+			foreach (GridPoint gp in n) {
+				if (gp.Fog != null)
+					gp.Fog.Remove ();
+			}
+		}
+		
 		#region IPointerDownHandler implementation
 		public void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new PointerDownEvent (this));

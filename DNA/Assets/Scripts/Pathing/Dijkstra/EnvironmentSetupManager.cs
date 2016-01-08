@@ -24,8 +24,6 @@ namespace DNA {
 
 		void OnLoadPoints () {
 			CreateCoffeePlants ();
-			fogOfWar.Init ();
-			// OnLoadFog ();
 		}
 
 		void OnLoadFog () {
@@ -64,6 +62,8 @@ namespace DNA {
 				d.BeginConstruction<Road> ();
 				d.EndConstruction ();
 			}*/
+
+			fogOfWar.Init ();
 		}
 	}
 }

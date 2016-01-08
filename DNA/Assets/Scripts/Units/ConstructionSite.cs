@@ -76,7 +76,6 @@ namespace DNA.Units {
 		void OnUpdateLabor () {
 			if (pbar != null)
 				pbar.SetProgress (Inventory["Labor"].PercentFilled);
-			Debug.Log (Inventory["Labor"].PercentFilled);
 		}
 	}
 }

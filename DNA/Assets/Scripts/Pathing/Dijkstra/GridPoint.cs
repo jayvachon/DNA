@@ -32,7 +32,8 @@ namespace DNA.Paths {
 		public FogOfWar Fog {
 			get { return fog; }
 			set {
-				if (fog != null) {
+				fog = value;
+				/*if (fog != null) {
 					fog.onUpdateState -= OnUpdateFog;
 				}
 				fog = value;
@@ -44,19 +45,12 @@ namespace DNA.Paths {
 					} else {
 						obj.gameObject.SetActive (true);
 					}
-				}
+				}*/
 			}
 		}
 
 		public bool HasFog {
 			get { return Fog != null; }
-		}
-
-		public void OnUpdateFog (FogOfWar.FogState state) {
-			if (Object != null) {
-				MonoBehaviour obj = Object as MonoBehaviour;
-				obj.gameObject.SetActive (state == FogOfWar.FogState.Faded || state == FogOfWar.FogState.Empty);
-			}
 		}
 	}
 }

@@ -191,7 +191,8 @@ namespace DNA.Models {
 				Duration = 2f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>)
+				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>),
+				AlwaysPairNearest = true
 			});
 
 			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
@@ -199,7 +200,8 @@ namespace DNA.Models {
 				Duration = 1.5f,
 				AutoStart = false,
 				Repeat = true,
-				Pair = typeof (AcceptDeliverItem<CoffeeGroup>)
+				Pair = typeof (AcceptDeliverItem<CoffeeGroup>),
+				AlwaysPairNearest = true
 			});
 
 			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
@@ -222,7 +224,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConstructUnit<CoffeePlant>), new CostTaskSettings {
 				Symbol = "construct_coffee",
-				Title = "Birth Coffee Plant (20M)",
+				Title = "Birth Coffee Plant",
 				Description = "Creates a new coffee plant",
 				Duration = 0f,
 				Costs = new [] {
@@ -234,7 +236,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConstructUnit<MilkshakePool>), new CostTaskSettings {
 				Symbol = "construct_derrick",
-				Title = "Birth Milkshake Derrick (35M)",
+				Title = "Birth Milkshake Derrick",
 				Description = "Creates a new milkshake derrick",
 				Duration = 0f,
 				Costs = new [] {
@@ -246,7 +248,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConstructUnit<University>), new CostTaskSettings {
 				Symbol = "construct_university",
-				Title = "Birth University (50M)",
+				Title = "Birth University",
 				Description = "Creates a new university",
 				Duration = 0f,
 				Costs = new [] {
@@ -258,7 +260,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConstructUnit<Clinic>), new CostTaskSettings {
 				Symbol = "construct_clinic",
-				Title = "Birth Clinic (40M)",
+				Title = "Birth Clinic",
 				Description = "Creates a new clinic",
 				Duration = 0f,
 				Costs = new [] {
@@ -270,7 +272,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConstructUnit<Flower>), new CostTaskSettings {
 				Symbol = "construct_flower",
-				Title = "Birth Flower (10M)",
+				Title = "Birth Flower",
 				Description = "Creates a new flower",
 				Duration = 0f,
 				Costs = new [] {
@@ -282,7 +284,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConstructUnit<CollectionCenter>), new CostTaskSettings {
 				Symbol = "construct_collector",
-				Title = "Birth Collection Center (50M)",
+				Title = "Birth Collection Center",
 				Description = "Creates a new collection center",
 				Duration = 0f,
 				Costs = new [] {
@@ -297,7 +299,7 @@ namespace DNA.Models {
 			 */
 
 			tasks.Add (typeof (ConsumeItem<YearGroup>), new TaskSettings {
-				Symbol = "construct_year",
+				Symbol = "consume_year",
 				Title = "",
 				Description = "Consumes year",
 				Duration = 1f,
@@ -321,7 +323,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (DeliverItem<CoffeeGroup>), new TaskSettings {
-				Symbol = "construct_coffee",
+				Symbol = "deliver_coffee",
 				Title = "",
 				Description = "Delivers coffee",
 				Duration = 1.5f,
@@ -364,7 +366,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (GenerateUnit<Distributor>), new CostTaskSettings {
 				Symbol = "generate_laborer",
-				Title = "Birth Laborer (25C)",
+				Title = "Birth Laborer",
 				Description = "Creates a new laborer",
 				Duration = 0f,
 				AutoStart = false,
@@ -419,13 +421,13 @@ namespace DNA.Models {
 				Repeat = false,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 50 }
+						{ "Coffee", 50 }
 					},
 					new Dictionary<string, int> {
-						{ "Milkshakes", 100 }
+						{ "Coffee", 100 }
 					},
 					new Dictionary<string, int> {
-						{ "Milkshakes", 200 }
+						{ "Coffee", 200 }
 					}
 				}
 			});
@@ -471,7 +473,35 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Coffee", 100 },
+						{ "Coffee", 15 },
+						{ "Milkshakes", 30 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 20 },
+						{ "Milkshakes", 40 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 25 },
+						{ "Milkshakes", 50 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 30 },
+						{ "Milkshakes", 60 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 35 },
+						{ "Milkshakes", 70 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 40 },
+						{ "Milkshakes", 80 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 45 },
+						{ "Milkshakes", 90 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 50 },
 						{ "Milkshakes", 100 }
 					}
 				}
@@ -569,6 +599,7 @@ namespace DNA.Models {
 		public float Duration { get; set; }
 		public bool AutoStart { get; set; }
 		public bool Repeat { get; set; }
+		public bool AlwaysPairNearest { get; set; }
 	}
 
 	public class CostTaskSettings : TaskSettings {

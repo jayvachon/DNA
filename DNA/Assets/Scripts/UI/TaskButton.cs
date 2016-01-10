@@ -31,6 +31,22 @@ public class TaskButton : MBRefs {
 	public void Init (PerformerTask task) {
 		this.task = task;
 		Text.text = task.Settings.Title;
+		if (task is CostTask) {
+			CostTask costTask = task as CostTask;
+			Text.text += " (";
+			int count = costTask.Costs.Count;
+			foreach (var c in costTask.Costs) {
+				Text.text += c.Value;
+				if (c.Key == "Coffee")
+					Text.text += "C";
+				else
+					Text.text += "M";
+				count --;
+				if (count > 0)
+					Text.text += ", ";
+			}
+			Text.text += ")";
+		}
 	}
 
 	public void OnPress () {
@@ -39,5 +55,6 @@ public class TaskButton : MBRefs {
 		} else {
 			task.Start ();
 		}
+		Init (task);
 	}
 }

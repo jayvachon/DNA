@@ -231,8 +231,6 @@ namespace DNA.Paths {
 			}
 		}
 
-		Vector3 currentPoint = Vector3.zero;
-
 		public bool Moving {
 			get { return movement.Moving; }
 		}
@@ -244,7 +242,6 @@ namespace DNA.Paths {
 
 		public Positioner2 (Transform mover, GridPoint startPoint) {
 			this.mover = mover;
-			this.currentPoint = startPoint.Position;
 			movement = new MovementBehaviour (mover, settings);
 			movement.onEndMove += OnEndMove;
 			path = new PathBehaviour (mover, settings, startPoint);

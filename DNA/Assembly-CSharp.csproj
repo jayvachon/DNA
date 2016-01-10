@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Debugging\GizmosDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\InventoryDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
+     <Compile Include="Assets\Scripts\Debugging\PathfinderDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Fermat.cs" />
      <Compile Include="Assets\Scripts\Environment\InnerSea.cs" />

@@ -11,12 +11,15 @@ namespace DNA.Paths {
 
 	public static class Pathfinder {
 
-		static PathElement version = new PathElement ();
+		// these properties only have public getters so that PathfinderDrawer can draw them - could prob remove for production
+
+		static VersionTracker pathVersionTracker = new VersionTracker ();
 
 		static Path<GridPoint>[] paths;
-		static Path<GridPoint>[] Paths {
+		public static Path<GridPoint>[] Paths {
 			get {
-				//if (paths == null || !version.UpToDate) {
+
+				if (!pathVersionTracker.UpToDate) {
 
 					List<Connection> connections = TreeGrid.Connections;
 					paths = new Path<GridPoint>[connections.Count*2];
@@ -26,36 +29,14 @@ namespace DNA.Paths {
 						paths[i] = connections[j].Path[0];
 						paths[i+1] = connections[j++].Path[1];
 					}
-
-					version.SetUpToDate ();
-				//}
+				}
+					
 				return paths;
 			}
 		}
 
-		static Path<GridPoint>[] pathsNoFree;
-		static Path<GridPoint>[] PathsNoFree {
-			get {
-
-				List<Connection> connections = TreeGrid.Connections.FindAll (x => x.Cost > 0);
-				pathsNoFree = new Path<GridPoint>[connections.Count*2];
-
-				int j = 0;
-
-				for (int i = 0; i < pathsNoFree.Length; i += 2) {
-
-					Connection c = connections[j++];
-
-					pathsNoFree[i] = c.Path[0];
-					pathsNoFree[i+1] = c.Path[1];
-				}
-
-				return pathsNoFree;
-			}
-		}
-
-		static Path<GridPoint>[] pathsIgnoreCost;
-		static Path<GridPoint>[] PathsIgnoreCost {
+		/*static Path<GridPoint>[] pathsIgnoreCost;
+		public static Path<GridPoint>[] PathsIgnoreCost {
 			get {
 
 				List<Connection> connections = TreeGrid.Connections;
@@ -74,22 +55,27 @@ namespace DNA.Paths {
 
 				return pathsIgnoreCost;
 			}
-		}
+		}*/
+
+		static VersionTracker freeVersionTracker = new VersionTracker ();
 
 		static Path<GridPoint>[] freePaths;
-		static Path<GridPoint>[] FreePaths {
+		public static Path<GridPoint>[] FreePaths {
 			get {
 
-				List<Connection> connections = TreeGrid.Connections.FindAll (x => x.Cost == 0);
-				freePaths = new Path<GridPoint>[connections.Count*2];
+				if (!freeVersionTracker.UpToDate) {
+				
+					List<Connection> connections = TreeGrid.Connections.FindAll (x => x.Cost == 0);
+					freePaths = new Path<GridPoint>[connections.Count*2];
 
-				int j = 0;
-				for (int i = 0; i < freePaths.Length; i += 2) {
-					
-					Connection c = connections[j++];
+					int j = 0;
+					for (int i = 0; i < freePaths.Length; i += 2) {
+						
+						Connection c = connections[j++];
 
-					freePaths[i] = c.Path[0];
-					freePaths[i+1] = c.Path[1];
+						freePaths[i] = c.Path[0];
+						freePaths[i+1] = c.Path[1];
+					}
 				}
 
 				return freePaths;
@@ -97,7 +83,7 @@ namespace DNA.Paths {
 		}
 
 		static Path<GridPoint>[] clearPaths;
-		static Path<GridPoint>[] ClearPaths {
+		public static Path<GridPoint>[] ClearPaths {
 			get {
 
 				List<Connection> connections = TreeGrid.Connections.FindAll (
@@ -126,6 +112,10 @@ namespace DNA.Paths {
 
 		public static List<GridPoint> GetFreePath (GridPoint a, GridPoint b) {
 			Path<GridPoint>[] free = FreePaths;
+			/*Debug.Log (".........");
+			Debug.Log (a == null ? "null" : a.Object + " = " + PathsHavePoint (a, free));
+			Debug.Log (b == null ? "null" : b.Object + " = " + PathsHavePoint (b, free));
+			Debug.Log (".........");*/
 			return (PathsHavePoint (a, free) && PathsHavePoint (b, free)) 
 				? GetPath (a, b, FreePaths)
 				: new List<GridPoint> ();
@@ -135,12 +125,11 @@ namespace DNA.Paths {
 			return GetPath (a, b, Paths);
 		}
 
-		public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
+		/*public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
 			return GetPath (a, b, PathsIgnoreCost);
-		}
+		}*/
 
 		public static List<GridPoint> GetPathNoOverlap (GridPoint a, GridPoint b) {
-			//return GetPath (a, b, PathsNoFree);
 			return GetPath (a, b, ClearPaths);
 		}
 
@@ -153,7 +142,7 @@ namespace DNA.Paths {
 			int shortestPath = int.MaxValue;
 
 			foreach (GridPoint b in ConnectedPoints) {
-				if (b.Object != null && requirement (b)) {
+				if (b != a && b.Object != null && requirement (b)) {
 					int pathLength = GetFreePath (a, b).Count;
 					if (pathLength < shortestPath) {
 						nearest = b;
@@ -198,6 +187,21 @@ namespace DNA.Paths {
 			}
 
 			return connections;
+		}
+	}
+
+	public class VersionTracker {
+
+		int prevConnectionVersion = -1;
+		public bool UpToDate {
+			get {
+				if (prevConnectionVersion == TreeGrid.ConnectionVersion) {
+					return true;
+				} else {
+					prevConnectionVersion = TreeGrid.ConnectionVersion;
+					return false;
+				}
+			}
 		}
 	}
 }

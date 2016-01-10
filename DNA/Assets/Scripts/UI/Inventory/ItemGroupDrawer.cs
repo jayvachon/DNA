@@ -30,7 +30,10 @@ namespace DNA {
 		}
 
 		void OnUpdate () {
-			countText.text = Group.Count.ToString ();
+			string suffix = "M";
+			if (Group.ID == "Coffee")
+				suffix = "C";
+			countText.text = Group.Count.ToString () + suffix;
 		}
 	}
 }

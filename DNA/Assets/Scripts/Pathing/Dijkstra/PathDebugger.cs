@@ -45,8 +45,8 @@ namespace DNA.Paths {
 				first = !first;
 			}
 			if (points.Count == 2) {
-				path = Pathfinder.GetShortestPath (points[0], points[1]);
-				Instance.Line.UpdatePositions (path.ConvertAll (x => x.Position));
+				// path = Pathfinder.GetShortestPath (points[0], points[1]);
+				// Instance.Line.UpdatePositions (path.ConvertAll (x => x.Position));
 			}
 		}
 

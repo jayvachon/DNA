@@ -44,8 +44,7 @@ namespace DNA.Units {
 				// If the selected object is a GridPoint with a road, move to it
 				if (p.HasRoad) {
 					CurrentPoint = null;
-					// positioner.Destination = p;
-					p2.Destination = p;
+					SetDestination (p);
 				} else {
 
 					// If the selected object is a GridPoint with a road under construction, move to it
@@ -122,20 +121,18 @@ namespace DNA.Units {
 			get { return roadConstructionPoint; }
 			set {
 				roadConstructionPoint = value;
-				// positioner.Destination = roadConstructionPoint;
-				p2.Destination = roadConstructionPoint;
+				SetDestination (roadConstructionPoint);
 			}
 		}
 
 		public bool Idle {
-			get { return currentMatch == null && !p2.Moving; }
+			get { return currentMatch == null && !positioner.Moving; }
 		}
 
 		GridPoint lastMatchedPoint = null;
 		MatchResult currentMatch;
 		Connection currentRoadConstruction;
-		// Positioner positioner;
-		Positioner2 p2;
+		Positioner2 positioner;
 
 		static float startRotation = 0f;
 		static float StartRotation {
@@ -150,17 +147,20 @@ namespace DNA.Units {
 
 		public bool moving = false;
 		void Update () {
-			// moving = positioner.moving;
-			moving = p2.Moving;
+			moving = positioner.Moving;
 		}
 
 		public void SetStartPoint (GridPoint startPoint) {
-			// positioner = new Positioner (MyTransform, startPoint, StartRotation);
-			// positioner.OnArriveAtDestination += OnArriveAtDestination;
-			p2 = new Positioner2 (MyTransform, startPoint);
-			p2.onArriveAtDestination += OnArriveAtDestination;
+			positioner = new Positioner2 (MyTransform, startPoint);
+			positioner.onArriveAtDestination += OnArriveAtDestination;
 			Position = startPoint.Position.GetPointAroundAxis (StartRotation, 1.25f);
 			CurrentPoint = startPoint;
+		}
+
+		void SetDestination (GridPoint point) {
+			if (point != null) {
+				positioner.Destination = point;
+			}
 		}
 
 		/**
@@ -173,8 +173,6 @@ namespace DNA.Units {
 		void OnArriveAtDestination (GridPoint point) {
 			
 			CurrentPoint = point;
-			Debug.Log (CurrentPoint.Position);
-			Debug.Log (CurrentPoint.Unit);
 
 			// If a road construction site was assigned, build the road
 			if (point == RoadConstructionPoint) {
@@ -199,7 +197,12 @@ namespace DNA.Units {
 		void OnChangeConnectionObject (IPathElementObject obj) {
 
 			// Need to wait a frame so that construction site can have its cost set
-			Coroutine.WaitForFixedUpdate (() => TryConstructRoad ());	
+			Coroutine.WaitForFixedUpdate (
+				() => {
+					if (currentMatch == null)
+						TryConstructRoad ();
+				}
+			);
 		}
 
 		bool TryStartMatch () {
@@ -262,29 +265,26 @@ namespace DNA.Units {
 
 			t.onComplete -= OnCompleteTask;
 			
-			if (!TryStartMatch ()) {
+			/*if (!TryStartMatch ()) {
 				if (TryConstructRoad ())
 					return;
 			} else {
 				return;
-			}
+			}*/
 
 			// TODO: handle special case where e.g. collection center is built closer to resources
 			// Check if the last matched point can pair with the task
-			if (lastMatchedPoint != null && TaskMatcher.GetPair (t, lastMatchedPoint) != null) {
-				// positioner.Destination = lastMatchedPoint;
-				p2.Destination = lastMatchedPoint;
+			if (!t.Settings.AlwaysPairNearest && lastMatchedPoint != null && TaskMatcher.GetPair (t, lastMatchedPoint) != null) {
+				SetDestination (lastMatchedPoint);
 			} else {
 				
 				// If not, find the closest one that can
-				/*positioner.Destination = Pathfinder.FindNearestPoint (
+				GridPoint d = Pathfinder.FindNearestPoint (
 					positioner.Destination,
 					(GridPoint p) => { return TaskMatcher.GetPair (t, p) != null; }
-				);*/
-				p2.Destination = Pathfinder.FindNearestPoint (
-					p2.Destination,
-					(GridPoint p) => { return TaskMatcher.GetPair (t, p) != null; }
 				);
+
+				SetDestination (d);
 			}
 
 			currentMatch = null;
@@ -303,7 +303,6 @@ namespace DNA.Units {
 				currentMatch.Match.onComplete -= OnCompleteTask;
 				currentMatch.Match.Stop ();
 				currentMatch = null;
-				// positioner.InterruptRotateAround ();
 			}
 		}
 
@@ -313,8 +312,7 @@ namespace DNA.Units {
 		void BeginEncircling () {
 			int performCount = currentMatch.GetPerformCount ();
 			float time = currentMatch.Match.Settings.Duration * performCount;
-			// positioner.RotateAroundPoint (time);
-			p2.RotateAroundPoint (time);
+			positioner.RotateAroundPoint (time);
 		}
 
 		#endregion

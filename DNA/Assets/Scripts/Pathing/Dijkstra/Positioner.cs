@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// deprecate
+
 namespace DNA.Paths {
 
 	public delegate void OnArriveAtDestination (GridPoint point);

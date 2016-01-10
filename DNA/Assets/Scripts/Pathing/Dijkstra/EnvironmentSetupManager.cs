@@ -19,7 +19,6 @@ namespace DNA {
 			fogOfWar.OnLoadFog += OnLoadFog;
 			points.Init ();
 			connections.Init ();
-			
 		}
 
 		void OnLoadPoints () {

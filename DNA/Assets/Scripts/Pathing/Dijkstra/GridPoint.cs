@@ -31,22 +31,7 @@ namespace DNA.Paths {
 		FogOfWar fog = null;
 		public FogOfWar Fog {
 			get { return fog; }
-			set {
-				fog = value;
-				/*if (fog != null) {
-					fog.onUpdateState -= OnUpdateFog;
-				}
-				fog = value;
-				MonoBehaviour obj = Object as MonoBehaviour;
-				if (obj != null) {
-					if (fog != null) {
-						fog.onUpdateState += OnUpdateFog;
-						obj.gameObject.SetActive (fog.State == FogOfWar.FogState.Faded || fog.State == FogOfWar.FogState.Empty);
-					} else {
-						obj.gameObject.SetActive (true);
-					}
-				}*/
-			}
+			set { fog = value; }
 		}
 
 		public bool HasFog {

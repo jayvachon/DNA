@@ -34,6 +34,8 @@ namespace DNA {
 		public static List<Connection> Connections {
 			get {
 				if (connections == null) {
+
+					ConnectionVersion = 0;
 					
 					List<LineSegment> segments = Voronoi.DelaunayTriangulation ();
 					connections = new List<Connection> ();
@@ -48,6 +50,7 @@ namespace DNA {
 							&& Mathf.Approximately (s[1].y, p.Position.z));
 
 						Connection c = new Connection (new [] { p1, p2 });
+						c.onUpdateCost += OnUpdateConnectionCost;
 						
 						p1.Connections.Add (c);
 						p2.Connections.Add (c);
@@ -67,7 +70,7 @@ namespace DNA {
 					
 					// TODO: don't require colors in the voronoi constructor
 					List<uint> colors = new List<uint> ();
-					foreach (GridPoint point in Points)
+					for (int i = 0; i < Points.Count; i ++)
 						colors.Add (0);
 
 					voronoi = new Delaunay.Voronoi (
@@ -78,6 +81,12 @@ namespace DNA {
 				}
 				return voronoi;
 			}
+		}
+
+		public static int ConnectionVersion { get; private set; }
+
+		static void OnUpdateConnectionCost (int cost) {
+			ConnectionVersion += 1;
 		}
 	}
 }

@@ -9,6 +9,7 @@ using DNA;
 public class GuiTasks : GuiSelectableListener {
 
 	public List<TaskButton> buttons;
+	List<ISelectable> selected;
 
 	void Awake () {
 		Init ();
@@ -23,10 +24,17 @@ public class GuiTasks : GuiSelectableListener {
 				hasTask = true;
 			}
 		}
+		if (hasTask) {
+			foreach (var g in Player.Instance.Inventory.Groups) {
+				g.Value.onUpdate += UpdateActiveState;
+			}
+		}
 		SetGroupActive (hasTask);
 	}
 
 	protected override void OnUpdateSelection (List<ISelectable> selected) {
+
+		this.selected = selected;
 
 		if (selected.Count == 0) {
 			SetButtons (Player.Instance.PerformableTasks.ActiveTasks.Values.ToList ());
@@ -39,6 +47,13 @@ public class GuiTasks : GuiSelectableListener {
 
 		List<PerformerTask> tasks = TaskMatcher.GetTasksInCommon (performers, true);
 		SetButtons (tasks);
+	}
+
+	void UpdateActiveState () {
+		foreach (var g in Player.Instance.Inventory.Groups) {
+			g.Value.onUpdate -= UpdateActiveState;
+		}
+		OnUpdateSelection (selected);
 	}
 
 	void EnableButton (PerformerTask t) {

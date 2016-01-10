@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using DNA.InventorySystem;
 
@@ -7,7 +8,7 @@ namespace DNA.Tasks {
 	public class FleeTree : CostTask {
 
 		protected override void OnEnd () {
-			Application.LoadLevel (0);
+			SceneManager.LoadScene ("Main");
 			base.OnEnd ();
 		}
 	}

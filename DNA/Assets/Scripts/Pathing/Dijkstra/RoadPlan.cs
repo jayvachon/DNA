@@ -11,6 +11,12 @@ namespace DNA.Paths {
 
 		List<Connection> connections;
 
+		public RoadPlan (Connection connection) {
+			this.connections = new List<Connection> { connection };
+			connection.OnSetState += OnSetConnectionState;
+			UpdateTerminus ();
+		}
+
 		public RoadPlan (List<Connection> connections) {
 			this.connections = connections;
 			foreach (Connection connection in connections) {

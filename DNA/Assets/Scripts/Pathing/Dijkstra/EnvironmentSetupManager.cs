@@ -27,9 +27,9 @@ namespace DNA {
 
 		void OnLoadFog () {
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
-			points.SetUnitAtIndex<MilkshakePool> (4);
+			points.SetUnitAtIndex<MilkshakePool> (2);
 			// points.SetUnitAtIndex<CoffeePlant> (2);
-			points.SetUnitAtIndex<Flower> (2);
+			points.SetUnitAtIndex<Flower> (4);
 		}
 
 		void CreateCoffeePlants () {
@@ -55,12 +55,12 @@ namespace DNA {
 				c.EndConstruction ();
 			}
 
-			/*List<Connection> topConnections2 = points.GetConnectionsAtIndex (12);
+			List<Connection> topConnections2 = points.GetConnectionsAtIndex (12);
 			for (int i = 0; i < topConnections2.Count; i ++) {
 				ConnectionContainer d = ConnectionsManager.GetContainer (topConnections2[i]);
 				d.BeginConstruction<Road> ();
 				d.EndConstruction ();
-			}*/
+			}
 
 			fogOfWar.Init ();
 		}

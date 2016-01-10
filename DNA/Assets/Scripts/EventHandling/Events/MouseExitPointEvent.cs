@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DNA.Paths;
 
 namespace DNA.EventSystem {
 

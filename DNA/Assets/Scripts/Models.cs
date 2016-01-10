@@ -218,6 +218,13 @@ namespace DNA.Models {
 				Repeat = true
 			});
 
+			tasks.Add (typeof (CollectItem<HappinessGroup>), new TaskSettings {
+				Symbol = "collect_happiness",
+				Duration = 0.25f,
+				AutoStart = false,
+				Repeat = true
+			});
+
 			/**
 			 *	Construct
 			 */
@@ -304,6 +311,16 @@ namespace DNA.Models {
 				Description = "Consumes year",
 				Duration = 1f,
 				AutoStart = false,
+				Repeat = true,
+				Pair = null
+			});
+
+			tasks.Add (typeof (ConsumeItem<HappinessGroup>), new TaskSettings {
+				Symbol = "consume_happiness",
+				Title = "",
+				Description = "Consumes happiness",
+				Duration = 5f,
+				AutoStart = true,
 				Repeat = true,
 				Pair = null
 			});

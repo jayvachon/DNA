@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.EventSystem;
 using DNA.InputSystem;
 using DNA.Tasks;
 using DNA.Paths;
@@ -66,13 +65,6 @@ namespace DNA {
 
 		System.Type pen;
 
-		void Awake () {
-			Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
-			Events.instance.AddListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
-			Events.instance.AddListener<MouseExitPointEvent> (OnMouseExitPointEvent);
-			// EmptyClickHandler.Instance.onClick += OnEmptyClick;
-		}
-
 		void OnDisable () {
 			// if (EmptyClickHandler.Instance != null)
 				// EmptyClickHandler.Instance.onClick -= OnEmptyClick;
@@ -110,25 +102,6 @@ namespace DNA {
 		bool CanConstructOnPoint (GridPoint point) {
 			return PlayerActionState.State == ActionState.Construction 
 				&& (PerformableTasks[pen] as IConstructable).CanConstruct (point);
-		}
-
-		void OnClickPointEvent (ClickPointEvent e) {
-			constructionTargets.Add (e.Container);
-			if (CanConstructOnPoint (e.Point)) {
-				Construct (e.Point, e.Container);
-			}
-		}
-
-		void OnMouseEnterPointEvent (MouseEnterPointEvent e) {
-			if (CanConstructOnPoint (e.Point)) {
-				ObjectPool.Instantiate ("PointHighlight", e.Point.Position);
-			}
-		}
-
-		void OnMouseExitPointEvent (MouseExitPointEvent e) {
-			if (CanConstructOnPoint (e.Point)) {
-				ObjectPool.Destroy ("PointHighlight");
-			}
 		}
 
 		void OnEmptyClick (System.Type type) {

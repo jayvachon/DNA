@@ -71,9 +71,11 @@ namespace DNA.Paths {
 
 			public delegate void OnEndMove (Vector3 target);
 			public delegate void OnEndRotation ();
+			public delegate void OnStartRotation ();
 
 			public OnEndMove onEndMove;
 			public OnEndRotation onEndRotation;
+			public OnStartRotation onStartRotation;
 
 			public bool Moving {
 				get { return (rotateCo != null && rotateCo.Running) || (translateCo != null && translateCo.Running); }
@@ -97,7 +99,11 @@ namespace DNA.Paths {
 				this.trajectory = t;
 
 				if (trajectory.NeedsRotation) {
-					Rotate (RotationTime, Translate);
+					StartRotation ();
+					Rotate (RotationTime, () => { 
+						EndRotation ();
+						Translate ();
+					});
 				} else {
 					Translate ();
 				}
@@ -141,6 +147,11 @@ namespace DNA.Paths {
 					onEndMove (target);
 			}
 
+			void StartRotation () {
+				if (onStartRotation != null)
+					onStartRotation ();
+			}
+
 			void EndRotation () {
 				if (onEndRotation != null)
 					onEndRotation ();
@@ -155,6 +166,10 @@ namespace DNA.Paths {
 			GridPoint endPoint;
 			int pathPosition = 0;
 			List<GridPoint> path;
+
+			public GridPoint PreviousPoint {
+				get { return path[pathPosition-1]; }
+			}
 
 			public GridPoint CurrentPoint {
 				get { return path[pathPosition]; }
@@ -219,7 +234,12 @@ namespace DNA.Paths {
 		}
 
 		public delegate void OnArriveAtDestination (GridPoint point);
+		public delegate void OnEnterPoint (GridPoint point);
+		public delegate void OnExitPoint (GridPoint point);
+
 		public OnArriveAtDestination onArriveAtDestination;
+		public OnEnterPoint onEnterPoint;
+		public OnExitPoint onExitPoint;
 
 		GridPoint destination;
 		public GridPoint Destination {
@@ -244,11 +264,17 @@ namespace DNA.Paths {
 			this.mover = mover;
 			movement = new MovementBehaviour (mover, settings);
 			movement.onEndMove += OnEndMove;
+			movement.onStartRotation += OnStartRotation;
+			movement.onEndRotation += OnEndRotation;
 			path = new PathBehaviour (mover, settings, startPoint);
 		}
 
 		public void RotateAroundPoint (float time) {
 			movement.FullRotation (time, path.CurrentPoint.Position);
+		}
+
+		public void SetSpeed (float speed) {
+			settings = new Settings (settings.radius, speed);
 		}
 
 		bool StartMove () {
@@ -266,6 +292,16 @@ namespace DNA.Paths {
 			if (!StartMove () && onArriveAtDestination != null) {
 				onArriveAtDestination (path.CurrentPoint);
 			}
+		}
+
+		void OnStartRotation () {
+			if (onEnterPoint != null)
+				onEnterPoint (path.PreviousPoint);
+		}
+
+		void OnEndRotation () {
+			if (onExitPoint != null)
+				onExitPoint (path.CurrentPoint);
 		}
 	}
 }

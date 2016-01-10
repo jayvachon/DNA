@@ -10,51 +10,27 @@ namespace DNA.Tasks {
 
 	public class ConstructRoad : CostTask, IConstructable {
 
-		// TODO: this whole segment deal is super hacky
-		int segmentCost = -1;
-		
-		CostTaskSettings costSettings;
-		public override CostTaskSettings Settings {
-			get {
-				if (costSettings == null) {
-					try {
-						costSettings = (CostTaskSettings)settings;
-					} catch {
-						throw new System.Exception (this + " requires a CostTaskSettings model");
-					}
-				}
-				if (segmentCost > -1)
-					costSettings.Costs[0]["Milkshakes"] = Cost;
-				return costSettings;
-			}
-		}
-
-		public int Cost {
-			get { return segmentCost * Mathf.Max (1, RoadConstructor.Instance.NewSegmentCount); }
-		}
-
-		public ConstructRoad (Inventory inventory=null) : base (inventory) {
-			segmentCost = Settings.Costs[0]["Milkshakes"];
-		}
+		public PathElementContainer ElementContainer { get; set; }
 
 		protected override void OnEnd () {
 			Purchase ();
-			List<Connection> connections = RoadConstructor.Instance.Connections;
-			foreach (Connection c in connections) {
-				ConstructionSite site = ConnectionsManager.GetContainer (c).BeginConstruction<Road> ();
-				if (site != null) {
-					site.LaborCost = segmentCost;
-					site.RoadPlan = new RoadPlan (connections);
-				}
+			ConnectionContainer c = (ConnectionContainer)ElementContainer;
+			ConstructionSite site = c.BeginConstruction<Road> ();
+			if (site != null) {
+				site.LaborCost = TotalCost;
+				site.RoadPlan = new RoadPlan (c.Connection);
 			}
-			RoadConstructor.Instance.Clear ();
 			base.OnEnd ();
 		}
 
 		public bool CanConstruct (PathElement element) {
+			Connection c = (Connection)element;
 			return CanAfford 
-				&& ((GridPoint)element).HasRoad 
-				|| RoadConstructor.Instance.PointCount > 0;
+				&& c.State == DevelopmentState.Undeveloped 
+				&& c.Cost > 0 
+				&& System.Array.Find (c.Points, x => x.HasRoad) != null;
+				// eventually allow this - but need to scrap RoadPlan and have laborers search for valid construction on their own
+				// && System.Array.Find (c.Points, x => x.HasRoad || x.HasRoadConstruction) != null;
 		}
 	}
 }

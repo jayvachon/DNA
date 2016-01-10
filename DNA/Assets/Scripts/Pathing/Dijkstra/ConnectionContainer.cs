@@ -55,6 +55,14 @@ namespace DNA.Paths {
 				pdh.OnPointerDown (e);
 			}
 		}
+
+		public override void OnPointerEnter (PointerEventData e) {
+			Events.instance.Raise (new MouseEnterConnectionEvent (this));
+		}
+
+		public override void OnPointerExit (PointerEventData e) {
+			Events.instance.Raise (new MouseExitConnectionEvent (this));
+		}
 		#endregion
 
 		protected override void OnSetObject (IPathElementObject obj) {

@@ -157,6 +157,10 @@ namespace DNA.Tasks {
 			}
 		}
 
+		public void Stop () {
+			Match.Stop ();
+		}
+
 		public int GetPerformCount () {
 			AcceptInventoryTask a = Acceptor as AcceptInventoryTask;
 			if (a == null)

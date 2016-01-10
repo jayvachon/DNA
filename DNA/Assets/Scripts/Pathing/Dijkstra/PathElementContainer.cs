@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA {
 
-	public class PathElementContainer : MBRefs, IPointerDownHandler {
+	public class PathElementContainer : MBRefs, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler {
 
 		public virtual PathElement Element { get; protected set; }
 		protected virtual Vector3 Anchor { get { return Vector3.zero; } }
@@ -128,8 +128,10 @@ namespace DNA {
 		protected virtual void OnSetObject (IPathElementObject obj) {}
 		protected virtual void OnEndConstruction (IPathElementObject obj) {}
 
-		#region IPointerDownHandler implementation
+		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
 		public virtual void OnPointerDown (PointerEventData e) {}
+		public virtual void OnPointerEnter (PointerEventData e) {}
+		public virtual void OnPointerExit (PointerEventData e) {}
 		#endregion
 
 		class DamageHandler {

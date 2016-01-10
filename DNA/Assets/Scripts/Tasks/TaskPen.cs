@@ -11,11 +11,14 @@ namespace DNA.Tasks {
 
 		static PerformerTask task;
 		static UnitRenderer visual;
+		static bool roadTask;
 
 		public static void Set (PerformerTask newTask) {
 
 			task = newTask;
-			System.Type[] taskTypes = task is ConstructRoad
+			roadTask = task is ConstructRoad;
+
+			System.Type[] taskTypes = roadTask
 				? new [] { typeof (Road) }
 				: task.GetType ().GetGenericArguments ();
 
@@ -27,9 +30,16 @@ namespace DNA.Tasks {
 			}
 
 			GameCursor.Instance.onClick += OnClick;
-			Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
-			Events.instance.AddListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
-			Events.instance.AddListener<MouseExitPointEvent> (OnMouseExitPointEvent);
+
+			if (roadTask) {
+				Events.instance.AddListener<ClickConnectionEvent> (OnClickConnectionEvent);
+				Events.instance.AddListener<MouseEnterConnectionEvent> (OnMouseEnterConnectionEvent);
+				Events.instance.AddListener<MouseExitConnectionEvent> (OnMouseExitConnectionEvent);
+			} else {
+				Events.instance.AddListener<ClickPointEvent> (OnClickPointEvent);
+				Events.instance.AddListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
+				Events.instance.AddListener<MouseExitPointEvent> (OnMouseExitPointEvent);
+			}
 		}
 
 		static void OnClick (bool overTarget) {
@@ -43,41 +53,23 @@ namespace DNA.Tasks {
 			RoadConstructor.Instance.Clear ();
 			GameCursor.Instance.onClick -= OnClick;
 			GameCursor.Instance.RemoveVisual ();
-			Events.instance.RemoveListener<ClickPointEvent> (OnClickPointEvent);
-			Events.instance.RemoveListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
-			Events.instance.RemoveListener<MouseExitPointEvent> (OnMouseExitPointEvent);
+
+			if (roadTask) {
+				Events.instance.RemoveListener<ClickConnectionEvent> (OnClickConnectionEvent);
+				Events.instance.RemoveListener<MouseEnterConnectionEvent> (OnMouseEnterConnectionEvent);
+				Events.instance.RemoveListener<MouseExitConnectionEvent> (OnMouseExitConnectionEvent);
+			} else {
+				Events.instance.RemoveListener<ClickPointEvent> (OnClickPointEvent);
+				Events.instance.RemoveListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
+				Events.instance.RemoveListener<MouseExitPointEvent> (OnMouseExitPointEvent);
+			}				
 		}
 
-		static bool CanConstructOnPoint (GridPoint point) {
-			return (task as IConstructable).CanConstruct (point);
+		static bool CanConstructOnElement (PathElement element) {
+			return (task as IConstructable).CanConstruct (element);
 		}
 
 		static void Construct (GridPoint point, PointContainer container) {
-
-			if (task is ConstructRoad) {
-
-				RoadConstructor.Instance.AddPoint (point);
-				if (RoadConstructor.Instance.PointCount < 2)
-					return;
-
-				CostTask t = task as CostTask;
-				string text = "Purchase: ";
-				foreach (var cost in t.Costs) {
-					text += cost.Value.ToString () + cost.Key.Substring (0, 1);
-				}
-				UI.Instance.ConstructPrompt.Open (text,
-					() => {
-						task.Start ();
-						Remove ();
-					},
-					() => {
-						RoadConstructor.Instance.Clear ();
-						Remove ();
-					},
-					task.Enabled
-				);
-			}
-
 			ConstructUnit c = task as ConstructUnit;
 			if (c != null) {
 				c.ElementContainer = container;
@@ -86,18 +78,46 @@ namespace DNA.Tasks {
 			}
 		}
 
+		static void ConstructRoad (Connection connection, ConnectionContainer container) {
+			ConstructRoad c = task as ConstructRoad;
+			c.ElementContainer = container;
+			c.Start ();
+			Remove ();
+		}
+
 		static void OnClickPointEvent (ClickPointEvent e) {
-			Construct (e.Point, e.Container);
+			if (CanConstructOnElement (e.Point)) {
+				Construct (e.Point, e.Container);
+			}
 		}
 
 		static void OnMouseEnterPointEvent (MouseEnterPointEvent e) {
-			if (CanConstructOnPoint (e.Point)) {
+			if (CanConstructOnElement (e.Point)) {
 				GameCursor.Instance.Target = e.Point.Position;
 				visual.SetAlpha (1f);
 			}
 		}
 
 		static void OnMouseExitPointEvent (MouseExitPointEvent e) {
+			GameCursor.Instance.Target = null;
+			visual.SetAlpha (0.33f);
+		}
+
+		static void OnClickConnectionEvent (ClickConnectionEvent e) {
+			if (CanConstructOnElement (e.Connection)) {
+				ConstructRoad (e.Connection, e.Container);
+			}
+		}
+
+		static void OnMouseEnterConnectionEvent (MouseEnterConnectionEvent e) {
+			if (CanConstructOnElement (e.Connection)) {
+				GameCursor.Instance.Target = e.Connection.Center;
+				GameCursor.Instance.Rotation = e.Connection.Rotation;
+				visual.SetAlpha (1f);
+			}
+		}
+
+		static void OnMouseExitConnectionEvent (MouseExitConnectionEvent e) {
 			GameCursor.Instance.Target = null;
 			visual.SetAlpha (0.33f);
 		}

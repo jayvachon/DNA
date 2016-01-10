@@ -131,6 +131,7 @@ namespace DNA.Units {
 
 		GridPoint lastMatchedPoint = null;
 		MatchResult currentMatch;
+		MatchResult flowerMatch;
 		Connection currentRoadConstruction;
 		Positioner2 positioner;
 
@@ -153,6 +154,8 @@ namespace DNA.Units {
 		public void SetStartPoint (GridPoint startPoint) {
 			positioner = new Positioner2 (MyTransform, startPoint);
 			positioner.onArriveAtDestination += OnArriveAtDestination;
+			positioner.onEnterPoint += OnEnterPoint;
+			positioner.onExitPoint += OnExitPoint;
 			Position = startPoint.Position.GetPointAroundAxis (StartRotation, 1.25f);
 			CurrentPoint = startPoint;
 		}
@@ -188,6 +191,21 @@ namespace DNA.Units {
 			}
 		}
 
+		void OnEnterPoint (GridPoint point) {
+			if (point.Unit is Flower) {
+				flowerMatch = PointTaskMatch (point);
+				if (flowerMatch != null)
+					flowerMatch.Start (true);
+			}
+		}
+
+		void OnExitPoint (GridPoint point) {
+			if (flowerMatch != null) {
+				flowerMatch.Stop ();
+				flowerMatch = null;
+			}
+		}
+
 		void OnChangeCurrentPointObject (IPathElementObject obj) {
 			
 			// Need to wait a frame so that construction site can have its cost set
@@ -209,9 +227,9 @@ namespace DNA.Units {
 			MatchResult match = PointTaskMatch (CurrentPoint);
 			if (match != null) {
 				currentMatch = match;
-				if (match.PairType != null) {
+				// if (match.PairType != null) {
 					BeginEncircling ();
-				}
+				// }
 				currentMatch.Match.onComplete += OnCompleteTask;
 				match.Start (true);
 				return true;
@@ -301,21 +319,16 @@ namespace DNA.Units {
 		void InterruptTask () {
 			if (currentMatch != null) {
 				currentMatch.Match.onComplete -= OnCompleteTask;
-				currentMatch.Match.Stop ();
+				currentMatch.Stop ();
 				currentMatch = null;
 			}
 		}
-
-		// move this to its own class
-		#region encircling
 
 		void BeginEncircling () {
 			int performCount = currentMatch.GetPerformCount ();
 			float time = currentMatch.Match.Settings.Duration * performCount;
 			positioner.RotateAroundPoint (time);
 		}
-
-		#endregion
 
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 

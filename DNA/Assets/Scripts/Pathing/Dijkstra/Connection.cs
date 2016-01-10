@@ -33,6 +33,16 @@ namespace DNA.Paths {
 			}
 		}
 
+		Quaternion rotation = Quaternion.identity;
+		public Quaternion Rotation {
+			get {
+				if (rotation == Quaternion.identity) {
+					rotation = Quaternion.LookRotation (Positions[1] - Positions[0]);
+				}
+				return rotation;
+			}
+		}
+
 		Path<GridPoint>[] path;
 		public Path<GridPoint>[] Path {
 			get {

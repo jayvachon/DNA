@@ -62,13 +62,16 @@
      <Compile Include="Assets\Scripts\Environment\Sea2.cs" />
      <Compile Include="Assets\Scripts\Environment\SeaManager.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\ClickConnectionEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickContainerEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\ClickEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\ReleaseEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\SelectEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\Input\UnselectEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\MouseEnterConnectionEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseEnterPointEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\MouseExitConnectionEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseExitPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\PointerDownEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
@@ -106,7 +109,6 @@
      <Compile Include="Assets\Scripts\Inventory\Holders\CoffeeHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\DistributorHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Holders\HappinessHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\HealthHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\LaborHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\MilkshakeHolder.cs" />
@@ -120,12 +122,12 @@
      <Compile Include="Assets\Scripts\Inventory\Items\CoffeeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\DistributorItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Items\HappinessItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\HealthItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\LaborItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\YearItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\CoffeeGroup.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Group\HappinessGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\HealthGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\LaborGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\MilkshakeGroup.cs" />
@@ -135,6 +137,7 @@
      <Compile Include="Assets\Scripts\Inventory\new\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\ItemGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\CoffeeItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Items\HappinessItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\HealthItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\LaborItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\MilkshakeItem.cs" />

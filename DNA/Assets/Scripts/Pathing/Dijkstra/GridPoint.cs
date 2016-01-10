@@ -28,6 +28,10 @@ namespace DNA.Paths {
 			get { return Connections.Find (x => x.Cost == x.Costs["free"]) != null; }
 		}
 
+		public bool HasRoadConstruction {
+			get { return Connections.Find (x => x.State == DevelopmentState.UnderConstruction) != null; }
+		}
+
 		FogOfWar fog = null;
 		public FogOfWar Fog {
 			get { return fog; }

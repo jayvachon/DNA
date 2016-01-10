@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
-using DNA.Paths;
 using DNA.Units;
 using DNA.EventSystem;
 using DNA.InputSystem;
 
-namespace DNA {
+namespace DNA.Paths {
 
 	[RequireComponent (typeof (BoxCollider))]
-	public class PointContainer : PathElementContainer, IPointerEnterHandler, IPointerExitHandler {
+	public class PointContainer : PathElementContainer {
 
 		GridPoint point;
 		public GridPoint Point { 
@@ -69,11 +68,11 @@ namespace DNA {
 			}
 		}
 
-		public void OnPointerEnter (PointerEventData e) {
+		public override void OnPointerEnter (PointerEventData e) {
 			Events.instance.Raise (new MouseEnterPointEvent (this));
 		}
 
-		public void OnPointerExit (PointerEventData e) {
+		public override void OnPointerExit (PointerEventData e) {
 			Events.instance.Raise (new MouseExitPointEvent (this));
 		}
 		#endregion

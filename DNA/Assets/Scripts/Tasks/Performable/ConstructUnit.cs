@@ -13,9 +13,7 @@ namespace DNA.Tasks {
 		public ConstructUnit (Inventory inventory=null) : base (inventory) {}
 
 		public bool CanConstruct (PathElement element) {
-			return CanAfford 
-				// && ((GridPoint)element).HasRoad 
-				&& element.State == DevelopmentState.Undeveloped;
+			return CanAfford && element.State == DevelopmentState.Undeveloped;
 		}
 	}
 

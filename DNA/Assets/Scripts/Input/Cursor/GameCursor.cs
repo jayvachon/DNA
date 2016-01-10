@@ -31,6 +31,12 @@ namespace DNA.InputSystem {
 			set { target = value; }
 		}
 
+		Quaternion rotation = Quaternion.identity;
+		public Quaternion Rotation {
+			get { return rotation; }
+			set { rotation = value; }
+		}
+
 		public delegate void OnClick (bool overTarget);
 		public OnClick onClick;
 
@@ -63,9 +69,11 @@ namespace DNA.InputSystem {
 				if (Target == null) {
 					if (Physics.Raycast (ray, out hit, Mathf.Infinity, 1 << (int)InputLayer.Structure)) {
 						visual.transform.position = Vector3.Lerp (ray.origin, hit.point, 0.9f);
+						visual.transform.rotation = Quaternion.Lerp (visual.transform.rotation, Quaternion.identity, 0.5f);
 					}
 				} else {
 					visual.transform.position = Vector3.Lerp (visual.transform.position, (Vector3)Target, 0.25f);
+					visual.transform.rotation = Quaternion.Lerp (visual.transform.rotation, Rotation, 0.5f);
 				}
 				yield return null;
 			}

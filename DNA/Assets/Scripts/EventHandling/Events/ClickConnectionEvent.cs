@@ -2,17 +2,15 @@
 using System.Collections;
 using DNA.Paths;
 
-// deprecate
-
 namespace DNA.EventSystem {
 
-	public class ClickContainerEvent : GameEvent {
+	public class ClickConnectionEvent : GameEvent {
 
 		public readonly ConnectionContainer Container;
 		public readonly Connection Connection;
 
-		public ClickContainerEvent (ConnectionContainer container) {
-			Container = container;
+		public ClickConnectionEvent (ConnectionContainer connection) {
+			Container = connection;
 			Connection = Container.Connection;
 		}
 	}

@@ -7,8 +7,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	// TODO: Rename to Laborer
-	public class Distributor : MobileUnit {
+	public class Laborer : MobileUnit {
 
 		void Awake () {
 
@@ -52,7 +51,7 @@ namespace DNA.Units {
 		}
 
 		void OnRetirement () {
-			ChangeUnit<Distributor, Elder> ();
+			ChangeUnit<Laborer, Elder> ();
 		}
 
 		protected override void OnChangeUnit<U> (U u) {

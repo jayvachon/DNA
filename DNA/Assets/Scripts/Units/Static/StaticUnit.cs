@@ -67,8 +67,8 @@ namespace DNA.Units {
 			Events.instance.Raise (new PointerDownEvent (this));
 			if (!e.LeftClicked () && SelectionHandler.Selected.Count == 0) {
 				if (AcceptableTasks.EnabledTasks.Count > 0) {
-					List<Distributor> laborers = ObjectPool.GetActiveObjects<Distributor> ();
-					Distributor available = laborers.Find (x => x.Idle);
+					List<Laborer> laborers = ObjectPool.GetActiveObjects<Laborer> ();
+					Laborer available = laborers.Find (x => x.Idle);
 					if (available != null) {
 						available.OnOverrideSelect (this);
 					}

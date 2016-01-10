@@ -48,7 +48,7 @@ namespace DNA.Units {
 
 			Inventory = Player.Instance.Inventory;
 
-			PerformableTasks.Add (new GenerateUnit<Distributor> ()).onComplete += OnGenerateDistributor;
+			PerformableTasks.Add (new GenerateUnit<Laborer> ()).onComplete += OnGenerateLaborer;
 			PerformableTasks.Add (new GenerateUnit<Elder> ()).onComplete += OnGenerateElder;
 			PerformableTasks.Add (new GenerateUnit<Corpse> ()).onComplete += OnGenerateCorpse;
 
@@ -59,8 +59,8 @@ namespace DNA.Units {
 			a.Add (new AcceptDeliverItem<CoffeeGroup> ());
 		}
 
-		void OnGenerateDistributor (PerformerTask task) {
-			OnUnitGenerated (((GenerateUnit<Distributor>)task).GeneratedUnit);
+		void OnGenerateLaborer (PerformerTask task) {
+			OnUnitGenerated (((GenerateUnit<Laborer>)task).GeneratedUnit);
 		}
 
 		void OnGenerateElder (PerformerTask task) {

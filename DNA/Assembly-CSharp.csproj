@@ -107,7 +107,6 @@
      <Compile Include="Assets\Scripts\Input\SelectionManager.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\BedHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\CoffeeHolder.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Holders\DistributorHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\ElderHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\HealthHolder.cs" />
      <Compile Include="Assets\Scripts\Inventory\Holders\LaborHolder.cs" />
@@ -120,7 +119,6 @@
      <Compile Include="Assets\Scripts\Inventory\ItemHolderDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\BedItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\CoffeeItem.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Items\DistributorItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\ElderItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\HealthItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\Items\LaborItem.cs" />
@@ -313,8 +311,8 @@
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
      <Compile Include="Assets\Scripts\Units\MilkshakeProduction.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Corpse.cs" />
-     <Compile Include="Assets\Scripts\Units\Mobile\Distributor.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Elder.cs" />
+     <Compile Include="Assets\Scripts\Units\Mobile\Laborer.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
      <Compile Include="Assets\Scripts\Units\ProductionTier.cs" />
      <Compile Include="Assets\Scripts\Units\RepairSite.cs" />
@@ -332,7 +330,7 @@
      <Compile Include="Assets\Scripts\Units\Static\StaticUnitsManager.cs" />
      <Compile Include="Assets\Scripts\Units\Static\University.cs" />
      <Compile Include="Assets\Scripts\Upgrades\CoffeeCapacity.cs" />
-     <Compile Include="Assets\Scripts\Upgrades\DistributorSpeed.cs" />
+     <Compile Include="Assets\Scripts\Upgrades\LaborerSpeed.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Upgrade.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Upgrades.cs" />
      <Compile Include="Assets\Scripts\Upgrades\UpgradesTest.cs" />

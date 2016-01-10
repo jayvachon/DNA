@@ -28,7 +28,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 
 		//TestBinding (this, taskAcceptor, taskAcceptor2);
 		//TestMatching (this, taskAcceptor);
-		//TestGenerateUnit (new GenerateUnitTest<Distributor> ());
+		//TestGenerateUnit (new GenerateUnitTest<Laborer> ());
 
 		//TestGenerate<MilkshakeHolder> (new GenerateItemTest<MilkshakeHolder> ());
 		//TestConsume<CoffeeHolder> (new ConsumeItemTest<CoffeeHolder> ());

@@ -80,15 +80,15 @@ public class HotkeyHandler : MonoBehaviour {
 
 	List<Hotkey> hotkeys = new List<Hotkey> () {
 		new Hotkey (KeyCode.Period, () => {
-			List<Distributor> laborers = ObjectPool.GetActiveObjects<Distributor> ();
-			Distributor available = laborers.Find (x => x.Idle);
+			List<Laborer> laborers = ObjectPool.GetActiveObjects<Laborer> ();
+			Laborer available = laborers.Find (x => x.Idle);
 			if (available != null) {
 				SelectionHandler.SelectSingle (available);
 			}
 		}),
 		new Hotkey (KeyCode.L, () => {
 			GivingTreeUnit tree = ObjectPool.GetActiveObjects<GivingTreeUnit> ()[0];
-			tree.PerformableTasks[typeof (GenerateUnit<Distributor>)].Start ();
+			tree.PerformableTasks[typeof (GenerateUnit<Laborer>)].Start ();
 		}),
 		new Hotkey (KeyCode.Escape, () => {
 			SelectionHandler.Clear ();

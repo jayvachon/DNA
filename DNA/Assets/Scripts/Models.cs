@@ -56,7 +56,7 @@ namespace DNA.Models {
 				Emissions = 0f
 			});
 
-			units.Add (typeof (Distributor), new UnitSettings {
+			units.Add (typeof (Laborer), new UnitSettings {
 				Symbol = "laborer",
 				Title = "Laborer",
 				Description = "Laborers perform work until they reach retirement age.",
@@ -88,7 +88,7 @@ namespace DNA.Models {
 			units.Add (typeof (CoffeePlant), new UnitSettings {
 				Symbol = "coffee",
 				Title = "Coffee Plant",
-				Description = "Deliver coffee to the Giving Tree to create more Laborers.",
+				Description = "Deliver coffee to the Giving Tree to create more laborers.",
 				Emissions = -0.01f,
 				TakesDamage = true
 			});
@@ -136,7 +136,7 @@ namespace DNA.Models {
 			units.Add (typeof (GivingTreeUnit), new UnitSettings {
 				Symbol = "tree",
 				Title = "Giving Tree",
-				Description = "The Giving Tree gives birth to Laborers and is also a portal to the next dimension.",
+				Description = "The Giving Tree gives birth to laborers and is also a portal to the next dimension.",
 				Emissions = 0f,
 				TakesDamage = false
 			});
@@ -381,7 +381,7 @@ namespace DNA.Models {
 			 *	GenerateUnit
 			 */
 
-			tasks.Add (typeof (GenerateUnit<Distributor>), new CostTaskSettings {
+			tasks.Add (typeof (GenerateUnit<Laborer>), new CostTaskSettings {
 				Symbol = "generate_laborer",
 				Title = "Birth Laborer",
 				Description = "Creates a new laborer",
@@ -591,9 +591,9 @@ namespace DNA.Models {
 				Pair = typeof (AcceptCollectItemTest<YearGroup>)
 			});
 
-			tasks.Add (typeof (GenerateUnitTest<Distributor>), new CostTaskSettings {
-				Title = "Generate Distributor",
-				Description = "Generates a distributor",
+			tasks.Add (typeof (GenerateUnitTest<Laborer>), new CostTaskSettings {
+				Title = "Generate Laborer",
+				Description = "Generates a laborer",
 				Duration = 0f,
 				AutoStart = false,
 				Repeat = false,

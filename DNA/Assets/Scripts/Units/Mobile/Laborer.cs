@@ -11,20 +11,22 @@ namespace DNA.Units {
 	public class Laborer : MobileUnit {
 
 		float maxSpeed = 1f;
-		float minSpeed = 0.5f;
+		float minSpeed = 0.25f;
 
 		void Awake () {
 
 			unitRenderer.SetColors (Palette.Pink);
-			// unitRenderer.SetColors (Palette.Blue);
 
 			Upgrades.Instance.AddListener<CoffeeCapacity> (
 				(CoffeeCapacity u) => Inventory["Coffee"].Capacity = u.CurrentValue
 			);
+			Upgrades.Instance.AddListener<MilkshakeCapacity> (
+				(MilkshakeCapacity u) => Inventory["Milkshakes"].Capacity = u.CurrentValue
+			);
 		}
 
 		protected override void OnInitInventory (Inventory i) {
-			i.Add (new YearGroup (0, 5)).onFill += OnRetirement;
+			i.Add (new YearGroup (0, 1000));//.onFill += OnRetirement; <-- Uncomment to have laborers turn into elders on retirement
 			i.Add (new CoffeeGroup (0, 3));
 			i.Add (new MilkshakeGroup (0, 5));
 			i.Add (new LaborGroup (0, 1000));

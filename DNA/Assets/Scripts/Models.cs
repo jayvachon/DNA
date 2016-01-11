@@ -220,7 +220,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (CollectItem<HappinessGroup>), new TaskSettings {
 				Symbol = "collect_happiness",
-				Duration = 0.33f,
+				Duration = 0.5f,
 				AutoStart = false,
 				Repeat = true
 			});
@@ -438,6 +438,25 @@ namespace DNA.Models {
 				Repeat = false,
 				Costs = new [] {
 					new Dictionary<string, int> {
+						{ "Coffee", 30 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 50 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 150 }
+					}
+				}
+			});
+
+			tasks.Add (typeof (ResearchUpgrade<MilkshakeCapacity>), new CostTaskSettings {
+				Symbol = "reseach_milkshake",
+				Title = "Upgrade Laborer milkshake capacity",
+				Description = "Laborers will be able to carry more milkshake",
+				AutoStart = false,
+				Repeat = false,
+				Costs = new [] {
+					new Dictionary<string, int> {
 						{ "Coffee", 50 }
 					},
 					new Dictionary<string, int> {
@@ -489,6 +508,14 @@ namespace DNA.Models {
 				Repeat = false,
 				Pair = null,
 				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 5 },
+						{ "Milkshakes", 20 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 10 },
+						{ "Milkshakes", 25 }
+					},
 					new Dictionary<string, int> {
 						{ "Coffee", 15 },
 						{ "Milkshakes", 30 }

@@ -48,19 +48,21 @@ namespace DNA.Tasks {
 
 		public static void Remove () {
 
-			task = null;
+			if (task != null) {
+				task = null;
 
-			GameCursor.Instance.Target = null;
-			GameCursor.Instance.onClick -= OnClick;
-			GameCursor.Instance.RemoveVisual ();
+				GameCursor.Instance.Target = null;
+				GameCursor.Instance.onClick -= OnClick;
+				GameCursor.Instance.RemoveVisual ();
 
-			Events.instance.RemoveListener<ClickConnectionEvent> (OnClickConnectionEvent);
-			Events.instance.RemoveListener<MouseEnterConnectionEvent> (OnMouseEnterConnectionEvent);
-			Events.instance.RemoveListener<MouseExitConnectionEvent> (OnMouseExitConnectionEvent);
-			
-			Events.instance.RemoveListener<ClickPointEvent> (OnClickPointEvent);
-			Events.instance.RemoveListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
-			Events.instance.RemoveListener<MouseExitPointEvent> (OnMouseExitPointEvent);
+				Events.instance.RemoveListener<ClickConnectionEvent> (OnClickConnectionEvent);
+				Events.instance.RemoveListener<MouseEnterConnectionEvent> (OnMouseEnterConnectionEvent);
+				Events.instance.RemoveListener<MouseExitConnectionEvent> (OnMouseExitConnectionEvent);
+				
+				Events.instance.RemoveListener<ClickPointEvent> (OnClickPointEvent);
+				Events.instance.RemoveListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
+				Events.instance.RemoveListener<MouseExitPointEvent> (OnMouseExitPointEvent);
+			}
 		}
 
 		static bool CanConstructOnElement (PathElement element) {

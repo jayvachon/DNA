@@ -228,9 +228,7 @@ namespace DNA.Units {
 			MatchResult match = PointTaskMatch (CurrentPoint);
 			if (match != null) {
 				currentMatch = match;
-				// if (match.PairType != null) {
-					BeginEncircling ();
-				// }
+				BeginEncircling ();
 				currentMatch.Match.onComplete += OnCompleteTask;
 				match.Start (true);
 				return true;
@@ -339,6 +337,29 @@ namespace DNA.Units {
 			positioner.onEnterPoint -= OnEnterPoint;
 			positioner.onExitPoint -= OnExitPoint;
 		}
+
+		#region scaling select
+		Vector3 startScale = Vector3.zero;
+		public Vector3 Scale {
+			get { return MyTransform.localScale; }
+			set {
+				if (startScale == Vector3.zero) {
+					startScale = MyTransform.localScale;
+				}
+				MyTransform.localScale = value;
+			}
+		}
+		
+		public override void OnSelect () {
+			base.OnSelect ();
+			Scale = Scale * 1.05f; // this ensures that the selected unit shows up in front of any others it's overlapping
+		}
+
+		public override void OnUnselect () {
+			base.OnUnselect ();
+			Scale = startScale;
+		}
+		#endregion
 
 		#region IPathElementVisitor implementation
 		int visitorIndex = 0;

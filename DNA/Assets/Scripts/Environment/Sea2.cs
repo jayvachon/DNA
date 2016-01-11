@@ -5,8 +5,8 @@ namespace DNA {
 
 	public class Sea2 : MBRefs {
 
-		protected readonly float MinLevel = -10f;
-		protected readonly float MaxLevel = 10f;
+		public readonly float MinLevel = -10f;
+		public readonly float MaxLevel = 10f;
 
 		public float Level {
 			get { return MyTransform.localPosition.y; }

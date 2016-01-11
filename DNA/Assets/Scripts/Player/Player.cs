@@ -48,7 +48,7 @@ namespace DNA {
 					performableTasks.Add (new ConstructUnit<Flower> ());
 					performableTasks.Add (new ConstructUnit<MilkshakePool> ());
 					performableTasks.Add (new ConstructUnit<University> ());
-					performableTasks.Add (new ConstructUnit<Clinic> ());
+					// performableTasks.Add (new ConstructUnit<Clinic> ());
 					performableTasks.Add (new ConstructUnit<CollectionCenter> ());
 				}
 				return performableTasks;

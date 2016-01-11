@@ -20,24 +20,32 @@ demo\
 \
 postdemo\
 - after construction, laborers should look for additional construction\
+- set laborer destination to a point where the path crosses through a unit that can be bound to, then when the laborer is rotating around the point w/ that unit, assign the laborer to that unit -> it stops but doesn\'92t carry out task\
 \
 :::: glitches ::::\
 \
 demo\
+- if laborer is redirected from derrick to coffee & has milkshakes in inventory, when it goes to deliver coffee it will actually deliver the milkshakes and then go back to the derrick\
+- turn coffee plant dark on empty\
 \
 postdemo\
+- build two roads from the same point and assign a laborer to 1 construction site. after finishing, it might move on but still be performing the construction task on the other road\
 \
 :::: features ::::\
 \
 demo\
+- only allow derricks to be built on drivable plots (randomly distributed like coffee)\
 - feedback when buying university upgrade (+ notification when done)\
 - laborers gain happiness by passing by flowers\
+- milkshake upgrades\
+- need to indicate sea level vs levee level\
 \
 postdemo\
 - setting construction site for road should lerp to connection point, not point (place road pieces 1 at a time)\
 - encircle construction/repair sites\
 - scale hitboxes to unit\
 - darker blue sea color\
+- maybe if laborer happiness > 97 after flower construction, just set it to 100 so it doesn\'92t do the weird quick rotation\
 \
 :::: design problems ::::\
 \

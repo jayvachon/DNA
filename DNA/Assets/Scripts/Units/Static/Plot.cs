@@ -34,43 +34,19 @@ namespace DNA.Units {
 			}
 		}
 
-		BuildingIndicator indicator;
-
 		void Awake () {
 
-			unitRenderer.SetColors (new Color (0.47f, 0.043f, 0.24f));
+			// unitRenderer.SetColors (new Color (0.47f, 0.043f, 0.24f));
+			// unitRenderer.SetColors (Palette.Black);
 
 			Inventory = new Inventory (this);
-			//Inventory.Add (new MilkshakeHolder (0, 0));
 			Inventory.Add (new MilkshakeGroup ());
 
-			/*AcceptableActions.Add (new GameActions.AcceptDeliverItem<MilkshakeHolder> ());
-			AcceptableActions.SetActive ("DeliverMilkshake", false);*/
-
-			//Events.instance.AddListener<UnlockUnitEvent> (OnUnlockUnitEvent);
 		}
-
-		protected virtual void Start () {
-			//PerformableTasks.Add (new DNA.Tasks.GenerateUnit<MilkshakePool> (Player.Instance.Inventory)).onEnd += OnGenerateUnit;
-			//PerformableTasks.Add (new DNA.Tasks.GenerateUnit<CoffeePlant> (Player.Instance.Inventory)).onEnd += OnGenerateUnit;
-		}
-
-		//public override void OnPoolCreate () {
-		/*protected override void OnEnable () {
-			if (name != DefaultName) {
-				name = DefaultName;
-				Inventory.Get<MilkshakeHolder> ().DisplaySettings = new ItemHolderDisplaySettings (false, true);
-				RefreshInfoContent ();
-			}
-			base.OnEnable ();
-		}*/
-
 		void OnGenerateUnit (PerformerTask task) {
 			Unit unit = ((GenerateUnit)task).GeneratedUnit;
 			StaticUnit staticUnit = unit as StaticUnit;
 			staticUnit.Position = Position;
-			//staticUnit.PathPoint = PathPoint;
-			//PathPoint.StaticUnit = staticUnit;
 			if (Selected) SelectionManager.Select (staticUnit.UnitClickable);
 			DestroyThis ();
 		}

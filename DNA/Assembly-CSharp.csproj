@@ -271,6 +271,7 @@
      <Compile Include="Assets\Scripts\UI\ElderAvatar.cs" />
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\FloatingIndicator.cs" />
+     <Compile Include="Assets\Scripts\UI\HUD\LeveeInfo.cs" />
      <Compile Include="Assets\Scripts\UI\HUD\SeaLevelMeter.cs" />
      <Compile Include="Assets\Scripts\UI\HappinessIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\HealthIndicator.cs" />
@@ -331,6 +332,7 @@
      <Compile Include="Assets\Scripts\Units\Static\University.cs" />
      <Compile Include="Assets\Scripts\Upgrades\CoffeeCapacity.cs" />
      <Compile Include="Assets\Scripts\Upgrades\LaborerSpeed.cs" />
+     <Compile Include="Assets\Scripts\Upgrades\MilkshakeCapacity.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Upgrade.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Upgrades.cs" />
      <Compile Include="Assets\Scripts\Upgrades\UpgradesTest.cs" />

@@ -26,7 +26,7 @@ public class Fertility {
 	}
 
 	public static float[] Multipliers {
-		get { return new float[] { 1f, 1.1f, 1.2f, 1.33f, 1.5f, 1.75f }; }
+		get { return new float[] { 1f, 1.2f, 1.5f, 2f, 3f, 5f }; }
 	}
 
 	public Fertility (float distanceToCenter, float maxValue) {

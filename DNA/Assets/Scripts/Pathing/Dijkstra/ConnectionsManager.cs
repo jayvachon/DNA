@@ -16,6 +16,21 @@ namespace DNA.Paths {
 			return connections.Find (x => x.Connection == connection);
 		}
 
+		public static ConnectionContainer FindNearest (Vector3 position) {
+			ConnectionContainer nearest = null;
+			float nearestDistance = Mathf.Infinity;
+			foreach (ConnectionContainer c in connections) {
+				float distance = Vector3.Distance (position, c.transform.position);
+				if (distance < nearestDistance) {
+					nearest = c;
+					nearestDistance = distance;
+					if (nearestDistance < 1f)
+						break;
+				}
+			}
+			return nearest;
+		}
+
 		public void Init () {
 			StartCoroutine (CreateConnections ());
 		}

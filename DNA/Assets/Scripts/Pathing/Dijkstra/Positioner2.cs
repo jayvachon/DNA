@@ -9,11 +9,11 @@ namespace DNA.Paths {
 		struct Settings {
 			
 			public readonly float radius;
-			public readonly float speed;
+			public readonly float maxSpeed;
 
-			public Settings (float radius, float speed) {
+			public Settings (float radius, float maxSpeed) {
 				this.radius = radius;
-				this.speed = speed;
+				this.maxSpeed = maxSpeed;
 			}
 		}
 
@@ -82,11 +82,11 @@ namespace DNA.Paths {
 			}
 
 			float RotationTime {
-				get { return Mathf.Abs (trajectory.rotationOrigin.ArcLengthClockwise (trajectory.rotationTarget , settings.radius)) / settings.speed; }
+				get { return Mathf.Abs (trajectory.rotationOrigin.ArcLengthClockwise (trajectory.rotationTarget , settings.radius)) / settings.maxSpeed; }
 			}
 
 			float TranslateTime {
-				get { return Vector3.Distance (trajectory.translateOrigin, trajectory.translateTarget) / settings.speed; }
+				get { return Vector3.Distance (trajectory.translateOrigin, trajectory.translateTarget) / settings.maxSpeed; }
 			}
 
 			public MovementBehaviour (Transform mover, Settings settings) {
@@ -94,18 +94,18 @@ namespace DNA.Paths {
 				this.settings = settings;
 			}
 
-			public void SetTrajectory (Trajectory t) {
+			public void SetTrajectory (Trajectory t, float speed) {
 
 				this.trajectory = t;
 
 				if (trajectory.NeedsRotation) {
 					StartRotation ();
-					Rotate (RotationTime, () => { 
+					Rotate (RotationTime / speed, () => { 
 						EndRotation ();
-						Translate ();
+						Translate (speed);
 					});
 				} else {
-					Translate ();
+					Translate (speed);
 				}
 			}
 
@@ -132,10 +132,10 @@ namespace DNA.Paths {
 				mover.position = trajectory.origin.GetPointAroundAxis (rotation, settings.radius);
 			}
 
-			void Translate () {
+			void Translate (float speed) {
 				if (translateCo != null)
 					translateCo.Stop (false);
-				translateCo = Co.Start (TranslateTime, UpdateTranslation, () => { EndMove (trajectory.target); });
+				translateCo = Co.Start (TranslateTime / speed, UpdateTranslation, () => { EndMove (trajectory.target); });
 			}
 
 			void UpdateTranslation (float p) {
@@ -255,6 +255,12 @@ namespace DNA.Paths {
 			get { return movement.Moving; }
 		}
 
+		float speed = 1f;
+		public float Speed {
+			get { return speed; }
+			set { speed = value; }
+		}
+
 		Transform mover;
 		Settings settings = new Settings (1.25f, 2f);
 		MovementBehaviour movement;
@@ -273,16 +279,12 @@ namespace DNA.Paths {
 			movement.FullRotation (time, path.CurrentPoint.Position);
 		}
 
-		public void SetSpeed (float speed) {
-			settings = new Settings (settings.radius, speed);
-		}
-
 		bool StartMove () {
 			Vector3[] trajectory = path.NextTrajectory ();
 			if (trajectory == null) {
 				movement.Stop ();
 			} else {
-				movement.SetTrajectory (new Trajectory (mover.position, trajectory[0], trajectory[1], settings.radius));
+				movement.SetTrajectory (new Trajectory (mover.position, trajectory[0], trajectory[1], settings.radius), Speed);
 				return true;
 			}
 			return false;

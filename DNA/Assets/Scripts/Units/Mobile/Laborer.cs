@@ -3,15 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.InputSystem;
 using DNA.Tasks;
+using DNA.Paths;
 using InventorySystem;
 
 namespace DNA.Units {
 
 	public class Laborer : MobileUnit {
 
+		float maxSpeed = 1f;
+		float minSpeed = 0.5f;
+
 		void Awake () {
 
-			unitRenderer.SetColors (new Color (1f, 0.5f, 1f));
+			unitRenderer.SetColors (Palette.Pink);
+			// unitRenderer.SetColors (Palette.Blue);
 
 			Upgrades.Instance.AddListener<CoffeeCapacity> (
 				(CoffeeCapacity u) => Inventory["Coffee"].Capacity = u.CurrentValue
@@ -19,11 +24,11 @@ namespace DNA.Units {
 		}
 
 		protected override void OnInitInventory (Inventory i) {
-			i.Add (new YearGroup (0, 1000)).onFill += OnRetirement;
+			i.Add (new YearGroup (0, 5)).onFill += OnRetirement;
 			i.Add (new CoffeeGroup (0, 3));
 			i.Add (new MilkshakeGroup (0, 5));
 			i.Add (new LaborGroup (0, 1000));
-			i.Add (new HappinessGroup (100, 100));
+			i.Add (new HappinessGroup (100, 100)).onUpdate += OnUpdateHappiness;
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
@@ -54,10 +59,26 @@ namespace DNA.Units {
 			ChangeUnit<Laborer, Elder> ();
 		}
 
-		protected override void OnChangeUnit<U> (U u) {
-			//Path.Active = false;
-			//Elder elder = u as Elder;
-			//elder.Init (givingTree);
+		void OnUpdateHappiness () {
+			if (positioner == null) return;
+			int happiness = Inventory["Happiness"].Count;
+			if (happiness % 10 == 0) {
+				float p = Inventory["Happiness"].PercentFilled;
+				unitRenderer.SetColors (Color.Lerp (Palette.Blue, Palette.Pink, p));
+				positioner.Speed = Mathf.Lerp (minSpeed, maxSpeed, p);
+			}
+		}
+
+		protected override void OnChangeUnit<Unit> (Unit u) {
+			Elder e = u as Elder;
+			if (e != null) {
+				GridPoint startPoint = CurrentPoint;
+				if (startPoint == null) {
+					ConnectionContainer c = ConnectionsManager.FindNearest (Position);
+					startPoint = c.Connection.Points[0];
+				}
+				e.SetStartPoint (startPoint, false);
+			}
 		}
 	}
 }

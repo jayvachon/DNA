@@ -2,6 +2,10 @@
 
 public static class Palette {
 
+	public static Color Pink {
+		get { return new Color (1f, 0.5f, 1f); }
+	}
+
 	public static Color Magenta {
 		get { return new Color (0.694f, 0.235f, 0.443f); }
 	}

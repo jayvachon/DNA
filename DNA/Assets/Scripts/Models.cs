@@ -220,7 +220,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (CollectItem<HappinessGroup>), new TaskSettings {
 				Symbol = "collect_happiness",
-				Duration = 0.25f,
+				Duration = 0.33f,
 				AutoStart = false,
 				Repeat = true
 			});

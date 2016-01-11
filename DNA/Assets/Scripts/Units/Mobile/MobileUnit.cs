@@ -86,9 +86,9 @@ namespace DNA.Units {
 		}
 
 		GridPoint currentPoint;
-		GridPoint CurrentPoint {
+		protected GridPoint CurrentPoint {
 			get { return currentPoint; }
-			set {
+			private set {
 
 				// Early exit if being set to the same value
 				if (currentPoint == value)
@@ -133,9 +133,9 @@ namespace DNA.Units {
 		MatchResult currentMatch;
 		MatchResult flowerMatch;
 		Connection currentRoadConstruction;
-		Positioner2 positioner;
+		protected Positioner2 positioner;
 
-		static float startRotation = 0f;
+		static float startRotation = 180f;
 		static float StartRotation {
 			get {
 				float r = startRotation;
@@ -146,17 +146,13 @@ namespace DNA.Units {
 			}
 		}
 
-		public bool moving = false;
-		void Update () {
-			moving = positioner.Moving;
-		}
-
-		public void SetStartPoint (GridPoint startPoint) {
+		public void SetStartPoint (GridPoint startPoint, bool setPosition=true) {
 			positioner = new Positioner2 (MyTransform, startPoint);
 			positioner.onArriveAtDestination += OnArriveAtDestination;
 			positioner.onEnterPoint += OnEnterPoint;
 			positioner.onExitPoint += OnExitPoint;
-			Position = startPoint.Position.GetPointAroundAxis (StartRotation, 1.25f);
+			if (setPosition)
+				Position = startPoint.Position.GetPointAroundAxis (StartRotation, 1.25f);
 			CurrentPoint = startPoint;
 		}
 
@@ -209,7 +205,12 @@ namespace DNA.Units {
 		void OnChangeCurrentPointObject (IPathElementObject obj) {
 			
 			// Need to wait a frame so that construction site can have its cost set
-			Coroutine.WaitForFixedUpdate (() => TryStartMatch ());
+			Coroutine.WaitForFixedUpdate (
+				() => {
+					if (currentMatch == null)
+						TryStartMatch ();
+				}
+			);
 		}
 
 		void OnChangeConnectionObject (IPathElementObject obj) {
@@ -331,6 +332,13 @@ namespace DNA.Units {
 		}
 
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
+
+		void OnDisable () {
+			base.OnDisable ();
+			positioner.onArriveAtDestination -= OnArriveAtDestination;
+			positioner.onEnterPoint -= OnEnterPoint;
+			positioner.onExitPoint -= OnExitPoint;
+		}
 
 		#region IPathElementVisitor implementation
 		int visitorIndex = 0;

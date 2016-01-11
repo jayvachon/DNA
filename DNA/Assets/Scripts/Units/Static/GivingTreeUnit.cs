@@ -42,8 +42,6 @@ namespace DNA.Units {
 			}
 		}
 
-		int positionIndex = 4;
-
 		void Awake () {
 
 			Inventory = Player.Instance.Inventory;
@@ -72,11 +70,6 @@ namespace DNA.Units {
 		}
 
 		void OnUnitGenerated (Unit unit) {
-			if (positionIndex >= CreatePositions.Count-1) {
-				positionIndex = 0;
-			} else {
-				positionIndex ++;
-			}
 			((MobileUnit)unit).SetStartPoint ((GridPoint)Element);
 		}
 

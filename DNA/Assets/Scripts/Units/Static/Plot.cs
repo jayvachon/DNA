@@ -11,13 +11,8 @@ namespace DNA.Units {
 	
 	public class Plot : StaticUnit, ITaskPerformer {
 
-		protected virtual string DefaultName { 
-			get { return "Plot"; }
-		}
-
-		new string name = "Plot";
 		public override string Name {
-			get { return name; }
+			get { return "Plot"; }
 		}
 
 		public override string Description {
@@ -49,6 +44,10 @@ namespace DNA.Units {
 			staticUnit.Position = Position;
 			if (Selected) SelectionManager.Select (staticUnit.UnitClickable);
 			DestroyThis ();
+		}
+
+		protected override void OnSetFertility (int fertility) {
+			// unitRenderer.SetColors (Palette.Black);
 		}
 
 		protected virtual void DestroyThis () {

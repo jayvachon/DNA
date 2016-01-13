@@ -18,7 +18,9 @@ namespace DNA.Units {
 						{ "flower", "FlowerRenderer" },
 						{ "tree", "GivingTreeRenderer" },
 						{ "university", "UniversityRenderer" },
-						{ "road", "RoadRenderer" }
+						{ "road", "RoadRenderer" },
+						{ "plot", "PlotRenderer" },
+						{ "drillable", "DrillablePlotRenderer" }
 					};
 				}
 				return renderers;

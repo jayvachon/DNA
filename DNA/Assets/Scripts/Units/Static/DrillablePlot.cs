@@ -9,10 +9,14 @@ namespace DNA.Units {
 
 	public class DrillablePlot : Plot {
 
+		public override string Name { 
+			get { return "DrillablePlot"; }
+		}
+
 		public override string Description {
 			get { return "An undeveloped plot valued at " + FertilityTier + "/" + Fertility.TierCount; }
 		}
-		
+
 		protected override void OnSetFertility (int fertility) {
 			unitRenderer.SetColors (Fertility.Colors[fertility]);
 		}

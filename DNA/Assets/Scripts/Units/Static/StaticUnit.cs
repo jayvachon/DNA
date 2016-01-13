@@ -36,6 +36,8 @@ namespace DNA.Units {
 			get { return fertilityTier; }
 			set { 
 				fertilityTier = value;
+				// if (Name == "DrillablePlot")
+					// Debug.Log (fertilityTier);
 				OnSetFertility (value);
 			}
 		}

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System.Collections;
 using DNA.Paths;
 using DNA.Units;
 using InventorySystem;
 
 namespace DNA.Tasks {
-
+	// TODO: have ConstructRoad inherit from this
 	public class ConstructUnit : CostTask, IConstructable {
 
 		public PathElementContainer ElementContainer { get; set; }
@@ -13,7 +14,10 @@ namespace DNA.Tasks {
 		public ConstructUnit (Inventory inventory=null) : base (inventory) {}
 
 		public bool CanConstruct (PathElement element) {
-			return CanAfford && element.State == DevelopmentState.Undeveloped;
+			// TODO: will need to change this to work with ConstructRoad			
+			if (element is Connection)
+				return false;
+			return CanAfford && Settings.ConstructionTargets.Any (((GridPoint)element).Unit.Settings.Symbol.Contains) && element.State == DevelopmentState.Undeveloped;
 		}
 	}
 

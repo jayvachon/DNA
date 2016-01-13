@@ -54,11 +54,12 @@ namespace DNA.Paths {
 				);
 
 				pc.SetFertility (distanceToCenter, val);
-				if (Random.value < 0.1f)
+				if (Random.value < 0.1f) {
 					pc.SetObject<DrillablePlot> ();
-				else
+				} else {
 					pc.SetObject<Plot> ();
-				
+				}
+
 				points.Add (pc);
 
 				if (i % blockSize == 0)

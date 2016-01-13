@@ -293,8 +293,10 @@
      <Compile Include="Assets\Scripts\Units\Components\Renderers\CoffeePlantRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\CollectionCenterRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\DerrickRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\DrillablePlotRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\FlowerRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\GivingTreeRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\PlotRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\RoadRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UnitRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UniversityRenderer.cs" />

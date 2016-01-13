@@ -113,7 +113,7 @@ namespace DNA.Models {
 				Symbol = "flower",
 				Title = "Flower",
 				Description = "Flowers are really pretty :)",
-				Emissions = -0.1f,
+				Emissions = -0.2f,
 				TakesDamage = true
 			});
 
@@ -126,9 +126,17 @@ namespace DNA.Models {
 			});
 
 			units.Add (typeof (DrillablePlot), new UnitSettings {
+				Symbol = "drillable",
+				Title = "Drillable Plot",
+				Description = "This plot can be drilled for milkshakes.",
+				Emissions = 0f,
+				TakesDamage = false
+			});
+
+			units.Add (typeof (Plot), new UnitSettings {
 				Symbol = "plot",
 				Title = "Plot",
-				Description = "This plot can be drilled for milkshakes.",
+				Description = "This plot can be built on.",
 				Emissions = 0f,
 				TakesDamage = false
 			});
@@ -238,7 +246,8 @@ namespace DNA.Models {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 20 }
 					}
-				}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
 			tasks.Add (typeof (ConstructUnit<MilkshakePool>), new CostTaskSettings {
@@ -250,7 +259,8 @@ namespace DNA.Models {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 20 }
 					}
-				}
+				},
+				ConstructionTargets = new [] { "drillable" }
 			});
 
 			tasks.Add (typeof (ConstructUnit<University>), new CostTaskSettings {
@@ -262,7 +272,8 @@ namespace DNA.Models {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 50 }
 					}
-				}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
 			tasks.Add (typeof (ConstructUnit<Clinic>), new CostTaskSettings {
@@ -274,7 +285,8 @@ namespace DNA.Models {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 40 }
 					}
-				}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
 			tasks.Add (typeof (ConstructUnit<Flower>), new CostTaskSettings {
@@ -286,7 +298,8 @@ namespace DNA.Models {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 10 }
 					}
-				}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
 			tasks.Add (typeof (ConstructUnit<CollectionCenter>), new CostTaskSettings {
@@ -298,7 +311,8 @@ namespace DNA.Models {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 50 }
 					}
-				}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
 			/**
@@ -319,7 +333,7 @@ namespace DNA.Models {
 				Symbol = "consume_happiness",
 				Title = "",
 				Description = "Consumes happiness",
-				Duration = 5f,
+				Duration = 3f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
@@ -652,6 +666,7 @@ namespace DNA.Models {
 		// This is useful for e.g. upgrades
 		// <ItemGroup ID, amount required>
 		public Dictionary<string, int>[] Costs { get; set; }
+		public string[] ConstructionTargets { get; set; }
 	}
 
 	public class UnitSettings {

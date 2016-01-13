@@ -5,6 +5,8 @@ using InventorySystem;
 
 namespace DNA.Units {
 
+	// TODO: rename to MilkshakeDerrick
+
 	public class MilkshakePool : StaticUnit {
 		
 		protected override void OnInitInventory (Inventory i) {
@@ -23,8 +25,13 @@ namespace DNA.Units {
 
 		protected override void OnSetState (DevelopmentState state) {
 			base.OnSetState (state);
-			if (state == DevelopmentState.Abandoned)
+			if (state == DevelopmentState.Abandoned) {
 				Inventory["Milkshakes"].Clear ();
+			} else if (state == DevelopmentState.Flooded) {
+				AcceptableTasks.DeactivateAll ();
+			} else {
+				AcceptableTasks.ActivateAll ();
+			}
 		}
 	}
 }

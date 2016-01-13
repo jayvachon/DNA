@@ -90,7 +90,7 @@ namespace DNA.Models {
 				Title = "Coffee Plant",
 				Description = "Deliver coffee to the Giving Tree to create more laborers.",
 				Emissions = -0.01f,
-				TakesDamage = true
+				TakesDamage = false
 			});
 
 			units.Add (typeof (University), new UnitSettings {

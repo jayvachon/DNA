@@ -28,6 +28,7 @@ namespace DNA.Units {
 
 		protected void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new ResearchUpgrade<CoffeeCapacity> ());
+			p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
 		}
 	}
 }

@@ -34,6 +34,16 @@ namespace DNA {
 			pumpRate = rate * displacementCoefficient;
 		}
 
+		[DebuggableMethod ()]
+		void SimulateFlood () {
+			outer.Level = outer.MaxLevel;
+			inner.Level = inner.MaxLevel;
+			Coroutine.WaitForSeconds (1f, () => {
+				outer.Level = outer.MinLevel;
+				inner.Level = inner.MinLevel;
+			});
+		}
+
 		void Update () {
 			
 			// Outer sea rises until it reaches top of the levee

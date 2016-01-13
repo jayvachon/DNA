@@ -27,9 +27,9 @@ namespace DNA {
 
 		void OnLoadFog () {
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
-			points.SetUnitAtIndex<MilkshakePool> (2);
-			// points.SetUnitAtIndex<CoffeePlant> (2);
-			points.SetUnitAtIndex<Flower> (4);
+			// points.SetUnitAtIndex<MilkshakePool> (2);
+			points.SetUnitAtIndex<CoffeePlant> (2);
+			// points.SetUnitAtIndex<Flower> (4);
 		}
 
 		void CreateCoffeePlants () {

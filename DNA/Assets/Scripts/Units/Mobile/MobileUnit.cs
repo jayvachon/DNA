@@ -50,7 +50,7 @@ namespace DNA.Units {
 					// If the selected object is a GridPoint with a road under construction, move to it
 					Connection underConstruction = p.Connections.Find (x => x.State == DevelopmentState.UnderConstruction);
 					if (underConstruction != null) {
-						RoadConstructionPoint = ((ConstructionSite)underConstruction.Object).RoadPlan.Terminus;
+						SetRoadConstructionPoint (underConstruction);
 					}
 				}
 				return;
@@ -59,7 +59,7 @@ namespace DNA.Units {
 			// If the selected object is a Connection, move to the terminus of the road construction plan
 			Connection c = u.Element as Connection;
 			if (c != null) {
-				RoadConstructionPoint = ((ConstructionSite)c.Object).RoadPlan.Terminus;
+				SetRoadConstructionPoint (c);
 			}
 		}
 		#endregion
@@ -162,6 +162,10 @@ namespace DNA.Units {
 			}
 		}
 
+		void SetRoadConstructionPoint (Connection connection) {
+			RoadConstructionPoint = System.Array.Find (connection.Points, x => x.HasRoad);
+		}
+
 		/**
 		 *	Assigning tasks:
 		 *	  1. With unit selected, right click a point and see if it has tasks (OnOverrideSelect -> PointHasTaskMatch)
@@ -182,8 +186,11 @@ namespace DNA.Units {
 			// Check if the point has any tasks to perform
 			// If so, start the task. If the task needs a pair, listen for when the task completes
 			// Failing that, check if the point is on a road under construction
+			// Failing that, check if there's a disabled task at this point that can be paired with an enabled task on another point			
 			if (!TryStartMatch ()) {
-				TryConstructRoad ();
+				if (!TryConstructRoad ()) {
+					TryMoveToPair ();
+				}
 			}
 		}
 
@@ -207,8 +214,11 @@ namespace DNA.Units {
 			// Need to wait a frame so that construction site can have its cost set
 			Coroutine.WaitForFixedUpdate (
 				() => {
-					if (currentMatch == null)
-						TryStartMatch ();
+					if (currentMatch == null) {
+						if (!TryStartMatch ()) {
+							TryMoveToPair ();
+						}
+					}
 				}
 			);
 		}
@@ -252,27 +262,21 @@ namespace DNA.Units {
 			return false;
 		}
 
-		MatchResult PointTaskMatch (GridPoint point) {
+		bool TryMoveToPair () {
+			MatchResult match = TaskMatcher.GetPerformable (this, CurrentPoint.Unit as ITaskAcceptor, false);
+			if (match != null) {
+				GridPoint d = Pathfinder.FindNearestPoint (
+					CurrentPoint,
+					(GridPoint p) => { return TaskMatcher.GetPair (match.Match, p, false) != null; }
+				);
+				SetDestination (d);
+				return true;
+			} else {
+				return false;
+			}
+		}
 
-/* OLD:
-			ITaskAcceptor acceptor = point.Unit as ITaskAcceptor;
--			MatchResult match = TaskMatcher.GetPerformable (this, acceptor);
--
--			if (match == null)
--				return null;
--
--			// This might be a better behavior than checking for a pair
--			// The task is performed whether or not a pair exists. It still pairs if one is available, otherwise performs the task to the best of its ability			
--			return match;
--
--			/*if (!match.NeedsPair)
--				return match;
--
--			// If it does but needs a pair, check if a pair exists in the world
--			GridPoint p = Pathfinder.ConnectedPoints.FirstOrDefault (
--				x => TaskMatcher.GetPair (match.Match, x) != null);
--
--			return (p == null) ? null : match;*/
+		MatchResult PointTaskMatch (GridPoint point) {
 
 			// Check if the point has any tasks to perform
 			return TaskMatcher.GetPerformable (this, point.Unit as ITaskAcceptor);
@@ -282,26 +286,40 @@ namespace DNA.Units {
 
 			t.onComplete -= OnCompleteTask;
 			
-			/*if (!TryStartMatch ()) {
-				if (TryConstructRoad ())
+			bool taskNeedsPair = t.Settings.Pair != null;
+
+			if (taskNeedsPair) {
+
+				// Check if the last matched point can pair with the task
+				if (!t.Settings.AlwaysPairNearest && lastMatchedPoint != null && TaskMatcher.GetPair (t, lastMatchedPoint) != null) {
+					SetDestination (lastMatchedPoint);
+				} else {
+					
+					// If not, find the closest one that can
+					GridPoint d = Pathfinder.FindNearestPoint (
+						positioner.Destination,
+						(GridPoint p) => { return TaskMatcher.GetPair (t, p) != null; }
+					);
+
+					SetDestination (d);
+				}
+			} else {
+
+				// If the completed task doesn't require a pair, check if any other tasks can be performed on this point or connection
+				if (!TryStartMatch ()) {
+					if (TryConstructRoad ()) {
+						Debug.Log ("got road");
+						return;
+					}
+				} else {
+					Debug.Log ("got match");
 					return;
-			} else {
-				return;
-			}*/
+				}
 
-			// TODO: handle special case where e.g. collection center is built closer to resources
-			// Check if the last matched point can pair with the task
-			if (!t.Settings.AlwaysPairNearest && lastMatchedPoint != null && TaskMatcher.GetPair (t, lastMatchedPoint) != null) {
-				SetDestination (lastMatchedPoint);
-			} else {
-				
-				// If not, find the closest one that can
-				GridPoint d = Pathfinder.FindNearestPoint (
-					positioner.Destination,
-					(GridPoint p) => { return TaskMatcher.GetPair (t, p) != null; }
-				);
-
-				SetDestination (d);
+				// If completed task was construction, look for other construction
+				if (t is CollectItem<InventorySystem.LaborGroup>) {
+					MoveToConstruction (false);
+				}
 			}
 
 			currentMatch = null;
@@ -309,10 +327,44 @@ namespace DNA.Units {
 		}
 
 		void OnCompleteRoad (PerformerTask t) {
-			if (currentRoadConstruction != null)
-				RoadConstructionPoint = Array.Find (currentRoadConstruction.Points, x => x != RoadConstructionPoint);
+			MoveToConstruction ();
 			t.onComplete -= OnCompleteRoad;
 			currentMatch = null;
+		}
+
+		void MoveToConstruction (bool preferRoad=true) {
+			
+			// Find the nearest construction site, checking roads first if preferRoad is true
+
+			GridPoint d = null;
+			if (preferRoad) {
+				d = FindRoadUnderConstruction ();
+				if (d == null) {
+					d = FindPointUnderConstruction ();
+				}
+			} else {
+				d = FindPointUnderConstruction ();
+				if (d == null) {
+					d = FindRoadUnderConstruction ();
+				}
+			}
+
+			if (d != null)
+				SetDestination (d);
+		}
+
+		GridPoint FindPointUnderConstruction () {
+			return Pathfinder.FindNearestPoint (
+				positioner.Destination,
+				(GridPoint p) => { return p.State == DevelopmentState.UnderConstruction; }
+			);
+		}
+
+		GridPoint FindRoadUnderConstruction () {
+			return Pathfinder.FindNearestPoint (
+				positioner.Destination,
+				(GridPoint p) => { return p.HasRoadConstruction; }
+			);
 		}
 
 		void InterruptTask () {

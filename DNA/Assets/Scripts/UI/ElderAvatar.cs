@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using DNA.InventorySystem;
 
 [RequireComponent (typeof (Image))]
 public class ElderAvatar : MBRefs {
 
-	ElderItem elder;
+	// ElderItem elder;
 	bool trackHealth = false;
 
 	Image image = null;
@@ -19,16 +18,16 @@ public class ElderAvatar : MBRefs {
 		}
 	}
 
-	public void Init (ElderItem elder) {
+	/*public void Init (ElderItem elder) {
 		this.elder = elder;
 		//Image.fillAmount = elder.HealthManager.Health;		
-	}
+	}*/
 
 	IEnumerator CoTrackHealth () {
 		//int blink = 0;
 		//int blinkSpeed = 10;
 		while (trackHealth) {
-			if (elder != null) {
+			// if (elder != null) {
 				/*Image.fillAmount = elder.HealthManager.Health;
 				if (elder.HealthManager.Sick) {
 					blink ++;
@@ -43,7 +42,7 @@ public class ElderAvatar : MBRefs {
 				} else {
 					Image.color = Color.white;
 				}*/
-			}
+			// }
 			yield return null;
 		}
 	}

@@ -6,7 +6,7 @@ using InventorySystem;
 
 namespace DNA {
 
-	public class Levee : MBRefs, ISelectable, IInventoryHolder, ITaskPerformer {
+	public class Levee : MBRefs, ISelectable, IInventoryHolder {
 
 		const float WallHeight = 1f;
 		const float WallWidth = 2f;
@@ -14,18 +14,7 @@ namespace DNA {
 		public Inventory Inventory {
 			get { return Player.Instance.Inventory; }
 		}
-
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-					performableTasks.Add (new UpgradeLevee ()).onComplete += OnUpgradeHeight;
-				}
-				return performableTasks;
-			}
-		}
-
+		
 		public float Height {
 			get { return MyTransform.localScale.y; }
 			set { MyTransform.SetLocalScaleY (value); }
@@ -57,7 +46,7 @@ namespace DNA {
 			}
 		}
 
-		void OnUpgradeHeight (PerformerTask task) {
+		public void UpgradeHeight () {
 			Height += 1f;
 		}
 

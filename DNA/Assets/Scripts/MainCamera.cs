@@ -21,8 +21,6 @@ public class MainCamera : MBRefs {
 	float[] zConstraints = new [] { -80f, -5f };
 	float[] zoomConstraints = new[] { 15f, 80f };
 
-	bool zoomedOut = false;
-
 	void Awake () {
 		Events.instance.AddListener<SelectEvent> (OnSelectEvent);
 		anchor = transform.parent;
@@ -58,18 +56,6 @@ public class MainCamera : MBRefs {
 		center.SetLocalEulerAnglesY (center.localEulerAngles.y - Input.GetAxis ("Horizontal"));
 		transform.SetLocalPositionZ (
 			Mathf.Clamp (transform.localPosition.z + Input.GetAxis ("Vertical") * 0.5f, zConstraints[0], zConstraints[1]));
-
-		if (!zoomedOut) {
-			if (transform.localPosition.z <= zConstraints[0]) {
-				zoomedOut = true;
-				SelectionHandler.SelectSingle (GameObject.Find ("Levee").gameObject.GetComponent<MonoBehaviour> () as ISelectable);
-			}
-		} else {
-			if (transform.localPosition.z > zConstraints[0]) {
-				zoomedOut = false;
-				SelectionHandler.Clear ();
-			}
-		}
 
 		float yLook = Mathf.Lerp (0f, zConstraints[0] / 2f, Mathf.InverseLerp (zConstraints[1], zConstraints[0], transform.localPosition.z));
 		Vector3 look = center.position;

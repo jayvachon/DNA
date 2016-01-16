@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.InventorySystem;
 using DNA.InputSystem;
 using DNA.EventSystem;
 

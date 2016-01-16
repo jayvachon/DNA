@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DNA.InventorySystem;
+// using DNA.InventorySystem;
 
-public class InventoryDrawer : MBRefs, IInventoryHolder {
+public class InventoryDrawer : MBRefs/*, IInventoryHolder*/ {
 
-	public Inventory Inventory { get; set; }
+	/*public Inventory Inventory { get; set; }
 
 	public static InventoryDrawer Create (Transform otherTransform, Inventory drawInventory) {
 		GameObject go = new GameObject("InventoryDrawer", typeof (InventoryDrawer));
@@ -30,16 +30,16 @@ public class InventoryDrawer : MBRefs, IInventoryHolder {
 				contents += string.Format ("{0}: {1}/{2}\n", holder.Name, count, holder.Capacity);
 		}
 		return contents;
-	}
+	}*/
 
 	/**
 	 *	Debugging
 	 */
 
-	public void Print () {
+	/*public void Print () {
 		foreach (ItemHolder holder in Inventory.Holders) {
 			Debug.Log(holder.Count);
 			Debug.Log(holder.Name);
 		}
-	}
+	}*/
 }

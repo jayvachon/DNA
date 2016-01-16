@@ -35,28 +35,6 @@ namespace DNA.Paths {
 			}
 		}
 
-		/*static Path<GridPoint>[] pathsIgnoreCost;
-		public static Path<GridPoint>[] PathsIgnoreCost {
-			get {
-
-				List<Connection> connections = TreeGrid.Connections;
-				pathsIgnoreCost = new Path<GridPoint>[connections.Count*2];
-
-				int j = 0;
-				for (int i = 0; i < pathsIgnoreCost.Length; i += 2) {
-
-					Connection c = connections[j++];
-
-					pathsIgnoreCost[i] = c.Path[0];
-					pathsIgnoreCost[i].Cost = c.Costs["default"];
-					pathsIgnoreCost[i+1] = c.Path[1];
-					pathsIgnoreCost[i+1].Cost = c.Costs["default"];
-				}
-
-				return pathsIgnoreCost;
-			}
-		}*/
-
 		static VersionTracker freeVersionTracker = new VersionTracker ();
 
 		static Path<GridPoint>[] freePaths;
@@ -112,10 +90,6 @@ namespace DNA.Paths {
 
 		public static List<GridPoint> GetFreePath (GridPoint a, GridPoint b) {
 			Path<GridPoint>[] free = FreePaths;
-			/*Debug.Log (".........");
-			Debug.Log (a == null ? "null" : a.Object + " = " + PathsHavePoint (a, free));
-			Debug.Log (b == null ? "null" : b.Object + " = " + PathsHavePoint (b, free));
-			Debug.Log (".........");*/
 			return (PathsHavePoint (a, free) && PathsHavePoint (b, free)) 
 				? GetPath (a, b, FreePaths)
 				: new List<GridPoint> ();
@@ -124,10 +98,6 @@ namespace DNA.Paths {
 		public static List<GridPoint> GetCheapestPath (GridPoint a, GridPoint b) {
 			return GetPath (a, b, Paths);
 		}
-
-		/*public static List<GridPoint> GetShortestPath (GridPoint a, GridPoint b) {
-			return GetPath (a, b, PathsIgnoreCost);
-		}*/
 
 		public static List<GridPoint> GetPathNoOverlap (GridPoint a, GridPoint b) {
 			return GetPath (a, b, ClearPaths);

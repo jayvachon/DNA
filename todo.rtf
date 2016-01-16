@@ -4,7 +4,10 @@
 \margl1440\margr1440\vieww13220\viewh12360\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 Commands/xbuild\
+\f0\fs24 \cf0 time, you washed out\
+like a soft, sudden, summer rain\
+sibylle baier\
+\
 to do\
 \
 going thru doorways erases memories (\'93WAIT! what was I gonna do in here??\'94)\
@@ -13,20 +16,15 @@ going thru doorways erases memories (\'93WAIT! what was I gonna do in here??\'94
 :::: bugs ::::\
 \
 demo\
-- if laborer has full inventory and is assigned e.g. coffee plant, it goes there but does not perform task (should instead go, then look for delivery point)\
 - right-click to assign idle laborer stops working at some point(?)\
-- buildings not being damaged by flooding\
-- inner sea not rising after levee is breached \
 \
 postdemo\
-- after construction, laborers should look for additional construction\
 - set laborer destination to a point where the path crosses through a unit that can be bound to, then when the laborer is rotating around the point w/ that unit, assign the laborer to that unit -> it stops but doesn\'92t carry out task\
 \
 :::: glitches ::::\
 \
 demo\
 - if laborer is redirected from derrick to coffee & has milkshakes in inventory, when it goes to deliver coffee it will actually deliver the milkshakes and then go back to the derrick\
-- turn coffee plant dark on empty\
 \
 postdemo\
 - build two roads from the same point and assign a laborer to 1 construction site. after finishing, it might move on but still be performing the construction task on the other road\
@@ -34,18 +32,16 @@ postdemo\
 :::: features ::::\
 \
 demo\
-- only allow derricks to be built on drivable plots (randomly distributed like coffee)\
 - feedback when buying university upgrade (+ notification when done)\
-- laborers gain happiness by passing by flowers\
-- milkshake upgrades\
-- need to indicate sea level vs levee level\
+- when levee breached, inner sea should rise at consistent rate (not set by emissions rate)\
+- right click on ANY point (not just points with tasks) to assign an available laborer\
 \
 postdemo\
-- setting construction site for road should lerp to connection point, not point (place road pieces 1 at a time)\
 - encircle construction/repair sites\
 - scale hitboxes to unit\
 - darker blue sea color\
 - maybe if laborer happiness > 97 after flower construction, just set it to 100 so it doesn\'92t do the weird quick rotation\
+- worker strike when happiness = 0\
 \
 :::: design problems ::::\
 \

@@ -18,7 +18,6 @@ namespace DNA.Tasks {
 			ConstructionSite site = c.BeginConstruction<Road> ();
 			if (site != null) {
 				site.LaborCost = TotalCost;
-				site.RoadPlan = new RoadPlan (c.Connection);
 			}
 			base.OnEnd ();
 		}
@@ -28,9 +27,7 @@ namespace DNA.Tasks {
 			return CanAfford 
 				&& c.State == DevelopmentState.Undeveloped 
 				&& c.Cost > 0 
-				&& System.Array.Find (c.Points, x => x.HasRoad) != null;
-				// eventually allow this - but need to scrap RoadPlan and have laborers search for valid construction on their own
-				// && System.Array.Find (c.Points, x => x.HasRoad || x.HasRoadConstruction) != null;
+				&& System.Array.Find (c.Points, x => x.HasRoad || x.HasRoadConstruction) != null;
 		}
 	}
 }

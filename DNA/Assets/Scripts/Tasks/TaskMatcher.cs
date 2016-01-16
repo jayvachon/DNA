@@ -34,9 +34,11 @@ namespace DNA.Tasks {
 			return match;
 		}
 
-		public static MatchResult GetPerformable (ITaskPerformer performer, ITaskAcceptor acceptor) {
+		public static MatchResult GetPerformable (ITaskPerformer performer, ITaskAcceptor acceptor, bool mustBeEnabled=true) {
 
-			List<PerformerTask> matches = GetEnabled (performer, acceptor);
+			List<PerformerTask> matches = mustBeEnabled
+				? GetEnabled (performer, acceptor)
+				: GetActive (performer, acceptor);
 
 			if (matches.Count == 0)
 				return null;
@@ -61,16 +63,19 @@ namespace DNA.Tasks {
 			return GetMatching (performer.PerformableTasks.EnabledTasks, acceptor.AcceptableTasks.EnabledTasks);
 		}
 
-		public static AcceptorTask GetPair (PerformerTask task, DNA.Paths.PathElement acceptor) {
+		public static AcceptorTask GetPair (PerformerTask task, DNA.Paths.PathElement acceptor, bool mustBeEnabled=true) {
 			try {
-				return GetPair (task, ((ITaskAcceptor)acceptor.Object));
+				return GetPair (task, ((ITaskAcceptor)acceptor.Object), mustBeEnabled);
 			} catch {
 				throw new System.Exception (acceptor.Object + " does not implement the ITaskAcceptor interface");
 			}
 		}
 
-		public static AcceptorTask GetPair (PerformerTask task, ITaskAcceptor acceptor) {
+		public static AcceptorTask GetPair (PerformerTask task, ITaskAcceptor acceptor, bool mustBeEnabled=true) {
 			// TODO: linq
+			Dictionary<System.Type, AcceptorTask> tasks = mustBeEnabled
+				? acceptor.AcceptableTasks.EnabledTasks
+				: acceptor.AcceptableTasks.ActiveTasks;
 			foreach (var acceptorTask in acceptor.AcceptableTasks.EnabledTasks) {
 				AcceptorTask a = acceptorTask.Value;
 				if (a.GetType () == task.Settings.Pair)

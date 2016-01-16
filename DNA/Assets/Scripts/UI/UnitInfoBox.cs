@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using DNA.InventorySystem;
 using DNA.Tasks;
 
 // Deprecate

@@ -270,7 +270,8 @@ namespace DNA.Models {
 				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 50 }
+						{ "Milkshakes", 1 }
+						// { "Milkshakes", 50 }
 					}
 				},
 				ConstructionTargets = new [] { "plot", "drillable" }

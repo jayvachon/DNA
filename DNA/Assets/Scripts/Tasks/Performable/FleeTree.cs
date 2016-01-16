@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using DNA.InventorySystem;
 
 namespace DNA.Tasks {
 

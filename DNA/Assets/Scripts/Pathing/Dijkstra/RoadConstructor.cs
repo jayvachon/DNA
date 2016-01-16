@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using DNA.EventSystem;
 using DNA.Tasks;
 
+// deprecate
+
 namespace DNA.Paths {
 
 	[RequireComponent (typeof (LineDrawer))]

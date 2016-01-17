@@ -7,33 +7,7 @@ namespace DNA.Tasks {
 
 	public static class TaskMatcher {
 
-		public static MatchResult GetPerformable (ITaskPerformer performer, ITaskAcceptor acceptor, ITaskAcceptor acceptorPair) {
-			
-			MatchResult match = null;
-			List<PerformerTask> matches = GetEnabled (performer, acceptor);
-
-			if (matches.Count == 0)
-				return null;
-
-			// Prioritizes tasks that don't require a pair, or whose pair exists between the acceptors
-			foreach (PerformerTask task in matches) {
-				
-				AcceptorTask acceptorTask = GetAcceptor (task, acceptor);
-				if (task.Settings.Pair == null) {
-					return new MatchResult (task, false, acceptorTask);
-				}
-
-				if (match == null || match.NeedsPair) {
-					AcceptorTask pair = GetPair (task, acceptorPair);
-					if (pair != null)
-						return new MatchResult (task, false, acceptorTask);
-					match = new MatchResult (task, true, acceptorTask);
-				}
-			}
-
-			return match;
-		}
-
+		// Returns a task for the for the performer to perform		
 		public static MatchResult GetPerformable (ITaskPerformer performer, ITaskAcceptor acceptor, bool mustBeEnabled=true) {
 
 			List<PerformerTask> matches = mustBeEnabled
@@ -53,6 +27,24 @@ namespace DNA.Tasks {
 			}
 
 			return new MatchResult (matches[0], true, GetAcceptor (matches[0], acceptor));
+		}
+
+		// Tries to find a pair for the provided match		
+		public static MatchResult GetPerformable (MatchResult match, ITaskPerformer performer, ITaskAcceptor acceptor) {
+
+			if (match == null)
+				return null;
+
+			AcceptorTask pair = GetPair (match.Match, acceptor);
+			if (pair == null)
+				return null;
+
+			foreach (PerformerTask performerTask in GetEnabled (performer, acceptor)) {
+				if (pair.AcceptedTask == performerTask.GetType ()) {
+					return new MatchResult (performerTask, true, pair);
+				}
+			}
+			return null;
 		}
 
 		public static List<PerformerTask> GetActive (ITaskPerformer performer, ITaskAcceptor acceptor) {
@@ -76,7 +68,7 @@ namespace DNA.Tasks {
 			Dictionary<System.Type, AcceptorTask> tasks = mustBeEnabled
 				? acceptor.AcceptableTasks.EnabledTasks
 				: acceptor.AcceptableTasks.ActiveTasks;
-			foreach (var acceptorTask in acceptor.AcceptableTasks.EnabledTasks) {
+			foreach (var acceptorTask in tasks) {
 				AcceptorTask a = acceptorTask.Value;
 				if (a.GetType () == task.Settings.Pair)
 					return a;

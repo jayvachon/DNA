@@ -36,8 +36,6 @@ namespace DNA.Units {
 			get { return fertilityTier; }
 			set { 
 				fertilityTier = value;
-				// if (Name == "DrillablePlot")
-					// Debug.Log (fertilityTier);
 				OnSetFertility (value);
 			}
 		}
@@ -68,12 +66,10 @@ namespace DNA.Units {
 		public void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new PointerDownEvent (this));
 			if (!e.LeftClicked () && SelectionHandler.Selected.Count == 0) {
-				if (AcceptableTasks.EnabledTasks.Count > 0) {
-					List<Laborer> laborers = ObjectPool.GetActiveObjects<Laborer> ();
-					Laborer available = laborers.Find (x => x.Idle);
-					if (available != null) {
-						available.OnOverrideSelect (this);
-					}
+				List<Laborer> laborers = ObjectPool.GetActiveObjects<Laborer> ();
+				Laborer available = laborers.Find (x => x.Idle);
+				if (available != null) {
+					available.OnOverrideSelect (this);
 				}
 			}
 		}

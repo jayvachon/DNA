@@ -131,6 +131,7 @@ namespace DNA.Units {
 
 		GridPoint lastMatchedPoint = null;
 		MatchResult currentMatch;
+		MatchResult previousMatch;
 		MatchResult flowerMatch;
 		Connection currentRoadConstruction;
 		protected Positioner2 positioner;
@@ -235,7 +236,13 @@ namespace DNA.Units {
 		}
 
 		bool TryStartMatch () {
-			MatchResult match = PointTaskMatch (CurrentPoint);
+
+			// Check if the previously performed task has a pair on this point
+			// Failing that, check for other performable tasks on this point						
+			MatchResult match = TaskMatcher.GetPerformable (previousMatch, this, CurrentPoint.Unit as ITaskAcceptor);
+			if (match == null)
+				match = PointTaskMatch (CurrentPoint);
+
 			if (match != null) {
 				currentMatch = match;
 				BeginEncircling ();
@@ -308,11 +315,9 @@ namespace DNA.Units {
 				// If the completed task doesn't require a pair, check if any other tasks can be performed on this point or connection
 				if (!TryStartMatch ()) {
 					if (TryConstructRoad ()) {
-						Debug.Log ("got road");
 						return;
 					}
 				} else {
-					Debug.Log ("got match");
 					return;
 				}
 
@@ -322,6 +327,7 @@ namespace DNA.Units {
 				}
 			}
 
+			previousMatch = currentMatch;
 			currentMatch = null;
 			lastMatchedPoint = CurrentPoint;
 		}
@@ -329,6 +335,7 @@ namespace DNA.Units {
 		void OnCompleteRoad (PerformerTask t) {
 			MoveToConstruction ();
 			t.onComplete -= OnCompleteRoad;
+			previousMatch = currentMatch;
 			currentMatch = null;
 		}
 
@@ -383,7 +390,7 @@ namespace DNA.Units {
 
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
-		void OnDisable () {
+		protected override void OnDisable () {
 			base.OnDisable ();
 			positioner.onArriveAtDestination -= OnArriveAtDestination;
 			positioner.onEnterPoint -= OnEnterPoint;

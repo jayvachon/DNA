@@ -210,7 +210,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 
 	public void TestBinding (ITaskPerformer performer, ITaskAcceptor acceptor, ITaskAcceptor acceptorPair) {
 		
-		MatchResult match = TaskMatcher.GetPerformable (performer, acceptor, acceptorPair);
+		/*MatchResult match = TaskMatcher.GetPerformable (performer, acceptor, acceptorPair);
 		if (match != null) {
 			Debug.Log (match.Match);
 			if (!match.NeedsPair) {
@@ -232,6 +232,6 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 				// Move to the acceptor pair
 				Debug.Log ("move to other point on path");
 			}
-		}
+		}*/
 	}
 }

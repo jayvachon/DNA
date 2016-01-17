@@ -15,6 +15,7 @@ namespace DNA {
 
 		float pumpRate = 0f;
 		float riseRate = 0f;
+		float floodRate = 0.0033f;
 		float displacementCoefficient = 0.000033f;
 
 		public float LeveeTop {
@@ -44,6 +45,11 @@ namespace DNA {
 			});
 		}
 
+		[DebuggableMethod ()]
+		void UpgradeLevee () {
+			levee.UpgradeHeight ();
+		}
+
 		void Update () {
 			
 			// Outer sea rises until it reaches top of the levee
@@ -55,12 +61,13 @@ namespace DNA {
 			}
 
 			// Inner sea rises if outer sea has reached top of levee
-			if (outer.Level >= LeveeTop) {
-				inner.Level += riseRate;
+			if (outer.Level >= LeveeTop && inner.Level < LeveeTop) {
+				inner.Level += floodRate;
 			}
 
 			// Both seas rise once inner sea reaches top of levee
 			if (inner.Level >= LeveeTop) {
+				inner.Level += riseRate;
 				outer.Level = inner.Level;
 			}
 		}

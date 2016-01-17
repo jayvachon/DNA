@@ -68,6 +68,8 @@ namespace DNA.Units {
 				float p = Inventory["Happiness"].PercentFilled;
 				unitRenderer.SetColors (Color.Lerp (Palette.Blue, Palette.Pink, p));
 				positioner.Speed = Mathf.Lerp (minSpeed, maxSpeed, p);
+				if (Selected)
+					unitRenderer.OnSelect ();
 			}
 		}
 

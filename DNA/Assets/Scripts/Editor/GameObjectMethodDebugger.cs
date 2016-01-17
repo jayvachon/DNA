@@ -44,6 +44,8 @@ public class GameObjectMethodDebugger : EditorWindow {
 		scrollPos = GUILayout.BeginScrollView (scrollPos, false, false, GUILayout.Width (position.width), GUILayout.Height (position.height));
 
 		foreach (DebuggableComponent c in components) {
+			if (c == null || c.Component == null)
+				continue;
 			GUILayout.Label (c.Component.name);
 			foreach (MethodInfo m in c.Methods) {
 				

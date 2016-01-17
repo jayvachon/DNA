@@ -270,8 +270,7 @@ namespace DNA.Models {
 				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 1 }
-						// { "Milkshakes", 50 }
+						{ "Milkshakes", 50 }
 					}
 				},
 				ConstructionTargets = new [] { "plot", "drillable" }
@@ -310,7 +309,7 @@ namespace DNA.Models {
 				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 50 }
+						{ "Milkshakes", 60 }
 					}
 				},
 				ConstructionTargets = new [] { "plot", "drillable" }
@@ -447,7 +446,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ResearchUpgrade<CoffeeCapacity>), new CostTaskSettings {
 				Symbol = "reseach_coffee",
-				Title = "Upgrade Laborer coffee capacity",
+				Title = "+1 coffee capacity",
 				Description = "Laborers will be able to carry more coffee",
 				AutoStart = false,
 				Repeat = false,
@@ -466,7 +465,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ResearchUpgrade<MilkshakeCapacity>), new CostTaskSettings {
 				Symbol = "reseach_milkshake",
-				Title = "Upgrade Laborer milkshake capacity",
+				Title = "+1 milkshake capacity",
 				Description = "Laborers will be able to carry more milkshake",
 				AutoStart = false,
 				Repeat = false,
@@ -516,7 +515,7 @@ namespace DNA.Models {
 			});
 
 			tasks.Add (typeof (UpgradeLevee), new CostTaskSettings {
-				Title = "Upgrade levee",
+				Title = "Raise levee",
 				Description = "Raises the levee wall",
 				Duration = 0f,
 				AutoStart = false,

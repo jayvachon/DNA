@@ -61,8 +61,8 @@ public class Mover : MonoBehaviour {
 		Settings settings;
 		Trajectory trajectory;
 
-		Co rotateCo;
-		Co translateCo;
+		// Co rotateCo;
+		// Co translateCo;
 
 		Quaternion rotation;
 		Vector3 position;
@@ -111,7 +111,8 @@ public class Mover : MonoBehaviour {
 		void Rotate (float duration, System.Action onEnd) {
 			// if (rotateCo != null && rotateCo.gameObject.activeSelf)
 				// rotateCo.Stop (false);
-			rotateCo = Co.Start (duration, UpdateRotation, onEnd);
+			Co.Start (duration, UpdateRotation, onEnd);
+			// rotateCo = Co.Start (duration, UpdateRotation, onEnd);
 		}
 
 		void UpdateRotation (float p) {
@@ -122,7 +123,8 @@ public class Mover : MonoBehaviour {
 		void Translate () {
 			// if (translateCo != null && translateCo.gameObject.activeSelf)
 				// translateCo.Stop (false);
-			translateCo = Co.Start (TranslateTime, UpdateTranslation, EndMove);
+			Co.Start (TranslateTime, UpdateTranslation, EndMove);
+			// translateCo = Co.Start (TranslateTime, UpdateTranslation, EndMove);
 		}
 
 		void UpdateTranslation (float p) {

@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf130
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf340
 {\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
 \margl1440\margr1440\vieww13220\viewh12360\viewkind0
@@ -16,6 +16,9 @@ going thru doorways erases memories (\'93WAIT! what was I gonna do in here??\'94
 :::: bugs ::::\
 \
 demo\
+- laborers aren\'92t immediately getting the message that the acceptor task can be bound to \
+- building a road off a point where laborers have been working automatically triggers construction (think actually some listeners are not being unsubscribed on destroy construction site)\
+- if two laborers are building a construction site, one of them will throw a null ref exception on Laborer line 242 (prob referencing destroyed construction site)\
 \
 postdemo\
 - set laborer destination to a point where the path crosses through a unit that can be bound to, then when the laborer is rotating around the point w/ that unit, assign the laborer to that unit -> it stops but doesn\'92t carry out task\
@@ -23,8 +26,11 @@ postdemo\
 :::: glitches ::::\
 \
 demo\
+- can\'92t interrupt laborer constructing road\
+- assigning laborer to the same point twice stops it\
 \
 postdemo\
+- when a building runs out of resources, laborers get caught in a back-n-forth loop\
 \
 :::: features ::::\
 \
@@ -55,6 +61,8 @@ reproducing bugs\
 :::: balancing ::::\
 \
 demo\
+- start with a loan (player can select 1 of 3)\
+\
 \
 postdemo\
 - \'93even\'94 random distribution of coffee plants\

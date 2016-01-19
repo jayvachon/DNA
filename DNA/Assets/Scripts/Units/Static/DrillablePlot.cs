@@ -13,7 +13,7 @@ namespace DNA.Units {
 		}
 
 		public override string Description {
-			get { return "An undeveloped plot valued at " + FertilityTier + "/" + Fertility.TierCount; }
+			get { return "Build a milkshake derrick on this plot to drill for milkshakes. It's valued at " + (FertilityTier+1) + "/" + (Fertility.TierCount+1) + "."; }
 		}
 
 		protected override void OnSetFertility (int fertility) {

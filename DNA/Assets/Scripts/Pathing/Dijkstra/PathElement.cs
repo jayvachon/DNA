@@ -64,15 +64,15 @@ namespace DNA.Paths {
 		}
 
 		public void RegisterVisitor (IPathElementVisitor visitor) {
-			visitors.Add (visitor);
 			visitor.VisitorIndex = visitors.Count;
+			visitors.Add (visitor);
 		}
 
 		public void RemoveVisitor (IPathElementVisitor visitor) {
 			visitors.Remove (visitor);
-			visitor.VisitorIndex = 0;
+			visitor.VisitorIndex = -1;
 			for (int i = 0; i < visitors.Count; i ++) {
-				visitors[i].VisitorIndex = i+1;
+				visitors[i].VisitorIndex = i;
 			}
 		}
 	}

@@ -30,6 +30,7 @@ namespace DNA.Units {
 			p.Add (new ResearchUpgrade<CoffeeCapacity> ());
 			p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
 			p.Add (new UpgradeLevee ());
+			// p.Add (new UpgradeFogOfWar ());
 		}
 	}
 }

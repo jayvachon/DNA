@@ -9,6 +9,7 @@ namespace InventorySystem {
 			get { return "Coffee"; }
 		}
 
-		public CoffeeGroup (int startCount=0, int capacity=-1) : base (startCount, capacity) {}
+		public CoffeeGroup () : base (0, -1) {}
+		public CoffeeGroup (int startCount, int capacity=-1) : base (startCount, capacity) {}
 	}
 }

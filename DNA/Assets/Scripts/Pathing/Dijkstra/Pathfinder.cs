@@ -9,6 +9,8 @@ using Delaunay.Geo;
 
 namespace DNA.Paths {
 
+	public enum PathType { Default, Free, Clear }
+
 	public static class Pathfinder {
 
 		// these properties only have public getters so that PathfinderDrawer can draw them - could prob remove for production
@@ -84,6 +86,25 @@ namespace DNA.Paths {
 			}
 		}
 
+		static Path<GridPoint>[] GetConnections (PathType pathType) {
+			switch (pathType) {
+				case PathType.Default: return Paths;
+				case PathType.Free: return FreePaths;
+				case PathType.Clear: return ClearPaths;
+			}
+			throw new System.Exception (pathType + " is not a valid PathType");
+		}
+
+		static List<CachedPath> cache;
+		static List<CachedPath> Cache {
+			get {
+				if (cache == null) {
+					cache = new List<CachedPath> ();
+				}
+				return cache;
+			}
+		}
+
 		public static List<GridPoint> ConnectedPoints {
 			get { return TreeGrid.Points.FindAll (x => x.HasRoad); }
 		}
@@ -91,16 +112,16 @@ namespace DNA.Paths {
 		public static List<GridPoint> GetFreePath (GridPoint a, GridPoint b) {
 			Path<GridPoint>[] free = FreePaths;
 			return (PathsHavePoint (a, free) && PathsHavePoint (b, free)) 
-				? GetPath (a, b, FreePaths)
+				? GetPath (a, b, PathType.Free)
 				: new List<GridPoint> ();
 		}
 
 		public static List<GridPoint> GetCheapestPath (GridPoint a, GridPoint b) {
-			return GetPath (a, b, Paths);
+			return GetPath (a, b, PathType.Default);
 		}
 
 		public static List<GridPoint> GetPathNoOverlap (GridPoint a, GridPoint b) {
-			return GetPath (a, b, ClearPaths);
+			return GetPath (a, b, PathType.Clear);
 		}
 
 		public static GridPoint FindNearestPoint (GridPoint a, Func<GridPoint, bool> requirement=null) {
@@ -124,12 +145,27 @@ namespace DNA.Paths {
 			return nearest;
 		}
 
-		static List<GridPoint> GetPath (GridPoint a, GridPoint b, Path<GridPoint>[] pathToUse) {
+		static List<GridPoint> GetPath (GridPoint a, GridPoint b, PathType pathType) {
+
+			CachedPath p = Cache.Find (x => x.a == a && x.b == b && x.pathType == pathType);
+
+			if (p == null) {
+				p = new CachedPath (a, b, pathType);
+				Cache.Add (p);
+				return p.Path;
+			}
+
+			return p.Path;
+		}
+
+		public static List<GridPoint> CalculatePath (GridPoint a, GridPoint b, PathType pathType) {
 
 			#if UNITY_EDITOR
 			if (a == b)
 				throw new System.Exception ("No path could be found because the two points are the same");
 			#endif
+
+			Path<GridPoint>[] pathToUse = GetConnections (pathType);
 
 			var path = Engine.CalculateShortestPathBetween<GridPoint> (a, b, pathToUse);
 			List<GridPoint> pathList = new List<GridPoint> ();
@@ -172,6 +208,30 @@ namespace DNA.Paths {
 					return false;
 				}
 			}
+		}
+	}
+
+	public class CachedPath {
+		
+		public readonly GridPoint a;
+		public readonly GridPoint b;
+		public readonly PathType pathType;
+		VersionTracker version = new VersionTracker ();
+		List<GridPoint> path;
+
+		public List<GridPoint> Path {
+			get {
+				if (!version.UpToDate) {
+					path = Pathfinder.CalculatePath (a, b, pathType);
+				}
+				return path;
+			}
+		}
+
+		public CachedPath (GridPoint a, GridPoint b, PathType pathType) {
+			this.a = a;
+			this.b = b;
+			this.pathType = pathType;
 		}
 	}
 }

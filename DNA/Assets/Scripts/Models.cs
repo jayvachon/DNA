@@ -29,6 +29,16 @@ namespace DNA.Models {
 				return unitsSettings;
 			}
 		}
+
+		LoansSettings loansSettings;
+		public LoansSettings LoansSettings {
+			get {
+				if (loansSettings == null) {
+					loansSettings = new LoansSettings ();
+				}
+				return loansSettings;
+			}
+		}
 	}
 
 	public class UnitsSettings {
@@ -200,7 +210,8 @@ namespace DNA.Models {
 				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>),
-				AlwaysPairNearest = true
+				AlwaysPairNearest = true,
+				BindCapacity = 1
 			});
 
 			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
@@ -209,7 +220,8 @@ namespace DNA.Models {
 				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<CoffeeGroup>),
-				AlwaysPairNearest = true
+				AlwaysPairNearest = true,
+				BindCapacity = 1
 			});
 
 			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
@@ -535,34 +547,59 @@ namespace DNA.Models {
 						{ "Milkshakes", 30 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 20 },
-						{ "Milkshakes", 40 }
-					},
-					new Dictionary<string, int> {
 						{ "Coffee", 25 },
-						{ "Milkshakes", 50 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 30 },
-						{ "Milkshakes", 60 }
+						{ "Milkshakes", 45 }
 					},
 					new Dictionary<string, int> {
 						{ "Coffee", 35 },
-						{ "Milkshakes", 70 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 40 },
-						{ "Milkshakes", 80 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 45 },
-						{ "Milkshakes", 90 }
+						{ "Milkshakes", 60 }
 					},
 					new Dictionary<string, int> {
 						{ "Coffee", 50 },
-						{ "Milkshakes", 100 }
+						{ "Milkshakes", 80 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 75 },
+						{ "Milkshakes", 120 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 100 },
+						{ "Milkshakes", 150 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 150 },
+						{ "Milkshakes", 175 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 250 },
+						{ "Milkshakes", 200 }
 					}
 				}
+			});
+
+			tasks.Add (typeof (UpgradeFogOfWar), new CostTaskSettings {
+				Title = "Increase eyesight",
+				Description = "Reveal more from fog of war",
+				Duration = 0f,
+				AutoStart = false,
+				Repeat = false,
+				Pair = null,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 100 },
+						{ "Milkshakes", 150 }
+					}
+				}
+			});
+
+			tasks.Add (typeof (BorrowLoan<MilkshakeLoanGroup>), new TaskSettings {
+				Title = "Borrow Milkshakes",
+				Description = "Take out a loan of 100 milkshakes"
+			});
+
+			tasks.Add (typeof (BorrowLoan<CoffeeLoanGroup>), new TaskSettings {
+				Title = "Borrow Coffee",
+				Description = "Take out a loan of 100 coffee"
 			});
 
 			/**
@@ -649,15 +686,56 @@ namespace DNA.Models {
 		}
 	}
 
+	public class LoansSettings {
+			
+		Dictionary<System.Type, LoanSettings> loans;
+
+		public Dictionary<System.Type, LoanSettings> Loans {
+			get { return loans; }
+		}
+
+		public LoanSettings this[System.Type loanType] {
+			get { 
+				try {
+					return loans[loanType]; 
+				} catch {
+					throw new System.Exception ("Could not find a model for '" + loanType + "'");
+				}
+			}
+		}
+
+		public LoansSettings () {
+
+			loans = new Dictionary<System.Type, LoanSettings> ();
+
+			loans.Add (typeof (Loan<MilkshakeGroup>), new LoanSettings {
+				Symbol = "milkshake_loan",
+				Amount = 100,
+				InterestRate = 0.068f,
+				RepaymentLength = 12,
+				GracePeriod = 12
+			});
+
+			loans.Add (typeof (Loan<CoffeeGroup>), new LoanSettings {
+				Symbol = "coffee_loan",
+				Amount = 100,
+				InterestRate = 0.068f,
+				RepaymentLength = 12,
+				GracePeriod = 12
+			});
+		}
+	}
+
 	public class TaskSettings {
 		public string Symbol { get; set; }
-		public string Title { get; set; }
-		public string Description { get; set; }
-		public System.Type Pair { get; set; }
-		public float Duration { get; set; }
-		public bool AutoStart { get; set; }
-		public bool Repeat { get; set; }
-		public bool AlwaysPairNearest { get; set; }
+		public string Title { get; set; }			// How the task will be displayed in the UI
+		public string Description { get; set; }		// A description of the task to display in the UI
+		public System.Type Pair { get; set; }		// (optional) A type of AcceptorTask that this task must be bound to in order to be performed
+		public float Duration { get; set; }			// How long it takes for the task to be performed
+		public bool AutoStart { get; set; }			// If true, task will be performed on instantiation
+		public bool Repeat { get; set; }			// If true, task will automatically repeat until it becomes disabled, if ever
+		public bool AlwaysPairNearest { get; set; } // If false, task will always return to the first pair it found
+		public int BindCapacity { get; set; }		// (optional) The maximum number of tasks that the Pair can bind with (ignored if Pair is null)
 	}
 
 	public class CostTaskSettings : TaskSettings {
@@ -675,5 +753,14 @@ namespace DNA.Models {
 		public string Description { get; set; }
 		public float Emissions { get; set; }
 		public bool TakesDamage { get; set; }
+	}
+
+	public class LoanSettings {
+		public string Symbol { get; set; } // not currently doing anything
+		public string Resource { get; set; }
+		public int Amount { get; set; }
+		public float InterestRate { get; set; }
+		public int RepaymentLength { get; set; }
+		public int GracePeriod { get; set; }
 	}
 }

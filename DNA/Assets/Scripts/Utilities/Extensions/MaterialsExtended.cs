@@ -50,12 +50,21 @@ public static class MaterialsExtended {
 
 		Material m;
 		if ( color.a > 0.99 ) {
-			m = new Material ( Shader.Find ( "Diffuse" ) );
+			m = new Material (Shader.Find ("Standard"));
+			m.SetFloat("_Smoothness", 0);
 		} else {
-			m = new Material ( Shader.Find ( "Transparent/Diffuse" ) );
+			m = new Material (Shader.Find ("Standard"));
+			m.SetFloat("_Mode", 2);
+            m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetInt("_ZWrite", 0);
+            m.DisableKeyword("_ALPHATEST_ON");
+            m.EnableKeyword("_ALPHABLEND_ON");
+            m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            m.renderQueue = 3000;
 		}
-		m.color = color;
+		m.SetColor ("_Color", color);
+		
 		return m;
-
 	}
 }

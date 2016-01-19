@@ -39,7 +39,7 @@ namespace DNA {
 
 			int pointsCount = points.Points.Count;
 			for (int i = 20; i < pointsCount; i ++) {
-				if (Random.value < 0.05f) {
+				if (Random.value < 0.075f) {
 					points.SetUnitAtIndex<CoffeePlant> (i);
 				}
 			}

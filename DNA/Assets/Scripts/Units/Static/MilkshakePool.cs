@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#define NEVER_EMPTY
+using UnityEngine;
 using System.Collections;
 using DNA.Tasks;
 using InventorySystem;
@@ -11,7 +12,11 @@ namespace DNA.Units {
 		
 		protected override void OnInitInventory (Inventory i) {
 			i.Add (new MilkshakeGroup (100, 100));
-			i["Milkshakes"].onEmpty += () => { Element.State = DevelopmentState.Abandoned; };
+			#if NEVER_EMPTY
+				i["Milkshakes"].onRemove += () => { i["Milkshakes"].Add (); };
+			#else
+				i["Milkshakes"].onEmpty += () => { Element.State = DevelopmentState.Abandoned; };
+			#endif
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {

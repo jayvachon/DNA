@@ -33,6 +33,14 @@ namespace DNA {
 			}
 		}
 
+		public static LoanSettings GetLoanSettings (System.Type loanType) {
+			try {
+				return Data.LoansSettings[loanType];
+			} catch {
+				throw new System.Exception ("No model exists for the loan '" + loanType + "'");
+			}
+		}
+
 		public static string GetUnitSymbol (System.Type unitType) {
 			return GetUnitSettings (unitType).Symbol;
 		}

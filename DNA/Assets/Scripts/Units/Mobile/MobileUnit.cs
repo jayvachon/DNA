@@ -31,7 +31,7 @@ namespace DNA.Units {
 
 			// If the current point was selected and a task is not being performed, run OnArrive again to check for updates
 			if (p == CurrentPoint) {
-				if (currentMatch != null)
+				if (currentMatch == null)
 					OnArriveAtDestination (CurrentPoint);
 				return;
 			}
@@ -174,7 +174,7 @@ namespace DNA.Units {
 		 *	  3. (if task needs pair) Find the pair on the path and move to it (OnCompleteTask)
 		 */
 
-		void OnArriveAtDestination (GridPoint point) {
+		void OnArriveAtDestination (GridPoint point, bool lookForPair=true) {
 			
 			CurrentPoint = point;
 
@@ -189,7 +189,7 @@ namespace DNA.Units {
 			// Failing that, check if the point is on a road under construction
 			// Failing that, check if there's a disabled task at this point that can be paired with an enabled task on another point			
 			if (!TryStartMatch ()) {
-				if (!TryConstructRoad ()) {
+				if (!TryConstructRoad () && lookForPair) {
 					TryMoveToPair ();
 				}
 			}
@@ -238,16 +238,16 @@ namespace DNA.Units {
 		bool TryStartMatch () {
 
 			// Check if the previously performed task has a pair on this point
-			// Failing that, check for other performable tasks on this point						
+			// Failing that, check for other performable tasks on this point			
 			MatchResult match = TaskMatcher.GetPerformable (previousMatch, this, CurrentPoint.Unit as ITaskAcceptor);
 			if (match == null)
 				match = PointTaskMatch (CurrentPoint);
 
-			if (match != null) {
+			if (match != null && match.Start (true)) {
 				currentMatch = match;
 				BeginEncircling ();
 				currentMatch.Match.onComplete += OnCompleteTask;
-				match.Start (true);
+				// match.Start (true);
 				return true;
 			}
 			return false;
@@ -257,10 +257,10 @@ namespace DNA.Units {
 			currentRoadConstruction = CurrentPoint.Connections.Find (x => x.State == DevelopmentState.UnderConstruction);
 			if (currentRoadConstruction != null) {
 				MatchResult match = TaskMatcher.GetPerformable (this, currentRoadConstruction.Object as ITaskAcceptor);
-				if (match != null) {
+				if (match != null && match.Start ()) {
 					currentMatch = match;
 					currentMatch.Match.onComplete += OnCompleteRoad;
-					match.Start ();
+					// match.Start ();
 					return true;
 				}
 			} else {
@@ -270,8 +270,8 @@ namespace DNA.Units {
 		}
 
 		bool TryMoveToPair () {
-			MatchResult match = TaskMatcher.GetPerformable (this, CurrentPoint.Unit as ITaskAcceptor, false);
-			if (match != null) {
+			MatchResult match = TaskMatcher.GetPerformable (this, CurrentPoint.Unit as ITaskAcceptor, false);	
+			if (match != null && !match.Match.Enabled) {
 				GridPoint d = Pathfinder.FindNearestPoint (
 					CurrentPoint,
 					(GridPoint p) => { return TaskMatcher.GetPair (match.Match, p, false) != null; }
@@ -424,8 +424,10 @@ namespace DNA.Units {
 		int visitorIndex = 0;
 		public int VisitorIndex {
 			get { return visitorIndex; }
-			set {
+			set { 
 				visitorIndex = value;
+				if (Idle)
+					OnArriveAtDestination (CurrentPoint, false);
 			}
 		}
 		#endregion

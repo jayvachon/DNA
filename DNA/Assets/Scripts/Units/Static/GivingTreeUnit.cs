@@ -47,9 +47,10 @@ namespace DNA.Units {
 			Inventory = Player.Instance.Inventory;
 
 			PerformableTasks.Add (new GenerateUnit<Laborer> ()).onComplete += OnGenerateLaborer;
-			PerformableTasks.Add (new GenerateUnit<Elder> ()).onComplete += OnGenerateElder;
-			PerformableTasks.Add (new GenerateUnit<Corpse> ()).onComplete += OnGenerateCorpse;
-
+			// PerformableTasks.Add (new GenerateUnit<Elder> ()).onComplete += OnGenerateElder;
+			// PerformableTasks.Add (new GenerateUnit<Corpse> ()).onComplete += OnGenerateCorpse;
+			PerformableTasks.Add (new BorrowLoan<MilkshakeLoanGroup> ());
+			PerformableTasks.Add (new BorrowLoan<CoffeeLoanGroup> ());
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {

@@ -26,8 +26,11 @@ namespace DNA {
 			get {
 				if (inventory == null) {
 					inventory = new Inventory (this);
-					Inventory.Add (new MilkshakeGroup (130));
-					Inventory.Add (new CoffeeGroup (65));
+					// Inventory.Add (new MilkshakeGroup (130));
+					Inventory.Add (new MilkshakeGroup ());
+					// Inventory.Add (new CoffeeGroup (70));
+					Inventory.Add (new CoffeeGroup ());
+					
 					Inventory.Add (new YearGroup ());
 					Inventory.Add (new LaborGroup ());
 				}

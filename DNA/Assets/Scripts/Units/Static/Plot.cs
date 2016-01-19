@@ -30,10 +30,6 @@ namespace DNA.Units {
 		}
 
 		void Awake () {
-
-			// unitRenderer.SetColors (new Color (0.47f, 0.043f, 0.24f));
-			// unitRenderer.SetColors (Palette.Black);
-
 			Inventory = new Inventory (this);
 			Inventory.Add (new MilkshakeGroup ());
 
@@ -44,10 +40,6 @@ namespace DNA.Units {
 			staticUnit.Position = Position;
 			if (Selected) SelectionManager.Select (staticUnit.UnitClickable);
 			DestroyThis ();
-		}
-
-		protected override void OnSetFertility (int fertility) {
-			// unitRenderer.SetColors (Palette.Black);
 		}
 
 		protected virtual void DestroyThis () {

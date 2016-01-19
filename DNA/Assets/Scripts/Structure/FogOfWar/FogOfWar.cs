@@ -10,6 +10,12 @@ namespace DNA {
 
 	public class FogOfWar : MBRefs, IPointerDownHandler {
 
+		static int fadeLevel;
+		public static int FadeLevel {
+			get { return fadeLevel; }
+			private set { fadeLevel = value; }
+		}
+
 		GridPoint point;
 		public GridPoint Point {
 			get { return point; }
@@ -49,6 +55,15 @@ namespace DNA {
 				if (f != null) {
 					f.Fade ();
 				}
+				if (fadeLevel > 0) {
+					foreach (Connection c2 in other.Connections) {
+						GridPoint other2 = c2.GetOtherPoint (Point);
+						FogOfWar f2 = other2.Fog;
+						if (f2 != null) {
+							f2.Fade ();
+						}
+					}
+				}
 			}
 		}
 
@@ -66,6 +81,11 @@ namespace DNA {
 				if (gp.Fog != null)
 					gp.Fog.Remove ();
 			}
+		}
+
+		public static void UpgradeFadeLevel () {
+			FadeLevel += 1;
+			// TODO: update current fade levels on upgrade (right now, need to wait for road construction to finish)			
 		}
 		
 		#region IPointerDownHandler implementation

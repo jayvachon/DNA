@@ -108,7 +108,7 @@ namespace DNA {
 				TaskPen.Remove ();
 				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<University>)]);
 			}),
-			new Hotkey (KeyCode.D, () => {
+			new Hotkey (KeyCode.M, () => {
 				TaskPen.Remove ();
 				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<MilkshakePool>)]);
 			}),

@@ -7,6 +7,7 @@ namespace InventorySystem {
 	public delegate void OnUpdate ();
 	public delegate void OnEmpty ();
 	public delegate void OnFill ();
+	public delegate void OnRemove ();
 	public delegate void OnAdd<T> (List<T> items) where T : Item;
 
 	/// <summary>
@@ -98,6 +99,11 @@ namespace InventorySystem {
 		public OnUpdate onUpdate;
 
 		/// <summary>
+		/// Called any time an item is added or removed.
+		/// </summary>
+		public OnRemove onRemove;
+
+		/// <summary>
 		/// Called when the last item is removed.
 		/// </summary>
 		public OnEmpty onEmpty;
@@ -110,7 +116,7 @@ namespace InventorySystem {
 		public abstract void Initialize (Inventory inventory);
 		public abstract void Set (int count);
 		public abstract void Add (int count);
-		public abstract void Add (Item item=null);
+		public abstract Item Add (Item item=null);
 		public abstract void Add (List<Item> newItems);
 		public abstract void Remove (int count);
 		public abstract Item Remove (Item item=null, bool sendUpdate=true);
@@ -120,6 +126,7 @@ namespace InventorySystem {
 		public abstract bool Contains (Item item);
 		protected abstract void SendUpdateMessage ();
 		protected abstract void SendEmptyMessage ();
+		protected abstract void SendRemoveMessage ();
 		protected abstract void SendFillMessage ();
 		public abstract void Print ();
 	}
@@ -183,9 +190,10 @@ namespace InventorySystem {
 		/// Add an Item
 		/// </summary>
 		/// <param name="item">The Item to add.</param>
-		public override void Add (Item item=null) {
+		public override Item Add (Item item=null) {
 			if (item == null) item = new T ();
 			Add (new List<Item> { item });
+			return item;
 		}
 
 		/// <summary>
@@ -238,6 +246,7 @@ namespace InventorySystem {
 				items.Remove (item);
 			}
 
+			SendRemoveMessage ();
 			if (sendUpdate) SendUpdateMessage ();
 			if (Empty) SendEmptyMessage ();
 			
@@ -281,6 +290,10 @@ namespace InventorySystem {
 		/// <returns>True if the item was found.</returns>
 		public override bool Contains (Item item) {
 			return Items.Contains (item);
+		}
+
+		protected override void SendRemoveMessage () {
+			if (onRemove != null) onRemove ();
 		}
 
 		protected override void SendUpdateMessage () {

@@ -48,17 +48,20 @@ namespace DNA.Tasks {
 				throw new System.Exception (this.GetType () + " is marked as repeating with a duration of 0. This will cause the game to hang.");
 		}
 
-		public void Start (AcceptorTask acceptTask) {
-			if (acceptTask.Enabled) {
-				if (Start ()) this.acceptTask = acceptTask;
+		public bool Start (AcceptorTask acceptTask) {
+			if (acceptTask.Enabled && (Settings.BindCapacity == 0 || acceptTask.BoundCount < Settings.BindCapacity)) {
+				if (Start ()) {
+					this.acceptTask = acceptTask;
+					acceptTask.Bind (this);
+					return true;
+				}
 			}
+			return false;
 		}
 
 		public bool Start () {
 
 			// Don't allow the action to overlap itself
-			// if (Settings.Symbol == "construct_flower")
-				// Debug.Log ("???? "+ Enabled);
 			if (!Enabled || performing) return false;
 			performing = true;
 			perform = true;
@@ -94,9 +97,13 @@ namespace DNA.Tasks {
 					}
 				} else {
 					if (acceptTask.Enabled) {
-						if (!Start ()) SendOnCompleteMessage ();
+						if (!Start ()) {
+							SendOnCompleteMessage ();
+							acceptTask.Unbind (this);
+						}
 					} else {
 						SendOnCompleteMessage ();
+						acceptTask.Unbind (this);
 					}
 				}
 			} else {

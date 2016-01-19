@@ -15,12 +15,14 @@ public class ObjectPool {
 
 	MonoBehaviour prefab;
 
+	#if UNITY_EDITOR
 	[MenuItem ("Object Pool/Refresh Resources")]
 	static void RefreshResources () {
 		// TODO: for each asset in resources/prefabs, delete the asset and re-copy the asset in the project directory ONLY IF the asset exists in the project directory
 		// (right now this is just deleting all the prefabs so that they can be re-created at runtime)
 		PoolIOHandler.DeletePrefabsInResources ();
 	}
+	#endif
 
 	public void Init<T> (string id) where T : MonoBehaviour {
 		prefab = PoolIOHandler.LoadPrefab<T> (id);

@@ -87,6 +87,10 @@ namespace DNA.Tasks {
 			ActiveTasks.Clear ();
 		}
 
+		public bool Has (System.Type taskType) {
+			return tasks.ContainsKey (taskType);
+		}
+
 		/**
 		 *	Debugging
 		 */

@@ -426,8 +426,11 @@ namespace DNA.Units {
 			get { return visitorIndex; }
 			set { 
 				visitorIndex = value;
-				if (Idle)
-					OnArriveAtDestination (CurrentPoint, false);
+				// Debug.Log (visitorIndex);
+				if (Idle && visitorIndex > -1) {
+					// Debug.Log (gameObject);
+					// OnArriveAtDestination (CurrentPoint, false);
+				}
 			}
 		}
 		#endregion

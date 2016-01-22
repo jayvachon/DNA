@@ -7,6 +7,8 @@ namespace DNA {
 
 	public static class LoanManager {
 
+		public delegate void OnUpdateLoans ();
+
 		static float repaymentTime = 60f;
 
 		static Inventory inventory;
@@ -14,12 +16,19 @@ namespace DNA {
 			get {
 				if (inventory == null) {
 					inventory = new Inventory ();
-					inventory.Add (new MilkshakeLoanGroup (5));
-					inventory.Add (new CoffeeLoanGroup (5));
-					Coroutine.WaitForSeconds (repaymentTime, ElapseTime);
+					inventory.Add (new MilkshakeLoanGroup (5)).onUpdate += OnUpdate;
+					inventory.Add (new CoffeeLoanGroup (5)).onUpdate += OnUpdate;
+					Co.Start (repaymentTime, OnElapseTime, ElapseTime);
 				}
 				return inventory;
 			}
+		}
+
+		public static float Time { get; private set; }
+		public static OnUpdateLoans onUpdateLoans;
+
+		static void OnElapseTime (float t) {
+			Time = t;
 		}
 
 		static void ElapseTime () {
@@ -30,7 +39,12 @@ namespace DNA {
 				}
 			}
 
-			Coroutine.WaitForSeconds (repaymentTime, ElapseTime);
+			Co.Start (repaymentTime, OnElapseTime, ElapseTime);
+		}
+
+		static void OnUpdate () {
+			if (onUpdateLoans != null)
+				onUpdateLoans ();
 		}
 	}
 }

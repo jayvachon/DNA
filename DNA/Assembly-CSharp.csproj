@@ -85,6 +85,12 @@
      <Compile Include="Assets\Scripts\GUI\GuiManager.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiSelectableListener.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiTasks.cs" />
+     <Compile Include="Assets\Scripts\GUI\Loans\BorrowCoffeeButton.cs" />
+     <Compile Include="Assets\Scripts\GUI\Loans\BorrowLoanButton.cs" />
+     <Compile Include="Assets\Scripts\GUI\Loans\BorrowMilkshakesButton.cs" />
+     <Compile Include="Assets\Scripts\GUI\Loans\LoanRow.cs" />
+     <Compile Include="Assets\Scripts\GUI\Loans\MonthTimer.cs" />
+     <Compile Include="Assets\Scripts\GUI\UIElement.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />
      <Compile Include="Assets\Scripts\Input\ClickHandler.cs" />

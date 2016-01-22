@@ -710,15 +710,15 @@ namespace DNA.Models {
 
 			loans.Add (typeof (Loan<MilkshakeGroup>), new LoanSettings {
 				Symbol = "milkshake_loan",
-				Amount = 100,
-				InterestRate = 0.068f,
+				Amount = 250,
+				InterestRate = 0.0429f,
 				RepaymentLength = 12,
 				GracePeriod = 12
 			});
 
 			loans.Add (typeof (Loan<CoffeeGroup>), new LoanSettings {
 				Symbol = "coffee_loan",
-				Amount = 100,
+				Amount = 200,
 				InterestRate = 0.068f,
 				RepaymentLength = 12,
 				GracePeriod = 12

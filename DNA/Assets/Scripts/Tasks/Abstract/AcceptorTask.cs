@@ -6,8 +6,11 @@ namespace DNA.Tasks {
 
 	public abstract class AcceptorTask : Task {
 
+		public delegate void OnChangeBoundCount (int count);
+
 		public abstract System.Type AcceptedTask { get; }
 		public ITaskAcceptor Acceptor { get; set; }
+		public OnChangeBoundCount onChangeBoundCount;
 
 		List<PerformerTask> boundTasks = new List<PerformerTask> ();
 
@@ -17,14 +20,21 @@ namespace DNA.Tasks {
 
 		public void Bind (PerformerTask task) {
 			boundTasks.Add (task);
+			SendChangeBoundCountMessage ();
 		}
 
 		public void Unbind (PerformerTask task) {
 			try {
 				boundTasks.Remove (task);
+				SendChangeBoundCountMessage ();
 			} catch {
 				throw new System.Exception (task + " has not been bound to " + this + " and cannot be unbound");
 			}
+		}
+
+		void SendChangeBoundCountMessage () {
+			if (onChangeBoundCount != null)
+				onChangeBoundCount (BoundCount);
 		}
 	}
 }

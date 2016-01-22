@@ -8,6 +8,8 @@ namespace DNA {
 
 	public class Loan : Item {
 
+		public delegate void OnUpdate ();
+
 		public override string Name {
 			get { return "Loan"; }
 		}
@@ -25,21 +27,43 @@ namespace DNA {
 			}
 		}
 
+		public string Status {
+			get {
+				if (elapsedTime <= settings.GracePeriod) {
+					return "Grace: " + elapsedTime + "/" + settings.GracePeriod;
+				}
+				if (elapsedTime > settings.GracePeriod) {
+					return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.GracePeriod + settings.RepaymentLength);
+				}
+				return "Repaid";
+			}
+		}
+
+		public int Owed {
+			get { return Payment * settings.RepaymentLength - Mathf.Max (0, elapsedTime - settings.GracePeriod); }
+		}
+
 		protected LoanSettings settings;
 		protected int elapsedTime = 0;
+		public OnUpdate onUpdate;
 
 		public Loan () {}
 
 		public void AddTime () {
 			elapsedTime ++;
+			if (elapsedTime <= settings.GracePeriod) {
+				Debug.Log (elapsedTime + " / " + settings.GracePeriod);
+			}
 			if (elapsedTime > settings.GracePeriod) {
 				// TODO: handle negatives
 				Player.Instance.Inventory[Group.ID].Remove (Payment);				
-				Debug.Log ("repayment");
+				Debug.Log ("repayment: " + (elapsedTime-settings.GracePeriod) + " / " + (settings.GracePeriod + settings.RepaymentLength));
 			}
 			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {
 				Debug.Log ("Loan repaid");
 			}
+			if (onUpdate != null)
+				onUpdate ();
 		}
 	}
 

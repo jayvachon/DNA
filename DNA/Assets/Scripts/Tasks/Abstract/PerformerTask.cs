@@ -40,7 +40,7 @@ namespace DNA.Tasks {
 		protected TaskSettings settings;
 
 		bool perform = false;	 // should the task be performing?
-		bool performing = false; // is the task performing now?
+		bool performing = false; // is the task being performed?
 
 		public PerformerTask () {
 			settings = DataManager.GetTaskSettings (this.GetType ());
@@ -81,6 +81,8 @@ namespace DNA.Tasks {
 			performing = false;
 			perform = false;
 			Coroutine.Stop (SetProgress);
+			if (acceptTask != null)
+				acceptTask.Unbind (this);
 		}
 
 		void End () {

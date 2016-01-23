@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using InventorySystem;
 
 namespace DNA {
 
@@ -24,7 +25,10 @@ namespace DNA {
 		}
 
 		void OnUpdateLoan () {
-			GetChildComponent<Text> (1).text = loan.Status;
+			if (loan.Owed == 0 || loan.Status == Loan.LoanStatus.Defaulted) {
+				ObjectPool.Destroy<LoanRow> (this);
+			}
+			GetChildComponent<Text> (1).text = loan.StatusDetails;
 			GetChildComponent<Text> (2).text = loan.Owed.ToString ();
 			GetChildComponent<Text> (3).text = loan.Payment.ToString ();
 		}

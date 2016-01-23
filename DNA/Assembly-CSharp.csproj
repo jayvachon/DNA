@@ -88,8 +88,10 @@
      <Compile Include="Assets\Scripts\GUI\Loans\BorrowCoffeeButton.cs" />
      <Compile Include="Assets\Scripts\GUI\Loans\BorrowLoanButton.cs" />
      <Compile Include="Assets\Scripts\GUI\Loans\BorrowMilkshakesButton.cs" />
+     <Compile Include="Assets\Scripts\GUI\Loans\LoanList.cs" />
      <Compile Include="Assets\Scripts\GUI\Loans\LoanRow.cs" />
      <Compile Include="Assets\Scripts\GUI\Loans\MonthTimer.cs" />
+     <Compile Include="Assets\Scripts\GUI\Loans\MonthlyPaymentText.cs" />
      <Compile Include="Assets\Scripts\GUI\UIElement.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager.cs" />
      <Compile Include="Assets\Scripts\Health\HealthManager2.cs" />

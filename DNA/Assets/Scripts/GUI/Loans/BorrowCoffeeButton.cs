@@ -19,13 +19,6 @@ namespace DNA {
 
 		void OnEnable () {
 			SetText ("coffee", DataManager.GetLoanSettings (typeof (Loan<CoffeeGroup>)).Amount);
-			((CoffeeLoanGroup)LoanManager.Inventory["Coffee"]).onAdd += OnAddLoan;
-		}
-
-		void OnAddLoan (List<Loan<CoffeeGroup>> loan) {
-			LoanRow row = ObjectPool.Instantiate<LoanRow> ();
-			row.transform.SetParent (loanList);
-			row.Init ("Coffee", loan[0]);
 		}
 	}
 }

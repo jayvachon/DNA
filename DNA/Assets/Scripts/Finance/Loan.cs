@@ -27,54 +27,86 @@ namespace DNA {
 			}
 		}
 
-		public string Status {
+		public string StatusDetails {
 			get {
-				if (elapsedTime <= settings.GracePeriod) {
+				/*if (elapsedTime <= settings.GracePeriod) {
 					return "Grace: " + elapsedTime + "/" + settings.GracePeriod;
 				}
 				if (elapsedTime > settings.GracePeriod) {
 					return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.GracePeriod + settings.RepaymentLength);
+				}
+				return "Repaid";*/
+				switch (Status) {
+					case LoanStatus.Grace: return "Grace: " + elapsedTime + "/" + settings.GracePeriod;
+					case LoanStatus.Repayment: return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.GracePeriod + settings.RepaymentLength);
+					case LoanStatus.Late: return "Warning " + warningCount + "/" + warningMax;
 				}
 				return "Repaid";
 			}
 		}
 
 		public int Owed {
-			get { return Payment * settings.RepaymentLength - Mathf.Max (0, elapsedTime - settings.GracePeriod); }
+			get { return Payment * (settings.RepaymentLength - Mathf.Max (0, elapsedTime - settings.GracePeriod)); }
 		}
+
+		public ItemGroup PlayerItemGroup {
+			get { return Player.Instance.Inventory[Group.ID]; }
+		}
+
+		public enum LoanStatus { Grace, Repayment, Late, Defaulted }
+		public LoanStatus Status { get; private set; }
 
 		protected LoanSettings settings;
 		protected int elapsedTime = 0;
+		int warningCount = 0;
+		int warningMax = 3;
+
 		public OnUpdate onUpdate;
 
-		public Loan () {}
+		public Loan () {
+			Status = LoanStatus.Grace;
+			elapsedTime = 0;
+			warningCount = 0;
+			warningMax = 3;
+		}
 
 		public void AddTime () {
 			elapsedTime ++;
-			if (elapsedTime <= settings.GracePeriod) {
-				Debug.Log (elapsedTime + " / " + settings.GracePeriod);
-			}
 			if (elapsedTime > settings.GracePeriod) {
-				// TODO: handle negatives
-				Player.Instance.Inventory[Group.ID].Remove (Payment);				
-				Debug.Log ("repayment: " + (elapsedTime-settings.GracePeriod) + " / " + (settings.GracePeriod + settings.RepaymentLength));
+				if (PlayerItemGroup.Count < Payment) {
+					GiveWarning ();
+					elapsedTime --;
+				} else {
+					Status = LoanStatus.Repayment;
+					PlayerItemGroup.Remove (Payment);
+					Debug.Log ("repayment: " + (elapsedTime-settings.GracePeriod) + " / " + (settings.GracePeriod + settings.RepaymentLength));
+				}
 			}
 			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {
-				Debug.Log ("Loan repaid");
+				Coroutine.WaitForFixedUpdate (() => { Group.Remove (this); });
 			}
 			if (onUpdate != null)
 				onUpdate ();
 		}
+
+		void GiveWarning () {
+			if (warningCount < warningMax) {
+				warningCount ++;
+				Status = LoanStatus.Late;
+				// Debug.Log ("warning " + warningCount);
+			} else {
+				LoanManager.Defaulted = true;
+				Status = LoanStatus.Defaulted;
+				Coroutine.WaitForFixedUpdate (() => { Group.Remove (this); });
+				// Debug.Log ("default");
+			}
+		}
 	}
 
-	public class Loan<T> : Loan where T : ItemGroup, new () {
+	public class Loan<T> : Loan where T : ItemGroup {
 
-		T group;
-
-		public Loan () {
+		public Loan () : base () {
 			settings = DataManager.GetLoanSettings (this.GetType ());
-			group = new T () as T;
-			group.Capacity = settings.Amount;
 		}
 	}
 }

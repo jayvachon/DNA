@@ -7,7 +7,7 @@ namespace DNA.Tasks {
 	public class BorrowLoan<T> : InventoryTask<T> where T : ItemGroup {
 
 		public override bool Enabled {
-			get { return !Group.Full; }
+			get { return !Group.Full && !LoanManager.Defaulted; }
 		}
 
 		protected override Inventory Inventory {

@@ -24,6 +24,12 @@ namespace DNA {
 			}
 		}
 
+		static bool defaulted = false;
+		public static bool Defaulted {
+			get { return defaulted; }
+			set { defaulted = value; }
+		}
+
 		public static float Time { get; private set; }
 		public static OnUpdateLoans onUpdateLoans;
 

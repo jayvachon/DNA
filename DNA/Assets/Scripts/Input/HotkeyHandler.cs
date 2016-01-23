@@ -115,11 +115,16 @@ namespace DNA {
 			new Hotkey (KeyCode.C, () => {
 				TaskPen.Remove ();
 				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<CollectionCenter>)]);
-			})/*,
-			new Hotkey (KeyCode.X, () => {
-				TaskPen.Remove ();
-				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<Clinic>)]);
-			})*/
+			})
+			#if UNITY_EDITOR
+			,
+			new Hotkey (KeyCode.Equals, () => {
+				Player.Instance.Inventory["Coffee"].Add (200);
+			}),
+			new Hotkey (KeyCode.Minus, () => {
+				Player.Instance.Inventory["Milkshakes"].Add (200);
+			})
+			#endif
 		};
 
 		void Update () {

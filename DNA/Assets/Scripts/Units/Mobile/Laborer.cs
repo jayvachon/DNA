@@ -74,7 +74,7 @@ namespace DNA.Units {
 		}
 
 		protected override void OnChangeUnit<Unit> (Unit u) {
-			Elder e = u as Elder;
+			/*Elder e = u as Elder;
 			if (e != null) {
 				GridPoint startPoint = CurrentPoint;
 				if (startPoint == null) {
@@ -82,7 +82,7 @@ namespace DNA.Units {
 					startPoint = c.Connection.Points[0];
 				}
 				e.SetStartPoint (startPoint, false);
-			}
+			}*/
 		}
 	}
 }

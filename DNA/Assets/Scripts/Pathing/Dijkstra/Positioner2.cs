@@ -172,7 +172,11 @@ namespace DNA.Paths {
 			}
 
 			public GridPoint CurrentPoint {
-				get { return path[pathPosition]; }
+				get { 
+					if (path == null || path.Count == 0)
+						return endPoint;
+					return path[pathPosition]; 
+				}
 			}
 
 			public void SetDestination (GridPoint point) {
@@ -182,7 +186,7 @@ namespace DNA.Paths {
 
 			public Vector3[] NextTrajectory () {
 
-				if (path.Count == 0 || pathPosition == path.Count-1)
+				if (path == null || path.Count == 0 || pathPosition == path.Count-1)
 					return null;
 
 				Vector3 origin = path[pathPosition].Position;
@@ -276,7 +280,9 @@ namespace DNA.Paths {
 		}
 
 		public void RotateAroundPoint (float time) {
-			movement.FullRotation (time, path.CurrentPoint.Position);
+			movement.FullRotation (time, (path.CurrentPoint == null)
+				? Destination.Position
+				: path.CurrentPoint.Position);
 		}
 
 		bool StartMove () {
@@ -297,13 +303,15 @@ namespace DNA.Paths {
 		}
 
 		void OnStartRotation () {
-			if (onEnterPoint != null)
+			if (onEnterPoint != null) {
 				onEnterPoint (path.PreviousPoint);
+			}
 		}
 
 		void OnEndRotation () {
-			if (onExitPoint != null)
+			if (onExitPoint != null) {
 				onExitPoint (path.CurrentPoint);
+			}
 		}
 	}
 }

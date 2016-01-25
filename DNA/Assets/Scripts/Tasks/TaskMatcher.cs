@@ -52,7 +52,11 @@ namespace DNA.Tasks {
 		}
 
 		public static List<PerformerTask> GetEnabled (ITaskPerformer performer, ITaskAcceptor acceptor) {
-			return GetMatching (performer.PerformableTasks.EnabledTasks, acceptor.AcceptableTasks.EnabledTasks);
+			try {
+				return GetMatching (performer.PerformableTasks.EnabledTasks, acceptor.AcceptableTasks.EnabledTasks);
+			} catch {
+				throw new System.Exception ("The ITaskPerformer " + performer + " or ITaskAcceptor " + acceptor + " is null");
+			}
 		}
 
 		public static AcceptorTask GetPair (PerformerTask task, DNA.Paths.PathElement acceptor, bool mustBeEnabled=true) {
@@ -144,7 +148,7 @@ namespace DNA.Tasks {
 			Acceptor = acceptor;
 		}
 
-		public bool Start (bool ignorePair=false) {
+		public TaskStartResult Start (bool ignorePair=false) {
 			if (!ignorePair && NeedsPair) // TODO: this check might be excessive
 				throw new System.Exception ("The task " + Match + " is unpaired and will not start.");
 			if (Acceptor != null) {

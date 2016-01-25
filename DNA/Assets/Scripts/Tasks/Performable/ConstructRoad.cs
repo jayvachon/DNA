@@ -8,9 +8,15 @@ using InventorySystem;
 
 namespace DNA.Tasks {
 
-	public class ConstructRoad : CostTask, IConstructable {
+	public class ConstructRoad : ConstructUnit, IConstructable {
 
-		public PathElementContainer ElementContainer { get; set; }
+		public override bool CanConstruct (PathElement element) {
+			Connection c = (Connection)element;
+			return CanAfford 
+				&& c.State == DevelopmentState.Undeveloped 
+				&& c.Cost > 0 
+				&& System.Array.Find (c.Points, x => x.HasRoad || x.HasRoadConstruction) != null;
+		}
 
 		protected override void OnEnd () {
 			Purchase ();
@@ -20,14 +26,6 @@ namespace DNA.Tasks {
 				site.LaborCost = TotalCost;
 			}
 			base.OnEnd ();
-		}
-
-		public bool CanConstruct (PathElement element) {
-			Connection c = (Connection)element;
-			return CanAfford 
-				&& c.State == DevelopmentState.Undeveloped 
-				&& c.Cost > 0 
-				&& System.Array.Find (c.Points, x => x.HasRoad || x.HasRoadConstruction) != null;
 		}
 	}
 }

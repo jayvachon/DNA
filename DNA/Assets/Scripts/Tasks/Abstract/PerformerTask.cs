@@ -6,9 +6,11 @@ using DNA.Models;
 
 namespace DNA.Tasks {
 
+	public enum TaskStartResult { Success, Wait, Disabled, Null }
 	public delegate void OnStart (PerformerTask task);
 	public delegate void OnEnd (PerformerTask task);
 	public delegate void OnComplete (PerformerTask task);
+	public delegate void OnEndWait (PerformerTask task, bool performing);
 
 	public abstract class PerformerTask : Task {
 
@@ -36,8 +38,10 @@ namespace DNA.Tasks {
 		public OnStart onStart;
 		public OnEnd onEnd;
 		public OnComplete onComplete;
-		protected AcceptorTask acceptTask;
+		public OnEndWait onEndWait;
+
 		protected TaskSettings settings;
+		protected AcceptorTask acceptTask;
 
 		bool perform = false;	 // should the task be performing?
 		bool performing = false; // is the task being performed?
@@ -48,21 +52,37 @@ namespace DNA.Tasks {
 				throw new System.Exception (this.GetType () + " is marked as repeating with a duration of 0. This will cause the game to hang.");
 		}
 
-		public bool Start (AcceptorTask acceptTask) {
-			if (acceptTask.Enabled && (Settings.BindCapacity == 0 || acceptTask.BoundCount < Settings.BindCapacity)) {
+		public TaskStartResult Start (AcceptorTask acceptTask) {
+			/*if (acceptTask.Enabled && (Settings.BindCapacity == 0 || acceptTask.BoundCount < Settings.BindCapacity)) {
 				if (Start ()) {
 					this.acceptTask = acceptTask;
 					acceptTask.Bind (this);
 					return true;
 				}
 			}
-			return false;
+			return false;*/
+			if (!acceptTask.Enabled) {
+				return TaskStartResult.Disabled;
+			}
+
+			this.acceptTask = acceptTask;
+
+			if (Settings.BindCapacity > 0 && acceptTask.BoundCount >= Settings.BindCapacity) {
+				acceptTask.onChangeBoundCount += OnChangeBoundCount;
+				return TaskStartResult.Wait;
+			}
+
+			TaskStartResult result = Start ();
+			if (result == TaskStartResult.Success) {
+				acceptTask.Bind (this);
+			}
+			return result;
 		}
 
-		public bool Start () {
+		public TaskStartResult Start () {
 
 			// Don't allow the action to overlap itself
-			if (!Enabled || performing) return false;
+			if (!Enabled || performing) return TaskStartResult.Disabled;
 			performing = true;
 			perform = true;
 
@@ -74,7 +94,7 @@ namespace DNA.Tasks {
 			Coroutine.Start (settings.Duration, SetProgress, End);
 			#endif
 
-			return true;
+			return TaskStartResult.Success;
 		}
 
 		public void Stop () {
@@ -85,13 +105,18 @@ namespace DNA.Tasks {
 				acceptTask.Unbind (this);
 		}
 
+		public void CancelWait () {
+			onEndWait = null;
+			acceptTask.onChangeBoundCount -= OnChangeBoundCount;
+		}
+
 		void End () {
 			Log ("End", true);
 			performing = false;
 			OnEnd ();
 			if (settings.Repeat && perform) {
 				if (acceptTask == null) {
-					if (!Start ()) {
+					if (Start () != TaskStartResult.Success) {
 						SendOnCompleteMessage ();
 						if (settings.Repeat && settings.AutoStart) {
 							StartOnEnable ();
@@ -99,7 +124,7 @@ namespace DNA.Tasks {
 					}
 				} else {
 					if (acceptTask.Enabled) {
-						if (!Start ()) {
+						if (Start () != TaskStartResult.Success) {
 							SendOnCompleteMessage ();
 							acceptTask.Unbind (this);
 						}
@@ -127,7 +152,7 @@ namespace DNA.Tasks {
 				Coroutine.WaitForSeconds (time, () => {
 					if (!perform)
 						return;
-					if (!Start ()) {
+					if (Start () != TaskStartResult.Success) {
 						StartOnEnable ();
 					}
 				});
@@ -144,6 +169,19 @@ namespace DNA.Tasks {
 
 		void SendOnCompleteMessage () {
 			if (onComplete != null) onComplete (this);
+		}
+
+		void OnChangeBoundCount (int boundCount) {
+			TaskStartResult result = Start (acceptTask);
+			if (result != TaskStartResult.Wait) {
+				acceptTask.onChangeBoundCount -= OnChangeBoundCount;
+				SendEndWaitMessage (result == TaskStartResult.Success);
+			}
+		}
+
+		void SendEndWaitMessage (bool performing) {
+			if (onEndWait != null)
+				onEndWait (this, performing);
 		}
 
 		void Log (string message, bool printType) {

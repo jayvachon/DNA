@@ -7,7 +7,7 @@ namespace DNA {
 
 	public class LoanList : UIElement {
 
-		void OnEnable () {
+		void Awake () {
 			((CoffeeLoanGroup)LoanManager.Inventory["Coffee"]).onAdd += OnAddCoffeeLoan;
 			((MilkshakeLoanGroup)LoanManager.Inventory["Milkshakes"]).onAdd += OnAddMilkshakeLoan;
 		}

@@ -24,12 +24,16 @@ namespace DNA.Tasks {
 		}
 
 		public void Unbind (PerformerTask task) {
-			try {
+			if (boundTasks.Contains (task)) {
+				boundTasks.Remove (task);
+				SendChangeBoundCountMessage ();
+			}
+			/*try {
 				boundTasks.Remove (task);
 				SendChangeBoundCountMessage ();
 			} catch {
 				throw new System.Exception (task + " has not been bound to " + this + " and cannot be unbound");
-			}
+			}*/
 		}
 
 		void SendChangeBoundCountMessage () {

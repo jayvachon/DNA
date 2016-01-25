@@ -29,13 +29,6 @@ namespace DNA {
 
 		public string StatusDetails {
 			get {
-				/*if (elapsedTime <= settings.GracePeriod) {
-					return "Grace: " + elapsedTime + "/" + settings.GracePeriod;
-				}
-				if (elapsedTime > settings.GracePeriod) {
-					return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.GracePeriod + settings.RepaymentLength);
-				}
-				return "Repaid";*/
 				switch (Status) {
 					case LoanStatus.Grace: return "Grace: " + elapsedTime + "/" + settings.GracePeriod;
 					case LoanStatus.Repayment: return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.GracePeriod + settings.RepaymentLength);
@@ -93,12 +86,10 @@ namespace DNA {
 			if (warningCount < warningMax) {
 				warningCount ++;
 				Status = LoanStatus.Late;
-				// Debug.Log ("warning " + warningCount);
 			} else {
 				LoanManager.Defaulted = true;
 				Status = LoanStatus.Defaulted;
 				Coroutine.WaitForFixedUpdate (() => { Group.Remove (this); });
-				// Debug.Log ("default");
 			}
 		}
 	}

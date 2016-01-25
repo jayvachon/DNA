@@ -10,11 +10,11 @@ namespace DNA.Paths {
 		public PathElement Element { get; set; }
 
 		void Awake () {
-			GetComponent<Renderer> ().SetColor (Palette.Black);
+			GetComponent<Renderer> ().SetColor (Palette.Grey);
 		}
 
 		public void Init (float length) {
-			MyTransform.localScale = new Vector3 (0.1f, 0.1f, length);
+			MyTransform.localScale = new Vector3 (0.35f, 0.1f, length);
 		}
 	}
 }

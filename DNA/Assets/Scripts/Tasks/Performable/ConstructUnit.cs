@@ -13,7 +13,7 @@ namespace DNA.Tasks {
 
 		public ConstructUnit (Inventory inventory=null) : base (inventory) {}
 
-		public bool CanConstruct (PathElement element) {
+		public virtual bool CanConstruct (PathElement element) {
 			// TODO: will need to change this to work with ConstructRoad			
 			if (element is Connection)
 				return false;

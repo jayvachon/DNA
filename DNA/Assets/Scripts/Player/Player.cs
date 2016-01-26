@@ -30,6 +30,7 @@ namespace DNA {
 					Inventory.Add (new CoffeeGroup ());
 					Inventory.Add (new YearGroup ());
 					Inventory.Add (new LaborGroup ());
+					Inventory.Add (new LaborerGroup (3));
 				}
 				return inventory;
 			}
@@ -48,6 +49,7 @@ namespace DNA {
 					performableTasks.Add (new ConstructUnit<Flower> ());
 					performableTasks.Add (new ConstructUnit<MilkshakePool> ());
 					performableTasks.Add (new ConstructUnit<University> ());
+					performableTasks.Add (new ConstructUnit<House> ());
 					// performableTasks.Add (new ConstructUnit<Clinic> ());
 					performableTasks.Add (new ConstructUnit<CollectionCenter> ());
 				}

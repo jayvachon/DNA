@@ -66,7 +66,9 @@ public class GuiTasks : GuiSelectableListener {
 	}
 
 	void DisableButtons () {
-		foreach (TaskButton button in buttons)
-			button.gameObject.SetActive (false);
+		foreach (TaskButton button in buttons) {
+			if (button != null)
+				button.gameObject.SetActive (false);
+		}
 	}
 }

@@ -20,7 +20,8 @@ namespace DNA.Units {
 						{ "university", "UniversityRenderer" },
 						{ "road", "RoadRenderer" },
 						{ "plot", "PlotRenderer" },
-						{ "drillable", "DrillablePlotRenderer" }
+						{ "drillable", "DrillablePlotRenderer" },
+						{ "house", "HouseRenderer" }
 					};
 				}
 				return renderers;
@@ -32,6 +33,8 @@ namespace DNA.Units {
 			if (Renderers.TryGetValue (key, out r)) {
 				return r;
 			}
+			// TODO: should throw this exception, but right now something weird is happening with construction sites not needing a unit renderer
+			// throw new System.Exception ("No UnitRenderer exists for the key " + key);
 			return "";
 		}
 

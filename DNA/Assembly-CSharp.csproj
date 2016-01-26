@@ -120,6 +120,7 @@
      <Compile Include="Assets\Scripts\Inventory\new\Group\HappinessGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\HealthGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\LaborGroup.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Group\LaborerGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\MilkshakeGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Group\YearGroup.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\IInventoryHolder.cs" />
@@ -130,6 +131,7 @@
      <Compile Include="Assets\Scripts\Inventory\new\Items\HappinessItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\HealthItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\LaborItem.cs" />
+     <Compile Include="Assets\Scripts\Inventory\new\Items\LaborerItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\MilkshakeItem.cs" />
      <Compile Include="Assets\Scripts\Inventory\new\Items\YearItem.cs" />
      <Compile Include="Assets\Scripts\Levee\Levee.cs" />
@@ -230,6 +232,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\DeliverItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\FleeTree.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateItem.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\GenerateLaborer.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\IConstructable.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ResearchUnit.cs" />
@@ -290,6 +293,7 @@
      <Compile Include="Assets\Scripts\Units\Components\Renderers\DrillablePlotRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\FlowerRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\GivingTreeRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\HouseRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\PlotRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\RoadRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UnitRenderer.cs" />
@@ -320,6 +324,7 @@
      <Compile Include="Assets\Scripts\Units\Static\Flower.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeRipe.cs" />
      <Compile Include="Assets\Scripts\Units\Static\GivingTreeUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\House.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Jacuzzi.cs" />
      <Compile Include="Assets\Scripts\Units\Static\MilkshakePool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />

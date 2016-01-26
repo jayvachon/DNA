@@ -49,12 +49,15 @@ namespace DNA.Units {
 			Inventory["Happiness"].Fill ();
 			RefreshInfoContent ();
 			PerformableTasks[typeof (GenerateItem<YearGroup>)].Start ();
+			Player.Instance.Inventory["Laborer"].Add ();
 			base.OnEnable ();
 		}
 
 		protected override void OnDisable () {
 			base.OnDisable ();
 			PerformableTasks[typeof (GenerateItem<YearGroup>)].Stop ();
+			if (Player.Instance != null)
+				Player.Instance.Inventory["Laborer"].Remove ();
 		}
 
 		void OnRetirement () {

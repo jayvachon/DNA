@@ -174,6 +174,14 @@ namespace DNA.Models {
 				Emissions = 0f,
 				TakesDamage = false
 			});
+
+			units.Add (typeof (House), new UnitSettings {
+				Symbol = "house",
+				Title = "House",
+				Description = "Houses increase the amount of laborers you can birth",
+				Emissions = 0.1f,
+				TakesDamage = true
+			});
 		}
 	}
 
@@ -327,6 +335,19 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
+			tasks.Add (typeof (ConstructUnit<House>), new CostTaskSettings {
+				Symbol = "construct_house",
+				Title = "Birth House",
+				Description = "Creates a new house so that more laborer can be birthed",
+				Duration = 0f,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 20 }
+					}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
+			});
+
 			/**
 			 *	Consume
 			 */
@@ -407,7 +428,7 @@ namespace DNA.Models {
 			 *	GenerateUnit
 			 */
 
-			tasks.Add (typeof (GenerateUnit<Laborer>), new CostTaskSettings {
+			tasks.Add (typeof (GenerateLaborer), new CostTaskSettings {
 				Symbol = "generate_laborer",
 				Title = "Birth Laborer",
 				Description = "Creates a new laborer",

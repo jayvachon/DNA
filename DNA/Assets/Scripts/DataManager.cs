@@ -25,6 +25,14 @@ namespace DNA {
 			}
 		}
 
+		public static TaskSettings GetPerformerPairSettings (System.Type taskType) {
+			try {
+				return Data.TasksSettings.Tasks.FirstOrDefault (x => x.Value.Pair == taskType).Value;
+			} catch {
+				throw new System.Exception ("No model could be found for the pair of '" + taskType + "'");
+			}
+		}
+
 		public static UnitSettings GetUnitSettings (System.Type unitType) {
 			try {
 				return Data.UnitsSettings[unitType];

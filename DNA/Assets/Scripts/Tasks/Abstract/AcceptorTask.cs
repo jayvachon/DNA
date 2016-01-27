@@ -10,29 +10,69 @@ namespace DNA.Tasks {
 
 		public abstract System.Type AcceptedTask { get; }
 		public ITaskAcceptor Acceptor { get; set; }
-		public OnChangeBoundCount onChangeBoundCount;
 
-		List<PerformerTask> boundTasks = new List<PerformerTask> ();
-
-		public int BoundCount {
-			get { return boundTasks.Count; }
-		}
-
-		public void Bind (PerformerTask task) {
-			boundTasks.Add (task);
-			SendChangeBoundCountMessage ();
-		}
-
-		public void Unbind (PerformerTask task) {
-			if (boundTasks.Contains (task)) {
-				boundTasks.Remove (task);
-				SendChangeBoundCountMessage ();
+		BindingHandler binder;
+		public BindingHandler Binder {
+			get {
+				if (binder == null) {
+					binder = new BindingHandler (this);
+				}
+				return binder;
 			}
 		}
 
-		void SendChangeBoundCountMessage () {
-			if (onChangeBoundCount != null)
-				onChangeBoundCount (BoundCount);
+		public class BindingHandler {
+
+			List<PerformerTask> active = new List<PerformerTask> ();
+			Queue<PerformerTask> queued = new Queue<PerformerTask> ();
+			// int bindLimit = 1;
+			AcceptorTask task;
+
+			public BindingHandler (AcceptorTask task) {
+				this.task = task;
+				// TODO: would probably be better to have this set initially				
+				// bindLimit = DataManager.GetPerformerPairSettings (task.GetType ()).BindCapacity;
+			}
+
+			public void Add (PerformerTask task, int bindLimit) {
+
+				// Ignore if no BindLimit has been set	
+				if (bindLimit == 0) {
+					task.OnBind ();
+					return;
+				}
+
+				if (active.Count < bindLimit) {
+					Bind (task);
+				} else {
+					queued.Enqueue (task);
+					task.OnQueue ();
+				}
+			}
+
+			public void Remove (PerformerTask task, int bindLimit) {
+
+				// Ignore if no BindLimit has been set
+				if (bindLimit == 0) {
+					return;
+				}
+				
+				try {
+					active.Remove (task);
+				} catch {
+					throw new System.Exception ("The PerformerTask '" + task + "' has not been bound to the AcceptorTask '" + task + "'");
+				}
+
+				if (queued.Count > 0) {
+					PerformerTask newTask = queued.Dequeue ();
+					Add (newTask, bindLimit);
+				}
+			}
+
+			void Bind (PerformerTask task) {
+				active.Add (task);
+				task.OnBind ();
+			}
 		}
 	}
 }

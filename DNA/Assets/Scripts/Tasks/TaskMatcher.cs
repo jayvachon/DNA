@@ -148,7 +148,7 @@ namespace DNA.Tasks {
 			Acceptor = acceptor;
 		}
 
-		public TaskStartResult Start (bool ignorePair=false) {
+		public bool Start (bool ignorePair=false) {
 			if (!ignorePair && NeedsPair) // TODO: this check might be excessive
 				throw new System.Exception ("The task " + Match + " is unpaired and will not start.");
 			if (Acceptor != null) {

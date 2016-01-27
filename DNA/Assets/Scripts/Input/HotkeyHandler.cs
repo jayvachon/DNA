@@ -90,7 +90,7 @@ namespace DNA {
 			}),
 			new Hotkey (KeyCode.L, () => {
 				GivingTreeUnit tree = ObjectPool.GetActiveObjects<GivingTreeUnit> ()[0];
-				tree.PerformableTasks[typeof (GenerateUnit<Laborer>)].Start ();
+				tree.PerformableTasks[typeof (GenerateLaborer)].Start ();
 			}),
 			new Hotkey (KeyCode.Escape, () => {
 				SelectionHandler.Clear ();

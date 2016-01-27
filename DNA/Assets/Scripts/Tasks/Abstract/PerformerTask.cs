@@ -6,11 +6,14 @@ using DNA.Models;
 
 namespace DNA.Tasks {
 
-	public enum TaskStartResult { Success, Wait, Disabled, Null }
+	public enum TaskState { Idle, Performing, Queued }
+
 	public delegate void OnStart (PerformerTask task);
 	public delegate void OnEnd (PerformerTask task);
 	public delegate void OnComplete (PerformerTask task);
 	public delegate void OnEndWait (PerformerTask task, bool performing);
+
+	public delegate void OnChangeTaskState (TaskState state);
 
 	public abstract class PerformerTask : Task {
 
@@ -29,6 +32,16 @@ namespace DNA.Tasks {
 			get { return settings; }
 		}
 
+		TaskState state = TaskState.Idle;
+		public TaskState State {
+			get { return state; }
+			private set {
+				state = value;
+				if (onChangeState != null)
+					onChangeState (state);
+			}
+		}
+
 		// For testing (?)
 		public bool Performing {
 			get { return performing; }
@@ -39,6 +52,7 @@ namespace DNA.Tasks {
 		public OnEnd onEnd;
 		public OnComplete onComplete;
 		public OnEndWait onEndWait;
+		public OnChangeTaskState onChangeState;
 
 		protected TaskSettings settings;
 		protected AcceptorTask acceptTask;
@@ -52,37 +66,33 @@ namespace DNA.Tasks {
 				throw new System.Exception (this.GetType () + " is marked as repeating with a duration of 0. This will cause the game to hang.");
 		}
 
-		public TaskStartResult Start (AcceptorTask acceptTask) {
-			/*if (acceptTask.Enabled && (Settings.BindCapacity == 0 || acceptTask.BoundCount < Settings.BindCapacity)) {
-				if (Start ()) {
-					this.acceptTask = acceptTask;
-					acceptTask.Bind (this);
-					return true;
-				}
+		public void OnBind () {
+			if (Start ()) {
+				State = TaskState.Performing;
+			} else {
+				State = TaskState.Idle;
 			}
-			return false;*/
-			if (!acceptTask.Enabled) {
-				return TaskStartResult.Disabled;
+		}
+
+		public void OnQueue () {
+			State = TaskState.Queued;
+		}
+
+		public bool Start (AcceptorTask acceptTask) {
+			
+			if (!Enabled || !acceptTask.Enabled) {
+				return false;
 			}
 
 			this.acceptTask = acceptTask;
-
-			if (Settings.BindCapacity > 0 && acceptTask.BoundCount >= Settings.BindCapacity) {
-				acceptTask.onChangeBoundCount += OnChangeBoundCount;
-				return TaskStartResult.Wait;
-			}
-
-			TaskStartResult result = Start ();
-			if (result == TaskStartResult.Success) {
-				acceptTask.Bind (this);
-			}
-			return result;
+			acceptTask.Binder.Add (this, settings.BindCapacity);
+			return true;
 		}
 
-		public TaskStartResult Start () {
+		public bool Start () {
 
 			// Don't allow the action to overlap itself
-			if (!Enabled || performing) return TaskStartResult.Disabled;
+			if (!Enabled || performing) return false;
 			performing = true;
 			perform = true;
 
@@ -94,20 +104,16 @@ namespace DNA.Tasks {
 			Coroutine.Start (settings.Duration, SetProgress, End);
 			#endif
 
-			return TaskStartResult.Success;
+			return true;
 		}
 
 		public void Stop () {
+			State = TaskState.Idle;
 			performing = false;
 			perform = false;
 			Coroutine.Stop (SetProgress);
 			if (acceptTask != null)
-				acceptTask.Unbind (this);
-		}
-
-		public void CancelWait () {
-			onEndWait = null;
-			acceptTask.onChangeBoundCount -= OnChangeBoundCount;
+				acceptTask.Binder.Remove (this, settings.BindCapacity);
 		}
 
 		void End () {
@@ -116,7 +122,7 @@ namespace DNA.Tasks {
 			OnEnd ();
 			if (settings.Repeat && perform) {
 				if (acceptTask == null) {
-					if (Start () != TaskStartResult.Success) {
+					if (!Start ()) {
 						SendOnCompleteMessage ();
 						if (settings.Repeat && settings.AutoStart) {
 							StartOnEnable ();
@@ -124,13 +130,11 @@ namespace DNA.Tasks {
 					}
 				} else {
 					if (acceptTask.Enabled) {
-						if (Start () != TaskStartResult.Success) {
+						if (!Start ()) {
 							SendOnCompleteMessage ();
-							acceptTask.Unbind (this);
 						}
 					} else {
 						SendOnCompleteMessage ();
-						acceptTask.Unbind (this);
 					}
 				}
 			} else {
@@ -152,7 +156,7 @@ namespace DNA.Tasks {
 				Coroutine.WaitForSeconds (time, () => {
 					if (!perform)
 						return;
-					if (Start () != TaskStartResult.Success) {
+					if (!Start ()) {
 						StartOnEnable ();
 					}
 				});
@@ -168,15 +172,10 @@ namespace DNA.Tasks {
 		}
 
 		void SendOnCompleteMessage () {
+			State = TaskState.Idle;
+			if (acceptTask != null)
+				acceptTask.Binder.Remove (this, settings.BindCapacity);
 			if (onComplete != null) onComplete (this);
-		}
-
-		void OnChangeBoundCount (int boundCount) {
-			TaskStartResult result = Start (acceptTask);
-			if (result != TaskStartResult.Wait) {
-				acceptTask.onChangeBoundCount -= OnChangeBoundCount;
-				SendEndWaitMessage (result == TaskStartResult.Success);
-			}
 		}
 
 		void SendEndWaitMessage (bool performing) {

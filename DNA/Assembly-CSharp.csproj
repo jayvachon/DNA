@@ -221,6 +221,7 @@
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskAcceptor.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskBinder.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskPerformer.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskRateSetter.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\AcceptableTasks.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\PerformableTasks.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\TaskList.cs" />
@@ -289,11 +290,13 @@
      <Compile Include="Assets\Scripts\Units\Components\Renderers\ClinicRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\CoffeePlantRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\CollectionCenterRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\ConstructionSiteRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\DerrickRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\DrillablePlotRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\FlowerRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\GivingTreeRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\HouseRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\LaborerRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\PlotRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\RoadRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UnitRenderer.cs" />

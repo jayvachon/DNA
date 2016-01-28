@@ -248,7 +248,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (CollectItem<HappinessGroup>), new TaskSettings {
 				Symbol = "collect_happiness",
-				Duration = 0.5f,
+				Duration = 0.33f,
 				AutoStart = false,
 				Repeat = true
 			});
@@ -556,44 +556,20 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Coffee", 5 },
-						{ "Milkshakes", 20 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 10 },
-						{ "Milkshakes", 25 }
-					},
-					new Dictionary<string, int> {
 						{ "Coffee", 15 },
 						{ "Milkshakes", 30 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 25 },
-						{ "Milkshakes", 45 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 35 },
+						{ "Coffee", 30 },
 						{ "Milkshakes", 60 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 50 },
-						{ "Milkshakes", 80 }
+						{ "Coffee", 90 },
+						{ "Milkshakes", 180 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 75 },
-						{ "Milkshakes", 120 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 100 },
-						{ "Milkshakes", 150 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 150 },
-						{ "Milkshakes", 175 }
-					},
-					new Dictionary<string, int> {
-						{ "Coffee", 250 },
-						{ "Milkshakes", 200 }
+						{ "Coffee", 270 },
+						{ "Milkshakes", 360 }
 					}
 				}
 			});
@@ -732,7 +708,7 @@ namespace DNA.Models {
 			loans.Add (typeof (Loan<MilkshakeGroup>), new LoanSettings {
 				Symbol = "milkshake_loan",
 				Amount = 150,
-				InterestRate = 0.068f,
+				InterestRate = 0.08f,
 				RepaymentLength = 8,
 				GracePeriod = 12
 			});
@@ -740,7 +716,7 @@ namespace DNA.Models {
 			loans.Add (typeof (Loan<CoffeeGroup>), new LoanSettings {
 				Symbol = "coffee_loan",
 				Amount = 100,
-				InterestRate = 0.068f,
+				InterestRate = 0.08f,
 				RepaymentLength = 8,
 				GracePeriod = 12
 			});

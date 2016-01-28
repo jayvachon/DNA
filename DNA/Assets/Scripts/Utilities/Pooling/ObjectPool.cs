@@ -59,7 +59,11 @@ public class ObjectPool {
 		if (inactive.Count > 0) {
 			m = inactive.Pop ();
 		} else {
-			m = MonoBehaviour.Instantiate (prefab) as MonoBehaviour;
+			try {
+				m = MonoBehaviour.Instantiate (prefab) as MonoBehaviour;
+			} catch {
+				throw new System.Exception ("Could not find a prefab of type " + prefab);
+			}
 		}
 
 		active.Add (m);

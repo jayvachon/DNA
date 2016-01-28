@@ -142,14 +142,20 @@ namespace DNA.Units {
 
 		public virtual void OnSelect () {
 			Selected = true;
-			unitRenderer.OnSelect ();
-			unitTransform.OnSelect ();
+			// TODO: entirely remove renderer and transform			
+			if (unitRenderer != null)
+				unitRenderer.OnSelect ();
+			if (unitTransform != null)
+				unitTransform.OnSelect ();
 		}
 
 		public virtual void OnUnselect () {
 			Selected = false;
-			unitRenderer.OnUnselect ();
-			unitTransform.OnUnselect ();
+			// TODO: entirely remove renderer and transform			
+			if (unitRenderer != null)
+				unitRenderer.OnUnselect ();
+			if (unitTransform != null)
+				unitTransform.OnUnselect ();
 		}
 		#endregion
 	}

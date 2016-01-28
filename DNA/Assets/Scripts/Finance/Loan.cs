@@ -31,7 +31,11 @@ namespace DNA {
 			get {
 				switch (Status) {
 					case LoanStatus.Grace: return "Grace: " + elapsedTime + "/" + settings.GracePeriod;
-					case LoanStatus.Repayment: return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.GracePeriod + settings.RepaymentLength);
+					case LoanStatus.Repayment: 
+						return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.RepaymentLength) + 
+							((warningCount > 0)
+							? "\nWarnings: " + warningCount + "/" + warningMax
+							: "");
 					case LoanStatus.Late: return "Warning " + warningCount + "/" + warningMax;
 				}
 				return "Repaid";
@@ -72,7 +76,6 @@ namespace DNA {
 				} else {
 					Status = LoanStatus.Repayment;
 					PlayerItemGroup.Remove (Payment);
-					Debug.Log ("repayment: " + (elapsedTime-settings.GracePeriod) + " / " + (settings.GracePeriod + settings.RepaymentLength));
 				}
 			}
 			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {

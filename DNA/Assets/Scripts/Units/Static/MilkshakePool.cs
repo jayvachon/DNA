@@ -1,4 +1,4 @@
-﻿#define NEVER_EMPTY
+﻿#undef NEVER_EMPTY
 using UnityEngine;
 using System.Collections;
 using DNA.Tasks;
@@ -24,7 +24,7 @@ namespace DNA.Units {
 		}
 
 		protected override void OnSetFertility (int tier) {
-			Inventory["Milkshakes"].Capacity = (int)(200 * Fertility.Multipliers[tier]);
+			Inventory["Milkshakes"].Capacity = (int)(1000 * Fertility.Multipliers[tier]);
 			Inventory["Milkshakes"].Fill ();
 		}
 

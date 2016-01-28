@@ -134,6 +134,7 @@ namespace DNA.Units {
 
 		void OnArriveAtDestination (GridPoint point) {
 			
+			MyState = State.Idle;
 			PathElement destination = TaskSelector.OnArrive (assignedElement);
 			
 			if (destination != null) {
@@ -173,7 +174,7 @@ namespace DNA.Units {
 		class TaskSelection {
 
 			public float PerformTime {
-				get { return currentMatch.Match.Settings.Duration * currentMatch.GetPerformCount (); }
+				get { return currentMatch.Match.Duration * currentMatch.GetPerformCount (); }
 			}
 
 			public PathElement CurrentElem {

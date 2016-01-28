@@ -42,6 +42,16 @@ namespace DNA.Tasks {
 			}
 		}
 
+		public float Duration {
+			get {
+				float d = settings.Duration;
+				if (Performer is ITaskRateSetter) {
+					d *= ((ITaskRateSetter)Performer).TaskRate;
+				}
+				return d;
+			}
+		}
+
 		// For testing (?)
 		public bool Performing {
 			get { return performing; }
@@ -62,7 +72,7 @@ namespace DNA.Tasks {
 
 		public PerformerTask () {
 			settings = DataManager.GetTaskSettings (this.GetType ());
-			if (settings.Repeat && settings.Duration == 0)
+			if (settings.Repeat && Duration == 0)
 				throw new System.Exception (this.GetType () + " is marked as repeating with a duration of 0. This will cause the game to hang.");
 		}
 
@@ -99,9 +109,9 @@ namespace DNA.Tasks {
 			Log ("Start", true);
 			OnStart ();
 			#if QUARTER_TIME
-			Coroutine.Start (settings.Duration*0.25f, SetProgress, End);
+			Coroutine.Start (Duration*0.25f, SetProgress, End);
 			#else
-			Coroutine.Start (settings.Duration, SetProgress, End);
+			Coroutine.Start (Duration, SetProgress, End);
 			#endif
 
 			return true;
@@ -149,7 +159,7 @@ namespace DNA.Tasks {
 
 		void StartOnEnable () {
 			if (!Enabled) {
-				float time = settings.Duration;
+				float time = Duration;
 				#if QUARTER_TIME
 				time *= 0.25f;
 				#endif

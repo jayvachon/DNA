@@ -37,10 +37,6 @@ namespace DNA.Units {
 
 		ProgressBar pbar;
 
-		void Awake () {
-			unitRenderer.SetColors (new Color (1f, 1f, 1f));
-		}
-
 		protected override void OnEnable () {
 			base.OnEnable ();
 			Coroutine.WaitForFixedUpdate (() => {

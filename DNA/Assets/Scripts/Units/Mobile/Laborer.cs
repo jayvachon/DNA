@@ -8,14 +8,18 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class Laborer : MobileUnit {
+	public class Laborer : MobileUnit, ITaskRateSetter {
 
 		float maxSpeed = 1f;
 		float minSpeed = 0.25f;
 
-		void Awake () {
+		float maxTaskSpeed = 1f;
+		float minTaskSpeed = 2f;
+		
+		float taskRate = 1f;
+		public float TaskRate { get { return taskRate; } }
 
-			unitRenderer.SetColors (Palette.Pink);
+		void Awake () {
 
 			Upgrades.Instance.AddListener<CoffeeCapacity> (
 				(CoffeeCapacity u) => Inventory["Coffee"].Capacity = u.CurrentValue
@@ -71,6 +75,7 @@ namespace DNA.Units {
 				float p = Inventory["Happiness"].PercentFilled;
 				unitRenderer.SetColors (Color.Lerp (Palette.Blue, Palette.Pink, p));
 				positioner.Speed = Mathf.Lerp (minSpeed, maxSpeed, p);
+				taskRate = Mathf.Lerp (minTaskSpeed, maxTaskSpeed, p);
 				if (Selected)
 					unitRenderer.OnSelect ();
 			}

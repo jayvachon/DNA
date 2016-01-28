@@ -21,7 +21,9 @@ namespace DNA.Units {
 						{ "road", "RoadRenderer" },
 						{ "plot", "PlotRenderer" },
 						{ "drillable", "DrillablePlotRenderer" },
-						{ "house", "HouseRenderer" }
+						{ "house", "HouseRenderer" },
+						{ "construction", "ConstructionSiteRenderer" },
+						{ "laborer", "LaborerRenderer" }
 					};
 				}
 				return renderers;
@@ -32,10 +34,9 @@ namespace DNA.Units {
 			string r;
 			if (Renderers.TryGetValue (key, out r)) {
 				return r;
+			} else {
+				throw new System.Exception ("No UnitRenderer exists for the key " + key);
 			}
-			// TODO: should throw this exception, but right now something weird is happening with construction sites not needing a unit renderer
-			// throw new System.Exception ("No UnitRenderer exists for the key " + key);
-			return "";
 		}
 
 		public virtual Vector3 Offset { get { return Vector3.zero; } }

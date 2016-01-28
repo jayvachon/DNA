@@ -134,10 +134,10 @@ namespace DNA.Units {
 
 		void OnArriveAtDestination (GridPoint point) {
 			
-			ArriveAction action = TaskSelector.OnArrive (assignedElement);
+			PathElement destination = TaskSelector.OnArrive (assignedElement);
 			
-			if (action.Destination != null) {
-				SetDestination (action.Destination);
+			if (destination != null) {
+				SetDestination (destination);
 				return;
 			}
 		}
@@ -170,15 +170,6 @@ namespace DNA.Units {
 			}
 		}
 
-		struct ArriveAction {
-
-			public readonly PathElement Destination;
-
-			public ArriveAction (PathElement destination) {
-				Destination = destination;
-			}
-		}
-
 		class TaskSelection {
 
 			public float PerformTime {
@@ -199,14 +190,14 @@ namespace DNA.Units {
 				this.unit = unit;
 			}
 
-			public ArriveAction OnArrive (PathElement elem) {
+			public PathElement OnArrive (PathElement elem) {
 
 				previousElem = currentElem;
 				currentElem = elem;
 
 				// Early out if the object associated with this PathElement does accept tasks
 				if (!(elem.Object is ITaskAcceptor)) {
-					return new ArriveAction (null);
+					return null;
 				}
 				
 				// First, try to perform a task on this PathElement
@@ -237,7 +228,7 @@ namespace DNA.Units {
 					TryGetPairDestination (elem, out destination);
 				}*/
 
-				return new ArriveAction (destination);
+				return destination;
 			}
 
 			public void InterruptTask () {
@@ -323,6 +314,7 @@ namespace DNA.Units {
 
 				task.onComplete -= OnCompleteTask;
 				bool taskNeedsPair = task.Settings.Pair != null;
+				unit.OnCompleteTask ();
 
 				if (taskNeedsPair) {
 
@@ -352,9 +344,7 @@ namespace DNA.Units {
 					GridPoint point = currentElem as GridPoint;
 					if (point != null) {
 						unit.OnArriveAtDestination (point);
-					} else {
-						unit.OnCompleteTask ();
-					}
+					} 
 
 					if (unit.Idle) {
 
@@ -366,16 +356,6 @@ namespace DNA.Units {
 							unit.SetDestination (destination);
 						}
 					}
-				}
-			}
-
-			void OnEndWait (PerformerTask task, bool performing) {
-				task.onEndWait -= OnEndWait;
-				if (performing) {
-					task.onComplete += OnCompleteTask;
-					unit.OnBeginTask ();
-				} else {
-					unit.OnCompleteTask ();
 				}
 			}
 		}

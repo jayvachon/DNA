@@ -1,4 +1,4 @@
-﻿#define IGNORE_HOUSES
+﻿#undef IGNORE_HOUSES
 using UnityEngine;
 using System.Collections;
 using DNA.Units;

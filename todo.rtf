@@ -16,9 +16,7 @@ going thru doorways erases memories (\'93WAIT! what was I gonna do in here??\'94
 :::: bugs ::::\
 \
 demo\
-- laborers aren\'92t immediately getting the message that the acceptor task can be bound to \
-- building a road off a point where laborers have been working automatically triggers construction (think actually some listeners are not being unsubscribed on destroy construction site)\
-- if two laborers are building a construction site, one of them will throw a null ref exception on Laborer line 242 (prob referencing destroyed construction site)\
+- cannot assign laborers to road construction after they have finished a task (is their state not being set to idle?)\
 \
 postdemo\
 - set laborer destination to a point where the path crosses through a unit that can be bound to, then when the laborer is rotating around the point w/ that unit, assign the laborer to that unit -> it stops but doesn\'92t carry out task\
@@ -27,7 +25,7 @@ postdemo\
 \
 demo\
 - can\'92t interrupt laborer constructing road\
-- assigning laborer to the same point twice stops it\
+- repayment length is inaccurate in loan menu\
 \
 postdemo\
 - when a building runs out of resources, laborers get caught in a back-n-forth loop\
@@ -61,9 +59,9 @@ reproducing bugs\
 :::: balancing ::::\
 \
 demo\
-- smaller loan size, shorter grace period\
 - enable capacities for derricks and coffee, but set very high\
-\
+- happiness should affect work speed as well as movement speed\
+- higher interest rates for loans\
 \
 postdemo\
 - \'93even\'94 random distribution of coffee plants\

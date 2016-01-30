@@ -9,6 +9,9 @@ namespace DNA.Tasks {
 
 	public static class TaskPen {
 
+		public delegate void OnRemove ();
+
+		public static OnRemove onRemove;
 		static PerformerTask task;
 		static UnitRenderer visual;
 		static bool roadTask;
@@ -17,10 +20,16 @@ namespace DNA.Tasks {
 
 			task = newTask;
 			roadTask = task is ConstructRoad;
+			bool seedTask = task is PlantSeed;
 
-			System.Type[] taskTypes = roadTask
-				? new [] { typeof (Road) }
-				: task.GetType ().GetGenericArguments ();
+			System.Type[] taskTypes;
+			if (roadTask) {
+				taskTypes = new [] { typeof (Road) };
+			} else if (seedTask) {
+				taskTypes = new [] { typeof (Seed) };
+			} else {
+				taskTypes = task.GetType ().GetGenericArguments ();
+			}
 
 			if (taskTypes.Length > 0) {
 				string renderer = UnitRenderer.GetRenderer (DataManager.GetUnitSymbol (taskTypes[0]));
@@ -63,6 +72,9 @@ namespace DNA.Tasks {
 				Events.instance.RemoveListener<MouseEnterPointEvent> (OnMouseEnterPointEvent);
 				Events.instance.RemoveListener<MouseExitPointEvent> (OnMouseExitPointEvent);
 			}
+
+			if (onRemove != null)
+				onRemove ();
 		}
 
 		static bool CanConstructOnElement (PathElement element) {
@@ -70,12 +82,18 @@ namespace DNA.Tasks {
 		}
 
 		static void Construct (GridPoint point, PointContainer container) {
-			ConstructUnit c = task as ConstructUnit;
+			IConstructable c = task as IConstructable;
 			if (c != null) {
 				c.ElementContainer = container;
 				c.Start ();
 				Remove ();
 			}
+			/*ConstructUnit c = task as ConstructUnit;
+			if (c != null) {
+				c.ElementContainer = container;
+				c.Start ();
+				Remove ();
+			}*/
 		}
 
 		static void ConstructRoad (Connection connection, ConnectionContainer container) {

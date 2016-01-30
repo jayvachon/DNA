@@ -74,6 +74,14 @@ public class ObjectColor : MonoBehaviour {
 		}
 	}
 
+	public void Hide () {
+		Renderer.enabled = false;
+	}
+
+	public void Show () {
+		Renderer.enabled = true;
+	}
+
 	void SetColorInChildren () {
 		List<Transform> children = transform.GetAllChildren ();
 		foreach (Transform child in children) {

@@ -30,7 +30,7 @@ namespace DNA.Units {
 		}
 
 		public UnitTransform unitTransform; // deprecate
-		public UnitRenderer unitRenderer; // deprecate
+		public UnitRenderer unitRenderer;
 		public UnitClickable unitClickable; // deprecate
 
 		Inventory inventory;

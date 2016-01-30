@@ -605,6 +605,11 @@ namespace DNA.Models {
 				}
 			});
 
+			tasks.Add (typeof (PlantSeed), new TaskSettings {
+				Title = "Plant seed",
+				Description = "Seeds grow into beautiful flowers"
+			});
+
 			tasks.Add (typeof (BorrowLoan<MilkshakeLoanGroup>), new TaskSettings {
 				Title = "Borrow Milkshakes",
 				Description = "Take out a loan of 100 milkshakes"

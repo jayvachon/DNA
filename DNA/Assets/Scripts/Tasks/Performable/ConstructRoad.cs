@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Tasks {
 
-	public class ConstructRoad : ConstructUnit, IConstructable {
+	public class ConstructRoad : ConstructUnit {
 
 		public override bool CanConstruct (PathElement element) {
 			Connection c = (Connection)element;

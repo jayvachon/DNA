@@ -37,7 +37,7 @@ namespace DNA {
 			try {
 				return Data.UnitsSettings[unitType];
 			} catch {
-				throw new System.Exception ("No model exists for the task '" + unitType + "'");
+				throw new System.Exception ("No model exists for the unit '" + unitType + "'");
 			}
 		}
 

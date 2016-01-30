@@ -55,12 +55,12 @@ namespace DNA.Units {
 			// PerformableTasks.Add (new BorrowLoan<CoffeeLoanGroup> ());
 		}
 
-		void OnEnable () {
+		protected override void OnEnable () {
 			base.OnEnable ();
 			StartSeedProduction ();
 		}
 
-		void OnDisable () {
+		protected override void OnDisable () {
 			base.OnDisable ();
 			seedProduction.Stop ();
 		}

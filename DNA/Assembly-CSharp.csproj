@@ -236,6 +236,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateLaborer.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateUnit.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\IConstructable.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\PlantSeed.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ResearchUnit.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ResearchUpgrade.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\UpgradeFogOfWar.cs" />

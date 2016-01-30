@@ -22,7 +22,7 @@ public static class ExtensionMethods {
 	 *	Vector3
 	 */
 	 
-	public static Vector3 NullPosition = new Vector3 (-1, -1, -1);
+	// public static Vector3 NullPosition = new Vector3 (-1, -1, -1);
 
 	public static bool Equals (this Vector3 vector3, Vector3 otherVector3) {
 		return Mathf.Approximately (vector3.x, otherVector3.x) && Mathf.Approximately (vector3.y, otherVector3.y) && Mathf.Approximately (vector3.z, otherVector3.z);

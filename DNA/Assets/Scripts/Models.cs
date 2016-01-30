@@ -182,6 +182,14 @@ namespace DNA.Models {
 				Emissions = 0.1f,
 				TakesDamage = true
 			});
+
+			units.Add (typeof (Seed), new UnitSettings {
+				Symbol = "seed",
+				Title = "Seed",
+				Description = "Seeds give birth to beautiful flowers :)",
+				Emissions = 0f,
+				TakesDamage = true
+			});
 		}
 	}
 
@@ -542,7 +550,7 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 20 }
+						{ "Milkshakes", 10 }
 					}
 				}
 			});
@@ -564,12 +572,20 @@ namespace DNA.Models {
 						{ "Milkshakes", 60 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 90 },
-						{ "Milkshakes", 180 }
+						{ "Coffee", 60 },
+						{ "Milkshakes", 120 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 270 },
-						{ "Milkshakes", 360 }
+						{ "Coffee", 120 },
+						{ "Milkshakes", 240 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 240 },
+						{ "Milkshakes", 480 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 480 },
+						{ "Milkshakes", 960 }
 					}
 				}
 			});

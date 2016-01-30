@@ -6,6 +6,7 @@ namespace DNA.Units {
 
 	public class UnitRenderer : ObjectColor {
 
+		// TODO: Move this to the UnitSettings model		
 		static Dictionary<string, string> renderers;
 		static Dictionary<string, string> Renderers {
 			get {
@@ -23,7 +24,8 @@ namespace DNA.Units {
 						{ "drillable", "DrillablePlotRenderer" },
 						{ "house", "HouseRenderer" },
 						{ "construction", "ConstructionSiteRenderer" },
-						{ "laborer", "LaborerRenderer" }
+						{ "laborer", "LaborerRenderer" },
+						{ "seed", "SeedRenderer" }
 					};
 				}
 				return renderers;

@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class GivingTreeUnit : StaticUnit, ITaskPerformer {
+	public class GivingTreeUnit : StaticUnit, ITaskPerformer, ISeedProducer {
 
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
@@ -28,7 +28,7 @@ namespace DNA.Units {
 					int positionCount = 8;
 					float radius = 2;
 					float deg = 360f / (float)positionCount;
-					Vector3 center = UnitTransform.Position;//StaticTransform.Position;
+					Vector3 center = UnitTransform.Position;
 					for (int i = 0; i < positionCount; i ++) {
 						float radians = (float)i * deg * Mathf.Deg2Rad;
 						createPositions.Add (new Vector3 (
@@ -42,6 +42,8 @@ namespace DNA.Units {
 			}
 		}
 
+		SeedProductionHandler seedProduction;
+
 		void Awake () {
 
 			Inventory = Player.Instance.Inventory;
@@ -51,6 +53,16 @@ namespace DNA.Units {
 			// PerformableTasks.Add (new GenerateUnit<Corpse> ()).onComplete += OnGenerateCorpse;
 			// PerformableTasks.Add (new BorrowLoan<MilkshakeLoanGroup> ());
 			// PerformableTasks.Add (new BorrowLoan<CoffeeLoanGroup> ());
+		}
+
+		void OnEnable () {
+			base.OnEnable ();
+			StartSeedProduction ();
+		}
+
+		void OnDisable () {
+			base.OnDisable ();
+			seedProduction.Stop ();
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
@@ -76,6 +88,10 @@ namespace DNA.Units {
 
 		void OnYearsCollected () {
 			ChangeUnit<GivingTreeUnit, GivingTreeRipe> ();
+		}
+
+		public void StartSeedProduction () {
+			seedProduction = new SeedProductionHandler (MyTransform, 3.5f);
 		}
 	}
 }

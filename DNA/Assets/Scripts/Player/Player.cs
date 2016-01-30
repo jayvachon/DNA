@@ -46,7 +46,7 @@ namespace DNA {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
 					performableTasks.Add (new ConstructRoad ());
-					performableTasks.Add (new ConstructUnit<Flower> ());
+					// performableTasks.Add (new ConstructUnit<Flower> ());
 					performableTasks.Add (new ConstructUnit<MilkshakePool> ());
 					performableTasks.Add (new ConstructUnit<University> ());
 					performableTasks.Add (new ConstructUnit<House> ());

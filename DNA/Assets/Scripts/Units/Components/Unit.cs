@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using DNA.InputSystem;
+using DNA.EventSystem;
 using InventorySystem;
 using DNA.Models;
 
 namespace DNA.Units {
 
-	public class Unit : MBRefs, INameable, IInventoryHolder, ISelectable {
+	public class Unit : MBRefs, INameable, IInventoryHolder, ISelectable, IPointerDownHandler {
 
 		public virtual string Name {
 			get { return Settings.Title; }
@@ -27,8 +29,8 @@ namespace DNA.Units {
 			}
 		}
 
-		public UnitTransform unitTransform;
-		public UnitRenderer unitRenderer;
+		public UnitTransform unitTransform; // deprecate
+		public UnitRenderer unitRenderer; // deprecate
 		public UnitClickable unitClickable; // deprecate
 
 		Inventory inventory;
@@ -70,11 +72,6 @@ namespace DNA.Units {
 		public Transform Transform {
 			get { return unitTransform.MyTransform; }
 		}
-
-		/*public Vector3 Position {
-			get { return Transform.position; }
-			set { unitTransform.Position = value; }
-		}*/
 
 		// Changes this unit T to unit U
 		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {
@@ -156,6 +153,13 @@ namespace DNA.Units {
 				unitRenderer.OnUnselect ();
 			if (unitTransform != null)
 				unitTransform.OnUnselect ();
+		}
+		#endregion
+
+		#region IPointerDownHandler implementation
+		public virtual void OnPointerDown (PointerEventData e) {
+			Events.instance.Raise (new PointerDownEvent (this));
+			SelectionHandler.ClickSelectable (this, e);
 		}
 		#endregion
 	}

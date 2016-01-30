@@ -299,6 +299,7 @@
      <Compile Include="Assets\Scripts\Units\Components\Renderers\LaborerRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\PlotRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\RoadRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\SeedRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UnitRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UniversityRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitClickable.cs" />
@@ -320,6 +321,9 @@
      <Compile Include="Assets\Scripts\Units\Mobile\MobileUnit.cs" />
      <Compile Include="Assets\Scripts\Units\ProductionTier.cs" />
      <Compile Include="Assets\Scripts\Units\RepairSite.cs" />
+     <Compile Include="Assets\Scripts\Units\Seeds\ISeedProducer.cs" />
+     <Compile Include="Assets\Scripts\Units\Seeds\Seed.cs" />
+     <Compile Include="Assets\Scripts\Units\Seeds\SeedProductionHandler.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CollectionCenter.cs" />

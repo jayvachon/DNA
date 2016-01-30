@@ -1,6 +1,5 @@
 #undef DEBUG_MSG
 using UnityEngine;
-using UnityEngine.EventSystems;
 using System;
 using System.Linq;
 using System.Collections;
@@ -12,7 +11,7 @@ using DNA.Paths;
 
 namespace DNA.Units {
 
-	public class MobileUnit : Unit, ITaskPerformer, IPointerDownHandler, ISelectableOverrider, IPathElementVisitor {
+	public class MobileUnit : Unit, ITaskPerformer, ISelectableOverrider, IPathElementVisitor {
 
 		#region ISelectableOverrider implementation
 		public UnityEngine.EventSystems.PointerEventData.InputButton OverrideButton {
@@ -129,7 +128,7 @@ namespace DNA.Units {
 			if (positioner.Moving)
 				MyState = State.Moving;
 			else
-				OnArriveAtDestination ((GridPoint)elem);
+				OnArriveAtDestination ((GridPoint)elem); // TODO: somtimes get an invalid cast exception - this needs to be handled
 		}
 
 		void OnArriveAtDestination (GridPoint point) {
@@ -400,13 +399,6 @@ namespace DNA.Units {
 			set { 
 				visitorIndex = value;
 			}
-		}
-		#endregion
-
-		#region IPointerDownHandler implementation
-		public void OnPointerDown (PointerEventData e) {
-			Events.instance.Raise (new PointerDownEvent (this));
-			SelectionHandler.ClickSelectable (this, e);
 		}
 		#endregion
 	}

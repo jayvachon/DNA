@@ -65,7 +65,7 @@ namespace DNA.Units {
 		public override void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new PointerDownEvent (this));
 			if (!e.LeftClicked () && SelectionHandler.Selected.Count == 0) {
-				List<Laborer> laborers = ObjectPool.GetActiveObjects<Laborer> ();
+				List<Laborer> laborers = ObjectPool.GetActiveInstances<Laborer> ();
 				Laborer available = laborers.Find (x => x.Idle);
 				if (available != null) {
 					available.OnOverrideSelect (this);

@@ -47,7 +47,7 @@ namespace DNA {
 		}
 
 		public void UpgradeHeight () {
-			Height += 3f;
+			Height += 2f;
 		}
 
 		#region ISelectable implementation

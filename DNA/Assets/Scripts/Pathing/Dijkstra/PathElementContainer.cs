@@ -29,7 +29,7 @@ namespace DNA {
 			damageHandler = new DamageHandler (OnDamage);
 		}
 
-		public ConstructionSite BeginConstruction<T> () where T : MonoBehaviour, IPathElementObject {
+		public ConstructionSite BeginConstruction<T> (int laborCost=0, bool autoConstruct=false) where T : MonoBehaviour, IPathElementObject {
 
 			// Create a construction site and listen for labor to be completed
 			// Set the project to turn into once labor completes
@@ -39,6 +39,9 @@ namespace DNA {
 				(project as MonoBehaviour).gameObject.SetActive (false);
 				site = (ConstructionSite)SetObject<ConstructionSite> ();
 				site.Inventory["Labor"].onEmpty += EndConstruction;
+				site.Inventory["Labor"].Capacity = laborCost;
+				site.Inventory["Labor"].Fill ();
+				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
 			}
 			return site;

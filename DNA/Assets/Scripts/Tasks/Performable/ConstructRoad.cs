@@ -11,8 +11,9 @@ namespace DNA.Tasks {
 	public class ConstructRoad : ConstructUnit {
 
 		public override bool CanConstruct (PathElement element) {
-			Connection c = (Connection)element;
-			return CanAfford 
+			Connection c = element as Connection;
+			return c != null
+				&& CanAfford 
 				&& c.State == DevelopmentState.Undeveloped 
 				&& c.Cost > 0 
 				&& System.Array.Find (c.Points, x => x.HasRoad || x.HasRoadConstruction) != null;
@@ -21,10 +22,7 @@ namespace DNA.Tasks {
 		protected override void OnEnd () {
 			Purchase ();
 			ConnectionContainer c = (ConnectionContainer)ElementContainer;
-			ConstructionSite site = c.BeginConstruction<Road> ();
-			if (site != null) {
-				site.LaborCost = TotalCost;
-			}
+			ConstructionSite site = c.BeginConstruction<Road> (TotalCost);
 			base.OnEnd ();
 		}
 	}

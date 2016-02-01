@@ -8,15 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class ConstructionSite : StaticUnit, IPathElementObject {
-
-		public int LaborCost {
-			get { return Inventory["Labor"].Count; }
-			set { 
-				Inventory["Labor"].Capacity = value;
-				Inventory["Labor"].Fill ();
-			}
-		}
+	public class ConstructionSite : StaticUnit, IPathElementObject, ITaskPerformer {
 
 		public override SelectSettings SelectSettings {
 			get { 
@@ -33,9 +25,25 @@ namespace DNA.Units {
 			}
 		}
 
+		PerformableTasks performableTasks;
+		public PerformableTasks PerformableTasks {
+			get {
+				if (performableTasks == null) {
+					performableTasks = new PerformableTasks (this);
+					performableTasks.Add (new ConsumeItem<LaborGroup> ());
+				}
+				return performableTasks;
+			}
+		}
+
 		public RoadPlan RoadPlan { get; set; }
 
 		ProgressBar pbar;
+
+		public void AutoConstruct () {
+			PerformableTasks[typeof (ConsumeItem<LaborGroup>)].Start ();
+			AcceptableTasks.SetActive (typeof (AcceptCollectItem<LaborGroup>), false);
+		}
 
 		protected override void OnEnable () {
 			base.OnEnable ();
@@ -55,6 +63,7 @@ namespace DNA.Units {
 		
 		protected override void OnDisable () { 
 			base.OnDisable ();
+			AcceptableTasks.SetActive (typeof (AcceptCollectItem<LaborGroup>), true);
 			if (UI.Instance != null) {
 				UI.Instance.DestroyProgressBar (pbar); 
 				pbar = null;

@@ -13,12 +13,18 @@ namespace DNA.Units {
 			get {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
-					performableTasks.Add (new PlantSeed ());
+					performableTasks.Add (new PlantSeed ()).onStart += OnStartPlant;
 				}
 				return performableTasks;
 			}
 		}
 		#endregion
+
+		SeedProductionHandler seedProduction;
+
+		public void Init (SeedProductionHandler seedProduction) {
+			this.seedProduction = seedProduction;
+		}
 
 		public override void OnPointerDown (PointerEventData e) {
 			TaskPen.Set (PerformableTasks[typeof (PlantSeed)]);
@@ -29,6 +35,11 @@ namespace DNA.Units {
 		void OnCancelPlant () {
 			TaskPen.onRemove -= OnCancelPlant;
 			unitRenderer.Show ();
+		}
+
+		void OnStartPlant (PerformerTask task) {
+			TaskPen.onRemove -= OnCancelPlant;
+			seedProduction.RemoveSeed ();
 		}
 	}
 }

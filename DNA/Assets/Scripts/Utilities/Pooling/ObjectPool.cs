@@ -122,7 +122,7 @@ public class ObjectPool {
 		GetPool<T> ().ReleaseInstance (go.GetComponent<MonoBehaviour> ());
 	}
 
-	public static List<T> GetActiveObjects<T> () where T : MonoBehaviour {
+	public static List<T> GetActiveInstances<T> () where T : MonoBehaviour {
 		return GetPool<T> ().active.ConvertAll (x => (T)x);
 	}
 }

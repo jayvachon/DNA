@@ -63,7 +63,8 @@ namespace DNA.Models {
 				Symbol = "road",
 				Title = "Road",
 				Description = "Roads connect buildings so that laborers can reach them.",
-				Emissions = 0f
+				Emissions = 0.01f,
+				RemovesFogOfWar = true
 			});
 
 			units.Add (typeof (Laborer), new UnitSettings {
@@ -99,7 +100,7 @@ namespace DNA.Models {
 				Symbol = "coffee",
 				Title = "Coffee Plant",
 				Description = "Deliver coffee to the Giving Tree to create more laborers.",
-				Emissions = -0.01f,
+				Emissions = 0f,
 				TakesDamage = false
 			});
 
@@ -123,15 +124,16 @@ namespace DNA.Models {
 				Symbol = "flower",
 				Title = "Flower",
 				Description = "Flowers are really pretty :)",
-				Emissions = -0.2f,
-				TakesDamage = true
+				Emissions = -0.05f,
+				TakesDamage = true,
+				RemovesFogOfWar = true
 			});
 
 			units.Add (typeof (CollectionCenter), new UnitSettings {
 				Symbol = "collector",
 				Title = "Collection Center",
 				Description = "Resources can be desposited here so that laborers don't have to go all the way back to the Giving Tree.",
-				Emissions = 0.2f,
+				Emissions = 0.3f,
 				TakesDamage = true
 			});
 
@@ -156,7 +158,8 @@ namespace DNA.Models {
 				Title = "Giving Tree",
 				Description = "The Giving Tree gives birth to laborers and is also a portal to the next dimension.",
 				Emissions = 0f,
-				TakesDamage = false
+				TakesDamage = false,
+				RemovesFogOfWar = true
 			});
 
 			units.Add (typeof (ConstructionSite), new UnitSettings {
@@ -180,6 +183,14 @@ namespace DNA.Models {
 				Title = "House",
 				Description = "Houses increase the amount of laborers you can birth",
 				Emissions = 0.1f,
+				TakesDamage = true
+			});
+
+			units.Add (typeof (Apartment), new UnitSettings {
+				Symbol = "apartment",
+				Title = "Apartment",
+				Description = "Apartments increase the amount of laborers you can birth",
+				Emissions = 0.3f,
 				TakesDamage = true
 			});
 
@@ -350,7 +361,20 @@ namespace DNA.Models {
 				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 20 }
+						{ "Milkshakes", 25 }
+					}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
+			});
+
+			tasks.Add (typeof (ConstructUnit<Apartment>), new CostTaskSettings {
+				Symbol = "construct_apartment",
+				Title = "Birth Apartment",
+				Description = "Creates a new apartment so that more laborer can be birthed",
+				Duration = 0f,
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 60 }
 					}
 				},
 				ConstructionTargets = new [] { "plot", "drillable" }
@@ -378,6 +402,13 @@ namespace DNA.Models {
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
+			});
+
+			tasks.Add (typeof (ConsumeItem<LaborGroup>), new TaskSettings {
+				Symbol = "consume_labor",
+				Description = "Consumes labor",
+				Duration = 1f,
+				Repeat = true		
 			});
 
 			/**
@@ -550,7 +581,7 @@ namespace DNA.Models {
 				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 10 }
+						{ "Milkshakes", 15 }
 					}
 				}
 			});
@@ -572,20 +603,28 @@ namespace DNA.Models {
 						{ "Milkshakes", 60 }
 					},
 					new Dictionary<string, int> {
+						{ "Coffee", 45 },
+						{ "Milkshakes", 90 }
+					},
+					new Dictionary<string, int> {
 						{ "Coffee", 60 },
 						{ "Milkshakes", 120 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 90 },
+						{ "Milkshakes", 180 }
 					},
 					new Dictionary<string, int> {
 						{ "Coffee", 120 },
 						{ "Milkshakes", 240 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 240 },
-						{ "Milkshakes", 480 }
+						{ "Coffee", 180 },
+						{ "Milkshakes", 320 }
 					},
 					new Dictionary<string, int> {
-						{ "Coffee", 480 },
-						{ "Milkshakes", 960 }
+						{ "Coffee", 240 },
+						{ "Milkshakes", 480 }
 					}
 				}
 			});
@@ -771,6 +810,7 @@ namespace DNA.Models {
 		public string Description { get; set; }
 		public float Emissions { get; set; }
 		public bool TakesDamage { get; set; }
+		public bool RemovesFogOfWar { get; set; }
 	}
 
 	public class LoanSettings {

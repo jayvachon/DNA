@@ -40,7 +40,7 @@ namespace DNA {
 		}
 
 		void InitFog () {
-			List<FogOfWar> fog = ObjectPool.GetActiveObjects<FogOfWar> ();
+			List<FogOfWar> fog = ObjectPool.GetActiveInstances<FogOfWar> ();
 			foreach (FogOfWar f in fog) {
 				f.Init ();
 			}

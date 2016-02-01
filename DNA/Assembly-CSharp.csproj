@@ -288,6 +288,7 @@
      <Compile Include="Assets\Scripts\UI\UnitInfoContent.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitClickable.cs" />
      <Compile Include="Assets\Scripts\Units\Components\MobileUnitTransform.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\ApartmentRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\ClinicRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\CoffeePlantRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\CollectionCenterRenderer.cs" />
@@ -325,6 +326,7 @@
      <Compile Include="Assets\Scripts\Units\Seeds\ISeedProducer.cs" />
      <Compile Include="Assets\Scripts\Units\Seeds\Seed.cs" />
      <Compile Include="Assets\Scripts\Units\Seeds\SeedProductionHandler.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Apartment.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Clinic.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CoffeePlant.cs" />
      <Compile Include="Assets\Scripts\Units\Static\CollectionCenter.cs" />

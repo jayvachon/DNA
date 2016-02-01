@@ -16,7 +16,7 @@ namespace DNA {
 		float pumpRate = 0f;
 		float riseRate = 0f;
 		float floodRate = 0.0033f;
-		float displacementCoefficient = 0.00003f;
+		float displacementCoefficient = 0.000035f;
 
 		public float LeveeTop {
 			get { return levee.Position.y + levee.Height; }

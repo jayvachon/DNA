@@ -9,6 +9,7 @@ namespace InventorySystem {
 	public delegate void OnFill ();
 	public delegate void OnRemove ();
 	public delegate void OnAdd<T> (List<T> items) where T : Item;
+	public delegate void OnUpdateCapacity ();
 
 	/// <summary>
 	/// An ItemGroup contains InventoryItems. This abstract class is useful for grouping ItemGroups
@@ -47,7 +48,11 @@ namespace InventorySystem {
 		/// </summary>
 		public int Capacity {
 			get { return capacity; }
-			set { capacity = value; }
+			set { 
+				capacity = value; 
+				if (onUpdateCapacity != null)
+					onUpdateCapacity ();
+			}
 		}
 
 		/// <summary>
@@ -112,6 +117,11 @@ namespace InventorySystem {
 		/// Called when the group reaches capacity.
 		/// </summary>
 		public OnFill onFill;
+
+		/// <summary>
+		/// Called when the capacity is changed.
+		/// </summary>
+		public OnUpdateCapacity onUpdateCapacity;
 
 		public abstract void Initialize (Inventory inventory);
 		public abstract void Set (int count);

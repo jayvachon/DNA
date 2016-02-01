@@ -88,12 +88,6 @@ namespace DNA.Tasks {
 				c.Start ();
 				Remove ();
 			}
-			/*ConstructUnit c = task as ConstructUnit;
-			if (c != null) {
-				c.ElementContainer = container;
-				c.Start ();
-				Remove ();
-			}*/
 		}
 
 		static void ConstructRoad (Connection connection, ConnectionContainer container) {

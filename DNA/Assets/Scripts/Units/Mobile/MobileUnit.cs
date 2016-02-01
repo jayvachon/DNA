@@ -125,10 +125,12 @@ namespace DNA.Units {
 				? (GridPoint)elem
 				: System.Array.Find (((Connection)elem).Points, x => x.HasRoad);
 
-			if (positioner.Moving)
+			if (positioner.Moving) {
 				MyState = State.Moving;
-			else
-				OnArriveAtDestination ((GridPoint)elem); // TODO: somtimes get an invalid cast exception - this needs to be handled
+			} else {
+				if (elem is GridPoint)
+					OnArriveAtDestination ((GridPoint)elem);
+			}
 		}
 
 		void OnArriveAtDestination (GridPoint point) {

@@ -25,9 +25,9 @@ namespace DNA.Tasks {
 		protected override void OnEnd () {
 			Purchase ();
 			try {
-				ElementContainer.BeginConstruction<T> ().LaborCost = TotalCost;
+				ElementContainer.BeginConstruction<T> (TotalCost);
 			} catch {
-				throw new System.Exception ("The path element container has not been set for the task '" + this + ".' Be sure to call SetConstructionPoint (container)");
+				throw new System.Exception ("The path element container has not been set for the task '" + this + ".' Be sure to set the property ElementContainer");
 			}
 			base.OnEnd ();
 		}

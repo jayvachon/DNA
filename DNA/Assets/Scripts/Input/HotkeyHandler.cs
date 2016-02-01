@@ -82,14 +82,14 @@ namespace DNA {
 
 		List<Hotkey> hotkeys = new List<Hotkey> () {
 			new Hotkey (KeyCode.Period, () => {
-				List<Laborer> laborers = ObjectPool.GetActiveObjects<Laborer> ();
+				List<Laborer> laborers = ObjectPool.GetActiveInstances<Laborer> ();
 				Laborer available = laborers.Find (x => x.Idle);
 				if (available != null) {
 					SelectionHandler.SelectSingle (available);
 				}
 			}),
 			new Hotkey (KeyCode.L, () => {
-				GivingTreeUnit tree = ObjectPool.GetActiveObjects<GivingTreeUnit> ()[0];
+				GivingTreeUnit tree = ObjectPool.GetActiveInstances<GivingTreeUnit> ()[0];
 				tree.PerformableTasks[typeof (GenerateLaborer)].Start ();
 			}),
 			new Hotkey (KeyCode.Escape, () => {
@@ -99,10 +99,6 @@ namespace DNA {
 			new Hotkey (KeyCode.R, () => {
 				TaskPen.Remove ();
 				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructRoad)]);
-			}),
-			new Hotkey (KeyCode.F, () => {
-				TaskPen.Remove ();
-				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<Flower>)]);
 			}),
 			new Hotkey (KeyCode.U, () => {
 				TaskPen.Remove ();
@@ -119,6 +115,10 @@ namespace DNA {
 			new Hotkey (KeyCode.H, () => {
 				TaskPen.Remove ();
 				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<House>)]);
+			}),
+			new Hotkey (KeyCode.A, () => {
+				TaskPen.Remove ();
+				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<Apartment>)]);
 			})
 			#if UNITY_EDITOR
 			,

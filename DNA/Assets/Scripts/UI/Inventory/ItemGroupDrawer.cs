@@ -26,14 +26,19 @@ namespace DNA {
 
 		void Start () {
 			Group.onUpdate += OnUpdate;
+			Group.onUpdateCapacity += OnUpdate;
 			OnUpdate ();
 		}
 
 		void OnUpdate () {
-			string suffix = "M";
-			if (Group.ID == "Coffee")
-				suffix = "C";
-			countText.text = Group.Count.ToString () + suffix;
+			if (Group.ID == "Laborer") {
+				countText.text = "Pop: " + Group.Count.ToString () + "/" + Group.Capacity.ToString ();
+			} else {
+				string suffix = "M";
+				if (Group.ID == "Coffee")
+					suffix = "C";
+				countText.text = Group.Count.ToString () + suffix;
+			}
 		}
 	}
 }

@@ -7,7 +7,7 @@ public class Ground : MonoBehaviour, IPointerDownHandler {
 
 	#region IPointerDownHandler implementation
 	public void OnPointerDown (PointerEventData e) {
-		Events.instance.Raise (new PointerDownEvent (this));
+		Events.instance.Raise (new PointerDownEvent (this, e));
 	}
 	#endregion
 }

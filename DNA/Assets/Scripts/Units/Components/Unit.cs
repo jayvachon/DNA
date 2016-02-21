@@ -158,7 +158,7 @@ namespace DNA.Units {
 
 		#region IPointerDownHandler implementation
 		public virtual void OnPointerDown (PointerEventData e) {
-			Events.instance.Raise (new PointerDownEvent (this));
+			Events.instance.Raise (new PointerDownEvent (this, e));
 			SelectionHandler.ClickSelectable (this, e);
 		}
 		#endregion

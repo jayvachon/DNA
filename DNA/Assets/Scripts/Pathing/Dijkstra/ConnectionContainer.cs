@@ -47,7 +47,7 @@ namespace DNA.Paths {
 		#region IPointerDownHandler implementation
 		public override void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new ClickConnectionEvent (this));
-			Events.instance.Raise (new PointerDownEvent (this));
+			Events.instance.Raise (new PointerDownEvent (this, e));
 			if (Connection.Object is Unit)
 				SelectionHandler.ClickSelectable ((ISelectable)Connection.Object, e);
 			IPointerDownHandler pdh = Connection.Object as IPointerDownHandler;

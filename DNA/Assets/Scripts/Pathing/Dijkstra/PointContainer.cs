@@ -59,7 +59,7 @@ namespace DNA.Paths {
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
 		public override void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new ClickPointEvent (this));
-			Events.instance.Raise (new PointerDownEvent (this));
+			Events.instance.Raise (new PointerDownEvent (this, e));
 			if (Point.Object is Unit)
 				SelectionHandler.ClickSelectable (Point.Unit, e);
 			IPointerDownHandler pdh = Point.Object as IPointerDownHandler;

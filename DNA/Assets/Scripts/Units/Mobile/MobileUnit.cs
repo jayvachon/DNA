@@ -15,7 +15,7 @@ namespace DNA.Units {
 
 		#region ISelectableOverrider implementation
 		public UnityEngine.EventSystems.PointerEventData.InputButton OverrideButton {
-			get { return UnityEngine.EventSystems.PointerEventData.InputButton.Right; }
+			get { return UnityEngine.EventSystems.PointerEventData.InputButton.Left; }
 		}
 
 		public virtual void OnOverrideSelect (ISelectable overridenSelectable) {

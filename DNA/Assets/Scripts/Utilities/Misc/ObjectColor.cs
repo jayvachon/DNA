@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent (typeof (Renderer))]
-public class ObjectColor : MonoBehaviour {
+public class ObjectColor : MBRefs {
 
 	new Renderer renderer = null;
 	Renderer Renderer {

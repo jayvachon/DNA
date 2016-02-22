@@ -36,6 +36,11 @@ public class MBRefs : MonoBehaviour {
 		set { MyTransform.localEulerAngles = value; }
 	}
 
+	public Vector3 LocalScale {
+		get { return MyTransform.localScale; }
+		set { MyTransform.localScale = value; }
+	}
+
 	public Transform Parent {
 		get { return MyTransform.parent; }
 		set { MyTransform.SetParent (value); }

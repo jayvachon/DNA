@@ -22,23 +22,23 @@ namespace DNA {
 			}
 		}
 
-		Renderer renderer = null;
+		Renderer _renderer = null;
 		Renderer Renderer {
 			get {
-				if (renderer == null) {
-					renderer = GetComponent<Renderer> ();
+				if (_renderer == null) {
+					_renderer = GetComponent<Renderer> ();
 				}
-				return renderer;
+				return _renderer;
 			}
 		}
 
-		Collider collider = null;
+		Collider _collider = null;
 		Collider Collider {
 			get {
-				if (collider == null) {
-					collider = GetComponent<Collider> ();
+				if (_collider == null) {
+					_collider = GetComponent<Collider> ();
 				}
-				return collider;
+				return _collider;
 			}
 		}
 

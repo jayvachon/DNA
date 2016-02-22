@@ -22,7 +22,7 @@ namespace DNA.Tasks {
 		protected override void OnEnd () {
 			Purchase ();
 			ConnectionContainer c = (ConnectionContainer)ElementContainer;
-			ConstructionSite site = c.BeginConstruction<Road> (TotalCost);
+			c.BeginConstruction<Road> (TotalCost);
 			base.OnEnd ();
 		}
 	}

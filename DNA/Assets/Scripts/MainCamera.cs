@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using DNA.EventSystem;
 using DNA.InputSystem;
@@ -6,24 +7,23 @@ using DNA.Units;
 
 public class MainCamera : MBRefs {
 
-	Camera camera = null;
+	Camera cam = null;
 	public Camera Camera {
 		get {
-			if (camera == null) {
-				camera = GetComponent<Camera> ();
+			if (cam == null) {
+				cam = GetComponent<Camera> ();
 			}
-			return camera;
+			return cam;
 		}
 	}
 
 	public Transform center;
-	Transform anchor;
 
 	float[] zConstraints = new [] { -80f, -5f };
 	float[] zoomConstraints = new[] { 15f, 80f };
 
 	void Awake () {
-		anchor = transform.parent;
+		Events.instance.AddListener<PointerDownEvent> (OnPointerDownEvent);
 	}
 
 	void Update () {
@@ -44,5 +44,25 @@ public class MainCamera : MBRefs {
 		Vector3 look = center.position;
 		look.y = yLook;
 		transform.LookAt (look);
+	}
+
+	void OnPointerDownEvent (PointerDownEvent e) {
+		if (e.data.button == PointerEventData.InputButton.Right) {
+			StartCoroutine (CoMoveDrag (Input.mousePosition));
+		}
+	}
+
+	IEnumerator CoMoveDrag (Vector3 start) {
+		
+		float startRotation = center.localEulerAngles.y;
+		float startPosition = LocalPosition.z;
+
+		while (Input.GetMouseButton (1)) {
+			Vector3 delta = Camera.ScreenToViewportPoint (Input.mousePosition - start);
+			center.SetLocalEulerAnglesY (startRotation + delta.x * 90);
+			// TODO: smoothing
+			transform.SetLocalPositionZ (startPosition - delta.y * 30);
+			yield return null;
+		}
 	}
 }

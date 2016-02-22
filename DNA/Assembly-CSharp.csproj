@@ -242,6 +242,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\UpgradeFogOfWar.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\UpgradeLevee.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskDisplaySettings.cs" />
+     <Compile Include="Assets\Scripts\Tasks\TaskFinder.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskMatcher.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskPen.cs" />
      <Compile Include="Assets\Scripts\Tasks\Tests\AcceptCollectItemTest.cs" />
@@ -282,6 +283,7 @@
      <Compile Include="Assets\Scripts\UI\Notifications\NotificationCenter.cs" />
      <Compile Include="Assets\Scripts\UI\ProgressBar.cs" />
      <Compile Include="Assets\Scripts\UI\TaskButton.cs" />
+     <Compile Include="Assets\Scripts\UI\TaskIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\UI.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBoxOverlay.cs" />

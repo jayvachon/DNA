@@ -142,6 +142,10 @@ namespace DNA.Tasks {
 			get { return Match.Settings.Pair; }
 		}
 
+		public float Duration {
+			get { return Match.Duration * GetPerformCount (); }
+		}
+
 		public MatchResult (PerformerTask match, bool needsPair, AcceptorTask acceptor) {
 			Match = match;
 			NeedsPair = needsPair;

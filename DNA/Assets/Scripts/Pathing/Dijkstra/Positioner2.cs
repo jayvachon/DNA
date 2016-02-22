@@ -249,6 +249,14 @@ namespace DNA.Paths {
 		public GridPoint Destination {
 			get { return destination; }
 			set {
+				// dumb bug:
+				// If a destination that is >1 point away is set,
+				// and then as the unit is moving, a different destination is set,
+				// the unit will go directly to the target.
+				// This is because of line 47
+				// Typically this works fine, but only if the unit has already passed the origin
+				// What needs to happen is the unit needs to be directed to the origin rather than the target
+				// and idk what the most elegant way of doing that is
 				destination = value;
 				path.SetDestination (destination);
 				StartMove ();

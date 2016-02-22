@@ -20,7 +20,7 @@ namespace DNA.Paths {
 	public delegate void OnSetObject (IPathElementObject obj);
 	public delegate void OnSetState (DevelopmentState state);
 
-	public class PathElement {
+	public abstract class PathElement {
 
 		DevelopmentState state = DevelopmentState.Undeveloped;
 		public DevelopmentState State {

@@ -27,9 +27,10 @@ namespace DNA.Tasks {
 		// Checks if the match exists on the given path element
 		// Finding none, looks for any other matches
 		public bool TaskFromMatch (PathElement elem, MatchResult match, out MatchResult result) {
-			result = (match == null)
+			ITaskAcceptor acceptor = elem.Object as ITaskAcceptor;
+			result = (match == null || acceptor == null)
 				? null
-				: TaskMatcher.GetPerformable (match, performer, elem.Object as ITaskAcceptor);
+				: TaskMatcher.GetPerformable (match, performer, acceptor);
 			return result != null;
 		}
 

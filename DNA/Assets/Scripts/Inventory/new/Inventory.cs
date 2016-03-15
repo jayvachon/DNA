@@ -9,6 +9,8 @@ namespace InventorySystem {
 	/// </summary>
 	public class Inventory {
 
+		public delegate void OnUpdate ();
+
 		readonly Dictionary<string, ItemGroup> groups = new Dictionary<string, ItemGroup> ();
 
 		/// <summary>
@@ -64,7 +66,7 @@ namespace InventorySystem {
 		/// <param name="group">The ItemGroup to add.</param>
 		public ItemGroup Add (ItemGroup group) {
 			group.Initialize (this);
-			group.onUpdate += OnUpdate;
+			group.onUpdate += SendOnUpdateMessage;
 			groups.Add (group.ID, group);
 			return group;
 		}
@@ -77,7 +79,7 @@ namespace InventorySystem {
 				group.Value.Clear ();
 		}
 
-		void OnUpdate () {
+		void SendOnUpdateMessage () {
 			if (onUpdate != null)
 				onUpdate ();
 		}

@@ -70,13 +70,13 @@ namespace DNA {
 		public void AddTime () {
 			elapsedTime ++;
 			if (elapsedTime > settings.GracePeriod) {
-				if (PlayerItemGroup.Count < Payment) {
+				/*if (PlayerItemGroup.Count < Payment) {
 					GiveWarning ();
 					elapsedTime --;
 				} else {
-					Status = LoanStatus.Repayment;
-					PlayerItemGroup.Remove (Payment);
-				}
+				}*/
+				Status = LoanStatus.Repayment;
+				PlayerItemGroup.Remove (Payment);
 			}
 			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {
 				Coroutine.WaitForFixedUpdate (() => { Group.Remove (this); });

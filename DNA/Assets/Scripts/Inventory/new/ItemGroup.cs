@@ -4,18 +4,19 @@ using System.Collections.Generic;
 
 namespace InventorySystem {
 
-	public delegate void OnUpdate ();
-	public delegate void OnEmpty ();
-	public delegate void OnFill ();
-	public delegate void OnRemove ();
-	public delegate void OnAdd<T> (List<T> items) where T : Item;
-	public delegate void OnUpdateCapacity ();
-
 	/// <summary>
 	/// An ItemGroup contains InventoryItems. This abstract class is useful for grouping ItemGroups
 	/// of different types together, but only ItemGroup<T> should ever inherit from it.
 	/// </summary>
 	public abstract class ItemGroup {
+
+		public delegate void OnUpdate ();
+		public delegate void OnEmpty ();
+		public delegate void OnFill ();
+		public delegate void OnRemove ();
+		public delegate void OnAdd<T> (List<T> items) where T : Item;
+		public delegate void OnUpdateCapacity ();
+		public delegate void OnUpdateMinimum ();
 
 		/// <summary>
 		/// Get the ID. This is useful when finding an ItemGroup in the Inventory.
@@ -55,6 +56,29 @@ namespace InventorySystem {
 			}
 		}
 
+		int minimum = 0;
+
+		//// <summary>
+		/// Get the minimum number of items that must be in the intentory (default is 0)
+		/// </summary>
+		public int Minimum {
+			get { return minimum; }
+			set {
+				minimum = value;
+				if (onUpdateMinimum != null)
+					onUpdateMinimum ();
+			}
+		}
+
+		//// <summary>
+		/// Get/set whether or not the group has a minium value. If set to true, defaults to 0.
+		/// Setting the Minimum property will also affect this evaulation - this just wraps the Minimum property.
+		/// </summary>
+		public bool NoMinumum {
+			get { return Minimum == -int.MaxValue; }
+			set { Minimum = value ? -int.MaxValue : 0; }
+		}
+
 		/// <summary>
 		/// Get whether or not a capacity has been set.
 		/// </summary>
@@ -66,7 +90,8 @@ namespace InventorySystem {
 		/// Get the total number of items.
 		/// </summary>
 		public int Count { 
-			get { return items.Count; }
+			// get { return items.Count; }
+			get; protected set;
 		}
 
 		/// <summary>
@@ -74,6 +99,13 @@ namespace InventorySystem {
 		/// </summary>
 		public bool Empty { 
 			get { return Count == 0; }
+		}
+
+		//// <summary>
+		/// Returns true if the item count is at the minimum.
+		/// </summary>
+		public bool AtMinimum {
+			get { return Count == Minimum; }
 		}
 
 		/// <summary>
@@ -94,6 +126,7 @@ namespace InventorySystem {
 				}
 				float capacity = (float)Capacity;
 				float count = (float)Count;
+				// TODO: adjust this to work with nonzero minimums
 				return count / capacity;
 			}
 		}
@@ -123,6 +156,11 @@ namespace InventorySystem {
 		/// </summary>
 		public OnUpdateCapacity onUpdateCapacity;
 
+		//// <summary>
+		/// Called when the mimunum is changed.
+		/// </summary>
+		public OnUpdateMinimum onUpdateMinimum;
+
 		public abstract void Initialize (Inventory inventory);
 		public abstract void Set (int count);
 		public abstract void Add (int count);
@@ -145,7 +183,7 @@ namespace InventorySystem {
 	/// Contains InventoryItems of type T. Every type of Item should have a corresponding ItemGroup
 	/// and all new ItemGroups should inherit from this class.
 	/// </summary>
-	public class ItemGroup<T> : ItemGroup where T : Item, new () {
+	public abstract class ItemGroup<T> : ItemGroup where T : Item, new () {
 		
 		public override string ID { get { return ""; } }
 
@@ -158,8 +196,13 @@ namespace InventorySystem {
 		/// </summary>
 		public OnAdd<T> onAdd;
 
-		public ItemGroup (int startCount=0, int capacity=-1) {
+		public ItemGroup (int startCount=0, int capacity=-1, int minimum=0) {
 			Capacity = capacity;
+			Minimum = minimum;
+			if (startCount < minimum) {
+				Debug.LogWarning ("start count of the item group '" + ID + "' is less than the specified minimum. Setting it equal to minimum.");
+				startCount = minimum;
+			}
 			Set (startCount);
 		}
 
@@ -222,6 +265,7 @@ namespace InventorySystem {
 				newItems.RemoveAt (0);
 			}
 			items.AddRange (addedItems);
+			Count += addedItems.Count;
 
 			SendAddMessage (addedItems.ConvertAll (x => (T)x));
 			SendUpdateMessage ();
@@ -234,7 +278,7 @@ namespace InventorySystem {
 		/// </summary>
 		/// <param name="count">The number of items to remove</param>
 		public override void Remove (int count) {
-			if (count <= 0) return;
+			// if (count <= 0) return;
 			for (int i = 0; i < count-1; i ++) {
 				Remove (null, false);
 			}
@@ -248,18 +292,28 @@ namespace InventorySystem {
 		/// <returns>The removed Item (null if the item was not in the group)</returns>
 		public override Item Remove (Item item=null, bool sendUpdate=true) {
 			
-			if (Empty) return null;
-			Item removedItem = items[0] ?? item;
-			if (item == null) {
-				items.RemoveAt (0);
-			} else {
+			if (AtMinimum) return null;
+
+			Item removedItem = null;
+
+			if (item != null) {
+
+				// If a specific item was passed in, remove that item
 				items.Remove (item);
+				removedItem = item;
+			} else if (items.Count > 0) {
+
+				// Otherwise remove the item at position 0
+				removedItem = items[0];
+				items.RemoveAt (0);
 			}
+
+			Count --;
 
 			SendRemoveMessage ();
 			if (sendUpdate) SendUpdateMessage ();
 			if (Empty) SendEmptyMessage ();
-			
+
 			return removedItem;
 		}
 

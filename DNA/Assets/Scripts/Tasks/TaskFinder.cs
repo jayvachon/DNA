@@ -35,17 +35,28 @@ namespace DNA.Tasks {
 		}
 
 		// Checks for matches on the path element's connections
-		public bool TaskFromConnections (PathElement elem, out MatchResult result) {
+		// public bool TaskFromConnections (PathElement elem, out MatchResult result) {
+		public bool TaskFromConnections (PathElement elem, out PathElement destination, out MatchResult result) {
 
+			destination = null;
+			result = null;
+
+			// Convert to point
+			// If conversion fails (because elem is a Connect and no points under construction are connected) then skip
 			GridPoint point = ConnectionToPoint (elem);
 			if (point == null) {
-				result = null;
 				return false;
 			}
 
+			// If the connected point is under construction, move to it
+			if (point.State == DevelopmentState.UnderConstruction) {
+				destination = point;
+				return true;
+			}
+
+			// If there's a connection under construction, begin construction
 			Connection connection = point.Connections.Find (x => x.State == DevelopmentState.UnderConstruction);
 			if (connection == null) {
-				result = null;
 				return false;
 			}
 

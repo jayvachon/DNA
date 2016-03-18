@@ -356,6 +356,7 @@
      <Compile Include="Assets\Scripts\Utilities\Extensions\ExtensionMethods.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\MaterialsExtended.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\TrigMap.cs" />
+     <Compile Include="Assets\Scripts\Utilities\LowPassFilter.cs" />
      <Compile Include="Assets\Scripts\Utilities\Misc\INameable.cs" />
      <Compile Include="Assets\Scripts\Utilities\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Utilities\Misc\ObjectColor.cs" />

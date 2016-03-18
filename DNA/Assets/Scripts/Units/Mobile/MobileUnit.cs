@@ -143,8 +143,12 @@ namespace DNA.Units {
 			} else if (TaskFinder.TaskFromPathElement (currentElement, out match)) {
 				StartMatch (match);
 				return true;
-			} else if (TaskFinder.TaskFromConnections (currentElement, out match)) {
-				StartMatch (match);
+			} else if (TaskFinder.TaskFromConnections (currentElement, out destination, out match)) {
+				if (destination != null) {
+					SetDestination (destination);
+				} else if (match != null) {
+					StartMatch (match);
+				}
 				return true;
 			} else if (TaskFinder.NearestPairFromDisabledTask (currentElement, out destination)) {
 				SetDestination (destination);
@@ -248,7 +252,7 @@ namespace DNA.Units {
 		
 		public override void OnSelect () {
 			base.OnSelect ();
-			Scale = Scale * 1.05f; // this ensures that the selected unit shows up in front of any others it's overlapping
+			Scale = Scale * 1.05f; // this ensures that the unit, when selected, shows up in front of any others it's overlapping
 		}
 
 		public override void OnUnselect () {

@@ -19,12 +19,11 @@ public class MainCamera : MBRefs {
 
 	public Transform center;
 
+	LowPassFilter lpfHorizontal = new LowPassFilter ();
+	LowPassFilter lpfVertical = new LowPassFilter ();
 	float[] zConstraints = new [] { -80f, -5f };
 	float[] zoomConstraints = new[] { 15f, 80f };
-
-	void Awake () {
-		Events.instance.AddListener<PointerDownEvent> (OnPointerDownEvent);
-	}
+	bool dragging = false;
 
 	void Update () {
 		
@@ -44,11 +43,15 @@ public class MainCamera : MBRefs {
 		Vector3 look = center.position;
 		look.y = yLook;
 		transform.LookAt (look);
-	}
 
-	void OnPointerDownEvent (PointerDownEvent e) {
-		if (e.data.button == PointerEventData.InputButton.Right) {
+		if (Input.GetMouseButtonDown (1)) {
+			dragging = true;
 			StartCoroutine (CoMoveDrag (Input.mousePosition));
+		}
+		if (dragging && !Input.GetMouseButton (1)) {
+			dragging = false;
+			lpfHorizontal.Reset ();
+			lpfVertical.Reset ();
 		}
 	}
 
@@ -57,11 +60,16 @@ public class MainCamera : MBRefs {
 		float startRotation = center.localEulerAngles.y;
 		float startPosition = LocalPosition.z;
 
-		while (Input.GetMouseButton (1)) {
+		while (dragging) {
+
 			Vector3 delta = Camera.ScreenToViewportPoint (Input.mousePosition - start);
-			center.SetLocalEulerAnglesY (startRotation + delta.x * 90);
-			// TODO: smoothing
-			transform.SetLocalPositionZ (startPosition - delta.y * 30);
+
+			float vOffset = lpfVertical.InputSignal (delta.x);
+			center.SetLocalEulerAnglesY (startRotation + vOffset * 90);
+
+			float hOffset = lpfHorizontal.InputSignal (delta.y);
+			transform.SetLocalPositionZ (startPosition - hOffset * 50f);
+
 			yield return null;
 		}
 	}

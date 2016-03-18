@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using InventorySystem;
@@ -16,8 +16,8 @@ namespace DNA {
 			get {
 				if (inventory == null) {
 					inventory = new Inventory ();
-					inventory.Add (new MilkshakeLoanGroup (3)).onUpdate += OnUpdate;
-					inventory.Add (new CoffeeLoanGroup (3)).onUpdate += OnUpdate;
+					inventory.Add (new MilkshakeLoanGroup (4)).onUpdate += OnUpdate;
+					inventory.Add (new CoffeeLoanGroup (4)).onUpdate += OnUpdate;
 					Co.Start (repaymentTime, OnElapseTime, ElapseTime);
 				}
 				return inventory;

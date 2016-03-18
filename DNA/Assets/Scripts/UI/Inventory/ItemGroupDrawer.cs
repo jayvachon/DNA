@@ -32,11 +32,12 @@ namespace DNA {
 
 		void OnUpdate () {
 			if (Group.ID == "Laborer") {
-				countText.text = "Pop: " + Group.Count.ToString () + "/" + Group.Capacity.ToString ();
+				countText.text = Group.Count.ToString () + "/" + Group.Capacity.ToString ();
 			} else {
-				string suffix = "M";
+				string suffix = "";
+				/*string suffix = "M";
 				if (Group.ID == "Coffee")
-					suffix = "C";
+					suffix = "C";*/
 				countText.text = Group.Count.ToString () + suffix;
 			}
 		}

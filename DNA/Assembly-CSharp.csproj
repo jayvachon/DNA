@@ -341,7 +341,6 @@
      <Compile Include="Assets\Scripts\Units\Static\MilkshakePool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
-     <Compile Include="Assets\Scripts\Units\Static\StaticUnitsManager.cs" />
      <Compile Include="Assets\Scripts\Units\Static\University.cs" />
      <Compile Include="Assets\Scripts\Upgrades\CoffeeCapacity.cs" />
      <Compile Include="Assets\Scripts\Upgrades\LaborerSpeed.cs" />

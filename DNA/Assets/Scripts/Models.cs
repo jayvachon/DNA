@@ -64,7 +64,8 @@ namespace DNA.Models {
 				Title = "Road",
 				Description = "Roads connect buildings so that laborers can reach them.",
 				Emissions = 0.01f,
-				RemovesFogOfWar = true
+				RemovesFogOfWar = true,
+				Unlocked = true
 			});
 
 			units.Add (typeof (Laborer), new UnitSettings {
@@ -93,7 +94,8 @@ namespace DNA.Models {
 				Title = "Milkshake Derrick",
 				Description = "Milkshakes collected from a Derrick can be used to construct buildings.",
 				Emissions = 1f,
-				TakesDamage = true
+				TakesDamage = true,
+				Unlocked = true
 			});
 
 			units.Add (typeof (CoffeePlant), new UnitSettings {
@@ -101,7 +103,8 @@ namespace DNA.Models {
 				Title = "Coffee Plant",
 				Description = "Deliver coffee to the Giving Tree to create more laborers.",
 				Emissions = 0f,
-				TakesDamage = false
+				TakesDamage = false,
+				Unlocked = false
 			});
 
 			units.Add (typeof (University), new UnitSettings {
@@ -109,7 +112,8 @@ namespace DNA.Models {
 				Title = "University",
 				Description = "Upgrade units by conducting research at the University.",
 				Emissions = 0.5f,
-				TakesDamage = true
+				TakesDamage = true,
+				Unlocked = true
 			});
 
 			units.Add (typeof (Clinic), new UnitSettings {
@@ -117,7 +121,8 @@ namespace DNA.Models {
 				Title = "Clinic",
 				Description = "Elders live longer when they're receiving care at a Clinic.",
 				Emissions = 0.75f,
-				TakesDamage = true
+				TakesDamage = true,
+				Unlocked = false
 			});
 
 			units.Add (typeof (Flower), new UnitSettings {
@@ -134,7 +139,8 @@ namespace DNA.Models {
 				Title = "Collection Center",
 				Description = "Resources can be desposited here so that laborers don't have to go all the way back to the Giving Tree.",
 				Emissions = 0.3f,
-				TakesDamage = true
+				TakesDamage = true,
+				Unlocked = true
 			});
 
 			units.Add (typeof (DrillablePlot), new UnitSettings {
@@ -183,7 +189,8 @@ namespace DNA.Models {
 				Title = "House",
 				Description = "Houses increase the amount of laborers you can birth",
 				Emissions = 0.1f,
-				TakesDamage = true
+				TakesDamage = true,
+				Unlocked = true
 			});
 
 			units.Add (typeof (Apartment), new UnitSettings {
@@ -191,7 +198,8 @@ namespace DNA.Models {
 				Title = "Apartment",
 				Description = "Apartments increase the amount of laborers you can birth",
 				Emissions = 0.3f,
-				TakesDamage = true
+				TakesDamage = true,
+				Unlocked = false
 			});
 
 			units.Add (typeof (Seed), new UnitSettings {
@@ -539,8 +547,6 @@ namespace DNA.Models {
 				Symbol = "reseach_milkshake",
 				Title = "+1 milkshake capacity",
 				Description = "Laborers will be able to carry more milkshake",
-				AutoStart = false,
-				Repeat = false,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 50 }
@@ -555,6 +561,22 @@ namespace DNA.Models {
 			});
 
 			/**
+			 *	ResearchUnit
+			 */
+
+			tasks.Add (typeof (ResearchUnit<Apartment>), new CostTaskSettings {
+				Symbol = "research_apartment",
+				Title = "Apartment",
+				Description = "Apartments hold more laborers and are more efficiently priced",
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 50 },
+						{ "Milkshakes", 30 }
+					}
+				}
+			});
+
+			/**
 			 *	Misc
 			 */
 
@@ -562,9 +584,6 @@ namespace DNA.Models {
 				Title = "Flee Tree",
 				Description = "Goes to the next level",
 				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 1 }
@@ -576,9 +595,6 @@ namespace DNA.Models {
 				Title = "Birth road",
 				Description = "Builds a road",
 				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 15 }
@@ -806,11 +822,12 @@ namespace DNA.Models {
 
 	public class UnitSettings {
 		public string Symbol { get; set; }
-		public string Title { get; set; }
-		public string Description { get; set; }
-		public float Emissions { get; set; }
-		public bool TakesDamage { get; set; }
-		public bool RemovesFogOfWar { get; set; }
+		public string Title { get; set; }			// Display name
+		public string Description { get; set; }		// A description to display in the ui
+		public float Emissions { get; set; }		// (%) environmental impact of the unit (0 = no impact, 1 = most impact)
+		public bool TakesDamage { get; set; }		// Whether or not the unit is damaged by water
+		public bool RemovesFogOfWar { get; set; }	// True if the unit, when built, removes the fog of war surrounding it
+		public bool Unlocked { get; set; }			// True if the unit has been unlocked through research
 	}
 
 	public class LoanSettings {

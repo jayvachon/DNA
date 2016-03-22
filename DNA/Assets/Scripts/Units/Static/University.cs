@@ -22,13 +22,10 @@ namespace DNA.Units {
 			Inventory = Player.Instance.Inventory;
 		}
 
-		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
-			a.Add (new AcceptCollectItem<LaborGroup> ());
-		}
-
 		protected void OnInitPerformableTasks (PerformableTasks p) {
-			p.Add (new ResearchUpgrade<CoffeeCapacity> ());
-			p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
+			// p.Add (new ResearchUpgrade<CoffeeCapacity> ());
+			// p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
+			p.Add (new ResearchUnit<Apartment> ());
 			p.Add (new UpgradeLevee ());
 			// p.Add (new UpgradeFogOfWar ());
 		}

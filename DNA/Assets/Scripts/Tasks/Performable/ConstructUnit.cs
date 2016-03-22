@@ -22,6 +22,10 @@ namespace DNA.Tasks {
 
 	public class ConstructUnit<T> : ConstructUnit where T : Unit, IPathElementObject {
 
+		public override bool Enabled {
+			get { return CanAfford && DataManager.GetUnitSettings (typeof (T)).Unlocked; }
+		}
+
 		protected override void OnEnd () {
 			Purchase ();
 			try {

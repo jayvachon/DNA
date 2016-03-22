@@ -29,6 +29,7 @@ namespace DNA {
 
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
 			points.SetUnitAtIndex<Flower> (2);
+			// points.SetUnitAtIndex<University> (3);
 			points.SetUnitAtIndex<MilkshakePool> (15);
 
 			ConnectionContainer c = ConnectionsManager.GetContainer (points.GetConnectionsAtIndex (2)[3]);
@@ -39,6 +40,7 @@ namespace DNA {
 		void CreateCoffeePlants () {
 
 			int first = Random.Range (6, 20);
+			if (first == 15) first += 1;
 			points.SetUnitAtIndex<CoffeePlant> (first);
 
 			int pointsCount = points.Points.Count;

@@ -60,7 +60,6 @@ namespace DNA.Paths {
 					pc.SetObject<Plot> ();
 				}
 
-				pc.index = i;
 				points.Add (pc);
 
 				if (i % blockSize == 0)

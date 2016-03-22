@@ -10,8 +10,6 @@ namespace DNA.Paths {
 	[RequireComponent (typeof (BoxCollider))]
 	public class PointContainer : PathElementContainer {
 
-		public int index;
-
 		GridPoint point;
 		public GridPoint Point { 
 			get { return point; }

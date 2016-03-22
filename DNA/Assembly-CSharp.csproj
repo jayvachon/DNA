@@ -216,6 +216,7 @@
      <Compile Include="Assets\Scripts\Tasks\Abstract\InventoryTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\PerformerTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Abstract\Task.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Abstract\UpgradeTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptDeliverItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskAcceptor.cs" />

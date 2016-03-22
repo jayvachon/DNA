@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace DNA.Tasks {
 
-	public class UpgradeLevee : CostTask {
+	public class UpgradeLevee : UpgradeTask {
 
 		Levee levee = null;
 		Levee Levee {

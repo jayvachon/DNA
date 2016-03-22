@@ -57,6 +57,10 @@ namespace DNA.InputSystem {
 			SendUpdateSelectionMessage ();
 		}
 
+		public static void Reselect () {
+			SendUpdateSelectionMessage ();
+		}
+
 		public static void ClickSelectable (ISelectable selectable, PointerEventData e) {
 			
 			SelectSettings settings = selectable.SelectSettings;

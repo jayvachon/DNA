@@ -52,11 +52,9 @@ namespace DNA.Tasks {
 			}
 		}
 
-		// For testing (?)
 		public bool Performing {
 			get { return performing; }
 		}
-		// End testing
 
 		public OnStart onStart;
 		public OnEnd onEnd;

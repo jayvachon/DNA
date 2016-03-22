@@ -2,8 +2,11 @@
 using System.Collections;
 using DNA.Tasks;
 using InventorySystem;
+using DNA.InputSystem;
 
 namespace DNA.Units {
+
+	// TODO: show upgrade progress when task is started
 
 	public class University : StaticUnit, ITaskPerformer {
 
@@ -28,6 +31,25 @@ namespace DNA.Units {
 			p.Add (new ResearchUnit<Apartment> ());
 			p.Add (new UpgradeLevee ());
 			// p.Add (new UpgradeFogOfWar ());
+
+			foreach (var task in PerformableTasks.ActiveTasks) {
+				task.Value.onStart += OnStartUpgrade;
+				task.Value.onComplete += OnCompleteUpgrade;
+			}
+		}
+
+		void OnStartUpgrade (PerformerTask p) {
+			SetUpgradeInProgress (true);
+		}
+
+		void OnCompleteUpgrade (PerformerTask p) {
+			SetUpgradeInProgress (false);
+		}
+
+		void SetUpgradeInProgress (bool inProgress) {
+			foreach (var task in PerformableTasks.ActiveTasks)
+				((UpgradeTask)task.Value).UpgradeInProgress = inProgress;
+			SelectionHandler.Reselect (); // hack: force a redraw in the ui
 		}
 	}
 }

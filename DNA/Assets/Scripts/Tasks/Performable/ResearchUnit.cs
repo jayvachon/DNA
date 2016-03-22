@@ -4,10 +4,10 @@ using DNA.Units;
 
 namespace DNA.Tasks {
 
-	public class ResearchUnit<T> : CostTask where T : Unit {
+	public class ResearchUnit<T> : UpgradeTask where T : Unit {
 
 		public override bool Enabled {
-			get { return CanAfford && !DataManager.GetUnitSettings (typeof (T)).Unlocked; }
+			get { return CanAfford && !UpgradeInProgress && !DataManager.GetUnitSettings (typeof (T)).Unlocked; }
 		}
 
 		public ResearchUnit () : base () {

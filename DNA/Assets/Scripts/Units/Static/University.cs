@@ -21,6 +21,9 @@ namespace DNA.Units {
 			}
 		}
 
+		ProgressBar pbar;
+		bool upgrading = false;
+
 		void Awake () {
 			Inventory = Player.Instance.Inventory;
 		}
@@ -28,6 +31,7 @@ namespace DNA.Units {
 		protected void OnInitPerformableTasks (PerformableTasks p) {
 			// p.Add (new ResearchUpgrade<CoffeeCapacity> ());
 			// p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
+			p.Add (new ResearchUpgrade<LaborerSpeed> ());
 			p.Add (new ResearchUnit<Apartment> ());
 			p.Add (new UpgradeLevee ());
 			// p.Add (new UpgradeFogOfWar ());
@@ -40,16 +44,31 @@ namespace DNA.Units {
 
 		void OnStartUpgrade (PerformerTask p) {
 			SetUpgradeInProgress (true);
+			pbar = UI.Instance.CreateProgressBar (Position);
+			pbar.SetColor (Color.green);
+			StartCoroutine (CoUpdateUpgradeProgress (p));
 		}
 
 		void OnCompleteUpgrade (PerformerTask p) {
 			SetUpgradeInProgress (false);
+			UI.Instance.DestroyProgressBar (pbar); 
+			upgrading = false;
 		}
 
 		void SetUpgradeInProgress (bool inProgress) {
 			foreach (var task in PerformableTasks.ActiveTasks)
 				((UpgradeTask)task.Value).UpgradeInProgress = inProgress;
 			SelectionHandler.Reselect (); // hack: force a redraw in the ui
+		}
+
+		IEnumerator CoUpdateUpgradeProgress (PerformerTask task) {
+
+			upgrading = true;
+
+			while (upgrading) {
+				pbar.SetProgress (task.Progress);
+				yield return null;
+			}
 		}
 	}
 }

@@ -120,6 +120,7 @@ namespace DNA.Units {
 			if (elem != currentElement) {
 				StopMatch ();
 				SetDestination (elem);
+				Debug.Log (elem);
 			}
 		}
 

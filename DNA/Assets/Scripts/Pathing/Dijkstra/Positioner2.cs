@@ -267,11 +267,13 @@ namespace DNA.Paths {
 			get { return movement.Moving; }
 		}
 
-		float speed = 1f;
+		float speed = 1f; // %
 		public float Speed {
 			get { return speed; }
 			set { speed = value; }
 		}
+
+		float speedMultiplier = 1f; // upgradable value
 
 		Transform mover;
 		Settings settings = new Settings (1.25f, 2f);
@@ -285,6 +287,10 @@ namespace DNA.Paths {
 			movement.onStartRotation += OnStartRotation;
 			movement.onEndRotation += OnEndRotation;
 			path = new PathBehaviour (mover, settings, startPoint);
+
+			Upgrades.Instance.AddListener<LaborerSpeed> (
+				(LaborerSpeed u) => speedMultiplier = u.CurrentValue
+			);
 		}
 
 		public void RotateAroundPoint (float time) {
@@ -298,7 +304,7 @@ namespace DNA.Paths {
 			if (trajectory == null) {
 				movement.Stop ();
 			} else {
-				movement.SetTrajectory (new Trajectory (mover.position, trajectory[0], trajectory[1], settings.radius), Speed);
+				movement.SetTrajectory (new Trajectory (mover.position, trajectory[0], trajectory[1], settings.radius), Speed * speedMultiplier);
 				return true;
 			}
 			return false;

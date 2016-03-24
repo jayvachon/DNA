@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ProgressBar : MonoBehaviour {
@@ -6,11 +7,20 @@ public class ProgressBar : MonoBehaviour {
 	public RectTransform back;
 	public RectTransform mercury;
 
+	Image MercuryImage {
+		get { return mercury.GetComponent<Image> (); }
+	}
+
 	float fillSize;
 
 	void OnEnable () {
 		mercury.sizeDelta = back.sizeDelta;
 		fillSize = back.sizeDelta.x;
+		SetColor (Color.red);
+	}
+
+	public void SetColor (Color color) {
+		MercuryImage.color = color;
 	}
 
 	public void SetProgress (float p) {

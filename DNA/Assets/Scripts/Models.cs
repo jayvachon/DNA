@@ -524,12 +524,36 @@ namespace DNA.Models {
 			 *	ResearchUpgrade
 			 */
 
+			tasks.Add (typeof (ResearchUpgrade<LaborerSpeed>), new CostTaskSettings {
+				Symbol = "reseach_laborer_speed",
+				Title = "Faster Workers",
+				Description = "Laborers will move faster",
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 60 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 120 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 200 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 320 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 480 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 720 }
+					}
+				}
+			});
+
 			tasks.Add (typeof (ResearchUpgrade<CoffeeCapacity>), new CostTaskSettings {
 				Symbol = "reseach_coffee",
 				Title = "+1 coffee capacity",
 				Description = "Laborers will be able to carry more coffee",
-				AutoStart = false,
-				Repeat = false,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 30 }

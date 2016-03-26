@@ -52,6 +52,11 @@ namespace DNA.InputSystem {
 			Select (selectable);
 		}
 
+		public static void UnselectSingle (ISelectable selectable) {
+			if (selected.Contains (selectable))
+				Unselect (selectable);
+		}
+
 		public static void Clear () {
 			UnselectAll ();
 			SendUpdateSelectionMessage ();

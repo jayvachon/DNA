@@ -75,5 +75,23 @@ namespace DNA.Units {
 
 		protected virtual void OnInitAcceptableTasks (AcceptableTasks a) {}
 		protected virtual void OnSetFertility (int fertility) {}
+
+		#region ISelectable implementation
+		protected SelectSettings selectSettings;
+		public override SelectSettings SelectSettings {
+			get { 
+				if (selectSettings == null) {
+					selectSettings = new SelectSettings (
+						new List<System.Type> () {
+							typeof (Ground),
+							typeof (DNA.Paths.ConnectionContainer),
+							typeof (FogOfWar)
+						}
+					);
+				}
+				return selectSettings;
+			}
+		}
+		#endregion
 	}
 }

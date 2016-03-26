@@ -87,6 +87,9 @@ namespace DNA {
 			} else {
 				Point.OnSetObject += OnSetObject;
 			}
+
+			// this crashes the project
+			// Upgrades.Instance.AddListener<Eyesight> (UpgradeFadeLevel);
 		}
 
 		void Remove () {
@@ -158,7 +161,7 @@ namespace DNA {
 			state = State.Faded;
 		}
 
-		public static void UpgradeFadeLevel () {
+		void UpgradeFadeLevel (Eyesight u) {
 			fadeLevel += 1;
 			List<FogOfWar> fow = ObjectPool.GetActiveInstances<FogOfWar> ();
 			foreach (FogOfWar f in fow) {

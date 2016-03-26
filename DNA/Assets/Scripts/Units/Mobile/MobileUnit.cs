@@ -120,7 +120,6 @@ namespace DNA.Units {
 			if (elem != currentElement) {
 				StopMatch ();
 				SetDestination (elem);
-				Debug.Log (elem);
 			}
 		}
 
@@ -230,11 +229,17 @@ namespace DNA.Units {
 			}
 		}
 
+		protected override void OnEnable () {
+			base.OnEnable ();
+			Events.instance.AddListener<ClickConnectionEvent> (OnClickConnection);
+		}
+		
 		protected override void OnDisable () {
 			base.OnDisable ();
 			positioner.onArriveAtDestination -= OnArriveAtDestination;
 			positioner.onEnterPoint -= OnEnterPoint;
 			positioner.onExitPoint -= OnExitPoint;
+			Events.instance.RemoveListener<ClickConnectionEvent> (OnClickConnection);
 		}
 
 		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
@@ -260,6 +265,12 @@ namespace DNA.Units {
 			base.OnUnselect ();
 			Scale = startScale;
 		}
+
+		void OnClickConnection (ClickConnectionEvent e) {
+			if (e.Connection.Object == null)
+				SelectionHandler.UnselectSingle (this);
+		}
+
 		#endregion
 
 		#region IPathElementVisitor implementation

@@ -128,7 +128,7 @@ namespace DNA.Units {
 					selectSettings = new SelectSettings (
 						new List<System.Type> () {
 							typeof (Ground),
-							typeof (DNA.Paths.ConnectionContainer),
+							// typeof (DNA.Paths.ConnectionContainer),
 							typeof (FogOfWar)
 						}
 					);

@@ -8,7 +8,7 @@ public class ProgressBar : MonoBehaviour {
 	public RectTransform mercury;
 
 	Image MercuryImage {
-		get { return mercury.GetComponent<Image> (); }
+		get { return back.GetComponent<Image> (); }
 	}
 
 	float fillSize;

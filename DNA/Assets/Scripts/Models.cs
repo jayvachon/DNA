@@ -672,10 +672,6 @@ namespace DNA.Models {
 			tasks.Add (typeof (UpgradeFogOfWar), new CostTaskSettings {
 				Title = "Increase eyesight",
 				Description = "Reveal more from fog of war",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 100 },

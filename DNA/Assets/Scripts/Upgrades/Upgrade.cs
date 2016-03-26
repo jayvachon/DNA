@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class Upgrade {
 	public object CurrentValue { get { return null; } }
-	public abstract int CurrentLevel { get; set; }
+	public virtual int CurrentLevel { get; set; }
 }
 
 public abstract class Upgrade<T> : Upgrade {

@@ -34,6 +34,7 @@ namespace DNA.Units {
 			p.Add (new ResearchUpgrade<LaborerSpeed> ());
 			p.Add (new ResearchUnit<Apartment> ());
 			p.Add (new UpgradeLevee ());
+			// p.Add (new ResearchUpgrade<Eyesight> ());
 			// p.Add (new UpgradeFogOfWar ());
 
 			foreach (var task in PerformableTasks.ActiveTasks) {

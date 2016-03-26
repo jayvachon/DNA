@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using System.IO;
+using System.Linq;
 using UnityEditor;
 #endif
 
@@ -14,15 +15,6 @@ public class ObjectPool {
 	List<MonoBehaviour> active = new List<MonoBehaviour> ();
 
 	MonoBehaviour prefab;
-
-	#if UNITY_EDITOR
-	[MenuItem ("Object Pool/Refresh Resources")]
-	static void RefreshResources () {
-		// TODO: for each asset in resources/prefabs, delete the asset and re-copy the asset in the project directory ONLY IF the asset exists in the project directory
-		// (right now this is just deleting all the prefabs so that they can be re-created at runtime)
-		PoolIOHandler.DeletePrefabsInResources ();
-	}
-	#endif
 
 	public void Init<T> (string id) where T : MonoBehaviour {
 		prefab = PoolIOHandler.LoadPrefab<T> (id);
@@ -68,11 +60,13 @@ public class ObjectPool {
 
 		active.Add (m);
 		m.gameObject.SetActive (true);
+		m.transform.SetParent (null);
 
 		return m;
 	}
 
 	void ReleaseInstance (MonoBehaviour instance) {
+		// instance.transform.SetParent (InactiveInstancesContainer.Instance.Transform);
 		instance.gameObject.SetActive (false);
 		active.Remove (instance);
 		inactive.Push (instance);
@@ -92,13 +86,16 @@ public class ObjectPool {
 		return t;
 	}
 
+	// TODO: these appear to break if you've been using generic methods for e.g. instantiation (is it because (Clone) is being added to the name?)
 	public static void Destroy (string id) {
 		ObjectPool op = GetPool (id);
 		if (op.active.Count > 0)
 			op.ReleaseInstance (op.active[0]);
 	}
 
+	// TODO: these appear to break if you've been using generic methods for e.g. instantiation (is it because (Clone) is being added to the name?)
 	public static void Destroy (GameObject go) {
+		Debug.LogWarning ("Unstable - use generic methods instead");
 		MonoBehaviour m = go.GetComponent<MonoBehaviour> ();
 		ObjectPool op = GetPool (m.GetType ().Name);
 		op.ReleaseInstance (m);
@@ -122,11 +119,44 @@ public class ObjectPool {
 		GetPool<T> ().ReleaseInstance (go.GetComponent<MonoBehaviour> ());
 	}
 
+	// TODO: these appear to break if you've been using generic methods for e.g. instantiation (is it because (Clone) is being added to the name?)
+	public static void DestroyChildren (Transform t) {
+
+		List<Transform> children = new List<Transform> ();
+		foreach (Transform child in t) children.Add (child);
+
+		for (int i = 0; i < children.Count; i ++)
+			Destroy (children[i]);
+	}
+
+	public static void DestroyChildren<T> (Transform t, System.Action<T> onDestroy=null) where T : MonoBehaviour {
+
+		List<Transform> children = new List<Transform> ();
+		foreach (Transform child in t) children.Add (child);
+
+		for (int i = 0; i < children.Count; i ++) {
+			if (onDestroy != null)
+				onDestroy (children[i].GetComponent<T> ());
+			Destroy<T> (children[i]);
+		}
+	}
+
+	public static void DestroyChildrenWithCriteria<T> (Transform t, System.Func<T, bool> criteria) where T : MonoBehaviour {
+
+		List<T> children = new List<T> ();
+		foreach (Transform child in t) children.Add (child.GetComponent<T> ());
+
+		for (int i = 0; i < children.Count; i ++) {
+			if (criteria (children[i])) Destroy<T> (children[i]);
+		}
+	}
+
 	public static List<T> GetActiveInstances<T> () where T : MonoBehaviour {
 		return GetPool<T> ().active.ConvertAll (x => (T)x);
 	}
 }
 
+[InitializeOnLoad]
 public static class PoolIOHandler {
 
 	static string ApplicationPath {
@@ -137,7 +167,7 @@ public static class PoolIOHandler {
 		get { return ApplicationPath + "/Resources/Prefabs/"; }
 	}
 
-	static string Path {
+	static string PrefabsPath {
 		get { return "Prefabs/"; }
 	}
 
@@ -178,14 +208,91 @@ public static class PoolIOHandler {
 	}
 
 	static MonoBehaviour LoadMonoBehaviour (string id) {
-		return Resources.Load (Path + id, typeof (MonoBehaviour)) as MonoBehaviour;
+		return Resources.Load (PrefabsPath + id, typeof (MonoBehaviour)) as MonoBehaviour;
 	}
 
 	#if UNITY_EDITOR
+
+	const string MONITOR_ITEM = "Object Pool/Monitor prefab changes";
+	static bool monitorEnabled;
+
+	static PoolIOHandler () {
+		PoolIOHandler.monitorEnabled = EditorPrefs.GetBool (PoolIOHandler.MONITOR_ITEM, true);
+		EditorApplication.delayCall += () => {
+			SetMonitorEnabled (monitorEnabled);
+		};
+	}
+
+	static void PrefabUpdated (GameObject go) {
+
+		GameObject prefab = PrefabUtility.GetPrefabParent (go) as GameObject;
+		string prefabPath = AssetDatabase.GetAssetPath (prefab);
+
+		// Skip if the prefab being updated is in the Resources directory
+		if (prefabPath.Contains ("Resources"))
+			return;
+		
+		string prefabName = Path.GetFileNameWithoutExtension (prefabPath);
+		string resourcePath = GetPrefabInResources (prefabName);
+		
+		// Only update if this prefab has been added to the Resources directory
+		if (resourcePath != null) {
+			AssetDatabase.DeleteAsset ("Assets" + resourcePath.Replace (Application.dataPath, ""));
+			AssetDatabase.CopyAsset (prefabPath, "Assets/Resources/Prefabs/" + prefabName + ".prefab");
+			AssetDatabase.Refresh ();
+		}
+	}
+
+	public static void SetMonitorEnabled (bool enabled) {
+		Menu.SetChecked (PoolIOHandler.MONITOR_ITEM, enabled);
+		EditorPrefs.SetBool (PoolIOHandler.MONITOR_ITEM, enabled);
+		PoolIOHandler.monitorEnabled = enabled;
+		if (enabled)
+			PrefabUtility.prefabInstanceUpdated += PrefabUpdated;
+		else
+			PrefabUtility.prefabInstanceUpdated -= PrefabUpdated;
+	}
+
+	[MenuItem (PoolIOHandler.MONITOR_ITEM)]
+	static void ToggleMonitor () {
+		SetMonitorEnabled (!PoolIOHandler.monitorEnabled);
+	}
+
+	[MenuItem ("Object Pool/Refresh Prefabs")]
+	static void RefreshResources () {
+
+		// Removes and replaces all the prefabs in the Resources directory
+		// This will be very slow for a project with many prefabs...
+
+		string[] files = GetPrefabsInResources ();
+		foreach (string f in files) {
+
+			string fileName = Path.GetFileNameWithoutExtension (f);
+			string projectPath = FindPrefabDirectory (fileName, ApplicationPath);
+
+			AssetDatabase.DeleteAsset ("Assets" + f.Replace (Application.dataPath, ""));
+
+			string p = "Assets" + projectPath.Replace (Application.dataPath, "");
+
+			AssetDatabase.CopyAsset (p, "Assets/Resources/Prefabs/" + fileName + ".prefab");
+			AssetDatabase.Refresh ();
+		}
+	}
+	
 	public static void DeletePrefabsInResources () {
-		string[] files = Directory.GetFiles (ResourcesPath, "*.prefab");
+		string[] files = GetPrefabsInResources ();
 		foreach (string f in files)
 			AssetDatabase.DeleteAsset ("Assets" + f.Replace (Application.dataPath, ""));
+	}
+
+	public static string[] GetPrefabsInResources () {
+		return Directory.GetFiles (ResourcesPath, "*.prefab");
+	}
+
+	public static string GetPrefabInResources (string prefabName) {
+		return GetPrefabsInResources ()
+			.ToList<string> ()
+			.Find (x => x.Contains (prefabName + ".prefab"));
 	}
 
 	static string FindPrefabDirectory (string id, string path) {
@@ -212,4 +319,32 @@ public static class PoolIOHandler {
 		Object.DestroyImmediate (go);
 	}
 	#endif
+}
+
+public class InactiveInstancesContainer : MonoBehaviour {
+
+	static InactiveInstancesContainer instance = null;
+	static public InactiveInstancesContainer Instance {
+		get {
+			if (instance == null) {
+				instance = UnityEngine.Object.FindObjectOfType (typeof (InactiveInstancesContainer)) as InactiveInstancesContainer;
+				if (instance == null) {
+					GameObject go = new GameObject ("InactiveInstancesContainer");
+					go.hideFlags = HideFlags.HideInHierarchy;
+					DontDestroyOnLoad (go);
+					instance = go.AddComponent<InactiveInstancesContainer> ();
+				}
+			}
+			return instance;
+		}
+	}
+
+	Transform myTransform;
+	public Transform Transform {
+		get {
+			if (myTransform == null)
+				myTransform = transform;
+			return myTransform;
+		}
+	}
 }

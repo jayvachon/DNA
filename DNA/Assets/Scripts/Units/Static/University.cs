@@ -33,6 +33,7 @@ namespace DNA.Units {
 			// p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
 			p.Add (new ResearchUpgrade<LaborerSpeed> ());
 			p.Add (new ResearchUnit<Apartment> ());
+			p.Add (new ResearchUnit<CollectionCenter> ());
 			p.Add (new UpgradeLevee ());
 			p.Add (new ResearchUpgrade<Eyesight> ());
 

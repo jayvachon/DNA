@@ -140,7 +140,7 @@ namespace DNA.Models {
 				Description = "Resources can be desposited here so that laborers don't have to go all the way back to the Giving Tree.",
 				Emissions = 0.3f,
 				TakesDamage = true,
-				Unlocked = true
+				Unlocked = false
 			});
 
 			units.Add (typeof (DrillablePlot), new UnitSettings {
@@ -596,6 +596,18 @@ namespace DNA.Models {
 					new Dictionary<string, int> {
 						{ "Coffee", 50 },
 						{ "Milkshakes", 30 }
+					}
+				}
+			});
+
+			tasks.Add (typeof (ResearchUnit<CollectionCenter>), new CostTaskSettings {
+				Symbol = "research_collection",
+				Title = "Collection Center",
+				Description = "Workers can deliver resources to the collection center instead of going to the Giving Tree",
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Coffee", 60 },
+						{ "Milkshakes", 90 }
 					}
 				}
 			});

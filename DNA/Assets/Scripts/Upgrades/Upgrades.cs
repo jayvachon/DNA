@@ -60,7 +60,11 @@ public class Upgrades {
 		}
 	}
 
-	public void SetLevel<T> (int level=-1) where T : Upgrade {
+	public void NextLevel<T> () where T : Upgrade {
+		SetLevel<T> (-1);
+	}
+
+	public void SetLevel<T> (int level) where T : Upgrade {
 		KeyValuePair<Upgrade, UpgradeDelegate> del;
 		if (delegates.TryGetValue (typeof (T), out del)) {
 			if (level == -1) {
@@ -69,6 +73,15 @@ public class Upgrades {
 				del.Key.CurrentLevel = level;
 			}
 			del.Value.Invoke (del.Key);
+		}
+	}
+
+	public T GetUpgrade<T> () where T : Upgrade {
+		KeyValuePair<Upgrade, UpgradeDelegate> del;
+		if (delegates.TryGetValue (typeof (T), out del)) {
+			return (T)del.Key;
+		} else {
+			throw new System.Exception ("Could not find upgrade of type " + typeof (T));
 		}
 	}
 }

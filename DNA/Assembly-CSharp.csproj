@@ -346,6 +346,7 @@
      <Compile Include="Assets\Scripts\Upgrades\CoffeeCapacity.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Eyesight.cs" />
      <Compile Include="Assets\Scripts\Upgrades\LaborerSpeed.cs" />
+     <Compile Include="Assets\Scripts\Upgrades\LeveeHeight.cs" />
      <Compile Include="Assets\Scripts\Upgrades\MilkshakeCapacity.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Upgrade.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Upgrades.cs" />

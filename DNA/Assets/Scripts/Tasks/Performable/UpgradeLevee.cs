@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace DNA.Tasks {
 
+	// TODO: have this inherit from ResearchUpgrade (not doing it now bc doing so would set the duration of the task)
 	public class UpgradeLevee : UpgradeTask {
 
 		Levee levee = null;
@@ -14,9 +15,13 @@ namespace DNA.Tasks {
 			}
 		}
 
+		public override int Level {
+			get { return Upgrades.Instance.GetUpgrade<LeveeHeight> ().CurrentLevel; }
+		}
+
 		protected override void OnEnd () {
 			Purchase ();
-			Levee.UpgradeHeight ();
+			Upgrades.Instance.NextLevel<LeveeHeight> ();
 		}
 	}
 }

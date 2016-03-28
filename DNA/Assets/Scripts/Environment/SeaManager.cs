@@ -47,7 +47,7 @@ namespace DNA {
 
 		[DebuggableMethod ()]
 		void UpgradeLevee () {
-			levee.UpgradeHeight ();
+			Upgrades.Instance.NextLevel<LeveeHeight> ();
 		}
 
 		void Update () {

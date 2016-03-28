@@ -198,15 +198,21 @@ namespace DNA.Paths {
 
 			void CalculatePath () {
 
+				// Check if mover is already moving along a path
 				if (path != null && path.Count > 0) {
 					GridPoint nearest = NearestPoint ();
 					if (nearest == null) {
+						
+						// Mover is between points and gets redirected (this is buggy)
 						startPoint = path[pathPosition];
 					} else {
+
+						// Mover is at a point and gets redirected
 						startPoint = nearest;
 					}
 				}
 
+				// Ignore if the mover is already at the destination
 				if (startPoint == endPoint) {
 					path.Clear ();
 					return;
@@ -219,6 +225,8 @@ namespace DNA.Paths {
 				}
 			}
 
+			// Returns a point if the mover is within the radius of the point
+			// finding none, returns null
 			GridPoint NearestPoint () {
 				Vector3 moverPosition = mover.position;
 				GridPoint origin = path[pathPosition-1];
@@ -249,14 +257,6 @@ namespace DNA.Paths {
 		public GridPoint Destination {
 			get { return destination; }
 			set {
-				// dumb bug:
-				// If a destination that is >1 point away is set,
-				// and then as the unit is moving, a different destination is set,
-				// the unit will go directly to the target.
-				// This is because of line 47
-				// Typically this works fine, but only if the unit has already passed the origin
-				// What needs to happen is the unit needs to be directed to the origin rather than the target
-				// and idk what the most elegant way of doing that is
 				destination = value;
 				path.SetDestination (destination);
 				StartMove ();

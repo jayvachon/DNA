@@ -5,6 +5,10 @@ namespace DNA.Tasks {
 
 	public class ResearchUpgrade<T> : UpgradeTask where T : Upgrade {
 
+		public override int Level {
+			get { return Upgrades.Instance.GetUpgrade<T> ().CurrentLevel; }
+		}
+
 		public ResearchUpgrade () : base () {
 			Settings.Duration = TotalCost;
 		}
@@ -15,7 +19,7 @@ namespace DNA.Tasks {
 		}
 
 		protected override void OnEnd () {
-			Upgrades.Instance.SetLevel<T> ();
+			Upgrades.Instance.NextLevel<T> ();
 			base.OnEnd ();
 		}
 	}

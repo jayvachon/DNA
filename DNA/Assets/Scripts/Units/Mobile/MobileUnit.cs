@@ -23,6 +23,12 @@ namespace DNA.Units {
 			StaticUnit u = overridenSelectable as StaticUnit;
 
 			if (u != null) {
+
+				// Ignore points that can't be reached
+				GridPoint gp = u.Element as GridPoint;
+				if (gp != null && !gp.HasRoad)
+					return;
+
 				AssignPoint (u.Element);
 			}
 		}
@@ -233,7 +239,7 @@ namespace DNA.Units {
 			base.OnEnable ();
 			Events.instance.AddListener<ClickConnectionEvent> (OnClickConnection);
 		}
-		
+
 		protected override void OnDisable () {
 			base.OnDisable ();
 			positioner.onArriveAtDestination -= OnArriveAtDestination;

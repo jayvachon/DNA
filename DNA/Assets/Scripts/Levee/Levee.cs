@@ -24,7 +24,9 @@ namespace DNA {
 		readonly float startHeight = 1f;
 
 		void Awake () {
-			Height = startHeight;
+			Upgrades.Instance.AddListener<LeveeHeight> (
+				(LeveeHeight u) => { Height = u.CurrentValue; }
+			);
 			Init ();
 		}
 
@@ -44,10 +46,6 @@ namespace DNA {
 					WallWidth
 				);
 			}
-		}
-
-		public void UpgradeHeight () {
-			Height += 2f;
 		}
 
 		#region ISelectable implementation

@@ -11,7 +11,7 @@ public static class Palette {
 	}
 
 	public static Color YellowGreen {
-		get { return new Color (0.866f, 0.898f, 0.177f); }
+		get { return new Color (0.635f, 0.96f, 0.373f); }
 	}
 
 	public static Color Green {

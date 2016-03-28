@@ -629,10 +629,6 @@ namespace DNA.Models {
 			tasks.Add (typeof (UpgradeLevee), new CostTaskSettings {
 				Title = "Raise levee",
 				Description = "Raises the levee wall",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 15 },
@@ -669,13 +665,17 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (UpgradeFogOfWar), new CostTaskSettings {
+			tasks.Add (typeof (ResearchUpgrade<Eyesight>), new CostTaskSettings {
 				Title = "Increase eyesight",
 				Description = "Reveal more from fog of war",
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 100 },
 						{ "Milkshakes", 150 }
+					},
+					new Dictionary<string, int> {
+						{ "Coffee", 200 },
+						{ "Milkshakes", 350 }
 					}
 				}
 			});

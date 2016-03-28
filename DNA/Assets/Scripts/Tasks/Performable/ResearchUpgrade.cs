@@ -6,7 +6,13 @@ namespace DNA.Tasks {
 	public class ResearchUpgrade<T> : UpgradeTask where T : Upgrade {
 
 		public override int Level {
-			get { return Upgrades.Instance.GetUpgrade<T> ().CurrentLevel; }
+			get { 
+				T t;
+				if (Upgrades.Instance.TryGetUpgrade<T> (out t)) {
+					return t.CurrentLevel;
+				}
+				return 0;
+			}
 		}
 
 		public ResearchUpgrade () : base () {

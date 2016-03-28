@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class GivingTreeUnit : StaticUnit, ITaskPerformer, ISeedProducer {
+	public class GivingTreeUnit : StaticUnit, ITaskPerformer {//, ISeedProducer {
 
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
@@ -57,12 +57,12 @@ namespace DNA.Units {
 
 		protected override void OnEnable () {
 			base.OnEnable ();
-			StartSeedProduction ();
+			// StartSeedProduction ();
 		}
 
 		protected override void OnDisable () {
 			base.OnDisable ();
-			seedProduction.Stop ();
+			// seedProduction.Stop ();
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {

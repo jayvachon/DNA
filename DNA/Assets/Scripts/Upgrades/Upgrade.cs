@@ -17,6 +17,10 @@ public abstract class Upgrade<T> : Upgrade {
 	int currentLevel = 0;
 	public override int CurrentLevel {
 		get { return currentLevel; }
-		set { currentLevel = Mathf.Clamp (value, 0, Levels.Length-1); }
+		set { 
+			if (value < 0 || value > Levels.Length-1)
+				throw new System.Exception ("Level out of range");
+			currentLevel = value; 
+		}
 	}
 }

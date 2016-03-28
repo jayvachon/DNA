@@ -11,7 +11,9 @@ namespace DNA {
 
 	public class FogOfWar : MBRefs, IPointerDownHandler {
 
-		static int fadeLevel = 2;
+		int FadeLevel {
+			get { return Upgrades.Instance.GetUpgrade<Eyesight> ().CurrentValue; }
+		}
 
 		GridPoint point;
 		public GridPoint Point {
@@ -55,6 +57,7 @@ namespace DNA {
 
 		public enum State { Removed, Hidden, Faded, Covered }
 		State state = State.Covered;
+		bool hasConstruction = false;
 
 		public State MyState {
 			get { return state; }
@@ -63,10 +66,12 @@ namespace DNA {
 		List<List<Elements>> rings = new List<List<Elements>> ();
 
 		void OnEnable () {
+			hasConstruction = false;
 			Renderer.enabled = true;
 			Collider.enabled = true;
 			Renderer.SetColor (Palette.YellowGreen);
 			state = State.Covered;
+			Upgrades.Instance.AddListener<Eyesight> (UpgradeFadeLevel);
 		}
 		
 		public void Init () {
@@ -87,23 +92,24 @@ namespace DNA {
 			} else {
 				Point.OnSetObject += OnSetObject;
 			}
-
-			// this crashes the project
-			// Upgrades.Instance.AddListener<Eyesight> (UpgradeFadeLevel);
 		}
 
 		void Remove () {
 			Hide ();
-			GetRing (fadeLevel);
-			for (int i = 0; i < fadeLevel-1; i ++) {
+			GetRing (FadeLevel);
+			int fadeRingCount = 2;
+			for (int i = 0; i < Mathf.Max (0, FadeLevel-fadeRingCount); i ++) {
 				foreach (Elements e in rings[i]) {
 					e.Point.Fog.Hide ();
 				}
 			}
-			foreach (Elements e in rings[fadeLevel-1]) {
-				e.Point.Fog.Fade ();
+			for (int i = FadeLevel-1; i >= fadeRingCount; i --) {
+				foreach (Elements e in rings[i]) {
+					e.Point.Fog.Fade ();
+				}
 			}
 			state = State.Removed;
+			hasConstruction = true;
 		}
 
 		List<Elements> GetRing (int index) {
@@ -150,26 +156,20 @@ namespace DNA {
 			}
 		}
 
-		public void Hide () {
+		void Hide () {
 			Renderer.enabled = false;
 			Collider.enabled = false;
 			state = State.Hidden;
 		}
 
-		public void Fade () {
+		void Fade () {
 			GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
 			state = State.Faded;
 		}
 
 		void UpgradeFadeLevel (Eyesight u) {
-			fadeLevel += 1;
-			List<FogOfWar> fow = ObjectPool.GetActiveInstances<FogOfWar> ();
-			foreach (FogOfWar f in fow) {
-				if (f.MyState == FogOfWar.State.Removed) {
-					f.Remove ();
-				}
-			}
-			// TODO: update current fade levels on upgrade (right now, need to wait for road construction to finish)			
+			if (hasConstruction)
+				Remove ();
 		}
 		
 		#region IPointerDownHandler implementation

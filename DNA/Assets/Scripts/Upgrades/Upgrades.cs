@@ -84,4 +84,14 @@ public class Upgrades {
 			throw new System.Exception ("Could not find upgrade of type " + typeof (T));
 		}
 	}
+
+	public bool TryGetUpgrade<T> (out T upgrade) where T : Upgrade {
+		KeyValuePair<Upgrade, UpgradeDelegate> del;
+		if (delegates.TryGetValue (typeof (T), out del)) {
+			upgrade = (T)del.Key;
+			return true;
+		} 
+		upgrade = null;
+		return false;
+	}
 }

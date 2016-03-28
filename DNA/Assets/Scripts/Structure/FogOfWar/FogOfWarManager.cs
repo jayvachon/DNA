@@ -51,5 +51,10 @@ namespace DNA {
 			t.LookAt (new Vector3 (0, y, 0), Vector3.up);
 			t.SetLocalEulerAnglesX (t.localEulerAngles.x - 90f);
 		}
+
+		[DebuggableMethod ()]
+		void UpgradeFadeLevel () {
+			Upgrades.Instance.NextLevel<Eyesight> ();
+		}
 	}
 }

@@ -136,7 +136,7 @@ namespace DNA.Models {
 
 			units.Add (typeof (CollectionCenter), new UnitSettings {
 				Symbol = "collector",
-				Title = "Collection Center",
+				Title = "Silo",
 				Description = "Resources can be desposited here so that laborers don't have to go all the way back to the Giving Tree.",
 				Emissions = 0.3f,
 				TakesDamage = true,
@@ -351,8 +351,8 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConstructUnit<CollectionCenter>), new CostTaskSettings {
 				Symbol = "construct_collector",
-				Title = "Birth Collection Center",
-				Description = "Creates a new collection center",
+				Title = "Birth Silo",
+				Description = "Creates a new silo",
 				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
@@ -602,8 +602,8 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ResearchUnit<CollectionCenter>), new CostTaskSettings {
 				Symbol = "research_collection",
-				Title = "Collection Center",
-				Description = "Workers can deliver resources to the collection center instead of going to the Giving Tree",
+				Title = "Silo",
+				Description = "Workers can deliver resources to the silo instead of going to the Giving Tree",
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 60 },

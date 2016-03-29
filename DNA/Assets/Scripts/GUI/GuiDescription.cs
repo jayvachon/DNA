@@ -19,12 +19,13 @@ public class GuiDescription : GuiSelectableListener {
 
 	protected override void OnUpdateSelection (List<ISelectable> selected) {
 
-		if (selected.Count == 0) {
+		// not displaying this for now
+		// if (selected.Count == 0) {
 			name = "";
 			description = "";
 			SetGroupActive (false);
 			return;
-		}
+		// }
 
 		List<Unit> units = selected
 			.FindAll (x => x is Unit)

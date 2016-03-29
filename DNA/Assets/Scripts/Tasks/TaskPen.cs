@@ -18,6 +18,9 @@ namespace DNA.Tasks {
 
 		public static void Set (PerformerTask newTask) {
 
+			if (!newTask.Enabled)
+				return;
+
 			task = newTask;
 			roadTask = task is ConstructRoad;
 			bool seedTask = task is PlantSeed;

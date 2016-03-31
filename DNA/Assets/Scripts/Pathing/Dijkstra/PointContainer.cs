@@ -50,7 +50,7 @@ namespace DNA.Paths {
 			MyTransform.SetLocalEulerAnglesX (MyTransform.localEulerAngles.x - 90f);
 		}
 
-		protected override void OnEndConstruction (IPathElementObject obj) {
+		protected override void OnEndConstruction (StaticUnit obj) {
 			StaticUnit s = obj as StaticUnit;
 			if (s != null)
 				s.FertilityTier = fertility.Value;

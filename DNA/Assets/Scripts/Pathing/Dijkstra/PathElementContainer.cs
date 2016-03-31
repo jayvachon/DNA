@@ -6,7 +6,7 @@ using DNA.Paths;
 using DNA.Units;
 using InventorySystem;
 
-namespace DNA {
+namespace DNA.Paths {
 
 	public class PathElementContainer : MBRefs, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler {
 
@@ -19,9 +19,12 @@ namespace DNA {
 
 		int constructionCost;
 
-		IPathElementObject project;
+		StaticUnit project;
 		ConstructionSite site;
 		RepairSite repairSite;
+		
+		enum PlotType { None, Default, Drillable }
+		PlotType plotType = PlotType.None;
 
 		DamageHandler damageHandler;
 
@@ -29,18 +32,19 @@ namespace DNA {
 			damageHandler = new DamageHandler (OnDamage);
 		}
 
-		public ConstructionSite BeginConstruction<T> (int laborCost=0, bool autoConstruct=false) where T : MonoBehaviour, IPathElementObject {
+		public ConstructionSite BeginConstruction<T> (int laborCost=0, bool autoConstruct=false) where T : StaticUnit {
 
 			// Create a construction site and listen for labor to be completed
 			// Set the project to turn into once labor completes
 
 			if (Element.State == DevelopmentState.Undeveloped) {
-				project = (IPathElementObject)ObjectPool.Instantiate<T> ();
-				(project as MonoBehaviour).gameObject.SetActive (false);
+				project = (StaticUnit)ObjectPool.Instantiate<T> ();
+				project.gameObject.SetActive (false);
 				site = (ConstructionSite)SetObject<ConstructionSite> ();
 				site.Inventory["Labor"].onEmpty += EndConstruction;
 				site.Inventory["Labor"].Capacity = laborCost;
 				site.Inventory["Labor"].Fill ();
+				Debug.Log (site);
 				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
 			}
@@ -54,10 +58,29 @@ namespace DNA {
 			// Mark this container as developed so that nothing else can be built here
 
 			site.Inventory["Labor"].onEmpty -= EndConstruction;
-			(project as MonoBehaviour).gameObject.SetActive (true);
+			project.gameObject.SetActive (true);
 			SetObject (project);
 			Element.State = DevelopmentState.Developed;
 			OnEndConstruction (project);
+			site = null;
+		}
+
+		[DebuggableMethod ()]
+		public void CancelConstruction () {
+
+			Debug.Log (site);
+			site.Inventory["Labor"].onEmpty -= EndConstruction;
+			RemoveObject ();
+
+			if (plotType == PlotType.Drillable)
+				SetObject<DrillablePlot> ();
+			else if (plotType == PlotType.Default)
+				SetObject<Plot> ();
+
+			// ObjectPool.Destroy ((project as MonoBehaviour).transform);
+			project.gameObject.SetActive (true);
+			ObjectPool.Destroy (project.transform);
+			Element.State = DevelopmentState.Undeveloped;
 			site = null;
 		}
 
@@ -89,13 +112,20 @@ namespace DNA {
 			Element.State = DevelopmentState.Abandoned;
 		}
 
-		public virtual T SetObject<T> (bool destroyPrevious=true) where T : MonoBehaviour, IPathElementObject {
-			IPathElementObject obj = ObjectPool.Instantiate<T> ();
+		public virtual T SetObject<T> (bool destroyPrevious=true) where T : StaticUnit {
+
+			StaticUnit obj = ObjectPool.Instantiate<T> ();
 			SetObject (obj, destroyPrevious);
+
+			if (typeof (T) == typeof (DrillablePlot))
+				plotType = PlotType.Drillable;
+			if (typeof (T) == typeof (Plot))
+				plotType = PlotType.Default;
+
 			return obj as T;
 		}
 
-		protected void SetObject (IPathElementObject obj, bool destroyPrevious=true) {
+		protected void SetObject (StaticUnit obj, bool destroyPrevious=true) {
 			if (destroyPrevious) RemoveObject ();
 			Element.Object = obj;
 			Transform objTransform = ((MonoBehaviour)obj).transform;
@@ -103,6 +133,7 @@ namespace DNA {
 			objTransform.localPosition = Anchor;
 			objTransform.rotation = MyTransform.rotation;
 			objTransform.localScale = MyTransform.localScale;
+			obj.Container = this;
 			OnSetObject (obj);
 		}
 
@@ -128,8 +159,8 @@ namespace DNA {
 			}
 		}
 
-		protected virtual void OnSetObject (IPathElementObject obj) {}
-		protected virtual void OnEndConstruction (IPathElementObject obj) {}
+		protected virtual void OnSetObject (StaticUnit obj) {}
+		protected virtual void OnEndConstruction (StaticUnit obj) {}
 
 		#region IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler implementation
 		public virtual void OnPointerDown (PointerEventData e) {}

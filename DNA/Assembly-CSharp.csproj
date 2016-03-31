@@ -227,6 +227,7 @@
      <Compile Include="Assets\Scripts\Tasks\Lists\PerformableTasks.cs" />
      <Compile Include="Assets\Scripts\Tasks\Lists\TaskList.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\BorrowLoan.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\CancelConstruction.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\CollectItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ConstructRoad.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ConstructUnit.cs" />

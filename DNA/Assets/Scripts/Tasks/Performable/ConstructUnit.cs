@@ -20,7 +20,7 @@ namespace DNA.Tasks {
 		}
 	}
 
-	public class ConstructUnit<T> : ConstructUnit where T : Unit, IPathElementObject {
+	public class ConstructUnit<T> : ConstructUnit where T : StaticUnit {
 
 		public override bool Enabled {
 			get { return CanAfford && DataManager.GetUnitSettings (typeof (T)).Unlocked; }

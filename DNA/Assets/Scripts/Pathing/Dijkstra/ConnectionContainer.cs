@@ -65,7 +65,7 @@ namespace DNA.Paths {
 		}
 		#endregion
 
-		protected override void OnSetObject (IPathElementObject obj) {
+		protected override void OnSetObject (StaticUnit obj) {
 			Road r = obj as Road;
 			if (r != null) {
 				connection.SetCost ("free");

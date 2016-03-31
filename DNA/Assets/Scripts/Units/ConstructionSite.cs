@@ -31,12 +31,11 @@ namespace DNA.Units {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
 					performableTasks.Add (new ConsumeItem<LaborGroup> ());
+					performableTasks.Add (new CancelConstruction (Container));
 				}
 				return performableTasks;
 			}
 		}
-
-		public RoadPlan RoadPlan { get; set; }
 
 		ProgressBar pbar;
 

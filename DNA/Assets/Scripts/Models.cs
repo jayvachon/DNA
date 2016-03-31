@@ -242,7 +242,6 @@ namespace DNA.Models {
 			tasks.Add (typeof (CollectItem<MilkshakeGroup>), new TaskSettings {
 				Symbol = "collect_milkshake",
 				Duration = 2f,
-				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>),
 				AlwaysPairNearest = true,
@@ -252,7 +251,6 @@ namespace DNA.Models {
 			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
 				Symbol = "collect_coffee",
 				Duration = 1.5f,
-				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<CoffeeGroup>),
 				AlwaysPairNearest = true,
@@ -262,21 +260,18 @@ namespace DNA.Models {
 			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
 				Symbol = "collect_labor",
 				Duration = 1f,
-				AutoStart = false,
 				Repeat = true
 			});
 
 			tasks.Add (typeof (CollectItem<HealthGroup>), new TaskSettings {
 				Symbol = "collect_health",
 				Duration = 2f,
-				AutoStart = false,
 				Repeat = true
 			});
 
 			tasks.Add (typeof (CollectItem<HappinessGroup>), new TaskSettings {
 				Symbol = "collect_happiness",
 				Duration = 0.33f,
-				AutoStart = false,
 				Repeat = true
 			});
 
@@ -284,11 +279,15 @@ namespace DNA.Models {
 			 *	Construct
 			 */
 
+			tasks.Add (typeof (CancelConstruction), new TaskSettings {
+				Symbol = "cancel_construction",
+				Title = "Cancel construction"
+			});
+
 			tasks.Add (typeof (ConstructUnit<CoffeePlant>), new CostTaskSettings {
 				Symbol = "construct_coffee",
 				Title = "Birth Coffee Plant",
 				Description = "Creates a new coffee plant",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 20 }
@@ -301,7 +300,6 @@ namespace DNA.Models {
 				Symbol = "construct_derrick",
 				Title = "Birth Milkshake Derrick",
 				Description = "Creates a new milkshake derrick",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 20 }
@@ -314,7 +312,6 @@ namespace DNA.Models {
 				Symbol = "construct_university",
 				Title = "Birth University",
 				Description = "Creates a new university",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 50 }
@@ -327,7 +324,6 @@ namespace DNA.Models {
 				Symbol = "construct_clinic",
 				Title = "Birth Clinic",
 				Description = "Creates a new clinic",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 40 }
@@ -340,7 +336,6 @@ namespace DNA.Models {
 				Symbol = "construct_flower",
 				Title = "Birth Flower",
 				Description = "Creates a new flower",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 10 }
@@ -353,7 +348,6 @@ namespace DNA.Models {
 				Symbol = "construct_collector",
 				Title = "Birth Silo",
 				Description = "Creates a new silo",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 60 }
@@ -366,7 +360,6 @@ namespace DNA.Models {
 				Symbol = "construct_house",
 				Title = "Birth House",
 				Description = "Creates a new house so that more laborer can be birthed",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 25 }
@@ -379,7 +372,6 @@ namespace DNA.Models {
 				Symbol = "construct_apartment",
 				Title = "Birth Apartment",
 				Description = "Creates a new apartment so that more laborer can be birthed",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 60 }

@@ -20,6 +20,8 @@ namespace DNA.Units {
 			}
 		}
 
+		public PathElementContainer Container { get; set; }
+
 		AcceptableTasks acceptableTasks;
 		public AcceptableTasks AcceptableTasks {
 			get {

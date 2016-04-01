@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.Models;
 
 namespace DNA {
@@ -59,6 +60,17 @@ namespace DNA {
 					.Values.Where (x => x.Symbol == "construct_" + unitSymbol)
 					.ToList ()[0] as CostTaskSettings)
 					.Costs[0].Sum (x => x.Value);
+			} catch {
+				throw new System.Exception ("Could not find a cost for the unit '" + unitSymbol + "'");
+			}
+		}
+
+		public static Dictionary<string, int> GetConstructionCosts (string unitSymbol) {
+			try {
+				return (Data.TasksSettings.Tasks
+					.Values.Where (x => x.Symbol == "construct_" + unitSymbol)
+					.ToList ()[0] as CostTaskSettings)
+					.Costs[0];
 			} catch {
 				throw new System.Exception ("Could not find a cost for the unit '" + unitSymbol + "'");
 			}

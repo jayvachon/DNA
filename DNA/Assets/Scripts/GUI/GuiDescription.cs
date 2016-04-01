@@ -27,7 +27,7 @@ public class GuiDescription : GuiSelectableListener {
 			return;
 		// }
 
-		List<Unit> units = selected
+		/*List<Unit> units = selected
 			.FindAll (x => x is Unit)
 			.ConvertAll (x => x as Unit);
 
@@ -56,6 +56,6 @@ public class GuiDescription : GuiSelectableListener {
 			Description.text = description;
 		}
 
-		SetGroupActive (commonUnit != null);
+		SetGroupActive (commonUnit != null);*/
 	}
 }

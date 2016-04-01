@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.Paths;
 using DNA.Units;
+using DNA.Tasks;
 using InventorySystem;
 
 namespace DNA.Paths {
@@ -43,6 +44,7 @@ namespace DNA.Paths {
 				site.Inventory["Labor"].onEmpty += EndConstruction;
 				site.Inventory["Labor"].Capacity = laborCost;
 				site.Inventory["Labor"].Fill ();
+				site.PerformableTasks.Get<CancelConstruction> ().Init (this, project.Settings.Symbol);
 				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
 			}

@@ -36,7 +36,6 @@ namespace DNA.Paths {
 
 			// Create a construction site and listen for labor to be completed
 			// Set the project to turn into once labor completes
-
 			if (Element.State == DevelopmentState.Undeveloped) {
 				project = (StaticUnit)ObjectPool.Instantiate<T> ();
 				project.gameObject.SetActive (false);
@@ -44,7 +43,6 @@ namespace DNA.Paths {
 				site.Inventory["Labor"].onEmpty += EndConstruction;
 				site.Inventory["Labor"].Capacity = laborCost;
 				site.Inventory["Labor"].Fill ();
-				Debug.Log (site);
 				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
 			}
@@ -68,9 +66,7 @@ namespace DNA.Paths {
 		[DebuggableMethod ()]
 		public void CancelConstruction () {
 
-			Debug.Log (site);
 			site.Inventory["Labor"].onEmpty -= EndConstruction;
-			RemoveObject ();
 
 			if (plotType == PlotType.Drillable)
 				SetObject<DrillablePlot> ();

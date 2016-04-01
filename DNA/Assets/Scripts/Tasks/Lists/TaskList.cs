@@ -91,6 +91,10 @@ namespace DNA.Tasks {
 			return tasks.ContainsKey (taskType);
 		}
 
+		public U Get<U> () where U : T {
+			return tasks[typeof (U)] as U;
+		}
+
 		/**
 		 *	Debugging
 		 */

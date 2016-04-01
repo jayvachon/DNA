@@ -7,18 +7,14 @@ namespace DNA.Tasks {
 
 	public class CancelConstruction : PerformerTask {
 
-		PathElementContainer container;
+		public PathElementContainer Container { get; set; }
 
 		public override bool Enabled {
 			get { return true; }
 		}
 
-		public CancelConstruction (PathElementContainer container) {
-			this.container = container;
-		}
-
 		protected override void OnEnd () {
-			container.CancelConstruction ();
+			Container.CancelConstruction ();
 			SelectionHandler.Clear ();
 			base.OnEnd ();
 		}

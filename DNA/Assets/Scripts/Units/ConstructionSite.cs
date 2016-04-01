@@ -31,7 +31,7 @@ namespace DNA.Units {
 				if (performableTasks == null) {
 					performableTasks = new PerformableTasks (this);
 					performableTasks.Add (new ConsumeItem<LaborGroup> ());
-					performableTasks.Add (new CancelConstruction (Container));
+					performableTasks.Add (new CancelConstruction ());
 				}
 				return performableTasks;
 			}
@@ -56,6 +56,7 @@ namespace DNA.Units {
 						if (c != null)
 							pbar = UI.Instance.CreateProgressBar (c.Center);
 					}
+					PerformableTasks.Get<CancelConstruction> ().Container = Container;
 				}
 			});
 		}

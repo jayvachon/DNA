@@ -8,7 +8,22 @@ namespace DNA.Units {
 
 	// TODO: rename to MilkshakeDerrick
 
-	public class MilkshakePool : StaticUnit {
+	public class MilkshakePool : StaticUnit, ITaskPerformer {
+
+		PerformableTasks performableTasks;
+		public PerformableTasks PerformableTasks {
+			get {
+				if (performableTasks == null) {
+					performableTasks = new PerformableTasks (this);
+					OnInitPerformableTasks (performableTasks);
+				}
+				return performableTasks;
+			}
+		}
+
+		protected void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new DemolishUnit (Container));
+		}
 		
 		protected override void OnInitInventory (Inventory i) {
 			i.Add (new MilkshakeGroup (100, 100));

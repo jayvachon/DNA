@@ -95,7 +95,8 @@ namespace DNA.Models {
 				Description = "Milkshakes collected from a Derrick can be used to construct buildings.",
 				Emissions = 1f,
 				TakesDamage = true,
-				Unlocked = true
+				Unlocked = true,
+				Demolishable = true
 			});
 
 			units.Add (typeof (CoffeePlant), new UnitSettings {
@@ -113,7 +114,8 @@ namespace DNA.Models {
 				Description = "Upgrade units by conducting research at the University.",
 				Emissions = 0.5f,
 				TakesDamage = true,
-				Unlocked = true
+				Unlocked = true,
+				Demolishable = true
 			});
 
 			units.Add (typeof (Clinic), new UnitSettings {
@@ -122,7 +124,8 @@ namespace DNA.Models {
 				Description = "Elders live longer when they're receiving care at a Clinic.",
 				Emissions = 0.75f,
 				TakesDamage = true,
-				Unlocked = false
+				Unlocked = false,
+				Demolishable = true
 			});
 
 			units.Add (typeof (Flower), new UnitSettings {
@@ -131,7 +134,8 @@ namespace DNA.Models {
 				Description = "Flowers are really pretty :)",
 				Emissions = -0.05f,
 				TakesDamage = true,
-				RemovesFogOfWar = true
+				RemovesFogOfWar = true,
+				Demolishable = true
 			});
 
 			units.Add (typeof (CollectionCenter), new UnitSettings {
@@ -140,7 +144,8 @@ namespace DNA.Models {
 				Description = "Resources can be desposited here so that laborers don't have to go all the way back to the Giving Tree.",
 				Emissions = 0.3f,
 				TakesDamage = true,
-				Unlocked = false
+				Unlocked = false,
+				Demolishable = true
 			});
 
 			units.Add (typeof (DrillablePlot), new UnitSettings {
@@ -190,7 +195,8 @@ namespace DNA.Models {
 				Description = "Houses increase the amount of laborers you can birth",
 				Emissions = 0.1f,
 				TakesDamage = true,
-				Unlocked = true
+				Unlocked = true,
+				Demolishable = true
 			});
 
 			units.Add (typeof (Apartment), new UnitSettings {
@@ -199,7 +205,8 @@ namespace DNA.Models {
 				Description = "Apartments increase the amount of laborers you can birth",
 				Emissions = 0.3f,
 				TakesDamage = true,
-				Unlocked = false
+				Unlocked = false,
+				Demolishable = true
 			});
 
 			units.Add (typeof (Seed), new UnitSettings {
@@ -282,6 +289,11 @@ namespace DNA.Models {
 			tasks.Add (typeof (CancelConstruction), new TaskSettings {
 				Symbol = "cancel_construction",
 				Title = "Cancel construction"
+			});
+
+			tasks.Add (typeof (DemolishUnit), new TaskSettings {
+				Symbol = "demolish_unit",
+				Title = "Demolish"
 			});
 
 			tasks.Add (typeof (ConstructUnit<CoffeePlant>), new CostTaskSettings {
@@ -852,6 +864,7 @@ namespace DNA.Models {
 		public bool TakesDamage { get; set; }		// Whether or not the unit is damaged by water
 		public bool RemovesFogOfWar { get; set; }	// True if the unit, when built, removes the fog of war surrounding it
 		public bool Unlocked { get; set; }			// True if the unit has been unlocked through research
+		public bool Demolishable { get; set; }		// True if the unit can be demolished
 	}
 
 	public class LoanSettings {

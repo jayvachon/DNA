@@ -67,19 +67,21 @@ namespace DNA.Paths {
 
 		[DebuggableMethod ()]
 		public void CancelConstruction () {
-
 			site.Inventory["Labor"].onEmpty -= EndConstruction;
+			Demolish ();
+			site = null;
+		}
 
+		public void Demolish () {
+			
 			if (plotType == PlotType.Drillable)
 				SetObject<DrillablePlot> ();
 			else if (plotType == PlotType.Default)
 				SetObject<Plot> ();
 
-			// ObjectPool.Destroy ((project as MonoBehaviour).transform);
 			project.gameObject.SetActive (true);
 			ObjectPool.Destroy (project.transform);
 			Element.State = DevelopmentState.Undeveloped;
-			site = null;
 		}
 
 		void BeginRepair (float damageAmount) {

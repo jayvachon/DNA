@@ -7,7 +7,22 @@ namespace DNA.Units {
 
 	// TODO: handle damaged houses	
 
-	public class House : StaticUnit {
+	public class House : StaticUnit, ITaskPerformer {
+
+		PerformableTasks performableTasks;
+		public PerformableTasks PerformableTasks {
+			get {
+				if (performableTasks == null) {
+					performableTasks = new PerformableTasks (this);
+					OnInitPerformableTasks (performableTasks);
+				}
+				return performableTasks;
+			}
+		}
+
+		protected void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new DemolishUnit (Container));
+		}
 
 		protected override void OnEnable () {
 			base.OnEnable ();

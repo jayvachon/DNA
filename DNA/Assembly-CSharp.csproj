@@ -233,6 +233,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\ConstructUnit.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\ConsumeItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\DeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\DemolishUnit.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\FleeTree.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\GenerateLaborer.cs" />

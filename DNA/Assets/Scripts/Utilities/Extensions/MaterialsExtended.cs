@@ -14,6 +14,12 @@ public static class MaterialsExtended {
 		renderer.sharedMaterials = ColoredMaterials ( colors );
 	}
 
+	public static void SetAlpha (this Renderer renderer, float alpha) {
+		Color c = renderer.material.color;
+		c.a = alpha;
+		renderer.material.color = c;
+	}
+
 	// Get a material with the given color
 	public static Material ColoredMaterial ( Color color ) {
 

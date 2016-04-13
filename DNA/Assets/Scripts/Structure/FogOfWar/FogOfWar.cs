@@ -69,7 +69,8 @@ namespace DNA {
 			hasConstruction = false;
 			Renderer.enabled = true;
 			Collider.enabled = true;
-			Renderer.SetColor (Palette.YellowGreen);
+			// Renderer.SetColor (Palette.YellowGreen);
+			GetComponent<Renderer> ().SetAlpha (1f);
 			state = State.Covered;
 			Upgrades.Instance.AddListener<Eyesight> (UpgradeFadeLevel);
 		}
@@ -163,7 +164,8 @@ namespace DNA {
 		}
 
 		void Fade () {
-			GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
+			// GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
+			GetComponent<Renderer> ().SetAlpha (0.5f);
 			state = State.Faded;
 		}
 

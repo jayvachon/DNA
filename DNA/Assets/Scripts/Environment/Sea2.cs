@@ -17,7 +17,6 @@ namespace DNA {
 
 		protected virtual void Awake () {
 			Level = MinLevel;
-			GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Blue, 0.75f));
 		}
 	}
 }

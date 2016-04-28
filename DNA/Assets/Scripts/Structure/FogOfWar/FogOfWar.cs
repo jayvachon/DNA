@@ -65,11 +65,23 @@ namespace DNA {
 
 		List<List<Elements>> rings = new List<List<Elements>> ();
 
+		Color myColor = Color.black;
+		Color MyColor {
+			get {
+				if (myColor == Color.black) {
+					float range = 0.1f;
+					myColor = new Color (RandomInRange (0.698f,range), 0.153f, RandomInRange (0.905f,range), 0.3f);
+				}
+				return myColor;
+			}
+		}
+
 		void OnEnable () {
 			hasConstruction = false;
 			Renderer.enabled = true;
 			Collider.enabled = true;
 			// Renderer.SetColor (Palette.YellowGreen);
+			Renderer.SetColor (MyColor);
 			GetComponent<Renderer> ().SetAlpha (1f);
 			state = State.Covered;
 			Upgrades.Instance.AddListener<Eyesight> (UpgradeFadeLevel);
@@ -165,8 +177,14 @@ namespace DNA {
 
 		void Fade () {
 			// GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
-			GetComponent<Renderer> ().SetAlpha (0.5f);
+			// GetComponent<Renderer> ().SetColor (new Color (RandomInRange (0.698f, 0.2f), 0.153f, RandomInRange (0.905f, 0.2f), 0.3f));
+			GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (MyColor, 0.5f));
+			// GetComponent<Renderer> ().SetAlpha (0.5f);
 			state = State.Faded;
+		}
+
+		float RandomInRange (float val, float range) {
+			return val + ((Random.value > 0.5f) ? (range * Random.value) : (-range * Random.value));
 		}
 
 		void UpgradeFadeLevel (Eyesight u) {

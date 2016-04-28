@@ -58,6 +58,10 @@ public static class Palette {
 		get { return new Color (0.67f, 0.67f, 0.67f); }
 	}
 
+	public static Color DkGrey {
+		get { return new Color (0.14f, 0.14f, 0.14f); }
+	}
+
 	public static Color ApplyAlpha (Color c, float alpha) {
 		return new Color (c.r, c.g, c.b, alpha);
 	}

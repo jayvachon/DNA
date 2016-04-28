@@ -12,7 +12,7 @@ namespace DNA.Units {
 		public PathElement Element { get; set; }
 
 		void Awake () {
-			GetComponent<Renderer> ().SetColor (Palette.Grey);
+			GetComponent<Renderer> ().SetColor (Palette.Yellow);
 		}
 
 		public void Init (float length) {

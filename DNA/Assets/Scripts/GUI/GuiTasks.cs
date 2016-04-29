@@ -8,6 +8,7 @@ using DNA;
 
 public class GuiTasks : GuiSelectableListener {
 
+	public Transform menu;
 	public List<TaskButton> buttons;
 	List<ISelectable> selected;
 
@@ -25,9 +26,9 @@ public class GuiTasks : GuiSelectableListener {
 			}
 		}
 		if (hasTask) {
-			foreach (var g in Player.Instance.Inventory.Groups) {
+			/*foreach (var g in Player.Instance.Inventory.Groups) {
 				g.Value.onUpdate += UpdateActiveState;
-			}
+			}*/
 		}
 		SetGroupActive (hasTask);
 	}
@@ -37,9 +38,11 @@ public class GuiTasks : GuiSelectableListener {
 		this.selected = selected;
 
 		if (selected.Count == 0) {
-			SetButtons (Player.Instance.PerformableTasks.ActiveTasks.Values.ToList ());
+			menu.gameObject.SetActive (false);
+			// SetButtons (Player.Instance.PerformableTasks.ActiveTasks.Values.ToList ());
 			return;
 		}
+		menu.gameObject.SetActive (true);
 
 		List<ITaskPerformer> performers = selected
 			.FindAll (x => x is ITaskPerformer)
@@ -50,9 +53,9 @@ public class GuiTasks : GuiSelectableListener {
 	}
 
 	void UpdateActiveState () {
-		foreach (var g in Player.Instance.Inventory.Groups) {
+		/*foreach (var g in Player.Instance.Inventory.Groups) {
 			g.Value.onUpdate -= UpdateActiveState;
-		}
+		}*/
 		OnUpdateSelection (selected);
 	}
 

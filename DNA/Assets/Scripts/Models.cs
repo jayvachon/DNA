@@ -637,7 +637,7 @@ namespace DNA.Models {
 				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 15 }
+						{ "Milkshakes", 5 }
 					}
 				}
 			});

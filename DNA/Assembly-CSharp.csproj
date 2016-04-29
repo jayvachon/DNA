@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\Finance\LoanManager.cs" />
      <Compile Include="Assets\Scripts\Finance\MilkshakeLoanGroup.cs" />
      <Compile Include="Assets\Scripts\Flower\FlowerMesh.cs" />
+     <Compile Include="Assets\Scripts\GUI\ConstructionMenu.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiDescription.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiInventory.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiItemGroup.cs" />
@@ -286,6 +287,7 @@
      <Compile Include="Assets\Scripts\UI\Notifications\NotificationCenter.cs" />
      <Compile Include="Assets\Scripts\UI\ProgressBar.cs" />
      <Compile Include="Assets\Scripts\UI\TaskButton.cs" />
+     <Compile Include="Assets\Scripts\UI\TaskButton2.cs" />
      <Compile Include="Assets\Scripts\UI\TaskIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\UI.cs" />
      <Compile Include="Assets\Scripts\UI\UnitInfoBox.cs" />

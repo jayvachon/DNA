@@ -28,7 +28,7 @@ public class UIElement : MBRefs {
 	}
 
 	Button button = null;
-	protected Button Button {
+	public Button Button {
 		get {
 			if (button == null) {
 				button = GetComponent<Button> ();
@@ -39,7 +39,7 @@ public class UIElement : MBRefs {
 	}
 
 	Text buttonText = null;
-	protected Text ButtonText {
+	public Text ButtonText {
 		get {
 			if (buttonText == null) {
 				// buttonText = Button.transform.GetChild(0).GetComponent<Text> ();
@@ -61,6 +61,23 @@ public class UIElement : MBRefs {
 
 	protected T GetChildComponent<T> (int childIndex) where T : MonoBehaviour {
 		return RectTransform.GetChild (childIndex).GetComponent<T> () as T;
+	}
+
+
+	/**
+	 *	Button listeners
+	 */
+
+	public void AddButtonListener (System.Action action) {
+		Button.onClick.AddListener (() => { action (); });
+	}
+
+	public void RemoveButtonListener (System.Action action) {
+		Button.onClick.RemoveListener (() => { action (); });
+	}
+
+	public void RemoveButtonListeners () {
+		Button.onClick.RemoveAllListeners ();
 	}
 
 	protected virtual void OnButtonPress () {}

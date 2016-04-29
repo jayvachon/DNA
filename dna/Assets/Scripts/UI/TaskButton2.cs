@@ -4,28 +4,9 @@ using System.Collections;
 using DNA.Tasks;
 using DNA;
 
-public class TaskButton : UIElement {
+// working around an issue with ObjectPool - should delete this script and use the real TaskButton
 
-	/*Text text = null;
-	Text Text {
-		get {
-			if (text == null) {
-				// text = MyTransform.GetChild (0).GetComponent<Text> ();
-				text = MyTransform.GetChild<Text> ();
-			}
-			return text;
-		}
-	}*/
-
-	/*Button button = null;
-	public Button Button {
-		get {
-			if (button == null) {
-				button = GetComponent<Button> ();
-			}
-			return button;
-		}
-	}*/
+public class TaskButton2 : UIElement {
 
 	PerformerTask task;
 	bool hasText;
@@ -38,9 +19,12 @@ public class TaskButton : UIElement {
 		if (hasText) {
 			ButtonText.text = task.Settings.Title;
 			if (task is CostTask) {
+				
 				CostTask costTask = task as CostTask;
 				ButtonText.text += " (";
+				
 				int count = costTask.Costs.Count;
+
 				foreach (var c in costTask.Costs) {
 					ButtonText.text += c.Value;
 					if (c.Key == "Coffee")
@@ -59,7 +43,7 @@ public class TaskButton : UIElement {
 		AddButtonListener (OnPress);
 	}
 
-	public void OnPress () {
+	void OnPress () {
 		if (task is ConstructRoad || task is ConstructUnit) {
 			TaskPen.Set (task);
 		} else {

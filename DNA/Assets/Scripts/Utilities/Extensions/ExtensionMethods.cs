@@ -1,10 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
 public static class ExtensionMethods {
-	
+
+	/**
+	 *	String
+	 */
+
+	public static string RemoveEmptyChars (this string str) {
+		return new string (str
+			.ToCharArray ()
+			.ToList<char> ()
+			.FindAll (x => x != (char)0)
+			.ToArray<char> ());
+	}
+
 	/**
 	 *	Float
 	 */
@@ -22,8 +36,6 @@ public static class ExtensionMethods {
 	 *	Vector3
 	 */
 	 
-	// public static Vector3 NullPosition = new Vector3 (-1, -1, -1);
-
 	public static bool Equals (this Vector3 vector3, Vector3 otherVector3) {
 		return Mathf.Approximately (vector3.x, otherVector3.x) && Mathf.Approximately (vector3.y, otherVector3.y) && Mathf.Approximately (vector3.z, otherVector3.z);
 	}
@@ -149,12 +161,41 @@ public static class ExtensionMethods {
 		return children;
 	}
 
+	public static List<T> GetChildren<T> (this Transform transform) where T : MonoBehaviour {
+		List<T> children = new List<T> ();
+		foreach (Transform child in transform) {
+			T t = child.GetComponent<T> ();
+			if (t != null)
+				children.Add (t);
+		}
+		return children;
+	}
+
+	public static T GetChild<T> (this Transform transform) where T : MonoBehaviour {
+		try {
+			return transform.GetAllChildren<T> ()[0];
+		} catch {
+			throw new System.Exception (transform + " does not have a child of type '" + typeof (T) + "'");
+		}
+	}
+
 	// TODO: rename to GetChildrenRecursively
 	public static List<Transform> GetAllChildren (this Transform transform) {
 		List<Transform> children = new List<Transform> ();
 		foreach (Transform child in transform) {
 			children.Add (child);
 			children.AddRange (child.GetAllChildren ());
+		}
+		return children;
+	}
+
+	public static List<T> GetAllChildren<T> (this Transform transform) where T : MonoBehaviour {
+		List<T> children = new List<T> ();
+		List<Transform> transforms = transform.GetAllChildren ();
+		foreach (Transform child in transforms) {
+			T t = child.GetComponent<T> ();
+			if (t != null)
+				children.Add (t);
 		}
 		return children;
 	}
@@ -215,6 +256,10 @@ public static class ExtensionMethods {
 		transform.position = position;
 	}
 	
+	public static void SetLocalPosition (this Transform transform) {
+		transform.localPosition = Vector3.zero;
+	}
+
 	public static void SetLocalPosition (this Transform transform, Vector3 position) {
 		transform.localPosition = position;
 	}
@@ -298,6 +343,22 @@ public static class ExtensionMethods {
 	}
 
 	/**
+	 *	RectTransform
+	 */
+
+	public static void SetAnchoredPositionX (this RectTransform transform, float x) {
+		Vector2 p = transform.anchoredPosition;
+		p.x = x;
+		transform.anchoredPosition = p;
+	}
+
+	public static void SetAnchoredPositionY (this RectTransform transform, float y) {
+		Vector2 p = transform.anchoredPosition;
+		p.y = y;
+		transform.anchoredPosition = p;
+	}
+
+	/**
 	 *	Colliders
 	 */
 
@@ -319,5 +380,60 @@ public static class ExtensionMethods {
 
 	public static bool LeftClicked (this PointerEventData e) {
 		return e.button == PointerEventData.InputButton.Left;
+	}
+
+	/**
+	 *	Collections
+	 */
+	 
+	public static void Shuffle<T> (this IList<T> list) {
+		System.Random rng = new System.Random ();
+	    int n = list.Count;  
+	    while (n > 1) {  
+	        n--;  
+	        int k = rng.Next(n + 1);  
+	        T value = list[k];  
+	        list[k] = list[n];  
+	        list[n] = value;  
+	    }  
+	}
+
+	public static List<T> ToShuffled<T> (this List<T> list) {
+		List<T> newList = new List<T> (list);
+		newList.Shuffle ();
+		return newList;
+	}
+
+	public static void Print (this IList list) {
+		foreach (var i in list) {
+			System.Type t = i.GetType ();
+			if (t == typeof (IList)) {
+				((IList)i).Print ();
+			} else if (t == typeof (IDictionary)) {
+				((IDictionary)i).Print ();
+			} else {
+				Debug.Log (i);
+			}
+		}
+	}
+
+	public static void Print<T> (this List<T> list, Func<T, object> onPrint) where T : class {
+		foreach (T t in list)
+			Debug.Log (onPrint (t));
+	}
+
+	public static void Print (this IDictionary dict) {
+		Debug.Log (dict + ": " + dict.Count + " elements");
+		foreach (var d in dict) {
+			System.Type t = d.GetType ();
+			if (t == typeof (IList)) {
+				((IList)d).Print ();
+			} else if (t == typeof (IDictionary)) {
+				((IDictionary)d).Print ();
+			} else {
+				DictionaryEntry entry = (DictionaryEntry)d;
+				Debug.Log (entry.Key + ": " + entry.Value);
+			}
+		}
 	}
 }

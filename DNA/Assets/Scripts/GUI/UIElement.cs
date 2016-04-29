@@ -42,7 +42,8 @@ public class UIElement : MBRefs {
 	protected Text ButtonText {
 		get {
 			if (buttonText == null) {
-				buttonText = Button.transform.GetChild(0).GetComponent<Text> ();
+				// buttonText = Button.transform.GetChild(0).GetComponent<Text> ();
+				buttonText = Button.transform.GetChild<Text> ();
 			}
 			return buttonText;
 		}

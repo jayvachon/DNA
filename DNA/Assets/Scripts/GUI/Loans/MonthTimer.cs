@@ -6,8 +6,13 @@ namespace DNA {
 
 	public class MonthTimer : UIElement {
 
+		public bool roundTimer = true;
+
 		void Update () {
-			Image.fillAmount = LoanManager.Time;
+			if (roundTimer)
+				Image.fillAmount = LoanManager.Time;
+			else
+				transform.SetLocalScaleY (LoanManager.Time);
 		}
 	}
 }

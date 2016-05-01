@@ -10,7 +10,7 @@ namespace DNA {
 		public void OnEnable () {
 			// This is stupid but necessary because the scale comes in all weird			
 			RectTransform.localScale = Vector3.zero;
-			Coroutine.WaitForFixedUpdate (() => {
+			Co2.WaitForFixedUpdate (() => {
 				RectTransform.localScale = Vector3.one;
 			});
 		}

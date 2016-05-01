@@ -46,7 +46,7 @@ namespace DNA.Units {
 
 		protected override void OnEnable () {
 			base.OnEnable ();
-			Coroutine.WaitForFixedUpdate (() => {
+			Co2.WaitForFixedUpdate (() => {
 				if (gameObject.activeSelf) {
 					GridPoint gp = Element as GridPoint;
 					if (gp != null) {

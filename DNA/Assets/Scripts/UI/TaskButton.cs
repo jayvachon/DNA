@@ -28,7 +28,7 @@ public class TaskButton : UIElement {
 	}*/
 
 	PerformerTask task;
-	bool hasText;
+	bool hasText; // BAD hack
 
 	public void Init (PerformerTask task, bool hasText=true) {
 
@@ -65,6 +65,7 @@ public class TaskButton : UIElement {
 		} else {
 			task.Start ();
 		}
-		// Init (task, hasText);
+		if (hasText) // BAD hack - this is to get the road button working
+			Init (task);
 	}
 }

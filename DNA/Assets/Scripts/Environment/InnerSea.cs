@@ -2,5 +2,5 @@
 using System.Collections;
 
 namespace DNA {
-	public class InnerSea : Sea2 {}
+	public class InnerSea : Sea {}
 }

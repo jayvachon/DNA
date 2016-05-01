@@ -156,7 +156,9 @@ public class ObjectPool {
 	}
 }
 
+#if UNITY_EDITOR
 [InitializeOnLoad]
+#endif
 public static class PoolIOHandler {
 
 	static string ApplicationPath {

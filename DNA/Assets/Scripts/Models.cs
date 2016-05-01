@@ -248,7 +248,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (CollectItem<MilkshakeGroup>), new TaskSettings {
 				Symbol = "collect_milkshake",
-				Duration = 2f,
+				Duration = 1f,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>),
 				AlwaysPairNearest = true,
@@ -257,7 +257,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
 				Symbol = "collect_coffee",
-				Duration = 1.5f,
+				Duration = 0.75f,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<CoffeeGroup>),
 				AlwaysPairNearest = true,
@@ -266,19 +266,19 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
 				Symbol = "collect_labor",
-				Duration = 1f,
+				Duration = 0.5f,
 				Repeat = true
 			});
 
 			tasks.Add (typeof (CollectItem<HealthGroup>), new TaskSettings {
 				Symbol = "collect_health",
-				Duration = 2f,
+				Duration = 1f,
 				Repeat = true
 			});
 
 			tasks.Add (typeof (CollectItem<HappinessGroup>), new TaskSettings {
 				Symbol = "collect_happiness",
-				Duration = 0.33f,
+				Duration = 0.165f,
 				Repeat = true
 			});
 
@@ -410,7 +410,7 @@ namespace DNA.Models {
 				Symbol = "consume_happiness",
 				Title = "",
 				Description = "Consumes happiness",
-				Duration = 3f,
+				Duration = 2f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
@@ -419,7 +419,7 @@ namespace DNA.Models {
 			tasks.Add (typeof (ConsumeItem<LaborGroup>), new TaskSettings {
 				Symbol = "consume_labor",
 				Description = "Consumes labor",
-				Duration = 1f,
+				Duration = 0.5f,
 				Repeat = true		
 			});
 
@@ -431,7 +431,7 @@ namespace DNA.Models {
 				Symbol = "deliver_milkshake",
 				Title = "",
 				Description = "Delivers milkshakes",
-				Duration = 2f,
+				Duration = 1f,
 				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptCollectItem<MilkshakeGroup>)
@@ -441,7 +441,7 @@ namespace DNA.Models {
 				Symbol = "deliver_coffee",
 				Title = "",
 				Description = "Delivers coffee",
-				Duration = 1.5f,
+				Duration = 0.75f,
 				AutoStart = false,
 				Repeat = true,
 				Pair = typeof (AcceptCollectItem<CoffeeGroup>)
@@ -453,7 +453,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (GenerateItem<CoffeeGroup>), new TaskSettings {
 				Symbol = "generate_coffee",
-				Duration = 3f,
+				Duration = 1.5f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
@@ -469,7 +469,7 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (GenerateItem<HealthGroup>), new TaskSettings {
 				Symbol = "generate_health",
-				Duration = 5f,
+				Duration = 3f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
@@ -483,10 +483,6 @@ namespace DNA.Models {
 				Symbol = "generate_laborer",
 				Title = "Birth Laborer",
 				Description = "Creates a new laborer",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 25 }
@@ -498,10 +494,6 @@ namespace DNA.Models {
 				Symbol = "generate_elder",
 				Title = "Birth Elder",
 				Description = "Creates a new elder",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 0 }
@@ -513,10 +505,6 @@ namespace DNA.Models {
 				Symbol = "generate_corpse",
 				Title = "Birth Corpse",
 				Description = "Creates a new corpse",
-				Duration = 0f,
-				AutoStart = false,
-				Repeat = false,
-				Pair = null,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Coffee", 0 }
@@ -623,7 +611,6 @@ namespace DNA.Models {
 			tasks.Add (typeof (FleeTree), new CostTaskSettings {
 				Title = "Flee Tree",
 				Description = "Goes to the next level",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 1 }
@@ -634,7 +621,6 @@ namespace DNA.Models {
 			tasks.Add (typeof (ConstructRoad), new CostTaskSettings {
 				Title = "Birth road",
 				Description = "Builds a road",
-				Duration = 0f,
 				Costs = new [] {
 					new Dictionary<string, int> {
 						{ "Milkshakes", 5 }

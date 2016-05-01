@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace DNA {
 
-	public class OuterSea : Sea2 {
+	public class OuterSea : Sea {
 
 		Renderer _renderer = null;
 		Renderer Renderer {

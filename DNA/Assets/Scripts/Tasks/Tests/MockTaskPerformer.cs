@@ -72,7 +72,7 @@ public class MockTaskPerformer : MonoBehaviour, ITaskPerformer, IInventoryHolder
 
 		PerformableTasks.Add (repeat);
 		repeat.onEnd += (PerformerTask task) => {
-			Coroutine.WaitForFixedUpdate (() => {
+			Co2.WaitForFixedUpdate (() => {
 				if (repeat.Performing) 
 					Debug.Log ("Repeat test succeeded :)");
 				else

@@ -4,6 +4,6 @@ using System.Collections;
 public class LaborerSpeed : Upgrade<float> {
 
 	protected override float[] Levels {
-		get { return new float[] { 1f, 1.2f, 1.33f, 1.5f, 1.75f, 2f }; }
+		get { return new float[] { 1.33f, 1.5f, 1.67f, 2f, 2.33f, 2.5f }; }
 	}
 }

@@ -39,7 +39,7 @@ namespace DNA {
 		void SimulateFlood () {
 			outer.Level = outer.MaxLevel;
 			inner.Level = inner.MaxLevel;
-			Coroutine.WaitForSeconds (1f, () => {
+			Co2.WaitForSeconds (1f, () => {
 				outer.Level = outer.MinLevel;
 				inner.Level = inner.MinLevel;
 			});

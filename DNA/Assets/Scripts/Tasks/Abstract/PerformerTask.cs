@@ -106,10 +106,11 @@ namespace DNA.Tasks {
 
 			Log ("Start", true);
 			OnStart ();
+			Co2.StartCoroutine (Duration
 			#if QUARTER_TIME
-			Coroutine.Start (Duration*0.25f, SetProgress, End);
+			*0.25f
 			#else
-			Coroutine.Start (Duration, SetProgress, End);
+			, SetProgress, End);
 			#endif
 
 			return true;
@@ -119,7 +120,7 @@ namespace DNA.Tasks {
 			State = TaskState.Idle;
 			performing = false;
 			perform = false;
-			Coroutine.Stop (SetProgress);
+			Co2.StopCoroutine (SetProgress);
 			if (acceptTask != null)
 				acceptTask.Binder.Remove (this, settings.BindCapacity);
 		}
@@ -161,7 +162,7 @@ namespace DNA.Tasks {
 				#if QUARTER_TIME
 				time *= 0.25f;
 				#endif
-				Coroutine.WaitForSeconds (time, () => {
+				Co2.WaitForSeconds (time, () => {
 					if (!perform)
 						return;
 					if (!Start ()) {

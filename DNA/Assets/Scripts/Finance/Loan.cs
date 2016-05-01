@@ -79,7 +79,7 @@ namespace DNA {
 				PlayerItemGroup.Remove (Payment);
 			}
 			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {
-				Coroutine.WaitForFixedUpdate (() => { Group.Remove (this); });
+				Co2.WaitForFixedUpdate (() => { Group.Remove (this); });
 			}
 			if (onUpdate != null)
 				onUpdate ();
@@ -92,7 +92,7 @@ namespace DNA {
 			} else {
 				LoanManager.Defaulted = true;
 				Status = LoanStatus.Defaulted;
-				Coroutine.WaitForFixedUpdate (() => { Group.Remove (this); });
+				Co2.WaitForFixedUpdate (() => { Group.Remove (this); });
 			}
 		}
 	}

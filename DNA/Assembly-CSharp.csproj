@@ -58,7 +58,7 @@
      <Compile Include="Assets\Scripts\Environment\OuterSea.cs" />
      <Compile Include="Assets\Scripts\Environment\OuterSeaPiece.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
-     <Compile Include="Assets\Scripts\Environment\Sea2.cs" />
+     <Compile Include="Assets\Scripts\Environment\SeaLevel.cs" />
      <Compile Include="Assets\Scripts\Environment\SeaManager.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickConnectionEvent.cs" />
@@ -276,7 +276,6 @@
      <Compile Include="Assets\Scripts\UI\ElderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\FloatingIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\HUD\LeveeInfo.cs" />
-     <Compile Include="Assets\Scripts\UI\HUD\SeaLevelMeter.cs" />
      <Compile Include="Assets\Scripts\UI\HappinessIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\HealthIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\ItemGroupDrawer.cs" />
@@ -356,7 +355,7 @@
      <Compile Include="Assets\Scripts\Upgrades\Upgrades.cs" />
      <Compile Include="Assets\Scripts\Upgrades\UpgradesTest.cs" />
      <Compile Include="Assets\Scripts\Utilities\Co.cs" />
-     <Compile Include="Assets\Scripts\Utilities\Coroutine.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Co2.cs" />
      <Compile Include="Assets\Scripts\Utilities\CoroutineManager.cs" />
      <Compile Include="Assets\Scripts\Utilities\DebuggableMethod.cs" />
      <Compile Include="Assets\Scripts\Utilities\Extensions\ExtensionMethods.cs" />

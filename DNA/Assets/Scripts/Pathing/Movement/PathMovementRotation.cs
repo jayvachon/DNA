@@ -323,7 +323,7 @@ public class PathMovementRotation : MonoBehaviour {
 		float distance = Vector3.Distance (f, t);
 		float time = distance / speed;
 
-		Coroutine.Start (
+		Co2.StartCoroutine (
 			time, 
 			(float p) => { Move (p, f, t); }, 
 			OnArriveAtPoint

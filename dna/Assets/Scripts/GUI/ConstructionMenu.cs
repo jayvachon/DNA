@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.Tasks;
 using DNA.Units;
+using DNA.InputSystem;
 
 namespace DNA {
 
@@ -39,6 +40,8 @@ namespace DNA {
 			buttons[1].onClick.AddListener (() => { SetCategory ("residential"); });
 			buttons[2].onClick.AddListener (() => { SetCategory ("resource"); });
 			buttons[3].onClick.AddListener (() => { SetCategory ("civic"); });
+
+			SelectionHandler.onUpdateSelection += OnUpdateSelection;
 		}
 
 		PerformerTask PlayerTask (System.Type taskType) {
@@ -61,6 +64,10 @@ namespace DNA {
 
 		void SetTopPanelActive (bool active) {
 			topPanel.gameObject.SetActive (active);
+		}
+
+		void OnUpdateSelection (List<ISelectable> selected) {
+			SetTopPanelActive (false);
 		}
 	}
 }

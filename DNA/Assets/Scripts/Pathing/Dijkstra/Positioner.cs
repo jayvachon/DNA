@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace DNA.Paths {
 
-	public delegate void OnArriveAtDestination (GridPoint point);
+/*	public delegate void OnArriveAtDestination (GridPoint point);
 
 	public class Positioner {
 
@@ -70,11 +70,11 @@ namespace DNA.Paths {
 
 		public void RotateAroundPoint (float time) {
 			encircling = true;
-			/*Coroutine.StartWithCondition (time, 
-				(float p) => { rotator.RotateAroundPoint (p); }, 
-				() => { return encircling; },
-				() => { encircling = false; }
-			);*/
+			// Coroutine.StartWithCondition (time, 
+			// 	(float p) => { rotator.RotateAroundPoint (p); }, 
+			// 	() => { return encircling; },
+			// 	() => { encircling = false; }
+			// );
 		}
 
 		public void InterruptRotateAround () {
@@ -87,18 +87,18 @@ namespace DNA.Paths {
 			CalculatePath ();
 			if (!HasNextPoint) return;
 			
-			/*Coroutine.WaitForCondition (() => { return !encircling; }, () => {
+			// Coroutine.WaitForCondition (() => { return !encircling; }, () => {
 				
-				Vector3 from = path[pathPosition].Position;
-	 			Vector3 to = path[pathPosition+1].Position;
-				Vector3 next = pathPosition+1 < path.Count-1 ? path[pathPosition+2].Position : from;
+			// 	Vector3 from = path[pathPosition].Position;
+	 	// 		Vector3 to = path[pathPosition+1].Position;
+			// 	Vector3 next = pathPosition+1 < path.Count-1 ? path[pathPosition+2].Position : from;
 
-				trajectory = rotator.InitMovement (from, to, next, pathPosition+1 == path.Count-1);
-				pathPosition ++;
+			// 	trajectory = rotator.InitMovement (from, to, next, pathPosition+1 == path.Count-1);
+			// 	pathPosition ++;
 
-				BeginMove ();
-				Debug.Log ("begin");
-			});*/
+			// 	BeginMove ();
+			// 	Debug.Log ("begin");
+			// });
 		}
 
 		void BeginMove () {
@@ -118,10 +118,10 @@ namespace DNA.Paths {
 			} else {
 				
 				// otherwise, do the rotation
-				/*Coroutine.Start (time, (float p) => {
-					ghostPosition = Vector3.Lerp (start, end, p);
-					rotator.ApplyPosition (ghostPosition, pathPosition);
-				}, Move);*/
+				// Coroutine.Start (time, (float p) => {
+				// 	ghostPosition = Vector3.Lerp (start, end, p);
+				// 	rotator.ApplyPosition (ghostPosition, pathPosition);
+				// }, Move);
 			}
 		}
 
@@ -132,10 +132,10 @@ namespace DNA.Paths {
 			float distance = Vector3.Distance (start, end);
 			float time = Mathf.Abs (distance / speed);
 
-			/*Coroutine.Start (time, (float p) => {
-				ghostPosition = Vector3.Lerp (start, end, p);
-				rotator.ApplyPosition (ghostPosition, pathPosition);
-			}, EndMove);*/
+			// Coroutine.Start (time, (float p) => {
+			// 	ghostPosition = Vector3.Lerp (start, end, p);
+			// 	rotator.ApplyPosition (ghostPosition, pathPosition);
+			// }, EndMove);
 		}
 
 		void EndMove () {
@@ -151,10 +151,10 @@ namespace DNA.Paths {
 			float distance = trajectory.TargetArc;
 			float time = Mathf.Abs (distance / speed) / 2f;
 
-			/*Coroutine.Start (time, (float p) => {
-				ghostPosition = Vector3.Lerp (start, end, p);
-				rotator.ApplyPosition (ghostPosition, pathPosition);
-			}, OnArriveAtPoint);*/
+			// Coroutine.Start (time, (float p) => {
+			// 	ghostPosition = Vector3.Lerp (start, end, p);
+			// 	rotator.ApplyPosition (ghostPosition, pathPosition);
+			// }, OnArriveAtPoint);
 		}
 
 		void CalculatePath () {
@@ -192,5 +192,5 @@ namespace DNA.Paths {
 			if (OnArriveAtDestination != null) 
 				OnArriveAtDestination (path[path.Count-1]);
 		}
-	}
+	}*/
 }

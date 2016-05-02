@@ -105,7 +105,7 @@ namespace DNA.Tasks {
 			if (performers.Count < 2)
 				return firstTasks.Values.ToList ().ConvertAll (x => x as PerformerTask);
 
-			foreach (ITaskPerformer p in performers) {
+			// foreach (ITaskPerformer p in performers) {
 
 				Dictionary<System.Type, PerformerTask> commonTasks = new Dictionary<System.Type, PerformerTask> ();
 				foreach (var t in commonTasks) {
@@ -113,9 +113,9 @@ namespace DNA.Tasks {
 						firstTasks.Remove (t.Key);
 				}
 
-				if (firstTasks.Count == 0)
-					break;
-			}
+				// if (firstTasks.Count == 0)
+					// break;
+			// }
 			return firstTasks.Values.ToList ().ConvertAll (x => x as PerformerTask);
 		}
 

@@ -5,18 +5,24 @@ namespace DNA {
 
 	public class Sea : MBRefs {
 
-		public readonly float MinLevel = -10f;
-		public readonly float MaxLevel = 10f;
-
-		public float Level {
-			get { return MyTransform.localPosition.y; }
-			set {
-				MyTransform.SetLocalPositionY (Mathf.Clamp (value, MinLevel, MaxLevel));
-			}
+		public virtual float Fill {
+			get { return average.Fill; }
 		}
 
-		protected virtual void Awake () {
-			Level = MinLevel;
+		public virtual float Level {
+			get { return average.Level; }
+		}
+
+		public float RiseRate { get; set; }
+		public float MinLevel { get { return average.Min; } }
+		public float MaxLevel { get { return average.Max; } }
+
+		protected SeaLevel average = new SeaLevel (-10f, 10f);
+
+		void Update () {
+
+			// raise/lower the sea level
+			average.Fill += RiseRate;
 		}
 	}
 }

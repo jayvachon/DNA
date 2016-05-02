@@ -32,6 +32,10 @@ namespace DNA {
 			Renderer.sharedMaterial.mainTextureOffset = new Vector2 (Mathf.PerlinNoise (materialOffset, 0), 0f);
 			materialOffset += 0.001f;
 
+			// funcky texture thing
+			Renderer.sharedMaterial.mainTextureOffset = new Vector2 (Mathf.PerlinNoise (materialOffset, 0), 0f);
+			materialOffset += 0.001f;
+
 			// update sea y position baseed on sea level and tide
 			MyTransform.SetLocalPositionY (Level);
 		}

@@ -6,8 +6,7 @@ namespace DNA {
 	public class SeaManager : MBRefs {
 
 		public float SeaLevel {
-			// get { return inner.Level; }
-			get { return 0; }
+			get { return inner.Level; }
 		}
 
 		public Levee levee;
@@ -29,7 +28,7 @@ namespace DNA {
 		[DebuggableMethod ()]
 		void OnUpdateEmissions (float val) {
 			riseRate = val * displacementCoefficient;
-			// outer.RiseRate = riseRate;
+			outer.RiseRate = riseRate;
 		}
 
 		[DebuggableMethod ()]
@@ -37,15 +36,15 @@ namespace DNA {
 			pumpRate = rate * displacementCoefficient;
 		}
 
-		// [DebuggableMethod ()]
-		// void SimulateFlood () {
-		// 	outer.Level = outer.MaxLevel;
-		// 	inner.Level = inner.MaxLevel;
-		// 	Co2.WaitForSeconds (1f, () => {
-		// 		outer.Level = outer.MinLevel;
-		// 		inner.Level = inner.MinLevel;
-		// 	});
-		// }
+		/*[DebuggableMethod ()]
+		void SimulateFlood () {
+			outer.Level = outer.MaxLevel;
+			inner.Level = inner.MaxLevel;
+			Co2.WaitForSeconds (1f, () => {
+				outer.Level = outer.MinLevel;
+				inner.Level = inner.MinLevel;
+			});
+		}*/
 
 		[DebuggableMethod ()]
 		void UpgradeLevee () {

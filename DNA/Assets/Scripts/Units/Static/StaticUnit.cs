@@ -79,7 +79,6 @@ namespace DNA.Units {
 		protected virtual void OnSetFertility (int fertility) {}
 
 		#region ISelectable implementation
-		protected SelectSettings selectSettings;
 		public override SelectSettings SelectSettings {
 			get { 
 				if (selectSettings == null) {

@@ -10,8 +10,8 @@ public class GuiDescription : GuiSelectableListener {
 	public Text Name;
 	public Text Description;
 
-	new string name;
-	string description;
+	// new string name;
+	// string description;
 
 	void Awake () {
 		Init ();
@@ -21,10 +21,10 @@ public class GuiDescription : GuiSelectableListener {
 
 		// not displaying this for now
 		// if (selected.Count == 0) {
-			name = "";
+			/*name = "";
 			description = "";
 			SetGroupActive (false);
-			return;
+			return;*/
 		// }
 
 		/*List<Unit> units = selected

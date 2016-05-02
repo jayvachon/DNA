@@ -21,7 +21,6 @@ namespace DNA {
 		}
 
 		public readonly RegularPolygon edges = new RegularPolygon (5, 75f);
-		readonly float startHeight = 1f;
 
 		void Awake () {
 			Upgrades.Instance.AddListener<LeveeHeight> (

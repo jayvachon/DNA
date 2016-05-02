@@ -9,8 +9,6 @@ namespace DNA.Units {
 
 	public class Road : StaticUnit {
 
-		public PathElement Element { get; set; }
-
 		void Awake () {
 			GetComponent<Renderer> ().SetColor (Palette.Yellow);
 		}

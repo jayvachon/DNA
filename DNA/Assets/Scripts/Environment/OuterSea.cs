@@ -5,6 +5,10 @@ namespace DNA {
 
 	public class OuterSea : Sea {
 
+		public override float Level {
+			get { return average.Level + tide.Level; }
+		}
+
 		Renderer _renderer = null;
 		Renderer Renderer {
 			get {
@@ -14,16 +18,24 @@ namespace DNA {
 				return _renderer;
 			}
 		}
+		// float materialOffset = 0;
 
-		float materialOffset = 0;
-		
-		protected override void Awake () {
-			base.Awake ();
+		SeaLevel tide = new SeaLevel (0f, 1f);
+
+		protected void Awake () {
+			tide.Swell (60f, true);
 		}
 
 		void Update () {
-			Renderer.sharedMaterial.mainTextureOffset = new Vector2 (Mathf.PerlinNoise (materialOffset, 0), 0f);
-			materialOffset += 0.001f;
+
+			base.Update ();
+
+			// funcky texture thing
+			// Renderer.sharedMaterial.mainTextureOffset = new Vector2 (Mathf.PerlinNoise (materialOffset, 0), 0f);
+			// materialOffset += 0.001f;
+
+			// update sea y position baseed on sea level and tide
+			MyTransform.SetLocalPositionY (Level);
 		}
 	}
 }

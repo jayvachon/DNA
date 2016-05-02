@@ -19,10 +19,13 @@ namespace DNA {
 		}
 
 		void Update () {
-			float s = Mathf.InverseLerp (min, max, sea.outer.Level);
+			// float s = Mathf.InverseLerp (min, max, sea.outer.Level);
 			float l = Mathf.InverseLerp (min, max, sea.LeveeTop);
-			seaLevel.transform.SetLocalScaleY (s);
+			float s = sea.outer.Fill;
+			// seaLevel.transform.SetLocalScaleY (s);
+			seaLevel.transform.SetLocalScaleY (sea.outer.Fill);
 			leveeLevel.transform.SetLocalScaleY (l);
+
 			if (s > l) {
 				seaMeter.color = Palette.Red;
 			} else {

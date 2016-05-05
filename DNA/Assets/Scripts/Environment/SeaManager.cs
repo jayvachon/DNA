@@ -36,15 +36,15 @@ namespace DNA {
 			pumpRate = rate * displacementCoefficient;
 		}
 
-		/*[DebuggableMethod ()]
+		[DebuggableMethod ()]
 		void SimulateFlood () {
-			outer.Level = outer.MaxLevel;
+			/*outer.Level = outer.MaxLevel;
 			inner.Level = inner.MaxLevel;
 			Co2.WaitForSeconds (1f, () => {
 				outer.Level = outer.MinLevel;
 				inner.Level = inner.MinLevel;
-			});
-		}*/
+			});*/
+		}
 
 		[DebuggableMethod ()]
 		void UpgradeLevee () {
@@ -55,16 +55,13 @@ namespace DNA {
 			
 			// Outer sea rises until it reaches top of the levee
 			if (outer.Level <= LeveeTop) {
-				// outer.Level += riseRate;
 
 				// Inner sea is pumped if levee hasn't been breached
-				// inner.Level -= pumpRate;
 				inner.RiseRate = -pumpRate;
 			}
 
 			// Inner sea rises if outer sea has reached top of levee
 			if (outer.Level >= LeveeTop && inner.Level < LeveeTop) {
-				// inner.Level += floodRate;
 				inner.RiseRate = floodRate;
 			}
 
@@ -73,8 +70,6 @@ namespace DNA {
 				// TODO: set inner sea level = to outer sea level
 				inner.RiseRate = 0f;
 				inner.SetLevel (outer.Level);
-				// inner.Level += riseRate;
-				// outer.Level = inner.Level;
 			}
 		}
 	}

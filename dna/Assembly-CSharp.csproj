@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Environment\SeaManager.cs" />
      <Compile Include="Assets\Scripts\Environment\SphereSea.cs" />
      <Compile Include="Assets\Scripts\Environment\SphereSeaPart.cs" />
+     <Compile Include="Assets\Scripts\Environment\WeatherManager.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickConnectionEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickContainerEvent.cs" />

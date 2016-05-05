@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Environment\InnerSea.cs" />
      <Compile Include="Assets\Scripts\Environment\OuterSea.cs" />
      <Compile Include="Assets\Scripts\Environment\OuterSeaPiece.cs" />
+     <Compile Include="Assets\Scripts\Environment\Rain.cs" />
      <Compile Include="Assets\Scripts\Environment\Sea.cs" />
      <Compile Include="Assets\Scripts\Environment\SeaLevel.cs" />
      <Compile Include="Assets\Scripts\Environment\SeaManager.cs" />

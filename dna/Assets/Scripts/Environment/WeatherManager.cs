@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class WeatherManager : MonoBehaviour {
 
 	public Rain rain;
+	public FogController fog;
 
 	float stormThreshold = 0.67f;
 
@@ -34,10 +35,11 @@ public class WeatherManager : MonoBehaviour {
 			curves[i].Update ();
 			val += curves[i].Value;
 		}
+
 		float intensity = Mathf.Pow (val/(float)curves.Length, 6);
-		Debug.Log (intensity);
 		rain.UpdateRain (intensity);
 		rain.UpdateWind (intensity, windPattern.Direction);
+		fog.UpdateRain (intensity);
 	}
 
 	class StormCurve {

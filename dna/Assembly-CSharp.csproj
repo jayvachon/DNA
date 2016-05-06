@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Debugging\PathfinderDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />
      <Compile Include="Assets\Scripts\Environment\Fermat.cs" />
+     <Compile Include="Assets\Scripts\Environment\FogController.cs" />
      <Compile Include="Assets\Scripts\Environment\InnerSea.cs" />
      <Compile Include="Assets\Scripts\Environment\OuterSea.cs" />
      <Compile Include="Assets\Scripts\Environment\OuterSeaPiece.cs" />

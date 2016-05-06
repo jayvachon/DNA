@@ -11,13 +11,50 @@ public class WeatherManager : MonoBehaviour {
 	RainPattern rainPattern = new RainPattern ();
 	WindPattern windPattern = new WindPattern ();
 
+	// StormCurve small = new StormCurve (60f);
+	StormCurve[] curves;
+
+	void Awake () {
+		curves = new StormCurve[3];
+		for (int i = 0; i < curves.Length; i ++) {
+			curves[i] = new StormCurve (120 * Mathf.Pow (i+1, 2));
+		}
+	}
+
 	void Update () {
 		
 		rainPattern.Update ();
 		windPattern.Update ();
 
-		rain.UpdateRain (rainPattern.Intensity);
-		rain.UpdateWind (windPattern.Intensity, windPattern.Direction);
+		// rain.UpdateRain (rainPattern.Intensity);
+		// rain.UpdateWind (windPattern.Intensity, windPattern.Direction);
+
+		float val = 0f;
+		for (int i = 0; i < curves.Length; i ++) {
+			curves[i].Update ();
+			val += curves[i].Value;
+		}
+		float intensity = Mathf.Pow (val/(float)curves.Length, 6);
+		Debug.Log (intensity);
+		rain.UpdateRain (intensity);
+		rain.UpdateWind (intensity, windPattern.Direction);
+	}
+
+	class StormCurve {
+
+		public float Value { get; private set; }
+
+		float rate;
+		float time = 0f;
+
+		public StormCurve (float rate) {
+			this.rate = rate;
+		}
+
+		public void Update () {
+			time += 1/rate*Time.deltaTime;
+			Value = Mathf.Sin (Mathf.PI * 2 * time);
+		}
 	}
 
 	// Method 1

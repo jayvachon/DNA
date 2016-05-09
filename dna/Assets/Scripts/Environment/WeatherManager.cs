@@ -18,7 +18,7 @@ public class WeatherManager : MonoBehaviour {
 	void Awake () {
 		curves = new StormCurve[3];
 		for (int i = 0; i < curves.Length; i ++) {
-			curves[i] = new StormCurve (120 * Mathf.Pow (i+1, 2));
+			curves[i] = new StormCurve (60 * Mathf.Pow (i+1, 2));
 		}
 	}
 

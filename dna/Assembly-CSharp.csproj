@@ -45,6 +45,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Climate\Grapher.cs" />
+     <Compile Include="Assets\Scripts\Climate\Noise.cs" />
+     <Compile Include="Assets\Scripts\Climate\NoisySignal.cs" />
+     <Compile Include="Assets\Scripts\Climate\Pattern.cs" />
+     <Compile Include="Assets\Scripts\Climate\Storm.cs" />
+     <Compile Include="Assets\Scripts\Climate\Wave.cs" />
+     <Compile Include="Assets\Scripts\Climate\Wind.cs" />
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />
      <Compile Include="Assets\Scripts\DataManager.cs" />
@@ -64,6 +71,7 @@
      <Compile Include="Assets\Scripts\Environment\SeaManager.cs" />
      <Compile Include="Assets\Scripts\Environment\SphereSea.cs" />
      <Compile Include="Assets\Scripts\Environment\SphereSeaPart.cs" />
+     <Compile Include="Assets\Scripts\Environment\WeatherDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\WeatherManager.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\ClickConnectionEvent.cs" />

@@ -16,11 +16,11 @@ namespace DNA.Climate {
 			for (int i = 0; i < systems.Systems.Length; i ++) {
 
 				IWeatherSystem system = systems.Systems[i];
-				Pattern[] sysPatterns = system.Patterns;
+				Dictionary<string, Pattern> sysPatterns = system.Patterns;
 
-				for (int j = 0; j < sysPatterns.Length; j ++) {
+				foreach (var kv in sysPatterns) {
 
-					Pattern p = sysPatterns[j];
+					Pattern p = kv.Value;
 					PatternGrapher g = ObjectPool.Instantiate<PatternGrapher> ();
 
 					g.transform.SetParent (transform);

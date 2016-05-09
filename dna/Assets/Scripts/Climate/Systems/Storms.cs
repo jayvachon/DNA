@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace DNA.Climate {
 
@@ -9,8 +10,18 @@ namespace DNA.Climate {
 			get { return "Weather"; }
 		}
 
-		public Pattern[] Patterns {
-			get { return new Pattern[] { precipitation, wind, temperature }; }
+		Dictionary<string, Pattern> patterns;
+		public Dictionary<string, Pattern> Patterns {
+			get {
+				if (patterns == null) {
+					return new Dictionary<string, Pattern> () {
+						{ "precipitation", precipitation },
+						{ "wind", wind },
+						{ "temperature", temperature }
+					};
+				}
+				return patterns;
+			}
 		}
 
 		[SerializeField] NoisySignal precipitation;

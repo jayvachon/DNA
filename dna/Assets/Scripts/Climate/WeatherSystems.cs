@@ -6,15 +6,15 @@ namespace DNA.Climate {
 
 	public class WeatherSystems : MonoBehaviour {
 
-		IWeatherSystem[] systems;
-		public IWeatherSystem[] Systems {
+		// IWeatherSystem[] systems;
+		Dictionary<string, IWeatherSystem> systems;
+		// public IWeatherSystem[] Systems {
+		public Dictionary<string, IWeatherSystem> {
 			get {
-				if (systems == null) {
-					systems = transform.GetChildren ()
-						.FindAll (x => x.GetComponent<MonoBehaviour> () is IWeatherSystem)
-						.ConvertAll (x => x.GetComponent<MonoBehaviour> () as IWeatherSystem)
-						.ToArray ();
-				}
+				IWeatherSystem sys = transform.GetChildren ()
+					.FindAll (x => x.GetComponent<MonoBehaviour> () is IWeatherSystem)
+					.ConvertAll (x => x.GetComponent<MonoBehaviour> () as IWeatherSystem)
+					.ToArray ();
 				return systems;
 			}
 		}

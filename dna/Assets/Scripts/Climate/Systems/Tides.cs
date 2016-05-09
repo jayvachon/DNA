@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace DNA.Climate {
 
@@ -9,8 +10,16 @@ namespace DNA.Climate {
 			get { return "Tides"; }
 		}
 
-		public Pattern[] Patterns {
-			get { return new Pattern[] { seaLevel }; }
+		Dictionary<string, Pattern> patterns;
+		public Dictionary<string, Pattern> Patterns {
+			get {
+				if (patterns == null) {
+					patterns = new Dictionary<string, Pattern> () {
+						{ "sea", seaLevel }
+					};
+				}
+				return patterns;
+			}
 		}
 
 		[SerializeField] Wave seaLevel;

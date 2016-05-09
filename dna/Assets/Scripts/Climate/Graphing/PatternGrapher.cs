@@ -19,8 +19,23 @@ namespace DNA.Climate {
 			}
 		}
 
-		public void SetPattern (Pattern pattern) {
+		TextMesh text = null;
+		TextMesh Text {
+			get {
+				if (text == null) {
+					text = GetComponent<TextMesh> ();
+				}
+				return text;
+			}
+		}
+
+		public void SetPattern (Pattern pattern, string patternName="") {
 			this.pattern = pattern;
+			Text.text = patternName;
+		}
+
+		public void SetScreenPosition (float yPos) {
+			transform.position = Camera.main.ViewportToWorldPoint (new Vector3 (0, yPos, 10f));
 		}
 
 		void Update () {

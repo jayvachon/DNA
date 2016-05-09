@@ -5,6 +5,10 @@ namespace DNA.Climate {
 
 	public class Storms : MonoBehaviour, IWeatherSystem {
 
+		public string Name {
+			get { return "Weather"; }
+		}
+
 		public Pattern[] Patterns {
 			get { return new Pattern[] { precipitation, wind, temperature }; }
 		}
@@ -13,19 +17,15 @@ namespace DNA.Climate {
 		[SerializeField] NoisySignal wind;
 		[SerializeField] NoisySignal temperature;
 
-		public PatternGrapher precipitationGrapher;
-		public PatternGrapher windGrapher;
-		public PatternGrapher temperatureGrapher;
-
 		void OnEnable () {
 			
 			precipitation = new NoisySignal (new Noise (20f, 1f), new Wave (60f, 0.3f));
 			wind = new NoisySignal (new Noise (20f, 1f), new Wave (60f, 0.3f));
 			temperature = new NoisySignal (new Noise (20f, 1f), new Wave (60f, 0.3f));
 			
-			precipitationGrapher.SetPattern (precipitation);
-			windGrapher.SetPattern (wind);
-			temperatureGrapher.SetPattern (temperature);
+			precipitation.Name = "Precipitation";
+			wind.Name = "Wind";
+			temperature.Name = "Temperature";
 		}
 
 		public void Advance () {

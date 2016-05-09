@@ -45,15 +45,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Climate\IWeatherSystem.cs" />
-     <Compile Include="Assets\Scripts\Climate\Noise.cs" />
-     <Compile Include="Assets\Scripts\Climate\NoisySignal.cs" />
-     <Compile Include="Assets\Scripts\Climate\Pattern.cs" />
-     <Compile Include="Assets\Scripts\Climate\PatternGrapher.cs" />
-     <Compile Include="Assets\Scripts\Climate\Seasons.cs" />
-     <Compile Include="Assets\Scripts\Climate\Storms.cs" />
-     <Compile Include="Assets\Scripts\Climate\Tides.cs" />
-     <Compile Include="Assets\Scripts\Climate\Wave.cs" />
+     <Compile Include="Assets\Scripts\Climate\Graphing\PatternGrapher.cs" />
+     <Compile Include="Assets\Scripts\Climate\Graphing\WeatherGrapher.cs" />
+     <Compile Include="Assets\Scripts\Climate\Patterns\Noise.cs" />
+     <Compile Include="Assets\Scripts\Climate\Patterns\NoisySignal.cs" />
+     <Compile Include="Assets\Scripts\Climate\Patterns\Pattern.cs" />
+     <Compile Include="Assets\Scripts\Climate\Patterns\Wave.cs" />
+     <Compile Include="Assets\Scripts\Climate\Systems\IWeatherSystem.cs" />
+     <Compile Include="Assets\Scripts\Climate\Systems\Seasons.cs" />
+     <Compile Include="Assets\Scripts\Climate\Systems\Storms.cs" />
+     <Compile Include="Assets\Scripts\Climate\Systems\Tides.cs" />
      <Compile Include="Assets\Scripts\Climate\WeatherSystems.cs" />
      <Compile Include="Assets\Scripts\Climate\Wind.cs" />
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />

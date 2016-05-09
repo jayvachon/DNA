@@ -8,6 +8,12 @@ namespace DNA.Climate {
 
 		public float Cursor { get; set; }
 
+		string name = "";
+		public virtual string Name {
+			get { return name; } 
+			set { name = value; }
+		}
+
 		public abstract float ValueAt (float position);
 
 		public float ValueAtCursor {

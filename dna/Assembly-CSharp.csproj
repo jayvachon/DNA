@@ -45,12 +45,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Climate\Grapher.cs" />
      <Compile Include="Assets\Scripts\Climate\Noise.cs" />
      <Compile Include="Assets\Scripts\Climate\NoisySignal.cs" />
      <Compile Include="Assets\Scripts\Climate\Pattern.cs" />
-     <Compile Include="Assets\Scripts\Climate\Storm.cs" />
+     <Compile Include="Assets\Scripts\Climate\PatternGrapher.cs" />
+     <Compile Include="Assets\Scripts\Climate\Storms.cs" />
      <Compile Include="Assets\Scripts\Climate\Wave.cs" />
+     <Compile Include="Assets\Scripts\Climate\WeatherSystem.cs" />
      <Compile Include="Assets\Scripts\Climate\Wind.cs" />
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />
      <Compile Include="Assets\Scripts\Clock\ITimeable.cs" />

@@ -33,7 +33,7 @@ namespace DNA.Paths {
 			damageHandler = new DamageHandler (OnDamage);
 		}
 
-		public ConstructionSite BeginConstruction<T> (int laborCost=0, bool autoConstruct=false) where T : StaticUnit {
+		public ConstructionSite BeginConstruction<T> (int laborCost=0, bool autoConstruct=true) where T : StaticUnit {
 
 			// Create a construction site and listen for labor to be completed
 			// Set the project to turn into once labor completes

@@ -25,6 +25,7 @@ namespace DNA.Units {
 						{ "house", "HouseRenderer" },
 						{ "construction", "ConstructionSiteRenderer" },
 						{ "laborer", "LaborerRenderer" },
+						{ "shark", "SharkRenderer" },
 						{ "seed", "SeedRenderer" },
 						{ "apartment", "ApartmentRenderer" }
 					};

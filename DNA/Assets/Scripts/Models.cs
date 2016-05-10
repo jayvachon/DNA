@@ -85,8 +85,13 @@ namespace DNA.Models {
 			units.Add (typeof (Corpse), new UnitSettings {
 				Symbol = "corpse",
 				Title = "Remains",
-				Description = "Deliver remains to the Giving Tree to harvest the years.",
-				Emissions = 0f
+				Description = "Deliver remains to the Giving Tree to harvest the years."
+			});
+
+			units.Add (typeof (Shark), new UnitSettings {
+				Symbol = "shark",
+				Title = "Shark",
+				Description = "Sharks are here to collect loans"
 			});
 
 			units.Add (typeof (MilkshakePool), new UnitSettings {
@@ -96,6 +101,7 @@ namespace DNA.Models {
 				Emissions = 1f,
 				TakesDamage = true,
 				Unlocked = true,
+				RemovesFogOfWar = true,
 				Demolishable = true
 			});
 
@@ -115,6 +121,7 @@ namespace DNA.Models {
 				Emissions = 0.5f,
 				TakesDamage = true,
 				Unlocked = true,
+				RemovesFogOfWar = true,
 				Demolishable = true
 			});
 
@@ -125,6 +132,7 @@ namespace DNA.Models {
 				Emissions = 0.75f,
 				TakesDamage = true,
 				Unlocked = false,
+				RemovesFogOfWar = true,
 				Demolishable = true
 			});
 
@@ -196,6 +204,7 @@ namespace DNA.Models {
 				Emissions = 0.1f,
 				TakesDamage = true,
 				Unlocked = true,
+				RemovesFogOfWar = true,
 				Demolishable = true
 			});
 
@@ -206,6 +215,7 @@ namespace DNA.Models {
 				Emissions = 0.3f,
 				TakesDamage = true,
 				Unlocked = false,
+				RemovesFogOfWar = true,
 				Demolishable = true
 			});
 

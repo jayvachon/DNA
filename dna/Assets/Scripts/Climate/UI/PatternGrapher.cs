@@ -52,8 +52,8 @@ namespace DNA.Climate {
 			for (int i = 0; i < pointCount; i ++) {
 				float x = i * increment;
 				points[i].position = new Vector3 (x, vals[i], 0f);
-				points[i].color = Color.black;
-				points[i].size = 0.1f;
+				points[i].startColor = Color.black;
+				points[i].startSize = 0.1f;
 			}
 
 			Particles.SetParticles(points, points.Length);

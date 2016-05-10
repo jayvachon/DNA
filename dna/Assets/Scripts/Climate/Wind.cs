@@ -8,6 +8,10 @@ namespace DNA.Climate {
 		NoisySignal amplitude;
 		NoisySignal direction;
 
+		public override float Amplitude {
+			get { return 1f; }
+		}
+
 		public Wind () {
 
 		}

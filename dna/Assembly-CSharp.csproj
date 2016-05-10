@@ -45,8 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Climate\Graphing\PatternGrapher.cs" />
-     <Compile Include="Assets\Scripts\Climate\Graphing\WeatherGrapher.cs" />
+     <Compile Include="Assets\Scripts\Climate\Climate.cs" />
+     <Compile Include="Assets\Scripts\Climate\Patterns\DelayedPattern.cs" />
+     <Compile Include="Assets\Scripts\Climate\Patterns\IGenerator.cs" />
      <Compile Include="Assets\Scripts\Climate\Patterns\Noise.cs" />
      <Compile Include="Assets\Scripts\Climate\Patterns\NoisySignal.cs" />
      <Compile Include="Assets\Scripts\Climate\Patterns\Pattern.cs" />
@@ -55,6 +56,10 @@
      <Compile Include="Assets\Scripts\Climate\Systems\Seasons.cs" />
      <Compile Include="Assets\Scripts\Climate\Systems\Storms.cs" />
      <Compile Include="Assets\Scripts\Climate\Systems\Tides.cs" />
+     <Compile Include="Assets\Scripts\Climate\UI\PatternGrapher.cs" />
+     <Compile Include="Assets\Scripts\Climate\UI\SystemReport.cs" />
+     <Compile Include="Assets\Scripts\Climate\UI\WeatherGrapher.cs" />
+     <Compile Include="Assets\Scripts\Climate\UI\WeatherReport.cs" />
      <Compile Include="Assets\Scripts\Climate\WeatherSystems.cs" />
      <Compile Include="Assets\Scripts\Climate\Wind.cs" />
      <Compile Include="Assets\Scripts\Clock\Clock.cs" />

@@ -13,10 +13,10 @@ namespace DNA.Climate {
 
 			graphs = new List<PatternGrapher> ();
 
-			for (int i = 0; i < systems.Systems.Length; i ++) {
+			foreach (var system in systems.Systems) {
 
-				IWeatherSystem system = systems.Systems[i];
-				Dictionary<string, Pattern> sysPatterns = system.Patterns;
+				IWeatherSystem sys = system.Value;
+				Dictionary<string, Pattern> sysPatterns = sys.Patterns;
 
 				foreach (var kv in sysPatterns) {
 
@@ -25,7 +25,7 @@ namespace DNA.Climate {
 
 					g.transform.SetParent (transform);
 					g.transform.Reset ();
-					g.SetPattern (p, system.Name + ": " + p.Name);
+					g.SetPattern (p, sys.Name + ": " + p.Name);
 					graphs.Add (g);
 				}
 			}

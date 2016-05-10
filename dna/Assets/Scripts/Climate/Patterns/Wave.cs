@@ -11,6 +11,10 @@ namespace DNA.Climate {
 		[Range (0, 1)]
 		public float amplitude;
 
+		public override float Amplitude {
+			get { return amplitude; }
+		}
+
 		float twopi;
 
 		public Wave (float frequency=0f, float amplitude=1f) {

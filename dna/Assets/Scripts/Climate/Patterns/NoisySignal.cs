@@ -9,6 +9,10 @@ namespace DNA.Climate {
 		public Noise noise;
 		public Wave wave;
 
+		public override float Amplitude {
+			get { return 1; }
+		}
+
 		public NoisySignal (Noise noise, Wave wave) {
 			this.noise = noise;
 			this.wave = wave;
@@ -21,7 +25,7 @@ namespace DNA.Climate {
 		}
 
 		public override float ValueAt (float position) {
-			return (noise.ValueAt (position) + wave.ValueAt (position)) / (noise.amplitude + wave.amplitude);
+			return Pattern.Add (position, noise, wave);
 		}
 	}
 }

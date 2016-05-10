@@ -17,7 +17,8 @@ namespace DNA.Climate {
 					return new Dictionary<string, Pattern> () {
 						{ "precipitation", precipitation },
 						{ "wind", wind },
-						{ "temperature", temperature }
+						{ "temperature", temperature },
+						{ "sea", sea }
 					};
 				}
 				return patterns;
@@ -27,22 +28,26 @@ namespace DNA.Climate {
 		[SerializeField] NoisySignal precipitation;
 		[SerializeField] NoisySignal wind;
 		[SerializeField] NoisySignal temperature;
+		[SerializeField] DelayedPattern sea;
 
 		void OnEnable () {
 			
 			precipitation = new NoisySignal (new Noise (20f, 1f), new Wave (60f, 0.3f));
 			wind = new NoisySignal (new Noise (20f, 1f), new Wave (60f, 0.3f));
 			temperature = new NoisySignal (new Noise (20f, 1f), new Wave (60f, 0.3f));
+			sea = new DelayedPattern (precipitation, 30f);
 			
 			precipitation.Name = "Precipitation";
 			wind.Name = "Wind";
 			temperature.Name = "Temperature";
+			sea.Name = "Sea";
 		}
 
 		public void Advance () {
 			precipitation.Update ();
 			wind.Update ();
 			temperature.Update ();
+			sea.Update ();
 		}
 	}
 }

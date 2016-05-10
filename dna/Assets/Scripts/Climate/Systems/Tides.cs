@@ -7,7 +7,7 @@ namespace DNA.Climate {
 	public class Tides : MonoBehaviour, IWeatherSystem {
 
 		public string Name {
-			get { return "Tides"; }
+			get { return "Tide"; }
 		}
 
 		Dictionary<string, Pattern> patterns;

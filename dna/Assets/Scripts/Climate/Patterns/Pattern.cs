@@ -14,6 +14,7 @@ namespace DNA.Climate {
 			set { name = value; }
 		}
 
+		public abstract float Amplitude { get; }
 		public abstract float ValueAt (float position);
 
 		public float ValueAtCursor {
@@ -37,6 +38,32 @@ namespace DNA.Climate {
 
 		public override string ToString () {
 			return "Cursor: " + Cursor + "\nValue: " + ValueAtCursor;
+		}
+
+		// Combines patterns at a specified position
+		public static float Add (float position, params Pattern[] patterns) {
+			float valueTotal = 0;
+			float amplitudeTotal = 0;
+			foreach (Pattern pattern in patterns) {
+				valueTotal += pattern.ValueAt (position);
+				amplitudeTotal += pattern.Amplitude;
+			}
+			return valueTotal / amplitudeTotal;
+		}
+
+		// Combines patterns at the cursor position
+		public static float Add (params Pattern[] patterns) {
+			float valueTotal = 0;
+			float amplitudeTotal = 0;
+			foreach (Pattern pattern in patterns) {
+				valueTotal += pattern.ValueAtCursor;
+				amplitudeTotal += pattern.Amplitude;
+			}
+			return valueTotal / amplitudeTotal;
+		}
+
+		public static float Normalize (float value) {
+			return (value + 1f) / 2f;
 		}
 	}
 }

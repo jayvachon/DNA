@@ -14,12 +14,20 @@ namespace DNA.Units {
 		}
 
 		void Init (GivingTreeUnit givingTree) {
+			
 			this.givingTree = givingTree;
+			
 			Vector3 startPosition = Position;
 			Vector3 targetPosition = givingTree.Position;
+			Vector3 dir = (startPosition - targetPosition).normalized;
+			targetPosition += dir * 3;
+			
 			float distance = Vector3.Distance (startPosition, targetPosition);
-			Co2.StartCoroutine (1f / distance, (float p) => {
+			float speed = 5f;
+
+			Co2.StartCoroutine (distance / speed, (float p) => {
 				Position = Vector3.Lerp (startPosition, targetPosition, p);
+				MyTransform.LookAt (targetPosition);
 			});
 		}
 	}

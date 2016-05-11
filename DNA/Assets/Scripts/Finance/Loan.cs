@@ -69,23 +69,18 @@ namespace DNA {
 
 		public void AddTime () {
 			elapsedTime ++;
-			if (elapsedTime > settings.GracePeriod) {
-				/*if (PlayerItemGroup.Count < Payment) {
-					GiveWarning ();
-					elapsedTime --;
-				} else {
-				}*/
+			/*if (elapsedTime > settings.GracePeriod) {
 				Status = LoanStatus.Repayment;
 				PlayerItemGroup.Remove (Payment);
 			}
 			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {
 				Co2.WaitForFixedUpdate (() => { Group.Remove (this); });
-			}
+			}*/
 			if (onUpdate != null)
 				onUpdate ();
 		}
 
-		void GiveWarning () {
+		/*void GiveWarning () {
 			if (warningCount < warningMax) {
 				warningCount ++;
 				Status = LoanStatus.Late;
@@ -94,7 +89,7 @@ namespace DNA {
 				Status = LoanStatus.Defaulted;
 				Co2.WaitForFixedUpdate (() => { Group.Remove (this); });
 			}
-		}
+		}*/
 	}
 
 	public class Loan<T> : Loan where T : ItemGroup {

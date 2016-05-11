@@ -9,7 +9,7 @@ namespace DNA {
 
 		public delegate void OnUpdateLoans ();
 
-		static float repaymentTime = 60f;
+		static float repaymentTime = 30f;
 
 		static Inventory inventory;
 		public static Inventory Inventory {

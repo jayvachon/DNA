@@ -824,9 +824,12 @@ namespace DNA.Models {
 			loans.Add (typeof (Loan<CoffeeGroup>), new LoanSettings {
 				Symbol = "coffee_loan",
 				Amount = 100,
-				InterestRate = 0.06f,
+				InterestRate = 0.1f,
+				RepaymentLength = 12,
+				GracePeriod = 4
+				/*InterestRate = 0.06f,
 				RepaymentLength = 8,
-				GracePeriod = 12
+				GracePeriod = 12*/
 			});
 		}
 	}

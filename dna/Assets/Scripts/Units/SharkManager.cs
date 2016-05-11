@@ -15,17 +15,27 @@ namespace DNA.Units {
 			}
 		}
 
+		float startRadius = 100f;
+
 		void OnEnable () {
 			LoanManager.onUpdateLoans += OnUpdateLoans;
 		}
 
 		void OnUpdateLoans () {
-
+			// CreateShark ();
 		}
 
 		[DebuggableMethod ()]
 		void CreateShark () {
-			Shark.Create (new Vector3 (20, 20, 0), GivingTree);
+			float angle = Random.Range (0, Mathf.PI * 2);
+			Shark.Create (
+				new Vector3 (
+					startRadius * Mathf.Sin (angle), 
+					GivingTree.Position.y, 
+					startRadius * Mathf.Cos (angle)
+				), 
+				GivingTree
+			);
 		}
 	}
 }

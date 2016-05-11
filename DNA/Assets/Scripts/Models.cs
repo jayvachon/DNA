@@ -105,6 +105,17 @@ namespace DNA.Models {
 				Demolishable = true
 			});
 
+			units.Add (typeof (Turret), new UnitSettings {
+				Symbol = "turret",
+				Title = "Turret",
+				Description = "Used to defend against sharks",
+				Emissions = 0.5f,
+				TakesDamage = true,
+				Unlocked = true,
+				RemovesFogOfWar = true,
+				Demolishable = true
+			});
+
 			units.Add (typeof (CoffeePlant), new UnitSettings {
 				Symbol = "coffee",
 				Title = "Coffee Plant",
@@ -824,8 +835,8 @@ namespace DNA.Models {
 			loans.Add (typeof (Loan<CoffeeGroup>), new LoanSettings {
 				Symbol = "coffee_loan",
 				Amount = 100,
-				InterestRate = 0.1f,
-				RepaymentLength = 12,
+				InterestRate = 0.2f,
+				RepaymentLength = 20,
 				GracePeriod = 4
 				/*InterestRate = 0.06f,
 				RepaymentLength = 8,

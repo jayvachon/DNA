@@ -15,7 +15,7 @@ namespace DNA.Units {
 			}
 		}
 
-		float startRadius = 100f;
+		float startRadius = 20f;
 
 		void OnEnable () {
 			LoanManager.onUpdateLoans += OnUpdateLoans;

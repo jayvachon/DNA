@@ -332,6 +332,7 @@
      <Compile Include="Assets\Scripts\Units\Components\Renderers\RoadRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\SeedRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\SharkRenderer.cs" />
+     <Compile Include="Assets\Scripts\Units\Components\Renderers\TurretRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UnitRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\Renderers\UniversityRenderer.cs" />
      <Compile Include="Assets\Scripts\Units\Components\StaticUnitClickable.cs" />
@@ -371,6 +372,7 @@
      <Compile Include="Assets\Scripts\Units\Static\MilkshakePool.cs" />
      <Compile Include="Assets\Scripts\Units\Static\Plot.cs" />
      <Compile Include="Assets\Scripts\Units\Static\StaticUnit.cs" />
+     <Compile Include="Assets\Scripts\Units\Static\Turret.cs" />
      <Compile Include="Assets\Scripts\Units\Static\University.cs" />
      <Compile Include="Assets\Scripts\Upgrades\CoffeeCapacity.cs" />
      <Compile Include="Assets\Scripts\Upgrades\Eyesight.cs" />

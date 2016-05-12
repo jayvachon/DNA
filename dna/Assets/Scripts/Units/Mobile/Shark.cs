@@ -6,16 +6,7 @@ namespace DNA.Units {
 	public class Shark : Unit {
 
 		GivingTreeUnit givingTree;
-
-		LineRenderer lineRenderer = null;
-		LineRenderer LineRenderer {
-			get {
-				if (lineRenderer == null) {
-					lineRenderer = GetComponent<LineRenderer> ();
-				}
-				return lineRenderer;
-			}
-		}
+		Lazer lazer;
 
 		public static Shark Create (Vector3 position, GivingTreeUnit givingTree) {
 			Shark shark = ObjectPool.Instantiate<Shark> (position);
@@ -26,7 +17,6 @@ namespace DNA.Units {
 		void Init (GivingTreeUnit givingTree) {
 			
 			this.givingTree = givingTree;
-			LineRenderer.enabled = false;
 			
 			Vector3 startPosition = Position;
 			Vector3 targetPosition = givingTree.Position;
@@ -38,15 +28,14 @@ namespace DNA.Units {
 			float distance = Vector3.Distance (startPosition, targetPosition);
 			float speed = 5f;
 
+			if (lazer == null)
+				lazer = Lazer.Create (MyTransform);
+
 			Co2.StartCoroutine (distance / speed, (float p) => {
 				Position = Vector3.Lerp (startPosition, targetPosition, p);
 				MyTransform.LookAt (targetPosition);
 			}, () => {
-				LineRenderer.SetPositions (new Vector3[] { 
-					Position,
-					new Vector3 (givingTree.Position.x, givingTree.Position.y + 2, givingTree.Position.z) 
-				});
-				LineRenderer.enabled = true;
+				lazer.StartFire (givingTree.transform, new Vector3 (0, 2, 0));
 			});
 		}
 	}

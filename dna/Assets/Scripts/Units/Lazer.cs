@@ -23,9 +23,12 @@ namespace DNA.Units {
 			this.target = target;
 
 			LineRenderer.enabled = true;
-			LineRenderer.SetPositions (new Vector3[] {
-				Position,
-				target.position + offset
+
+			Co2.RunWhileTrue (() => { return gameObject.activeSelf; }, () => {
+				LineRenderer.SetPositions (new Vector3[] {
+					Position,
+					target.position + offset
+				});
 			});
 		}
 
@@ -33,10 +36,11 @@ namespace DNA.Units {
 			LineRenderer.enabled = false;
 		}
 
-		public static Lazer Create (Transform parent) {
+		public static Lazer Create (Transform parent, Vector3 offset=new Vector3()) {
 			Lazer lazer = ObjectPool.Instantiate<Lazer> ();
 			lazer.transform.SetParent (parent);
 			lazer.transform.Reset ();
+			lazer.transform.localPosition = offset;
 			return lazer;
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace DNA.Units {
 
@@ -7,12 +8,46 @@ namespace DNA.Units {
 		
 		float range = 10f;
 		RangeRing ring;
+		Lazer lazer;
+		Shark target;
+
+		bool UpdateTarget () {
+			
+			List<Shark> sharks = ObjectPool.GetActiveInstances<Shark> ();
+			Shark nearest = null;
+			float nearestDistance = Mathf.Infinity;
+			
+			foreach (Shark shark in sharks) {
+				float distance = Vector3.Distance (shark.Position, Position);
+				if (distance <= range && distance < nearestDistance) {
+					nearest = shark;
+					nearestDistance = distance;
+				}
+			}
+
+			bool updated = target != nearest;
+			target = nearest;
+			return updated;
+		}
 
 		protected override void OnEnable () {
+
 			base.OnEnable ();
+
+			lazer = Lazer.Create (MyTransform, new Vector3 (0, 1.5f, 0));
 			ring = RangeRing.Create (MyTransform);
 			ring.Set (range, 40);
 			ring.Hide ();
+
+			Co2.InvokeWhileTrue (0.5f, () => { return gameObject.activeSelf; }, () => {
+				if (UpdateTarget ()) {
+					if (target == null) {
+						lazer.StopFire ();
+					} else {
+						lazer.StartFire (target.MyTransform);
+					}
+				}
+			});
 		}
 
 		public override void OnSelect () {

@@ -341,9 +341,11 @@ namespace InventorySystem {
 		/// Removes all items.
 		/// </summary>
 		public override void Clear () {
-			items.Clear ();
-			SendUpdateMessage ();
-			SendEmptyMessage ();
+			if (!Empty) {
+				items.Clear ();
+				SendUpdateMessage ();
+				SendEmptyMessage ();
+			}
 		}
 
 		/// <summary>
@@ -352,8 +354,7 @@ namespace InventorySystem {
 		/// <param name="toGroup">ItemGroup to send the item to.</param>
 		/// <param name="item">The Item to transfer.</param>
 		public override void Transfer (ItemGroup toGroup, Item item=null) {
-			Item i = Remove (item);
-			toGroup.Add (i);
+			toGroup.Add (Remove (item));
 		}
 
 		//// <summary>
@@ -362,8 +363,7 @@ namespace InventorySystem {
 		//// <param name="toGroup">ItemGroup to send the items to.</param>
 		//// <param name="amount">The number of items to transfer</param>
 		public override void Transfer (ItemGroup toGroup, int amount) {
-			List<Item> removed = Remove (amount);
-			toGroup.Add (removed);
+			toGroup.Add (Remove (amount));
 		}
 
 		/// <summary>

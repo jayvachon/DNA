@@ -22,7 +22,7 @@ namespace DNA.Units {
 			// LoanManager.onUpdateLoans += OnUpdateLoans;
 			// LoanManager.onUpdatePayments += OnUpdatePayments;
 			Co2.Repeat (10f, () => {
-				foreach (Loan loan in LoanManager.GetLoansInRepayment ())
+				foreach (Loan loan in LoanManager.GetLoans ())
 					CreateShark (loan);
 			});
 		}

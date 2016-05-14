@@ -16,6 +16,7 @@ namespace DNA {
 
 		public abstract int Amount { get; }
 		public abstract int Payment { get; }
+		public abstract int Owed { get; }
 
 		/*public int Amount {
 			get { return settings.Amount; }
@@ -45,9 +46,9 @@ namespace DNA {
 			}
 		}
 
-		public int Owed {
+		/*public int Owed {
 			get { return Payment * (settings.RepaymentLength - Mathf.Max (0, elapsedTime - settings.GracePeriod)); }
-		}
+		}*/
 
 		/*public ItemGroup PlayerItemGroup {
 			get { return Player.Instance.Inventory[Group.ID]; }
@@ -77,6 +78,9 @@ namespace DNA {
 			return Payment;
 		}
 
+		public abstract Repayment GetRepayment ();
+		public abstract void ReturnRepayment (Repayment repayment);
+
 		/*public void AddTime () {
 			elapsedTime ++;
 			if (elapsedTime > settings.GracePeriod) {
@@ -89,6 +93,17 @@ namespace DNA {
 			if (onUpdate != null)
 				onUpdate ();
 		}*/
+
+		public class Repayment {
+
+			public readonly int ID;
+			public int Amount { get; set; }
+
+			public Repayment (int id, int amount) {
+				ID = id;
+				Amount = amount;
+			}
+		}
 	}
 
 	public class Loan<T> : Loan where T : ItemGroup, new () {
@@ -106,12 +121,36 @@ namespace DNA {
 			}
 		}
 
+		public override int Owed {
+			get {
+				int repaymentsTotal = 0;
+				foreach (var repayment in repayments)
+					repaymentsTotal += repayment.Value.Amount;
+				return group.Count + repaymentsTotal;
+			}
+		}
+
 		T group;
+		Dictionary<int, Repayment> repayments = new Dictionary<int, Repayment> ();
+		int repaymentCounter = 0;
 
 		public Loan () : base () {
 			settings = DataManager.GetLoanSettings (this.GetType ());
 			group = new T () { Capacity = settings.Amount };
 			group.Fill ();
+		}
+
+		public override Repayment GetRepayment () {
+			Repayment r = new Repayment (repaymentCounter, group.Remove (Payment).Count);
+			repayments.Add (repaymentCounter, r);
+			repaymentCounter ++;
+			return r;
+		}
+
+		public override void ReturnRepayment (Repayment repayment) {
+			repayments.Remove (repayment.ID);
+			group.Capacity = Mathf.Max (repayment.Amount + group.Count, group.Capacity);
+			group.Add (repayment.Amount);
 		}
 	}
 }

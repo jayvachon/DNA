@@ -48,7 +48,19 @@ namespace DNA {
 			// Co.Start (repaymentTime, OnElapseTime, ElapseTime);
 		}
 
-		public static List<Loan> GetLoansInRepayment () {
+		public static List<Loan> GetLoans () {
+
+			List<Loan> loans = new List<Loan> ();
+
+			foreach (var group in Inventory.Groups) {
+				foreach (Item item in group.Value.Items)
+					loans.Add ((Loan)item);
+			}
+
+			return loans;
+		}
+
+		/*public static List<Loan> GetLoansInRepayment () {
 
 			List<Loan> loans = new List<Loan> ();
 
@@ -61,7 +73,7 @@ namespace DNA {
 			}
 
 			return loans;
-		}
+		}*/
 
 		/*static void OnUpdate () {
 			if (onUpdateLoans != null)

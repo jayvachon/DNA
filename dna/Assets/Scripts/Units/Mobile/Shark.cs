@@ -8,6 +8,8 @@ namespace DNA.Units {
 
 		Lazer lazer;
 		ProgressBar pbar;
+		Loan loan;
+		Loan.Repayment repayment;
 		float damageTimer = 0f;
 		const float damageTime = 5f;
 
@@ -29,8 +31,10 @@ namespace DNA.Units {
 				lazer = Lazer.Create (this);
 
 			// Initialize inventory
-			// loan.Transfer (Inventory[loan.ID], loan.Payment);
-			// Inventory[loan.Group.ID].Set (loan.Payment);
+			this.loan = loan;
+			// Inventory[loan.Group.ID].Set (loan.RemovePayment ());
+			this.repayment = loan.GetRepayment ();
+			Inventory[loan.Group.ID].Set (repayment.Amount);
 
 			// Set trajectory
 			Vector3 startPosition = Position;
@@ -56,6 +60,7 @@ namespace DNA.Units {
 			i.Add (new CoffeeGroup ());
 			i.Add (new MilkshakeGroup ());
 			i.Add (new HealthGroup (100, 100)).onEmpty += () => {
+				loan.ReturnRepayment (repayment);
 				DestroyThis<Shark> ();
 			};
 		}
@@ -73,7 +78,7 @@ namespace DNA.Units {
 
 		public void TakeDamage (IDamager damager) {
 			damageTimer += Time.deltaTime;
-			if (damageTimer >= damageTime / 100f) {
+			if (damageTimer >= damageTime / 100f && !Inventory["Health"].Empty) {
 				Inventory["Health"].Remove ();
 				pbar.SetProgress (Inventory["Health"].PercentFilled);
 				damageTimer = 0f;

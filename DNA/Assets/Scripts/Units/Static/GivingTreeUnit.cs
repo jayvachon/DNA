@@ -94,7 +94,7 @@ namespace DNA.Units {
 			// seedProduction = new SeedProductionHandler (MyTransform, 3.5f);
 		}
 
-		public void TakeDamage () {
+		public void TakeDamage (IDamager damager) {
 			// TODO: Transfer resources to shark
 		}
 	}

@@ -19,15 +19,21 @@ namespace DNA.Units {
 		float startRadius = 20f;
 
 		void OnEnable () {
-			LoanManager.onUpdateLoans += OnUpdateLoans;
+			// LoanManager.onUpdateLoans += OnUpdateLoans;
+			// LoanManager.onUpdatePayments += OnUpdatePayments;
+			Co2.Repeat (10f, () => {
+				foreach (Loan loan in LoanManager.GetLoansInRepayment ())
+					CreateShark (loan);
+			});
 		}
 
-		void OnUpdateLoans () {
-			// CreateShark ();
-		}
+		/*void OnUpdatePayments (Dictionary<string, int> payments) {
+			foreach (var payment in payments)
+				CreateShark (payment.Key, payment.Value);
+		}*/
 
 		[DebuggableMethod ()]
-		void CreateShark () {
+		void CreateShark (Loan loan) {
 			float angle = Random.Range (0, Mathf.PI * 2);
 			Shark.Create (
 				new Vector3 (
@@ -35,7 +41,8 @@ namespace DNA.Units {
 					GivingTree.Position.y, 
 					startRadius * Mathf.Cos (angle)
 				), 
-				GivingTree
+				GivingTree,
+				loan
 			);
 		}
 	}

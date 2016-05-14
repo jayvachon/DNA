@@ -93,6 +93,7 @@ namespace DNA.Units {
 				unitRenderer = ObjectPool.Instantiate (renderer) as UnitRenderer;
 				unitRenderer.transform.SetParent (MyTransform);
 				unitRenderer.transform.localPosition = unitRenderer.Offset;
+				unitRenderer.transform.localEulerAngles = Vector3.zero;
 			}
 		}
 

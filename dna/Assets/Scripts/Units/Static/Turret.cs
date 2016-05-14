@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace DNA.Units {
 
-	public class Turret : StaticUnit {
+	public class Turret : StaticUnit, IDamager {
 		
-		float range = 10f;
+		float range = 15f;
 		RangeRing ring;
 		Lazer lazer;
 		Shark target;
@@ -15,7 +15,7 @@ namespace DNA.Units {
 			
 			List<Shark> sharks = ObjectPool.GetActiveInstances<Shark> ();
 
-			// If a target has already been found, keep shooting
+			// If a target has already been found, keep shooting it
 			if (target != null && sharks.Contains (target))
 				return false;
 
@@ -41,7 +41,7 @@ namespace DNA.Units {
 
 			base.OnEnable ();
 
-			lazer = Lazer.Create (MyTransform, new Vector3 (0, 1.5f, 0));
+			lazer = Lazer.Create (this, new Vector3 (0, 1.5f, 0));
 			ring = RangeRing.Create (MyTransform);
 			ring.Set (range, 40);
 			ring.Hide ();

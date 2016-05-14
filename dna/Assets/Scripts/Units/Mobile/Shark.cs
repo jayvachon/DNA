@@ -4,20 +4,20 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class Shark : Unit, IDamageable {
+	public class Shark : Unit, IDamageable, IDamager {
 
 		Lazer lazer;
 		ProgressBar pbar;
 		float damageTimer = 0f;
 		const float damageTime = 5f;
 
-		public static Shark Create (Vector3 position, GivingTreeUnit givingTree) {
+		public static Shark Create (Vector3 position, GivingTreeUnit givingTree, Loan loan) {
 			Shark shark = ObjectPool.Instantiate<Shark> (position);
-			shark.Init (givingTree);
+			shark.Init (givingTree, loan);
 			return shark;
 		}
 
-		void Init (GivingTreeUnit givingTree) {
+		void Init (GivingTreeUnit givingTree, Loan loan) {
 			
 			// Create progress bar
 			if (pbar == null)
@@ -26,7 +26,11 @@ namespace DNA.Units {
 
 			// Create laser
 			if (lazer == null)
-				lazer = Lazer.Create (MyTransform);
+				lazer = Lazer.Create (this);
+
+			// Initialize inventory
+			// loan.Transfer (Inventory[loan.ID], loan.Payment);
+			// Inventory[loan.Group.ID].Set (loan.Payment);
 
 			// Set trajectory
 			Vector3 startPosition = Position;
@@ -48,6 +52,14 @@ namespace DNA.Units {
 			});
 		}
 
+		protected override void OnInitInventory (Inventory i) {
+			i.Add (new CoffeeGroup ());
+			i.Add (new MilkshakeGroup ());
+			i.Add (new HealthGroup (100, 100)).onEmpty += () => {
+				DestroyThis<Shark> ();
+			};
+		}
+
 		protected override void OnEnable () {
 			base.OnEnable ();
 			Inventory["Health"].Fill ();
@@ -56,15 +68,10 @@ namespace DNA.Units {
 		protected override void OnDisable () {
 			base.OnDisable ();
 			lazer.StopFire ();
+			Inventory.Clear ();
 		}
 
-		protected override void OnInitInventory (Inventory i) {
-			i.Add (new HealthGroup (100, 100)).onEmpty += () => {
-				DestroyThis<Shark> ();
-			};
-		}
-
-		public void TakeDamage () {
+		public void TakeDamage (IDamager damager) {
 			damageTimer += Time.deltaTime;
 			if (damageTimer >= damageTime / 100f) {
 				Inventory["Health"].Remove ();

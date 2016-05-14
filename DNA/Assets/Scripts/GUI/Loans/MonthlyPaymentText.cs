@@ -8,16 +8,16 @@ namespace DNA {
 		public string loanGroup;
 
 		void OnEnable () {
-			LoanManager.onUpdateLoans += OnUpdateLoanGroups;
+			// LoanManager.onUpdateLoans += OnUpdateLoanGroups;
 		}
 
-		void OnUpdateLoanGroups () {
+		/*void OnUpdateLoanGroups () {
 			foreach (Loan l in LoanManager.Inventory[loanGroup].Items) {
 				l.onUpdate += OnUpdateLoans;
 			}
-		}
+		}*/
 
-		void OnUpdateLoans () {
+		/*void OnUpdateLoans () {
 			int payment = 0;
 			foreach (Loan l in LoanManager.Inventory[loanGroup].Items) {
 				if (l.Owed == 0) {
@@ -29,6 +29,6 @@ namespace DNA {
 				}
 			}
 			Text.text = loanGroup + ": " + payment;
-		}
+		}*/
 	}
 }

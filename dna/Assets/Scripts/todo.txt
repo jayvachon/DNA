@@ -1,0 +1,64 @@
+time, you washed out
+like a soft, sudden, summer rain
+sibylle baier
+
+to do
+
+going thru doorways erases memories (“WAIT! what was I gonna do in here??”)
+
+:::: bugs ::::
+
+- loan button is not re-enabled after loans have been paid off (if maximum # loans were taken out)
+- when a laborer gets to a road construction site and a flower is being grown, it will not perform the task
+- ^ in general, laborers performing construction over a growing flower will break
+
+:::: glitches ::::
+
+- if assigning laborer to a point it is already moving towards, the laborer stops
+
+:::: features ::::
+
+demo
+- notification when university upgrade finishes
+- show # of assigned units above milkshakes, coffee. add option to select all assigned units when resource selected
+- show what is currently being built
+- fast-forward button (simcity style)
+
+postdemo
+- darker blue sea color
+- maybe if laborer happiness > 97 after flower construction, just set it to 100 so it doesn’t do the weird quick rotation
+- worker strike when happiness = 0
+
+:::: design problems ::::
+
+demo
+
+postdemo
+- laborers turning into elders is not fun. you lose development momentum & it’s really hard to pick up steam again.
+	> try adding variation to retirement ages so there’s any easier transition
+
+:::: hotkeys ::::
+
+reproducing bugs
+- let laborer become elder, then create laborer. the new laborer will try to carry out the tasks of the previous one before it became an elder
+
+:::: balancing ::::
+- should be an even random distribution of a *set #* of coffee & milkshakes 
+
+:::: cleanup ::::
+- "lazer" -> "laser"
+- rm unitTransform, unitClickable from Unit (also make unitRenderer private)
+- deprecate co.cs and replace with co2.cs (+ rename co2 to co)
+
+fonts
+oriya sangam mn
+sinhala mn
+
+i’m not convinced i’m a good person. i’m not even convinced i’m a person.
+i have accepted myself for who i am. i have accepted that i don’t like who i am
+what’s important is not what you want to do, but who you want to help
+or:
+don’t let “what do i want to do with my life?” be a barrier to “who in my life do i want to help?”
+
+paths
+/Users/jamesvachon/Developer/git-repositories/unity-projects/DNA/dna/Assets/Models

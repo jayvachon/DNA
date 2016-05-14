@@ -6,7 +6,7 @@ using DNA.Models;
 
 namespace DNA {
 
-	public class Loan : Item {
+	public abstract class Loan : Item {
 
 		public delegate void OnUpdate ();
 
@@ -14,18 +14,21 @@ namespace DNA {
 			get { return "Loan"; }
 		}
 
-		public int Amount {
-			get { return settings.Amount; }
-		}
+		public abstract int Amount { get; }
+		public abstract int Payment { get; }
 
-		public int Payment {
+		/*public int Amount {
+			get { return settings.Amount; }
+		}*/
+
+		/*public int Payment {
 			get {
 				// https://upload.wikimedia.org/math/e/b/0/eb0d554c1ead49a1a0bd3155b764ec0c.png				
 				float c = settings.InterestRate;
 				float n = settings.RepaymentLength;
 				return (int)((float)settings.Amount * ((c * Mathf.Pow (1 + c, n)) / (Mathf.Pow (1 + c, n) - 1)));
 			}
-		}
+		}*/
 
 		public string StatusDetails {
 			get {
@@ -46,9 +49,9 @@ namespace DNA {
 			get { return Payment * (settings.RepaymentLength - Mathf.Max (0, elapsedTime - settings.GracePeriod)); }
 		}
 
-		public ItemGroup PlayerItemGroup {
+		/*public ItemGroup PlayerItemGroup {
 			get { return Player.Instance.Inventory[Group.ID]; }
-		}
+		}*/
 
 		public enum LoanStatus { Grace, Repayment, Late, Defaulted }
 		public LoanStatus Status { get; private set; }
@@ -67,35 +70,48 @@ namespace DNA {
 			warningMax = 3;
 		}
 
-		public void AddTime () {
+		public int IteratePayment () {
 			elapsedTime ++;
-			/*if (elapsedTime > settings.GracePeriod) {
+			if (elapsedTime <= settings.GracePeriod)
+				return 0;
+			return Payment;
+		}
+
+		/*public void AddTime () {
+			elapsedTime ++;
+			if (elapsedTime > settings.GracePeriod) {
 				Status = LoanStatus.Repayment;
 				PlayerItemGroup.Remove (Payment);
 			}
 			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {
 				Co2.WaitForFixedUpdate (() => { Group.Remove (this); });
-			}*/
+			}
 			if (onUpdate != null)
 				onUpdate ();
-		}
-
-		/*void GiveWarning () {
-			if (warningCount < warningMax) {
-				warningCount ++;
-				Status = LoanStatus.Late;
-			} else {
-				LoanManager.Defaulted = true;
-				Status = LoanStatus.Defaulted;
-				Co2.WaitForFixedUpdate (() => { Group.Remove (this); });
-			}
 		}*/
 	}
 
-	public class Loan<T> : Loan where T : ItemGroup {
+	public class Loan<T> : Loan where T : ItemGroup, new () {
+
+		public override int Amount {
+			get { return settings.Amount; }
+		}
+
+		public override int Payment {
+			get {
+				// https://upload.wikimedia.org/math/e/b/0/eb0d554c1ead49a1a0bd3155b764ec0c.png				
+				float c = settings.InterestRate;
+				float n = settings.RepaymentLength;
+				return (int)((float)group.Capacity * ((c * Mathf.Pow (1 + c, n)) / (Mathf.Pow (1 + c, n) - 1)));
+			}
+		}
+
+		T group;
 
 		public Loan () : base () {
 			settings = DataManager.GetLoanSettings (this.GetType ());
+			group = new T () { Capacity = settings.Amount };
+			group.Fill ();
 		}
 	}
 }

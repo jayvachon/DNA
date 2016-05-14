@@ -5,6 +5,6 @@ namespace DNA.Units {
 
 	public interface IDamageable {
 		Vector3 Position { get; }
-		void TakeDamage ();
+		void TakeDamage (IDamager damager);
 	}
 }

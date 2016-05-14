@@ -837,7 +837,7 @@ namespace DNA.Models {
 				Amount = 100,
 				InterestRate = 0.2f,
 				RepaymentLength = 20,
-				GracePeriod = 4
+				GracePeriod = 0
 				/*InterestRate = 0.06f,
 				RepaymentLength = 8,
 				GracePeriod = 12*/

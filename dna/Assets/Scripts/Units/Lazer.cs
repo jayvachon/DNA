@@ -16,6 +16,12 @@ namespace DNA.Units {
 			}
 		}
 
+		IDamager damager;
+
+		void Init (IDamager damager) {
+			this.damager = damager;
+		}
+
 		public void StartFire (IDamageable target, Vector3 offset=new Vector3 ()) {
 
 			LineRenderer.enabled = true;
@@ -26,7 +32,7 @@ namespace DNA.Units {
 					Position,
 					targetTransform.position + offset
 				});
-				target.TakeDamage ();
+				target.TakeDamage (damager);
 			}, StopFire);
 		}
 
@@ -34,11 +40,16 @@ namespace DNA.Units {
 			LineRenderer.enabled = false;
 		}
 
-		public static Lazer Create (Transform parent, Vector3 offset=new Vector3()) {
+		public static Lazer Create (IDamager damager, Vector3 offset=new Vector3()) {
+
+			Transform parentTransform = ((MonoBehaviour)damager).transform;
+
 			Lazer lazer = ObjectPool.Instantiate<Lazer> ();
-			lazer.transform.SetParent (parent);
+			lazer.transform.SetParent (parentTransform);
 			lazer.transform.Reset ();
 			lazer.transform.localPosition = offset;
+			lazer.Init (damager);
+
 			return lazer;
 		}
 	}

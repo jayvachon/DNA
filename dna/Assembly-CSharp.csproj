@@ -345,6 +345,7 @@
      <Compile Include="Assets\Scripts\Units\ConstructionSite.cs" />
      <Compile Include="Assets\Scripts\Units\Fertility.cs" />
      <Compile Include="Assets\Scripts\Units\IDamageable.cs" />
+     <Compile Include="Assets\Scripts\Units\IDamager.cs" />
      <Compile Include="Assets\Scripts\Units\Lazer.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\PlotsCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />
@@ -397,6 +398,7 @@
      <Compile Include="Assets\Scripts\Utilities\Misc\MBRefs.cs" />
      <Compile Include="Assets\Scripts\Utilities\Misc\ObjectColor.cs" />
      <Compile Include="Assets\Scripts\Utilities\Pooling\ObjectPool.cs" />
+     <None Include="Assets\Scripts\todo.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

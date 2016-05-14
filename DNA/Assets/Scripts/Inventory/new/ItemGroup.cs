@@ -166,11 +166,12 @@ namespace InventorySystem {
 		public abstract void Add (int count);
 		public abstract Item Add (Item item=null);
 		public abstract void Add (List<Item> newItems);
-		public abstract void Remove (int count);
+		public abstract List<Item> Remove (int count);
 		public abstract Item Remove (Item item=null, bool sendUpdate=true);
 		public abstract void Fill ();
 		public abstract void Clear ();
 		public abstract void Transfer (ItemGroup toGroup, Item item=null);
+		public abstract void Transfer (ItemGroup toGroup, int amount);
 		public abstract bool Contains (Item item);
 		protected abstract void SendUpdateMessage ();
 		protected abstract void SendEmptyMessage ();
@@ -277,12 +278,20 @@ namespace InventorySystem {
 		/// Removes a number of items.
 		/// </summary>
 		/// <param name="count">The number of items to remove</param>
-		public override void Remove (int count) {
-			// if (count <= 0) return;
-			for (int i = 0; i < count-1; i ++) {
-				Remove (null, false);
+		public override List<Item> Remove (int count) {
+
+			if (count <= 0) {
+				throw new System.Exception ("Only amounts larger than 0 can be removed from an item group");
 			}
-			Remove (null, true);
+
+			List<Item> removed = new List<Item> ();
+
+			for (int i = 0; i < count-1; i ++) {
+				removed.Add (Remove (null, false));
+			}
+			removed.Add (Remove (null, true));
+
+			return removed;
 		}
 
 		/// <summary>
@@ -345,6 +354,16 @@ namespace InventorySystem {
 		public override void Transfer (ItemGroup toGroup, Item item=null) {
 			Item i = Remove (item);
 			toGroup.Add (i);
+		}
+
+		//// <summary>
+		/// Transfers an amount of items from this ItemGroup to another ItemGroup.
+		/// </summary>
+		//// <param name="toGroup">ItemGroup to send the items to.</param>
+		//// <param name="amount">The number of items to transfer</param>
+		public override void Transfer (ItemGroup toGroup, int amount) {
+			List<Item> removed = Remove (amount);
+			toGroup.Add (removed);
 		}
 
 		/// <summary>

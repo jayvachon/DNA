@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.Tasks;
 
 namespace DNA {
@@ -22,13 +23,14 @@ namespace DNA {
 		}
 
 		void Awake () {
-			LoanManager.onUpdateLoans += OnUpdateLoans;
-			OnUpdateLoans ();
+			// LoanManager.onUpdateLoans += OnUpdateLoans;
+			// LoanManager.onUpdatePayments += OnUpdatePayments;
+			// OnUpdatePayments (null);
 		}
 
-		void OnUpdateLoans () {
+		/*void OnUpdatePayments (Dictionary<string, int> payments) {
 			Button.interactable = BorrowTask.Enabled;
-		}
+		}*/
 
 		protected void SetText (string resource, int amount) {
 			ButtonText.text = "Borrow " + amount.ToString () + " " + resource;

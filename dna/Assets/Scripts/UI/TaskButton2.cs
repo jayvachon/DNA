@@ -16,7 +16,7 @@ public class TaskButton2 : UIElement {
 		this.task = task;
 		this.hasText = hasText;
 
-		if (hasText) {
+		if (this.hasText) {
 			ButtonText.text = task.Settings.Title;
 			if (task is CostTask) {
 				

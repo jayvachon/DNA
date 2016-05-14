@@ -42,7 +42,7 @@ namespace DNA.Units {
 			}
 		}
 
-		SeedProductionHandler seedProduction;
+		// SeedProductionHandler seedProduction;
 
 		void Awake () {
 
@@ -91,7 +91,7 @@ namespace DNA.Units {
 		}
 
 		public void StartSeedProduction () {
-			seedProduction = new SeedProductionHandler (MyTransform, 3.5f);
+			// seedProduction = new SeedProductionHandler (MyTransform, 3.5f);
 		}
 	}
 }

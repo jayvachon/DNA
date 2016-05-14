@@ -16,11 +16,7 @@ namespace DNA.Units {
 			}
 		}
 
-		Transform target;
-
 		public void StartFire (Transform target, Vector3 offset=new Vector3 ()) {
-
-			this.target = target;
 
 			LineRenderer.enabled = true;
 

@@ -14,7 +14,7 @@ namespace DNA.Climate {
 		public Dictionary<string, Pattern> Patterns {
 			get {
 				if (patterns == null) {
-					return new Dictionary<string, Pattern> () {
+					patterns = new Dictionary<string, Pattern> () {
 						{ "precipitation", precipitation },
 						{ "wind", wind },
 						{ "temperature", temperature },

@@ -26,10 +26,10 @@ namespace DNA.Tasks {
 			List<PerformerTask> active = new List<PerformerTask> ();
 			Queue<PerformerTask> queued = new Queue<PerformerTask> ();
 			// int bindLimit = 1;
-			AcceptorTask task;
+			// AcceptorTask task;
 
 			public BindingHandler (AcceptorTask task) {
-				this.task = task;
+				// this.task = task;
 				// TODO: would probably be better to have this set initially				
 				// bindLimit = DataManager.GetPerformerPairSettings (task.GetType ()).BindCapacity;
 			}

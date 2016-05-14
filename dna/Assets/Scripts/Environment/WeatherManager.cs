@@ -7,7 +7,7 @@ public class WeatherManager : MonoBehaviour {
 	public Rain rain;
 	public FogController fog;
 
-	float stormThreshold = 0.67f;
+	// float stormThreshold = 0.67f;
 
 	RainPattern rainPattern = new RainPattern ();
 	WindPattern windPattern = new WindPattern ();

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InventorySystem;
 
 namespace DNA.Units {
 
 	public class Shark : Unit {
 
-		GivingTreeUnit givingTree;
 		Lazer lazer;
 
 		public static Shark Create (Vector3 position, GivingTreeUnit givingTree) {
@@ -15,8 +15,6 @@ namespace DNA.Units {
 		}
 
 		void Init (GivingTreeUnit givingTree) {
-			
-			this.givingTree = givingTree;
 			
 			Vector3 startPosition = Position;
 			Vector3 targetPosition = givingTree.Position;
@@ -37,6 +35,10 @@ namespace DNA.Units {
 			}, () => {
 				lazer.StartFire (givingTree.transform, new Vector3 (0, 2, 0));
 			});
+		}
+
+		protected override void OnInitInventory (Inventory i) {
+			i.Add (new HealthGroup (100, 100));
 		}
 	}
 }

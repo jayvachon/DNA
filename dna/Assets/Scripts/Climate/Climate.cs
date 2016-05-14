@@ -5,8 +5,8 @@ namespace DNA.Climate {
 
 	public class Climate : MonoBehaviour {
 
-		float temperature = 0f;
-		float sea = 0f;
+		// float temperature = 0f;
+		// float sea = 0f;
 		
 	}
 }

@@ -344,6 +344,7 @@
      <Compile Include="Assets\Scripts\Units\Components\UnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\ConstructionSite.cs" />
      <Compile Include="Assets\Scripts\Units\Fertility.cs" />
+     <Compile Include="Assets\Scripts\Units\IDamageable.cs" />
      <Compile Include="Assets\Scripts\Units\Lazer.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\PlotsCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />

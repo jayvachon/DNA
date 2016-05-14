@@ -4,9 +4,12 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class Shark : Unit {
+	public class Shark : Unit, IDamageable {
 
 		Lazer lazer;
+		ProgressBar pbar;
+		float damageTimer = 0f;
+		const float damageTime = 5f;
 
 		public static Shark Create (Vector3 position, GivingTreeUnit givingTree) {
 			Shark shark = ObjectPool.Instantiate<Shark> (position);
@@ -16,6 +19,16 @@ namespace DNA.Units {
 
 		void Init (GivingTreeUnit givingTree) {
 			
+			// Create progress bar
+			if (pbar == null)
+				pbar = UI.Instance.CreateProgressBar (MyTransform, new Vector3 (0, -0.5f, 0));
+			pbar.SetProgress (Inventory["Health"].PercentFilled);
+
+			// Create laser
+			if (lazer == null)
+				lazer = Lazer.Create (MyTransform);
+
+			// Set trajectory
 			Vector3 startPosition = Position;
 			Vector3 targetPosition = givingTree.Position;
 			Vector3 dir = (startPosition - targetPosition).normalized;
@@ -26,19 +39,38 @@ namespace DNA.Units {
 			float distance = Vector3.Distance (startPosition, targetPosition);
 			float speed = 5f;
 
-			if (lazer == null)
-				lazer = Lazer.Create (MyTransform);
-
+			// Move
 			Co2.StartCoroutine (distance / speed, (float p) => {
 				Position = Vector3.Lerp (startPosition, targetPosition, p);
 				MyTransform.LookAt (targetPosition);
 			}, () => {
-				lazer.StartFire (givingTree.transform, new Vector3 (0, 2, 0));
+				lazer.StartFire (givingTree, new Vector3 (0, 2, 0));
 			});
 		}
 
+		protected override void OnEnable () {
+			base.OnEnable ();
+			Inventory["Health"].Fill ();
+		}
+
+		protected override void OnDisable () {
+			base.OnDisable ();
+			lazer.StopFire ();
+		}
+
 		protected override void OnInitInventory (Inventory i) {
-			i.Add (new HealthGroup (100, 100));
+			i.Add (new HealthGroup (100, 100)).onEmpty += () => {
+				DestroyThis<Shark> ();
+			};
+		}
+
+		public void TakeDamage () {
+			damageTimer += Time.deltaTime;
+			if (damageTimer >= damageTime / 100f) {
+				Inventory["Health"].Remove ();
+				pbar.SetProgress (Inventory["Health"].PercentFilled);
+				damageTimer = 0f;
+			}
 		}
 	}
 }

@@ -14,6 +14,12 @@ namespace DNA.Units {
 		bool UpdateTarget () {
 			
 			List<Shark> sharks = ObjectPool.GetActiveInstances<Shark> ();
+
+			// If a target has already been found, keep shooting
+			if (target != null && sharks.Contains (target))
+				return false;
+
+			// Otherwise, find the nearest target
 			Shark nearest = null;
 			float nearestDistance = Mathf.Infinity;
 			
@@ -25,6 +31,7 @@ namespace DNA.Units {
 				}
 			}
 
+			// Return true if the target was updated
 			bool updated = target != nearest;
 			target = nearest;
 			return updated;
@@ -44,7 +51,7 @@ namespace DNA.Units {
 					if (target == null) {
 						lazer.StopFire ();
 					} else {
-						lazer.StartFire (target.MyTransform);
+						lazer.StartFire (target);
 					}
 				}
 			});

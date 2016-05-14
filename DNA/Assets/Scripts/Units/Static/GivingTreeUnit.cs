@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class GivingTreeUnit : StaticUnit, ITaskPerformer {//, ISeedProducer {
+	public class GivingTreeUnit : StaticUnit, ITaskPerformer, IDamageable {//, ISeedProducer {
 
 		PerformableTasks performableTasks;
 		public PerformableTasks PerformableTasks {
@@ -92,6 +92,10 @@ namespace DNA.Units {
 
 		public void StartSeedProduction () {
 			// seedProduction = new SeedProductionHandler (MyTransform, 3.5f);
+		}
+
+		public void TakeDamage () {
+			// TODO: Transfer resources to shark
 		}
 	}
 }

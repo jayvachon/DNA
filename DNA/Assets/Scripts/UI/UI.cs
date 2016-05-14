@@ -18,12 +18,16 @@ public class UI : MonoBehaviour {
 	List<ProgressBar> progressBars = new List<ProgressBar> ();
 
 	public ProgressBar CreateProgressBar (Vector3 position) {
+		return CreateProgressBar (transform, position);
+	}
+
+	public ProgressBar CreateProgressBar (Transform parent, Vector3 offset) {
 		ProgressBar pbar = ObjectPool.Instantiate<ProgressBar> () as ProgressBar;
-		pbar.transform.SetParent (transform);
-		pbar.transform.position = new Vector3 (
-			position.x,
-			position.y + 2f,
-			position.z
+		pbar.transform.SetParent (parent);
+		pbar.transform.localPosition = new Vector3 (
+			offset.x,
+			offset.y + 2f,
+			offset.z
 		);
 		progressBars.Add (pbar);
 		return pbar;

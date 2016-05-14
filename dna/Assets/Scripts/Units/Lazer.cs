@@ -16,16 +16,18 @@ namespace DNA.Units {
 			}
 		}
 
-		public void StartFire (Transform target, Vector3 offset=new Vector3 ()) {
+		public void StartFire (IDamageable target, Vector3 offset=new Vector3 ()) {
 
 			LineRenderer.enabled = true;
+			Transform targetTransform = ((MonoBehaviour)target).transform;
 
-			Co2.RunWhileTrue (() => { return gameObject.activeSelf; }, () => {
+			Co2.RunWhileTrue (() => { return gameObject.activeSelf && targetTransform.gameObject.activeSelf; }, () => {
 				LineRenderer.SetPositions (new Vector3[] {
 					Position,
-					target.position + offset
+					targetTransform.position + offset
 				});
-			});
+				target.TakeDamage ();
+			}, StopFire);
 		}
 
 		public void StopFire () {

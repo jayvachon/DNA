@@ -13,7 +13,7 @@ namespace DNA.Paths {
 
 	public static class Pathfinder {
 
-		// these properties only have public getters so that PathfinderDrawer can draw them - could prob remove for production
+		// these properties are only public so that PathfinderDrawer can draw them - could prob remove for production
 
 		static VersionTracker pathVersionTracker = new VersionTracker ();
 
@@ -68,7 +68,7 @@ namespace DNA.Paths {
 
 				List<Connection> connections = TreeGrid.Connections.FindAll (
 					x => x.Cost > 0
-					&& (!x.Path[0].Source.HasFog 
+					&& (!x.Path[0].Source.HasFog
 					|| !x.Path[0].Destination.HasFog));
 
 				clearPaths = new Path<GridPoint>[connections.Count*2];

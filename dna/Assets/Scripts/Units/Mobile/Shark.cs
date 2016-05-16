@@ -53,8 +53,6 @@ namespace DNA.Units {
 			}, () => {
 				lazer.StartFire (givingTree.MyTransform, new Vector3 (0, 2, 0));
 				givingTree.StartTakeDamage ();
-				// givingTreeTask = TaskMatcher.GetPerformable (this, givingTree);
-				// givingTreeTask.Start (true);
 				givingTreeTask = TaskMatcher.StartMatch (this, givingTree);
 			});
 		}

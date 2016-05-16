@@ -10,6 +10,16 @@ namespace DNA.Units {
 
 	public class GivingTreeUnit : StaticUnit, IDamageable {//, ISeedProducer {
 
+		static GivingTreeUnit instance;
+		public static GivingTreeUnit Instance {
+			get {
+				if (instance == null) {
+					instance = GameObject.FindObjectOfType (typeof (GivingTreeUnit)) as GivingTreeUnit;
+				}
+				return instance;
+			}
+		}
+
 		List<Vector3> createPositions;
 		List<Vector3> CreatePositions {
 			get {

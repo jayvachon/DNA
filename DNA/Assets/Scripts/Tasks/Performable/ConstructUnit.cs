@@ -30,7 +30,7 @@ namespace DNA.Tasks {
 			Purchase ();
 			try {
 				ElementContainer.BeginConstruction<T> (TotalCost);
-			} catch {
+			} catch (System.NullReferenceException) {
 				throw new System.Exception ("The path element container has not been set for the task '" + this + ".' Be sure to set the property ElementContainer");
 			}
 			base.OnEnd ();

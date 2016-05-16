@@ -35,6 +35,7 @@ namespace DNA.Paths {
 
 		public ConstructionSite BeginConstruction<T> (int laborCost=0, bool autoConstruct=true) where T : StaticUnit {
 
+
 			// Create a construction site and listen for labor to be completed
 			// Set the project to turn into once labor completes
 			if (Element.State == DevelopmentState.Undeveloped) {
@@ -47,6 +48,13 @@ namespace DNA.Paths {
 				site.PerformableTasks.Get<CancelConstruction> ().Init (this, project.Settings.Symbol);
 				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
+
+				/*if (typeof (T) != typeof (CoffeePlant) && typeof (T) != typeof (GivingTreeUnit) && typeof (T) != typeof (Road)) {
+					List<GridPoint> path = Pathfinder.GetPathNoOverlap ((GridPoint)Element, (GridPoint)GivingTreeUnit.Instance.Element);
+					// Debug.Log ((GridPoint)Element);
+					// Debug.Log ((GridPoint)GivingTreeUnit.Instance.Element);
+					// Debug.Log (path.Count);
+				}*/
 			}
 			return site;
 		}

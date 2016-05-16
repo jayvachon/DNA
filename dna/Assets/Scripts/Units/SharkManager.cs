@@ -6,16 +6,6 @@ namespace DNA.Units {
 
 	public class SharkManager : MonoBehaviour {
 
-		GivingTreeUnit givingTree;
-		GivingTreeUnit GivingTree {
-			get {
-				if (givingTree == null) {
-					givingTree = GameObject.FindObjectOfType (typeof (GivingTreeUnit)) as GivingTreeUnit;
-				}
-				return givingTree;
-			}
-		}
-
 		float startRadius = 100f;
 
 		void OnEnable () {
@@ -38,10 +28,10 @@ namespace DNA.Units {
 			Shark.Create (
 				new Vector3 (
 					startRadius * Mathf.Sin (angle), 
-					GivingTree.Position.y, 
+					GivingTreeUnit.Instance.Position.y, 
 					startRadius * Mathf.Cos (angle)
 				), 
-				GivingTree,
+				GivingTreeUnit.Instance,
 				loan
 			);
 		}

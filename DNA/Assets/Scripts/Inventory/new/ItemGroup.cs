@@ -177,6 +177,7 @@ namespace InventorySystem {
 		protected abstract void SendEmptyMessage ();
 		protected abstract void SendRemoveMessage ();
 		protected abstract void SendFillMessage ();
+		public abstract string Formatted ();
 		public abstract void Print ();
 	}
 
@@ -393,6 +394,10 @@ namespace InventorySystem {
 
 		protected override void SendFillMessage () {
 			if (onFill != null) onFill ();
+		}
+
+		public override string Formatted () {
+			return ID + ": " + Count + (HasCapacity ? "/" + Capacity : ""); 
 		}
 
 		/// <summary>

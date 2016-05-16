@@ -8,17 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class GivingTreeUnit : StaticUnit, ITaskPerformer, IDamageable {//, ISeedProducer {
-
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-				}
-				return performableTasks;
-			}
-		}
+	public class GivingTreeUnit : StaticUnit, IDamageable {//, ISeedProducer {
 
 		List<Vector3> createPositions;
 		List<Vector3> CreatePositions {
@@ -48,11 +38,15 @@ namespace DNA.Units {
 
 			Inventory = Player.Instance.Inventory;
 
-			PerformableTasks.Add (new GenerateLaborer ()).onComplete += OnGenerateLaborer;
+			// PerformableTasks.Add (new GenerateLaborer ()).onComplete += OnGenerateLaborer;
 			// PerformableTasks.Add (new GenerateUnit<Elder> ()).onComplete += OnGenerateElder;
 			// PerformableTasks.Add (new GenerateUnit<Corpse> ()).onComplete += OnGenerateCorpse;
 			// PerformableTasks.Add (new BorrowLoan<MilkshakeLoanGroup> ());
 			// PerformableTasks.Add (new BorrowLoan<CoffeeLoanGroup> ());
+		}
+
+		protected override void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new GenerateLaborer ()).onComplete += OnGenerateLaborer;
 		}
 
 		protected override void OnEnable () {
@@ -94,8 +88,7 @@ namespace DNA.Units {
 			// seedProduction = new SeedProductionHandler (MyTransform, 3.5f);
 		}
 
-		public void TakeDamage (IDamager damager) {
-			// TODO: Transfer resources to shark
-		}
+		public void StartTakeDamage (IDamager damager) {}
+		public void StopTakeDamage () {}
 	}
 }

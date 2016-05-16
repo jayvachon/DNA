@@ -10,8 +10,8 @@ namespace DNA.Units {
 		ProgressBar pbar;
 		Loan loan;
 		Loan.Repayment repayment;
-		float damageTimer = 0f;
-		const float damageTime = 5f;
+		// float damageTimer = 0f;
+		// const float damageTime = 5f;
 
 		public static Shark Create (Vector3 position, GivingTreeUnit givingTree, Loan loan) {
 			Shark shark = ObjectPool.Instantiate<Shark> (position);
@@ -28,13 +28,12 @@ namespace DNA.Units {
 
 			// Create laser
 			if (lazer == null)
-				lazer = Lazer.Create (this);
+				lazer = Lazer.Create (MyTransform);
 
 			// Initialize inventory
 			this.loan = loan;
-			// Inventory[loan.Group.ID].Set (loan.RemovePayment ());
 			this.repayment = loan.GetRepayment ();
-			Inventory[loan.Group.ID].Set (repayment.Amount);
+			Inventory[repayment.Type].Capacity = repayment.Amount;
 
 			// Set trajectory
 			Vector3 startPosition = Position;
@@ -52,7 +51,7 @@ namespace DNA.Units {
 				Position = Vector3.Lerp (startPosition, targetPosition, p);
 				MyTransform.LookAt (targetPosition);
 			}, () => {
-				lazer.StartFire (givingTree, new Vector3 (0, 2, 0));
+				lazer.StartFire (givingTree.MyTransform, new Vector3 (0, 2, 0));
 			});
 		}
 
@@ -65,6 +64,8 @@ namespace DNA.Units {
 			};
 		}
 
+		// protected override void OnInitAcceptableTasks
+
 		protected override void OnEnable () {
 			base.OnEnable ();
 			Inventory["Health"].Fill ();
@@ -76,13 +77,15 @@ namespace DNA.Units {
 			Inventory.Clear ();
 		}
 
-		public void TakeDamage (IDamager damager) {
-			damageTimer += Time.deltaTime;
+		public void StartTakeDamage (IDamager damager) {
+			/*damageTimer += Time.deltaTime;
 			if (damageTimer >= damageTime / 100f && !Inventory["Health"].Empty) {
 				Inventory["Health"].Remove ();
 				pbar.SetProgress (Inventory["Health"].PercentFilled);
 				damageTimer = 0f;
-			}
+			}*/
 		}
+
+		public void StopTakeDamage () {}
 	}
 }

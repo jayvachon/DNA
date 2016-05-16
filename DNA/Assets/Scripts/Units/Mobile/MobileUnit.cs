@@ -11,7 +11,7 @@ using DNA.Paths;
 
 namespace DNA.Units {
 
-	public class MobileUnit : Unit, ITaskPerformer, ISelectableOverrider, IPathElementVisitor {
+	public class MobileUnit : Unit, ISelectableOverrider, IPathElementVisitor {
 
 		#region ISelectableOverrider implementation
 		public UnityEngine.EventSystems.PointerEventData.InputButton OverrideButton {
@@ -41,17 +41,6 @@ namespace DNA.Units {
 					mobileTransform = UnitTransform as MobileUnitTransform;
 				}
 				return mobileTransform;
-			}
-		}
-
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-					OnInitPerformableTasks (performableTasks);
-				}
-				return performableTasks;
 			}
 		}
 
@@ -247,8 +236,6 @@ namespace DNA.Units {
 			positioner.onExitPoint -= OnExitPoint;
 			Events.instance.RemoveListener<ClickConnectionEvent> (OnClickConnection);
 		}
-
-		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
 
 		#region scaling select
 		Vector3 startScale = Vector3.zero;

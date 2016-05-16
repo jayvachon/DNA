@@ -41,7 +41,7 @@ namespace DNA.Units {
 
 			base.OnEnable ();
 
-			lazer = Lazer.Create (this, new Vector3 (0, 1.5f, 0));
+			lazer = Lazer.Create (MyTransform, new Vector3 (0, 1.5f, 0));
 			ring = RangeRing.Create (MyTransform);
 			ring.Set (range, 40);
 			ring.Hide ();
@@ -51,7 +51,8 @@ namespace DNA.Units {
 					if (target == null) {
 						lazer.StopFire ();
 					} else {
-						lazer.StartFire (target);
+						lazer.StartFire (target.MyTransform);
+						
 					}
 				}
 			});

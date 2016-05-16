@@ -5,25 +5,16 @@ using DNA.Tasks;
 
 namespace DNA.Units {
 
-	public class Seed : Unit, ITaskPerformer {
-
-		#region ITaskPerformer implementation
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-					performableTasks.Add (new PlantSeed ()).onStart += OnStartPlant;
-				}
-				return performableTasks;
-			}
-		}
-		#endregion
+	public class Seed : Unit {
 
 		SeedProductionHandler seedProduction;
 
 		public void Init (SeedProductionHandler seedProduction) {
 			this.seedProduction = seedProduction;
+		}
+
+		protected override void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new PlantSeed ()).onStart += OnStartPlant;
 		}
 
 		public override void OnPointerDown (PointerEventData e) {

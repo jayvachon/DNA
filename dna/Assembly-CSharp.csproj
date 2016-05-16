@@ -301,6 +301,7 @@
      <Compile Include="Assets\Scripts\UI\HUD\LeveeInfo.cs" />
      <Compile Include="Assets\Scripts\UI\HappinessIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\HealthIndicator.cs" />
+     <Compile Include="Assets\Scripts\UI\InfoBox.cs" />
      <Compile Include="Assets\Scripts\UI\Inventory\ItemGroupDrawer.cs" />
      <Compile Include="Assets\Scripts\UI\ItemHolderContainerUI.cs" />
      <Compile Include="Assets\Scripts\UI\ItemHolderOverlay.cs" />

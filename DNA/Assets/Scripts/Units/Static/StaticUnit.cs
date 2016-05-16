@@ -9,7 +9,7 @@ using DNA.Paths;
 
 namespace DNA.Units {
 
-	public class StaticUnit : Unit, IPathElementObject, ITaskAcceptor {
+	public class StaticUnit : Unit, IPathElementObject {
 
 		PathElement element;
 		public PathElement Element { 
@@ -21,17 +21,6 @@ namespace DNA.Units {
 		}
 
 		public PathElementContainer Container { get; set; }
-
-		AcceptableTasks acceptableTasks;
-		public AcceptableTasks AcceptableTasks {
-			get {
-				if (acceptableTasks == null) {
-					acceptableTasks = new AcceptableTasks (this);
-					OnInitAcceptableTasks (acceptableTasks);
-				}
-				return acceptableTasks;
-			}
-		}
 
 		int fertilityTier;
 		public int FertilityTier {
@@ -75,7 +64,6 @@ namespace DNA.Units {
 			}
 		}
 
-		protected virtual void OnInitAcceptableTasks (AcceptableTasks a) {}
 		protected virtual void OnSetFertility (int fertility) {}
 
 		#region ISelectable implementation

@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 	
-	public class Plot : StaticUnit, ITaskPerformer {
+	public class Plot : StaticUnit {
 
 		public override string Name {
 			get { return "Plot"; }
@@ -16,16 +16,6 @@ namespace DNA.Units {
 
 		public override string Description {
 			get { return "Construct buildings on plots."; }
-		}
-
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-				}
-				return performableTasks;
-			}
 		}
 
 		void Awake () {

@@ -4,12 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using DNA.InputSystem;
 using DNA.EventSystem;
-using InventorySystem;
 using DNA.Models;
+using DNA.Tasks;
+using InventorySystem;
 
 namespace DNA.Units {
 
-	public class Unit : MBRefs, INameable, IInventoryHolder, ISelectable, IPointerDownHandler {
+	public class Unit : MBRefs, INameable, IInventoryHolder, ISelectable, IPointerDownHandler, ITaskPerformer, ITaskAcceptor {
 
 		public virtual string Name {
 			get { return Settings.Title; }
@@ -45,6 +46,28 @@ namespace DNA.Units {
 			protected set {
 				inventory = value;
 				OnInitInventory (inventory);
+			}
+		}
+
+		PerformableTasks performableTasks;
+		public PerformableTasks PerformableTasks {
+			get {
+				if (performableTasks == null) {
+					performableTasks = new PerformableTasks (this);
+					OnInitPerformableTasks (performableTasks);
+				}
+				return performableTasks;
+			}
+		}
+
+		AcceptableTasks acceptableTasks;
+		public AcceptableTasks AcceptableTasks {
+			get {
+				if (acceptableTasks == null) {
+					acceptableTasks = new AcceptableTasks (this);
+					OnInitAcceptableTasks (acceptableTasks);
+				}
+				return acceptableTasks;
 			}
 		}
 		
@@ -120,6 +143,8 @@ namespace DNA.Units {
 		}
 
 		protected virtual void OnInitInventory (Inventory i) {}
+		protected virtual void OnInitPerformableTasks (PerformableTasks p) {}
+		protected virtual void OnInitAcceptableTasks (AcceptableTasks a) {}
 
 		#region ISelectable implementation
 		protected SelectSettings selectSettings;

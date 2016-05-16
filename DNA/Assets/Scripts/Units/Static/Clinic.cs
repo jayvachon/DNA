@@ -5,18 +5,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class Clinic : StaticUnit, ITaskPerformer {
-
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-					OnInitPerformableTasks (performableTasks);
-				}
-				return performableTasks;
-			}
-		}
+	public class Clinic : StaticUnit {
 
 		HealthIndicator indicator;
 
@@ -28,7 +17,7 @@ namespace DNA.Units {
 			a.Add (new AcceptCollectItem<HealthGroup> ());
 		}
 
-		protected void OnInitPerformableTasks (PerformableTasks p) {
+		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new GenerateItem<HealthGroup> ());
 		}
 

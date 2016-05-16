@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class ConstructionSite : StaticUnit, IPathElementObject, ITaskPerformer {
+	public class ConstructionSite : StaticUnit, IPathElementObject {
 
 		public override SelectSettings SelectSettings {
 			get { 
@@ -25,23 +25,16 @@ namespace DNA.Units {
 			}
 		}
 
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-					performableTasks.Add (new ConsumeItem<LaborGroup> ());
-					performableTasks.Add (new CancelConstruction (Player.Instance.Inventory));
-				}
-				return performableTasks;
-			}
-		}
-
 		ProgressBar pbar;
 
 		public void AutoConstruct () {
 			PerformableTasks[typeof (ConsumeItem<LaborGroup>)].Start ();
 			AcceptableTasks.SetActive (typeof (AcceptCollectItem<LaborGroup>), false);
+		}
+
+		protected override void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new ConsumeItem<LaborGroup> ());
+			p.Add (new CancelConstruction (Player.Instance.Inventory));
 		}
 
 		protected override void OnEnable () {

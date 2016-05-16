@@ -97,10 +97,12 @@ namespace DNA {
 		public class Repayment {
 
 			public readonly int ID;
+			public readonly string Type;
 			public int Amount { get; set; }
 
-			public Repayment (int id, int amount) {
+			public Repayment (int id, string type, int amount) {
 				ID = id;
+				Type = type;
 				Amount = amount;
 			}
 		}
@@ -141,7 +143,7 @@ namespace DNA {
 		}
 
 		public override Repayment GetRepayment () {
-			Repayment r = new Repayment (repaymentCounter, group.Remove (Payment).Count);
+			Repayment r = new Repayment (repaymentCounter, group.ID, group.Remove (Payment).Count);
 			repayments.Add (repaymentCounter, r);
 			repaymentCounter ++;
 			return r;

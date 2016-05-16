@@ -8,18 +8,7 @@ namespace DNA.Units {
 
 	// TODO: show upgrade progress when task is started
 
-	public class University : StaticUnit, ITaskPerformer {
-
-		PerformableTasks performableTasks;
-		public PerformableTasks PerformableTasks {
-			get {
-				if (performableTasks == null) {
-					performableTasks = new PerformableTasks (this);
-					OnInitPerformableTasks (performableTasks);
-				}
-				return performableTasks;
-			}
-		}
+	public class University : StaticUnit {
 
 		ProgressBar pbar;
 		bool upgrading = false;
@@ -28,7 +17,7 @@ namespace DNA.Units {
 			Inventory = Player.Instance.Inventory;
 		}
 
-		protected void OnInitPerformableTasks (PerformableTasks p) {
+		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			// p.Add (new ResearchUpgrade<CoffeeCapacity> ());
 			// p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
 			p.Add (new ResearchUpgrade<LaborerSpeed> ());

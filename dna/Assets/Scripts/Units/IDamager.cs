@@ -3,7 +3,5 @@ using System.Collections;
 
 namespace DNA.Units {
 
-	public interface IDamager {
-
-	}
+	public interface IDamager {}
 }

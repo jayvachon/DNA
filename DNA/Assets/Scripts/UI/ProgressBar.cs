@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ProgressBar : MonoBehaviour {
+public class ProgressBar : MBRefs {
 
 	public RectTransform back;
 	public RectTransform mercury;
@@ -28,6 +28,6 @@ public class ProgressBar : MonoBehaviour {
 	}
 
 	void Update () {
-		transform.LookAt (Camera.main.transform);
+		MyTransform.LookAt (Camera.main.transform);
 	}
 }

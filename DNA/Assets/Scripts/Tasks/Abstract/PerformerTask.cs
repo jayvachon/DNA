@@ -68,10 +68,20 @@ namespace DNA.Tasks {
 		bool perform = false;	 // should the task be performing?
 		bool performing = false; // is the task being performed?
 
-		public PerformerTask () {
-			settings = DataManager.GetTaskSettings (this.GetType ());
+		public PerformerTask (string symbolOverride="") {
+
+			// Load the settings
+			if (symbolOverride == "")
+				settings = DataManager.GetTaskSettings (this.GetType ());
+			else
+				settings = DataManager.GetTaskSettings (symbolOverride);
+
+			// Validate settings
 			if (settings.Repeat && Duration == 0)
 				throw new System.Exception (this.GetType () + " is marked as repeating with a duration of 0. This will cause the game to hang.");
+
+			if (settings.Type != GetType ())
+				throw new System.Exception ("The type defined in the task model " + settings + " does not match the type " + GetType ());
 		}
 
 		public void OnBind () {

@@ -12,8 +12,6 @@ namespace DNA.Units {
 		Loan loan;
 		Loan.Repayment repayment;
 		MatchResult givingTreeTask;
-		// float damageTimer = 0f;
-		// const float damageTime = 5f;
 
 		public static Shark Create (Vector3 position, GivingTreeUnit givingTree, Loan loan) {
 			Shark shark = ObjectPool.Instantiate<Shark> (position);
@@ -62,11 +60,11 @@ namespace DNA.Units {
 
 		protected override void OnInitInventory (Inventory i) {
 
-			i.Add (new CoffeeGroup ()).onFill += () => {
+			i.Add (new CoffeeGroup (0, 0)).onFill += () => {
 				Debug.Log ("coffee full");
 			};
 
-			i.Add (new MilkshakeGroup ()).onFill += () => {
+			i.Add (new MilkshakeGroup (0, 0)).onFill += () => {
 				Debug.Log ("milk full");
 			};
 
@@ -84,8 +82,8 @@ namespace DNA.Units {
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new ConsumeItem<HealthGroup> ());
-			p.Add (new CollectItem<CoffeeGroup> ());
-			p.Add (new CollectItem<MilkshakeGroup> ());
+			p.Add (new CollectItem<CoffeeGroup> ("shark_collect_coffee"));
+			p.Add (new CollectItem<MilkshakeGroup> ("shark_collect_milkshake"));
 		}
 
 		protected override void OnEnable () {
@@ -98,6 +96,8 @@ namespace DNA.Units {
 			lazer.StopFire ();
 			givingTreeTask.Stop ();
 			Inventory.Clear ();
+			Inventory["Coffee"].Capacity = 0;
+			Inventory["Milkshakes"].Capacity = 0;
 		}
 
 		public void StartTakeDamage () {

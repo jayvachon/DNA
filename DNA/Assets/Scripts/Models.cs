@@ -276,6 +276,13 @@ namespace DNA.Models {
 				BindCapacity = 1
 			});
 
+			tasks.Add ("shark_collect_milkshake", new TaskSettings {
+				Type = typeof (CollectItem<MilkshakeGroup>),
+				Duration = 0.2f,
+				Repeat = true,
+				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>)
+			});
+
 			tasks.Add ("collect_coffee", new TaskSettings {
 				Type = typeof (CollectItem<CoffeeGroup>),
 				Duration = 0.75f,
@@ -283,6 +290,13 @@ namespace DNA.Models {
 				Pair = typeof (AcceptDeliverItem<CoffeeGroup>),
 				AlwaysPairNearest = true,
 				BindCapacity = 1
+			});
+
+			tasks.Add ("shark_collect_coffee", new TaskSettings {
+				Type = typeof (CollectItem<CoffeeGroup>),
+				Duration = 0.2f,
+				Repeat = true,
+				Pair = typeof (AcceptDeliverItem<CoffeeGroup>)
 			});
 
 			tasks.Add ("collect_labor", new TaskSettings {

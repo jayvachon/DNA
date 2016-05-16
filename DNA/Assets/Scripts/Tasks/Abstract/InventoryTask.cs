@@ -23,6 +23,7 @@ namespace DNA.Tasks {
 			}
 		}
 
+		public InventoryTask (string symbolOverride) : base (symbolOverride) {}
 		public InventoryTask (Inventory inventory=null) {
 			this.inventory = inventory;
 		}
@@ -55,6 +56,7 @@ namespace DNA.Tasks {
 			}
 		}
 
+		public InventoryTask (string symbolOverride) : base (symbolOverride) {}
 		public InventoryTask (Inventory inventory=null) : base (inventory) {}
 	}
 }

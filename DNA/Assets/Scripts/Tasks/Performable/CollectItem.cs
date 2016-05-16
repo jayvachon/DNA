@@ -10,6 +10,8 @@ namespace DNA.Tasks {
 			get { return !Group.Full; }
 		}
 
+		public CollectItem (string symbolOverride="") : base (symbolOverride) {}
+
 		protected override void OnEnd () {
 			AcceptorInventory.Get<T> ().Transfer (Group);
 			base.OnEnd ();

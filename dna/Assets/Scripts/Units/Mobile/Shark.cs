@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using InventorySystem;
+using DNA.Tasks;
 
 namespace DNA.Units {
 
-	public class Shark : Unit, IDamageable, IDamager {
+	public class Shark : Unit, IDamageable {
 
 		Lazer lazer;
 		ProgressBar pbar;
 		Loan loan;
 		Loan.Repayment repayment;
+		MatchResult givingTreeTask;
 		// float damageTimer = 0f;
 		// const float damageTime = 5f;
 
@@ -52,19 +54,39 @@ namespace DNA.Units {
 				MyTransform.LookAt (targetPosition);
 			}, () => {
 				lazer.StartFire (givingTree.MyTransform, new Vector3 (0, 2, 0));
+				givingTree.StartTakeDamage ();
+				givingTreeTask = TaskMatcher.GetPerformable (this, givingTree);
+				givingTreeTask.Start (true);
 			});
 		}
 
 		protected override void OnInitInventory (Inventory i) {
-			i.Add (new CoffeeGroup ());
-			i.Add (new MilkshakeGroup ());
-			i.Add (new HealthGroup (100, 100)).onEmpty += () => {
+
+			i.Add (new CoffeeGroup ()).onFill += () => {
+				Debug.Log ("coffee full");
+			};
+
+			i.Add (new MilkshakeGroup ()).onFill += () => {
+				Debug.Log ("milk full");
+			};
+
+			HealthGroup health = new HealthGroup (100, 100);
+			health.onUpdate += () => {
+				pbar.SetProgress (Inventory["Health"].PercentFilled);
+			};
+			health.onEmpty += () => {
 				loan.ReturnRepayment (repayment);
 				DestroyThis<Shark> ();
 			};
+
+			i.Add (health);
 		}
 
-		// protected override void OnInitAcceptableTasks
+		protected override void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new ConsumeItem<HealthGroup> ());
+			p.Add (new CollectItem<CoffeeGroup> ());
+			p.Add (new CollectItem<MilkshakeGroup> ());
+		}
 
 		protected override void OnEnable () {
 			base.OnEnable ();
@@ -74,18 +96,16 @@ namespace DNA.Units {
 		protected override void OnDisable () {
 			base.OnDisable ();
 			lazer.StopFire ();
+			givingTreeTask.Stop ();
 			Inventory.Clear ();
 		}
 
-		public void StartTakeDamage (IDamager damager) {
-			/*damageTimer += Time.deltaTime;
-			if (damageTimer >= damageTime / 100f && !Inventory["Health"].Empty) {
-				Inventory["Health"].Remove ();
-				pbar.SetProgress (Inventory["Health"].PercentFilled);
-				damageTimer = 0f;
-			}*/
+		public void StartTakeDamage () {
+			PerformableTasks[typeof (ConsumeItem<HealthGroup>)].Start ();
 		}
 
-		public void StopTakeDamage () {}
+		public void StopTakeDamage () {
+			PerformableTasks[typeof (ConsumeItem<HealthGroup>)].Stop ();
+		}
 	}
 }

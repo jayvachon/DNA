@@ -419,7 +419,6 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConsumeItem<YearGroup>), new TaskSettings {
 				Symbol = "consume_year",
-				Title = "",
 				Description = "Consumes year",
 				Duration = 1f,
 				AutoStart = false,
@@ -429,8 +428,6 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConsumeItem<HappinessGroup>), new TaskSettings {
 				Symbol = "consume_happiness",
-				Title = "",
-				Description = "Consumes happiness",
 				Duration = 2f,
 				AutoStart = true,
 				Repeat = true,
@@ -439,9 +436,14 @@ namespace DNA.Models {
 
 			tasks.Add (typeof (ConsumeItem<LaborGroup>), new TaskSettings {
 				Symbol = "consume_labor",
-				Description = "Consumes labor",
 				Duration = 0.5f,
 				Repeat = true		
+			});
+
+			tasks.Add (typeof (ConsumeItem<HealthGroup>), new TaskSettings {
+				Symbol = "consume_health",
+				Duration = 0.05f,
+				Repeat = true
 			});
 
 			/**

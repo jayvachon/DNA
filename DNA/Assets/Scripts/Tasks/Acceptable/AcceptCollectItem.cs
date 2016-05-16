@@ -11,7 +11,7 @@ namespace DNA.Tasks {
 		}
 		
 		public override bool Enabled {
-			get { return !Group.Empty; }
+			get { return !Group.AtMinimum; }
 		}
 
 		public AcceptCollectItem (Inventory inventory=null) : base (inventory) {}

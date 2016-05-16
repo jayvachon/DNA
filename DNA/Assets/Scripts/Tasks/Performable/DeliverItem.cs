@@ -7,7 +7,7 @@ namespace DNA.Tasks {
 	public class DeliverItem<T> : InventoryTask<T> where T : ItemGroup {
 
 		public override bool Enabled {
-			get { return !Group.Empty; }
+			get { return !Group.AtMinimum; }
 		}
 		
 		protected override void OnEnd () {

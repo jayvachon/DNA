@@ -52,7 +52,7 @@ namespace DNA.Units {
 						lazer.StopFire ();
 					} else {
 						lazer.StartFire (target.MyTransform);
-						
+						target.StartTakeDamage ();
 					}
 				}
 			});

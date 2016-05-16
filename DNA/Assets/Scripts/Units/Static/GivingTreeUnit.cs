@@ -35,14 +35,7 @@ namespace DNA.Units {
 		// SeedProductionHandler seedProduction;
 
 		void Awake () {
-
 			Inventory = Player.Instance.Inventory;
-
-			// PerformableTasks.Add (new GenerateLaborer ()).onComplete += OnGenerateLaborer;
-			// PerformableTasks.Add (new GenerateUnit<Elder> ()).onComplete += OnGenerateElder;
-			// PerformableTasks.Add (new GenerateUnit<Corpse> ()).onComplete += OnGenerateCorpse;
-			// PerformableTasks.Add (new BorrowLoan<MilkshakeLoanGroup> ());
-			// PerformableTasks.Add (new BorrowLoan<CoffeeLoanGroup> ());
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
@@ -60,8 +53,10 @@ namespace DNA.Units {
 		}
 
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
-			a.Add (new AcceptDeliverItem<MilkshakeGroup> ());
-			a.Add (new AcceptDeliverItem<CoffeeGroup> ());
+			// a.Add (new AcceptDeliverItem<MilkshakeGroup> ());
+			// a.Add (new AcceptDeliverItem<CoffeeGroup> ());
+			a.Add (new AcceptCollectItem<MilkshakeGroup> ());
+			a.Add (new AcceptCollectItem<CoffeeGroup> ());
 		}
 
 		void OnGenerateLaborer (PerformerTask task) {
@@ -88,7 +83,7 @@ namespace DNA.Units {
 			// seedProduction = new SeedProductionHandler (MyTransform, 3.5f);
 		}
 
-		public void StartTakeDamage (IDamager damager) {}
+		public void StartTakeDamage () {}
 		public void StopTakeDamage () {}
 	}
 }

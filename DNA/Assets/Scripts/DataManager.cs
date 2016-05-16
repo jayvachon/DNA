@@ -20,9 +20,17 @@ namespace DNA {
 
 		public static TaskSettings GetTaskSettings (System.Type taskType) {
 			try {
-				return Data.TasksSettings[taskType];
+				return Data.TasksSettings.Tasks.Values.Where (x => x.Type == taskType).ToList ()[0];
 			} catch {
 				throw new System.Exception ("No model exists for the task '" + taskType + "'");
+			}
+		}
+
+		public static TaskSettings GetTaskSettings (string symbol) {
+			try {
+				return Data.TasksSettings[symbol];
+			} catch {
+				throw new System.Exception ("No task exists with the symbol '" + symbol + "'");
 			}
 		}
 
@@ -56,10 +64,7 @@ namespace DNA {
 
 		public static int GetConstructionCost (string unitSymbol) {
 			try {
-				return (Data.TasksSettings.Tasks
-					.Values.Where (x => x.Symbol == "construct_" + unitSymbol)
-					.ToList ()[0] as CostTaskSettings)
-					.Costs[0].Sum (x => x.Value);
+				return ((CostTaskSettings)Data.TasksSettings.Tasks["construct_" + unitSymbol]).Costs[0].Sum (x => x.Value);
 			} catch {
 				throw new System.Exception ("Could not find a cost for the unit '" + unitSymbol + "'");
 			}
@@ -67,10 +72,7 @@ namespace DNA {
 
 		public static Dictionary<string, int> GetConstructionCosts (string unitSymbol) {
 			try {
-				return (Data.TasksSettings.Tasks
-					.Values.Where (x => x.Symbol == "construct_" + unitSymbol)
-					.ToList ()[0] as CostTaskSettings)
-					.Costs[0];
+				return ((CostTaskSettings)Data.TasksSettings.Tasks["construct_" + unitSymbol]).Costs[0];
 			} catch {
 				throw new System.Exception ("Could not find a cost for the unit '" + unitSymbol + "'");
 			}

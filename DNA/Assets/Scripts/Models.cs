@@ -242,33 +242,33 @@ namespace DNA.Models {
 
 	// TODO: this should be grabbed from a json file, but just doing it here for now
 	public class TasksSettings {
-		
-		Dictionary<System.Type, TaskSettings> tasks;
 
-		public Dictionary<System.Type, TaskSettings> Tasks {
+		Dictionary<string, TaskSettings> tasks;
+
+		public Dictionary<string, TaskSettings> Tasks {
 			get { return tasks; }
 		}
 
-		public TaskSettings this[System.Type taskType] {
-			get { 
+		public TaskSettings this[string symbol] {
+			get {
 				try {
-					return tasks[taskType]; 
+					return tasks[symbol];
 				} catch {
-					throw new System.Exception ("Could not find a model for '" + taskType + "'");
+					throw new System.Exception ("Could not find a model for '" + symbol + "'");
 				}
 			}
 		}
 
 		public TasksSettings () {
 			
-			tasks = new Dictionary<System.Type, TaskSettings> ();
+			tasks = new Dictionary<string, TaskSettings> ();
 			
 			/**
 			 *	CollectItem
 			 */
 
-			tasks.Add (typeof (CollectItem<MilkshakeGroup>), new TaskSettings {
-				Symbol = "collect_milkshake",
+			tasks.Add ("collect_milkshake", new TaskSettings {
+				Type = typeof (CollectItem<MilkshakeGroup>),
 				Duration = 1f,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<MilkshakeGroup>),
@@ -276,8 +276,8 @@ namespace DNA.Models {
 				BindCapacity = 1
 			});
 
-			tasks.Add (typeof (CollectItem<CoffeeGroup>), new TaskSettings {
-				Symbol = "collect_coffee",
+			tasks.Add ("collect_coffee", new TaskSettings {
+				Type = typeof (CollectItem<CoffeeGroup>),
 				Duration = 0.75f,
 				Repeat = true,
 				Pair = typeof (AcceptDeliverItem<CoffeeGroup>),
@@ -285,20 +285,20 @@ namespace DNA.Models {
 				BindCapacity = 1
 			});
 
-			tasks.Add (typeof (CollectItem<LaborGroup>), new TaskSettings {
-				Symbol = "collect_labor",
+			tasks.Add ("collect_labor", new TaskSettings {
+				Type = typeof (CollectItem<LaborGroup>),
 				Duration = 0.5f,
 				Repeat = true
 			});
 
-			tasks.Add (typeof (CollectItem<HealthGroup>), new TaskSettings {
-				Symbol = "collect_health",
+			tasks.Add ("collect_health", new TaskSettings {
+				Type = typeof (CollectItem<HealthGroup>),
 				Duration = 1f,
 				Repeat = true
 			});
 
-			tasks.Add (typeof (CollectItem<HappinessGroup>), new TaskSettings {
-				Symbol = "collect_happiness",
+			tasks.Add ("collect_happiness", new TaskSettings {
+				Type = typeof (CollectItem<HappinessGroup>),
 				Duration = 0.165f,
 				Repeat = true
 			});
@@ -307,18 +307,18 @@ namespace DNA.Models {
 			 *	Construct
 			 */
 
-			tasks.Add (typeof (CancelConstruction), new TaskSettings {
-				Symbol = "cancel_construction",
+			tasks.Add ("cancel_construction", new TaskSettings {
+				Type = typeof (CancelConstruction),
 				Title = "Cancel construction"
 			});
 
-			tasks.Add (typeof (DemolishUnit), new TaskSettings {
-				Symbol = "demolish_unit",
+			tasks.Add ("demolish_unit", new TaskSettings {
+				Type = typeof (DemolishUnit),
 				Title = "Demolish"
 			});
 
-			tasks.Add (typeof (ConstructUnit<CoffeePlant>), new CostTaskSettings {
-				Symbol = "construct_coffee",
+			tasks.Add ("construct_coffee", new CostTaskSettings {
+				Type = typeof (ConstructUnit<CoffeePlant>),
 				Title = "Birth Coffee Plant",
 				Description = "Creates a new coffee plant",
 				Costs = new [] {
@@ -329,8 +329,8 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
-			tasks.Add (typeof (ConstructUnit<MilkshakePool>), new CostTaskSettings {
-				Symbol = "construct_derrick",
+			tasks.Add ("construct_derrick", new CostTaskSettings {
+				Type = typeof (ConstructUnit<MilkshakePool>),
 				Title = "Birth Milkshake Derrick",
 				Description = "Creates a new milkshake derrick",
 				Costs = new [] {
@@ -341,8 +341,8 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "drillable" }
 			});
 
-			tasks.Add (typeof (ConstructUnit<University>), new CostTaskSettings {
-				Symbol = "construct_university",
+			tasks.Add ("construct_university", new CostTaskSettings {
+				Type = typeof (ConstructUnit<University>),
 				Title = "Birth University",
 				Description = "Creates a new university",
 				Costs = new [] {
@@ -353,8 +353,8 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
-			tasks.Add (typeof (ConstructUnit<Clinic>), new CostTaskSettings {
-				Symbol = "construct_clinic",
+			tasks.Add ("construct_clinic", new CostTaskSettings {
+				Type = typeof (ConstructUnit<Clinic>),
 				Title = "Birth Clinic",
 				Description = "Creates a new clinic",
 				Costs = new [] {
@@ -365,8 +365,8 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
-			tasks.Add (typeof (ConstructUnit<Flower>), new CostTaskSettings {
-				Symbol = "construct_flower",
+			tasks.Add ("construct_flower", new CostTaskSettings {
+				Type = typeof (ConstructUnit<Flower>),
 				Title = "Birth Flower",
 				Description = "Creates a new flower",
 				Costs = new [] {
@@ -377,8 +377,8 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
-			tasks.Add (typeof (ConstructUnit<CollectionCenter>), new CostTaskSettings {
-				Symbol = "construct_collector",
+			tasks.Add ("construct_collector", new CostTaskSettings {
+				Type = typeof (ConstructUnit<CollectionCenter>),
 				Title = "Birth Silo",
 				Description = "Creates a new silo",
 				Costs = new [] {
@@ -389,8 +389,8 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
-			tasks.Add (typeof (ConstructUnit<House>), new CostTaskSettings {
-				Symbol = "construct_house",
+			tasks.Add ("construct_house", new CostTaskSettings {
+				Type = typeof (ConstructUnit<House>),
 				Title = "Birth House",
 				Description = "Creates a new house so that more laborer can be birthed",
 				Costs = new [] {
@@ -401,8 +401,8 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
-			tasks.Add (typeof (ConstructUnit<Apartment>), new CostTaskSettings {
-				Symbol = "construct_apartment",
+			tasks.Add ("construct_apartment", new CostTaskSettings {
+				Type = typeof (ConstructUnit<Apartment>),
 				Title = "Birth Apartment",
 				Description = "Creates a new apartment so that more laborer can be birthed",
 				Costs = new [] {
@@ -417,8 +417,8 @@ namespace DNA.Models {
 			 *	Consume
 			 */
 
-			tasks.Add (typeof (ConsumeItem<YearGroup>), new TaskSettings {
-				Symbol = "consume_year",
+			tasks.Add ("consume_year", new TaskSettings {
+				Type = typeof (ConsumeItem<YearGroup>),
 				Description = "Consumes year",
 				Duration = 1f,
 				AutoStart = false,
@@ -426,22 +426,22 @@ namespace DNA.Models {
 				Pair = null
 			});
 
-			tasks.Add (typeof (ConsumeItem<HappinessGroup>), new TaskSettings {
-				Symbol = "consume_happiness",
+			tasks.Add ("consume_happiness", new TaskSettings {
+				Type = typeof (ConsumeItem<HappinessGroup>),
 				Duration = 2f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
 			});
 
-			tasks.Add (typeof (ConsumeItem<LaborGroup>), new TaskSettings {
-				Symbol = "consume_labor",
+			tasks.Add ("consume_labor", new TaskSettings {
+				Type = typeof (ConsumeItem<LaborGroup>),
 				Duration = 0.5f,
 				Repeat = true		
 			});
 
-			tasks.Add (typeof (ConsumeItem<HealthGroup>), new TaskSettings {
-				Symbol = "consume_health",
+			tasks.Add ("consume_health", new TaskSettings {
+				Type = typeof (ConsumeItem<HealthGroup>),
 				Duration = 0.05f,
 				Repeat = true
 			});
@@ -450,8 +450,8 @@ namespace DNA.Models {
 			 *	DeliverItem
 			 */
 
-			tasks.Add (typeof (DeliverItem<MilkshakeGroup>), new TaskSettings {
-				Symbol = "deliver_milkshake",
+			tasks.Add ("deliver_milkshake", new TaskSettings {
+				Type = typeof (DeliverItem<MilkshakeGroup>),
 				Title = "",
 				Description = "Delivers milkshakes",
 				Duration = 1f,
@@ -460,8 +460,8 @@ namespace DNA.Models {
 				Pair = typeof (AcceptCollectItem<MilkshakeGroup>)
 			});
 
-			tasks.Add (typeof (DeliverItem<CoffeeGroup>), new TaskSettings {
-				Symbol = "deliver_coffee",
+			tasks.Add ("deliver_coffee", new TaskSettings {
+				Type = typeof (DeliverItem<CoffeeGroup>),
 				Title = "",
 				Description = "Delivers coffee",
 				Duration = 0.75f,
@@ -474,24 +474,24 @@ namespace DNA.Models {
 			 *	GenerateItem
 			 */
 
-			tasks.Add (typeof (GenerateItem<CoffeeGroup>), new TaskSettings {
-				Symbol = "generate_coffee",
+			tasks.Add ("generate_coffee", new TaskSettings {
+				Type = typeof (GenerateItem<CoffeeGroup>),
 				Duration = 1.5f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
 			});
 
-			tasks.Add (typeof (GenerateItem<YearGroup>), new TaskSettings {
-				Symbol = "generate_year",
+			tasks.Add ("generate_year", new TaskSettings {
+				Type = typeof (GenerateItem<YearGroup>),
 				Duration = 1f,
 				AutoStart = true,
 				Repeat = true,
 				Pair = null
 			});
 
-			tasks.Add (typeof (GenerateItem<HealthGroup>), new TaskSettings {
-				Symbol = "generate_health",
+			tasks.Add ("generate_health", new TaskSettings {
+				Type = typeof (GenerateItem<HealthGroup>),
 				Duration = 3f,
 				AutoStart = true,
 				Repeat = true,
@@ -502,8 +502,8 @@ namespace DNA.Models {
 			 *	GenerateUnit
 			 */
 
-			tasks.Add (typeof (GenerateLaborer), new CostTaskSettings {
-				Symbol = "generate_laborer",
+			tasks.Add ("generate_laborer", new CostTaskSettings {
+				Type = typeof (GenerateLaborer),
 				Title = "Birth Laborer",
 				Description = "Creates a new laborer",
 				Costs = new [] {
@@ -513,8 +513,8 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (GenerateUnit<Elder>), new CostTaskSettings {
-				Symbol = "generate_elder",
+			tasks.Add ("generate_elder", new CostTaskSettings {
+				Type = typeof (GenerateUnit<Elder>),
 				Title = "Birth Elder",
 				Description = "Creates a new elder",
 				Costs = new [] {
@@ -524,8 +524,8 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (GenerateUnit<Corpse>), new CostTaskSettings {
-				Symbol = "generate_corpse",
+			tasks.Add ("generate_corpse", new CostTaskSettings {
+				Type = typeof (GenerateUnit<Corpse>),
 				Title = "Birth Corpse",
 				Description = "Creates a new corpse",
 				Costs = new [] {
@@ -539,8 +539,8 @@ namespace DNA.Models {
 			 *	ResearchUpgrade
 			 */
 
-			tasks.Add (typeof (ResearchUpgrade<LaborerSpeed>), new CostTaskSettings {
-				Symbol = "reseach_laborer_speed",
+			tasks.Add ("reseach_laborer_speed", new CostTaskSettings {
+				Type = typeof (ResearchUpgrade<LaborerSpeed>),
 				Title = "Faster Workers",
 				Description = "Laborers will move faster",
 				Costs = new [] {
@@ -565,8 +565,8 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (ResearchUpgrade<CoffeeCapacity>), new CostTaskSettings {
-				Symbol = "reseach_coffee",
+			tasks.Add ("reseach_coffee", new CostTaskSettings {
+				Type = typeof (ResearchUpgrade<CoffeeCapacity>),
 				Title = "+1 coffee capacity",
 				Description = "Laborers will be able to carry more coffee",
 				Costs = new [] {
@@ -582,8 +582,8 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (ResearchUpgrade<MilkshakeCapacity>), new CostTaskSettings {
-				Symbol = "reseach_milkshake",
+			tasks.Add ("reseach_milkshake", new CostTaskSettings {
+				Type = typeof (ResearchUpgrade<MilkshakeCapacity>),
 				Title = "+1 milkshake capacity",
 				Description = "Laborers will be able to carry more milkshake",
 				Costs = new [] {
@@ -603,8 +603,8 @@ namespace DNA.Models {
 			 *	ResearchUnit
 			 */
 
-			tasks.Add (typeof (ResearchUnit<Apartment>), new CostTaskSettings {
-				Symbol = "research_apartment",
+			tasks.Add ("research_apartment", new CostTaskSettings {
+				Type = typeof (ResearchUnit<Apartment>),
 				Title = "Apartment",
 				Description = "Apartments hold more laborers and are more efficiently priced",
 				Costs = new [] {
@@ -615,8 +615,8 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (ResearchUnit<CollectionCenter>), new CostTaskSettings {
-				Symbol = "research_collection",
+			tasks.Add ("research_collection", new CostTaskSettings {
+				Type = typeof (ResearchUnit<CollectionCenter>),
 				Title = "Silo",
 				Description = "Workers can deliver resources to the silo instead of going to the Giving Tree",
 				Costs = new [] {
@@ -631,8 +631,9 @@ namespace DNA.Models {
 			 *	Misc
 			 */
 
-			tasks.Add (typeof (FleeTree), new CostTaskSettings {
+			tasks.Add ("flee_tree", new CostTaskSettings {
 				Title = "Flee Tree",
+				Type = typeof (FleeTree),
 				Description = "Goes to the next level",
 				Costs = new [] {
 					new Dictionary<string, int> {
@@ -641,8 +642,9 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (ConstructRoad), new CostTaskSettings {
+			tasks.Add ("construct_road", new CostTaskSettings {
 				Title = "Birth road",
+				Type = typeof (ConstructRoad),
 				Description = "Builds a road",
 				Costs = new [] {
 					new Dictionary<string, int> {
@@ -651,8 +653,9 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (UpgradeLevee), new CostTaskSettings {
+			tasks.Add ("upgrade_levee", new CostTaskSettings {
 				Title = "Raise levee",
+				Type = typeof (UpgradeLevee),
 				Description = "Raises the levee wall",
 				Costs = new [] {
 					new Dictionary<string, int> {
@@ -690,8 +693,9 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (ResearchUpgrade<Eyesight>), new CostTaskSettings {
+			tasks.Add ("research_eyesight", new CostTaskSettings {
 				Title = "Increase eyesight",
+				Type = typeof (ResearchUpgrade<Eyesight>),
 				Description = "Reveal more from fog of war",
 				Costs = new [] {
 					new Dictionary<string, int> {
@@ -705,18 +709,21 @@ namespace DNA.Models {
 				}
 			});
 
-			tasks.Add (typeof (PlantSeed), new TaskSettings {
+			tasks.Add ("plant_seed", new TaskSettings {
 				Title = "Plant seed",
+				Type = typeof (PlantSeed),
 				Description = "Seeds grow into beautiful flowers"
 			});
 
-			tasks.Add (typeof (BorrowLoan<MilkshakeLoanGroup>), new TaskSettings {
+			tasks.Add ("borrow_milkshakes", new TaskSettings {
 				Title = "Borrow Milkshakes",
+				Type = typeof (BorrowLoan<MilkshakeLoanGroup>),
 				Description = "Take out a loan of 100 milkshakes"
 			});
 
-			tasks.Add (typeof (BorrowLoan<CoffeeLoanGroup>), new TaskSettings {
+			tasks.Add ("borrow_coffee", new TaskSettings {
 				Title = "Borrow Coffee",
+				Type = typeof (BorrowLoan<CoffeeLoanGroup>),
 				Description = "Take out a loan of 100 coffee"
 			});
 
@@ -724,7 +731,7 @@ namespace DNA.Models {
 			 *	Tests
 			 */
 
-			tasks.Add (typeof (AutoStartTest), new TaskSettings {
+			/*tasks.Add (typeof (AutoStartTest), new TaskSettings {
 				Title = "Auto Start Test",
 				Description = "Tests to see if the action starts by itself upon creation",
 				Duration = 0.1f,
@@ -800,7 +807,7 @@ namespace DNA.Models {
 						{ "Coffee", 1 }
 					}
 				}
-			});
+			});*/
 		}
 	}
 
@@ -848,7 +855,7 @@ namespace DNA.Models {
 	}
 
 	public class TaskSettings {
-		public string Symbol { get; set; }
+		public System.Type Type { get; set; }
 		public string Title { get; set; }			// How the task will be displayed in the UI
 		public string Description { get; set; }		// A description of the task to display in the UI
 		public System.Type Pair { get; set; }		// (optional) A type of AcceptorTask that this task must be bound to in order to be performed
@@ -864,8 +871,9 @@ namespace DNA.Models {
 		// An array of costs. The CostTask will use the Costs at the first array position, then iterate the array if there are more elements.
 		// This is useful for e.g. upgrades
 		// <ItemGroup ID, amount required>
-		public Dictionary<string, int>[] Costs { get; set; }
-		public string[] ConstructionTargets { get; set; }
+		public Dictionary<string, int>[] Costs { get; set; }	// Costs of task
+		public string[] ConstructionTargets { get; set; }		// Types of units to construct on (ignore if this is not a construction task)
+		public System.Type BuildType { get; set; }				// Type of unit to construct (ignore if this is not a construction task)
 	}
 
 	public class UnitSettings {

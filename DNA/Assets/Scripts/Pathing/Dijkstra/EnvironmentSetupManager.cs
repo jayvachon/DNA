@@ -28,14 +28,14 @@ namespace DNA {
 		void OnLoadFog () {
 
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
-			points.SetUnitAtIndex<Flower> (2);
+			// points.SetUnitAtIndex<Flower> (2);
 			// points.SetUnitAtIndex<University> (3);
-			points.SetUnitAtIndex<Turret> (3);
-			points.SetUnitAtIndex<MilkshakePool> (15);
+			// points.SetUnitAtIndex<Turret> (3);
+			// points.SetUnitAtIndex<MilkshakePool> (15);
 
-			ConnectionContainer c = ConnectionsManager.GetContainer (points.GetConnectionsAtIndex (2)[3]);
+			/*ConnectionContainer c = ConnectionsManager.GetContainer (points.GetConnectionsAtIndex (2)[3]);
 			c.BeginConstruction<Road> ();
-			c.EndConstruction ();
+			c.EndConstruction ();*/
 		}
 
 		void CreateCoffeePlants () {
@@ -55,12 +55,12 @@ namespace DNA {
 		void OnLoadConnections () {
 			
 			// Create initial roads
-			List<Connection> topConnections = points.GetConnectionsAtIndex (0);
+			/*List<Connection> topConnections = points.GetConnectionsAtIndex (0);
 			for (int i = 0; i < topConnections.Count; i ++) {
 				ConnectionContainer c = ConnectionsManager.GetContainer (topConnections[i]);
 				c.BeginConstruction<Road> ();
 				c.EndConstruction ();
-			}
+			}*/
 
 			/*List<Connection> topConnections2 = points.GetConnectionsAtIndex (12);
 			for (int i = 0; i < topConnections2.Count; i ++) {

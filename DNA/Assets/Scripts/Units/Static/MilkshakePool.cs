@@ -12,6 +12,7 @@ namespace DNA.Units {
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new DemolishUnit (Container));
+			p.Add (new DeliverItem<MilkshakeGroup> ());
 		}
 		
 		protected override void OnInitInventory (Inventory i) {
@@ -30,6 +31,7 @@ namespace DNA.Units {
 		protected override void OnSetFertility (int tier) {
 			Inventory["Milkshakes"].Capacity = (int)(1000 * Fertility.Multipliers[tier]);
 			Inventory["Milkshakes"].Fill ();
+			TaskMatcher.StartMatch (this, Player.Instance);
 		}
 
 		protected override void OnSetState (DevelopmentState state) {

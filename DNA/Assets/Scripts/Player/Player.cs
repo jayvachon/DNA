@@ -9,7 +9,7 @@ using InventorySystem;
 
 namespace DNA {
 
-	public class Player : MonoBehaviour, IInventoryHolder, ITaskPerformer {
+	public class Player : MonoBehaviour, IInventoryHolder, ITaskPerformer, ITaskAcceptor {
 
 		static Player instance = null;
 		static public Player Instance {
@@ -54,6 +54,17 @@ namespace DNA {
 					performableTasks.Add (new ConstructUnit<CollectionCenter> ());
 				}
 				return performableTasks;
+			}
+		}
+
+		AcceptableTasks acceptableTasks;
+		public AcceptableTasks AcceptableTasks {
+			get {
+				if (acceptableTasks == null) {
+					acceptableTasks = new AcceptableTasks (this);
+					acceptableTasks.Add (new AcceptDeliverItem<MilkshakeGroup> ());
+				}
+				return acceptableTasks;
 			}
 		}
 

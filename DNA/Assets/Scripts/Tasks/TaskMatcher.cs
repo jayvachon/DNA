@@ -90,6 +90,12 @@ namespace DNA.Tasks {
 			return null;
 		}
 
+		public static MatchResult StartMatch (ITaskPerformer performer, ITaskAcceptor acceptor) {
+			MatchResult match = GetPerformable (performer, acceptor);
+			match.Start (true);
+			return match;
+		}
+
 		/// <summary>
 		/// Gets the Performer Tasks that the performers share in common
 		/// </summary>

@@ -44,7 +44,7 @@ namespace DNA.Units {
 			targetPosition.y += 2;
 			
 			float distance = Vector3.Distance (startPosition, targetPosition);
-			float speed = 5f;
+			float speed = 1f;
 
 			// Move
 			Co2.StartCoroutine (distance / speed, (float p) => {
@@ -53,8 +53,9 @@ namespace DNA.Units {
 			}, () => {
 				lazer.StartFire (givingTree.MyTransform, new Vector3 (0, 2, 0));
 				givingTree.StartTakeDamage ();
-				givingTreeTask = TaskMatcher.GetPerformable (this, givingTree);
-				givingTreeTask.Start (true);
+				// givingTreeTask = TaskMatcher.GetPerformable (this, givingTree);
+				// givingTreeTask.Start (true);
+				givingTreeTask = TaskMatcher.StartMatch (this, givingTree);
 			});
 		}
 
@@ -94,7 +95,8 @@ namespace DNA.Units {
 		protected override void OnDisable () {
 			base.OnDisable ();
 			lazer.StopFire ();
-			givingTreeTask.Stop ();
+			if (givingTreeTask != null)
+				givingTreeTask.Stop ();
 			Inventory.Clear ();
 			Inventory["Coffee"].Capacity = 0;
 			Inventory["Milkshakes"].Capacity = 0;

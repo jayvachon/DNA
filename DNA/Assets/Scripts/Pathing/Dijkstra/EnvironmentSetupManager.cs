@@ -55,12 +55,12 @@ namespace DNA {
 		void OnLoadConnections () {
 			
 			// Create initial roads
-			List<Connection> topConnections = points.GetConnectionsAtIndex (0);
+			/*List<Connection> topConnections = points.GetConnectionsAtIndex (0);
 			for (int i = 0; i < topConnections.Count; i ++) {
 				ConnectionContainer c = ConnectionsManager.GetContainer (topConnections[i]);
 				c.BeginConstruction<Road> ();
 				c.EndConstruction ();
-			}
+			}*/
 
 			/*List<Connection> topConnections2 = points.GetConnectionsAtIndex (12);
 			for (int i = 0; i < topConnections2.Count; i ++) {

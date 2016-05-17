@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\DataManager.cs" />
      <Compile Include="Assets\Scripts\Debugging\DebugMenu.cs" />
      <Compile Include="Assets\Scripts\Debugging\GizmosDrawer.cs" />
+     <Compile Include="Assets\Scripts\Debugging\GridPointDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\OptionsDrawer.cs" />
      <Compile Include="Assets\Scripts\Debugging\PathfinderDrawer.cs" />
      <Compile Include="Assets\Scripts\Environment\EmissionsManager.cs" />

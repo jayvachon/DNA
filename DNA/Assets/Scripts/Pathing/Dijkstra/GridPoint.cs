@@ -39,7 +39,7 @@ namespace DNA.Paths {
 		}
 
 		public bool HasFog {
-			get { return Fog != null && Fog.MyState == FogOfWar.State.Hidden || Fog.MyState == FogOfWar.State.Removed; }
+			get { return Fog != null && (Fog.MyState == FogOfWar.State.Covered || Fog.MyState == FogOfWar.State.Faded); }
 		}
 	}
 }

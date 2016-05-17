@@ -49,12 +49,12 @@ namespace DNA.Paths {
 				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
 
-				/*if (typeof (T) != typeof (CoffeePlant) && typeof (T) != typeof (GivingTreeUnit) && typeof (T) != typeof (Road)) {
+				if (typeof (T) != typeof (CoffeePlant) && typeof (T) != typeof (GivingTreeUnit) && typeof (T) != typeof (Road)) {
 					List<GridPoint> path = Pathfinder.GetPathNoOverlap ((GridPoint)Element, (GridPoint)GivingTreeUnit.Instance.Element);
 					// Debug.Log ((GridPoint)Element);
 					// Debug.Log ((GridPoint)GivingTreeUnit.Instance.Element);
 					// Debug.Log (path.Count);
-				}*/
+				}
 			}
 			return site;
 		}

@@ -50,10 +50,14 @@ namespace DNA.Paths {
 				Element.State = DevelopmentState.UnderConstruction;
 
 				if (typeof (T) != typeof (CoffeePlant) && typeof (T) != typeof (GivingTreeUnit) && typeof (T) != typeof (Road)) {
-					List<GridPoint> path = Pathfinder.GetPathNoOverlap ((GridPoint)Element, (GridPoint)GivingTreeUnit.Instance.Element);
-					// Debug.Log ((GridPoint)Element);
-					// Debug.Log ((GridPoint)GivingTreeUnit.Instance.Element);
-					// Debug.Log (path.Count);
+
+					List<Connection> path = Pathfinder.PointsToConnections (Pathfinder.GetPathNoOverlap ((GridPoint)Element, (GridPoint)GivingTreeUnit.Instance.Element));
+
+					foreach (Connection connection in path) {
+						ConnectionContainer c = ConnectionsManager.GetContainer (connection);
+						if (c.BeginConstruction<Road> () != null)
+							c.EndConstruction ();
+					}
 				}
 			}
 			return site;

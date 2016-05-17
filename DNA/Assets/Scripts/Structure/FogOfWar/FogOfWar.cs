@@ -176,10 +176,7 @@ namespace DNA {
 		}
 
 		void Fade () {
-			// GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (Palette.Green, 0.3f));
-			// GetComponent<Renderer> ().SetColor (new Color (RandomInRange (0.698f, 0.2f), 0.153f, RandomInRange (0.905f, 0.2f), 0.3f));
 			GetComponent<Renderer> ().SetColor (Palette.ApplyAlpha (MyColor, 0.5f));
-			// GetComponent<Renderer> ().SetAlpha (0.5f);
 			state = State.Faded;
 		}
 

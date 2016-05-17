@@ -51,6 +51,7 @@ reproducing bugs
 - "MilkshakePool" -> "Derrick"
 - rm unitTransform, unitClickable from Unit (also make unitRenderer private)
 - deprecate co.cs and replace with co2.cs (+ rename co2 to co)
+- rm old unity projects
 
 fonts
 oriya sangam mn

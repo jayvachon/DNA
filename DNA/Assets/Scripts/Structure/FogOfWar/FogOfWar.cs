@@ -80,7 +80,6 @@ namespace DNA {
 			hasConstruction = false;
 			Renderer.enabled = true;
 			Collider.enabled = true;
-			// Renderer.SetColor (Palette.YellowGreen);
 			Renderer.SetColor (MyColor);
 			GetComponent<Renderer> ().SetAlpha (1f);
 			state = State.Covered;

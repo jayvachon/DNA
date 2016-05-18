@@ -14,7 +14,7 @@ namespace DNA.Units {
 		MatchResult givingTreeTask;
 
 		public static Shark Create (Vector3 position, GivingTreeUnit givingTree, Loan loan) {
-			Shark shark = ObjectPool.Instantiate<Shark> (position);
+			Shark shark = UnitManager.Instantiate<Shark> (position);
 			shark.Init (givingTree, loan);
 			return shark;
 		}

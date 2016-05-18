@@ -24,7 +24,7 @@ namespace DNA.Units {
 		}
 
 		public void RemoveSeed () {
-			ObjectPool.Destroy<Seed> (seed);
+			UnitManager.Destroy (seed);
 			seed = null;
 			duration += 1;
 			if (duration <= durations.Length-1)
@@ -35,7 +35,7 @@ namespace DNA.Units {
 
 		void OnProduceSeed () {
 			if (seed == null) {
-				seed = ObjectPool.Instantiate<Seed> (
+				seed = UnitManager.Instantiate<Seed> (
 					new Vector3 (producerTransform.position.x, producerTransform.position.y + offset, producerTransform.position.z));
 				seed.Init (this);
 			}

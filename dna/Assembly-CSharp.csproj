@@ -350,7 +350,7 @@
      <Compile Include="Assets\Scripts\Units\IDamager.cs" />
      <Compile Include="Assets\Scripts\Units\Lazer.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\PlotsCreator.cs" />
-     <Compile Include="Assets\Scripts\Units\Managers\UnitCreator.cs" />
+     <Compile Include="Assets\Scripts\Units\Managers\UnitManager.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />
      <Compile Include="Assets\Scripts\Units\MilkshakeProduction.cs" />
      <Compile Include="Assets\Scripts\Units\Mobile\Corpse.cs" />

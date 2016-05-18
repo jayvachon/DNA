@@ -98,7 +98,8 @@ namespace DNA.Units {
 
 		// Changes this unit T to unit U
 		protected void ChangeUnit<T, U>  () where T : Unit where U : Unit {
-			U to = ObjectPool.Instantiate<U> ();
+			// U to = ObjectPool.Instantiate<U> ();
+			U to = UnitManager.Instantiate<U> ();
 			to.Position = Position;
 			if (Selected) {
 				SelectionManager.Select (to.UnitClickable);
@@ -139,7 +140,7 @@ namespace DNA.Units {
 		}
 
 		protected void DestroyThis<T> () where T : Unit {
-			ObjectPool.Destroy<T> (transform);
+			UnitManager.Destroy (this);
 		}
 
 		protected virtual void OnInitInventory (Inventory i) {}

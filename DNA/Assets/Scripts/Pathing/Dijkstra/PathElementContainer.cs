@@ -39,7 +39,8 @@ namespace DNA.Paths {
 			// Create a construction site and listen for labor to be completed
 			// Set the project to turn into once labor completes
 			if (Element.State == DevelopmentState.Undeveloped) {
-				project = (StaticUnit)ObjectPool.Instantiate<T> ();
+				
+				project = (StaticUnit)UnitManager.Instantiate<T> ();
 				project.gameObject.SetActive (false);
 				site = (ConstructionSite)SetObject<ConstructionSite> ();
 				site.Inventory["Labor"].onEmpty += EndConstruction;
@@ -49,7 +50,8 @@ namespace DNA.Paths {
 				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
 
-				if (typeof (T) != typeof (CoffeePlant) && typeof (T) != typeof (GivingTreeUnit) && typeof (T) != typeof (Road)) {
+				// Uncomment to have buildings automatically build roads to the giving tree (buggy)
+				/*if (typeof (T) != typeof (CoffeePlant) && typeof (T) != typeof (GivingTreeUnit) && typeof (T) != typeof (Road)) {
 
 					List<Connection> path = Pathfinder.PointsToConnections (Pathfinder.GetPathNoOverlap ((GridPoint)Element, (GridPoint)GivingTreeUnit.Instance.Element));
 
@@ -58,7 +60,7 @@ namespace DNA.Paths {
 						if (c.BeginConstruction<Road> () != null)
 							c.EndConstruction ();
 					}
-				}
+				}*/
 			}
 			return site;
 		}
@@ -92,7 +94,7 @@ namespace DNA.Paths {
 				SetObject<Plot> ();
 
 			project.gameObject.SetActive (true);
-			ObjectPool.Destroy (project.transform);
+			UnitManager.Destroy (project);
 			Element.State = DevelopmentState.Undeveloped;
 		}
 
@@ -126,7 +128,7 @@ namespace DNA.Paths {
 
 		public virtual T SetObject<T> (bool destroyPrevious=true) where T : StaticUnit {
 
-			StaticUnit obj = ObjectPool.Instantiate<T> ();
+			StaticUnit obj = UnitManager.Instantiate<T> ();
 			SetObject (obj, destroyPrevious);
 
 			if (typeof (T) == typeof (DrillablePlot))
@@ -151,7 +153,7 @@ namespace DNA.Paths {
 
 		void RemoveObject () {
 			if (Element.Object != null)
-				ObjectPool.Destroy (((MonoBehaviour)Element.Object).transform);
+				UnitManager.Destroy ((Unit)Element.Object);
 		}
 
 		public void SetFloodLevel (float floodLevel) {

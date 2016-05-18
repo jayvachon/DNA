@@ -17,7 +17,7 @@ namespace DNA.Tasks {
 
 		protected override void OnEnd () {
 			Purchase ();
-			GeneratedUnit = ObjectPool.Instantiate<T> ();
+			GeneratedUnit = UnitManager.Instantiate<T> ();
 			base.OnEnd ();
 		}
 	}

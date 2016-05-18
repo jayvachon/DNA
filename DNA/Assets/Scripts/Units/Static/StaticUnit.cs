@@ -46,7 +46,7 @@ namespace DNA.Units {
 		// this happens e.g. when coffee runs out of resources
 		protected void Destroy<T> (bool enablePathPoint=true) where T : StaticUnit {
 			if (enablePathPoint) {
-				StaticUnit plot = ObjectPool.Instantiate<Plot> () as StaticUnit;
+				StaticUnit plot = UnitManager.Instantiate<Plot> () as StaticUnit;
 				plot.Position = Position;
 				if (Selected) SelectionManager.Select (plot.UnitClickable);
 			}
@@ -56,6 +56,8 @@ namespace DNA.Units {
 		public override void OnPointerDown (PointerEventData e) {
 			Events.instance.Raise (new PointerDownEvent (this, e));
 			if (!e.LeftClicked () && SelectionHandler.Selected.Count == 0) {
+
+				// TODO: use UnitManager for lookup
 				List<Laborer> laborers = ObjectPool.GetActiveInstances<Laborer> ();
 				Laborer available = laborers.Find (x => x.Idle);
 				if (available != null) {

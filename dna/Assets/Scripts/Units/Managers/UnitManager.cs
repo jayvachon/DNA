@@ -21,6 +21,23 @@ namespace DNA.Units {
 			ObjectPool.Destroy (unit.transform);
 		}
 
+		public static List<T> GetUnitsOfType<T> () where T : Unit {
+
+			List<Unit> list;
+			if (units.TryGetValue (typeof (T), out list))
+				return list.ConvertAll (x => (T)x);
+			
+			return new List<T> ();
+		}
+
+		public static T GetSingleUnit<T> () where T : Unit {
+			try {
+				return GetUnitsOfType<T> ()[0];
+			} catch (IndexOutOfRangeException e) {
+				throw new Exception ("No units of type '" + typeof (T) + "' have been registered");
+			}
+		}
+
 		static void RegisterUnit<T> (T unit) where T : Unit {
 			List<Unit> list;
 			if (units.TryGetValue (typeof (T), out list)) {
@@ -34,7 +51,7 @@ namespace DNA.Units {
 			try {
 				units[unit.GetType ()].Remove (unit);
 			} catch (KeyNotFoundException e) {
-				throw new System.Exception ("The unit " + unit + " can not be unregistered from the UnitManager because it was not instantiated through the UnitManager\n" + e);
+				throw new Exception ("The unit " + unit + " can not be unregistered from the UnitManager because it was not instantiated through the UnitManager\n" + e);
 			}
 		}
 	}

@@ -82,14 +82,14 @@ namespace DNA {
 
 		List<Hotkey> hotkeys = new List<Hotkey> () {
 			new Hotkey (KeyCode.Period, () => {
-				List<Laborer> laborers = ObjectPool.GetActiveInstances<Laborer> ();
+				List<Laborer> laborers = UnitManager.GetUnitsOfType<Laborer> ();
 				Laborer available = laborers.Find (x => x.Idle);
 				if (available != null) {
 					SelectionHandler.SelectSingle (available);
 				}
 			}),
 			new Hotkey (KeyCode.L, () => {
-				GivingTreeUnit tree = ObjectPool.GetActiveInstances<GivingTreeUnit> ()[0];
+				GivingTreeUnit tree = UnitManager.GetSingleUnit<GivingTreeUnit> ();
 				tree.PerformableTasks[typeof (GenerateLaborer)].Start ();
 			}),
 			new Hotkey (KeyCode.Escape, () => {

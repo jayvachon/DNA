@@ -53,7 +53,7 @@ reproducing bugs
 - deprecate co.cs and replace with co2.cs (+ rename co2 to co)
 - rm old unity projects
 - delete old branches
-- rm deprecated scripts: RoadConstructor, UnitsList(?), PlotsCreator, Jacuzzi, ProjectionMatrix, CoroutineManager
+- rm deprecated scripts: RoadConstructor, UnitsList(?), PlotsCreator, Jacuzzi, ProjectionMatrix, CoroutineManager, MonthlyPaymentText
 
 fonts
 oriya sangam mn

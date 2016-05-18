@@ -13,7 +13,7 @@ namespace DNA.Units {
 
 		bool UpdateTarget () {
 			
-			List<Shark> sharks = ObjectPool.GetActiveInstances<Shark> ();
+			List<Shark> sharks = UnitManager.GetUnitsOfType<Shark> ();
 
 			// If a target has already been found, keep shooting it
 			if (target != null && sharks.Contains (target))

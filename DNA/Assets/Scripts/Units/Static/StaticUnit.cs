@@ -54,11 +54,12 @@ namespace DNA.Units {
 		}
 
 		public override void OnPointerDown (PointerEventData e) {
+			
 			Events.instance.Raise (new PointerDownEvent (this, e));
+
 			if (!e.LeftClicked () && SelectionHandler.Selected.Count == 0) {
 
-				// TODO: use UnitManager for lookup
-				List<Laborer> laborers = ObjectPool.GetActiveInstances<Laborer> ();
+				List<Laborer> laborers = UnitManager.GetUnitsOfType<Laborer> ();
 				Laborer available = laborers.Find (x => x.Idle);
 				if (available != null) {
 					available.OnOverrideSelect (this);

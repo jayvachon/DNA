@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DNA.EventSystem;
 
 namespace DNA.Units {
 
@@ -10,16 +11,28 @@ namespace DNA.Units {
 
 		static Dictionary<Type, List<Unit>> units = new Dictionary<Type, List<Unit>> ();
 
+		/**
+		 *	Instantiation
+		 */
+
 		public static T Instantiate<T> (Vector3 position=new Vector3 ()) where T : Unit {
 			T obj = ObjectPool.Instantiate<T> (position);
 			RegisterUnit<T> (obj);
 			return obj;
 		}
 
-		public static void Destroy (Unit unit) {
-			UnregisterUnit (unit);
+		public static void Destroy<T> (T unit) where T : Unit {
+			UnregisterUnit<T> (unit);
 			ObjectPool.Destroy (unit.transform);
 		}
+
+		public static void Destroy (Unit unit) {
+			Destroy<Unit> (unit);
+		}
+
+		/**
+		 *	Queries
+		 */
 
 		public static List<T> GetUnitsOfType<T> () where T : Unit {
 
@@ -30,6 +43,15 @@ namespace DNA.Units {
 			return new List<T> ();
 		}
 
+		public static List<T> GetAllUnitsOfType<T> () where T : class {
+			List<T> list = new List<T> ();
+			foreach (var unitList in units) {
+				if (typeof (T).IsAssignableFrom (unitList.Key))
+					list.AddRange (unitList.Value.ConvertAll (x => x as T));
+			}
+			return list;
+		}
+
 		public static T GetSingleUnit<T> () where T : Unit {
 			try {
 				return GetUnitsOfType<T> ()[0];
@@ -38,6 +60,22 @@ namespace DNA.Units {
 			}
 		}
 
+		/**
+		 *	Listeners
+		 */
+
+		public static void AddListener<T> (Events.EventDelegate<UpdateUnitsEvent<T>> e) where T : Unit {
+			Events.instance.AddListener<UpdateUnitsEvent<T>> (e);
+		}
+
+		static void SendUpdateMessage<T> () where T : Unit {
+			Events.instance.Raise (new UpdateUnitsEvent<T> (GetUnitsOfType<T> ()));
+		}
+
+		/**
+		 *	Private methods
+		 */
+
 		static void RegisterUnit<T> (T unit) where T : Unit {
 			List<Unit> list;
 			if (units.TryGetValue (typeof (T), out list)) {
@@ -45,14 +83,24 @@ namespace DNA.Units {
 			} else {
 				units.Add (typeof (T), new List<Unit> () { unit });
 			}
+			SendUpdateMessage<T> ();
 		}
 
-		static void UnregisterUnit (Unit unit) {
+		static void UnregisterUnit<T> (T unit) where T : Unit {
 			try {
 				units[unit.GetType ()].Remove (unit);
 			} catch (KeyNotFoundException e) {
 				throw new Exception ("The unit " + unit + " can not be unregistered from the UnitManager because it was not instantiated through the UnitManager\n" + e);
 			}
+		}
+	}
+
+	public class UpdateUnitsEvent<T> : GameEvent where T : Unit {
+
+		public readonly List<T> Units;
+
+		public UpdateUnitsEvent (List<T> units) {
+			Units = units;
 		}
 	}
 }

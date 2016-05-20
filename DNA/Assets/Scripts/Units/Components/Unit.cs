@@ -140,7 +140,7 @@ namespace DNA.Units {
 		}
 
 		protected void DestroyThis<T> () where T : Unit {
-			UnitManager.Destroy (this);
+			UnitManager.Destroy<T> ((T)this);
 		}
 
 		protected virtual void OnInitInventory (Inventory i) {}

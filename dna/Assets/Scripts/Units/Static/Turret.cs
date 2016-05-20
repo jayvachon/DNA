@@ -4,8 +4,11 @@ using System.Collections.Generic;
 
 namespace DNA.Units {
 
-	public class Turret : StaticUnit, IDamager {
+	public class Turret : StaticUnit, IDamager, ILaborDependent {
 		
+		public bool Accessible { get; set; }
+		public float Efficiency { get; set; }
+
 		float range = 15f;
 		RangeRing ring;
 		Lazer lazer;

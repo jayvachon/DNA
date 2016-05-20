@@ -346,9 +346,11 @@
      <Compile Include="Assets\Scripts\Units\Components\UnitTransform.cs" />
      <Compile Include="Assets\Scripts\Units\ConstructionSite.cs" />
      <Compile Include="Assets\Scripts\Units\Fertility.cs" />
-     <Compile Include="Assets\Scripts\Units\IDamageable.cs" />
-     <Compile Include="Assets\Scripts\Units\IDamager.cs" />
+     <Compile Include="Assets\Scripts\Units\Interfaces\IDamageable.cs" />
+     <Compile Include="Assets\Scripts\Units\Interfaces\IDamager.cs" />
+     <Compile Include="Assets\Scripts\Units\Interfaces\ILaborDependent.cs" />
      <Compile Include="Assets\Scripts\Units\Lazer.cs" />
+     <Compile Include="Assets\Scripts\Units\Managers\EfficiencyManager.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\PlotsCreator.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitManager.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\UnitsList.cs" />

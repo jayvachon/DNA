@@ -24,7 +24,7 @@ namespace DNA.Units {
 		}
 
 		public void RemoveSeed () {
-			UnitManager.Destroy (seed);
+			UnitManager.Destroy<Seed> (seed);
 			seed = null;
 			duration += 1;
 			if (duration <= durations.Length-1)

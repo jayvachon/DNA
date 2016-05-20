@@ -7,7 +7,10 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class CoffeePlant : StaticUnit {
+	public class CoffeePlant : StaticUnit, ILaborDependent {
+
+		public bool Accessible { get; set; }
+		public float Efficiency { get; set; }
 		
 		protected override void OnInitInventory (Inventory i) {
 			i.Add (new CoffeeGroup ());

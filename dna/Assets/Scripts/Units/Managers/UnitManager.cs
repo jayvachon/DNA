@@ -9,7 +9,10 @@ namespace DNA.Units {
 	// ObjectPool wrapper for quick lookup of units
 	public static class UnitManager {
 
+		public delegate void OnUpdate ();
+
 		static Dictionary<Type, List<Unit>> units = new Dictionary<Type, List<Unit>> ();
+		public static OnUpdate onUpdate;
 
 		/**
 		 *	Instantiation
@@ -70,6 +73,12 @@ namespace DNA.Units {
 
 		static void SendUpdateMessage<T> () where T : Unit {
 			Events.instance.Raise (new UpdateUnitsEvent<T> (GetUnitsOfType<T> ()));
+			SendUpdateMessage ();
+		}
+
+		static void SendUpdateMessage () {
+			if (onUpdate != null)
+				onUpdate ();
 		}
 
 		/**
@@ -89,6 +98,7 @@ namespace DNA.Units {
 		static void UnregisterUnit<T> (T unit) where T : Unit {
 			try {
 				units[unit.GetType ()].Remove (unit);
+				SendUpdateMessage ();
 			} catch (KeyNotFoundException e) {
 				throw new Exception ("The unit " + unit + " can not be unregistered from the UnitManager because it was not instantiated through the UnitManager\n" + e);
 			}

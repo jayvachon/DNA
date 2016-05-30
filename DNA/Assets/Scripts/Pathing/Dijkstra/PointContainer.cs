@@ -76,5 +76,9 @@ namespace DNA.Paths {
 			Events.instance.Raise (new MouseExitPointEvent (this));
 		}
 		#endregion
+
+		void OnDrawGizmos () {
+			
+		}
 	}
 }

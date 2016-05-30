@@ -15,8 +15,24 @@ namespace DNA.Units {
 		public PathElement Element { 
 			get { return element; }
 			set {
+
 				element = value;
 				element.OnSetState += OnSetState;
+
+				UpdateAccessbility ();
+
+				foreach (Connection connection in Point.Connections)
+					connection.onUpdateCost += OnUpdateConnectionCost;
+			}
+		}
+
+		GridPoint Point {
+			get { 
+				// try {
+					return (GridPoint)Element; 
+				/*} catch (System.InvalidCastException e) {
+					throw new System.Exception ("Could not find the GridPoint for " + this + "\n" + e);
+				}*/
 			}
 		}
 
@@ -31,15 +47,38 @@ namespace DNA.Units {
 			}
 		}
 
+		protected override void OnEnable () {
+			base.OnEnable ();
+		}
+
 		protected override void OnDisable () {
+
 			base.OnDisable ();
-			if (Element != null)
+
+			if (Element != null) {
 				Element.OnSetState -= OnSetState;
+				foreach (Connection connection in Point.Connections)
+					connection.onUpdateCost -= OnUpdateConnectionCost;
+			}
 		}
 
 		protected virtual void OnSetState (DevelopmentState state) {
 			if (state == DevelopmentState.Abandoned)
 				unitRenderer.SetAbandoned ();
+		}
+
+		void UpdateAccessbility () {
+
+			ILaborDependent ld = this as ILaborDependent;
+
+			if (ld != null) {
+				Debug.Log (this is ConstructionSite);
+				ld.Accessible = Point.HasRoad;
+			}
+		}
+
+		void OnUpdateConnectionCost (int cost) {
+			UpdateAccessbility ();
 		}
 
 		// TODO: update this to work with new points

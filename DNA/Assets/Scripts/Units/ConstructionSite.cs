@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class ConstructionSite : StaticUnit, IPathElementObject {
+	public class ConstructionSite : StaticUnit {
 
 		public override SelectSettings SelectSettings {
 			get { 

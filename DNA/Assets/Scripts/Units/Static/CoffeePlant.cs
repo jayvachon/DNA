@@ -21,6 +21,10 @@ namespace DNA.Units {
 			#endif
 		}
 
+		protected override void OnInitPerformableTasks (PerformableTasks p) {
+			p.Add (new WorkplaceDeliverItem<CoffeeGroup> ());
+		}
+
 		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
 			a.Add (new AcceptCollectItem<CoffeeGroup> ());				
 		}
@@ -28,6 +32,7 @@ namespace DNA.Units {
 		protected override void OnSetFertility (int tier) {
 			Inventory["Coffee"].Capacity = (int)(1500 * Fertility.Multipliers[tier]);
 			Inventory["Coffee"].Fill ();
+			TaskMatcher.StartMatch (this, Player.Instance);
 		}
 
 		protected override void OnSetState (DevelopmentState state) {
@@ -36,6 +41,11 @@ namespace DNA.Units {
 				Element.State = DevelopmentState.Abandoned;
 				Inventory["Coffee"].Clear ();
 			}
+		}
+
+		protected override void OnUpdateAccessibility () {
+			if (Accessible)
+				TaskMatcher.StartMatch (this, Player.Instance);
 		}
 	}
 }

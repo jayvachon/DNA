@@ -466,7 +466,6 @@ namespace DNA.Models {
 
 			tasks.Add ("deliver_milkshake", new TaskSettings {
 				Type = typeof (DeliverItem<MilkshakeGroup>),
-				Title = "",
 				Description = "Delivers milkshakes",
 				Duration = 1f,
 				AutoStart = false,
@@ -476,7 +475,6 @@ namespace DNA.Models {
 
 			tasks.Add ("deliver_coffee", new TaskSettings {
 				Type = typeof (DeliverItem<CoffeeGroup>),
-				Title = "",
 				Description = "Delivers coffee",
 				Duration = 0.75f,
 				AutoStart = false,
@@ -487,6 +485,12 @@ namespace DNA.Models {
 			tasks.Add ("workplace_deliver_milkshake", new TaskSettings {
 				Type = typeof (WorkplaceDeliverItem<MilkshakeGroup>),
 				Duration = 1f,
+				Repeat = true
+			});
+
+			tasks.Add ("workplace_deliver_coffee", new TaskSettings {
+				Type = typeof (WorkplaceDeliverItem<CoffeeGroup>),
+				Duration = 0.75f,
 				Repeat = true
 			});
 

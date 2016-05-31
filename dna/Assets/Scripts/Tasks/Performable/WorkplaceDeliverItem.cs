@@ -5,10 +5,10 @@ using DNA.Units;
 
 namespace DNA.Tasks {
 
-	public class WorkplaceDeliverItem<T> : CollectItem<T> where T : ItemGroup {
+	public class WorkplaceDeliverItem<T> : DeliverItem<T> where T : ItemGroup {
 
 		public override bool Enabled {
-			get { return Workplace.Accessible && !Group.Full; }
+			get { return Workplace.Accessible && !Group.Empty; }
 		}
 
 		IWorkplace Workplace {
@@ -20,7 +20,5 @@ namespace DNA.Tasks {
 				}
 			}
 		}
-
-		public WorkplaceDeliverItem (string symbolOverride="") : base (symbolOverride) {}
 	}
 }

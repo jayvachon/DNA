@@ -74,12 +74,9 @@ namespace DNA.Units {
 			if (workplace != null) {
 				workplace.Accessible = Point.HasRoad;
 				Events.instance.Raise (new UpdateAccessibilityEvent ());
+				OnUpdateAccessibility ();
 			}
 		}
-
-		/*void OnUpdateConnectionCost (int cost) {
-			UpdateAccessbility ();
-		}*/
 
 		// TODO: update this to work with new points
 		// this happens e.g. when coffee runs out of resources
@@ -107,6 +104,7 @@ namespace DNA.Units {
 		}
 
 		protected virtual void OnSetFertility (int fertility) {}
+		protected virtual void OnUpdateAccessibility () {}
 
 		#region ISelectable implementation
 		public override SelectSettings SelectSettings {

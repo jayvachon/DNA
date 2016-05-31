@@ -48,5 +48,10 @@ namespace DNA.Units {
 				AcceptableTasks.ActivateAll ();
 			}
 		}
+
+		protected override void OnUpdateAccessibility () {
+			if (Accessible)
+				TaskMatcher.StartMatch (this, Player.Instance);
+		}
 	}
 }

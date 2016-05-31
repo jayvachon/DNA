@@ -7,7 +7,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class CoffeePlant : StaticUnit, ILaborDependent {
+	public class CoffeePlant : StaticUnit, IWorkplace {
 
 		public bool Accessible { get; set; }
 		public float Efficiency { get; set; }

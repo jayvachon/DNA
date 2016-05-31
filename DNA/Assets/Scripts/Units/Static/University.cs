@@ -8,7 +8,7 @@ namespace DNA.Units {
 
 	// TODO: show upgrade progress when task is started
 
-	public class University : StaticUnit, ILaborDependent {
+	public class University : StaticUnit, IWorkplace {
 
 		public bool Accessible { get; set; }
 		public float Efficiency { get; set; }

@@ -7,6 +7,8 @@ namespace DNA.Paths {
 
 	public class GridPoint : PathElement {
 
+		public delegate void OnUpdateConnectionCost ();
+
 		public Vector3 Position { get; set; }
 
 		public Unit Unit {
@@ -40,6 +42,16 @@ namespace DNA.Paths {
 
 		public bool HasFog {
 			get { return Fog != null && (Fog.MyState == FogOfWar.State.Covered || Fog.MyState == FogOfWar.State.Faded); }
+		}
+
+		public OnUpdateConnectionCost onUpdateConnectionCost;
+
+		public void AddConnection (Connection connection) {
+			connection.onUpdateCost += (int c) => { 
+				if (onUpdateConnectionCost != null)
+					onUpdateConnectionCost (); 
+				};
+			Connections.Add (connection);
 		}
 	}
 }

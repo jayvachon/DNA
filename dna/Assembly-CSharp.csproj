@@ -98,6 +98,7 @@
      <Compile Include="Assets\Scripts\EventHandling\Events\MouseExitPointEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\PointerDownEvent.cs" />
      <Compile Include="Assets\Scripts\EventHandling\Events\UnlockUnitEvent.cs" />
+     <Compile Include="Assets\Scripts\EventHandling\Events\UpdateAccessibilityEvent.cs" />
      <Compile Include="Assets\Scripts\Finance\CoffeeLoanGroup.cs" />
      <Compile Include="Assets\Scripts\Finance\Loan.cs" />
      <Compile Include="Assets\Scripts\Finance\LoanManager.cs" />
@@ -244,6 +245,7 @@
      <Compile Include="Assets\Scripts\Tasks\Abstract\UpgradeTask.cs" />
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptCollectItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptDeliverItem.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Acceptable\AcceptWorkplaceDeliverItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskAcceptor.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskBinder.cs" />
      <Compile Include="Assets\Scripts\Tasks\Interfaces\ITaskPerformer.cs" />
@@ -269,6 +271,7 @@
      <Compile Include="Assets\Scripts\Tasks\Performable\ResearchUpgrade.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\UpgradeFogOfWar.cs" />
      <Compile Include="Assets\Scripts\Tasks\Performable\UpgradeLevee.cs" />
+     <Compile Include="Assets\Scripts\Tasks\Performable\WorkplaceDeliverItem.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskDisplaySettings.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskFinder.cs" />
      <Compile Include="Assets\Scripts\Tasks\TaskMatcher.cs" />
@@ -348,7 +351,7 @@
      <Compile Include="Assets\Scripts\Units\Fertility.cs" />
      <Compile Include="Assets\Scripts\Units\Interfaces\IDamageable.cs" />
      <Compile Include="Assets\Scripts\Units\Interfaces\IDamager.cs" />
-     <Compile Include="Assets\Scripts\Units\Interfaces\ILaborDependent.cs" />
+     <Compile Include="Assets\Scripts\Units\Interfaces\IWorkplace.cs" />
      <Compile Include="Assets\Scripts\Units\Lazer.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\EfficiencyManager.cs" />
      <Compile Include="Assets\Scripts\Units\Managers\PlotsCreator.cs" />

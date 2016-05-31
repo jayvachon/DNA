@@ -47,6 +47,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Editor\DebuggableMethod.cs" />
      <Compile Include="Assets\Scripts\Editor\GameObjectMethodDebugger.cs" />
+     <Compile Include="Assets\Scripts\Editor\GridPointInformation.cs" />
+     <Compile Include="Assets\Scripts\Editor\PointsManagerInformation.cs" />
      <None Include="Assets\Scripts\todo.txt" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>

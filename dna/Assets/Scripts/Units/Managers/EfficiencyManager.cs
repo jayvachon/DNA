@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DNA.EventSystem;
 
 namespace DNA.Units {
 
@@ -8,28 +9,29 @@ namespace DNA.Units {
 		void Awake () {
 			UnitManager.AddListener<Laborer> (OnUpdateLaborers);
 			UnitManager.onUpdate += OnUpdateUnits;
+			Events.instance.AddListener<UpdateAccessibilityEvent> (OnUpdateAccessibility);
 		}
 
 		void OnUpdateLaborers (UpdateUnitsEvent<Laborer> e) {
-			// Debug.Log ("LABORERS: " + e.Units.Count);
-			// Debug.Log (UnitManager.GetUnitsOfType<Laborer> ().Count);
+			UpdateEfficiency ();
 		}
 
 		void OnUpdateUnits () {
-			int laborDependentCount = UnitManager.GetAllUnitsOfType<ILaborDependent> ().Count;
-			int laborerCount = UnitManager.GetUnitsOfType<Laborer> ().Count;
-			Debug.Log ("-----------------");
-			Debug.Log (laborDependentCount);
-			Debug.Log (laborerCount);
-			if (laborDependentCount > 0) 
-				Debug.Log ((float)laborerCount / (float)laborDependentCount);
+			UpdateEfficiency ();
 		}
 
-		/*void Update () {
-			if (Input.GetKeyDown (KeyCode.Space)) {
-				Debug.Log ("HOUSE: " + UnitManager.GetAllUnitsOfType<House> ().Count);
-				Debug.Log ("ILaborDependent: " + UnitManager.GetAllUnitsOfType<ILaborDependent> ().Count);
-			}
-		}*/
+		void OnUpdateAccessibility (UpdateAccessibilityEvent e) {
+			UpdateEfficiency ();
+		}
+
+		void UpdateEfficiency () {
+			int laborDependentCount = UnitManager.GetAllUnitsOfType<IWorkplace> ().FindAll (x => x.Accessible).Count;
+			int laborerCount = UnitManager.GetUnitsOfType<Laborer> ().Count;
+			// Debug.Log ("-----------------");
+			// Debug.Log ("workplaces: " + laborDependentCount);
+			// Debug.Log ("laborers: " + laborerCount);
+			if (laborDependentCount > 0) 
+				Debug.Log (((float)laborerCount / (float)laborDependentCount * 100) + "%");
+		}
 	}
 }

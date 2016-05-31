@@ -8,14 +8,15 @@ namespace DNA.Units {
 
 	// TODO: rename to MilkshakeDerrick
 
-	public class MilkshakePool : StaticUnit, ILaborDependent {
+	public class MilkshakePool : StaticUnit, IWorkplace {
 
 		public bool Accessible { get; set; }
 		public float Efficiency { get; set; }
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new DemolishUnit (Container));
-			p.Add (new DeliverItem<MilkshakeGroup> ());
+			// p.Add (new DeliverItem<MilkshakeGroup> ());
+			p.Add (new WorkplaceDeliverItem<MilkshakeGroup> ());
 		}
 		
 		protected override void OnInitInventory (Inventory i) {

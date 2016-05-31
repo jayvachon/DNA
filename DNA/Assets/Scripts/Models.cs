@@ -484,6 +484,12 @@ namespace DNA.Models {
 				Pair = typeof (AcceptCollectItem<CoffeeGroup>)
 			});
 
+			tasks.Add ("workplace_deliver_milkshake", new TaskSettings {
+				Type = typeof (WorkplaceDeliverItem<MilkshakeGroup>),
+				Duration = 1f,
+				Repeat = true
+			});
+
 			/**
 			 *	GenerateItem
 			 */

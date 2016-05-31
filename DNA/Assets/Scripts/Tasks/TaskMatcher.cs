@@ -7,7 +7,7 @@ namespace DNA.Tasks {
 
 	public static class TaskMatcher {
 
-		// Returns a task for the for the performer to perform		
+		// Returns a task for the performer to perform		
 		public static MatchResult GetPerformable (ITaskPerformer performer, ITaskAcceptor acceptor, bool mustBeEnabled=true) {
 
 			List<PerformerTask> matches = mustBeEnabled
@@ -91,7 +91,7 @@ namespace DNA.Tasks {
 		}
 
 		public static MatchResult StartMatch (ITaskPerformer performer, ITaskAcceptor acceptor) {
-			MatchResult match = GetPerformable (performer, acceptor);
+			MatchResult match = GetPerformable (performer, acceptor, false);
 			match.Start (true);
 			return match;
 		}

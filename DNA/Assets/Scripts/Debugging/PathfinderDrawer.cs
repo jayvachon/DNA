@@ -26,6 +26,9 @@ public class PathfinderDrawer : MonoBehaviour {
 			}
 		}
 
+		if (currentPaths == null)
+			return;
+			
 		foreach (Path<GridPoint> p in currentPaths) {
 			if (p.Cost == 0) {
 				Gizmos.color = Color.white;

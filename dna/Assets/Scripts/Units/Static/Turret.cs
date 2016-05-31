@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DNA.Units {
 
-	public class Turret : StaticUnit, IDamager, ILaborDependent {
+	public class Turret : StaticUnit, IDamager, IWorkplace {
 		
 		public bool Accessible { get; set; }
 		public float Efficiency { get; set; }

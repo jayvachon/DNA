@@ -52,8 +52,8 @@ namespace DNA {
 						Connection c = new Connection (new [] { p1, p2 });
 						c.onUpdateCost += OnUpdateConnectionCost;
 						
-						p1.Connections.Add (c);
-						p2.Connections.Add (c);
+						p1.AddConnection (c);
+						p2.AddConnection (c);
 						connections.Add (c);
 					}
 				}

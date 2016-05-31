@@ -21,18 +21,18 @@ namespace DNA.Units {
 
 				UpdateAccessbility ();
 
-				foreach (Connection connection in Point.Connections)
-					connection.onUpdateCost += OnUpdateConnectionCost;
+				if (Element is GridPoint && this is IWorkplace)
+					Point.onUpdateConnectionCost += UpdateAccessbility;
 			}
 		}
 
 		GridPoint Point {
 			get { 
-				// try {
+				try {
 					return (GridPoint)Element; 
-				/*} catch (System.InvalidCastException e) {
+				} catch (System.InvalidCastException e) {
 					throw new System.Exception ("Could not find the GridPoint for " + this + "\n" + e);
-				}*/
+				}
 			}
 		}
 
@@ -57,8 +57,8 @@ namespace DNA.Units {
 
 			if (Element != null) {
 				Element.OnSetState -= OnSetState;
-				foreach (Connection connection in Point.Connections)
-					connection.onUpdateCost -= OnUpdateConnectionCost;
+				if (Element is GridPoint && this is IWorkplace)
+					Point.onUpdateConnectionCost -= UpdateAccessbility;
 			}
 		}
 
@@ -69,17 +69,17 @@ namespace DNA.Units {
 
 		void UpdateAccessbility () {
 
-			ILaborDependent ld = this as ILaborDependent;
+			IWorkplace workplace = this as IWorkplace;
 
-			if (ld != null) {
-				Debug.Log (this is ConstructionSite);
-				ld.Accessible = Point.HasRoad;
+			if (workplace != null) {
+				workplace.Accessible = Point.HasRoad;
+				Events.instance.Raise (new UpdateAccessibilityEvent ());
 			}
 		}
 
-		void OnUpdateConnectionCost (int cost) {
+		/*void OnUpdateConnectionCost (int cost) {
 			UpdateAccessbility ();
-		}
+		}*/
 
 		// TODO: update this to work with new points
 		// this happens e.g. when coffee runs out of resources

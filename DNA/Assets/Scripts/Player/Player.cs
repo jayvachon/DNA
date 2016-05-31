@@ -62,7 +62,8 @@ namespace DNA {
 			get {
 				if (acceptableTasks == null) {
 					acceptableTasks = new AcceptableTasks (this);
-					acceptableTasks.Add (new AcceptDeliverItem<MilkshakeGroup> ());
+					// acceptableTasks.Add (new AcceptDeliverItem<MilkshakeGroup> ());
+					acceptableTasks.Add (new AcceptWorkplaceDeliverItem<MilkshakeGroup> ());
 				}
 				return acceptableTasks;
 			}

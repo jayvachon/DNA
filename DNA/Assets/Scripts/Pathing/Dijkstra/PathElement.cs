@@ -72,7 +72,6 @@ namespace DNA.Paths {
 		public void RemoveVisitor (IPathElementVisitor visitor) {
 			if (!visitors.Contains (visitor))
 				return;
-			// Debug.Log ("rem " + visitor);
 			visitors.Remove (visitor);
 			visitor.VisitorIndex = -1;
 			for (int i = 0; i < visitors.Count; i ++) {

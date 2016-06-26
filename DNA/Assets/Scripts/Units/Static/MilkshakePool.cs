@@ -8,10 +8,14 @@ namespace DNA.Units {
 
 	// TODO: rename to MilkshakeDerrick
 
-	public class MilkshakePool : StaticUnit, IWorkplace {
+	public class MilkshakePool : StaticUnit, IWorkplace, ITaskRateSetter {
 
 		public bool Accessible { get; set; }
 		public float Efficiency { get; set; }
+
+		public float TaskRate {
+			get { return EfficiencyManager.Instance.Efficiency; }
+		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new DemolishUnit (Container));

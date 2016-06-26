@@ -46,7 +46,12 @@ namespace DNA.Tasks {
 			get {
 				float d = settings.Duration;
 				if (Performer is ITaskRateSetter) {
-					d *= ((ITaskRateSetter)Performer).TaskRate;
+					float rate = ((ITaskRateSetter)Performer).TaskRate;
+					#if UNITY_EDITOR
+					if (Mathf.Approximately (rate, 0f))
+						throw new System.Exception ("Task rate must be larger than 0");
+					#endif
+					d *= rate;
 				}
 				return d;
 			}

@@ -14,7 +14,45 @@ namespace DNA.FlowerDesigner {
      public class Triangulator
      {
          private List<Vector2> m_points = new List<Vector2>();
+
+         public List<TempTri> tris = new List<TempTri> ();
          
+         public Triangulator (Vector3[] points) {
+            m_points.Clear ();
+            tris.Clear ();
+            List<Vector2> v2points = new List<Vector2> ();
+            for (int i = 0; i < points.Length; i += 3) {
+                Vector3 side1 = points[i+1] - points[i];
+                Vector3 side2 = points[i+2] - points[i];
+                Vector3 normal = Vector3.Cross (side1, side2).normalized;
+                Quaternion qNormal = Quaternion.Euler (normal);
+                Quaternion forward = Quaternion.Euler (Vector3.forward);
+                Quaternion direction = Quaternion.Lerp (qNormal, forward, 0.5f);
+                Vector3 vDirection = direction.ToVector3 ();
+                // Debug.Log (vDirection.x + ", " + vDirection.y);
+                tris.Add (new TempTri (new Vector3[] { points[i], points[i+1], points[i+2] }, side1, side2, normal, direction));
+
+                Vector3 p1 = direction * points[i];
+                Vector3 p2 = direction * points[i+1];
+                Vector3 p3 = direction * points[i+2];
+
+                /*Debug.Log ("--");
+                Debug.Log (p1);
+                Debug.Log (p2);
+                Debug.Log (p3);*/
+
+                v2points.Add (new Vector2 (p1.x, p1.y));
+                v2points.Add (new Vector2 (p2.x, p2.y));
+                v2points.Add (new Vector2 (p3.x, p3.y));
+            }
+
+            m_points = v2points;
+            /*m_points = new List<Vector2> ();
+            m_points.Add (v2points[6]);
+            m_points.Add (v2points[7]);
+            m_points.Add (v2points[8]);*/
+         }
+
          public Triangulator (Vector2[] points) {
              m_points = new List<Vector2>(points);
          }
@@ -23,8 +61,10 @@ namespace DNA.FlowerDesigner {
              List<int> indices = new List<int>();
              
              int n = m_points.Count;
-             if (n < 3)
-                 return indices.ToArray();
+             if (n < 3) {
+                Debug.LogWarning ("not enough vertices to triangulate vertices");
+                return indices.ToArray();
+             }
              
              int[] V = new int[n];
              if (Area() > 0) {
@@ -39,8 +79,11 @@ namespace DNA.FlowerDesigner {
              int nv = n;
              int count = 2 * nv;
              for (int m = 0, v = nv - 1; nv > 2; ) {
-                 if ((count--) <= 0)
-                     return indices.ToArray();
+
+                 if ((count--) <= 0) {
+                    Debug.LogWarning ("cannot triangulate because vertices do not fan");
+                    return indices.ToArray();
+                 }
                  
                  int u = v;
                  if (nv <= u)
@@ -117,5 +160,45 @@ namespace DNA.FlowerDesigner {
              
              return ((aCROSSbp >= 0.0f) && (bCROSScp >= 0.0f) && (cCROSSap >= 0.0f));
          }
+
+         public void Draw () {
+
+            for (int i = 0; i < tris.Count; i ++) {
+
+                TempTri tri = tris[i];
+
+                Vector3[] points = tri.points;
+                Vector3 normal = tri.normal;
+
+                Debug.DrawLine(points[0],points[1],Color.red);
+                Debug.DrawLine(points[0],points[2],Color.red);
+                Debug.DrawLine(points[1],points[2],Color.red);
+
+                // Debug.DrawLine (tri.side1, tri.side1 * 1.1f, Color.green);
+                Debug.DrawLine (normal, normal * 1.2f, Color.white);
+
+                Vector3 dir = tri.direction.ToVector3 ();
+                Debug.DrawLine (dir * 1.2f, dir * 1.4f, Color.green);
+            }
+         }
      }
+
+     public class TempTri {
+
+        public Vector3[] points;
+        public Vector3 side1;
+        public Vector3 side2;
+        public Vector3 normal;
+        public Quaternion direction;
+
+        public TempTri (Vector3[] points, Vector3 side1, Vector3 side2, Vector3 normal, Quaternion direction) {
+            this.points = points;
+            this.side1 = side1;
+            this.side2 = side2;
+            this.normal = normal;
+            this.direction = direction;
+        }
+     }
+
 }
+

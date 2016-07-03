@@ -8,6 +8,19 @@ public class CustomMeshObject : MonoBehaviour {
 	MeshCollider mc = null;
 	
 	public Transform myTransform;
+
+	public bool flower = false;
+
+	void Start () {
+		if (flower) {
+			Vector3[] vertices = new Vector3[] {
+				new Vector3 (0, 0, 0),
+				new Vector3 (1, 0, 0),
+				new Vector3 (0, 0, 1)
+			};
+			Init (CustomMesh.CreateMesh (vertices), Color.white);
+		}
+	}
 	
 	public void Init (Mesh mesh, Color color, bool collider = false) {
 		if (mc != null) {

@@ -35,7 +35,7 @@ public static class ExtensionMethods {
 	/**
 	 *	Vector3
 	 */
-	 
+	
 	public static bool Equals (this Vector3 vector3, Vector3 otherVector3) {
 		return Mathf.Approximately (vector3.x, otherVector3.x) && Mathf.Approximately (vector3.y, otherVector3.y) && Mathf.Approximately (vector3.z, otherVector3.z);
 	}
@@ -61,8 +61,15 @@ public static class ExtensionMethods {
 	 *	Quaternion
 	 */
 
-	public static Quaternion ToQuaternion (this Vector3 vector3) {
-		return Quaternion.Euler (vector3.x, vector3.y, vector3.z);
+	public static Vector3 ToVector3 (this Quaternion q) {
+		Vector3 dir = q.eulerAngles;
+		if (dir.x > 180)
+		    dir.x -= 360f;
+		if (dir.y > 180)
+		    dir.y -= 360f;
+		if (dir.z > 180)
+		    dir.z -= 360f;
+		return dir;
 	}
 
 	// TODO: this could be made more generic (specify counter/clockwise, set angle axis)
@@ -124,6 +131,17 @@ public static class ExtensionMethods {
 		for (int i = 0; i < positions.Count; i ++) {
 			lineRenderer.SetPosition (i, positions[i]);
 		}
+	}
+
+	/**
+	 *	GameObject
+	 */
+
+	public static T LazyGetComponent<T> (this GameObject gameObject) where T : Component {
+		T t = gameObject.GetComponent<T> ();
+		if (t == null)
+			t = gameObject.AddComponent<T> ();
+		return t;
 	}
 
 	/**

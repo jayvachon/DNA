@@ -107,6 +107,7 @@
      <Compile Include="Assets\Scripts\FlowerDesigner\ProceduralMesh.cs" />
      <Compile Include="Assets\Scripts\FlowerDesigner\Tetrahedron.cs" />
      <Compile Include="Assets\Scripts\FlowerDesigner\Triangulator.cs" />
+     <Compile Include="Assets\Scripts\FlowerDesigner\csTriangulation.cs" />
      <Compile Include="Assets\Scripts\GUI\ConstructionMenu.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiDescription.cs" />
      <Compile Include="Assets\Scripts\GUI\GuiInventory.cs" />

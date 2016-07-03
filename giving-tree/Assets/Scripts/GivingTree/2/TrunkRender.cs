@@ -5,6 +5,6 @@ public class TrunkRender : MBRefs {
 
 	protected override void Awake () {
 		base.Awake ();
-		renderer.SetColor (Color.yellow);
+		GetComponent<Renderer>().SetColor (Color.yellow);
 	}
 }

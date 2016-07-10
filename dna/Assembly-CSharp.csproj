@@ -104,6 +104,12 @@
      <Compile Include="Assets\Scripts\Finance\LoanManager.cs" />
      <Compile Include="Assets\Scripts\Finance\MilkshakeLoanGroup.cs" />
      <Compile Include="Assets\Scripts\Flower\FlowerMesh.cs" />
+     <Compile Include="Assets\Scripts\FlowerDesigner\Cube.cs" />
+     <Compile Include="Assets\Scripts\FlowerDesigner\Flower.cs" />
+     <Compile Include="Assets\Scripts\FlowerDesigner\Part.cs" />
+     <Compile Include="Assets\Scripts\FlowerDesigner\Petal.cs" />
+     <Compile Include="Assets\Scripts\FlowerDesigner\PetalBase.cs" />
+     <Compile Include="Assets\Scripts\FlowerDesigner\Pistil.cs" />
      <Compile Include="Assets\Scripts\FlowerDesigner\ProceduralMesh.cs" />
      <Compile Include="Assets\Scripts\FlowerDesigner\Tetrahedron.cs" />
      <Compile Include="Assets\Scripts\FlowerDesigner\Triangulator.cs" />

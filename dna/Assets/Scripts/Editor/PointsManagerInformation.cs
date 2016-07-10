@@ -3,7 +3,7 @@ using UnityEditor;
 using System.Collections;
 using DNA.Paths;
 
-[CustomEditor (typeof (PointsManager))]
+/*[CustomEditor (typeof (PointsManager))]
 public class PointsManagerInformation : Editor {
 
 	void OnSceneGUI () {
@@ -16,4 +16,4 @@ public class PointsManagerInformation : Editor {
 			Handles.Label (pm.Points[i].transform.position, new GUIContent (text, new Texture ()));
 		}
 	}
-}
+}*/

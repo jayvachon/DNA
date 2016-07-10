@@ -12,6 +12,14 @@ namespace DNA {
 		public ConnectionsManager connections;
 		public FogOfWarManager fogOfWar;
 
+		#if UNITY_EDITOR
+		public bool createFlower = false;
+		public bool createUniversity = false;
+		public bool createTurret = false;
+		public bool createDerrick = false;
+		public bool createRoads = false;
+		#endif
+
 		void Awake () {
 			
 			points.OnLoadPoints += OnLoadPoints;
@@ -28,14 +36,24 @@ namespace DNA {
 		void OnLoadFog () {
 
 			points.SetUnitAtIndex<GivingTreeUnit> (0);
-			// points.SetUnitAtIndex<Flower> (2);
-			// points.SetUnitAtIndex<University> (3);
-			// points.SetUnitAtIndex<Turret> (3);
-			// points.SetUnitAtIndex<MilkshakePool> (15);
 
-			/*ConnectionContainer c = ConnectionsManager.GetContainer (points.GetConnectionsAtIndex (2)[3]);
-			c.BeginConstruction<Road> ();
-			c.EndConstruction ();*/
+			#if UNITY_EDITOR
+			if (createFlower)
+				points.SetUnitAtIndex<Flower> (2);
+			if (createUniversity)
+				points.SetUnitAtIndex<University> (3);
+			if (createTurret)
+				points.SetUnitAtIndex<Turret> (4);
+			if (createDerrick)
+				points.SetUnitAtIndex<MilkshakePool> (15);
+
+			if (createRoads) {
+				ConnectionContainer c = ConnectionsManager.GetContainer (points.GetConnectionsAtIndex (2)[3]);
+				c.BeginConstruction<Road> ();
+				c.EndConstruction ();
+			}
+
+			#endif
 		}
 
 		void CreateCoffeePlants () {

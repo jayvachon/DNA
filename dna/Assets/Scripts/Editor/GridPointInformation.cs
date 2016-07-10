@@ -4,7 +4,7 @@ using System.Collections;
 using DNA.Paths;
 using DNA.Units;
 
-[CustomEditor (typeof (PointContainer))]
+/*[CustomEditor (typeof (PointContainer))]
 public class GridPointInformation : Editor {
 
 	void OnSceneGUI () {
@@ -45,4 +45,4 @@ public class GridPointChildInformation : Editor {
 			Handles.Label (container.transform.position, new GUIContent (text, new Texture ()));
 		}
 	}
-}
+}*/

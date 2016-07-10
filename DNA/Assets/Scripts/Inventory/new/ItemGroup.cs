@@ -172,6 +172,7 @@ namespace InventorySystem {
 		public abstract void Clear ();
 		public abstract void Transfer (ItemGroup toGroup, Item item=null);
 		public abstract void Transfer (ItemGroup toGroup, int amount);
+		public abstract void TransferAll (ItemGroup toGroup);
 		public abstract bool Contains (Item item);
 		protected abstract void SendUpdateMessage ();
 		protected abstract void SendEmptyMessage ();
@@ -365,6 +366,14 @@ namespace InventorySystem {
 		//// <param name="amount">The number of items to transfer</param>
 		public override void Transfer (ItemGroup toGroup, int amount) {
 			toGroup.Add (Remove (amount));
+		}
+
+		//// <summary>
+		/// Transfers all items from this ItemGroup to another ItemGroup.
+		/// </summary>
+		public override void TransferAll (ItemGroup toGroup) {
+			if (!Empty)
+				toGroup.Add (Remove (Count));
 		}
 
 		/// <summary>

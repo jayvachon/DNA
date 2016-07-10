@@ -17,20 +17,7 @@ namespace DNA {
 		public abstract int Amount { get; }
 		public abstract int Payment { get; }
 		public abstract int Owed { get; }
-
-		/*public int Amount {
-			get { return settings.Amount; }
-		}*/
-
-		/*public int Payment {
-			get {
-				// https://upload.wikimedia.org/math/e/b/0/eb0d554c1ead49a1a0bd3155b764ec0c.png				
-				float c = settings.InterestRate;
-				float n = settings.RepaymentLength;
-				return (int)((float)settings.Amount * ((c * Mathf.Pow (1 + c, n)) / (Mathf.Pow (1 + c, n) - 1)));
-			}
-		}*/
-
+		
 		public string StatusDetails {
 			get {
 				switch (Status) {
@@ -45,14 +32,6 @@ namespace DNA {
 				return "Repaid";
 			}
 		}
-
-		/*public int Owed {
-			get { return Payment * (settings.RepaymentLength - Mathf.Max (0, elapsedTime - settings.GracePeriod)); }
-		}*/
-
-		/*public ItemGroup PlayerItemGroup {
-			get { return Player.Instance.Inventory[Group.ID]; }
-		}*/
 
 		public enum LoanStatus { Grace, Repayment, Late, Defaulted }
 		public LoanStatus Status { get; private set; }
@@ -80,19 +59,6 @@ namespace DNA {
 
 		public abstract Repayment GetRepayment ();
 		public abstract void ReturnRepayment (Repayment repayment);
-
-		/*public void AddTime () {
-			elapsedTime ++;
-			if (elapsedTime > settings.GracePeriod) {
-				Status = LoanStatus.Repayment;
-				PlayerItemGroup.Remove (Payment);
-			}
-			if (elapsedTime == settings.GracePeriod + settings.RepaymentLength) {
-				Co2.WaitForFixedUpdate (() => { Group.Remove (this); });
-			}
-			if (onUpdate != null)
-				onUpdate ();
-		}*/
 
 		public class Repayment {
 

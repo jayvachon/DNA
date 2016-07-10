@@ -10,7 +10,17 @@ public class BuildingIndicator : FloatingIndicator {
 	public Transform milkshakePoolRender;
 	public Transform universityRender;
 
-	public void Initialize (string id, Transform parent) {
+	public static BuildingIndicator Instantiate (string id, Transform parent) {
+
+		BuildingIndicator bi = ObjectPool.Instantiate<BuildingIndicator> ();
+		bi.Init (id);
+		bi.Initialize (parent, 1.5f);
+		bi.StartSpinning ();
+		
+		return bi;
+	}
+
+	void Init (string id) {
 		Transform activeRender = null;
 		switch (id) {
 			case "Clinic": activeRender = clinicRender; break;
@@ -20,8 +30,6 @@ public class BuildingIndicator : FloatingIndicator {
 			case "University": activeRender = universityRender; break;
 		}
 		activeRender.SetActiveRecursively (true);
-		Initialize (parent, 1.5f);
-		StartSpinning ();
 	}
 
 	public override void OnEnable () {

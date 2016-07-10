@@ -260,3 +260,17 @@ public class CoMb : MonoBehaviour {
 		}
 	}
 }
+
+public static class CoExtensionMethods {
+
+	public static void MoveTo (this Transform transform, Vector3 target, float speed, Action onEnd=null) {
+
+		Vector3 startPosition = transform.position;
+		float distance = Vector3.Distance (startPosition, target);
+
+		Co2.StartCoroutine (distance / speed, (float p) => {
+			transform.position = Vector3.Lerp (startPosition, target, p);
+			transform.LookAt (target);
+		}, onEnd);
+	}
+}

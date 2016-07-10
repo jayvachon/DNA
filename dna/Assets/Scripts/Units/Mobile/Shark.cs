@@ -12,6 +12,13 @@ namespace DNA.Units {
 		Loan loan;
 		Loan.Repayment repayment;
 		MatchResult givingTreeTask;
+		BuildingIndicator indicator;
+		Vector3 startPosition;
+		GivingTreeUnit givingTree;
+
+		string LoanType {
+			get { return repayment.Type; }
+		}
 
 		public static Shark Create (Vector3 position, GivingTreeUnit givingTree, Loan loan) {
 			Shark shark = UnitManager.Instantiate<Shark> (position);
@@ -21,6 +28,8 @@ namespace DNA.Units {
 
 		void Init (GivingTreeUnit givingTree, Loan loan) {
 			
+			this.givingTree = givingTree;
+
 			// Create progress bar
 			if (pbar == null)
 				pbar = UI.Instance.CreateProgressBar (MyTransform, new Vector3 (0, -0.5f, 0));
@@ -33,24 +42,20 @@ namespace DNA.Units {
 			// Initialize inventory
 			this.loan = loan;
 			this.repayment = loan.GetRepayment ();
-			Inventory[repayment.Type].Capacity = repayment.Amount;
+			Inventory[LoanType].Capacity = repayment.Amount;
+
+			// Create indicator
+			indicator = BuildingIndicator.Instantiate (LoanType == "Coffee" ? "Coffee Plant" : "Milkshake Derrick", MyTransform);
 
 			// Set trajectory
-			Vector3 startPosition = Position;
+			startPosition = Position;
 			Vector3 targetPosition = givingTree.Position;
 			Vector3 dir = (startPosition - targetPosition).normalized;
 			targetPosition += dir * 3;
 			startPosition.y += 2;
 			targetPosition.y += 2;
 			
-			float distance = Vector3.Distance (startPosition, targetPosition);
-			float speed = 1f;
-
-			// Move
-			Co2.StartCoroutine (distance / speed, (float p) => {
-				Position = Vector3.Lerp (startPosition, targetPosition, p);
-				MyTransform.LookAt (targetPosition);
-			}, () => {
+			MyTransform.MoveTo (targetPosition, 1f, () => {
 				lazer.StartFire (givingTree.MyTransform, new Vector3 (0, 2, 0));
 				givingTree.StartTakeDamage ();
 				givingTreeTask = TaskMatcher.StartMatch (this, givingTree);
@@ -59,24 +64,33 @@ namespace DNA.Units {
 
 		protected override void OnInitInventory (Inventory i) {
 
-			i.Add (new CoffeeGroup (0, 0)).onFill += () => {
-				Debug.Log ("coffee full");
-			};
-
-			i.Add (new MilkshakeGroup (0, 0)).onFill += () => {
-				Debug.Log ("milk full");
-			};
+			// Initialize inventory with instruction to return to start after resources have been fetched
+			i.Add (new CoffeeGroup (0, 0)).onFill += MoveToStart;
+			i.Add (new MilkshakeGroup (0, 0)).onFill += MoveToStart;
 
 			HealthGroup health = new HealthGroup (100, 100);
 			health.onUpdate += () => {
+
+				// Update the indicator as health changes
 				pbar.SetProgress (Inventory["Health"].PercentFilled);
 			};
 			health.onEmpty += () => {
+
+				// Return the loan to recalculate amount owed
+				// Return resources to the player and kill the shark
 				loan.ReturnRepayment (repayment);
+				Inventory[LoanType].TransferAll (givingTree.Inventory[LoanType]);
 				DestroyThis<Shark> ();
 			};
 
 			i.Add (health);
+		}
+
+		void MoveToStart () {
+			lazer.StopFire ();
+			MyTransform.MoveTo (startPosition, 1f, () => {
+				ObjectPool.Destroy<Shark> (MyTransform);
+			});
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
@@ -92,12 +106,17 @@ namespace DNA.Units {
 
 		protected override void OnDisable () {
 			base.OnDisable ();
+
+			// Stop extracting resources from the player
 			lazer.StopFire ();
 			if (givingTreeTask != null)
 				givingTreeTask.Stop ();
+
+			// Reset the inventory
 			Inventory.Clear ();
 			Inventory["Coffee"].Capacity = 0;
 			Inventory["Milkshakes"].Capacity = 0;
+			StopTakeDamage ();
 		}
 
 		public void StartTakeDamage () {

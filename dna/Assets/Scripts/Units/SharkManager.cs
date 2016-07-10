@@ -22,7 +22,6 @@ namespace DNA.Units {
 				CreateShark (payment.Key, payment.Value);
 		}*/
 
-		[DebuggableMethod ()]
 		void CreateShark (Loan loan) {
 			float angle = Random.Range (0, Mathf.PI * 2);
 			Shark.Create (

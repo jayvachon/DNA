@@ -56,9 +56,11 @@ namespace DNA.Units {
 			targetPosition.y += 2;
 			
 			MyTransform.MoveTo (targetPosition, 1f, () => {
+				if (!gameObject.activeSelf)
+					return;
 				lazer.StartFire (givingTree.MyTransform, new Vector3 (0, 2, 0));
 				givingTree.StartTakeDamage ();
-				givingTreeTask = TaskMatcher.StartMatch (this, givingTree);
+				givingTreeTask = TaskMatcher.StartMatch (this, givingTree, true);
 			});
 		}
 
@@ -89,7 +91,7 @@ namespace DNA.Units {
 		void MoveToStart () {
 			lazer.StopFire ();
 			MyTransform.MoveTo (startPosition, 1f, () => {
-				ObjectPool.Destroy<Shark> (MyTransform);
+				DestroyThis<Shark> ();
 			});
 		}
 
@@ -106,6 +108,8 @@ namespace DNA.Units {
 
 		protected override void OnDisable () {
 			base.OnDisable ();
+
+			ObjectPool.Destroy<BuildingIndicator> (indicator);
 
 			// Stop extracting resources from the player
 			lazer.StopFire ();

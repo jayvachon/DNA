@@ -26,7 +26,7 @@ namespace DNA.Units {
 
 		public static void Destroy<T> (T unit) where T : Unit {
 			UnregisterUnit<T> (unit);
-			ObjectPool.Destroy (unit.transform);
+			ObjectPool.Destroy<T> (unit.transform);
 		}
 
 		public static void Destroy (Unit unit) {
@@ -92,6 +92,8 @@ namespace DNA.Units {
 			} else {
 				units.Add (typeof (T), new List<Unit> () { unit });
 			}
+			// if (typeof (T) == typeof (Shark))
+				// Debug.Log ("REFISTER:" + units[typeof(Shark)].Count);
 			SendUpdateMessage<T> ();
 		}
 
@@ -99,6 +101,8 @@ namespace DNA.Units {
 			try {
 				units[unit.GetType ()].Remove (unit);
 				SendUpdateMessage ();
+				// if (typeof (T) == typeof (Shark))
+					// Debug.Log ("UNregister: " + units[typeof (Shark)].Count);
 			} catch (KeyNotFoundException e) {
 				throw new Exception ("The unit " + unit + " can not be unregistered from the UnitManager because it was not instantiated through the UnitManager\n" + e);
 			}

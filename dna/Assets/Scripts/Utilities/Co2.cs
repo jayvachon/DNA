@@ -267,10 +267,17 @@ public static class CoExtensionMethods {
 
 		Vector3 startPosition = transform.position;
 		float distance = Vector3.Distance (startPosition, target);
+		bool disabled = false;
 
 		Co2.StartCoroutine (distance / speed, (float p) => {
+			if (disabled)
+				return;
+			disabled = !transform.gameObject.activeSelf;
 			transform.position = Vector3.Lerp (startPosition, target, p);
 			transform.LookAt (target);
-		}, onEnd);
+		}, () => {
+			if (!disabled && onEnd != null && transform.gameObject.activeSelf)
+				onEnd ();
+		});
 	}
 }

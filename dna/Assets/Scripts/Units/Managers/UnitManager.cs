@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -92,8 +92,6 @@ namespace DNA.Units {
 			} else {
 				units.Add (typeof (T), new List<Unit> () { unit });
 			}
-			// if (typeof (T) == typeof (Shark))
-				// Debug.Log ("REFISTER:" + units[typeof(Shark)].Count);
 			SendUpdateMessage<T> ();
 		}
 
@@ -101,8 +99,6 @@ namespace DNA.Units {
 			try {
 				units[unit.GetType ()].Remove (unit);
 				SendUpdateMessage ();
-				// if (typeof (T) == typeof (Shark))
-					// Debug.Log ("UNregister: " + units[typeof (Shark)].Count);
 			} catch (KeyNotFoundException e) {
 				throw new Exception ("The unit " + unit + " can not be unregistered from the UnitManager because it was not instantiated through the UnitManager\n" + e);
 			}

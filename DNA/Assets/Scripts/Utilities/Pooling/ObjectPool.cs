@@ -61,15 +61,24 @@ public class ObjectPool {
 		active.Add (m);
 		m.gameObject.SetActive (true);
 		m.transform.SetParent (null);
+		#if UNITY_EDITOR
+		m.Log ("Instantiated");
+		#endif
 
 		return m;
 	}
 
 	void ReleaseInstance (MonoBehaviour instance) {
 		// instance.transform.SetParent (InactiveInstancesContainer.Instance.Transform);
+		if (!instance.gameObject.activeSelf)
+			return;
+			
 		instance.gameObject.SetActive (false);
 		active.Remove (instance);
 		inactive.Push (instance);
+		#if UNITY_EDITOR
+		instance.Log ("Destroyed");
+		#endif
 	}
 
 	public static MonoBehaviour Instantiate (string id, Vector3 position=new Vector3 (), Quaternion rotation=new Quaternion ()) {
@@ -348,5 +357,29 @@ public class InactiveInstancesContainer : MonoBehaviour {
 				myTransform = transform;
 			return myTransform;
 		}
+	}
+}
+
+public class Log : MonoBehaviour {
+	
+	public string message = "";
+	public int gameObjectId;
+
+	public void Newline (string msg) {
+		message += "[" + Timestamp () + "] " + msg + "\n";
+	}
+
+	string Timestamp () {
+		return System.DateTime.Now.ToString("HH:mm:ss");
+	}
+}
+
+
+public static class LogExtensionMethods {
+
+	public static void Log (this MonoBehaviour mb, string msg) {
+		Log l = mb.LazyGetComponent<Log> ();
+		l.gameObjectId = mb.gameObject.GetInstanceID ();
+		l.Newline (msg);
 	}
 }

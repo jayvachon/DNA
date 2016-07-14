@@ -271,6 +271,9 @@ public static class CoExtensionMethods {
 		Co2.StartCoroutine (distance / speed, (float p) => {
 			transform.position = Vector3.Lerp (startPosition, target, p);
 			transform.LookAt (target);
-		}, onEnd);
+		}, () => {
+			if (onEnd != null && transform.gameObject.activeSelf)
+				onEnd ();
+		});
 	}
 }

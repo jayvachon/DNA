@@ -46,7 +46,7 @@ namespace DNA.Units {
 			Inventory[LoanType].Capacity = repayment.Amount;
 
 			// Create indicator
-			indicator = BuildingIndicator.Instantiate (LoanType == "Coffee" ? "Coffee Plant" : "Milkshake Derrick", MyTransform);
+			indicator = BuildingIndicator.Instantiate (LoanType == "Coffee" ? "coffee" : "derrick", MyTransform);
 
 			// Set trajectory
 			startPosition = Position;
@@ -79,14 +79,30 @@ namespace DNA.Units {
 			};
 			health.onEmpty += () => {
 
-				// Return the loan to recalculate amount owed
-				// Return resources to the player and kill the shark
-				loan.ReturnRepayment (repayment);
-				Inventory[LoanType].TransferAll (givingTree.Inventory[LoanType]);
-				DestroyThis<Shark> ();
+				// Stop the task if it's being performed, then return the payment
+				if (givingTreeTask != null && givingTreeTask.Match.Performing) {
+					givingTreeTask.Match.onEnd += (PerformerTask t) => {
+						ReturnRepayment ();
+						givingTreeTask.Match.onEnd = null;
+					};
+					givingTreeTask.Stop ();
+				} else {
+					ReturnRepayment ();
+				}
+
 			};
 
 			i.Add (health);
+		}
+
+		void ReturnRepayment () {
+
+			// Return the loan to recalculate amount owed
+			loan.ReturnRepayment (repayment);
+			Inventory[LoanType].TransferAll (givingTree.Inventory[LoanType]);
+
+			// Return resources to the player and kill the shark
+			DestroyThis<Shark> ();
 		}
 
 		void MoveToStart () {
@@ -111,11 +127,7 @@ namespace DNA.Units {
 			base.OnDisable ();
 
 			ObjectPool.Destroy<BuildingIndicator> (indicator);
-
-			// Stop extracting resources from the player
 			lazer.StopFire ();
-			if (givingTreeTask != null)
-				givingTreeTask.Stop ();
 
 			// Reset the inventory
 			Inventory.Clear ();

@@ -456,7 +456,7 @@ namespace DNA.Models {
 
 			tasks.Add ("consume_health", new TaskSettings {
 				Type = typeof (ConsumeItem<HealthGroup>),
-				Duration = 0.075f,
+				Duration = 0.05f,
 				Repeat = true
 			});
 

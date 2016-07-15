@@ -14,7 +14,8 @@ namespace DNA.Units {
 		public float Efficiency { get; set; }
 
 		public float TaskRate {
-			get { return EfficiencyManager.Instance.Efficiency; }
+			// get { return EfficiencyManager.Instance.Efficiency; }
+			get { return Efficiency; }
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {

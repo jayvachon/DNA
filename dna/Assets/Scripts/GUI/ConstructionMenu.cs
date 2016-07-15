@@ -34,7 +34,8 @@ namespace DNA {
 				PlayerTask (typeof (ConstructUnit<CollectionCenter>))
 			});
 			categories.Add ("civic", new PerformerTask[] {
-				PlayerTask (typeof (ConstructUnit<University>))
+				PlayerTask (typeof (ConstructUnit<University>)),
+				PlayerTask (typeof (ConstructUnit<Turret>))
 			});
 
 			buttons[1].onClick.AddListener (() => { SetCategory ("residential"); });

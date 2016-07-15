@@ -9,7 +9,7 @@ namespace DNA.Units {
 		public bool Accessible { get; set; }
 		public float Efficiency { get; set; }
 
-		float range = 15f;
+		float range = 7.5f;
 		RangeRing ring;
 		Lazer lazer;
 		Shark target;

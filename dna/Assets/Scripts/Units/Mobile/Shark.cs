@@ -107,7 +107,7 @@ namespace DNA.Units {
 
 		void MoveToStart () {
 			lazer.StopFire ();
-			MyTransform.MoveTo (startPosition, 1f, () => {
+			MyTransform.MoveTo (startPosition, 0.67f, () => {
 				DestroyThis<Shark> ();
 			});
 		}

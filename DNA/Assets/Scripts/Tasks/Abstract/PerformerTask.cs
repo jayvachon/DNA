@@ -42,7 +42,7 @@ namespace DNA.Tasks {
 			}
 		}
 
-		public float Duration {
+		public virtual float Duration {
 			get {
 				float d = settings.Duration;
 				if (Performer is ITaskRateSetter) {

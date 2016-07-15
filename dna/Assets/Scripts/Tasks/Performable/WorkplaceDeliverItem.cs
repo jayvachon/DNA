@@ -8,7 +8,7 @@ namespace DNA.Tasks {
 	public class WorkplaceDeliverItem<T> : DeliverItem<T> where T : ItemGroup {
 
 		public override bool Enabled {
-			get { return Workplace.Accessible && !Group.Empty; }
+			get { return Workplace.Accessible && Workplace.Efficiency > 0f && !Group.Empty; }
 		}
 
 		IWorkplace Workplace {
@@ -19,6 +19,10 @@ namespace DNA.Tasks {
 					throw new System.Exception ("Only TaskPerformers that implement the IWorkplace interface can use the WorkplaceCollectItem task\n" + e);
 				}
 			}
+		}
+
+		public override float Duration {
+			get { return EfficiencyManager.Instance.GetRate (settings.Duration); }
 		}
 	}
 }

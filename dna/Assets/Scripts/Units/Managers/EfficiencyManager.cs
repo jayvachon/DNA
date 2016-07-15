@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DNA.EventSystem;
 
 namespace DNA.Units {
@@ -20,7 +21,22 @@ namespace DNA.Units {
 			}
 		}
 
-		public float Efficiency { get; private set; }
+		// public float Efficiency { get; private set; }
+		[SerializeField]
+		float efficiency;
+		public float Efficiency {
+			get { return efficiency; }
+			set {
+				efficiency = Mathf.Clamp01 (value);
+				List<IWorkplace> workplaces = UnitManager.GetAllUnitsOfType<IWorkplace> ();
+				foreach	(IWorkplace w in workplaces)
+					w.Efficiency = efficiency;
+			}
+		}
+
+		public float GetRate (float val) {
+			return Mathf.Pow (val, 2f - Efficiency);
+		}
 
 		void Awake () {
 			UnitManager.AddListener<Laborer> (OnUpdateLaborers);

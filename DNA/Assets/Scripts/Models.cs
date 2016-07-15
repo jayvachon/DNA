@@ -427,13 +427,25 @@ namespace DNA.Models {
 				ConstructionTargets = new [] { "plot", "drillable" }
 			});
 
+			tasks.Add ("construct_turret", new CostTaskSettings {
+				Type = typeof (ConstructUnit<Turret>),
+				Title = "Birth Turret",
+				Description = "Turrets kill loan sharks >:)",
+				Costs = new [] {
+					new Dictionary<string, int> {
+						{ "Milkshakes", 40 }
+					}
+				},
+				ConstructionTargets = new [] { "plot", "drillable" }
+			});
+
 			/**
 			 *	Consume
 			 */
 
 			tasks.Add ("consume_year", new TaskSettings {
 				Type = typeof (ConsumeItem<YearGroup>),
-				Description = "Consumes year",
+				Description = "Consume year",
 				Duration = 1f,
 				AutoStart = false,
 				Repeat = true,
@@ -484,13 +496,13 @@ namespace DNA.Models {
 
 			tasks.Add ("workplace_deliver_milkshake", new TaskSettings {
 				Type = typeof (WorkplaceDeliverItem<MilkshakeGroup>),
-				Duration = 1f,
+				Duration = 2.5f,
 				Repeat = true
 			});
 
 			tasks.Add ("workplace_deliver_coffee", new TaskSettings {
 				Type = typeof (WorkplaceDeliverItem<CoffeeGroup>),
-				Duration = 0.75f,
+				Duration = 3f,
 				Repeat = true
 			});
 

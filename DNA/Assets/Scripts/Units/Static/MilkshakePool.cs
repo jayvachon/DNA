@@ -58,5 +58,9 @@ namespace DNA.Units {
 			if (Accessible)
 				TaskMatcher.StartMatch (this, Player.Instance);
 		}
+
+		public void OnUpdateEfficiency () {
+			TaskMatcher.StartMatch (this, Player.Instance);
+		}
 	}
 }

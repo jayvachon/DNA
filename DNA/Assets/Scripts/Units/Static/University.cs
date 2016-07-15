@@ -63,5 +63,7 @@ namespace DNA.Units {
 				yield return null;
 			}
 		}
+
+		public void OnUpdateEfficiency () {}
 	}
 }

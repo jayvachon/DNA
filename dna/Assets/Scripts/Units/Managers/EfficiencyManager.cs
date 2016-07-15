@@ -29,8 +29,10 @@ namespace DNA.Units {
 			set {
 				efficiency = Mathf.Clamp01 (value);
 				List<IWorkplace> workplaces = UnitManager.GetAllUnitsOfType<IWorkplace> ();
-				foreach	(IWorkplace w in workplaces)
+				foreach	(IWorkplace w in workplaces) {
 					w.Efficiency = efficiency;
+					w.OnUpdateEfficiency ();
+				}
 			}
 		}
 

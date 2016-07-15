@@ -70,5 +70,7 @@ namespace DNA.Units {
 			base.OnUnselect ();
 			ring.Hide ();
 		}
+
+		public void OnUpdateEfficiency () {}
 	}
 }

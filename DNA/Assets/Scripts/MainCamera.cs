@@ -28,7 +28,15 @@ public class MainCamera : MBRefs {
 	void Update () {
 		
 		transform.SetLocalPositionY (
-			Mathf.Clamp (transform.localPosition.y + Input.GetAxis ("Mouse ScrollWheel") * Time.deltaTime * 50,
+			Mathf.Clamp (transform.localPosition.y + Input.GetAxis ("Mouse ScrollWheel") * Time.deltaTime * 
+				#if UNITY_STANDALONE_OSX
+				50
+				#elif UNITY_STANDALONE_WIN
+				500
+				#else
+				50
+				#endif
+				,
 				zoomConstraints[0],
 				zoomConstraints[1])
 		);

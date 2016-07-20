@@ -60,6 +60,12 @@ namespace DNA.Tasks {
 
 		public static void Remove () {
 
+			// TODOD: Tidy this up
+			if (Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.RightShift)) {
+				GameCursor.Instance.Target = null;
+				return;
+			}
+
 			if (task != null) {
 				task = null;
 

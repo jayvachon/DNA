@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DNA.Units;
 
 public class BuildingIndicator : FloatingIndicator {
 
@@ -10,26 +11,26 @@ public class BuildingIndicator : FloatingIndicator {
 	public Transform milkshakePoolRender;
 	public Transform universityRender;
 
+	UnitRenderer visual;
+
 	public static BuildingIndicator Instantiate (string id, Transform parent) {
 
 		BuildingIndicator bi = ObjectPool.Instantiate<BuildingIndicator> ();
 		bi.Init (id);
-		bi.Initialize (parent, 1.5f);
+		bi.Initialize (parent, 2.25f);
 		bi.StartSpinning ();
 		
 		return bi;
 	}
 
 	void Init (string id) {
-		Transform activeRender = null;
-		switch (id) {
-			case "Clinic": activeRender = clinicRender; break;
-			case "Coffee Plant": activeRender = coffeeRender; break;
-			case "Jacuzzi": activeRender = jacuzziRender; break;
-			case "Milkshake Derrick": activeRender = milkshakePoolRender; break;
-			case "University": activeRender = universityRender; break;
-		}
-		activeRender.SetActiveRecursively (true);
+
+		string renderer = UnitRenderer.GetRenderer (id);
+		visual = ObjectPool.Instantiate (renderer) as UnitRenderer;
+		visual.transform.parent = MyTransform;
+
+		Vector3 s = visual.transform.localScale;
+		visual.transform.localScale = new Vector3 (s.x*0.5f, s.y*0.5f, s.z*0.5f);
 	}
 
 	public override void OnEnable () {
@@ -37,6 +38,7 @@ public class BuildingIndicator : FloatingIndicator {
 	}
 
 	public override void OnDisable () {
+		ObjectPool.Destroy (visual);
 		MyTransform.SetChildrenActive (false);		
 		base.OnDisable ();
 	}

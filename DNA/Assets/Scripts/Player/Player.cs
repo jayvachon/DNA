@@ -52,6 +52,7 @@ namespace DNA {
 					performableTasks.Add (new ConstructUnit<Apartment> ());
 					// performableTasks.Add (new ConstructUnit<Clinic> ());
 					performableTasks.Add (new ConstructUnit<CollectionCenter> ());
+					performableTasks.Add (new ConstructUnit<Turret> ());
 				}
 				return performableTasks;
 			}

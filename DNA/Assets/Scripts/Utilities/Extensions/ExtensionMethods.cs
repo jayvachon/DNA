@@ -144,6 +144,10 @@ public static class ExtensionMethods {
 		return t;
 	}
 
+	public static T LazyGetComponent<T> (this MonoBehaviour mono) where T : Component {
+		return mono.gameObject.LazyGetComponent<T> ();
+	}
+
 	/**
 	 *	Transform
 	 */

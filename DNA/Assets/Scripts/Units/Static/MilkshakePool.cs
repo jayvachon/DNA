@@ -14,7 +14,8 @@ namespace DNA.Units {
 		public float Efficiency { get; set; }
 
 		public float TaskRate {
-			get { return EfficiencyManager.Instance.Efficiency; }
+			// get { return EfficiencyManager.Instance.Efficiency; }
+			get { return Efficiency; }
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
@@ -56,6 +57,10 @@ namespace DNA.Units {
 		protected override void OnUpdateAccessibility () {
 			if (Accessible)
 				TaskMatcher.StartMatch (this, Player.Instance);
+		}
+
+		public void OnUpdateEfficiency () {
+			TaskMatcher.StartMatch (this, Player.Instance);
 		}
 	}
 }

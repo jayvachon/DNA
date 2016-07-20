@@ -90,8 +90,8 @@ namespace DNA.Tasks {
 			return null;
 		}
 
-		public static MatchResult StartMatch (ITaskPerformer performer, ITaskAcceptor acceptor) {
-			MatchResult match = GetPerformable (performer, acceptor, false);
+		public static MatchResult StartMatch (ITaskPerformer performer, ITaskAcceptor acceptor, bool mustBeEnabled=false) {
+			MatchResult match = GetPerformable (performer, acceptor, mustBeEnabled);
 			match.Start (true);
 			return match;
 		}

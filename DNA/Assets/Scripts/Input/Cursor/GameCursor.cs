@@ -38,7 +38,7 @@ namespace DNA.InputSystem {
 			set { rotation = value; }
 		}
 
-		public delegate void OnClick (bool overTarget);
+		public delegate void OnClick (bool overTarge);
 		public OnClick onClick;
 
 		void OnEnable () { Events.instance.AddListener<PointerDownEvent> (OnPointerDownEvent); }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace DNA.Units {
 
 		public static void Destroy<T> (T unit) where T : Unit {
 			UnregisterUnit<T> (unit);
-			ObjectPool.Destroy (unit.transform);
+			ObjectPool.Destroy<T> (unit.transform);
 		}
 
 		public static void Destroy (Unit unit) {

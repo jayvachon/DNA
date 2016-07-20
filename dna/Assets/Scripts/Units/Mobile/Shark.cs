@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using InventorySystem;
 using DNA.Tasks;
 
@@ -45,7 +46,7 @@ namespace DNA.Units {
 			Inventory[LoanType].Capacity = repayment.Amount;
 
 			// Create indicator
-			indicator = BuildingIndicator.Instantiate (LoanType == "Coffee" ? "Coffee Plant" : "Milkshake Derrick", MyTransform);
+			indicator = BuildingIndicator.Instantiate (LoanType == "Coffee" ? "coffee" : "derrick", MyTransform);
 
 			// Set trajectory
 			startPosition = Position;
@@ -56,9 +57,11 @@ namespace DNA.Units {
 			targetPosition.y += 2;
 			
 			MyTransform.MoveTo (targetPosition, 1f, () => {
+				if (!gameObject.activeSelf)
+					return;
 				lazer.StartFire (givingTree.MyTransform, new Vector3 (0, 2, 0));
 				givingTree.StartTakeDamage ();
-				givingTreeTask = TaskMatcher.StartMatch (this, givingTree);
+				givingTreeTask = TaskMatcher.StartMatch (this, givingTree, true);
 			});
 		}
 
@@ -76,20 +79,36 @@ namespace DNA.Units {
 			};
 			health.onEmpty += () => {
 
-				// Return the loan to recalculate amount owed
-				// Return resources to the player and kill the shark
-				loan.ReturnRepayment (repayment);
-				Inventory[LoanType].TransferAll (givingTree.Inventory[LoanType]);
-				DestroyThis<Shark> ();
+				// Stop the task if it's being performed, then return the payment
+				if (givingTreeTask != null && givingTreeTask.Match.Performing) {
+					givingTreeTask.Match.onEnd += (PerformerTask t) => {
+						ReturnRepayment ();
+						givingTreeTask.Match.onEnd = null;
+					};
+					givingTreeTask.Stop ();
+				} else {
+					ReturnRepayment ();
+				}
+
 			};
 
 			i.Add (health);
 		}
 
+		void ReturnRepayment () {
+
+			// Return the loan to recalculate amount owed
+			loan.ReturnRepayment (repayment);
+			Inventory[LoanType].TransferAll (givingTree.Inventory[LoanType]);
+
+			// Return resources to the player and kill the shark
+			DestroyThis<Shark> ();
+		}
+
 		void MoveToStart () {
 			lazer.StopFire ();
-			MyTransform.MoveTo (startPosition, 1f, () => {
-				ObjectPool.Destroy<Shark> (MyTransform);
+			MyTransform.MoveTo (startPosition, 0.67f, () => {
+				DestroyThis<Shark> ();
 			});
 		}
 
@@ -107,10 +126,8 @@ namespace DNA.Units {
 		protected override void OnDisable () {
 			base.OnDisable ();
 
-			// Stop extracting resources from the player
+			ObjectPool.Destroy<BuildingIndicator> (indicator);
 			lazer.StopFire ();
-			if (givingTreeTask != null)
-				givingTreeTask.Stop ();
 
 			// Reset the inventory
 			Inventory.Clear ();

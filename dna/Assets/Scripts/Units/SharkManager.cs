@@ -6,7 +6,7 @@ namespace DNA.Units {
 
 	public class SharkManager : MonoBehaviour {
 
-		float startRadius = 10f;//100f;
+		float startRadius = 100f;
 
 		void OnEnable () {
 			// LoanManager.onUpdateLoans += OnUpdateLoans;

@@ -14,13 +14,11 @@ namespace DNA.Units {
 		public float Efficiency { get; set; }
 
 		public float TaskRate {
-			// get { return EfficiencyManager.Instance.Efficiency; }
 			get { return Efficiency; }
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new DemolishUnit (Container));
-			// p.Add (new DeliverItem<MilkshakeGroup> ());
 			p.Add (new WorkplaceDeliverItem<MilkshakeGroup> ());
 		}
 		

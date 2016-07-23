@@ -2,7 +2,7 @@ time, you washed out
 like a soft, sudden, summer rain
 sibylle baier
 
-to do
+TO DO
 
 going thru doorways erases memories (“WAIT! what was I gonna do in here??”)
 
@@ -14,7 +14,7 @@ going thru doorways erases memories (“WAIT! what was I gonna do in here??”)
 
 :::: glitches ::::
 
-- if assigning laborer to a point it is already moving towards, the laborer stops
+
 
 :::: features ::::
 

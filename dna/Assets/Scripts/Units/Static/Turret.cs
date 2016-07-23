@@ -50,7 +50,7 @@ namespace DNA.Units {
 			ring.Hide ();
 
 			Co2.InvokeWhileTrue (0.5f, () => { return gameObject.activeSelf; }, () => {
-				if (UpdateTarget ()) {
+				if (Accessible && UpdateTarget ()) {
 					if (target == null) {
 						lazer.StopFire ();
 					} else {

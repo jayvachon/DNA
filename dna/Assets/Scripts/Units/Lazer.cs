@@ -20,7 +20,7 @@ namespace DNA.Units {
 
 			LineRenderer.enabled = true;
 
-			Co2.RunWhileTrue (() => { return gameObject.activeSelf && target.gameObject.activeSelf; }, () => {
+			Co2.RunWhileTrue (() => { return LineRenderer.enabled && target.gameObject.activeSelf; }, () => {
 				LineRenderer.SetPositions (new Vector3[] {
 					Position,
 					target.position + offset

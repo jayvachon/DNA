@@ -35,7 +35,6 @@ turrets:
 - let laborer become elder, then create laborer. the new laborer will try to carry out the tasks of the previous one before it became an elder
 
 :::: BALANCING ::::
-- should be an even random distribution of a *set #* of coffee & milkshakes 
 
 :::: CLEANUP ::::
 - "lazer" -> "laser"

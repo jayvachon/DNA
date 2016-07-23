@@ -36,29 +36,14 @@ namespace DNA.Paths {
 		IEnumerator CreatePoints () {
 			
 			const int blockSize = 100;
-			const float perlinScale = 20f;
 
 			List<GridPoint> gpoints = TreeGrid.Points;
-			int pointCount = gpoints.Count;
 
-			for (int i = 0; i < pointCount; i ++) {
+			for (int i = 0; i < gpoints.Count; i ++) {
 
 				PointContainer pc = ObjectPool.Instantiate<PointContainer> ();
 				pc.Point = gpoints[i];
 				pc.Parent = MyTransform;
-
-				float distanceToCenter = (float)i / (float)pointCount;
-				float val = Mathf.PerlinNoise (
-					((pc.Point.Position.x / 100f) + 1f) / 2f * perlinScale,
-					((pc.Point.Position.z / 100f) + 1f) / 2f * perlinScale
-				);
-
-				pc.SetFertility (distanceToCenter, val);
-				if (Random.value < 0.08f) {
-					pc.SetObject<DrillablePlot> ();
-				} else {
-					pc.SetObject<Plot> ();
-				}
 
 				points.Add (pc);
 

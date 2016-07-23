@@ -466,6 +466,12 @@ namespace DNA.Models {
 				Repeat = true		
 			});
 
+			tasks.Add ("workplace_consume_labor", new TaskSettings {
+				Type = typeof (WorkplaceConsumeItem<LaborGroup>),
+				Duration = 0.5f,
+				Repeat = true		
+			});
+
 			tasks.Add ("consume_health", new TaskSettings {
 				Type = typeof (ConsumeItem<HealthGroup>),
 				Duration = 0.2f,
@@ -684,7 +690,7 @@ namespace DNA.Models {
 				Description = "Builds a road",
 				Costs = new [] {
 					new Dictionary<string, int> {
-						{ "Milkshakes", 5 }
+						{ "Milkshakes", 10 }
 					}
 				}
 			});

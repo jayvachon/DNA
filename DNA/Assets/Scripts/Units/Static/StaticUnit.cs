@@ -29,7 +29,7 @@ namespace DNA.Units {
 		GridPoint Point {
 			get { 
 				try {
-					return (GridPoint)Element; 
+					return (GridPoint)Element;
 				} catch (System.InvalidCastException e) {
 					throw new System.Exception ("Could not find the GridPoint for " + this + "\n" + e);
 				}
@@ -72,7 +72,7 @@ namespace DNA.Units {
 			IWorkplace workplace = this as IWorkplace;
 
 			if (workplace != null) {
-				workplace.Accessible = Point.HasRoad;
+				workplace.Accessible = Element is Connection || Point.HasRoad;
 				Events.instance.Raise (new UpdateAccessibilityEvent ());
 				OnUpdateAccessibility ();
 			}

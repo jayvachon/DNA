@@ -8,7 +8,7 @@ using InventorySystem;
 
 namespace DNA.Units {
 
-	public class ConstructionSite : StaticUnit {
+	public class ConstructionSite : StaticUnit, IWorkplace {
 
 		public override SelectSettings SelectSettings {
 			get { 
@@ -25,15 +25,17 @@ namespace DNA.Units {
 			}
 		}
 
+		public bool Accessible { get; set; }
+		public float Efficiency { get; set; }
+
 		ProgressBar pbar;
 
 		public void AutoConstruct () {
-			PerformableTasks[typeof (ConsumeItem<LaborGroup>)].Start ();
-			AcceptableTasks.SetActive (typeof (AcceptCollectItem<LaborGroup>), false);
+			PerformableTasks[typeof (WorkplaceConsumeItem<LaborGroup>)].Start ();
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
-			p.Add (new ConsumeItem<LaborGroup> ());
+			p.Add (new WorkplaceConsumeItem<LaborGroup> ());
 			p.Add (new CancelConstruction (Player.Instance.Inventory));
 		}
 
@@ -55,7 +57,6 @@ namespace DNA.Units {
 		
 		protected override void OnDisable () { 
 			base.OnDisable ();
-			AcceptableTasks.SetActive (typeof (AcceptCollectItem<LaborGroup>), true);
 			if (UI.Instance != null) {
 				UI.Instance.DestroyProgressBar (pbar); 
 				pbar = null;
@@ -73,6 +74,10 @@ namespace DNA.Units {
 		void OnUpdateLabor () {
 			if (pbar != null)
 				pbar.SetProgress (Inventory["Labor"].PercentFilled);
+		}
+
+		public void OnUpdateEfficiency () {
+			PerformableTasks[typeof (WorkplaceConsumeItem<LaborGroup>)].Start ();
 		}
 	}
 }

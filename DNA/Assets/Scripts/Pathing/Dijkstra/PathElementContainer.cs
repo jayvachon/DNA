@@ -49,18 +49,6 @@ namespace DNA.Paths {
 				site.PerformableTasks.Get<CancelConstruction> ().Init (this, project.Settings.Symbol);
 				if (autoConstruct) site.AutoConstruct ();
 				Element.State = DevelopmentState.UnderConstruction;
-
-				// Uncomment to have buildings automatically build roads to the giving tree (buggy)
-				/*if (typeof (T) != typeof (CoffeePlant) && typeof (T) != typeof (GivingTreeUnit) && typeof (T) != typeof (Road)) {
-
-					List<Connection> path = Pathfinder.PointsToConnections (Pathfinder.GetPathNoOverlap ((GridPoint)Element, (GridPoint)GivingTreeUnit.Instance.Element));
-
-					foreach (Connection connection in path) {
-						ConnectionContainer c = ConnectionsManager.GetContainer (connection);
-						if (c.BeginConstruction<Road> () != null)
-							c.EndConstruction ();
-					}
-				}*/
 			}
 			return site;
 		}

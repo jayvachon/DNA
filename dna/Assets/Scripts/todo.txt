@@ -1,51 +1,43 @@
-time, you washed out
-like a soft, sudden, summer rain
-sibylle baier
 
 to do
 
-going thru doorways erases memories (“WAIT! what was I gonna do in here??”)
+turrets:
+- need to be able to double up on attacking shark (and prioritize attacking different sharks)
+- laser power determined by global efficiency
+- upgrade laser power, range
+- switch from laser to "bullet" ? (single shot takes out % of health, turret cooldown timer)
+- (bug) eventually stops firing
+- (bug) sometimes lazer does not render even though the attack is happening
 
-:::: bugs ::::
-
+:::: BUGS ::::
 - loan button is not re-enabled after loans have been paid off (if maximum # loans were taken out)
-- when a laborer gets to a road construction site and a flower is being grown, it will not perform the task
-- ^ in general, laborers performing construction over a growing flower will break
 
-:::: glitches ::::
+:::: GLITCHES ::::
 
-- if assigning laborer to a point it is already moving towards, the laborer stops
 
-:::: features ::::
+:::: FEATURES ::::
 
-demo
-- notification when university upgrade finishes
-- show # of assigned units above milkshakes, coffee. add option to select all assigned units when resource selected
+- workplaces notify when resource has been collected/task completed
+- laborers wander
+- can laborers turn into elders now that they are not being assigned tasks?
 - show what is currently being built
 - fast-forward button (simcity style)
-
-postdemo
-- darker blue sea color
-- maybe if laborer happiness > 97 after flower construction, just set it to 100 so it doesn’t do the weird quick rotation
+- big spheres for sea
 - worker strike when happiness = 0
 
-:::: design problems ::::
+:::: DESIGN PROBLEMS ::::
 
-demo
+- loan shark creation curve (fewer initially, more as debt increases)
 
-postdemo
-- laborers turning into elders is not fun. you lose development momentum & it’s really hard to pick up steam again.
-	> try adding variation to retirement ages so there’s any easier transition
+:::: HOTKEYS ::::
 
-:::: hotkeys ::::
-
-reproducing bugs
+::: REPRODUCING BUGS :::
 - let laborer become elder, then create laborer. the new laborer will try to carry out the tasks of the previous one before it became an elder
 
-:::: balancing ::::
+:::: BALANCING ::::
 - should be an even random distribution of a *set #* of coffee & milkshakes 
 
-:::: cleanup ::::
+:::: CLEANUP ::::
 - "lazer" -> "laser"
 - "CollectionCenter" -> "Silo"
 - "MilkshakePool" -> "Derrick"
@@ -54,6 +46,11 @@ reproducing bugs
 - rm old unity projects
 - delete old branches
 - rm deprecated scripts: RoadConstructor, UnitsList(?), PlotsCreator, Jacuzzi, ProjectionMatrix, CoroutineManager, MonthlyPaymentText, UnitTransform, UnitClickable
+
+
+
+
+
 
 fonts
 oriya sangam mn
@@ -64,6 +61,13 @@ i have accepted myself for who i am. i have accepted that i don’t like who i a
 what’s important is not what you want to do, but who you want to help
 or:
 don’t let “what do i want to do with my life?” be a barrier to “who in my life do i want to help?”
+
+going thru doorways erases memories (“WAIT! what was I gonna do in here??”)
+
+time, you washed out
+like a soft, sudden, summer rain
+sibylle baier
+
 
 paths
 /Users/jamesvachon/Developer/git-repositories/unity-projects/DNA/dna/Assets/Models

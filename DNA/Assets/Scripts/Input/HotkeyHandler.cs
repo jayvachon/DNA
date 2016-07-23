@@ -119,6 +119,10 @@ namespace DNA {
 			new Hotkey (KeyCode.P, () => {
 				TaskPen.Remove ();
 				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<Apartment>)]);
+			}),
+			new Hotkey (KeyCode.T, () => {
+				TaskPen.Remove ();
+				TaskPen.Set (Player.Instance.PerformableTasks[typeof (ConstructUnit<Turret>)]);
 			})
 			#if UNITY_EDITOR
 			,

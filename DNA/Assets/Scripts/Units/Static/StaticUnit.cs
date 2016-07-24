@@ -67,6 +67,10 @@ namespace DNA.Units {
 				unitRenderer.SetAbandoned ();
 		}
 
+		protected void IndicateResourceCollected (string id) {
+			ResourceCollectedIndicator.Init (id, MyTransform);
+		}
+
 		void UpdateAccessbility () {
 
 			IWorkplace workplace = this as IWorkplace;

@@ -25,12 +25,12 @@ namespace DNA {
 		}
 
 		void OnUpdateLoan () {
-			if (loan.Owed == 0 || loan.Status == Loan.LoanStatus.Defaulted) {
+			/*if (loan.Owed == 0 || loan.Status == Loan.LoanStatus.Defaulted) {
 				ObjectPool.Destroy<LoanRow> (this);
-			}
-			GetChildComponent<Text> (1).text = loan.StatusDetails;
+			}*/
+			/*GetChildComponent<Text> (1).text = loan.StatusDetails;
 			GetChildComponent<Text> (2).text = loan.Owed.ToString ();
-			GetChildComponent<Text> (3).text = loan.Payment.ToString ();
+			GetChildComponent<Text> (3).text = loan.Payment.ToString ();*/
 		}
 	}
 }

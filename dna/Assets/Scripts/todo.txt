@@ -17,7 +17,6 @@ turrets:
 
 :::: FEATURES ::::
 
-- workplaces notify when resource has been collected/task completed
 - laborers wander
 - can laborers turn into elders now that they are not being assigned tasks?
 - show what is currently being built
@@ -44,7 +43,7 @@ turrets:
 - deprecate co.cs and replace with co2.cs (+ rename co2 to co)
 - rm old unity projects
 - delete old branches
-- rm deprecated scripts: RoadConstructor, UnitsList(?), PlotsCreator, Jacuzzi, ProjectionMatrix, CoroutineManager, MonthlyPaymentText, UnitTransform, UnitClickable
+- rm deprecated scripts: RoadConstructor, UnitsList(?), PlotsCreator, Jacuzzi, ProjectionMatrix, CoroutineManager, MonthlyPaymentText, UnitTransform, UnitClickable, MonthTimer
 
 
 

@@ -1,5 +1,5 @@
 
-to do
+TO DO
 
 turrets:
 - need to be able to double up on attacking shark (and prioritize attacking different sharks)
@@ -17,7 +17,6 @@ turrets:
 
 :::: FEATURES ::::
 
-- workplaces notify when resource has been collected/task completed
 - laborers wander
 - can laborers turn into elders now that they are not being assigned tasks?
 - show what is currently being built
@@ -35,7 +34,6 @@ turrets:
 - let laborer become elder, then create laborer. the new laborer will try to carry out the tasks of the previous one before it became an elder
 
 :::: BALANCING ::::
-- should be an even random distribution of a *set #* of coffee & milkshakes 
 
 :::: CLEANUP ::::
 - "lazer" -> "laser"
@@ -45,7 +43,7 @@ turrets:
 - deprecate co.cs and replace with co2.cs (+ rename co2 to co)
 - rm old unity projects
 - delete old branches
-- rm deprecated scripts: RoadConstructor, UnitsList(?), PlotsCreator, Jacuzzi, ProjectionMatrix, CoroutineManager, MonthlyPaymentText, UnitTransform, UnitClickable
+- rm deprecated scripts: RoadConstructor, UnitsList(?), PlotsCreator, Jacuzzi, ProjectionMatrix, CoroutineManager, MonthlyPaymentText, UnitTransform, UnitClickable, MonthTimer
 
 
 

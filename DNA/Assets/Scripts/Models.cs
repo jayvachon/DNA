@@ -474,7 +474,7 @@ namespace DNA.Models {
 
 			tasks.Add ("consume_health", new TaskSettings {
 				Type = typeof (ConsumeItem<HealthGroup>),
-				Duration = 0.2f,
+				Duration = 0.05f,
 				Repeat = true
 			});
 
@@ -878,16 +878,16 @@ namespace DNA.Models {
 			loans.Add (typeof (Loan<MilkshakeGroup>), new LoanSettings {
 				Symbol = "milkshake_loan",
 				Amount = 150,
-				InterestRate = 0.06f,
-				RepaymentLength = 8,
+				InterestRate = 0.02f,
+				RepaymentLength = 10,
 				GracePeriod = 12
 			});
 
 			loans.Add (typeof (Loan<CoffeeGroup>), new LoanSettings {
 				Symbol = "coffee_loan",
 				Amount = 100,
-				InterestRate = 0.2f,
-				RepaymentLength = 20,
+				InterestRate = 0.02f,
+				RepaymentLength = 10,
 				GracePeriod = 0
 				/*InterestRate = 0.06f,
 				RepaymentLength = 8,

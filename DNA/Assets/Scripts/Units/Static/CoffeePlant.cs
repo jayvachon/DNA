@@ -22,11 +22,7 @@ namespace DNA.Units {
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
-			p.Add (new WorkplaceDeliverItem<CoffeeGroup> ());
-		}
-
-		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
-			a.Add (new AcceptCollectItem<CoffeeGroup> ());				
+			p.Add (new WorkplaceDeliverItem<CoffeeGroup> ()).onEnd += (PerformerTask task) => { IndicateResourceCollected ("coffee"); } ;
 		}
 
 		protected override void OnSetFertility (int tier) {

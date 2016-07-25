@@ -6,21 +6,14 @@ namespace DNA.Units {
 
 	public class SharkManager : MonoBehaviour {
 
-		float startRadius = 100f;
+		float startRadius = 10f;
 
 		void OnEnable () {
-			// LoanManager.onUpdateLoans += OnUpdateLoans;
-			// LoanManager.onUpdatePayments += OnUpdatePayments;
 			Co2.Repeat (10f, () => {
 				foreach (Loan loan in LoanManager.GetLoans ())
 					CreateShark (loan);
 			});
 		}
-
-		/*void OnUpdatePayments (Dictionary<string, int> payments) {
-			foreach (var payment in payments)
-				CreateShark (payment.Key, payment.Value);
-		}*/
 
 		void CreateShark (Loan loan) {
 			float angle = Random.Range (0, Mathf.PI * 2);

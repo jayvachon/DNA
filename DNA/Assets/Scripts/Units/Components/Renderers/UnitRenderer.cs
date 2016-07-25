@@ -75,5 +75,10 @@ namespace DNA.Units {
 		public void OnUnselect () {
 			SetColor ();
 		}
+
+		public void SetScale (float scale) {
+			Vector3 s = MyTransform.localScale;
+			MyTransform.localScale = new Vector3 (s.x * scale, s.y * scale, s.z * scale);
+		}
 	}
 }

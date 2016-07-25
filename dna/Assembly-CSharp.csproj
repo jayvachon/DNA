@@ -324,6 +324,7 @@
      <Compile Include="Assets\Scripts\UI\Notifications\Notification.cs" />
      <Compile Include="Assets\Scripts\UI\Notifications\NotificationCenter.cs" />
      <Compile Include="Assets\Scripts\UI\ProgressBar.cs" />
+     <Compile Include="Assets\Scripts\UI\ResourceCollectedIndicator.cs" />
      <Compile Include="Assets\Scripts\UI\TaskButton.cs" />
      <Compile Include="Assets\Scripts\UI\TaskButton2.cs" />
      <Compile Include="Assets\Scripts\UI\TaskIndicator.cs" />

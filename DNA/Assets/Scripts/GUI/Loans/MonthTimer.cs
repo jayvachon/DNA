@@ -2,17 +2,18 @@
 using UnityEngine.UI;
 using System.Collections;
 
+// deprecate
 namespace DNA {
 
 	public class MonthTimer : UIElement {
 
 		public bool roundTimer = true;
 
-		void Update () {
+		/*void Update () {
 			if (roundTimer)
 				Image.fillAmount = LoanManager.Time;
 			else
 				transform.SetLocalScaleY (LoanManager.Time);
-		}
+		}*/
 	}
 }

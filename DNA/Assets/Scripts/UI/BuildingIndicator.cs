@@ -28,9 +28,7 @@ public class BuildingIndicator : FloatingIndicator {
 		string renderer = UnitRenderer.GetRenderer (id);
 		visual = ObjectPool.Instantiate (renderer) as UnitRenderer;
 		visual.transform.parent = MyTransform;
-
-		Vector3 s = visual.transform.localScale;
-		visual.transform.localScale = new Vector3 (s.x*0.5f, s.y*0.5f, s.z*0.5f);
+		visual.SetScale (0.5f);
 	}
 
 	public override void OnEnable () {

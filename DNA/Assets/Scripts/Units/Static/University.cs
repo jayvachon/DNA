@@ -21,8 +21,7 @@ namespace DNA.Units {
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
-			// p.Add (new ResearchUpgrade<CoffeeCapacity> ());
-			// p.Add (new ResearchUpgrade<MilkshakeCapacity> ());
+			
 			p.Add (new ResearchUpgrade<LaborerSpeed> ());
 			p.Add (new ResearchUnit<Apartment> ());
 			p.Add (new ResearchUnit<CollectionCenter> ());

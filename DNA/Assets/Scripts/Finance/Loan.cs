@@ -18,85 +18,63 @@ namespace DNA {
 		public abstract int Payment { get; }
 		public abstract int Owed { get; }
 		
-		public string StatusDetails {
-			get {
-				switch (Status) {
-					case LoanStatus.Grace: return "Grace: " + elapsedTime + "/" + settings.GracePeriod;
-					case LoanStatus.Repayment: 
-						return "Repayment: " + (elapsedTime-settings.GracePeriod) + "/" + (settings.RepaymentLength) + 
-							((warningCount > 0)
-							? "\nWarnings: " + warningCount + "/" + warningMax
-							: "");
-					case LoanStatus.Late: return "Warning " + warningCount + "/" + warningMax;
-				}
-				return "Repaid";
-			}
-		}
-
-		public enum LoanStatus { Grace, Repayment, Late, Defaulted }
-		public LoanStatus Status { get; private set; }
-
 		protected LoanSettings settings;
-		protected int elapsedTime = 0;
-		int warningCount = 0;
-		int warningMax = 3;
-
 		public OnUpdate onUpdate;
-
-		public Loan () {
-			Status = LoanStatus.Grace;
-			elapsedTime = 0;
-			warningCount = 0;
-			warningMax = 3;
-		}
-
-		public int IteratePayment () {
-			elapsedTime ++;
-			if (elapsedTime <= settings.GracePeriod)
-				return 0;
-			return Payment;
-		}
 
 		public abstract Repayment GetRepayment ();
 		public abstract void ReturnRepayment (Repayment repayment);
+
+		protected int CalculatePayment (float principal, float interestRate, float time) {
+			return Mathf.RoundToInt ((interestRate * principal) / (1 - Mathf.Pow (1 + interestRate, -time)));
+		}
+
+		protected int CalculateOwed (float principal, float interestRate, float time) {
+			return Mathf.RoundToInt (CalculatePayment (principal, interestRate, time) * time);
+		}
 
 		public class Repayment {
 
 			public readonly int ID;
 			public readonly string Type;
+			public readonly int Interest;
 			public int Amount { get; set; }
 
-			public Repayment (int id, string type, int amount) {
+			public Repayment (int id, string type, int amount, int interest) {
 				ID = id;
 				Type = type;
 				Amount = amount;
+				Interest = interest;
+			}
+
+			public override string ToString () {
+				return "id: " + ID + "\nType: " + Type + "\nAmount: " + Amount;
 			}
 		}
 	}
 
 	public class Loan<T> : Loan where T : ItemGroup, new () {
 
+		// The original principal
 		public override int Amount {
 			get { return settings.Amount; }
 		}
 
+		// Amount owed in a single payment
 		public override int Payment {
 			get {
-				// https://upload.wikimedia.org/math/e/b/0/eb0d554c1ead49a1a0bd3155b764ec0c.png				
-				float c = settings.InterestRate;
-				float n = settings.RepaymentLength;
-				return (int)((float)group.Capacity * ((c * Mathf.Pow (1 + c, n)) / (Mathf.Pow (1 + c, n) - 1)));
+				return CalculatePayment (principal, settings.InterestRate, settings.RepaymentLength);
 			}
 		}
 
+		// Total amount owed
 		public override int Owed {
 			get {
-				int repaymentsTotal = 0;
-				foreach (var repayment in repayments)
-					repaymentsTotal += repayment.Value.Amount;
-				return group.Count + repaymentsTotal;
+				return CalculateOwed (principal, settings.InterestRate, settings.RepaymentLength);
 			}
 		}
+
+		// Dynamical principal (updated when payments are missed)
+		int principal;
 
 		T group;
 		Dictionary<int, Repayment> repayments = new Dictionary<int, Repayment> ();
@@ -104,21 +82,38 @@ namespace DNA {
 
 		public Loan () : base () {
 			settings = DataManager.GetLoanSettings (this.GetType ());
-			group = new T () { Capacity = settings.Amount };
+			principal = settings.Amount;
+			group = new T () { Capacity = Owed };
 			group.Fill ();
 		}
 
 		public override Repayment GetRepayment () {
-			Repayment r = new Repayment (repaymentCounter, group.ID, group.Remove (Payment).Count);
+
+			// Calculate how much of the payment is interest
+			int interest = Payment - (int)(principal/settings.RepaymentLength);
+
+			// Create the repayment, track it, and return it
+			Repayment r = new Repayment (repaymentCounter, group.ID, group.Remove (Payment).Count, interest);
 			repayments.Add (repaymentCounter, r);
 			repaymentCounter ++;
 			return r;
 		}
 
 		public override void ReturnRepayment (Repayment repayment) {
+			
+			// (Payment was missed)
+
+			// Remove the repayment and add the interest to the principal
 			repayments.Remove (repayment.ID);
-			group.Capacity = Mathf.Max (repayment.Amount + group.Count, group.Capacity);
+			principal += repayment.Interest;
+
+			// Update the capacity and add the resources back into the loan
+			group.Capacity = Mathf.Max (repayment.Amount + group.Count, principal);
 			group.Add (repayment.Amount);
+		}
+
+		public override string ToString () {
+			return "Original principal: " + Amount + "\nPrincipal: " + principal + "\nOwed: " + Owed + "\nPayment: "  + Payment;
 		}
 	}
 }

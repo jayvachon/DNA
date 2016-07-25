@@ -14,14 +14,12 @@ namespace DNA.Units {
 		public float Efficiency { get; set; }
 
 		public float TaskRate {
-			// get { return EfficiencyManager.Instance.Efficiency; }
 			get { return Efficiency; }
 		}
 
 		protected override void OnInitPerformableTasks (PerformableTasks p) {
 			p.Add (new DemolishUnit (Container));
-			// p.Add (new DeliverItem<MilkshakeGroup> ());
-			p.Add (new WorkplaceDeliverItem<MilkshakeGroup> ());
+			p.Add (new WorkplaceDeliverItem<MilkshakeGroup> ()).onEnd += (PerformerTask task) => { IndicateResourceCollected ("derrick"); };
 		}
 		
 		protected override void OnInitInventory (Inventory i) {
@@ -31,10 +29,6 @@ namespace DNA.Units {
 			#else
 				i["Milkshakes"].onEmpty += () => { Element.State = DevelopmentState.Abandoned; };
 			#endif
-		}
-
-		protected override void OnInitAcceptableTasks (AcceptableTasks a) {
-			a.Add (new AcceptCollectItem<MilkshakeGroup> ());			
 		}
 
 		protected override void OnSetFertility (int tier) {

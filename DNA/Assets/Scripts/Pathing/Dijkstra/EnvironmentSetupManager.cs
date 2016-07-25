@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DNA.Paths;
 using DNA.Units;
 
@@ -30,6 +31,7 @@ namespace DNA {
 		}
 
 		void OnLoadPoints () {
+			CreateDrillablePlots ();
 			CreateCoffeePlants ();
 		}
 
@@ -56,6 +58,38 @@ namespace DNA {
 			#endif
 		}
 
+		void CreateDrillablePlots () {
+
+			float pointCount = (float)(points.Points.Count);
+			float index = 0;
+			const float perlinScale = 20f;
+			List<PointContainer> containers = points.Points;
+
+			foreach (PointContainer pc in containers) {
+				float distanceToCenter = index / pointCount;
+				float val = Mathf.PerlinNoise (
+					((pc.Point.Position.x / 100f) + 1f) / 2f * perlinScale,
+					((pc.Point.Position.z / 100f) + 1f) / 2f * perlinScale
+				);
+				pc.SetFertility (distanceToCenter, val);
+				index ++;
+			}
+
+			int drillableCount = (int)(points.Points.Count * 0.08f);
+			Dictionary<float, int> vals = new Dictionary<float, int> ();
+			for (int i = 0; i < containers.Count; i ++)
+				vals.Add (QuasiRandom (), i);
+
+			foreach (var val in vals.OrderBy (k => Mathf.Abs (k.Key))) {
+				if (drillableCount > 0) {
+					containers[val.Value].SetObject<DrillablePlot> ();
+					drillableCount --;
+				} else {
+					containers[val.Value].SetObject<Plot> ();
+				}
+			}
+		}
+
 		void CreateCoffeePlants () {
 
 			int first = Random.Range (6, 20);
@@ -63,10 +97,17 @@ namespace DNA {
 			points.SetUnitAtIndex<CoffeePlant> (first);
 
 			int pointsCount = points.Points.Count;
-			for (int i = 20; i < pointsCount; i ++) {
-				if (Random.value < 0.075f) {
-					points.SetUnitAtIndex<CoffeePlant> (i);
-				}
+			int coffeeCount = (int)(pointsCount * 0.08f);
+
+			Dictionary<float, int> vals = new Dictionary<float, int> ();
+
+			for (int i = 20; i < pointsCount; i ++)
+				vals.Add (QuasiRandom (), i);
+
+			foreach (var val in vals.OrderBy (k => Mathf.Abs (k.Key))) {
+				points.SetUnitAtIndex<CoffeePlant> (val.Value);
+				coffeeCount --;
+				if (coffeeCount == 0) break;
 			}
 		}
 
@@ -88,6 +129,22 @@ namespace DNA {
 			}*/
 
 			fogOfWar.Init ();
+		}
+
+		float QuasiRandom () {
+
+			float U, u, v, S;
+
+		    do
+		    {
+		        u = 2.0f * UnityEngine.Random.value - 1.0f;
+		        v = 2.0f * UnityEngine.Random.value - 1.0f;
+		        S = u * u + v * v;
+		    }
+		    while (S >= 1.0f);
+
+		    float fac = Mathf.Sqrt(-2.0f * Mathf.Log(S) / S);
+		    return u * fac;
 		}
 	}
 }

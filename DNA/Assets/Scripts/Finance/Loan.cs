@@ -17,6 +17,10 @@ namespace DNA {
 		public abstract int Amount { get; }
 		public abstract int Payment { get; }
 		public abstract int Owed { get; }
+
+		public float PercentUnpaid {
+			get { return Owed / Amount; }
+		}
 		
 		protected LoanSettings settings;
 		public OnUpdate onUpdate;

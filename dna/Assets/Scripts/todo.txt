@@ -11,6 +11,7 @@ turrets:
 
 :::: BUGS ::::
 - loan button is not re-enabled after loans have been paid off (if maximum # loans were taken out)
+- sea is not rising!!!!
 
 :::: GLITCHES ::::
 

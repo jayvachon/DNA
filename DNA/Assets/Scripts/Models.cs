@@ -462,7 +462,7 @@ namespace DNA.Models {
 
 			tasks.Add ("consume_labor", new TaskSettings {
 				Type = typeof (ConsumeItem<LaborGroup>),
-				Duration = 0.5f,
+				Duration = 1f,
 				Repeat = true		
 			});
 
@@ -889,9 +889,6 @@ namespace DNA.Models {
 				InterestRate = 0.02f,
 				RepaymentLength = 10,
 				GracePeriod = 0
-				/*InterestRate = 0.06f,
-				RepaymentLength = 8,
-				GracePeriod = 12*/
 			});
 		}
 	}

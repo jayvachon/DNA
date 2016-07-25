@@ -6,12 +6,15 @@ namespace DNA.Units {
 
 	public class SharkManager : MonoBehaviour {
 
-		float startRadius = 10f;
+		float startRadius = 100f;
 
 		void OnEnable () {
-			Co2.Repeat (10f, () => {
-				foreach (Loan loan in LoanManager.GetLoans ())
-					CreateShark (loan);
+
+			Co2.Repeat (5f, () => {
+				foreach (Loan loan in LoanManager.GetLoans ()) {
+					if (loan.PercentUnpaid > Random.value * 10)
+						CreateShark (loan);
+				}
 			});
 		}
 
